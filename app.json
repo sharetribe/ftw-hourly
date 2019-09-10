@@ -1,11 +1,11 @@
 {
-  "name": "Sharetribe Flex Template Demo",
-  "description": "Sharetribe Flex Template Demo - Saunatime!",
+  "name": "Sharetribe Flex Template Demo: Time-based Process",
+  "description": "Sharetribe Flex template for time-based process",
   "keywords": [
-    "node", 
+    "node",
     "react"
   ],
-  "repository": "https://github.com/sharetribe/flex-template-web/",
+  "repository": "https://github.com/sharetribe/ftw-time/",
   "env": {
     "REACT_APP_MAPBOX_ACCESS_TOKEN": {
       "description": "See: Integrating to map providers documentation https://github.com/sharetribe/flex-template-web/blob/master/docs/map-providers.md"
