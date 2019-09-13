@@ -1,4 +1,5 @@
 import moment from 'moment';
+import jstz from 'jstimezonedetect';
 
 /**
  * Input names for the DateRangePicker from react-dates.
@@ -222,7 +223,6 @@ export const parseDateFromISO8601 = dateString => {
  *
  * @returns {String} string in 'YYYY-MM-DD'format
  */
-
 export const stringifyDateToISO8601 = date => {
   return moment(date).format('YYYY-MM-DD');
 };
@@ -235,7 +235,6 @@ export const stringifyDateToISO8601 = date => {
  *
  * @returns {String} string in '0000-00-00T00:00:00.000Z' format
  */
-
 export const formatDateStringToUTC = dateString => {
   return moment.utc(dateString).toDate();
 };
@@ -249,7 +248,6 @@ export const formatDateStringToUTC = dateString => {
  *
  * @returns {String} string in '0000-00-00T00:00:00.000Z' format
  */
-
 export const getExclusiveEndDate = dateString => {
   return moment
     .utc(dateString)
@@ -273,4 +271,31 @@ export const formatDateToText = (intl, date) => {
       day: 'numeric',
     }),
   };
+};
+
+/**
+ * Detect the default timezone of user's browser.
+ * This function can only be called from client side.
+ *
+ * @returns {String} string containing IANA timezone key (e.g. 'Europe/Helsinki')
+ */
+export const getDefaultTimeZoneOnBrowser = () => {
+  if (typeof window === 'undefined') {
+    throw new Error(
+      'Utility function: getDefaultTimeZoneOnBrowser() should be called on client-side only.'
+    );
+  }
+
+  if (Intl && typeof Intl !== 'undefined' && typeof Intl.DateTimeFormat !== 'undefined') {
+    const dtf = new Intl.DateTimeFormat();
+    if ((typeof dtf !== 'undefined') & (typeof dtf.resolvedOptions !== 'undefined')) {
+      const currentTimeZone = dtf.resolvedOptions().timeZone;
+      if (currentTimeZone) {
+        return currentTimeZone;
+      }
+    }
+  }
+  // Fallback to jstimezonedetect dependency.
+  // However, most browsers support Intl.DateTimeFormat already.
+  return jstz.determine().name();
 };
