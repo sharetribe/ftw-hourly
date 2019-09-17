@@ -14,6 +14,9 @@ way to update this template, but currently, we follow a pattern:
 
 ## Upcoming version 2019-XX-XX
 
+- [add] add FieldTimeZoneSelect component and a script that can extract IANA time zone keys from
+  moment-timezone's JSON formatted files. [#2](https://github.com/sharetribe/ftw-time/pull/2)
+
 ## [v3.5.1] 2019-09-17
 
 - [add] add orverriding function `onAdd` and `onRemove` for `CustomOverlayView` in
