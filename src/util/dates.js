@@ -1,4 +1,7 @@
-import moment from 'moment';
+// Import moment from moment-timezone. 10-year range only.
+// The full data included in moment-timezone dependency is mostly irrelevant
+// and slows down the first paint.
+import moment from 'moment-timezone/builds/moment-timezone-with-data-10-year-range.min';
 import jstz from 'jstimezonedetect';
 
 /**
@@ -26,6 +29,288 @@ export const isDate = d =>
  * @returns {boolean} true if given parameters have the same timestamp.
  */
 export const isSameDate = (a, b) => a && isDate(a) && b && isDate(b) && a.getTime() === b.getTime();
+
+/**
+ * Check if the browser's DateTimeFormat API supports time zones.
+ *
+ * @returns {Boolean} true if the browser returns current timezone.
+ */
+export const isTimeZoneSupported = () => {
+  if (!Intl || typeof Intl === 'undefined' || typeof Intl.DateTimeFormat === 'undefined') {
+    return false;
+  }
+
+  const dtf = new Intl.DateTimeFormat();
+  if (typeof dtf === 'undefined' || typeof dtf.resolvedOptions === 'undefined') {
+    return false;
+  }
+  return !!dtf.resolvedOptions().timeZone;
+};
+
+/**
+ * Detect the default timezone of user's browser.
+ * This function can only be called from client side.
+ * I.e. server-side rendering doesn't make sense - it would not return user's timezone.
+ *
+ * @returns {String} string containing IANA timezone key (e.g. 'Europe/Helsinki')
+ */
+export const getDefaultTimeZoneOnBrowser = () => {
+  if (typeof window === 'undefined') {
+    throw new Error(
+      'Utility function: getDefaultTimeZoneOnBrowser() should be called on client-side only.'
+    );
+  }
+
+  if (isTimeZoneSupported()) {
+    const dtf = new Intl.DateTimeFormat();
+    const currentTimeZone = dtf.resolvedOptions().timeZone;
+    if (currentTimeZone) {
+      return currentTimeZone;
+    }
+  }
+
+  // Fallback to jstimezonedetect dependency.
+  // However, most browsers support Intl.DateTimeFormat already.
+  return jstz.determine().name();
+};
+
+/**
+ * Check if the given time zone key is valid.
+ *
+ * @param {String} name of the time zone in IANA format
+ *
+ * @returns {Boolean} true if the browser recognizes the key.
+ */
+export const isValidTimeZone = timeZone => {
+  try {
+    new Intl.DateTimeFormat('en-US', { timeZone }).format();
+    return true;
+  } catch (e) {
+    return false;
+  }
+};
+
+/**
+ * Format date instance to string and localized it to given time zone.
+ * Default formatting shows date and hours and minutes in 24 hour format:
+ *
+ * > localizeAndFormatDate(intl, 'America/Los_Angeles', new Date())
+ * => "9/18/2019, 08:18"
+ *
+ * @param {Object} instance of React Intl
+ * @param {String} timezone name. It should represent IANA timezone key.
+ * @param {Date} date to be localized.
+ * @param {Object} formatting options for Intl.DateTimeFormat.
+ *
+ * @returns {String} date localized and formatted to string.
+ */
+export const localizeAndFormatDate = (intl, timeZone, date, formattingOptions = null) => {
+  if (!isTimeZoneSupported()) {
+    throw new Error(`Your browser doesn't support timezones.`);
+  }
+
+  if (!isValidTimeZone(timeZone)) {
+    throw new Error(`Given time zone key (${timeZone}) is not valid.`);
+  }
+
+  const format = formattingOptions || {
+    year: 'numeric',
+    month: 'numeric',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false,
+  };
+
+  return intl.formatTime(date, { ...format, timeZone });
+};
+
+/**
+ * Format date instance to string and localized it to given time zone.
+ * Default formatting shows hours and minutes in 24 hour format:
+ *
+ * > localizeAndFormatTime(intl, 'America/Los_Angeles', new Date())
+ * => "08:18"
+ *
+ * @param {Object} instance of React Intl
+ * @param {String} timezone name. It should represent IANA timezone key.
+ * @param {Date} date to be localized.
+ * @param {Object} formatting options for Intl.DateTimeFormat.
+ *
+ * @returns {String} date localized and formatted to string.
+ */
+export const localizeAndFormatTime = (
+  intl,
+  timeZone,
+  date,
+  formattingOptions = {
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false,
+  }
+) => {
+  return localizeAndFormatDate(intl, timeZone, date, formattingOptions);
+};
+
+// Helper function for exported function: getSharpHours
+// Recursively find boundaries for bookable time slots.
+const findBookingUnitBoundaries = params => {
+  const {
+    cumulatedResults,
+    currentBoundary,
+    startMoment,
+    endMoment,
+    nextBoundaryFn,
+    intl,
+    timeZone,
+  } = params;
+
+  if (moment(currentBoundary).isBetween(startMoment, endMoment, null, '[]')) {
+    return findBookingUnitBoundaries({
+      ...params,
+      cumulatedResults: [
+        ...cumulatedResults,
+        {
+          timestamp: currentBoundary.valueOf(),
+          timeOfDay: localizeAndFormatTime(intl, timeZone, currentBoundary),
+        },
+      ],
+      currentBoundary: moment(nextBoundaryFn(timeZone, currentBoundary)),
+    });
+  }
+  return cumulatedResults;
+};
+
+/**
+ * Find the next sharp hour after the current moment.
+ *
+ * @param {String} timezone name. It should represent IANA timezone key.
+ * @param {Moment|Date} Start point for looking next sharp hour.
+ *
+ * @returns {Array} an array of localized hours.
+ */
+export const findNextBoundary = (timeZone, currentMomentOrDate) =>
+  moment(currentMomentOrDate)
+    .clone()
+    .tz(timeZone)
+    .add(1, 'hour')
+    .startOf('hour')
+    .toDate();
+
+/**
+ * Find sharp hours inside given time window. Returned strings are localized to given time zone.
+ *
+ * > getSharpHours(intl, 'Europe/Helsinki', new Date('2019-09-18T08:00:00.000Z'), new Date('2019-09-18T11:00:00.000Z'));
+ * => [
+ *    {
+ *      "timestamp": 1568793600000,
+ *      "timeOfDay": "11:00",
+ *    },
+ *    {
+ *      "timestamp": 1568797200000,
+ *      "timeOfDay": "12:00",
+ *    },
+ *    {
+ *      "timestamp": 1568800800000,
+ *      "timeOfDay": "13:00",
+ *    },
+ *    {
+ *      "timestamp": 1568804400000,
+ *      "timeOfDay": "14:00",
+ *    },
+ *  ]
+ *
+ * @param {Object} formatting options for Intl.DateTimeFormat.
+ * @param {String} timezone name. It should represent IANA timezone key.
+ * @param {Date} Start point of available time window.
+ * @param {Date} End point of available time window.
+ *
+ * @returns {Array} an array of objects with keys timestamp and timeOfDay.
+ */
+export const getSharpHours = (intl, timeZone, startTime, endTime) => {
+  if (!moment.tz.zone(timeZone)) {
+    throw new Error(
+      'Time zones are not loaded into moment-timezone. "getSharpHours" function uses time zones.'
+    );
+  }
+
+  // Select a moment before startTime to find next possible sharp hour.
+  // I.e. startTime might be a sharp hour.
+  const millisecondBeforeStartTime = new Date(startTime.getTime() - 1);
+  return findBookingUnitBoundaries({
+    currentBoundary: findNextBoundary(timeZone, millisecondBeforeStartTime),
+    startMoment: moment(startTime),
+    endMoment: moment(endTime),
+    nextBoundaryFn: findNextBoundary,
+    cumulatedResults: [],
+    intl,
+    timeZone,
+  });
+};
+
+/**
+ * Find sharp start hours for bookable time units (hour) inside given time window.
+ * Returned strings are localized to given time zone.
+ *
+ * > getStartHours(intl, 'Europe/Helsinki', new Date('2019-09-18T08:00:00.000Z'), new Date('2019-09-18T11:00:00.000Z'));
+ * => [
+ *    {
+ *      "timestamp": 1568793600000,
+ *      "timeOfDay": "11:00",
+ *    },
+ *    {
+ *      "timestamp": 1568797200000,
+ *      "timeOfDay": "12:00",
+ *    },
+ *    {
+ *      "timestamp": 1568800800000,
+ *      "timeOfDay": "13:00",
+ *    },
+ *  ]
+ *
+ * @param {Object} formatting options for Intl.DateTimeFormat.
+ * @param {String} timezone name. It should represent IANA timezone key.
+ * @param {Date} Start point of available time window.
+ * @param {Date} End point of available time window.
+ *
+ * @returns {Array} an array of objects with keys timestamp and timeOfDay.
+ */
+export const getStartHours = (intl, timeZone, startTime, endTime) => {
+  const hours = getSharpHours(intl, timeZone, startTime, endTime);
+  return hours.length < 2 ? hours : hours.slice(0, -1);
+};
+
+/**
+ * Find sharp end hours for bookable time units (hour) inside given time window.
+ * Returned strings are localized to given time zone.
+ *
+ * > getStartingHours(intl, 'Europe/Helsinki', new Date('2019-09-18T08:00:00.000Z'), new Date('2019-09-18T11:00:00.000Z'));
+ * => [
+ *    {
+ *      "timestamp": 1568797200000,
+ *      "timeOfDay": "12:00",
+ *    },
+ *    {
+ *      "timestamp": 1568800800000,
+ *      "timeOfDay": "13:00",
+ *    },
+ *    {
+ *      "timestamp": 1568804400000,
+ *      "timeOfDay": "14:00",
+ *    },
+ *  ]
+ *
+ * @param {Object} formatting options for Intl.DateTimeFormat.
+ * @param {String} timezone name. It should represent IANA timezone key.
+ * @param {Date} Start point of available time window.
+ * @param {Date} End point of available time window.
+ *
+ * @returns {Array} an array of objects with keys timestamp and timeOfDay.
+ */
+export const getEndHours = (intl, timeZone, startTime, endTime) => {
+  const hours = getSharpHours(intl, timeZone, startTime, endTime);
+  return hours.length < 2 ? [] : hours.slice(1);
+};
 
 /**
  * Convert date given by API to something meaningful noon on browser's timezone
@@ -271,31 +556,4 @@ export const formatDateToText = (intl, date) => {
       day: 'numeric',
     }),
   };
-};
-
-/**
- * Detect the default timezone of user's browser.
- * This function can only be called from client side.
- *
- * @returns {String} string containing IANA timezone key (e.g. 'Europe/Helsinki')
- */
-export const getDefaultTimeZoneOnBrowser = () => {
-  if (typeof window === 'undefined') {
-    throw new Error(
-      'Utility function: getDefaultTimeZoneOnBrowser() should be called on client-side only.'
-    );
-  }
-
-  if (Intl && typeof Intl !== 'undefined' && typeof Intl.DateTimeFormat !== 'undefined') {
-    const dtf = new Intl.DateTimeFormat();
-    if ((typeof dtf !== 'undefined') & (typeof dtf.resolvedOptions !== 'undefined')) {
-      const currentTimeZone = dtf.resolvedOptions().timeZone;
-      if (currentTimeZone) {
-        return currentTimeZone;
-      }
-    }
-  }
-  // Fallback to jstimezonedetect dependency.
-  // However, most browsers support Intl.DateTimeFormat already.
-  return jstz.determine().name();
 };
