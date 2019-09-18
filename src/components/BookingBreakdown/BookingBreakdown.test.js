@@ -59,8 +59,10 @@ describe('BookingBreakdown', () => {
           ],
         })}
         booking={createBooking('example-booking', {
-          start: new Date(Date.UTC(2017, 3, 14)),
-          end: new Date(Date.UTC(2017, 3, 16)),
+          start: new Date(Date.UTC(2017, 3, 14, 12, 0, 0)),
+          displayStart: new Date(Date.UTC(2017, 3, 14, 12, 0, 0)),
+          end: new Date(Date.UTC(2017, 3, 16, 12, 0, 0)),
+          displayEnd: new Date(Date.UTC(2017, 3, 16, 12, 0, 0)),
         })}
         intl={fakeIntl}
       />
@@ -89,8 +91,10 @@ describe('BookingBreakdown', () => {
           ],
         })}
         booking={createBooking('example-booking', {
-          start: new Date(Date.UTC(2017, 3, 14)),
-          end: new Date(Date.UTC(2017, 3, 16)),
+          start: new Date(Date.UTC(2017, 3, 14, 12, 0, 0)),
+          displayStart: new Date(Date.UTC(2017, 3, 14, 12, 0, 0)),
+          end: new Date(Date.UTC(2017, 3, 16, 12, 0, 0)),
+          displayEnd: new Date(Date.UTC(2017, 3, 16, 12, 0, 0)),
         })}
         intl={fakeIntl}
       />
@@ -126,8 +130,10 @@ describe('BookingBreakdown', () => {
           ],
         })}
         booking={createBooking('example-booking', {
-          start: new Date(Date.UTC(2017, 3, 14)),
-          end: new Date(Date.UTC(2017, 3, 16)),
+          start: new Date(Date.UTC(2017, 3, 14, 12, 0, 0)),
+          displayStart: new Date(Date.UTC(2017, 3, 14, 12, 0, 0)),
+          end: new Date(Date.UTC(2017, 3, 16, 12, 0, 0)),
+          displayEnd: new Date(Date.UTC(2017, 3, 16, 12, 0, 0)),
         })}
         intl={fakeIntl}
       />
@@ -180,8 +186,10 @@ describe('BookingBreakdown', () => {
           ],
         })}
         booking={createBooking('example-booking', {
-          start: new Date(Date.UTC(2017, 3, 14)),
-          end: new Date(Date.UTC(2017, 3, 16)),
+          start: new Date(Date.UTC(2017, 3, 14, 12, 0, 0)),
+          displayStart: new Date(Date.UTC(2017, 3, 14, 12, 0, 0)),
+          end: new Date(Date.UTC(2017, 3, 16, 12, 0, 0)),
+          displayEnd: new Date(Date.UTC(2017, 3, 16, 12, 0, 0)),
         })}
         intl={fakeIntl}
       />

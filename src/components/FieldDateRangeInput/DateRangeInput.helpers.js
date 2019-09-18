@@ -2,7 +2,7 @@ import moment from 'moment';
 import { isSameDay, isInclusivelyAfterDay, isInclusivelyBeforeDay } from 'react-dates';
 
 import { ensureTimeSlot } from '../../util/data';
-import { START_DATE, END_DATE, dateFromAPIToLocalNoon } from '../../util/dates';
+import { START_DATE, END_DATE } from '../../util/dates';
 import { LINE_ITEM_DAY, LINE_ITEM_NIGHT, TIME_SLOT_DAY } from '../../util/types';
 import config from '../../config';
 
@@ -12,7 +12,12 @@ const timeSlotEqualsDay = (timeSlot, day) => {
     // Time slots describe available dates by providing a start and
     // an end date which is the following day. In the single date picker
     // the start date is used to represent available dates.
-    const localStartDate = dateFromAPIToLocalNoon(timeSlot.attributes.start);
+    const localStartDate = timeSlot.attributes.start;
+
+    // TODO: this needs to be fixed. We should create another function that checks daily availability.
+    console.warning(
+      'DateInput, timeSlotEqualsDay function is deprecated. It does not work with time-based process.'
+    );
 
     return isSameDay(day, moment(localStartDate));
   } else {
