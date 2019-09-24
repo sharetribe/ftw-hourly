@@ -4,6 +4,8 @@ import {
   FormattedMessage,
   FormattedDate,
   FormattedHTMLMessage,
+  createIntl,
+  createIntlCache,
   injectIntl,
 } from 'react-intl';
 
@@ -21,6 +23,8 @@ export {
   FormattedMessage,
   FormattedDate,
   FormattedHTMLMessage,
+  createIntl,
+  createIntlCache,
   injectIntl,
   intlShape,
 };
