@@ -14,6 +14,9 @@ way to update this template, but currently, we follow a pattern:
 
 ## Upcoming version 2019-XX-XX
 
+- [add] Add new component `FieldTimeZoneSelect`. Also add `moment-timezone` as a dependency and some
+  helper functions to `util/dates.js` for handling timezones and tiem-based timeslots.
+  [#5](https://github.com/sharetribe/ftw-time/pull/5)
 - [add] add FieldTimeZoneSelect component and a script that can extract IANA time zone keys from
   moment-timezone's JSON formatted files. [#2](https://github.com/sharetribe/ftw-time/pull/2)
 
