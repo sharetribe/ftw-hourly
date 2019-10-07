@@ -14,6 +14,8 @@ way to update this template, but currently, we follow a pattern:
 
 ## Upcoming version 2019-XX-XX
 
+- [remove] Remove dateFromAPIToLocalNoon and dateFromLocalToAPI.
+  [#6](https://github.com/sharetribe/ftw-time/pull/6)
 - [add] Add new component `FieldTimeZoneSelect`. Also add `moment-timezone` as a dependency and some
   helper functions to `util/dates.js` for handling timezones and tiem-based timeslots.
   [#5](https://github.com/sharetribe/ftw-time/pull/5)
