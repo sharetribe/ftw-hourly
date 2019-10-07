@@ -24,7 +24,7 @@ const testMessages = mapValues(messages, (val, key) => key);
 export const TestProvider = props => {
   const store = configureStore();
   return (
-    <IntlProvider locale="en" messages={testMessages} textComponent="span">
+    <IntlProvider locale="en" messages={testMessages} textComponent="span" timeZone="Etc/UTC">
       <BrowserRouter>
         <Provider store={store}>{props.children}</Provider>
       </BrowserRouter>

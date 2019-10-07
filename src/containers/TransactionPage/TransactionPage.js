@@ -9,7 +9,6 @@ import { createResourceLocatorString, findRouteByRouteName } from '../../util/ro
 import routeConfiguration from '../../routeConfiguration';
 import { propTypes } from '../../util/types';
 import { ensureListing, ensureTransaction } from '../../util/data';
-import { dateFromAPIToLocalNoon } from '../../util/dates';
 import { createSlug } from '../../util/urlHelpers';
 import { txIsPaymentPending } from '../../util/transaction';
 import { getMarketplaceEntities } from '../../ducks/marketplaceData.duck';
@@ -122,8 +121,8 @@ export const TransactionPageComponent = props => {
       // (E.g. quantity is used when booking is created.)
       bookingData: {},
       bookingDates: {
-        bookingStart: dateFromAPIToLocalNoon(currentBooking.attributes.start),
-        bookingEnd: dateFromAPIToLocalNoon(currentBooking.attributes.end),
+        bookingStart: currentBooking.attributes.start,
+        bookingEnd: currentBooking.attributes.end,
       },
     };
 
