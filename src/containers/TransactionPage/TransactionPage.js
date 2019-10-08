@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { arrayOf, bool, func, number, object, oneOf, shape, string } from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
@@ -34,6 +34,7 @@ import {
   sendMessage,
   sendReview,
   fetchMoreMessages,
+  fetchTimeSlots,
 } from './TransactionPage.duck';
 import css from './TransactionPage.css';
 
@@ -72,8 +73,7 @@ export const TransactionPageComponent = props => {
     declineSaleError,
     onAcceptSale,
     onDeclineSale,
-    timeSlots,
-    fetchTimeSlotsError,
+    monthlyTimeSlots,
     processTransitions,
     callSetInitialValues,
     onInitializeCardPaymentData,
@@ -240,8 +240,7 @@ export const TransactionPageComponent = props => {
       declineSaleError={declineSaleError}
       nextTransitions={processTransitions}
       onSubmitBookingRequest={handleSubmitBookingRequest}
-      timeSlots={timeSlots}
-      fetchTimeSlotsError={fetchTimeSlotsError}
+      monthlyTimeSlots={monthlyTimeSlots}
     />
   ) : (
     loadingOrFailedFetching
@@ -277,11 +276,8 @@ TransactionPageComponent.defaultProps = {
   initialMessageFailedToTransaction: null,
   savePaymentMethodFailed: false,
   sendMessageError: null,
-  timeSlots: null,
-  fetchTimeSlotsError: null,
+  monthlyTimeSlots: null,
 };
-
-const { bool, func, oneOf, shape, string, arrayOf, number } = PropTypes;
 
 TransactionPageComponent.propTypes = {
   params: shape({ id: string }).isRequired,
@@ -306,8 +302,15 @@ TransactionPageComponent.propTypes = {
   sendMessageError: propTypes.error,
   onShowMoreMessages: func.isRequired,
   onSendMessage: func.isRequired,
-  timeSlots: arrayOf(propTypes.timeSlot),
-  fetchTimeSlotsError: propTypes.error,
+  monthlyTimeSlots: object,
+  // monthlyTimeSlots could be something like:
+  // monthlyTimeSlots: {
+  //   '2019-11': {
+  //     timeSlots: [],
+  //     fetchTimeSlotsInProgress: false,
+  //     fetchTimeSlotsError: null,
+  //   }
+  // }
   callSetInitialValues: func.isRequired,
   onInitializeCardPaymentData: func.isRequired,
 
@@ -342,8 +345,7 @@ const mapStateToProps = state => {
     sendMessageError,
     sendReviewInProgress,
     sendReviewError,
-    timeSlots,
-    fetchTimeSlotsError,
+    monthlyTimeSlots,
     processTransitions,
   } = state.TransactionPage;
   const { currentUser } = state.user;
@@ -371,8 +373,7 @@ const mapStateToProps = state => {
     sendMessageError,
     sendReviewInProgress,
     sendReviewError,
-    timeSlots,
-    fetchTimeSlotsError,
+    monthlyTimeSlots,
     processTransitions,
   };
 };
@@ -389,6 +390,8 @@ const mapDispatchToProps = dispatch => {
       dispatch(sendReview(role, tx, reviewRating, reviewContent)),
     callSetInitialValues: (setInitialValues, values) => dispatch(setInitialValues(values)),
     onInitializeCardPaymentData: () => dispatch(initializeCardPaymentData()),
+    onFetchTimeSlots: (listingId, start, end, timeZone) =>
+      dispatch(fetchTimeSlots(listingId, start, end, timeZone)),
   };
 };
 
