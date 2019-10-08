@@ -14,7 +14,10 @@ import {
   nightsBetween,
   daysBetween,
   minutesBetween,
+  monthIdStringInTimeZone,
   formatDate,
+  getMonthStartInTimeZone,
+  getNextMonthStartInTimeZone,
   parseDateFromISO8601,
   stringifyDateToISO8601,
 } from './dates';
@@ -233,6 +236,17 @@ describe('date utils', () => {
     });
   });
 
+  describe('monthIdStringInTimeZone() for 2019-11-01', () => {
+    it('should return correct month-id string', () => {
+      const date = new Date(Date.UTC(2019, 10, 1, 0, 0, 0));
+      expect(monthIdStringInTimeZone(date, 'Australia/Eucla')).toEqual('2019-11');
+      expect(monthIdStringInTimeZone(date, 'Europe/Helsinki')).toEqual('2019-11');
+      // Note month has changed in UTC (and therefore in Eucla and Helsinki),
+      // but not yet in Los Angeles.
+      expect(monthIdStringInTimeZone(date, 'America/Los_Angeles')).toEqual('2019-10');
+    });
+  });
+
   describe('formatDate()', () => {
     /*
       NOTE: These are not really testing the formatting properly since
@@ -261,6 +275,60 @@ describe('date utils', () => {
     it('should return string in YYYY-MM-DD format', () => {
       const date = new Date(2018, 10, 23);
       expect(stringifyDateToISO8601(date)).toEqual('2018-11-23');
+    });
+  });
+
+  describe('getMonthStartInTimeZone() for 2019-11-23', () => {
+    it('should return correct start of the month', () => {
+      const date = new Date(Date.UTC(2019, 10, 23, 14, 34, 22));
+      expect(
+        localizeAndFormatDate(
+          intl,
+          'Australia/Eucla',
+          getMonthStartInTimeZone(date, 'Australia/Eucla')
+        )
+      ).toEqual('11/1/2019, 00:00');
+      expect(
+        localizeAndFormatDate(
+          intl,
+          'Europe/Helsinki',
+          getMonthStartInTimeZone(date, 'Europe/Helsinki')
+        )
+      ).toEqual('11/1/2019, 00:00');
+      expect(
+        localizeAndFormatDate(
+          intl,
+          'America/Los_Angeles',
+          getMonthStartInTimeZone(date, 'America/Los_Angeles')
+        )
+      ).toEqual('11/1/2019, 00:00');
+    });
+  });
+
+  describe('getNextMonthStartInTimeZone() for 2019-11-23', () => {
+    it('should return correct start of the next month', () => {
+      const date = new Date(Date.UTC(2019, 10, 23, 14, 34, 22));
+      expect(
+        localizeAndFormatDate(
+          intl,
+          'Australia/Eucla',
+          getNextMonthStartInTimeZone(date, 'Australia/Eucla')
+        )
+      ).toEqual('12/1/2019, 00:00');
+      expect(
+        localizeAndFormatDate(
+          intl,
+          'Europe/Helsinki',
+          getNextMonthStartInTimeZone(date, 'Europe/Helsinki')
+        )
+      ).toEqual('12/1/2019, 00:00');
+      expect(
+        localizeAndFormatDate(
+          intl,
+          'America/Los_Angeles',
+          getNextMonthStartInTimeZone(date, 'America/Los_Angeles')
+        )
+      ).toEqual('12/1/2019, 00:00');
     });
   });
 });
