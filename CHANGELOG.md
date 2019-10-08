@@ -14,6 +14,8 @@ way to update this template, but currently, we follow a pattern:
 
 ## Upcoming version 2019-XX-XX
 
+- [add] Fetch timeSlots on ListingPage and TransactionPage.
+  [#9](https://github.com/sharetribe/ftw-time/pull/9)
 - [remove] Remove dateFromAPIToLocalNoon and dateFromLocalToAPI.
   [#6](https://github.com/sharetribe/ftw-time/pull/6)
 - [add] Add new component `FieldTimeZoneSelect`. Also add `moment-timezone` as a dependency and some
