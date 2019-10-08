@@ -18,9 +18,6 @@
 }
 
 .inputRoot {
-  /* Contain repainting to this component only */
-  transform: translate3d(0, 0, 0);
-
   /* Override react-dates default styles to match input styles */
 
   & :global(.SingleDatePicker) {
@@ -239,6 +236,17 @@
   }
   & :global(.CalendarMonth_caption) {
     text-transform: capitalize;
+  }
+
+  & :global(.DateInput__disabled) {
+    background: none;
+  }
+  & :global(.DateInput_input__disabled) {
+    border-bottom: 1px solid var(--matterColorNegative);
+  }
+  & :global(.DateInput_input__disabled::placeholder) {
+    color: var(--matterColorNegative);
+    font-style: normal;
   }
 }
 
