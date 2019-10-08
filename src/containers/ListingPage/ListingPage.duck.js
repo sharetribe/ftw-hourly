@@ -1,10 +1,10 @@
 import pick from 'lodash/pick';
-import moment from 'moment';
 import config from '../../config';
 import { types as sdkTypes } from '../../util/sdkLoader';
 import { storableError } from '../../util/errors';
 import { addMarketplaceEntities } from '../../ducks/marketplaceData.duck';
 import { denormalisedResponseEntities } from '../../util/data';
+import { getNextMonthStartInTimeZone, monthIdStringInTimeZone } from '../../util/dates';
 import { TRANSITION_ENQUIRE } from '../../util/transaction';
 import {
   LISTING_PAGE_DRAFT_VARIANT,
@@ -40,8 +40,13 @@ const initialState = {
   showListingError: null,
   reviews: [],
   fetchReviewsError: null,
-  timeSlots: null,
-  fetchTimeSlotsError: null,
+  monthlyTimeSlots: {
+    // '2019-12': {
+    //   timeSlots: [],
+    //   fetchTimeSlotsError: null,
+    //   fetchTimeSlotsInProgress: null,
+    // },
+  },
   sendEnquiryInProgress: false,
   sendEnquiryError: null,
   enquiryModalOpenForListingId: null,
@@ -65,12 +70,41 @@ const listingPageReducer = (state = initialState, action = {}) => {
     case FETCH_REVIEWS_ERROR:
       return { ...state, fetchReviewsError: payload };
 
-    case FETCH_TIME_SLOTS_REQUEST:
-      return { ...state, fetchTimeSlotsError: null };
-    case FETCH_TIME_SLOTS_SUCCESS:
-      return { ...state, timeSlots: payload };
-    case FETCH_TIME_SLOTS_ERROR:
-      return { ...state, fetchTimeSlotsError: payload };
+    case FETCH_TIME_SLOTS_REQUEST: {
+      const monthlyTimeSlots = {
+        ...state.monthlyTimeSlots,
+        [payload]: {
+          ...state.monthlyTimeSlots[payload],
+          fetchTimeSlotsError: null,
+          fetchTimeSlotsInProgress: true,
+        },
+      };
+      return { ...state, monthlyTimeSlots };
+    }
+    case FETCH_TIME_SLOTS_SUCCESS: {
+      const monthId = payload.monthId;
+      const monthlyTimeSlots = {
+        ...state.monthlyTimeSlots,
+        [monthId]: {
+          ...state.monthlyTimeSlots[monthId],
+          fetchTimeSlotsInProgress: false,
+          timeSlots: payload.timeSlots,
+        },
+      };
+      return { ...state, monthlyTimeSlots };
+    }
+    case FETCH_TIME_SLOTS_ERROR: {
+      const monthId = payload.monthId;
+      const monthlyTimeSlots = {
+        ...state.monthlyTimeSlots,
+        [monthId]: {
+          ...state.monthlyTimeSlots[monthId],
+          fetchTimeSlotsInProgress: false,
+          fetchTimeSlotsError: payload.error,
+        },
+      };
+      return { ...state, monthlyTimeSlots };
+    }
 
     case SEND_ENQUIRY_REQUEST:
       return { ...state, sendEnquiryInProgress: true, sendEnquiryError: null };
@@ -112,15 +146,18 @@ export const fetchReviewsError = error => ({
   payload: error,
 });
 
-export const fetchTimeSlotsRequest = () => ({ type: FETCH_TIME_SLOTS_REQUEST });
-export const fetchTimeSlotsSuccess = timeSlots => ({
-  type: FETCH_TIME_SLOTS_SUCCESS,
-  payload: timeSlots,
+export const fetchTimeSlotsRequest = monthId => ({
+  type: FETCH_TIME_SLOTS_REQUEST,
+  payload: monthId,
 });
-export const fetchTimeSlotsError = error => ({
+export const fetchTimeSlotsSuccess = (monthId, timeSlots) => ({
+  type: FETCH_TIME_SLOTS_SUCCESS,
+  payload: { timeSlots, monthId },
+});
+export const fetchTimeSlotsError = (monthId, error) => ({
   type: FETCH_TIME_SLOTS_ERROR,
   error: true,
-  payload: error,
+  payload: { monthId, error },
 });
 
 export const sendEnquiryRequest = () => ({ type: SEND_ENQUIRY_REQUEST });
@@ -194,53 +231,17 @@ const timeSlotsRequest = params => (dispatch, getState, sdk) => {
   });
 };
 
-export const fetchTimeSlots = listingId => (dispatch, getState, sdk) => {
-  dispatch(fetchTimeSlotsRequest);
+export const fetchTimeSlots = (listingId, start, end, timeZone) => (dispatch, getState, sdk) => {
+  const monthId = monthIdStringInTimeZone(start, timeZone);
 
-  // Time slots can be fetched for 90 days at a time,
-  // for at most 180 days from now. If max number of bookable
-  // day exceeds 90, a second request is made.
+  dispatch(fetchTimeSlotsRequest(monthId));
 
-  const maxTimeSlots = 90;
-  // booking range: today + bookable days -1
-  const bookingRange = config.dayCountAvailableForBooking - 1;
-  const timeSlotsRange = Math.min(bookingRange, maxTimeSlots);
-
-  const start = moment
-    .utc()
-    .startOf('day')
-    .toDate();
-  const end = moment()
-    .utc()
-    .startOf('day')
-    .add(timeSlotsRange, 'days')
-    .toDate();
-  const params = { listingId, start, end };
-
-  return dispatch(timeSlotsRequest(params))
+  return dispatch(timeSlotsRequest({ listingId, start, end }))
     .then(timeSlots => {
-      const secondRequest = bookingRange > maxTimeSlots;
-
-      if (secondRequest) {
-        const secondRange = Math.min(maxTimeSlots, bookingRange - maxTimeSlots);
-        const secondParams = {
-          listingId,
-          start: end,
-          end: moment(end)
-            .add(secondRange, 'days')
-            .toDate(),
-        };
-
-        return dispatch(timeSlotsRequest(secondParams)).then(secondBatch => {
-          const combined = timeSlots.concat(secondBatch);
-          dispatch(fetchTimeSlotsSuccess(combined));
-        });
-      } else {
-        dispatch(fetchTimeSlotsSuccess(timeSlots));
-      }
+      dispatch(fetchTimeSlotsSuccess(monthId, timeSlots));
     })
     .catch(e => {
-      dispatch(fetchTimeSlotsError(storableError(e)));
+      dispatch(fetchTimeSlotsError(monthId, storableError(e)));
     });
 };
 
@@ -269,6 +270,32 @@ export const sendEnquiry = (listingId, message) => (dispatch, getState, sdk) => 
     });
 };
 
+// Helper function for loadData call.
+const fetchMonthlyTimeSlots = (dispatch, listing) => {
+  const hasWindow = typeof window !== 'undefined';
+  const attributes = listing.attributes;
+  // Listing could be ownListing entity too, so we just check if attributes key exists
+  const hasTimeZone =
+    attributes && attributes.availabilityPlan && attributes.availabilityPlan.timezone;
+
+  // Fetch time-zones on client side only.
+  if (hasWindow && listing.id && hasTimeZone) {
+    const now = new Date();
+    const tz = listing.attributes.availabilityPlan.timezone;
+
+    const nextMonth = getNextMonthStartInTimeZone(now, tz);
+    const nextAfterNextMonth = getNextMonthStartInTimeZone(nextMonth, tz);
+
+    return Promise.all([
+      dispatch(fetchTimeSlots(listing.id, now, nextMonth, tz)),
+      dispatch(fetchTimeSlots(listing.id, nextMonth, nextAfterNextMonth, tz)),
+    ]);
+  }
+
+  // By default return an empty array
+  return Promise.all([]);
+};
+
 export const loadData = (params, search) => dispatch => {
   const listingId = new UUID(params.id);
 
@@ -277,13 +304,17 @@ export const loadData = (params, search) => dispatch => {
     return dispatch(showListing(listingId, true));
   }
 
-  if (config.enableAvailability) {
-    return Promise.all([
-      dispatch(showListing(listingId)),
-      dispatch(fetchTimeSlots(listingId)),
-      dispatch(fetchReviews(listingId)),
-    ]);
-  } else {
-    return Promise.all([dispatch(showListing(listingId)), dispatch(fetchReviews(listingId))]);
-  }
+  return Promise.all([dispatch(showListing(listingId)), dispatch(fetchReviews(listingId))]).then(
+    responses => {
+      if (responses[0] && responses[0].data && responses[0].data.data) {
+        const listing = responses[0].data.data;
+
+        // Fetch timeSlots.
+        // This can happen parallel to loadData.
+        // We are not interested to return them from loadData call.
+        fetchMonthlyTimeSlots(dispatch, listing);
+      }
+      return responses;
+    }
+  );
 };

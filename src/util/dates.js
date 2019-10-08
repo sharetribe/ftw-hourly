@@ -400,6 +400,19 @@ export const monthIdStringInUTC = date =>
     .format('YYYY-MM');
 
 /**
+ * Format the given date to UTC month id/string
+ *
+ * @param {Date} date to be formatted
+ * @param {String} time zone.
+ *
+ * @returns {String} formatted month string
+ */
+export const monthIdStringInTimeZone = (date, timeZone) =>
+  moment(date)
+    .tz(timeZone)
+    .format('YYYY-MM');
+
+/**
  * Format the given date
  *
  * @param {Object} intl Intl object from react-intl
@@ -500,6 +513,46 @@ export const getExclusiveEndDate = dateString => {
     .add(1, 'days')
     .startOf('day')
     .toDate();
+};
+
+/**
+ * Return start of the month in given time zone.
+ * If no time zone is given, local time zone is used.
+ *
+ * @param {Date} date object that marks timestamp inside desired month.
+ *
+ * @returns {Date} start of the month in given time zone
+ */
+export const getMonthStartInTimeZone = (date, timeZone) => {
+  return timeZone
+    ? moment(date)
+        .tz(timeZone)
+        .startOf('month')
+        .toDate()
+    : moment(date)
+        .startOf('month')
+        .toDate();
+};
+
+/**
+ * Return start of the next month in given time zone.
+ * If no time zone is given, local time zone is used.
+ *
+ * @param {Date} date object that marks timestamp inside "previous" month.
+ *
+ * @returns {Date} start of the next month in given time zone
+ */
+export const getNextMonthStartInTimeZone = (date, timeZone) => {
+  return timeZone
+    ? moment(date)
+        .tz(timeZone)
+        .add(1, 'months')
+        .startOf('month')
+        .toDate()
+    : moment(date)
+        .add(1, 'months')
+        .startOf('month')
+        .toDate();
 };
 
 export const formatDateToText = (intl, date) => {

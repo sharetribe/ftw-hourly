@@ -1,7 +1,6 @@
 import pick from 'lodash/pick';
 import pickBy from 'lodash/pickBy';
 import isEmpty from 'lodash/isEmpty';
-import moment from 'moment';
 import config from '../../config';
 import { types as sdkTypes } from '../../util/sdkLoader';
 import { isTransactionsTransitionInvalidTransition, storableError } from '../../util/errors';
@@ -19,6 +18,7 @@ import {
   denormalisedEntities,
   denormalisedResponseEntities,
 } from '../../util/data';
+import { getNextMonthStartInTimeZone, monthIdStringInTimeZone } from '../../util/dates';
 import { addMarketplaceEntities } from '../../ducks/marketplaceData.duck';
 import { fetchCurrentUserNotifications } from '../../ducks/user.duck';
 
@@ -85,8 +85,13 @@ const initialState = {
   sendMessageError: null,
   sendReviewInProgress: false,
   sendReviewError: null,
-  timeSlots: null,
-  fetchTimeSlotsError: null,
+  monthlyTimeSlots: {
+    // '2019-12': {
+    //   timeSlots: [],
+    //   fetchTimeSlotsError: null,
+    //   fetchTimeSlotsInProgress: null,
+    // },
+  },
   fetchTransitionsInProgress: false,
   fetchTransitionsError: null,
   processTransitions: null,
@@ -177,12 +182,41 @@ export default function checkoutPageReducer(state = initialState, action = {}) {
     case SEND_REVIEW_ERROR:
       return { ...state, sendReviewInProgress: false, sendReviewError: payload };
 
-    case FETCH_TIME_SLOTS_REQUEST:
-      return { ...state, fetchTimeSlotsError: null };
-    case FETCH_TIME_SLOTS_SUCCESS:
-      return { ...state, timeSlots: payload };
-    case FETCH_TIME_SLOTS_ERROR:
-      return { ...state, fetchTimeSlotsError: payload };
+    case FETCH_TIME_SLOTS_REQUEST: {
+      const monthlyTimeSlots = {
+        ...state.monthlyTimeSlots,
+        [payload]: {
+          ...state.monthlyTimeSlots[payload],
+          fetchTimeSlotsError: null,
+          fetchTimeSlotsInProgress: true,
+        },
+      };
+      return { ...state, monthlyTimeSlots };
+    }
+    case FETCH_TIME_SLOTS_SUCCESS: {
+      const monthId = payload.monthId;
+      const monthlyTimeSlots = {
+        ...state.monthlyTimeSlots,
+        [monthId]: {
+          ...state.monthlyTimeSlots[monthId],
+          fetchTimeSlotsInProgress: false,
+          timeSlots: payload.timeSlots,
+        },
+      };
+      return { ...state, monthlyTimeSlots };
+    }
+    case FETCH_TIME_SLOTS_ERROR: {
+      const monthId = payload.monthId;
+      const monthlyTimeSlots = {
+        ...state.monthlyTimeSlots,
+        [monthId]: {
+          ...state.monthlyTimeSlots[monthId],
+          fetchTimeSlotsInProgress: false,
+          fetchTimeSlotsError: payload.error,
+        },
+      };
+      return { ...state, monthlyTimeSlots };
+    }
 
     default:
       return state;
@@ -238,18 +272,67 @@ const sendReviewRequest = () => ({ type: SEND_REVIEW_REQUEST });
 const sendReviewSuccess = () => ({ type: SEND_REVIEW_SUCCESS });
 const sendReviewError = e => ({ type: SEND_REVIEW_ERROR, error: true, payload: e });
 
-const fetchTimeSlotsRequest = () => ({ type: FETCH_TIME_SLOTS_REQUEST });
-const fetchTimeSlotsSuccess = timeSlots => ({
-  type: FETCH_TIME_SLOTS_SUCCESS,
-  payload: timeSlots,
+export const fetchTimeSlotsRequest = monthId => ({
+  type: FETCH_TIME_SLOTS_REQUEST,
+  payload: monthId,
 });
-const fetchTimeSlotsError = e => ({
+export const fetchTimeSlotsSuccess = (monthId, timeSlots) => ({
+  type: FETCH_TIME_SLOTS_SUCCESS,
+  payload: { timeSlots, monthId },
+});
+export const fetchTimeSlotsError = (monthId, error) => ({
   type: FETCH_TIME_SLOTS_ERROR,
   error: true,
-  payload: e,
+  payload: { monthId, error },
 });
 
 // ================ Thunks ================ //
+
+const timeSlotsRequest = params => (dispatch, getState, sdk) => {
+  return sdk.timeslots.query(params).then(response => {
+    return denormalisedResponseEntities(response);
+  });
+};
+
+export const fetchTimeSlots = (listingId, start, end, timeZone) => (dispatch, getState, sdk) => {
+  const monthId = monthIdStringInTimeZone(start, timeZone);
+
+  dispatch(fetchTimeSlotsRequest(monthId));
+
+  return dispatch(timeSlotsRequest({ listingId, start, end }))
+    .then(timeSlots => {
+      dispatch(fetchTimeSlotsSuccess(monthId, timeSlots));
+    })
+    .catch(e => {
+      dispatch(fetchTimeSlotsError(monthId, storableError(e)));
+    });
+};
+
+// Helper function for fetchTransaction call.
+const fetchMonthlyTimeSlots = (dispatch, listing) => {
+  const hasWindow = typeof window !== 'undefined';
+  const attributes = listing.attributes;
+  // Listing could be ownListing entity too, so we just check if attributes key exists
+  const hasTimeZone =
+    attributes && attributes.availabilityPlan && attributes.availabilityPlan.timezone;
+
+  // Fetch time-zones on client side only.
+  if (hasWindow && listing.id && hasTimeZone) {
+    const now = new Date();
+    const tz = listing.attributes.availabilityPlan.timezone;
+
+    const nextMonth = getNextMonthStartInTimeZone(now, tz);
+    const nextAfterNextMonth = getNextMonthStartInTimeZone(nextMonth, tz);
+
+    return Promise.all([
+      dispatch(fetchTimeSlots(listing.id, now, nextMonth, tz)),
+      dispatch(fetchTimeSlots(listing.id, nextMonth, nextAfterNextMonth, tz)),
+    ]);
+  }
+
+  // By default return an empty array
+  return Promise.all([]);
+};
 
 const listingRelationship = txResponse => {
   return txResponse.data.data.relationships.listing.data;
@@ -296,7 +379,7 @@ export const fetchTransaction = (id, txRole) => (dispatch, getState, sdk) => {
         txIsEnquired(transaction);
 
       if (canFetchTimeslots) {
-        dispatch(fetchTimeSlots(listingId));
+        fetchMonthlyTimeSlots(dispatch, listing);
       }
 
       const canFetchListing = listing && listing.attributes && !listing.attributes.deleted;
@@ -529,62 +612,6 @@ export const sendReview = (role, tx, reviewRating, reviewContent) => (dispatch, 
 
 const isNonEmpty = value => {
   return typeof value === 'object' || Array.isArray(value) ? !isEmpty(value) : !!value;
-};
-
-const timeSlotsRequest = params => (dispatch, getState, sdk) => {
-  return sdk.timeslots.query(params).then(response => {
-    return denormalisedResponseEntities(response);
-  });
-};
-
-const fetchTimeSlots = listingId => (dispatch, getState, sdk) => {
-  dispatch(fetchTimeSlotsRequest);
-
-  // Time slots can be fetched for 90 days at a time,
-  // for at most 180 days from now. If max number of bookable
-  // day exceeds 90, a second request is made.
-
-  const maxTimeSlots = 90;
-  // booking range: today + bookable days -1
-  const bookingRange = config.dayCountAvailableForBooking - 1;
-  const timeSlotsRange = Math.min(bookingRange, maxTimeSlots);
-
-  const start = moment
-    .utc()
-    .startOf('day')
-    .toDate();
-  const end = moment()
-    .utc()
-    .startOf('day')
-    .add(timeSlotsRange, 'days')
-    .toDate();
-  const params = { listingId, start, end };
-
-  return dispatch(timeSlotsRequest(params))
-    .then(timeSlots => {
-      const secondRequest = bookingRange > maxTimeSlots;
-
-      if (secondRequest) {
-        const secondRange = Math.min(maxTimeSlots, bookingRange - maxTimeSlots);
-        const secondParams = {
-          listingId,
-          start: end,
-          end: moment(end)
-            .add(secondRange, 'days')
-            .toDate(),
-        };
-
-        return dispatch(timeSlotsRequest(secondParams)).then(secondBatch => {
-          const combined = timeSlots.concat(secondBatch);
-          dispatch(fetchTimeSlotsSuccess(combined));
-        });
-      } else {
-        dispatch(fetchTimeSlotsSuccess(timeSlots));
-      }
-    })
-    .catch(e => {
-      dispatch(fetchTimeSlotsError(storableError(e)));
-    });
 };
 
 export const fetchNextTransitions = id => (dispatch, getState, sdk) => {
