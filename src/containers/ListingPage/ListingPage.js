@@ -24,6 +24,7 @@ import {
   ensureUser,
   userDisplayNameAsString,
 } from '../../util/data';
+import { timestampToDate, calculateQuantityFromHours } from '../../util/dates';
 import { richText } from '../../util/richText';
 import { getMarketplaceEntities } from '../../ducks/marketplaceData.duck';
 import { manageDisableScrolling, isScrollingDisabled } from '../../ducks/UI.duck';
@@ -101,14 +102,21 @@ export class ListingPageComponent extends Component {
     const listingId = new UUID(params.id);
     const listing = getListing(listingId);
 
-    const { bookingDates, ...bookingData } = values;
+    const { bookingStartTime, bookingEndTime, ...restOfValues } = values;
+    const bookingStart = timestampToDate(bookingStartTime);
+    const bookingEnd = timestampToDate(bookingEndTime);
+
+    const bookingData = {
+      quantity: calculateQuantityFromHours(bookingStart, bookingEnd),
+      ...restOfValues,
+    };
 
     const initialValues = {
       listing,
       bookingData,
       bookingDates: {
-        bookingStart: bookingDates.startDate,
-        bookingEnd: bookingDates.endDate,
+        bookingStart,
+        bookingEnd,
       },
       confirmPaymentError: null,
     };
