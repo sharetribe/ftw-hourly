@@ -28,13 +28,12 @@
 import React from 'react';
 import Decimal from 'decimal.js';
 import { types as sdkTypes } from '../../util/sdkLoader';
-import { nightsBetween, daysBetween } from '../../util/dates';
 import { TRANSITION_REQUEST_PAYMENT, TX_TRANSITION_ACTOR_CUSTOMER } from '../../util/transaction';
-import { LINE_ITEM_DAY, LINE_ITEM_NIGHT, LINE_ITEM_UNITS, DATE_TYPE_DATE } from '../../util/types';
+import { LINE_ITEM_UNITS } from '../../util/types';
 import { unitDivisor, convertMoneyToNumber, convertUnitToSubUnit } from '../../util/currency';
 import { BookingBreakdown } from '../../components';
 
-import css from './BookingDatesForm.css';
+import css from './BookingTimeForm.css';
 
 const { Money, UUID } = sdkTypes;
 
@@ -52,16 +51,7 @@ const estimatedTotalPrice = (unitPrice, unitCount) => {
 // an estimated transaction object for that use case.
 const estimatedTransaction = (unitType, bookingStart, bookingEnd, unitPrice, quantity) => {
   const now = new Date();
-  const isNightly = unitType === LINE_ITEM_NIGHT;
-  const isDaily = unitType === LINE_ITEM_DAY;
-
-  const unitCount = isNightly
-    ? nightsBetween(bookingStart, bookingEnd)
-    : isDaily
-    ? daysBetween(bookingStart, bookingEnd)
-    : quantity;
-
-  const totalPrice = estimatedTotalPrice(unitPrice, unitCount);
+  const totalPrice = estimatedTotalPrice(unitPrice, quantity);
 
   return {
     id: new UUID('estimated-transaction'),
@@ -77,7 +67,7 @@ const estimatedTransaction = (unitType, bookingStart, bookingEnd, unitPrice, qua
           code: unitType,
           includeFor: ['customer', 'provider'],
           unitPrice: unitPrice,
-          quantity: new Decimal(unitCount),
+          quantity: new Decimal(quantity),
           lineTotal: totalPrice,
           reversal: false,
         },
@@ -102,7 +92,8 @@ const estimatedTransaction = (unitType, bookingStart, bookingEnd, unitPrice, qua
 };
 
 const EstimatedBreakdownMaybe = props => {
-  const { unitType, unitPrice, startDate, endDate, quantity } = props.bookingData;
+  const { unitType, unitPrice, startDate, endDate, quantity, timeZone } = props.bookingData;
+
   const isUnits = unitType === LINE_ITEM_UNITS;
   const quantityIfUsingUnits = !isUnits || Number.isInteger(quantity);
   const canEstimatePrice = startDate && endDate && unitPrice && quantityIfUsingUnits;
@@ -119,7 +110,7 @@ const EstimatedBreakdownMaybe = props => {
       unitType={unitType}
       transaction={tx}
       booking={tx.booking}
-      dateType={DATE_TYPE_DATE}
+      timeZone={timeZone}
     />
   );
 };

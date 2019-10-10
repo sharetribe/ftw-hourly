@@ -325,6 +325,29 @@ export const getEndHours = (intl, timeZone, startTime, endTime) => {
 };
 
 /**
+ * Convert timestamp to date
+ * @param {string} timestamp
+ *
+ * @returns {Date} timestamp converted to date
+ */
+export const timestampToDate = timestamp => {
+  return new Date(Number.parseInt(timestamp, 10));
+};
+
+/**
+ * Return date in a given timezone
+ *
+ * @param {Date} date
+ * @param {String} timeZone
+ *
+ * @returns {Date} date in given timezone
+ */
+
+export const localDateToSelectedTimezone = (date, timeZone) => {
+  return moment.tz(moment(date).format('YYYY-MM-DD HH:mm:ss'), timeZone).toDate();
+};
+
+/**
  * Calculate the number of nights between the given dates
  *
  * @param {Date} startDate start of the time period
@@ -376,6 +399,49 @@ export const minutesBetween = (startDate, endDate) => {
     throw new Error('End Date cannot be before start Date');
   }
   return minutes;
+};
+
+/**
+ * Check if date is after another date.
+ * @param {Date} date
+ * @param {Date} compareToDate
+ *
+ * @returns {boolean} is the date same or after
+ */
+export const dateIsAfter = (date, compareToDate) => {
+  return moment(date).isSameOrAfter(compareToDate);
+};
+
+/**
+ * Check if the date is in the given range, start and end included.
+ * @param {Date} date to be checked
+ * @param {Date} start start of the range
+ * @param {Date} end end of the range
+ * @param {string} scope scope of the range, e.g. 'day', 'hour', 'minute', can be also null
+ *
+ * @returns {boolean} is date in range
+ */
+
+export const isInRange = (date, start, end, scope) => {
+  return moment(date).isBetween(start, end, scope, '[]');
+};
+
+/**
+ * Resets the date to 00:00:00
+ *
+ * @param {Date} date date to be reseted
+ * @param {int} offset offset of days (e.g. add 1 day)
+ * @param {String} timeZone
+ *
+ * @returns {Date} date with time 00:00:00 with given offset
+ */
+export const resetToStartOfDay = (date, timeZone, offset = 0) => {
+  return moment(date)
+    .clone()
+    .tz(timeZone)
+    .startOf('day')
+    .add(offset, 'days')
+    .toDate();
 };
 
 /**
@@ -490,7 +556,7 @@ export const stringifyDateToISO8601 = date => {
  * Formats string ('YYYY-MM-DD') to UTC format ('0000-00-00T00:00:00.000Z').
  * This is used in search query.
  *
- * @param {String} string in 'YYYY-MM-DD'format
+ * @param {String} dateString in 'YYYY-MM-DD'format
  *
  * @returns {String} string in '0000-00-00T00:00:00.000Z' format
  */
@@ -503,7 +569,7 @@ export const formatDateStringToUTC = dateString => {
  * This is used as end date of the search query.
  * One day must be added because end of the availability is exclusive in API.
  *
- * @param {String} string in 'YYYY-MM-DD'format
+ * @param {String} dateString in 'YYYY-MM-DD'format
  *
  * @returns {String} string in '0000-00-00T00:00:00.000Z' format
  */
@@ -584,4 +650,23 @@ export const formatDateToText = (intl, date, timeZone) => {
       ...tzMaybe,
     }),
   };
+};
+
+/**
+ * Calculate the quantity of hours between start and end dates.
+ * If the length of the timeslot is something else than hour (e.g. 30 minutes)
+ * you can change parameter 'hours' to 'minutes' and use that to calculate the
+ * quantity of timeslots.
+ *
+ * See moment documentation about diff:
+ * https://momentjs.com/docs/#/displaying/difference/
+ *
+ * @param {Date} startDate
+ * @param {Date} endDate
+ *
+ * @returns {int} quantity of hours between start and end
+ *
+ */
+export const calculateQuantityFromHours = (startDate, endDate) => {
+  return moment(endDate).diff(moment(startDate), 'hours', true);
 };

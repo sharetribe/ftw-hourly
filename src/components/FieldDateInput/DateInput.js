@@ -6,18 +6,18 @@
  */
 import React, { Component } from 'react';
 import { bool, func, instanceOf, shape, string, arrayOf } from 'prop-types';
-import {
-  SingleDatePicker,
-  isInclusivelyAfterDay,
-  isInclusivelyBeforeDay,
-  isSameDay,
-} from 'react-dates';
-import { intlShape, injectIntl } from '../../util/reactIntl';
+import { SingleDatePicker, isInclusivelyAfterDay, isInclusivelyBeforeDay } from 'react-dates';
+
+// Import moment from moment-timezone. 10-year range only.
+// The full data included in moment-timezone dependency is mostly irrelevant
+// and slows down the first paint.
+import moment from 'moment-timezone/builds/moment-timezone-with-data-10-year-range.min';
+
 import classNames from 'classnames';
-import moment from 'moment';
 import config from '../../config';
-import { propTypes, TIME_SLOT_DAY } from '../../util/types';
-import { ensureTimeSlot } from '../../util/data';
+
+import { intlShape, injectIntl } from '../../util/reactIntl';
+import { propTypes } from '../../util/types';
 
 import NextMonthIcon from './NextMonthIcon';
 import PreviousMonthIcon from './PreviousMonthIcon';
@@ -104,20 +104,30 @@ const defaultProps = {
   },
 };
 
-// Checks if time slot (propTypes.timeSlot) start time equals a day (moment)
-const timeSlotEqualsDay = (timeSlot, day) => {
-  // Time slots describe available dates by providing a start and
-  // an end date which is the following day. In the single date picker
-  // the start date is used to represent available dates.
-  const localStartDate = timeSlot.attributes.start;
+// Checks if time slot (propTypes.timeSlot) contains a day (moment)
+// Returns true if the day is inside the timeslot or if the timeslot
+// starts or ends between start and end of the day.
+//
+// By default react-dates handles dates in the browser's timezone so
+// we need to convert the value `day` to given timezone before comparing it
+// to timeslot.
+const timeSlotContainsDay = (timeSlot, day, timeZone) => {
+  const dayAsString = day.format('YYYY-MM-DD');
+  const startOfDay = moment.tz(dayAsString, timeZone);
+  const endOfDay = moment.tz(dayAsString, timeZone).add(1, 'days');
 
-  // TODO: this needs to be fixed. We should create another function that checks daily availability.
-  console.warning(
-    'DateInput, timeSlotEqualsDay function is deprecated. It does not work with time-based process.'
-  );
+  const startDate = moment.tz(timeSlot.attributes.start, timeZone);
+  const endDate = moment.tz(timeSlot.attributes.end, timeZone);
 
-  const isDay = ensureTimeSlot(timeSlot).attributes.type === TIME_SLOT_DAY;
-  return isDay && isSameDay(day, moment(localStartDate));
+  if (startOfDay.isSameOrAfter(startDate) && endDate.isSameOrAfter(endOfDay)) {
+    return true;
+  } else if (startDate.isBetween(startOfDay, endOfDay, 'day', '[)')) {
+    return true;
+  } else if (endDate.isBetween(startOfDay, endOfDay, 'day', '[)')) {
+    return true;
+  }
+
+  return false;
 };
 
 class DateInputComponent extends Component {
@@ -167,16 +177,20 @@ class DateInputComponent extends Component {
       children,
       render,
       timeSlots,
+      timeZone,
       ...datePickerProps
     } = this.props;
     /* eslint-enable no-unused-vars */
 
     const initialMoment = initialDate ? moment(initialDate) : null;
 
-    const date = value && value.date instanceof Date ? moment(value.date) : initialMoment;
+    const date =
+      value && value.date instanceof Date && value.date.toString() !== 'Invalid Date'
+        ? moment(value.date)
+        : initialMoment;
 
     const isDayBlocked = timeSlots
-      ? day => !timeSlots.find(timeSlot => timeSlotEqualsDay(timeSlot, day))
+      ? day => !timeSlots.find(timeSlot => timeSlotContainsDay(timeSlot, day, timeZone))
       : () => false;
 
     const placeholder = placeholderText || intl.formatMessage({ id: 'FieldDateInput.placeholder' });

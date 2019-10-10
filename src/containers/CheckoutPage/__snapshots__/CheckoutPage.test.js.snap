@@ -144,7 +144,7 @@ exports[`CheckoutPage matches snapshot 1`] = `
           listing1 title
         </h2>
         <p>
-          55 CheckoutPage.perNight
+          55 CheckoutPage.perUnit
         </p>
       </div>
     </div>

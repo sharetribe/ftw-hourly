@@ -14,6 +14,9 @@ way to update this template, but currently, we follow a pattern:
 
 ## Upcoming version 2019-XX-XX
 
+- [add] New components `BookingTimeForm` and `FieldDateAndTimeInput` for handling time-based
+  availability. Also change template to use time-based transaction process.
+  [#7](https://github.com/sharetribe/ftw-time/pull/7)
 - [add] Inbox and TransactionPage use time zones to display booking times
   [#10](https://github.com/sharetribe/ftw-time/pull/10)
 - [add] Fetch timeSlots on ListingPage and TransactionPage.

@@ -2,15 +2,16 @@ import React from 'react';
 import { compose } from 'redux';
 import { withRouter } from 'react-router-dom';
 import { intlShape, injectIntl, FormattedMessage } from '../../util/reactIntl';
-import { arrayOf, bool, func, node, oneOfType, shape, string } from 'prop-types';
+import { bool, func, node, object, oneOfType, shape, string } from 'prop-types';
 import classNames from 'classnames';
 import omit from 'lodash/omit';
 import { propTypes, LISTING_STATE_CLOSED, LINE_ITEM_NIGHT, LINE_ITEM_DAY } from '../../util/types';
 import { formatMoney } from '../../util/currency';
+import { dateIsAfter, monthIdStringInTimeZone } from '../../util/dates';
 import { parse, stringify } from '../../util/urlHelpers';
 import config from '../../config';
 import { ModalInMobile, Button } from '../../components';
-import { BookingDatesForm } from '../../forms';
+import { BookingTimeForm } from '../../forms';
 
 import css from './BookingPanel.css';
 
@@ -60,17 +61,18 @@ const BookingPanel = props => {
     subTitle,
     authorDisplayName,
     onManageDisableScrolling,
-    timeSlots,
-    fetchTimeSlotsError,
+    monthlyTimeSlots,
     history,
     location,
     intl,
   } = props;
 
   const price = listing.attributes.price;
+  const timeZone =
+    listing.attributes.availabilityPlan && listing.attributes.availabilityPlan.timezone;
   const hasListingState = !!listing.attributes.state;
   const isClosed = hasListingState && listing.attributes.state === LISTING_STATE_CLOSED;
-  const showBookingDatesForm = hasListingState && !isClosed;
+  const showBookingTimeForm = hasListingState && !isClosed;
   const showClosedListingHelpText = listing.id && isClosed;
   const { formattedPrice, priceTitle } = priceData(price, intl);
   const isBook = !!parse(location.search).book;
@@ -93,11 +95,28 @@ const BookingPanel = props => {
   const classes = classNames(rootClassName || css.root, className);
   const titleClasses = classNames(titleClassName || css.bookingTitle);
 
+  const currentDate = new Date();
+  const monthId = monthIdStringInTimeZone(currentDate, timeZone);
+
+  const timeSlots =
+    !monthlyTimeSlots || Object.keys(monthlyTimeSlots).length === 0
+      ? []
+      : monthlyTimeSlots[monthId] && monthlyTimeSlots[monthId].timeSlots
+      ? monthlyTimeSlots[monthId].timeSlots
+      : [];
+
+  const hasTimeSlots = timeSlots && timeSlots[0];
+  const firstTimeSlotStart = hasTimeSlots ? timeSlots[0].attributes.start : null;
+  const initialStartDate =
+    !firstTimeSlotStart || (firstTimeSlotStart && dateIsAfter(currentDate, firstTimeSlotStart))
+      ? currentDate
+      : firstTimeSlotStart;
+
   return (
     <div className={classes}>
       <ModalInMobile
         containerClassName={css.modalContainer}
-        id="BookingDatesFormInModal"
+        id="BookingTimeFormInModal"
         isModalOpenOnMobile={isBook}
         onClose={() => closeBookModal(history, location)}
         showAsModalMaxWidth={MODAL_BREAKPOINT}
@@ -114,17 +133,20 @@ const BookingPanel = props => {
           <h2 className={titleClasses}>{title}</h2>
           {subTitleText ? <div className={css.bookingHelp}>{subTitleText}</div> : null}
         </div>
-        {showBookingDatesForm ? (
-          <BookingDatesForm
+        {showBookingTimeForm ? (
+          <BookingTimeForm
             className={css.bookingForm}
             formId="BookingPanel"
-            submitButtonWrapperClassName={css.bookingDatesSubmitButtonWrapper}
+            submitButtonWrapperClassName={css.submitButtonWrapper}
             unitType={unitType}
             onSubmit={onSubmit}
             price={price}
             isOwnListing={isOwnListing}
-            timeSlots={timeSlots}
-            fetchTimeSlotsError={fetchTimeSlotsError}
+            monthlyTimeSlots={monthlyTimeSlots}
+            initialValues={{ bookingStartDate: { date: initialStartDate } }}
+            startDatePlaceholder={currentDate.toString()}
+            endDatePlaceholder={currentDate.toString()}
+            timeZone={timeZone}
           />
         ) : null}
       </ModalInMobile>
@@ -138,7 +160,7 @@ const BookingPanel = props => {
           </div>
         </div>
 
-        {showBookingDatesForm ? (
+        {showBookingTimeForm ? (
           <Button
             rootClassName={css.bookButton}
             onClick={() => openBookModal(isOwnListing, isClosed, history, location)}
@@ -162,8 +184,7 @@ BookingPanel.defaultProps = {
   isOwnListing: false,
   subTitle: null,
   unitType: config.bookingUnitType,
-  timeSlots: null,
-  fetchTimeSlotsError: null,
+  monthlyTimeSlots: null,
 };
 
 BookingPanel.propTypes = {
@@ -178,8 +199,7 @@ BookingPanel.propTypes = {
   subTitle: oneOfType([node, string]),
   authorDisplayName: oneOfType([node, string]).isRequired,
   onManageDisableScrolling: func.isRequired,
-  timeSlots: arrayOf(propTypes.timeSlot),
-  fetchTimeSlotsError: propTypes.error,
+  monthlyTimeSlots: object,
 
   // from withRouter
   history: shape({
