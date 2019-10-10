@@ -1,54 +1,36 @@
 import React from 'react';
-import moment from 'moment';
-import { bool } from 'prop-types';
+import { bool, string } from 'prop-types';
 import classNames from 'classnames';
 import { txIsEnquired } from '../../util/transaction';
 import { daysBetween, formatDateToText } from '../../util/dates';
 import { injectIntl, intlShape } from '../../util/reactIntl';
-import {
-  LINE_ITEM_DAY,
-  LINE_ITEM_NIGHT,
-  LINE_ITEM_UNITS,
-  DATE_TYPE_DATE,
-  DATE_TYPE_DATETIME,
-  propTypes,
-} from '../../util/types';
+import { DATE_TYPE_DATE, DATE_TYPE_DATETIME, propTypes } from '../../util/types';
 
 import css from './BookingTimeInfo.css';
 
-const bookingData = (unitType, tx, isOrder, intl) => {
+const bookingData = (unitType, tx, isOrder, intl, timeZone) => {
   // Attributes: displayStart and displayEnd can be used to differentiate shown time range
   // from actual start and end times used for availability reservation. It can help in situations
   // where there are preparation time needed between bookings.
   // Read more: https://www.sharetribe.com/api-reference/#bookings
   const { start, end, displayStart, displayEnd } = tx.booking.attributes;
   const startDate = displayStart || start;
-  const endDateRaw = displayEnd || end;
-  const isDaily = unitType === LINE_ITEM_DAY;
-  const isNightly = unitType === LINE_ITEM_NIGHT;
-  const isUnits = unitType === LINE_ITEM_UNITS;
-  const isSingleDay = !isNightly && daysBetween(startDate, endDateRaw) <= 1;
-  const bookingStart = formatDateToText(intl, startDate);
-  // Shift the exclusive API end date with daily bookings
-  const endDate =
-    isDaily || isUnits
-      ? moment(endDateRaw)
-          .subtract(1, 'days')
-          .toDate()
-      : endDateRaw;
-  const bookingEnd = formatDateToText(intl, endDate);
+  const endDate = displayEnd || end;
+  const isSingleDay = daysBetween(startDate, endDate) <= 1;
+  const bookingStart = formatDateToText(intl, startDate, timeZone);
+  const bookingEnd = formatDateToText(intl, endDate, timeZone);
   return { bookingStart, bookingEnd, isSingleDay };
 };
 
 const BookingTimeInfoComponent = props => {
-  const { bookingClassName, isOrder, intl, tx, unitType, dateType } = props;
+  const { bookingClassName, isOrder, intl, tx, unitType, dateType, timeZone } = props;
   const isEnquiry = txIsEnquired(tx);
 
   if (isEnquiry) {
     return null;
   }
 
-  const bookingTimes = bookingData(unitType, tx, isOrder, intl);
+  const bookingTimes = bookingData(unitType, tx, isOrder, intl, timeZone);
 
   const { bookingStart, bookingEnd, isSingleDay } = bookingTimes;
 
@@ -83,7 +65,7 @@ const BookingTimeInfoComponent = props => {
   }
 };
 
-BookingTimeInfoComponent.defaultProps = { dateType: null };
+BookingTimeInfoComponent.defaultProps = { dateType: null, timeZone: null };
 
 BookingTimeInfoComponent.propTypes = {
   intl: intlShape.isRequired,
@@ -91,6 +73,7 @@ BookingTimeInfoComponent.propTypes = {
   tx: propTypes.transaction.isRequired,
   unitType: propTypes.bookingUnitType.isRequired,
   dateType: propTypes.dateType,
+  timeZone: string,
 };
 
 const BookingTimeInfo = injectIntl(BookingTimeInfoComponent);

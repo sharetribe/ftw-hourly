@@ -135,7 +135,12 @@ export const BookingBreakdownComponent = props => {
   );
 };
 
-BookingBreakdownComponent.defaultProps = { rootClassName: null, className: null, dateType: null };
+BookingBreakdownComponent.defaultProps = {
+  rootClassName: null,
+  className: null,
+  dateType: null,
+  timeZone: null,
+};
 
 BookingBreakdownComponent.propTypes = {
   rootClassName: string,
@@ -146,6 +151,7 @@ BookingBreakdownComponent.propTypes = {
   transaction: propTypes.transaction.isRequired,
   booking: propTypes.booking.isRequired,
   dateType: propTypes.dateType,
+  timeZone: string,
 
   // from injectIntl
   intl: intlShape.isRequired,

@@ -555,19 +555,33 @@ export const getNextMonthStartInTimeZone = (date, timeZone) => {
         .toDate();
 };
 
-export const formatDateToText = (intl, date) => {
+/**
+ * Formats Date object to localized strings mapped inside object literal:
+ * { date, time, dateAndTime }
+ *
+ * @param {intl} intl
+ * @param {Date} date
+ * @param {String} timeZone optional IANA time zone key
+ *
+ * @returns {Object} containing date fromatted to date, time and dateAndTime strings
+ */
+export const formatDateToText = (intl, date, timeZone) => {
+  const tzMaybe = timeZone ? { timeZone } : {};
   return {
     date: intl.formatDate(date, {
       month: 'short',
       day: 'numeric',
+      ...tzMaybe,
     }),
     time: intl.formatDate(date, {
       hour: 'numeric',
       minute: 'numeric',
+      ...tzMaybe,
     }),
     dateAndTime: intl.formatTime(date, {
       month: 'short',
       day: 'numeric',
+      ...tzMaybe,
     }),
   };
 };
