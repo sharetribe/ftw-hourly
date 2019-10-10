@@ -72,7 +72,6 @@ import * as UserCard from './components/UserCard/UserCard.example';
 import * as UserDisplayName from './components/UserDisplayName/UserDisplayName.example';
 
 // forms
-import * as BookingDatesForm from './forms/BookingDatesForm/BookingDatesForm.example';
 import * as BookingTimeForm from './forms/BookingTimeForm/BookingTimeForm.example';
 import * as FieldDateAndTimeInput from './forms/BookingTimeForm/FieldDateAndTimeInput.example';
 import * as EditListingAvailabilityForm from './forms/EditListingAvailabilityForm/EditListingAvailabilityForm.example';
@@ -104,7 +103,6 @@ export {
   Avatar,
   BookingBreakdown,
   BookingDateRangeFilter,
-  BookingDatesForm,
   BookingTimeForm,
   BookingTimeInfo,
   BookingPanel,
