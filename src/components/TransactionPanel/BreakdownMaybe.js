@@ -1,7 +1,8 @@
 import React from 'react';
 import classNames from 'classnames';
 import config from '../../config';
-import { DATE_TYPE_DATE } from '../../util/types';
+import { DATE_TYPE_DATETIME } from '../../util/types';
+import { ensureListing } from '../../util/data';
 import { BookingBreakdown } from '../../components';
 
 import css from './TransactionPanel.css';
@@ -10,6 +11,11 @@ import css from './TransactionPanel.css';
 const BreakdownMaybe = props => {
   const { className, rootClassName, breakdownClassName, transaction, transactionRole } = props;
   const loaded = transaction && transaction.id && transaction.booking && transaction.booking.id;
+  const listingAttributes = ensureListing(transaction.listing).attributes;
+  const timeZone =
+    loaded && listingAttributes.availabilityPlan
+      ? listingAttributes.availabilityPlan.timezone
+      : 'Etc/UTC';
 
   const classes = classNames(rootClassName || css.breakdownMaybe, className);
   const breakdownClasses = classNames(breakdownClassName || css.breakdown);
@@ -22,7 +28,8 @@ const BreakdownMaybe = props => {
         unitType={config.bookingUnitType}
         transaction={transaction}
         booking={transaction.booking}
-        dateType={DATE_TYPE_DATE}
+        dateType={DATE_TYPE_DATETIME}
+        timeZone={timeZone}
       />
     </div>
   ) : null;
