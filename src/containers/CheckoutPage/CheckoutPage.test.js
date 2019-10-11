@@ -8,7 +8,11 @@ const noop = () => null;
 
 describe('CheckoutPage', () => {
   it('matches snapshot', () => {
-    const listing = createListing('listing1', {}, { author: createUser('author') });
+    const listing = createListing(
+      'listing1',
+      { availabilityPlan: { timezone: 'Etc/UTC' } },
+      { author: createUser('author') }
+    );
     const props = {
       bookingDates: {
         bookingStart: new Date(Date.UTC(2017, 3, 14)),

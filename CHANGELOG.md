@@ -14,6 +14,8 @@ way to update this template, but currently, we follow a pattern:
 
 ## Upcoming version 2019-XX-XX
 
+- [add] Add time-based dates to `BookingBreakdown` on `CheckoutPage`.
+  [#11](https://github.com/sharetribe/ftw-time/pull/11)
 - [add] New components `BookingTimeForm` and `FieldDateAndTimeInput` for handling time-based
   availability. Also change template to use time-based transaction process.
   [#7](https://github.com/sharetribe/ftw-time/pull/7)
