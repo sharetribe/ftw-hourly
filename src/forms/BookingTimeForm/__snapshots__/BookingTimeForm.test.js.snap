@@ -75,6 +75,7 @@ exports[`BookingTimeForm matches snapshot without selected dates 1`] = `
     }
   }
   onChange={[Function]}
+  onFetchTimeSlots={[Function]}
   onSubmit={[Function]}
   render={[Function]}
   startDateInputProps={

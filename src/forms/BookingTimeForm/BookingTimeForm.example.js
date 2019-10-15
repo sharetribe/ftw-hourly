@@ -61,6 +61,8 @@ const monthlyTimeSlots = {
   },
 };
 
+const noop = () => null;
+
 export const Form = {
   component: BookingTimeForm,
   props: {
@@ -72,6 +74,7 @@ export const Form = {
     onSubmit: values => {
       console.log('Submit BookingTimeForm with values:', values);
     },
+    onFetchTimeSlots: noop,
     price: new Money(1099, 'USD'),
     timeZone: 'Etc/UTC',
   },
