@@ -185,10 +185,58 @@ class FieldDateAndTimeInput extends Component {
       currentMonth: getMonthStartInTimeZone(TODAY, props.timeZone),
     };
 
+    this.fetchMonthData = this.fetchMonthData.bind(this);
+    this.onMonthClick = this.onMonthClick.bind(this);
     this.onBookingStartDateChange = this.onBookingStartDateChange.bind(this);
     this.onBookingStartTimeChange = this.onBookingStartTimeChange.bind(this);
     this.onBookingEndDateChange = this.onBookingEndDateChange.bind(this);
     this.isOutsideRange = this.isOutsideRange.bind(this);
+  }
+
+  fetchMonthData(date) {
+    const { listingId, timeZone, onFetchTimeSlots } = this.props;
+    const endOfRangeDate = endOfRange(TODAY, timeZone);
+
+    // Don't fetch timeSlots for past months or too far in the future
+    if (isInRange(date, TODAY, endOfRangeDate)) {
+      // Use "today", if the first day of given month is in the past
+      const start = dateIsAfter(TODAY, date) ? TODAY : date;
+
+      // Use endOfRangeDate, if the first day of the next month is too far in the future
+      const nextMonthDate = nextMonthFn(date, timeZone);
+      const end = dateIsAfter(nextMonthDate, endOfRangeDate)
+        ? resetToStartOfDay(endOfRangeDate, timeZone, 0)
+        : nextMonthDate;
+
+      // Fetch time slots for given time range
+      onFetchTimeSlots(listingId, start, end, timeZone);
+    }
+  }
+
+  onMonthClick(monthFn) {
+    const { onMonthChanged, timeZone } = this.props;
+
+    this.setState(
+      prevState => ({ currentMonth: monthFn(prevState.currentMonth, timeZone) }),
+      () => {
+        // Callback function after month has been updated.
+        // react-dates component has next and previous months ready (but inivisible).
+        // we try to populate those invisible months before user advances there.
+        this.fetchMonthData(monthFn(this.state.currentMonth, timeZone));
+
+        // If previous fetch for month data failed, try again.
+        const monthId = monthIdStringInTimeZone(this.state.currentMonth, timeZone);
+        const currentMonthData = this.props.monthlyTimeSlots[monthId];
+        if (currentMonthData && currentMonthData.fetchTimeSlotsError) {
+          this.fetchMonthData(this.state.currentMonth, timeZone);
+        }
+
+        // Call onMonthChanged function if it has been passed in among props.
+        if (onMonthChanged) {
+          onMonthChanged(monthId);
+        }
+      }
+    );
   }
 
   onBookingStartDateChange = value => {
@@ -370,6 +418,8 @@ class FieldDateAndTimeInput extends Component {
               timeSlots={timeSlotsOnSelectedMonth}
               timeZone={timeZone}
               onChange={this.onBookingStartDateChange}
+              onPrevMonthClick={() => this.onMonthClick(prevMonthFn)}
+              onNextMonthClick={() => this.onMonthClick(nextMonthFn)}
               navNext={<Next currentMonth={this.state.currentMonth} timeZone={timeZone} />}
               navPrev={<Prev currentMonth={this.state.currentMonth} timeZone={timeZone} />}
               useMobileMargins
@@ -416,6 +466,8 @@ class FieldDateAndTimeInput extends Component {
               timeSlots={timeSlotsOnSelectedDate}
               timeZone={timeZone}
               onChange={this.onBookingEndDateChange}
+              onPrevMonthClick={() => this.onMonthClick(prevMonthFn)}
+              onNextMonthClick={() => this.onMonthClick(nextMonthFn)}
               navNext={<Next currentMonth={this.state.currentMonth} timeZone={timeZone} />}
               navPrev={<Prev currentMonth={this.state.currentMonth} timeZone={timeZone} />}
               isOutsideRange={day =>
@@ -460,6 +512,7 @@ FieldDateAndTimeInput.defaultProps = {
   endDateInputProps: null,
   startTimeInputProps: null,
   endTimeInputProps: null,
+  listingId: null,
   monthlyTimeSlots: null,
   timeZone: null,
 };
@@ -475,6 +528,7 @@ FieldDateAndTimeInput.propTypes = {
   endTimeInputProps: object,
   form: object.isRequired,
   values: object.isRequired,
+  listingId: propTypes.uuid,
   monthlyTimeSlots: object,
   onFetchTimeSlots: func.isRequired,
   timeZone: string,

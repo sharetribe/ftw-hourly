@@ -61,6 +61,7 @@ export class BookingTimeFormComponent extends Component {
             handleSubmit,
             intl,
             isOwnListing,
+            listingId,
             submitButtonWrapperClassName,
             unitPrice,
             unitType,
@@ -130,6 +131,7 @@ export class BookingTimeFormComponent extends Component {
                 <FieldDateAndTimeInput
                   {...dateInputProps}
                   className={css.bookingDates}
+                  listingId={listingId}
                   bookingStartLabel={bookingStartLabel}
                   onFetchTimeSlots={onFetchTimeSlots}
                   monthlyTimeSlots={monthlyTimeSlots}
@@ -169,6 +171,7 @@ BookingTimeFormComponent.defaultProps = {
   submitButtonWrapperClassName: null,
   price: null,
   isOwnListing: false,
+  listingId: null,
   startDatePlaceholder: null,
   endDatePlaceholder: null,
   monthlyTimeSlots: null,
@@ -182,6 +185,7 @@ BookingTimeFormComponent.propTypes = {
   unitType: propTypes.bookingUnitType.isRequired,
   price: propTypes.money,
   isOwnListing: bool,
+  listingId: propTypes.uuid,
   monthlyTimeSlots: object,
   onFetchTimeSlots: func.isRequired,
 
