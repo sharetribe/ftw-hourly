@@ -1,10 +1,18 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { func, node, object, string } from 'prop-types';
 import { Field } from 'react-final-form';
 import classNames from 'classnames';
 import { ValidationError } from '../../components';
 
 import css from './FieldSelect.css';
+
+const handleChange = (propsOnChange, inputOnChange) => event => {
+  if (propsOnChange) {
+    const value = event.nativeEvent.target.value;
+    propsOnChange(value);
+  }
+  inputOnChange(event);
+};
 
 const FieldSelectComponent = props => {
   const {
@@ -16,6 +24,7 @@ const FieldSelectComponent = props => {
     input,
     meta,
     children,
+    onChange,
     ...rest
   } = props;
 
@@ -33,7 +42,15 @@ const FieldSelectComponent = props => {
     [css.selectSuccess]: valid,
     [css.selectError]: hasError,
   });
-  const selectProps = { className: selectClasses, id, ...input, ...rest };
+
+  const { onChange: inputOnChange, ...restOfInput } = input;
+  const selectProps = {
+    className: selectClasses,
+    id,
+    onChange: handleChange(onChange, inputOnChange),
+    ...restOfInput,
+    ...rest,
+  };
 
   const classes = classNames(rootClassName || css.root, className);
   return (
@@ -54,12 +71,12 @@ FieldSelectComponent.defaultProps = {
   children: null,
 };
 
-const { string, object, node } = PropTypes;
-
 FieldSelectComponent.propTypes = {
   rootClassName: string,
   className: string,
   selectClassName: string,
+
+  onChange: func,
 
   // Label is optional, but if it is given, an id is also required so
   // the label can reference the input in the `for` attribute
