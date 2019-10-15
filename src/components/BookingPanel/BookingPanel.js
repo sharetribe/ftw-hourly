@@ -7,7 +7,6 @@ import classNames from 'classnames';
 import omit from 'lodash/omit';
 import { propTypes, LISTING_STATE_CLOSED, LINE_ITEM_NIGHT, LINE_ITEM_DAY } from '../../util/types';
 import { formatMoney } from '../../util/currency';
-import { dateIsAfter, monthIdStringInTimeZone } from '../../util/dates';
 import { parse, stringify } from '../../util/urlHelpers';
 import config from '../../config';
 import { ModalInMobile, Button } from '../../components';
@@ -17,6 +16,7 @@ import css from './BookingPanel.css';
 
 // This defines when ModalInMobile shows content as Modal
 const MODAL_BREAKPOINT = 1023;
+const TODAY = new Date();
 
 const priceData = (price, intl) => {
   if (price && price.currency === config.currency) {
@@ -48,6 +48,8 @@ const closeBookModal = (history, location) => {
   history.push(`${pathname}${searchString}`, state);
 };
 
+const dateFormattingOptions = { month: 'short', day: 'numeric', weekday: 'short' };
+
 const BookingPanel = props => {
   const {
     rootClassName,
@@ -61,6 +63,7 @@ const BookingPanel = props => {
     subTitle,
     authorDisplayName,
     onManageDisableScrolling,
+    onFetchTimeSlots,
     monthlyTimeSlots,
     history,
     location,
@@ -95,23 +98,6 @@ const BookingPanel = props => {
   const classes = classNames(rootClassName || css.root, className);
   const titleClasses = classNames(titleClassName || css.bookingTitle);
 
-  const currentDate = new Date();
-  const monthId = monthIdStringInTimeZone(currentDate, timeZone);
-
-  const timeSlots =
-    !monthlyTimeSlots || Object.keys(monthlyTimeSlots).length === 0
-      ? []
-      : monthlyTimeSlots[monthId] && monthlyTimeSlots[monthId].timeSlots
-      ? monthlyTimeSlots[monthId].timeSlots
-      : [];
-
-  const hasTimeSlots = timeSlots && timeSlots[0];
-  const firstTimeSlotStart = hasTimeSlots ? timeSlots[0].attributes.start : null;
-  const initialStartDate =
-    !firstTimeSlotStart || (firstTimeSlotStart && dateIsAfter(currentDate, firstTimeSlotStart))
-      ? currentDate
-      : firstTimeSlotStart;
-
   return (
     <div className={classes}>
       <ModalInMobile
@@ -143,9 +129,9 @@ const BookingPanel = props => {
             price={price}
             isOwnListing={isOwnListing}
             monthlyTimeSlots={monthlyTimeSlots}
-            initialValues={{ bookingStartDate: { date: initialStartDate } }}
-            startDatePlaceholder={currentDate.toString()}
-            endDatePlaceholder={currentDate.toString()}
+            onFetchTimeSlots={onFetchTimeSlots}
+            startDatePlaceholder={intl.formatDate(TODAY, dateFormattingOptions)}
+            endDatePlaceholder={intl.formatDate(TODAY, dateFormattingOptions)}
             timeZone={timeZone}
           />
         ) : null}
@@ -199,6 +185,7 @@ BookingPanel.propTypes = {
   subTitle: oneOfType([node, string]),
   authorDisplayName: oneOfType([node, string]).isRequired,
   onManageDisableScrolling: func.isRequired,
+  onFetchTimeSlots: func.isRequired,
   monthlyTimeSlots: object,
 
   // from withRouter
