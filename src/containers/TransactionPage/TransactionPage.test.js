@@ -53,6 +53,7 @@ describe('TransactionPage - Sale', () => {
       onShowMoreMessages: noop,
       onSendMessage: noop,
       onResetForm: noop,
+      onFetchTimeSlots: noop,
       intl: fakeIntl,
 
       location: {
@@ -108,6 +109,7 @@ describe('TransactionPage - Order', () => {
       onShowMoreMessages: noop,
       onSendMessage: noop,
       onResetForm: noop,
+      onFetchTimeSlots: noop,
       intl: fakeIntl,
 
       acceptInProgress: false,

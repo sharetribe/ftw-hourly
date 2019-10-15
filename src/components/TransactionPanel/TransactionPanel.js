@@ -177,6 +177,7 @@ export class TransactionPanelComponent extends Component {
       sendMessageError,
       sendReviewInProgress,
       sendReviewError,
+      onFetchTimeSlots,
       onManageDisableScrolling,
       onShowMoreMessages,
       transactionRole,
@@ -442,6 +443,7 @@ export class TransactionPanelComponent extends Component {
                   onSubmit={onSubmitBookingRequest}
                   onManageDisableScrolling={onManageDisableScrolling}
                   monthlyTimeSlots={monthlyTimeSlots}
+                  onFetchTimeSlots={onFetchTimeSlots}
                 />
               ) : null}
               <BreakdownMaybe
@@ -504,6 +506,7 @@ TransactionPanelComponent.propTypes = {
   sendMessageError: propTypes.error,
   sendReviewInProgress: bool.isRequired,
   sendReviewError: propTypes.error,
+  onFetchTimeSlots: func.isRequired,
   onManageDisableScrolling: func.isRequired,
   onShowMoreMessages: func.isRequired,
   onSendMessage: func.isRequired,

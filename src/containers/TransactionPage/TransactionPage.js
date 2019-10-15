@@ -55,6 +55,7 @@ export const TransactionPageComponent = props => {
     history,
     intl,
     messages,
+    onFetchTimeSlots,
     onManageDisableScrolling,
     onSendMessage,
     onSendReview,
@@ -227,6 +228,7 @@ export const TransactionPageComponent = props => {
       sendMessageError={sendMessageError}
       sendReviewInProgress={sendReviewInProgress}
       sendReviewError={sendReviewError}
+      onFetchTimeSlots={onFetchTimeSlots}
       onManageDisableScrolling={onManageDisableScrolling}
       onShowMoreMessages={onShowMoreMessages}
       onSendMessage={onSendMessage}
@@ -302,6 +304,7 @@ TransactionPageComponent.propTypes = {
   sendMessageError: propTypes.error,
   onShowMoreMessages: func.isRequired,
   onSendMessage: func.isRequired,
+  onFetchTimeSlots: func.isRequired,
   monthlyTimeSlots: object,
   // monthlyTimeSlots could be something like:
   // monthlyTimeSlots: {

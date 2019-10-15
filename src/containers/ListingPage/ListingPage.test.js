@@ -76,6 +76,7 @@ describe('ListingPage', () => {
       onInitializeCardPaymentData: noop,
       sendEnquiryInProgress: false,
       onSendEnquiry: noop,
+      onFetchTimeSlots: noop,
       categoriesConfig,
       amenitiesConfig,
     };

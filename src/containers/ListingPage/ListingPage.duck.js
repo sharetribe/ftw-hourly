@@ -4,7 +4,7 @@ import { types as sdkTypes } from '../../util/sdkLoader';
 import { storableError } from '../../util/errors';
 import { addMarketplaceEntities } from '../../ducks/marketplaceData.duck';
 import { denormalisedResponseEntities } from '../../util/data';
-import { getNextMonthStartInTimeZone, monthIdStringInTimeZone } from '../../util/dates';
+import { findNextBoundary, getNextMonthStartInTimeZone, monthIdStringInTimeZone } from '../../util/dates';
 import { TRANSITION_ENQUIRE } from '../../util/transaction';
 import {
   LISTING_PAGE_DRAFT_VARIANT,
@@ -280,14 +280,14 @@ const fetchMonthlyTimeSlots = (dispatch, listing) => {
 
   // Fetch time-zones on client side only.
   if (hasWindow && listing.id && hasTimeZone) {
-    const now = new Date();
     const tz = listing.attributes.availabilityPlan.timezone;
+    const nextBoundary = findNextBoundary(tz, new Date());
 
-    const nextMonth = getNextMonthStartInTimeZone(now, tz);
+    const nextMonth = getNextMonthStartInTimeZone(nextBoundary, tz);
     const nextAfterNextMonth = getNextMonthStartInTimeZone(nextMonth, tz);
 
     return Promise.all([
-      dispatch(fetchTimeSlots(listing.id, now, nextMonth, tz)),
+      dispatch(fetchTimeSlots(listing.id, nextBoundary, nextMonth, tz)),
       dispatch(fetchTimeSlots(listing.id, nextMonth, nextAfterNextMonth, tz)),
     ]);
   }
