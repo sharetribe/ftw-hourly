@@ -1,10 +1,24 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { func, node, object, string } from 'prop-types';
 import { Field } from 'react-final-form';
 import classNames from 'classnames';
 import { ValidationError } from '../../components';
 
 import css from './FieldSelect.css';
+
+const handleChange = (propsOnChange, inputOnChange) => event => {
+  // If "onChange" callback is passed through the props,
+  // it can notify the parent when the content of the input has changed.
+  if (propsOnChange) {
+    // "handleChange" function is attached to the low level <select> component
+    // value of the element needs to be picked from target
+    const value = event.nativeEvent.target.value;
+    propsOnChange(value);
+  }
+  // Notify Final Form that the input has changed.
+  // (Final Form knows how to deal with synthetic events of React.)
+  inputOnChange(event);
+};
 
 const FieldSelectComponent = props => {
   const {
@@ -16,6 +30,7 @@ const FieldSelectComponent = props => {
     input,
     meta,
     children,
+    onChange,
     ...rest
   } = props;
 
@@ -33,7 +48,15 @@ const FieldSelectComponent = props => {
     [css.selectSuccess]: valid,
     [css.selectError]: hasError,
   });
-  const selectProps = { className: selectClasses, id, ...input, ...rest };
+
+  const { onChange: inputOnChange, ...restOfInput } = input;
+  const selectProps = {
+    className: selectClasses,
+    id,
+    onChange: handleChange(onChange, inputOnChange),
+    ...restOfInput,
+    ...rest,
+  };
 
   const classes = classNames(rootClassName || css.root, className);
   return (
@@ -54,12 +77,12 @@ FieldSelectComponent.defaultProps = {
   children: null,
 };
 
-const { string, object, node } = PropTypes;
-
 FieldSelectComponent.propTypes = {
   rootClassName: string,
   className: string,
   selectClassName: string,
+
+  onChange: func,
 
   // Label is optional, but if it is given, an id is also required so
   // the label can reference the input in the `for` attribute
