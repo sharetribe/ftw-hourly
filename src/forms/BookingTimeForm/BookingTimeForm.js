@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import { bool, object, string } from 'prop-types';
+import { bool, func, object, string } from 'prop-types';
 import { compose } from 'redux';
 import { Form as FinalForm } from 'react-final-form';
 import { FormattedMessage, intlShape, injectIntl } from '../../util/reactIntl';
 import classNames from 'classnames';
 import { calculateQuantityFromHours, timestampToDate } from '../../util/dates';
-import { required, composeValidators } from '../../util/validators';
 import { propTypes } from '../../util/types';
 import config from '../../config';
 import { Form, PrimaryButton } from '../../components';
@@ -13,8 +12,6 @@ import EstimatedBreakdownMaybe from './EstimatedBreakdownMaybe';
 import FieldDateAndTimeInput from './FieldDateAndTimeInput';
 
 import css from './BookingTimeForm.css';
-
-const identity = v => v;
 
 export class BookingTimeFormComponent extends Component {
   constructor(props) {
@@ -69,6 +66,7 @@ export class BookingTimeFormComponent extends Component {
             unitType,
             values,
             monthlyTimeSlots,
+            onFetchTimeSlots,
             timeZone,
           } = fieldRenderProps;
 
@@ -113,41 +111,17 @@ export class BookingTimeFormComponent extends Component {
           );
 
           const startDateInputProps = {
-            name: 'bookingStartDate',
-            useMobileMargins: false,
-            id: `BookingTimeForm.bookingStartDate`,
             label: bookingStartLabel,
             placeholderText: startDatePlaceholder,
-            format: identity,
-            validate: composeValidators(required('Required')),
           };
-
           const endDateInputProps = {
-            name: 'bookingEndDate',
-            useMobileMargins: false,
-            id: `BookingTimeForm.bookingEndDate`,
             label: bookingEndLabel,
             placeholderText: endDatePlaceholder,
-            format: identity,
-            validate: composeValidators(required('Required')),
-          };
-
-          const startTimeInputProps = {
-            id: `BookingTimeForm.bookingStartDate`,
-            name: 'bookingStartTime',
-            label: 'Start Time',
-          };
-          const endTimeInputProps = {
-            id: `BookingTimeForm.bookingEndDate`,
-            name: 'bookingEndTime',
-            label: 'End Time',
           };
 
           const dateInputProps = {
             startDateInputProps,
             endDateInputProps,
-            startTimeInputProps,
-            endTimeInputProps,
           };
 
           return (
@@ -156,6 +130,8 @@ export class BookingTimeFormComponent extends Component {
                 <FieldDateAndTimeInput
                   {...dateInputProps}
                   className={css.bookingDates}
+                  bookingStartLabel={bookingStartLabel}
+                  onFetchTimeSlots={onFetchTimeSlots}
                   monthlyTimeSlots={monthlyTimeSlots}
                   values={values}
                   intl={intl}
@@ -207,6 +183,7 @@ BookingTimeFormComponent.propTypes = {
   price: propTypes.money,
   isOwnListing: bool,
   monthlyTimeSlots: object,
+  onFetchTimeSlots: func.isRequired,
 
   // from injectIntl
   intl: intlShape.isRequired,
