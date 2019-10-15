@@ -18,7 +18,7 @@ import {
   denormalisedEntities,
   denormalisedResponseEntities,
 } from '../../util/data';
-import { findNextBoundary, getNextMonthStartInTimeZone, monthIdStringInTimeZone } from '../../util/dates';
+import { findNextBoundary, nextMonthFn, monthIdStringInTimeZone } from '../../util/dates';
 import { addMarketplaceEntities } from '../../ducks/marketplaceData.duck';
 import { fetchCurrentUserNotifications } from '../../ducks/user.duck';
 
@@ -321,8 +321,8 @@ const fetchMonthlyTimeSlots = (dispatch, listing) => {
     const tz = listing.attributes.availabilityPlan.timezone;
     const nextBoundary = findNextBoundary(tz, new Date());
 
-    const nextMonth = getNextMonthStartInTimeZone(nextBoundary, tz);
-    const nextAfterNextMonth = getNextMonthStartInTimeZone(nextMonth, tz);
+    const nextMonth = nextMonthFn(nextBoundary, tz);
+    const nextAfterNextMonth = nextMonthFn(nextMonth, tz);
 
     return Promise.all([
       dispatch(fetchTimeSlots(listing.id, nextBoundary, nextMonth, tz)),

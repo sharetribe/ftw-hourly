@@ -17,7 +17,8 @@ import {
   monthIdStringInTimeZone,
   formatDate,
   getMonthStartInTimeZone,
-  getNextMonthStartInTimeZone,
+  nextMonthFn,
+  prevMonthFn,
   parseDateFromISO8601,
   stringifyDateToISO8601,
 } from './dates';
@@ -304,30 +305,34 @@ describe('date utils', () => {
     });
   });
 
-  describe('getNextMonthStartInTimeZone() for 2019-11-23', () => {
+  describe('nextMonthFn() for 2019-11-23', () => {
     it('should return correct start of the next month', () => {
+      // November == 10
       const date = new Date(Date.UTC(2019, 10, 23, 14, 34, 22));
       expect(
-        localizeAndFormatDate(
-          intl,
-          'Australia/Eucla',
-          getNextMonthStartInTimeZone(date, 'Australia/Eucla')
-        )
+        localizeAndFormatDate(intl, 'Australia/Eucla', nextMonthFn(date, 'Australia/Eucla'))
       ).toEqual('12/1/2019, 00:00');
       expect(
-        localizeAndFormatDate(
-          intl,
-          'Europe/Helsinki',
-          getNextMonthStartInTimeZone(date, 'Europe/Helsinki')
-        )
+        localizeAndFormatDate(intl, 'Europe/Helsinki', nextMonthFn(date, 'Europe/Helsinki'))
       ).toEqual('12/1/2019, 00:00');
       expect(
-        localizeAndFormatDate(
-          intl,
-          'America/Los_Angeles',
-          getNextMonthStartInTimeZone(date, 'America/Los_Angeles')
-        )
+        localizeAndFormatDate(intl, 'America/Los_Angeles', nextMonthFn(date, 'America/Los_Angeles'))
       ).toEqual('12/1/2019, 00:00');
+    });
+  });
+  describe('prevMonthFn() for 2019-11-23', () => {
+    it('should return correct start of the next month', () => {
+      // November == 10
+      const date = new Date(Date.UTC(2019, 10, 23, 14, 34, 22));
+      expect(
+        localizeAndFormatDate(intl, 'Australia/Eucla', prevMonthFn(date, 'Australia/Eucla'))
+      ).toEqual('10/1/2019, 00:00');
+      expect(
+        localizeAndFormatDate(intl, 'Europe/Helsinki', prevMonthFn(date, 'Europe/Helsinki'))
+      ).toEqual('10/1/2019, 00:00');
+      expect(
+        localizeAndFormatDate(intl, 'America/Los_Angeles', prevMonthFn(date, 'America/Los_Angeles'))
+      ).toEqual('10/1/2019, 00:00');
     });
   });
 });
