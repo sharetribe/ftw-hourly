@@ -112,18 +112,17 @@ const defaultProps = {
 // we need to convert the value `day` to given timezone before comparing it
 // to timeslot.
 const timeSlotContainsDay = (timeSlot, day, timeZone) => {
-  const dayAsString = day.format('YYYY-MM-DD');
-  const startOfDay = moment.tz(dayAsString, timeZone);
-  const endOfDay = moment.tz(dayAsString, timeZone).add(1, 'days');
+  const startOfDay = moment.tz(day.toArray().slice(0, 3), timeZone);
+  const endOfDay = startOfDay.clone().add(1, 'days');
 
   const startDate = moment.tz(timeSlot.attributes.start, timeZone);
   const endDate = moment.tz(timeSlot.attributes.end, timeZone);
 
   if (startOfDay.isSameOrAfter(startDate) && endDate.isSameOrAfter(endOfDay)) {
     return true;
-  } else if (startDate.isBetween(startOfDay, endOfDay, 'day', '[)')) {
+  } else if (startDate.isBetween(startOfDay, endOfDay, null, '[)')) {
     return true;
-  } else if (endDate.isBetween(startOfDay, endOfDay, 'day', '[)')) {
+  } else if (endDate.isBetween(startOfDay, endOfDay, null, '[)')) {
     return true;
   }
 
