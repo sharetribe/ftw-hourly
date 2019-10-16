@@ -9,6 +9,7 @@ import { createResourceLocatorString, findRouteByRouteName } from '../../util/ro
 import routeConfiguration from '../../routeConfiguration';
 import { propTypes } from '../../util/types';
 import { ensureListing, ensureTransaction } from '../../util/data';
+import { timestampToDate, calculateQuantityFromHours } from '../../util/dates';
 import { createSlug } from '../../util/urlHelpers';
 import { txIsPaymentPending } from '../../util/transaction';
 import { getMarketplaceEntities } from '../../ducks/marketplaceData.duck';
@@ -132,7 +133,14 @@ export const TransactionPageComponent = props => {
 
   // Customer can create a booking, if the tx is in "enquiry" state.
   const handleSubmitBookingRequest = values => {
-    const { bookingDates, ...bookingData } = values;
+    const { bookingStartTime, bookingEndTime, ...restOfValues } = values;
+    const bookingStart = timestampToDate(bookingStartTime);
+    const bookingEnd = timestampToDate(bookingEndTime);
+
+    const bookingData = {
+      quantity: calculateQuantityFromHours(bookingStart, bookingEnd),
+      ...restOfValues,
+    };
 
     const initialValues = {
       listing: currentListing,
@@ -140,8 +148,8 @@ export const TransactionPageComponent = props => {
       transaction: currentTransaction,
       bookingData,
       bookingDates: {
-        bookingStart: bookingDates.startDate,
-        bookingEnd: bookingDates.endDate,
+        bookingStart,
+        bookingEnd,
       },
       confirmPaymentError: null,
     };
