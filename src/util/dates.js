@@ -335,16 +335,33 @@ export const timestampToDate = timestamp => {
 };
 
 /**
- * Return date in a given timezone
+ * Returns a new date, which indicates the same time of day in a given time zone
+ * as given date is in local time zone
  *
  * @param {Date} date
  * @param {String} timeZone
  *
  * @returns {Date} date in given timezone
  */
-
-export const localDateToSelectedTimezone = (date, timeZone) => {
+export const timeOfDayFromLocalToTimeZone = (date, timeZone) => {
   return moment.tz(moment(date).format('YYYY-MM-DD HH:mm:ss'), timeZone).toDate();
+};
+
+/**
+ * Returns a new date, which indicates the same time of day in a local time zone
+ * as given date is in specified time zone
+ *
+ * @param {Date} date
+ * @param {String} timeZone
+ *
+ * @returns {Date} date in given timezone
+ */
+export const timeOfDayFromTimeZoneToLocal = (date, timeZone) => {
+  return moment(
+    moment(date)
+      .tz(timeZone)
+      .format('YYYY-MM-DD HH:mm:ss')
+  ).toDate();
 };
 
 /**
