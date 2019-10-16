@@ -21,6 +21,8 @@ import {
   prevMonthFn,
   parseDateFromISO8601,
   stringifyDateToISO8601,
+  timeOfDayFromLocalToTimeZone,
+  timeOfDayFromTimeZoneToLocal,
 } from './dates';
 
 describe('date utils', () => {
@@ -333,6 +335,75 @@ describe('date utils', () => {
       expect(
         localizeAndFormatDate(intl, 'America/Los_Angeles', prevMonthFn(date, 'America/Los_Angeles'))
       ).toEqual('10/1/2019, 00:00');
+    });
+  });
+
+  describe('timeOfDayFromLocalToTimeZone()', () => {
+    const formattingOptions = tz => {
+      const tzMaybe = tz ? { timeZone: tz } : {};
+      return {
+        year: 'numeric',
+        month: 'numeric',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false,
+        ...tzMaybe,
+      };
+    };
+
+    it('should return date in selected timezone America/New York', () => {
+      //const date = new Date('Sun Nov 10 2019 00:00:00 GMT-0500 (Eastern Standard Time)');
+      const date = new Date(2019, 10, 10, 0, 0, 0);
+      const tz = 'America/New_York';
+
+      const convertedDate = timeOfDayFromLocalToTimeZone(date, tz);
+      const testEnvFormattedDateTime = intl.formatDate(convertedDate, formattingOptions(tz));
+      const nyFormattedDateTime = intl.formatDate(date, formattingOptions());
+
+      expect(testEnvFormattedDateTime).toEqual(nyFormattedDateTime);
+    });
+
+    it('should return date in selected timezone Australia/Adelaide', () => {
+      const date = new Date(2019, 10, 10, 0, 0, 0);
+      const tz = 'Australia/Adelaide';
+      const convertedDate = timeOfDayFromLocalToTimeZone(date, tz);
+      const testEnvFormattedDateTime = intl.formatDate(convertedDate, formattingOptions(tz));
+      const adelFormattedDateTime = intl.formatDate(date, formattingOptions());
+
+      expect(testEnvFormattedDateTime).toEqual(adelFormattedDateTime);
+    });
+  });
+
+  describe('timeOfDayFromTimeZoneToLocal()', () => {
+    const formattingOptions = {
+      year: 'numeric',
+      month: 'numeric',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false,
+    };
+    it('should return date in selected timezone America/New_York', () => {
+      const date = new Date('Sun Nov 10 2019 00:00:00 GMT-0500 (Eastern Standard Time)');
+      const tz = 'America/New_York';
+
+      const convertedDate = timeOfDayFromTimeZoneToLocal(date, tz);
+      const testEnvFormattedDateTime = intl.formatDate(convertedDate, formattingOptions);
+      const nyFormattedDateTime = localizeAndFormatDate(intl, tz, date);
+
+      expect(testEnvFormattedDateTime).toEqual(nyFormattedDateTime);
+    });
+
+    it('should return date in selected timezone Australia/Adelaide', () => {
+      const date = new Date('Sun Nov 10 2019 00:00:00 GMT+1030 (Australian Central Daylight Time)');
+      const tz = 'Australia/Adelaide';
+
+      const convertedDate = timeOfDayFromTimeZoneToLocal(date, tz);
+      const testEnvFormattedDateTime = intl.formatDate(convertedDate, formattingOptions);
+      const adelFormattedDateTime = localizeAndFormatDate(intl, tz, date);
+
+      expect(testEnvFormattedDateTime).toEqual(adelFormattedDateTime);
     });
   });
 });
