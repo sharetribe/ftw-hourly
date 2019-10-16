@@ -250,9 +250,11 @@ class FieldDateAndTimeInput extends Component {
       return;
     }
 
-    const timeSlots = getMonthlyTimeSlots(monthlyTimeSlots, this.state.currentMonth, timeZone);
+    // This callback function (onBookingStartDateChange) is called from react-dates component.
+    // It gets raw value as a param - browser's local time instead of time in listing's timezone.
     const startDate = timeOfDayFromLocalToTimeZone(value.date, timeZone);
-    const timeSlotsOnSelectedDate = getTimeSlots(timeSlots, startDate);
+    const timeSlots = getMonthlyTimeSlots(monthlyTimeSlots, this.state.currentMonth, timeZone);
+    const timeSlotsOnSelectedDate = getTimeSlots(timeSlots, startDate, timeZone);
 
     const { startTime, endDate, endTime } = getAllTimeValues(
       intl,
@@ -272,7 +274,7 @@ class FieldDateAndTimeInput extends Component {
     const { monthlyTimeSlots, timeZone, intl, form, values } = this.props;
     const timeSlots = getMonthlyTimeSlots(monthlyTimeSlots, this.state.currentMonth, timeZone);
     const startDate = values.bookingStartDate.date;
-    const timeSlotsOnSelectedDate = getTimeSlots(timeSlots, startDate);
+    const timeSlotsOnSelectedDate = getTimeSlots(timeSlots, startDate, timeZone);
 
     const { endDate, endTime } = getAllTimeValues(
       intl,
@@ -295,11 +297,14 @@ class FieldDateAndTimeInput extends Component {
       return;
     }
 
-    const timeSlots = getMonthlyTimeSlots(monthlyTimeSlots, this.state.currentMonth, timeZone);
+    // This callback function (onBookingStartDateChange) is called from react-dates component.
+    // It gets raw value as a param - browser's local time instead of time in listing's timezone.
+    const endDate = timeOfDayFromLocalToTimeZone(value.date, timeZone);
+
     const { bookingStartDate, bookingStartTime } = values;
     const startDate = bookingStartDate.date;
-    const endDate = timeOfDayFromLocalToTimeZone(value.date, timeZone);
-    const timeSlotsOnSelectedDate = getTimeSlots(timeSlots, startDate);
+    const timeSlots = getMonthlyTimeSlots(monthlyTimeSlots, this.state.currentMonth, timeZone);
+    const timeSlotsOnSelectedDate = getTimeSlots(timeSlots, startDate, timeZone);
 
     const { endTime } = getAllTimeValues(
       intl,
@@ -323,7 +328,7 @@ class FieldDateAndTimeInput extends Component {
     const localizedDay = timeOfDayFromLocalToTimeZone(day, timeZone);
     // Given day (endDate) should be after the start of the day of selected booking start date.
     const startDate = resetToStartOfDay(bookingStartDate, timeZone);
-    // Given day (endDate) shoul be before the "next" day of selected timeSlots end.
+    // Given day (endDate) should be before the "next" day of selected timeSlots end.
     const endDate = resetToStartOfDay(selectedTimeSlot.attributes.end, timeZone, 1);
     return !(dateIsAfter(localizedDay, startDate) && dateIsAfter(endDate, localizedDay));
   }
