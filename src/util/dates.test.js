@@ -2,6 +2,7 @@ import { createIntl, createIntlCache } from './reactIntl';
 import { fakeIntl } from './test-data';
 import {
   isDate,
+  isInRange,
   isSameDate,
   isValidTimeZone,
   getTimeZoneNames,
@@ -353,7 +354,6 @@ describe('date utils', () => {
     };
 
     it('should return date in selected timezone America/New York', () => {
-      //const date = new Date('Sun Nov 10 2019 00:00:00 GMT-0500 (Eastern Standard Time)');
       const date = new Date(2019, 10, 10, 0, 0, 0);
       const tz = 'America/New_York';
 
@@ -404,6 +404,36 @@ describe('date utils', () => {
       const adelFormattedDateTime = localizeAndFormatDate(intl, tz, date);
 
       expect(testEnvFormattedDateTime).toEqual(adelFormattedDateTime);
+    });
+  });
+
+  describe('isInRange()', () => {
+    const startDate = new Date(Date.UTC(2019, 10, 10, 0, 0, 0));
+    const endDate = new Date(Date.UTC(2019, 10, 11, 12, 0, 0));
+
+    it('should return true if the date is inside range', () => {
+      const date = new Date(Date.UTC(2019, 10, 10, 12, 0, 0));
+      expect(isInRange(date, startDate, endDate)).toBeTruthy();
+    });
+
+    it('should return false if the date is outside range', () => {
+      const date = new Date(Date.UTC(2019, 10, 9, 12, 0, 0));
+      expect(isInRange(date, startDate, endDate)).toBeFalsy();
+    });
+
+    it('should return true if the date is inside day-range on correct time zone', () => {
+      const date = new Date('Wed Oct 16 2019 00:00:00 GMT-1100 (Samoa Standard Time)');
+      // aka new Date('Wed Oct 16 2019 23:00:00 GMT+1200 (Anadyr Standard Time)')
+
+      const start = new Date('Wed Oct 16 2019 00:00:00 GMT+1200 (Anadyr Standard Time)');
+      const end = new Date('Wed Oct 16 2019 09:00:00 GMT+1200 (Anadyr Standard Time)');
+
+      // Day scope in local time zone fails if you are running the test on environment using
+      // Samoa Standard Time (like Pacific/Pago_Pago).
+      // I.e. this fails: expect(isInRange(date, start, end, 'day')).toBeTruthy();
+
+      // Day scope in correct time zone succeeds
+      expect(isInRange(date, start, end, 'day', 'Asia/Anadyr')).toBeTruthy();
     });
   });
 });
