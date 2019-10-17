@@ -91,6 +91,7 @@ const EditListingWizardTab = props => {
     onUpdateImageOrder,
     onRemoveImage,
     onChange,
+    onManageDisableScrolling,
     updatedTab,
     updateInProgress,
     intl,
@@ -106,7 +107,7 @@ const EditListingWizardTab = props => {
     return images ? images.map(img => img.imageId || img.id) : null;
   };
 
-  const onCompleteEditListingWizardTab = (tab, updateValues) => {
+  const onCompleteEditListingWizardTab = (tab, updateValues, passThrownErrors = false) => {
     // Normalize images for API call
     const { images: updatedImages, ...otherValues } = updateValues;
     const imageProperty =
@@ -122,23 +123,27 @@ const EditListingWizardTab = props => {
         ? updateValuesWithImages
         : { ...updateValuesWithImages, id: currentListing.id };
 
-      onUpsertListingDraft(tab, upsertValues)
+      return onUpsertListingDraft(tab, upsertValues)
         .then(r => {
-          if (tab !== marketplaceTabs[marketplaceTabs.length - 1]) {
+          if (tab !== AVAILABILITY && tab !== marketplaceTabs[marketplaceTabs.length - 1]) {
             // Create listing flow: smooth scrolling polyfill to scroll to correct tab
             handleCreateFlowTabScrolling(false);
 
             // After successful saving of draft data, user should be redirected to next tab
             redirectAfterDraftUpdate(r.data.data.id.uuid, params, tab, marketplaceTabs, history);
-          } else {
+          } else if (tab === marketplaceTabs[marketplaceTabs.length - 1]) {
             handlePublishListing(currentListing.id);
           }
         })
         .catch(e => {
+          if (passThrownErrors) {
+            throw e;
+          }
           // No need for extra actions
+          // Error is logged in EditListingPage.duck file.
         });
     } else {
-      onUpdateListing(tab, { ...updateValuesWithImages, id: currentListing.id });
+      return onUpdateListing(tab, { ...updateValuesWithImages, id: currentListing.id });
     }
   };
 
@@ -150,6 +155,7 @@ const EditListingWizardTab = props => {
       onChange,
       panelUpdated: updatedTab === tab,
       updateInProgress,
+      onManageDisableScrolling,
     };
   };
 
@@ -234,8 +240,13 @@ const EditListingWizardTab = props => {
           availability={availability}
           submitButtonText={intl.formatMessage({ id: submitButtonTranslationKey })}
           onSubmit={values => {
-            onCompleteEditListingWizardTab(tab, values);
+            // We want to return the Promise to the form,
+            // so that it doesn't close its modal if an error is thrown.
+            return onCompleteEditListingWizardTab(tab, values, true);
           }}
+          onNextTab={() =>
+            redirectAfterDraftUpdate(listing.id.uuid, params, tab, marketplaceTabs, history)
+          }
         />
       );
     }

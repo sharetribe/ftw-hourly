@@ -648,7 +648,8 @@ export function requestUpdateListing(tab, data) {
       })
       .catch(e => {
         log.error(e, 'update-listing-failed', { listingData: data });
-        return dispatch(updateListingError(storableError(e)));
+        dispatch(updateListingError(storableError(e)));
+        throw e;
       });
   };
 }
