@@ -12,6 +12,8 @@ import EstimatedBreakdownMaybe from './EstimatedBreakdownMaybe';
 
 const { UUID, Money } = sdkTypes;
 
+const noop = () => null;
+
 const startDateInputProps = {
   name: 'bookingStartDate',
   useMobileMargins: false,
@@ -83,8 +85,9 @@ describe('BookingTimeForm', () => {
         timeZone="Etc/UTC"
         monthlyTimeSlots={monthlyTimeSlots}
         initialValues={{ bookingStartDate: { date: new Date('2019-10-14T00:00:00Z') } }}
-        onChange={formState => {}}
-        onSubmit={v => v}
+        onChange={noop}
+        onSubmit={noop}
+        onFetchTimeSlots={noop}
         intl={fakeIntl}
       />
     );

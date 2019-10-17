@@ -335,16 +335,33 @@ export const timestampToDate = timestamp => {
 };
 
 /**
- * Return date in a given timezone
+ * Returns a new date, which indicates the same time of day in a given time zone
+ * as given date is in local time zone
  *
  * @param {Date} date
  * @param {String} timeZone
  *
  * @returns {Date} date in given timezone
  */
-
-export const localDateToSelectedTimezone = (date, timeZone) => {
+export const timeOfDayFromLocalToTimeZone = (date, timeZone) => {
   return moment.tz(moment(date).format('YYYY-MM-DD HH:mm:ss'), timeZone).toDate();
+};
+
+/**
+ * Returns a new date, which indicates the same time of day in a local time zone
+ * as given date is in specified time zone
+ *
+ * @param {Date} date
+ * @param {String} timeZone
+ *
+ * @returns {Date} date in given timezone
+ */
+export const timeOfDayFromTimeZoneToLocal = (date, timeZone) => {
+  return moment(
+    moment(date)
+      .tz(timeZone)
+      .format('YYYY-MM-DD HH:mm:ss')
+  ).toDate();
 };
 
 /**
@@ -422,8 +439,12 @@ export const dateIsAfter = (date, compareToDate) => {
  * @returns {boolean} is date in range
  */
 
-export const isInRange = (date, start, end, scope) => {
-  return moment(date).isBetween(start, end, scope, '[]');
+export const isInRange = (date, start, end, scope, timeZone) => {
+  return timeZone
+    ? moment(date)
+        .tz(timeZone)
+        .isBetween(start, end, scope, '[]')
+    : moment(date).isBetween(start, end, scope, '[]');
 };
 
 /**
@@ -601,6 +622,29 @@ export const getMonthStartInTimeZone = (date, timeZone) => {
 };
 
 /**
+ * Return start of the previous month in given time zone.
+ * If no time zone is given, local time zone is used.
+ *
+ * @param {Date} date object that marks timestamp inside "current" month.
+ *
+ * @returns {Date} start of the next month in given time zone
+ */
+export const prevMonthFn = (date, timeZone) => {
+  return timeZone
+    ? moment(date)
+        .clone()
+        .tz(timeZone)
+        .subtract(1, 'months')
+        .startOf('month')
+        .toDate()
+    : moment(date)
+        .clone()
+        .subtract(1, 'months')
+        .startOf('month')
+        .toDate();
+};
+
+/**
  * Return start of the next month in given time zone.
  * If no time zone is given, local time zone is used.
  *
@@ -608,14 +652,16 @@ export const getMonthStartInTimeZone = (date, timeZone) => {
  *
  * @returns {Date} start of the next month in given time zone
  */
-export const getNextMonthStartInTimeZone = (date, timeZone) => {
+export const nextMonthFn = (currentMoment, timeZone) => {
   return timeZone
-    ? moment(date)
+    ? moment(currentMoment)
+        .clone()
         .tz(timeZone)
         .add(1, 'months')
         .startOf('month')
         .toDate()
-    : moment(date)
+    : moment(currentMoment)
+        .clone()
         .add(1, 'months')
         .startOf('month')
         .toDate();

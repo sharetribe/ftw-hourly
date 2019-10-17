@@ -109,12 +109,11 @@ const FormComponent = props => (
         form,
         handleSubmit,
         onChange,
+        onFetchTimeSlots,
         pristine,
         submitting,
         startDateInputProps,
         endDateInputProps,
-        startTimeInputProps,
-        endTimeInputProps,
         timeZone,
         monthlyTimeSlots,
         values,
@@ -125,8 +124,6 @@ const FormComponent = props => (
       const dateInputProps = {
         startDateInputProps,
         endDateInputProps,
-        startTimeInputProps,
-        endTimeInputProps,
       };
 
       return (
@@ -141,6 +138,7 @@ const FormComponent = props => (
           <FieldDateAndTimeInput
             {...dateInputProps}
             monthlyTimeSlots={monthlyTimeSlots}
+            onFetchTimeSlots={onFetchTimeSlots}
             values={values}
             intl={intl}
             form={form}
@@ -172,6 +170,7 @@ export const Empty = {
     onSubmit: values => {
       console.log('Submitting a form with values:', values);
     },
+    onFetchTimeSlots: identity,
   },
   group: 'custom inputs',
 };

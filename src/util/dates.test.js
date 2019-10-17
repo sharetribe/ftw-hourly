@@ -2,6 +2,7 @@ import { createIntl, createIntlCache } from './reactIntl';
 import { fakeIntl } from './test-data';
 import {
   isDate,
+  isInRange,
   isSameDate,
   isValidTimeZone,
   getTimeZoneNames,
@@ -17,9 +18,12 @@ import {
   monthIdStringInTimeZone,
   formatDate,
   getMonthStartInTimeZone,
-  getNextMonthStartInTimeZone,
+  nextMonthFn,
+  prevMonthFn,
   parseDateFromISO8601,
   stringifyDateToISO8601,
+  timeOfDayFromLocalToTimeZone,
+  timeOfDayFromTimeZoneToLocal,
 } from './dates';
 
 describe('date utils', () => {
@@ -304,30 +308,132 @@ describe('date utils', () => {
     });
   });
 
-  describe('getNextMonthStartInTimeZone() for 2019-11-23', () => {
+  describe('nextMonthFn() for 2019-11-23', () => {
     it('should return correct start of the next month', () => {
+      // November == 10
       const date = new Date(Date.UTC(2019, 10, 23, 14, 34, 22));
       expect(
-        localizeAndFormatDate(
-          intl,
-          'Australia/Eucla',
-          getNextMonthStartInTimeZone(date, 'Australia/Eucla')
-        )
+        localizeAndFormatDate(intl, 'Australia/Eucla', nextMonthFn(date, 'Australia/Eucla'))
       ).toEqual('12/1/2019, 00:00');
       expect(
-        localizeAndFormatDate(
-          intl,
-          'Europe/Helsinki',
-          getNextMonthStartInTimeZone(date, 'Europe/Helsinki')
-        )
+        localizeAndFormatDate(intl, 'Europe/Helsinki', nextMonthFn(date, 'Europe/Helsinki'))
       ).toEqual('12/1/2019, 00:00');
       expect(
-        localizeAndFormatDate(
-          intl,
-          'America/Los_Angeles',
-          getNextMonthStartInTimeZone(date, 'America/Los_Angeles')
-        )
+        localizeAndFormatDate(intl, 'America/Los_Angeles', nextMonthFn(date, 'America/Los_Angeles'))
       ).toEqual('12/1/2019, 00:00');
+    });
+  });
+  describe('prevMonthFn() for 2019-11-23', () => {
+    it('should return correct start of the next month', () => {
+      // November == 10
+      const date = new Date(Date.UTC(2019, 10, 23, 14, 34, 22));
+      expect(
+        localizeAndFormatDate(intl, 'Australia/Eucla', prevMonthFn(date, 'Australia/Eucla'))
+      ).toEqual('10/1/2019, 00:00');
+      expect(
+        localizeAndFormatDate(intl, 'Europe/Helsinki', prevMonthFn(date, 'Europe/Helsinki'))
+      ).toEqual('10/1/2019, 00:00');
+      expect(
+        localizeAndFormatDate(intl, 'America/Los_Angeles', prevMonthFn(date, 'America/Los_Angeles'))
+      ).toEqual('10/1/2019, 00:00');
+    });
+  });
+
+  describe('timeOfDayFromLocalToTimeZone()', () => {
+    const formattingOptions = tz => {
+      const tzMaybe = tz ? { timeZone: tz } : {};
+      return {
+        year: 'numeric',
+        month: 'numeric',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false,
+        ...tzMaybe,
+      };
+    };
+
+    it('should return date in selected timezone America/New York', () => {
+      const date = new Date(2019, 10, 10, 0, 0, 0);
+      const tz = 'America/New_York';
+
+      const convertedDate = timeOfDayFromLocalToTimeZone(date, tz);
+      const testEnvFormattedDateTime = intl.formatDate(convertedDate, formattingOptions(tz));
+      const nyFormattedDateTime = intl.formatDate(date, formattingOptions());
+
+      expect(testEnvFormattedDateTime).toEqual(nyFormattedDateTime);
+    });
+
+    it('should return date in selected timezone Australia/Adelaide', () => {
+      const date = new Date(2019, 10, 10, 0, 0, 0);
+      const tz = 'Australia/Adelaide';
+      const convertedDate = timeOfDayFromLocalToTimeZone(date, tz);
+      const testEnvFormattedDateTime = intl.formatDate(convertedDate, formattingOptions(tz));
+      const adelFormattedDateTime = intl.formatDate(date, formattingOptions());
+
+      expect(testEnvFormattedDateTime).toEqual(adelFormattedDateTime);
+    });
+  });
+
+  describe('timeOfDayFromTimeZoneToLocal()', () => {
+    const formattingOptions = {
+      year: 'numeric',
+      month: 'numeric',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false,
+    };
+    it('should return date in selected timezone America/New_York', () => {
+      const date = new Date('Sun Nov 10 2019 00:00:00 GMT-0500 (Eastern Standard Time)');
+      const tz = 'America/New_York';
+
+      const convertedDate = timeOfDayFromTimeZoneToLocal(date, tz);
+      const testEnvFormattedDateTime = intl.formatDate(convertedDate, formattingOptions);
+      const nyFormattedDateTime = localizeAndFormatDate(intl, tz, date);
+
+      expect(testEnvFormattedDateTime).toEqual(nyFormattedDateTime);
+    });
+
+    it('should return date in selected timezone Australia/Adelaide', () => {
+      const date = new Date('Sun Nov 10 2019 00:00:00 GMT+1030 (Australian Central Daylight Time)');
+      const tz = 'Australia/Adelaide';
+
+      const convertedDate = timeOfDayFromTimeZoneToLocal(date, tz);
+      const testEnvFormattedDateTime = intl.formatDate(convertedDate, formattingOptions);
+      const adelFormattedDateTime = localizeAndFormatDate(intl, tz, date);
+
+      expect(testEnvFormattedDateTime).toEqual(adelFormattedDateTime);
+    });
+  });
+
+  describe('isInRange()', () => {
+    const startDate = new Date(Date.UTC(2019, 10, 10, 0, 0, 0));
+    const endDate = new Date(Date.UTC(2019, 10, 11, 12, 0, 0));
+
+    it('should return true if the date is inside range', () => {
+      const date = new Date(Date.UTC(2019, 10, 10, 12, 0, 0));
+      expect(isInRange(date, startDate, endDate)).toBeTruthy();
+    });
+
+    it('should return false if the date is outside range', () => {
+      const date = new Date(Date.UTC(2019, 10, 9, 12, 0, 0));
+      expect(isInRange(date, startDate, endDate)).toBeFalsy();
+    });
+
+    it('should return true if the date is inside day-range on correct time zone', () => {
+      const date = new Date('Wed Oct 16 2019 00:00:00 GMT-1100 (Samoa Standard Time)');
+      // aka new Date('Wed Oct 16 2019 23:00:00 GMT+1200 (Anadyr Standard Time)')
+
+      const start = new Date('Wed Oct 16 2019 00:00:00 GMT+1200 (Anadyr Standard Time)');
+      const end = new Date('Wed Oct 16 2019 09:00:00 GMT+1200 (Anadyr Standard Time)');
+
+      // Day scope in local time zone fails if you are running the test on environment using
+      // Samoa Standard Time (like Pacific/Pago_Pago).
+      // I.e. this fails: expect(isInRange(date, start, end, 'day')).toBeTruthy();
+
+      // Day scope in correct time zone succeeds
+      expect(isInRange(date, start, end, 'day', 'Asia/Anadyr')).toBeTruthy();
     });
   });
 });

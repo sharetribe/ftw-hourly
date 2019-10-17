@@ -40,6 +40,7 @@ exports[`BookingTimeForm matches snapshot without selected dates 1`] = `
     }
   }
   isOwnListing={false}
+  listingId={null}
   monthlyTimeSlots={
     Object {
       "2019-10": Object {
@@ -75,6 +76,7 @@ exports[`BookingTimeForm matches snapshot without selected dates 1`] = `
     }
   }
   onChange={[Function]}
+  onFetchTimeSlots={[Function]}
   onSubmit={[Function]}
   render={[Function]}
   startDateInputProps={

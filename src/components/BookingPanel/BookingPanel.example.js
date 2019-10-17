@@ -4,6 +4,7 @@ import { LISTING_STATE_CLOSED } from '../../util/types';
 import BookingPanel from './BookingPanel';
 import css from './BookingPanelExample.css';
 
+const noop = () => null;
 export const Default = {
   component: BookingPanel,
   props: {
@@ -14,6 +15,7 @@ export const Default = {
     subTitle: 'Hosted by Author N',
     authorDisplayName: 'Author Name',
     onManageDisableScrolling: () => null,
+    onFetchTimeSlots: noop,
   },
 };
 
@@ -29,6 +31,7 @@ export const WithClosedListing = {
     title: <span>Booking title</span>,
     subTitle: 'Hosted by Author N',
     authorDisplayName: 'Author Name',
-    onManageDisableScrolling: () => null,
+    onManageDisableScrolling: noop,
+    onFetchTimeSlots: noop,
   },
 };
