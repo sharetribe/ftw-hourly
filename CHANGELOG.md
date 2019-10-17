@@ -14,6 +14,8 @@ way to update this template, but currently, we follow a pattern:
 
 ## Upcoming version 2019-XX-XX
 
+- [fix] Fix BookingTimeForm and add monthly timeslots to picker.
+  [#13](https://github.com/sharetribe/ftw-time/pull/13)
 - [add] Add time-based dates to `BookingBreakdown` on `CheckoutPage`.
   [#11](https://github.com/sharetribe/ftw-time/pull/11)
 - [add] New components `BookingTimeForm` and `FieldDateAndTimeInput` for handling time-based
