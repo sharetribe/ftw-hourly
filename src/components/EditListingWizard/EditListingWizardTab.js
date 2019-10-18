@@ -81,7 +81,6 @@ const EditListingWizardTab = props => {
     newListingPublished,
     history,
     images,
-    availability,
     listing,
     handleCreateFlowTabScrolling,
     handlePublishListing,
@@ -237,7 +236,6 @@ const EditListingWizardTab = props => {
       return (
         <EditListingAvailabilityPanel
           {...panelProps(AVAILABILITY)}
-          availability={availability}
           submitButtonText={intl.formatMessage({ id: submitButtonTranslationKey })}
           onSubmit={values => {
             // We want to return the Promise to the form,
@@ -305,7 +303,6 @@ EditListingWizardTab.propTypes = {
     replace: func.isRequired,
   }).isRequired,
   images: array.isRequired,
-  availability: object.isRequired,
 
   // We cannot use propTypes.listing since the listing might be a draft.
   listing: shape({
