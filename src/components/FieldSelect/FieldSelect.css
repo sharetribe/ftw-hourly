@@ -14,6 +14,10 @@
   & > option:disabled {
     color: var(--matterColorAnti);
   }
+
+  &:disabled {
+    border-bottom-color: var(--matterColorNegative);
+  }
 }
 
 .selectSuccess {
