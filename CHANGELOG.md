@@ -14,6 +14,8 @@ way to update this template, but currently, we follow a pattern:
 
 ## Upcoming version 2019-XX-XX
 
+- [add] Add more tests to functions in `util/dates.js`.
+  [#11](https://github.com/sharetribe/ftw-time/pull/11)
 - [add] Update translations to use hour instead of unit.
   [#15](https://github.com/sharetribe/ftw-time/pull/15)
 - [fix] Fix BookingTimeForm and add monthly timeslots to picker.
