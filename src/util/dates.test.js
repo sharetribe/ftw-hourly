@@ -1,5 +1,4 @@
 import { createIntl, createIntlCache } from './reactIntl';
-import { fakeIntl } from './test-data';
 import {
   isDate,
   isInRange,
@@ -24,6 +23,10 @@ import {
   stringifyDateToISO8601,
   timeOfDayFromLocalToTimeZone,
   timeOfDayFromTimeZoneToLocal,
+  timestampToDate,
+  dateIsAfter,
+  resetToStartOfDay,
+  calculateQuantityFromHours,
 } from './dates';
 
 describe('date utils', () => {
@@ -323,6 +326,7 @@ describe('date utils', () => {
       ).toEqual('12/1/2019, 00:00');
     });
   });
+
   describe('prevMonthFn() for 2019-11-23', () => {
     it('should return correct start of the next month', () => {
       // November == 10
@@ -407,6 +411,39 @@ describe('date utils', () => {
     });
   });
 
+  describe('timestampToDate()', () => {
+    const date = new Date(Date.UTC(2019, 10, 10, 0, 0, 0));
+    it('should return timestamp as date', () => {
+      expect(timestampToDate(date.getTime())).toEqual(date);
+    });
+
+    it('should return timestamp string as date', () => {
+      expect(timestampToDate(date.getTime().toString())).toEqual(date);
+    });
+  });
+
+  describe('dateIsAfter()', () => {
+    const date = new Date(Date.UTC(2019, 10, 10, 12, 0, 0));
+    const nextHour = new Date(Date.UTC(2019, 10, 10, 13, 0, 0));
+    const nextDay = new Date(Date.UTC(2019, 10, 11, 12, 0, 0));
+
+    it('should return true when the other date is next day', () => {
+      expect(dateIsAfter(nextDay, date)).toBeTruthy();
+    });
+
+    it('should return true when the other date is next hout', () => {
+      expect(dateIsAfter(nextHour, date)).toBeTruthy();
+    });
+
+    it('should return false when the other date is previous day', () => {
+      expect(dateIsAfter(date, nextDay)).toBeFalsy();
+    });
+
+    it('should return true if the dates are same', () => {
+      expect(dateIsAfter(date, date)).toBeTruthy();
+    });
+  });
+
   describe('isInRange()', () => {
     const startDate = new Date(Date.UTC(2019, 10, 10, 0, 0, 0));
     const endDate = new Date(Date.UTC(2019, 10, 11, 12, 0, 0));
@@ -434,6 +471,34 @@ describe('date utils', () => {
 
       // Day scope in correct time zone succeeds
       expect(isInRange(date, start, end, 'day', 'Asia/Anadyr')).toBeTruthy();
+    });
+  });
+
+  describe('resetToStartOfDay()', () => {
+    const date = new Date(Date.UTC(2019, 10, 10, 12, 11, 11));
+
+    it('reset to start of day', () => {
+      expect(resetToStartOfDay(date, 'Etc/UTC')).toEqual(new Date(Date.UTC(2019, 10, 10, 0, 0, 0)));
+    });
+
+    it('reset to start of day with given offset', () => {
+      expect(resetToStartOfDay(date, 'Etc/UTC', 5)).toEqual(
+        new Date(Date.UTC(2019, 10, 15, 0, 0, 0))
+      );
+    });
+  });
+
+  describe('calculateQuantityFromHours()', () => {
+    const startDate = new Date(Date.UTC(2019, 10, 10, 12, 0, 0));
+    const endDate = new Date(Date.UTC(2019, 10, 10, 18, 0, 0));
+    const endDateNextDay = new Date(Date.UTC(2019, 10, 11, 18, 0, 0));
+
+    it('calculates the number of hours', () => {
+      expect(calculateQuantityFromHours(startDate, endDate)).toEqual(6);
+    });
+
+    it('calculates the number of hours when start and en are in different days', () => {
+      expect(calculateQuantityFromHours(startDate, endDateNextDay)).toEqual(30);
     });
   });
 });
