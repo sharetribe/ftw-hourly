@@ -299,7 +299,13 @@ export const fetchTimeSlots = (listingId, start, end, timeZone) => (dispatch, ge
 
   dispatch(fetchTimeSlotsRequest(monthId));
 
-  return dispatch(timeSlotsRequest({ listingId, start, end }))
+  // The maximum pagination page size for timeSlots is 500
+  const extraParams = {
+    per_page: 500,
+    page: 1,
+  };
+
+  return dispatch(timeSlotsRequest({ listingId, start, end, ...extraParams }))
     .then(timeSlots => {
       dispatch(fetchTimeSlotsSuccess(monthId, timeSlots));
     })
