@@ -9,12 +9,88 @@
   padding: 11px 24px 0 24px;
 }
 
-.form {
-  flex-grow: 1;
+.sectionHeader {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-top: 3px;
+  padding-bottom: 3px;
 }
 
 .title {
-  margin-bottom: 19px;
+  margin-bottom: 16px;
+}
+
+.defaultScheduleTitle {
+  @apply --marketplaceSearchFilterSublabelFontStyles;
+  color: var(--matterColorAnti);
+}
+.editPlanButton {
+  @apply --marketplaceH5FontStyles;
+  margin: 0;
+  padding-top: 5px;
+}
+.editPlanIcon {
+  margin: 0px 3px 4px 0;
+}
+
+.week {
+  display: flex;
+  flex-direction: column;
+  border-top: solid 1px var(--matterColorNegative);
+  border-right: solid 1px var(--matterColorNegative);
+  border-left: solid 1px var(--matterColorNegative);
+  border-radius: 4px;
+  margin-bottom: 24px;
+
+  & > .weekDay {
+    border-bottom: solid 1px var(--matterColorNegative);
+  }
+}
+
+.weekDay {
+  @apply --marketplaceTabNavHorizontalFontStyles;
+  display: flex;
+  flex-direction: row;
+  padding-top: 22px;
+  padding-bottom: 25px;
+  padding-right: 24px;
+  padding-left: 24px;
+}
+.dayOfWeek {
+  width: 100px;
+  @media (--viewportSmall) {
+    width: 200px;
+  }
+}
+
+.blockedWeekDay {
+  background-color: #f3f3f3;
+  & > .dayOfWeek {
+    color: var(--matterColorAnti);
+  }
+}
+
+.entries {
+}
+
+.entry {
+  display: block;
+}
+
+.exceptions {
+  margin-top: 24px;
+}
+
+.addExceptionButton {
+  margin-top: 24px;
+  margin-bottom: 24px;
+}
+
+.goToNextTabButton {
+  margin-top: auto;
+  margin-bottom: 24px;
+  flex-shrink: 0;
 }
 
 @media (--viewportLarge) {
@@ -22,4 +98,31 @@
     margin-bottom: 38px;
     padding: 1px 0 7px 0;
   }
+
+  .goToNextTabButton {
+    display: inline-block;
+    width: 241px;
+    margin-top: 62px;
+  }
+}
+
+.modalContainer {
+  @apply --marketplaceModalBaseStyles;
+  min-height: 100vh;
+  height: 100%;
+
+  padding-left: 0;
+  padding-right: 0;
+
+  background-color: var(--matterColorBright);
+
+  @media (--viewportMedium) {
+    flex-basis: 576px;
+    min-height: auto;
+    height: auto;
+  }
+}
+
+.error {
+  color: var(--failColor);
 }

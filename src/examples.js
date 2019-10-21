@@ -74,6 +74,7 @@ import * as UserDisplayName from './components/UserDisplayName/UserDisplayName.e
 // forms
 import * as BookingTimeForm from './forms/BookingTimeForm/BookingTimeForm.example';
 import * as FieldDateAndTimeInput from './forms/BookingTimeForm/FieldDateAndTimeInput.example';
+import * as EditListingAvailabilityPlanForm from './forms/EditListingAvailabilityPlanForm/EditListingAvailabilityPlanForm.example';
 import * as EditListingAvailabilityForm from './forms/EditListingAvailabilityForm/EditListingAvailabilityForm.example';
 import * as EditListingDescriptionForm from './forms/EditListingDescriptionForm/EditListingDescriptionForm.example';
 import * as EditListingFeaturesForm from './forms/EditListingFeaturesForm/EditListingFeaturesForm.example';
@@ -108,6 +109,7 @@ export {
   BookingPanel,
   Button,
   Colors,
+  EditListingAvailabilityPlanForm,
   EditListingAvailabilityForm,
   EditListingDescriptionForm,
   EditListingFeaturesForm,

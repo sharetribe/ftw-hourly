@@ -28,8 +28,3 @@
 .selectError {
   border-bottom-color: var(--failColor);
 }
-
-:disabled {
-  color: var(--matterColorNegative);
-  border-bottom-color: var(--matterColorNegative);
-}

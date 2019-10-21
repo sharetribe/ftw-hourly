@@ -45,7 +45,7 @@ const FieldSelectComponent = props => {
   const hasError = touched && invalid && error;
 
   const selectClasses = classNames(selectClassName, css.select, {
-    [css.selectSuccess]: valid,
+    [css.selectSuccess]: input.value && valid,
     [css.selectError]: hasError,
   });
 
