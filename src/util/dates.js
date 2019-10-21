@@ -475,6 +475,7 @@ export const resetToStartOfDay = (date, timeZone, offset = 0) => {
 export const monthIdString = date => moment(date).format('YYYY-MM');
 
 /**
+ * Not used with time-based process...
  * Format the given date to UTC month id/string
  *
  * @param {Date} date to be formatted
@@ -487,7 +488,7 @@ export const monthIdStringInUTC = date =>
     .format('YYYY-MM');
 
 /**
- * Format the given date to UTC month id/string
+ * Format the given date to a localized month id/string
  *
  * @param {Date} date to be formatted
  * @param {String} time zone.
@@ -574,6 +575,7 @@ export const stringifyDateToISO8601 = date => {
 };
 
 /**
+ * Not used with time-based process...
  * Formats string ('YYYY-MM-DD') to UTC format ('0000-00-00T00:00:00.000Z').
  * This is used in search query.
  *
@@ -586,6 +588,7 @@ export const formatDateStringToUTC = dateString => {
 };
 
 /**
+ * Not used with time-based process...
  * Formats string ('YYYY-MM-DD') to UTC format ('0000-00-00T00:00:00.000Z') and adds one day.
  * This is used as end date of the search query.
  * One day must be added because end of the availability is exclusive in API.

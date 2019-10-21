@@ -6,7 +6,6 @@ import { withRouter } from 'react-router-dom';
 import omit from 'lodash/omit';
 
 import routeConfiguration from '../../routeConfiguration';
-import { parseDateFromISO8601, stringifyDateToISO8601 } from '../../util/dates';
 import { createResourceLocatorString } from '../../util/routes';
 import {
   ModalInMobile,
@@ -15,7 +14,6 @@ import {
   PriceFilter,
   SelectSingleFilter,
   SelectMultipleFilter,
-  BookingDateRangeFilter,
 } from '../../components';
 import { propTypes } from '../../util/types';
 import css from './SearchFiltersMobile.css';
@@ -34,12 +32,10 @@ class SearchFiltersMobileComponent extends Component {
     this.handleSelectSingle = this.handleSelectSingle.bind(this);
     this.handleSelectMultiple = this.handleSelectMultiple.bind(this);
     this.handlePrice = this.handlePrice.bind(this);
-    this.handleDateRange = this.handleDateRange.bind(this);
     this.handleKeyword = this.handleKeyword.bind(this);
     this.initialValue = this.initialValue.bind(this);
     this.initialValues = this.initialValues.bind(this);
     this.initialPriceRangeValue = this.initialPriceRangeValue.bind(this);
-    this.initialDateRangeValue = this.initialDateRangeValue.bind(this);
   }
 
   // Open filters modal, set the initial parameters to current ones
@@ -105,21 +101,6 @@ class SearchFiltersMobileComponent extends Component {
     history.push(createResourceLocatorString('SearchPage', routeConfiguration(), {}, queryParams));
   }
 
-  handleDateRange(urlParam, dateRange) {
-    const { urlQueryParams, history } = this.props;
-    const hasDates = dateRange && dateRange.dates;
-    const { startDate, endDate } = hasDates ? dateRange.dates : {};
-
-    const start = startDate ? stringifyDateToISO8601(startDate) : null;
-    const end = endDate ? stringifyDateToISO8601(endDate) : null;
-
-    const queryParams =
-      start != null && end != null
-        ? { ...urlQueryParams, [urlParam]: `${start},${end}` }
-        : omit(urlQueryParams, urlParam);
-    history.push(createResourceLocatorString('SearchPage', routeConfiguration(), {}, queryParams));
-  }
-
   handleKeyword(urlParam, keywords) {
     const { urlQueryParams, history } = this.props;
     const queryParams = urlParam
@@ -166,21 +147,6 @@ class SearchFiltersMobileComponent extends Component {
       : null;
   }
 
-  initialDateRangeValue(paramName) {
-    const urlQueryParams = this.props.urlQueryParams;
-    const dates = urlQueryParams[paramName];
-    const rawValuesFromParams = !!dates ? dates.split(',') : [];
-    const valuesFromParams = rawValuesFromParams.map(v => parseDateFromISO8601(v));
-    const initialValues =
-      !!dates && valuesFromParams.length === 2
-        ? {
-            dates: { startDate: valuesFromParams[0], endDate: valuesFromParams[1] },
-          }
-        : { dates: null };
-
-    return initialValues;
-  }
-
   render() {
     const {
       rootClassName,
@@ -195,7 +161,6 @@ class SearchFiltersMobileComponent extends Component {
       categoryFilter,
       amenitiesFilter,
       priceFilter,
-      dateRangeFilter,
       keywordFilter,
       intl,
     } = this.props;
@@ -265,20 +230,6 @@ class SearchFiltersMobileComponent extends Component {
       />
     ) : null;
 
-    const initialDateRange = this.initialDateRangeValue(dateRangeFilter.paramName);
-
-    const dateRangeFilterElement =
-      dateRangeFilter && dateRangeFilter.config.active ? (
-        <BookingDateRangeFilter
-          id="SearchFiltersMobile.dateRangeFilter"
-          urlParam={dateRangeFilter.paramName}
-          onSubmit={this.handleDateRange}
-          liveEdit
-          showAsPopup={false}
-          initialValues={initialDateRange}
-        />
-      ) : null;
-
     const initialKeyword = this.initialValue(keywordFilter.paramName);
     const keywordLabel = intl.formatMessage({
       id: 'SearchFiltersMobile.keywordLabel',
@@ -333,7 +284,6 @@ class SearchFiltersMobileComponent extends Component {
               {categoryFilterElement}
               {amenitiesFilterElement}
               {priceFilterElement}
-              {dateRangeFilterElement}
             </div>
           ) : null}
 
@@ -358,7 +308,6 @@ SearchFiltersMobileComponent.defaultProps = {
   categoryFilter: null,
   amenitiesFilter: null,
   priceFilter: null,
-  dateRangeFilter: null,
 };
 
 SearchFiltersMobileComponent.propTypes = {
@@ -378,7 +327,6 @@ SearchFiltersMobileComponent.propTypes = {
   categoriesFilter: propTypes.filterConfig,
   amenitiesFilter: propTypes.filterConfig,
   priceFilter: propTypes.filterConfig,
-  dateRangeFilter: propTypes.filterConfig,
 
   // from injectIntl
   intl: intlShape.isRequired,
