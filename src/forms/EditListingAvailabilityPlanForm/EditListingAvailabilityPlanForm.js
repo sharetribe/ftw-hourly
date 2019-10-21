@@ -57,7 +57,7 @@ const filterStartHours = (availableStartHours, values, dayOfWeek, index) => {
   const pickBefore = time => h => h < time;
   const pickBetween = (start, end) => h => h >= start && h < end;
 
-  return !prevEntry
+  return !prevEntry || !prevEntry.endTime
     ? availableStartHours.filter(pickBefore(currentEntry.endTime))
     : availableStartHours.filter(pickBetween(prevEntry.endTime, currentEntry.endTime));
 };
