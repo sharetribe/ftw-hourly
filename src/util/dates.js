@@ -164,6 +164,15 @@ export const localizeAndFormatTime = (
   return localizeAndFormatDate(intl, timeZone, date, formattingOptions);
 };
 
+// NOTE: If your customization is using different time-units than hours
+// and different boundaries than sharp hours, you need to modify these functions:
+// - findBookingUnitBoundaries (DST changes)
+// - findNextBoundary
+// - getSharpHours
+// - getStartHours
+// - getEndHours
+// - calculateQuantityFromHours
+
 // Helper function for exported function: getSharpHours
 // Recursively find boundaries for bookable time slots.
 const findBookingUnitBoundaries = params => {
@@ -178,15 +187,24 @@ const findBookingUnitBoundaries = params => {
   } = params;
 
   if (moment(currentBoundary).isBetween(startMoment, endMoment, null, '[]')) {
+    const timeOfDay = localizeAndFormatTime(intl, timeZone, currentBoundary);
+    // Choose the previous (aka first) sharp hour boundary,
+    // if daylight saving time (DST) creates the same time of day two times.
+    const newBoundary =
+      cumulatedResults &&
+      cumulatedResults.length > 0 &&
+      cumulatedResults.slice(-1)[0].timeOfDay === timeOfDay
+        ? []
+        : [
+            {
+              timestamp: currentBoundary.valueOf(),
+              timeOfDay,
+            },
+          ];
+
     return findBookingUnitBoundaries({
       ...params,
-      cumulatedResults: [
-        ...cumulatedResults,
-        {
-          timestamp: currentBoundary.valueOf(),
-          timeOfDay: localizeAndFormatTime(intl, timeZone, currentBoundary),
-        },
-      ],
+      cumulatedResults: [...cumulatedResults, ...newBoundary],
       currentBoundary: moment(nextBoundaryFn(timeZone, currentBoundary)),
     });
   }
@@ -440,11 +458,14 @@ export const dateIsAfter = (date, compareToDate) => {
  */
 
 export const isInRange = (date, start, end, scope, timeZone) => {
+  // Range usually ends with 00:00, and with day scope,
+  // this means that exclusive end is wrongly taken into range.
+  const millisecondBeforeEndTime = new Date(end.getTime() - 1);
   return timeZone
     ? moment(date)
         .tz(timeZone)
-        .isBetween(start, end, scope, '[]')
-    : moment(date).isBetween(start, end, scope, '[]');
+        .isBetween(start, millisecondBeforeEndTime, scope, '[]')
+    : moment(date).isBetween(start, end, scope, '[)');
 };
 
 /**
