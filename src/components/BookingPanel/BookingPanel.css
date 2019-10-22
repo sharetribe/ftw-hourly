@@ -99,7 +99,10 @@
   flex-grow: 1;
   display: flex;
   flex-direction: column;
-  margin: 0 0 84px 0;
+  /* Mobile phones introduce bottom-bar, which takes 102px vertical space.
+     In addition to that we have fixed button that takes 84px vertical space.
+  */
+  margin: 0 0 186px 0;
 
   @media (--viewportMedium) {
     margin: 0;
