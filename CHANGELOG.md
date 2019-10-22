@@ -14,6 +14,8 @@ way to update this template, but currently, we follow a pattern:
 
 ## Upcoming version 2019-XX-XX
 
+- [fix] Due to DST, one sharp hour (03:00) happens twice a day.
+  [#19](https://github.com/sharetribe/ftw-time/pull/19)
 - [fix] Submit buttons need extra space to the end of the form on mobile browsers.
   [#18](https://github.com/sharetribe/ftw-time/pull/18)
 - [remove] `EditListingAvailabilityForm` component. It's for day-based process.
