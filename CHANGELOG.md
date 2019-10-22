@@ -14,10 +14,12 @@ way to update this template, but currently, we follow a pattern:
 
 ## Upcoming version 2019-XX-XX
 
+- [fix] Submit buttons need extra space to the end of the form on mobile browsers.
+  [#18](https://github.com/sharetribe/ftw-time/pull/18)
 - [remove] `EditListingAvailabilityForm` component. It's for day-based process.
   [#17](https://github.com/sharetribe/ftw-time/pull/17)
 - [add] AvailabilityPlan edit form created and `EditListingAvailabilityPanel` uses it.
-  [#18](https://github.com/sharetribe/ftw-time/pull/18)
+  [#8](https://github.com/sharetribe/ftw-time/pull/8)
 - [fix] Query up to 500 timeslots per request and fix border-bottom of disabled FieldSelect.
   [#16](https://github.com/sharetribe/ftw-time/pull/16)
 - [add] Add more tests to functions in `util/dates.js`.
