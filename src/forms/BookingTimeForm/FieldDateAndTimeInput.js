@@ -328,8 +328,11 @@ class FieldDateAndTimeInput extends Component {
     const localizedDay = timeOfDayFromLocalToTimeZone(day, timeZone);
     // Given day (endDate) should be after the start of the day of selected booking start date.
     const startDate = resetToStartOfDay(bookingStartDate, timeZone);
+    // 00:00 would return wrong day as the end date.
+    // Removing 1 millisecond, solves the exclusivity issue.
+    const inclusiveEnd = new Date(selectedTimeSlot.attributes.end.getTime() - 1);
     // Given day (endDate) should be before the "next" day of selected timeSlots end.
-    const endDate = resetToStartOfDay(selectedTimeSlot.attributes.end, timeZone, 1);
+    const endDate = resetToStartOfDay(inclusiveEnd, timeZone, 1);
     return !(dateIsAfter(localizedDay, startDate) && dateIsAfter(endDate, localizedDay));
   }
 
