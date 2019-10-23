@@ -152,6 +152,8 @@
 .submitButton {
   margin-top: auto;
   flex-shrink: 0;
+  /* Mobile phones introduce bottom-bar, for which we need to give 96px vertical space */
+  padding-bottom: 96px;
 }
 
 @media (--viewportMedium) {
@@ -165,6 +167,10 @@
 
   .buttonAddNew {
     margin-bottom: 6px;
+  }
+
+  .submitButton {
+    padding-bottom: unset;
   }
 }
 
