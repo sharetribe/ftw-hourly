@@ -260,6 +260,10 @@
     background-position: 0 8px;
     padding-left: 24px;
 
+    &:hover {
+      border-bottom-color: var(--matterColorNegative);
+    }
+
     @media (--viewportMedium) {
       padding: 4px 0 9px 24px;
       border-bottom-width: 3px;
