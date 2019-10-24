@@ -14,6 +14,8 @@ way to update this template, but currently, we follow a pattern:
 
 ## Upcoming version 2019-XX-XX
 
+- [fix] Make the time selects fixed with on `EditListingPage` and add hover color to remove entry
+  icon. [#22](https://github.com/sharetribe/ftw-time/pull/22)
 - [fix] BookingTimeForm: do not pick exclusive end date from selected timeslot
   [#21](https://github.com/sharetribe/ftw-time/pull/21)
 - [fix] Due to DST, one sharp hour (03:00) happens twice a day.
