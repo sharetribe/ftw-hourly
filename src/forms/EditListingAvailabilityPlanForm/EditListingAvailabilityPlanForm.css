@@ -131,6 +131,10 @@
   stroke: none;
   fill: var(--matterColorAnti);
 
+  &:hover {
+    fill: var(--matterColor);
+  }
+
   /* align icon with the select fields */
   padding: 2px 0 11px;
 }
@@ -187,7 +191,7 @@
   padding-right: 0;
   padding-top: 8px;
   padding-bottom: 8px;
-  max-width: 48px;
+  width: 42px;
 
   &:select {
     margin-right: 0;
