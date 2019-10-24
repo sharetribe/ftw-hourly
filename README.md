@@ -7,11 +7,10 @@
 > instead.
 
 This is a **beta** version of the template web application for a Sharetribe Flex marketplace using
-**time-based booking process**. This means that we are going to customize the template heavily later
-on: changing translations, marketplace colors, logo, landing page and so on. Also, you should note
-that currently, there isn't any way to add, remove or view availability exceptions.
+**time-based booking process**. Many things in the template, from things like default content pages and marketplace colors and styling, are likely to change in the coming weeks.
+on: changing translations, marketplace colors, logo, landing page and so on. Also, adding, removing or viewing availability exceptions as a provider is not yet supported. This support will be added later.
 
-Essentially this repository is a fork from the existing FTW repository (which is using nightly
+This repository is a fork from the existing FTW repository (which is using nightly
 booking process). So, if you have started working with the original FTW repository and you want to
 change to FTW-time, you can
 [change the 'upstream' remote repository](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/configuring-a-remote-for-a-fork).
