@@ -10,9 +10,14 @@ way to update this template, but currently, we follow a pattern:
   cause conflicts.
 - Patch (v0.0.**X**): Bug fixes and small changes to components.
 
+Note: ftw-time@vx.x.x referers to updates made specifically to this repository. Previous ones are
+coming from upstream: https://github.com/sharetribe/flex-template-web/
+
 ---
 
 ## Upcoming version 2019-XX-XX
+
+## [ftw-time@v1.0.0] 2019-10-25
 
 - [add] Add default process and email templates to `ext/transaction-process`.
   [#20](https://github.com/sharetribe/ftw-time/pull/20)
