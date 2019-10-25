@@ -14,6 +14,8 @@ way to update this template, but currently, we follow a pattern:
 
 ## Upcoming version 2019-XX-XX
 
+- [add] Add default process and email templates to `ext/transaction-process`.
+  [#20](https://github.com/sharetribe/ftw-time/pull/20)
 - [fix] BookingTimeForm: UI improvements to date and time pickers.
   [#23](https://github.com/sharetribe/ftw-time/pull/23)
 - [fix] Make the time selects fixed with on `EditListingPage` and add hover color to remove entry
