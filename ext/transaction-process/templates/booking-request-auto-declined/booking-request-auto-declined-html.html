@@ -1,6 +1,8 @@
 
 {{~#*inline "format-date"~}}
-{{date date format="MMM d, YYYY"}}
+{{#with transaction.listing.availability-plan}}
+{{date d format="hh:mm a" tz=timezone}} on {{date date format="MMM d, YYYY" tz=timezone}}
+{{/with}}
 {{~/inline~}}
 
 <html>
