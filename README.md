@@ -40,7 +40,7 @@ yarn run dev                                                   # start the dev s
 You can also follow along the
 [Getting started with FTW](https://www.sharetribe.com/docs/tutorials/getting-started-with-ftw/)
 tutorial and read the background article about
-[Time-based template](https://www.sharetribe.com/docs/background/ftw-time) from the
+[Time-based template](https://www.sharetribe.com/docs/background/time-based-template/) from the
 [Flex Docs website](https://www.sharetribe.com/docs/).
 
 For more information of the configuration, see the
