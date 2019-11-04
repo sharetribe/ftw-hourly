@@ -19,6 +19,13 @@ https://github.com/sharetribe/flex-template-web/
 
 ## [v4.1.0] 2019-11-04
 
+### One change in this template
+
+- [fix] change console.warning to console.warn and remove examples from FieldDateRangeInput
+  component (the component is not updated to work with time-based availability).
+
+### Changes from upstream
+
 - [change] update react-dates from 20.3.0 to 21.3.1
   [#1223](https://github.com/sharetribe/flex-template-web/pull/1223)
 - [change] Update helmet from 3.18.0 to 3.21.2
