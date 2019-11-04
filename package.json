@@ -1,6 +1,6 @@
 {
   "name": "app",
-  "version": "ftw-time@v1.0.0",
+  "version": "v4.0.0",
   "private": true,
   "license": "Apache-2.0",
   "dependencies": {

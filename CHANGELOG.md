@@ -17,7 +17,7 @@ coming from upstream: https://github.com/sharetribe/flex-template-web/
 
 ## Upcoming version 2019-XX-XX
 
-## [ftw-time@v1.0.0] 2019-10-25
+## [v4.0.0] 2019-10-25
 
 - [add] Add default process and email templates to `ext/transaction-process`.
   [#20](https://github.com/sharetribe/ftw-time/pull/20)
@@ -59,6 +59,8 @@ coming from upstream: https://github.com/sharetribe/flex-template-web/
   [#5](https://github.com/sharetribe/ftw-time/pull/5)
 - [add] add FieldTimeZoneSelect component and a script that can extract IANA time zone keys from
   moment-timezone's JSON formatted files. [#2](https://github.com/sharetribe/ftw-time/pull/2)
+
+  [v4.0.0]: https://github.com/sharetribe/flex-template-web/compare/v3.5.1...v4.0.0
 
 ## [v3.5.1] 2019-09-17
 
