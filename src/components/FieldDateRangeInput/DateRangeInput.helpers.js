@@ -15,7 +15,7 @@ const timeSlotEqualsDay = (timeSlot, day) => {
     const localStartDate = timeSlot.attributes.start;
 
     // TODO: this needs to be fixed. We should create another function that checks daily availability.
-    console.warning(
+    console.warn(
       'DateInput, timeSlotEqualsDay function is deprecated. It does not work with time-based process.'
     );
 

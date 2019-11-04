@@ -17,6 +17,11 @@ So, if you have started working with the original FTW repository and you want to
 you can
 [change the 'upstream' remote repository](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/configuring-a-remote-for-a-fork).
 
+> Note: we have created [another template](https://github.com/sharetribe/ftw-time) for time-based
+> processes. It is still in **beta** mode, but if you are taking time-based booking process into use,
+> you should consider using it instead. You can read more from the related
+> [Flex Docs article](https://www.sharetribe.com/docs/background/time-based-template)
+
 ## Quick start
 
 > **Note:** this template assumes that you are using
@@ -74,6 +79,11 @@ guide in Flex Docs for more information.
 See the Flex Docs site: https://www.sharetribe.com/docs/
 
 See also the [docs/](docs/) directory for some additional internal documentation.
+
+## Get help – join Sharetribe Flex Developer Slack channel
+
+If you have any questions about development, the best place to ask them is the Flex Developer Slack
+channel at https://www.sharetribe.com/flex-slack
 
 ## License
 
