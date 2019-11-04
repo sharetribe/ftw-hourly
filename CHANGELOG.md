@@ -17,6 +17,31 @@ https://github.com/sharetribe/flex-template-web/
 
 ## Upcoming version 2019-XX-XX
 
+## [v4.1.0] 2019-11-04
+
+- [change] update react-dates from 20.3.0 to 21.3.1
+  [#1223](https://github.com/sharetribe/flex-template-web/pull/1223)
+- [change] Update helmet from 3.18.0 to 3.21.2
+  [#1225](https://github.com/sharetribe/flex-template-web/pull/1225)
+- [change] Update @sentry/browser and @sentry/node from 5.6.2 to 5.7.1. Due to some refactoring
+  Sentry has done internally which is included to this update, you might need to remove
+  `node_modules` and run `yarn install` again.
+  [#1224](https://github.com/sharetribe/flex-template-web/pull/1224)
+- [add] Add default timezone to date formatting in example transaction process email templates.
+  [#1227](https://github.com/sharetribe/flex-template-web/pull/1227)
+- [change] Update @formatjs/intl-relativetimeformat from 2.8.3 to 4.2.1
+  [#1222](https://github.com/sharetribe/flex-template-web/pull/1222)
+- [fix] Use currency of the `lineItem` on every line of the `BookingBreakdown` if possible.
+  [#1221](https://github.com/sharetribe/flex-template-web/pull/1221)
+- [fix] AvailabilityPlan doesn't need to have entries for every day.
+  [#1214](https://github.com/sharetribe/flex-template-web/pull/1214)
+- [change] Default transaction process alias changed.
+  [#1219](https://github.com/sharetribe/flex-template-web/pull/1219)
+- [change] Add default tx process definition. Remove default email templates.
+  [#1220](https://github.com/sharetribe/flex-template-web/pull/1220)
+
+  [v4.1.0]: https://github.com/sharetribe/flex-template-web/compare/v4.0.0...v4.1.0
+
 ## [v4.0.0] 2019-10-25
 
 - [add] Add default process and email templates to `ext/transaction-process`.

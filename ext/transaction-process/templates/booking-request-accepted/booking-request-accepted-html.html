@@ -1,6 +1,5 @@
-
 {{~#*inline "format-money"~}}
-{{money-amount money}} {{money.currency}}
+{{money-amount money}} {{ money.currency }}
 {{~/inline~}}
 
 {{~#*inline "format-date"~}}
@@ -24,36 +23,41 @@
 <html>
   <head>
     <style type="text/css">
-     table {
-       border-collapse: collapse;
-     }
-     .left {
-       text-align: left;
-     }
-     .right {
-       text-align: right;
-       padding-left: 20px;
-     }
-     .bottom-row > td {
-       padding-bottom: 5px;
-     }
-     .top-row {
-       border-top: 1px solid #CCC;
-     }
-     .top-row > td,
-     .top-row > th
-     {
-       padding-top: 5px;
-     }
+      table {
+        border-collapse: collapse;
+      }
+      .left {
+        text-align: left;
+      }
+      .right {
+        text-align: right;
+        padding-left: 20px;
+      }
+      .bottom-row > td {
+        padding-bottom: 5px;
+      }
+      .top-row {
+        border-top: 1px solid #ccc;
+      }
+      .top-row > td,
+      .top-row > th {
+        padding-top: 5px;
+      }
     </style>
   </head>
   <body>
     <h1>Your booking request was accepted!</h1>
 
     {{#with transaction}}
-    <p>{{provider.display-name}} has accepted your booking request for {{listing.title}} from {{> format-date date=booking.start}} to {{> format-date date=booking.end}}.</p>
+    <p>
+      {{ provider.display - name }} has accepted your booking request for {{ listing.title }} from
+      {{> format-date date=booking.start}} to {{> format-date date=booking.end}}.
+    </p>
 
-    <p>We have charged {{> format-money money=payin-total}} from your credit card. Here's your receipt.</p>
+    <p>
+      We have charged {{> format-money money=payin-total}} from your credit card. Here's your
+      receipt.
+    </p>
 
     <table>
       <thead>
@@ -62,8 +66,8 @@
           <td class="right">End date</td>
         </tr>
         <tr>
-            <th class="left">{{> format-day-time date=booking.start}}</th>
-            <th class="right">{{> format-day-time date=booking.end}}</th>
+          <th class="left">{{> format-day-time date=booking.start}}</th>
+          <th class="right">{{> format-day-time date=booking.end}}</th>
         </tr>
         <tr class="bottom-row">
           <th class="left">{{> format-month-date date=booking.start format="MMM d"}}</th>
@@ -71,24 +75,30 @@
         </tr>
       </thead>
       <tbody>
-      {{#each tx-line-items}}
+        {{#each tx-line-items}}
         {{#contains include-for "customer"}}
-          {{#eq "line-item/units" code}}
-            {{#if seats}}
-            <tr class="top-row">
-              <td colspan="2">{{> format-money money=unit-price}} &times; {{number units}} {{inflect units "unit" "units"}}</td>
-            </tr>
-            <tr class="bottom-row">
-              <td colspan="2">Seats &times; {{number seats}}</td>
-            </tr>
-            {{else}}
-            <tr class="top-row bottom-row">
-              <td colspan="2">{{> format-money money=unit-price}} &times; {{number quantity}} {{inflect quantity "unit" "units"}}</td>
-            </tr>
-            {{/if}}
-          {{/eq}}
+        {{#eq "line-item/units" code}}
+        {{#if seats}}
+        <tr class="top-row">
+          <td colspan="2">
+            {{> format-money money=unit-price}} &times; {{number units}}
+            {{inflect units "unit" "units"}}
+          </td>
+        </tr>
+        <tr class="bottom-row">
+          <td colspan="2">Seats &times; {{number seats}}</td>
+        </tr>
+        {{else}}
+        <tr class="top-row bottom-row">
+          <td colspan="2">
+            {{> format-money money=unit-price}} &times; {{number quantity}}
+            {{inflect quantity "unit" "units"}}
+          </td>
+        </tr>
+        {{/if}}
+        {{/eq}}
         {{/contains}}
-      {{/each}}
+        {{/each}}
       </tbody>
       <tfoot>
         <tr class="top-row">
@@ -102,6 +112,9 @@
 
     <hr />
 
-    <p>You have received this email notification because you are a member of {{marketplace.name}}. If you no longer wish to receive these emails, please contact {{marketplace.name}} team.</p>
+    <p>
+      You have received this email notification because you are a member of {{ marketplace.name }}.
+      If you no longer wish to receive these emails, please contact {{ marketplace.name }} team.
+    </p>
   </body>
 </html>
