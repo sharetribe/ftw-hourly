@@ -10,8 +10,8 @@ way to update this template, but currently, we follow a pattern:
   cause conflicts.
 - Patch (v0.0.**X**): Bug fixes and small changes to components.
 
-Note: ftw-time@vx.x.x referers to updates made specifically to this repository. Previous ones are
-coming from upstream: https://github.com/sharetribe/flex-template-web/
+Note: Previous release tags (before v4.0.0) are coming from upstream:
+https://github.com/sharetribe/flex-template-web/
 
 ---
 
