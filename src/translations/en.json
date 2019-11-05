@@ -446,6 +446,8 @@
   "NotFoundPage.description": "We can't find the page or sauna you're looking for. Make sure you've typed in the URL correctly or try searching Saunatime.",
   "NotFoundPage.heading": "Sorry, we couldn't find that page.",
   "NotFoundPage.title": "Page not found",
+  "OwnListingLink.addYourListingLink": "Add a listing",
+  "OwnListingLink.editYourListingLink": "Edit the listing",
   "Page.schemaDescription": "Book a sauna using Saunatime or earn some income by sharing your sauna",
   "Page.schemaTitle": "Book saunas everywhere | {siteTitle}",
   "PaginationLinks.next": "Next page",

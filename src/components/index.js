@@ -129,6 +129,7 @@ export { default as ListingCard } from './ListingCard/ListingCard';
 export { default as ManageListingCard } from './ManageListingCard/ManageListingCard';
 export { default as Map } from './Map/Map';
 export { default as OrderDiscussionPanel } from './OrderDiscussionPanel/OrderDiscussionPanel';
+export { default as OwnListingLink } from './OwnListingLink/OwnListingLink';
 export { default as Page } from './Page/Page';
 export { default as PriceFilter } from './PriceFilter/PriceFilter';
 export { default as Reviews } from './Reviews/Reviews';
