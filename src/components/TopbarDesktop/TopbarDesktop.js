@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
+import { bool, func, object, number, string } from 'prop-types';
 import { FormattedMessage, intlShape } from '../../util/reactIntl';
 import classNames from 'classnames';
 import { ACCOUNT_SETTINGS_PAGES } from '../../routeConfiguration';
@@ -13,6 +13,7 @@ import {
   MenuContent,
   MenuItem,
   NamedLink,
+  OwnListingLink,
 } from '../../components';
 import { TopbarSearchForm } from '../../forms';
 
@@ -25,6 +26,7 @@ const TopbarDesktop = props => {
     currentPage,
     rootClassName,
     currentUserHasListings,
+    currentUserListing,
     notificationCount,
     intl,
     isAuthenticated,
@@ -79,14 +81,8 @@ const TopbarDesktop = props => {
         <Avatar className={css.avatar} user={currentUser} disableProfileLink />
       </MenuLabel>
       <MenuContent className={css.profileMenuContent}>
-        <MenuItem key="ManageListingsPage">
-          <NamedLink
-            className={classNames(css.yourListingsLink, currentPageClass('ManageListingsPage'))}
-            name="ManageListingsPage"
-          >
-            <span className={css.menuItemBorder} />
-            <FormattedMessage id="TopbarDesktop.yourListingsLink" />
-          </NamedLink>
+        <MenuItem key="EditListingPage">
+          <OwnListingLink listing={currentUserListing} />
         </MenuItem>
         <MenuItem key="ProfileSettingsPage">
           <NamedLink
@@ -155,8 +151,6 @@ const TopbarDesktop = props => {
   );
 };
 
-const { bool, func, object, number, string } = PropTypes;
-
 TopbarDesktop.defaultProps = {
   rootClassName: null,
   className: null,
@@ -164,12 +158,14 @@ TopbarDesktop.defaultProps = {
   currentPage: null,
   notificationCount: 0,
   initialSearchFormValues: {},
+  currentUserListing: null,
 };
 
 TopbarDesktop.propTypes = {
   rootClassName: string,
   className: string,
   currentUserHasListings: bool.isRequired,
+  currentUserListing: propTypes.ownListing,
   currentUser: propTypes.currentUser,
   currentPage: string,
   isAuthenticated: bool.isRequired,
