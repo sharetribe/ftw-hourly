@@ -6,6 +6,12 @@ exports[`EditListingPageComponent matches snapshot 1`] = `
   title="EditListingPage.titleCreateListing"
 >
   <withRouter(Connect(TopbarContainerComponent)) />
+  <UserNav
+    className={null}
+    listing={null}
+    rootClassName={null}
+    selectedPageName="NewListingPage"
+  />
   <withViewport(injectIntl(EditListingWizard))
     currentUser={null}
     errors={
@@ -56,5 +62,6 @@ exports[`EditListingPageComponent matches snapshot 1`] = `
       }
     }
   />
+  <injectIntl(Footer) />
 </Page>
 `;

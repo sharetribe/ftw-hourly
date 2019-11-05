@@ -418,14 +418,11 @@
   "ManageListingCard.unsupportedPrice": "({currency})",
   "ManageListingCard.unsupportedPriceTitle": "Unsupported currency ({currency})",
   "ManageListingCard.viewListing": "View listing",
-  "ManageListingsPage.accountSettings": "Account settings",
   "ManageListingsPage.loadingOwnListings": "Loading listings…",
   "ManageListingsPage.noResults": "You don't have any listings.",
-  "ManageListingsPage.profileSettings": "Profile settings",
   "ManageListingsPage.queryError": "Query failed. Please try again.",
   "ManageListingsPage.title": "Manage listings",
   "ManageListingsPage.youHaveListings": "You have {count} {count, plural, one {listing} other {listings}}",
-  "ManageListingsPage.yourListings": "Your listings",
   "MapPriceMarker.unsupportedPrice": "({currency})",
   "Modal.close": "CLOSE",
   "Modal.closeModal": "Close modal",
@@ -988,5 +985,9 @@
   "UserCard.showFullBioLink": "more",
   "UserCard.viewProfileLink": "View profile",
   "UserDisplayName.banned": "Banned user",
-  "UserDisplayName.deleted": "Deleted user"
+  "UserDisplayName.deleted": "Deleted user",
+  "UserNav.newListing": "Add new listing",
+  "UserNav.editListing": "Edit listing",
+  "UserNav.profileSettingsPage": "Profile settings",
+  "UserNav.contactDetailsPage": "Account settings"
 }
