@@ -5,11 +5,10 @@
  * you should convert value.date to start date and end date before submitting it to API
  */
 import React, { Component } from 'react';
-import { arrayOf, bool, func, object, string } from 'prop-types';
+import { bool, func, object, string } from 'prop-types';
 import { Field } from 'react-final-form';
 import classNames from 'classnames';
 import { ValidationError } from '../../components';
-import { propTypes } from '../../util/types';
 
 import DateInput from './DateInput';
 import css from './FieldDateInput.css';
@@ -108,8 +107,8 @@ FieldDateInputComponent.defaultProps = {
   label: null,
   showLabelAsDisabled: false,
   placeholderText: null,
-  timeSlots: null,
   onChange: null,
+  isDayBlocked: null,
 };
 
 FieldDateInputComponent.propTypes = {
@@ -121,10 +120,10 @@ FieldDateInputComponent.propTypes = {
   label: string,
   showLabelAsDisabled: bool,
   placeholderText: string,
-  timeSlots: arrayOf(propTypes.timeSlot),
   input: object.isRequired,
   meta: object.isRequired,
   onChange: func,
+  isDayBlocked: func,
 };
 
 const FieldDateInput = props => {

@@ -740,3 +740,28 @@ export const formatDateToText = (intl, date, timeZone) => {
 export const calculateQuantityFromHours = (startDate, endDate) => {
   return moment(endDate).diff(moment(startDate), 'hours', true);
 };
+
+// Checks if time-range contains a day (moment)
+// Returns true if the day is inside the range or if the time-range
+// starts or ends between start and end of the day.
+//
+// By default react-dates handles dates in the browser's timezone so
+// we need to convert the value `day` to given timezone before comparing it
+// to time-range.
+export const isDayMomentInsideRange = (dayMoment, start, end, timeZone) => {
+  const startOfDay = moment.tz(dayMoment.toArray().slice(0, 3), timeZone);
+  const endOfDay = startOfDay.clone().add(1, 'days');
+
+  const startDate = moment.tz(start, timeZone);
+  const endDate = moment.tz(end, timeZone);
+
+  if (startOfDay.isSameOrAfter(startDate) && endDate.isSameOrAfter(endOfDay)) {
+    return true;
+  } else if (startDate.isBetween(startOfDay, endOfDay, null, '[)')) {
+    return true;
+  } else if (endDate.isBetween(startOfDay, endOfDay, null, '[)')) {
+    return true;
+  }
+
+  return false;
+};

@@ -17,6 +17,8 @@ https://github.com/sharetribe/flex-template-web/
 
 ## Upcoming version 2019-XX-XX
 
+- [change] Move isDayBlocked prop to FieldDateAndTimeInput.
+  [#32](https://github.com/sharetribe/ftw-time/pull/32)
 - [change] Extract TimeRange component away from BookingTimeInfo. Updates also FieldRadioButton,
   IconClose, and removes unused translations (EditListingAvailabilityForm was removed).
   [#31](https://github.com/sharetribe/ftw-time/pull/31)

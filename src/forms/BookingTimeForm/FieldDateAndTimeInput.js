@@ -7,6 +7,7 @@ import {
   getEndHours,
   isInRange,
   isSameDate,
+  isDayMomentInsideRange,
   resetToStartOfDay,
   timeOfDayFromLocalToTimeZone,
   timeOfDayFromTimeZoneToLocal,
@@ -401,6 +402,18 @@ class FieldDateAndTimeInput extends Component {
       selectedTimeSlot
     );
 
+    const isDayBlocked = timeSlotsOnSelectedMonth
+      ? day =>
+          !timeSlotsOnSelectedMonth.find(timeSlot =>
+            isDayMomentInsideRange(
+              day,
+              timeSlot.attributes.start,
+              timeSlot.attributes.end,
+              timeZone
+            )
+          )
+      : () => false;
+
     const placeholderTime = localizeAndFormatTime(
       intl,
       timeZone,
@@ -423,8 +436,7 @@ class FieldDateAndTimeInput extends Component {
               parse={v =>
                 v && v.date ? { date: timeOfDayFromLocalToTimeZone(v.date, timeZone) } : v
               }
-              timeSlots={timeSlotsOnSelectedMonth}
-              timeZone={timeZone}
+              isDayBlocked={isDayBlocked}
               onChange={this.onBookingStartDateChange}
               onPrevMonthClick={() => this.onMonthClick(prevMonthFn)}
               onNextMonthClick={() => this.onMonthClick(nextMonthFn)}
@@ -471,8 +483,7 @@ class FieldDateAndTimeInput extends Component {
               parse={v =>
                 v && v.date ? { date: timeOfDayFromLocalToTimeZone(v.date, timeZone) } : v
               }
-              timeSlots={timeSlotsOnSelectedDate}
-              timeZone={timeZone}
+              isDayBlocked={isDayBlocked}
               onChange={this.onBookingEndDateChange}
               onPrevMonthClick={() => this.onMonthClick(prevMonthFn)}
               onNextMonthClick={() => this.onMonthClick(nextMonthFn)}
