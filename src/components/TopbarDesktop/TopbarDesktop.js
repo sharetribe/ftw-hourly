@@ -4,6 +4,7 @@ import { FormattedMessage, intlShape } from '../../util/reactIntl';
 import classNames from 'classnames';
 import { ACCOUNT_SETTINGS_PAGES } from '../../routeConfiguration';
 import { propTypes } from '../../util/types';
+import { createSlug } from '../../util/urlHelpers';
 import {
   Avatar,
   InlineTextButton,
@@ -128,6 +129,27 @@ const TopbarDesktop = props => {
     </NamedLink>
   );
 
+  const listingLink = currentUserListing ? (
+    <NamedLink
+      className={css.createListingLink}
+      name="ListingPage"
+      params={{
+        id: currentUserListing.id.uuid,
+        slug: createSlug(currentUserListing.attributes.title),
+      }}
+    >
+      <span className={css.createListing}>
+        <FormattedMessage id="TopbarDesktop.viewListing" />
+      </span>
+    </NamedLink>
+  ) : (
+    <NamedLink className={css.createListingLink} name="NewListingPage">
+      <span className={css.createListing}>
+        <FormattedMessage id="TopbarDesktop.createListing" />
+      </span>
+    </NamedLink>
+  );
+
   return (
     <nav className={classes}>
       <NamedLink className={css.logoLink} name="LandingPage">
@@ -138,11 +160,7 @@ const TopbarDesktop = props => {
         />
       </NamedLink>
       {search}
-      <NamedLink className={css.createListingLink} name="NewListingPage">
-        <span className={css.createListing}>
-          <FormattedMessage id="TopbarDesktop.createListing" />
-        </span>
-      </NamedLink>
+      {listingLink}
       {inboxLink}
       {profileMenu}
       {signupLink}
