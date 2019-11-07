@@ -3,11 +3,7 @@ import { NamedLink } from '../../components';
 import { FormattedMessage } from '../../util/reactIntl';
 import { ensureOwnListing } from '../../util/data';
 import { LISTING_STATE_DRAFT } from '../../util/types';
-import {
-  LISTING_PAGE_PARAM_TYPE_DRAFT,
-  LISTING_PAGE_PARAM_TYPE_EDIT,
-  createSlug,
-} from '../../util/urlHelpers';
+import { getListingType, createSlug } from '../../util/urlHelpers';
 
 import css from './OwnListingLink.css';
 
@@ -35,7 +31,7 @@ const OwnListingLink = props => {
       params={{
         id,
         slug,
-        type: isDraft ? LISTING_PAGE_PARAM_TYPE_DRAFT : LISTING_PAGE_PARAM_TYPE_EDIT,
+        type: getListingType(isDraft),
         tab: 'photos',
       }}
     >

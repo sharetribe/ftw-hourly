@@ -6,11 +6,7 @@ import { ACCOUNT_SETTINGS_PAGES } from '../../routeConfiguration';
 import { LinkTabNavHorizontal } from '../../components';
 import { ensureOwnListing } from '../../util/data';
 import { LISTING_STATE_DRAFT } from '../../util/types';
-import {
-  LISTING_PAGE_PARAM_TYPE_DRAFT,
-  LISTING_PAGE_PARAM_TYPE_EDIT,
-  createSlug,
-} from '../../util/urlHelpers';
+import { getListingType, createSlug } from '../../util/urlHelpers';
 
 import css from './UserNav.css';
 
@@ -38,7 +34,7 @@ const listingTab = (listing, selectedPageName) => {
       params: {
         id,
         slug,
-        type: isDraft ? LISTING_PAGE_PARAM_TYPE_DRAFT : LISTING_PAGE_PARAM_TYPE_EDIT,
+        type: getListingType(isDraft),
         tab: 'photos',
       },
     },
