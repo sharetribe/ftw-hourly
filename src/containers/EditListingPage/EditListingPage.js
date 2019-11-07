@@ -17,7 +17,7 @@ import { ensureOwnListing } from '../../util/data';
 import { getMarketplaceEntities } from '../../ducks/marketplaceData.duck';
 import { manageDisableScrolling, isScrollingDisabled } from '../../ducks/UI.duck';
 import { stripeAccountClearError, createStripeAccount } from '../../ducks/stripe.duck';
-import { EditListingWizard, NamedRedirect, Page } from '../../components';
+import { EditListingWizard, Footer, NamedRedirect, Page, UserNav } from '../../components';
 import { TopbarContainer } from '../../containers';
 
 import {
@@ -64,7 +64,8 @@ export const EditListingPageComponent = props => {
   const isDraftURI = type === LISTING_PAGE_PARAM_TYPE_DRAFT;
 
   const listingId = page.submittedListingId || (id ? new UUID(id) : null);
-  const currentListing = ensureOwnListing(getOwnListing(listingId));
+  const listing = getOwnListing(listingId);
+  const currentListing = ensureOwnListing(listing);
   const { state: currentListingState } = currentListing.attributes;
 
   const isPastDraft = currentListingState && currentListingState !== LISTING_STATE_DRAFT;
@@ -146,6 +147,10 @@ export const EditListingPageComponent = props => {
           desktopClassName={css.desktopTopbar}
           mobileClassName={css.mobileTopbar}
         />
+        <UserNav
+          selectedPageName={listing ? 'EditListingPage' : 'NewListingPage'}
+          listing={listing}
+        />
         <EditListingWizard
           id="EditListingWizard"
           className={css.wizard}
@@ -171,6 +176,7 @@ export const EditListingPageComponent = props => {
           updatedTab={page.updatedTab}
           updateInProgress={page.updateInProgress || page.createListingDraftInProgress}
         />
+        <Footer />
       </Page>
     );
   } else {
@@ -180,7 +186,19 @@ export const EditListingPageComponent = props => {
       id: 'EditListingPage.loadingListingData',
     };
     return (
-      <Page title={intl.formatMessage(loadingPageMsg)} scrollingDisabled={scrollingDisabled} />
+      <Page title={intl.formatMessage(loadingPageMsg)} scrollingDisabled={scrollingDisabled}>
+        <TopbarContainer
+          className={css.topbar}
+          mobileRootClassName={css.mobileTopbar}
+          desktopClassName={css.desktopTopbar}
+          mobileClassName={css.mobileTopbar}
+        />
+        <UserNav
+          selectedPageName={listing ? 'EditListingPage' : 'NewListingPage'}
+          listing={listing}
+        />
+        <Footer />
+      </Page>
     );
   }
 };

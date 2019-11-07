@@ -127,14 +127,14 @@ exports[`TopbarDesktop data matches snapshot 1`] = `
         >
           <a
             className=""
-            href="/listings"
+            href="/l/new"
             onClick={[Function]}
             style={Object {}}
             title={null}
           >
             <span />
             <span>
-              TopbarDesktop.yourListingsLink
+              OwnListingLink.addYourListingLink
             </span>
           </a>
         </li>

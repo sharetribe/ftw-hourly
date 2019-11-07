@@ -18,6 +18,7 @@ exports[`ContactDetailsPage matches snapshot 1`] = `
       />
       <UserNav
         className={null}
+        listing={null}
         rootClassName={null}
         selectedPageName="ProfileSettingsPage"
       />

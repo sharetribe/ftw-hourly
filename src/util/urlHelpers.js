@@ -15,6 +15,15 @@ export const LISTING_PAGE_PARAM_TYPES = [
   LISTING_PAGE_PARAM_TYPE_EDIT,
 ];
 
+/**
+ * Get the type of the listing page param
+ * @param {boolean} isDraft
+ * @return {String} type of the listing page param
+ */
+export const getListingType = isDraft => {
+  return isDraft ? LISTING_PAGE_PARAM_TYPE_DRAFT : LISTING_PAGE_PARAM_TYPE_EDIT;
+};
+
 // Create slug from random texts
 // From Gist thread: https://gist.github.com/mathewbyrne/1280286
 export const createSlug = str => {

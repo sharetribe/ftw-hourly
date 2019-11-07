@@ -65,6 +65,7 @@ const initialState = {
   currentUserHasOrdersError: null,
   sendVerificationEmailInProgress: false,
   sendVerificationEmailError: null,
+  currentUserListing: null,
 };
 
 export default function reducer(state = initialState, action = {}) {
@@ -88,12 +89,17 @@ export default function reducer(state = initialState, action = {}) {
         currentUserHasListingsError: null,
         currentUserNotificationCount: 0,
         currentUserNotificationCountError: null,
+        currentUserListing: null,
       };
 
     case FETCH_CURRENT_USER_HAS_LISTINGS_REQUEST:
       return { ...state, currentUserHasListingsError: null };
     case FETCH_CURRENT_USER_HAS_LISTINGS_SUCCESS:
-      return { ...state, currentUserHasListings: payload.hasListings };
+      return {
+        ...state,
+        currentUserHasListings: payload.hasListings,
+        currentUserListing: payload.listing,
+      };
     case FETCH_CURRENT_USER_HAS_LISTINGS_ERROR:
       console.error(payload); // eslint-disable-line
       return { ...state, currentUserHasListingsError: payload };
@@ -174,9 +180,9 @@ const fetchCurrentUserHasListingsRequest = () => ({
   type: FETCH_CURRENT_USER_HAS_LISTINGS_REQUEST,
 });
 
-export const fetchCurrentUserHasListingsSuccess = hasListings => ({
+export const fetchCurrentUserHasListingsSuccess = (hasListings, listing) => ({
   type: FETCH_CURRENT_USER_HAS_LISTINGS_SUCCESS,
-  payload: { hasListings },
+  payload: { hasListings, listing },
 });
 
 const fetchCurrentUserHasListingsError = e => ({
@@ -251,11 +257,12 @@ export const fetchCurrentUserHasListings = () => (dispatch, getState, sdk) => {
     .query(params)
     .then(response => {
       const hasListings = response.data.data && response.data.data.length > 0;
+      const listing = hasListings ? response.data.data[0] : null;
 
       const hasPublishedListings =
         hasListings &&
         ensureOwnListing(response.data.data[0]).attributes.state !== LISTING_STATE_DRAFT;
-      dispatch(fetchCurrentUserHasListingsSuccess(!!hasPublishedListings));
+      dispatch(fetchCurrentUserHasListingsSuccess(!!hasPublishedListings, listing));
     })
     .catch(e => dispatch(fetchCurrentUserHasListingsError(storableError(e))));
 };

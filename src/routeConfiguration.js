@@ -9,7 +9,6 @@ import {
   InboxPage,
   LandingPage,
   ListingPage,
-  ManageListingsPage,
   NotFoundPage,
   PasswordChangePage,
   PasswordRecoveryPage,
@@ -212,14 +211,6 @@ const routeConfiguration = () => {
       authPage: 'LoginPage',
       component: props => <TransactionPage {...props} transactionRole="provider" />,
       loadData: params => TransactionPage.loadData({ ...params, transactionRole: 'provider' }),
-    },
-    {
-      path: '/listings',
-      name: 'ManageListingsPage',
-      auth: true,
-      authPage: 'LoginPage',
-      component: props => <ManageListingsPage {...props} />,
-      loadData: ManageListingsPage.loadData,
     },
     {
       path: '/account',

@@ -17,6 +17,9 @@ https://github.com/sharetribe/flex-template-web/
 
 ## Upcoming version 2019-XX-XX
 
+- [change] Remove ManageListingsPage from routing and change the links in Topbar to point either
+  AddListingPage or EditListingPage depending on if the user already has a listing or not.
+  [#30](https://github.com/sharetribe/ftw-time/pull/30)
 - [change] Move isDayBlocked prop to FieldDateAndTimeInput.
   [#32](https://github.com/sharetribe/ftw-time/pull/32)
 - [change] Extract TimeRange component away from BookingTimeInfo. Updates also FieldRadioButton,

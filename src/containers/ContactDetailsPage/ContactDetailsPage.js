@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { bool, func } from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { FormattedMessage, injectIntl, intlShape } from '../../util/reactIntl';
@@ -29,6 +29,7 @@ export const ContactDetailsPageComponent = props => {
     savePhoneNumberError,
     saveContactDetailsInProgress,
     currentUser,
+    currentUserListing,
     contactDetailsChanged,
     onChange,
     scrollingDisabled,
@@ -71,7 +72,7 @@ export const ContactDetailsPageComponent = props => {
             desktopClassName={css.desktopTopbar}
             mobileClassName={css.mobileTopbar}
           />
-          <UserNav selectedPageName="ContactDetailsPage" />
+          <UserNav selectedPageName="ContactDetailsPage" listing={currentUserListing} />
         </LayoutWrapperTopbar>
         <LayoutWrapperAccountSettingsSideNav currentTab="ContactDetailsPage" />
         <LayoutWrapperMain>
@@ -97,13 +98,12 @@ ContactDetailsPageComponent.defaultProps = {
   sendVerificationEmailError: null,
 };
 
-const { bool, func } = PropTypes;
-
 ContactDetailsPageComponent.propTypes = {
   saveEmailError: propTypes.error,
   savePhoneNumberError: propTypes.error,
   saveContactDetailsInProgress: bool.isRequired,
   currentUser: propTypes.currentUser,
+  currentUserListing: propTypes.ownListing,
   contactDetailsChanged: bool.isRequired,
   onChange: func.isRequired,
   onSubmitContactDetails: func.isRequired,
@@ -118,7 +118,12 @@ ContactDetailsPageComponent.propTypes = {
 
 const mapStateToProps = state => {
   // Topbar needs user info.
-  const { currentUser, sendVerificationEmailInProgress, sendVerificationEmailError } = state.user;
+  const {
+    currentUser,
+    currentUserListing,
+    sendVerificationEmailInProgress,
+    sendVerificationEmailError,
+  } = state.user;
   const {
     saveEmailError,
     savePhoneNumberError,
@@ -130,6 +135,7 @@ const mapStateToProps = state => {
     savePhoneNumberError,
     saveContactDetailsInProgress,
     currentUser,
+    currentUserListing,
     contactDetailsChanged,
     scrollingDisabled: isScrollingDisabled(state),
     sendVerificationEmailInProgress,
