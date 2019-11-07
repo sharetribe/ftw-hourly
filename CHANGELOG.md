@@ -17,6 +17,10 @@ https://github.com/sharetribe/flex-template-web/
 
 ## Upcoming version 2019-XX-XX
 
+- [change] Extract TimeRange component away from BookingTimeInfo. Updates also FieldRadioButton,
+  IconClose, and removes unused translations (EditListingAvailabilityForm was removed).
+  [#31](https://github.com/sharetribe/ftw-time/pull/31)
+
 ## [v4.1.0] 2019-11-04
 
 ### One change in this template

@@ -1,81 +1,48 @@
 import React from 'react';
-import { bool, string } from 'prop-types';
-import classNames from 'classnames';
+import { string } from 'prop-types';
 import { txIsEnquired } from '../../util/transaction';
-import { daysBetween, formatDateToText } from '../../util/dates';
-import { injectIntl, intlShape } from '../../util/reactIntl';
-import { DATE_TYPE_DATE, DATE_TYPE_DATETIME, propTypes } from '../../util/types';
+import { propTypes } from '../../util/types';
 
-import css from './BookingTimeInfo.css';
+import { TimeRange } from '../../components';
 
-const bookingData = (unitType, tx, isOrder, intl, timeZone) => {
+const bookingData = tx => {
   // Attributes: displayStart and displayEnd can be used to differentiate shown time range
   // from actual start and end times used for availability reservation. It can help in situations
   // where there are preparation time needed between bookings.
   // Read more: https://www.sharetribe.com/api-reference/#bookings
   const { start, end, displayStart, displayEnd } = tx.booking.attributes;
-  const startDate = displayStart || start;
-  const endDate = displayEnd || end;
-  const isSingleDay = daysBetween(startDate, endDate) <= 1;
-  const bookingStart = formatDateToText(intl, startDate, timeZone);
-  const bookingEnd = formatDateToText(intl, endDate, timeZone);
-  return { bookingStart, bookingEnd, isSingleDay };
+  const bookingStart = displayStart || start;
+  const bookingEnd = displayEnd || end;
+  return { bookingStart, bookingEnd };
 };
 
-const BookingTimeInfoComponent = props => {
-  const { bookingClassName, isOrder, intl, tx, unitType, dateType, timeZone } = props;
+const BookingTimeInfo = props => {
+  const { bookingClassName, tx, dateType, timeZone } = props;
   const isEnquiry = txIsEnquired(tx);
 
   if (isEnquiry) {
     return null;
   }
 
-  const bookingTimes = bookingData(unitType, tx, isOrder, intl, timeZone);
+  const { bookingStart, bookingEnd } = bookingData(tx);
 
-  const { bookingStart, bookingEnd, isSingleDay } = bookingTimes;
-
-  if (isSingleDay && dateType === DATE_TYPE_DATE) {
-    return (
-      <div className={classNames(css.bookingInfo, bookingClassName)}>
-        <span className={css.dateSection}>{`${bookingStart.date}`}</span>
-      </div>
-    );
-  } else if (dateType === DATE_TYPE_DATE) {
-    return (
-      <div className={classNames(css.bookingInfo, bookingClassName)}>
-        <span className={css.dateSection}>{`${bookingStart.date} -`}</span>
-        <span className={css.dateSection}>{`${bookingEnd.date}`}</span>
-      </div>
-    );
-  } else if (isSingleDay && dateType === DATE_TYPE_DATETIME) {
-    return (
-      <div className={classNames(css.bookingInfo, bookingClassName)}>
-        <span className={css.dateSection}>
-          {`${bookingStart.date}, ${bookingStart.time} - ${bookingEnd.time}`}
-        </span>
-      </div>
-    );
-  } else {
-    return (
-      <div className={classNames(css.bookingInfo, bookingClassName)}>
-        <span className={css.dateSection}>{`${bookingStart.dateAndTime} - `}</span>
-        <span className={css.dateSection}>{`${bookingEnd.dateAndTime}`}</span>
-      </div>
-    );
-  }
+  return (
+    <TimeRange
+      className={bookingClassName}
+      startDate={bookingStart}
+      endDate={bookingEnd}
+      dateType={dateType}
+      timeZone={timeZone}
+    />
+  );
 };
 
-BookingTimeInfoComponent.defaultProps = { dateType: null, timeZone: null };
+BookingTimeInfo.defaultProps = { dateType: null, timeZone: null };
 
-BookingTimeInfoComponent.propTypes = {
-  intl: intlShape.isRequired,
-  isOrder: bool.isRequired,
+BookingTimeInfo.propTypes = {
   tx: propTypes.transaction.isRequired,
-  unitType: propTypes.bookingUnitType.isRequired,
   dateType: propTypes.dateType,
   timeZone: string,
 };
-
-const BookingTimeInfo = injectIntl(BookingTimeInfoComponent);
 
 export default BookingTimeInfo;

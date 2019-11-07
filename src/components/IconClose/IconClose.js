@@ -4,6 +4,7 @@ import classNames from 'classnames';
 
 import css from './IconClose.css';
 const SIZE_SMALL = 'small';
+const SIZE_NORMAL = 'normal';
 
 const IconClose = props => {
   const { className, rootClassName, size } = props;
@@ -41,11 +42,13 @@ const { string } = PropTypes;
 IconClose.defaultProps = {
   className: null,
   rootClassName: null,
+  size: SIZE_NORMAL,
 };
 
 IconClose.propTypes = {
   className: string,
   rootClassName: string,
+  size: string,
 };
 
 export default IconClose;
