@@ -2,9 +2,11 @@
 import React from 'react';
 import { Form as FinalForm, FormSpy } from 'react-final-form';
 import moment from 'moment';
-import { Button } from '../../components';
+import { isDayMomentInsideRange } from '../../util/dates';
 import { required, bookingDateRequired, composeValidators } from '../../util/validators';
 import { createTimeSlots } from '../../util/test-data';
+import { Button } from '../../components';
+
 import FieldDateInput from './FieldDateInput';
 
 const identity = v => v;
@@ -16,6 +18,15 @@ const createAvailableTimeSlots = (dayCount, availableDayCount) => {
   );
 
   return availableSlotIndices.sort().map(i => slots[i]);
+};
+
+const isDayBlocked = (timeSlots, timeZone) => {
+  return timeSlots
+    ? day =>
+        !timeSlots.find(timeSlot =>
+          isDayMomentInsideRange(day, timeSlot.attributes.start, timeSlot.attributes.end, timeZone)
+        )
+    : () => false;
 };
 
 const FormComponent = props => (
@@ -94,7 +105,7 @@ export const WithAvailableTimeSlots = {
       label: 'Date',
       placeholderText: moment().format('ddd, MMMM D'),
       format: identity,
-      timeSlots: createAvailableTimeSlots(90, 60),
+      isDayBlocked: isDayBlocked(createAvailableTimeSlots(90, 60), 'Etc/UTC'),
       validate: composeValidators(required('Required'), bookingDateRequired('Date is not valid')),
       onBlur: () => console.log('onBlur called from DateInput props.'),
       onFocus: () => console.log('onFocus called from DateInput props.'),

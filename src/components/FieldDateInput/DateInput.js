@@ -5,7 +5,7 @@
  * N.B. *isOutsideRange* in defaultProps is defining what dates are available to booking.
  */
 import React, { Component } from 'react';
-import { bool, func, instanceOf, shape, string, arrayOf } from 'prop-types';
+import { bool, func, instanceOf, shape, string } from 'prop-types';
 import { SingleDatePicker, isInclusivelyAfterDay, isInclusivelyBeforeDay } from 'react-dates';
 
 // Import moment from moment-timezone. 10-year range only.
@@ -17,7 +17,6 @@ import classNames from 'classnames';
 import config from '../../config';
 
 import { intlShape, injectIntl } from '../../util/reactIntl';
-import { propTypes } from '../../util/types';
 
 import NextMonthIcon from './NextMonthIcon';
 import PreviousMonthIcon from './PreviousMonthIcon';
@@ -104,31 +103,6 @@ const defaultProps = {
   },
 };
 
-// Checks if time slot (propTypes.timeSlot) contains a day (moment)
-// Returns true if the day is inside the timeslot or if the timeslot
-// starts or ends between start and end of the day.
-//
-// By default react-dates handles dates in the browser's timezone so
-// we need to convert the value `day` to given timezone before comparing it
-// to timeslot.
-const timeSlotContainsDay = (timeSlot, day, timeZone) => {
-  const startOfDay = moment.tz(day.toArray().slice(0, 3), timeZone);
-  const endOfDay = startOfDay.clone().add(1, 'days');
-
-  const startDate = moment.tz(timeSlot.attributes.start, timeZone);
-  const endDate = moment.tz(timeSlot.attributes.end, timeZone);
-
-  if (startOfDay.isSameOrAfter(startDate) && endDate.isSameOrAfter(endOfDay)) {
-    return true;
-  } else if (startDate.isBetween(startOfDay, endOfDay, null, '[)')) {
-    return true;
-  } else if (endDate.isBetween(startOfDay, endOfDay, null, '[)')) {
-    return true;
-  }
-
-  return false;
-};
-
 class DateInputComponent extends Component {
   constructor(props) {
     super(props);
@@ -175,8 +149,6 @@ class DateInputComponent extends Component {
       value,
       children,
       render,
-      timeSlots,
-      timeZone,
       ...datePickerProps
     } = this.props;
     /* eslint-enable no-unused-vars */
@@ -187,10 +159,6 @@ class DateInputComponent extends Component {
       value && value.date instanceof Date && value.date.toString() !== 'Invalid Date'
         ? moment(value.date)
         : initialMoment;
-
-    const isDayBlocked = timeSlots
-      ? day => !timeSlots.find(timeSlot => timeSlotContainsDay(timeSlot, day, timeZone))
-      : () => false;
 
     const placeholder = placeholderText || intl.formatMessage({ id: 'FieldDateInput.placeholder' });
 
@@ -221,7 +189,6 @@ class DateInputComponent extends Component {
           placeholder={placeholder}
           screenReaderInputMessage={screenReaderInputText}
           phrases={{ closeDatePicker: closeDatePickerText, clearDate: clearDateText }}
-          isDayBlocked={isDayBlocked}
         />
       </div>
     );
@@ -232,7 +199,6 @@ DateInputComponent.defaultProps = {
   className: null,
   useMobileMargins: false,
   ...defaultProps,
-  timeSlots: null,
 };
 
 DateInputComponent.propTypes = {
@@ -246,6 +212,7 @@ DateInputComponent.propTypes = {
   onChange: func.isRequired,
   onBlur: func.isRequired,
   onFocus: func.isRequired,
+  isDayBlocked: func,
   phrases: shape({
     closeDatePicker: string,
     clearDate: string,
@@ -256,7 +223,6 @@ DateInputComponent.propTypes = {
   value: shape({
     date: instanceOf(Date),
   }),
-  timeSlots: arrayOf(propTypes.timeSlot),
 };
 
 export default injectIntl(DateInputComponent);
