@@ -18,8 +18,8 @@ you can
 [change the 'upstream' remote repository](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/configuring-a-remote-for-a-fork).
 
 > Note: we have created [another template](https://github.com/sharetribe/ftw-time) for time-based
-> processes. It is still in **beta** mode, but if you are taking time-based booking process into use,
-> you should consider using it instead. You can read more from the related
+> processes. It is still in **beta** mode, but if you are taking time-based booking process into
+> use, you should consider using it instead. You can read more from the related
 > [Flex Docs article](https://www.sharetribe.com/docs/background/time-based-template)
 
 ## Quick start
