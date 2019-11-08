@@ -17,6 +17,10 @@ https://github.com/sharetribe/flex-template-web/
 
 ## Upcoming version 2019-XX-XX
 
+- [fix] Fix the bugs in BookingTimeForm when the day has availability up to midnight. The next day
+  should not be counted as available if there is no availabilty set to that day. Also, the
+  calculated end date should be same as the start day if the start time is at 23:00
+  [#33](https://github.com/sharetribe/ftw-time/pull/33)
 - [change] Remove ManageListingsPage from routing and change the links in Topbar to point either
   AddListingPage or EditListingPage depending on if the user already has a listing or not.
   [#30](https://github.com/sharetribe/ftw-time/pull/30)

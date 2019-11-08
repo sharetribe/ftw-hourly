@@ -753,13 +753,17 @@ export const isDayMomentInsideRange = (dayMoment, start, end, timeZone) => {
   const endOfDay = startOfDay.clone().add(1, 'days');
 
   const startDate = moment.tz(start, timeZone);
-  const endDate = moment.tz(end, timeZone);
 
-  if (startOfDay.isSameOrAfter(startDate) && endDate.isSameOrAfter(endOfDay)) {
+  // Removing 1 millisecond, solves the exclusivity issue.
+  // Because we are only using the date and not the exact time we can remove the
+  // 1ms from the end date.
+  const inclusiveEndDate = moment.tz(new Date(end.getTime() - 1), timeZone);
+
+  if (startOfDay.isSameOrAfter(startDate) && inclusiveEndDate.isSameOrAfter(endOfDay)) {
     return true;
   } else if (startDate.isBetween(startOfDay, endOfDay, null, '[)')) {
     return true;
-  } else if (endDate.isBetween(startOfDay, endOfDay, null, '[)')) {
+  } else if (inclusiveEndDate.isBetween(startOfDay, endOfDay, null, '[)')) {
     return true;
   }
 
