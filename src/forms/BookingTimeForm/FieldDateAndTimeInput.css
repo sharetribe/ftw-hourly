@@ -126,3 +126,37 @@
   stroke: var(--matterColorLight);
   fill: var(--matterColorLight);
 }
+
+/**
+CSS for hiding the end date
+
+If you want to show the field for the end date e.g. for enabling longer bookings,
+you can remove the following code. 
+Remember to do required code changes also in FieldDateAndTimeInput.js!
+**/
+
+.field {
+  width: calc(50% - 5px);
+  @media (--viewportMedium) {
+    width: calc(50% - 12px);
+  }
+}
+
+.startDate {
+  width: 100%;
+}
+.endDateHidden {
+  display: none;
+}
+
+.lineBetween,
+.lineBetweenDisabled {
+  margin-top: 36px;
+}
+.lineBetweenDisabled {
+  color: var(--matterColorNegative);
+}
+
+/**
+CSS for hiding the end date above
+**/
