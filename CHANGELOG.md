@@ -17,6 +17,9 @@ https://github.com/sharetribe/flex-template-web/
 
 ## Upcoming version 2019-XX-XX
 
+- [change] Hide the end date from `FieldDateAndTimeInput`. If you want to enable longer booking
+  periods you can get the end date field back with couple of code changes.
+  [#34](https://github.com/sharetribe/ftw-time/pull/34)
 - [fix] Fix the bugs in BookingTimeForm when the day has availability up to midnight. The next day
   should not be counted as available if there is no availabilty set to that day. Also, the
   calculated end date should be same as the start day if the start time is at 23:00
