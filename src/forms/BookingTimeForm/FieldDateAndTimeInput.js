@@ -134,10 +134,14 @@ const getAllTimeValues = (
 
   const startTimeAsDate = startTime ? timestampToDate(startTime) : null;
 
+  // Note: We need to remove 1ms from the calculated endDate so that if the end
+  // date would be the next day at 00:00 the day in the form is still correct.
+  // Because we are only using the date and not the exact time we can remove the
+  // 1ms.
   const endDate = selectedEndDate
     ? selectedEndDate
     : startTimeAsDate
-    ? findNextBoundary(timeZone, startTimeAsDate)
+    ? new Date(findNextBoundary(timeZone, startTimeAsDate).getTime() - 1)
     : null;
 
   const selectedTimeSlot = timeSlots.find(t =>
@@ -509,8 +513,8 @@ class FieldDateAndTimeInput extends Component {
             >
               {bookingStartDate && (bookingStartTime || startTime) ? (
                 availableEndTimes.map(p => (
-                  <option key={p.timeOfDay} value={p.timestamp}>
-                    {p.timeOfDay}
+                  <option key={p.timeOfDay === '00:00' ? '24:00' : p.timeOfDay} value={p.timestamp}>
+                    {p.timeOfDay === '00:00' ? '24:00' : p.timeOfDay}
                   </option>
                 ))
               ) : (
