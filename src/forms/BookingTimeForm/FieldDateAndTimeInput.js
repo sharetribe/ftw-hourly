@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { func, object, string } from 'prop-types';
 import classNames from 'classnames';
-import { intlShape } from '../../util/reactIntl';
+import { FormattedMessage, intlShape } from '../../util/reactIntl';
 import {
   getStartHours,
   getEndHours,
@@ -424,10 +424,21 @@ class FieldDateAndTimeInput extends Component {
       findNextBoundary(timeZone, TODAY)
     );
 
+    const startTimeLabel = <FormattedMessage id="FieldDateTimeInput.startTime" />;
+    const endTimeLabel = <FormattedMessage id="FieldDateTimeInput.endTime" />;
+
+    /**
+     * NOTE: In this template the field for the end date is hidden by default.
+     * If you want to enable longer booking periods, showing the end date in the form requires some code changes:
+     * 1. Move the bookingStartTime field to the same formRow with the bookingStartDate field
+     * 2. Remove the div containing the line between dates
+     * 3. Remove the css related to hiding the booking end date from the bottom of the FieldDateAndTimeInput.css field
+     */
+
     return (
       <div className={classes}>
         <div className={css.formRow}>
-          <div className={css.field}>
+          <div className={classNames(css.field, css.startDate)}>
             <FieldDateInput
               className={css.fieldDateInput}
               name="bookingStartDate"
@@ -451,29 +462,9 @@ class FieldDateAndTimeInput extends Component {
               validate={bookingDateRequired('Required')}
             />
           </div>
-          <div className={css.field}>
-            <FieldSelect
-              name="bookingStartTime"
-              id={formId ? `${formId}.bookingStartTime` : 'bookingStartTime'}
-              className={bookingStartDate ? css.fieldSelect : css.fieldSelectDisabled}
-              selectClassName={bookingStartDate ? css.select : css.selectDisabled}
-              disabled={startTimeDisabled}
-              onChange={this.onBookingStartTimeChange}
-            >
-              {bookingStartDate ? (
-                availableStartTimes.map(p => (
-                  <option key={p.timeOfDay} value={p.timestamp}>
-                    {p.timeOfDay}
-                  </option>
-                ))
-              ) : (
-                <option>{placeholderTime}</option>
-              )}
-            </FieldSelect>
-          </div>
         </div>
         <div className={css.formRow}>
-          <div className={css.field}>
+          <div className={classNames(css.field, css.endDateHidden)}>
             <FieldDateInput
               {...endDateInputProps}
               name="bookingEndDate"
@@ -503,12 +494,38 @@ class FieldDateAndTimeInput extends Component {
               showLabelAsDisabled={endDateDisabled}
             />
           </div>
+
+          <div className={css.field}>
+            <FieldSelect
+              name="bookingStartTime"
+              id={formId ? `${formId}.bookingStartTime` : 'bookingStartTime'}
+              className={bookingStartDate ? css.fieldSelect : css.fieldSelectDisabled}
+              selectClassName={bookingStartDate ? css.select : css.selectDisabled}
+              label={startTimeLabel}
+              disabled={startTimeDisabled}
+              onChange={this.onBookingStartTimeChange}
+            >
+              {bookingStartDate ? (
+                availableStartTimes.map(p => (
+                  <option key={p.timeOfDay} value={p.timestamp}>
+                    {p.timeOfDay}
+                  </option>
+                ))
+              ) : (
+                <option>{placeholderTime}</option>
+              )}
+            </FieldSelect>
+          </div>
+
+          <div className={bookingStartDate ? css.lineBetween : css.lineBetweenDisabled}>-</div>
+
           <div className={css.field}>
             <FieldSelect
               name="bookingEndTime"
               id={formId ? `${formId}.bookingEndTime` : 'bookingEndTime'}
               className={bookingStartDate ? css.fieldSelect : css.fieldSelectDisabled}
               selectClassName={bookingStartDate ? css.select : css.selectDisabled}
+              label={endTimeLabel}
               disabled={endTimeDisabled}
             >
               {bookingStartDate && (bookingStartTime || startTime) ? (
