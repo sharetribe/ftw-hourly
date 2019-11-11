@@ -17,6 +17,8 @@ https://github.com/sharetribe/flex-template-web/
 
 ## Upcoming version 2019-XX-XX
 
+- [change] Change the default locations used in `Topbar` and `Footer`.
+  [#35](https://github.com/sharetribe/ftw-time/pull/35)
 - [change] Hide the end date from `FieldDateAndTimeInput`. If you want to enable longer booking
   periods you can get the end date field back with couple of code changes.
   [#34](https://github.com/sharetribe/ftw-time/pull/34)

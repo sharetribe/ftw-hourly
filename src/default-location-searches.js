@@ -9,38 +9,53 @@ const { LatLng, LatLngBounds } = sdkTypes;
 // `predictionPlace` (util.types.place) properties.
 export default [
   {
-    id: 'default-helsinki',
+    id: 'default-new-york',
     predictionPlace: {
-      address: 'Helsinki, Finland',
-      bounds: new LatLngBounds(new LatLng(60.29783, 25.25448), new LatLng(59.92248, 24.78287)),
+      address: 'New York City, New York, USA',
+      bounds: new LatLngBounds(
+        new LatLng(40.917576401307, -73.7008392055224),
+        new LatLng(40.477399, -74.2590879797556)
+      ),
     },
   },
   {
-    id: 'default-turku',
+    id: 'default-los-angeles',
     predictionPlace: {
-      address: 'Turku, Finland',
-      bounds: new LatLngBounds(new LatLng(60.53045, 22.38197), new LatLng(60.33361, 22.06644)),
+      address: 'Los Angeles, California, USA',
+      bounds: new LatLngBounds(
+        new LatLng(34.161440999758, -118.121305008073),
+        new LatLng(33.9018913203336, -118.521456965901)
+      ),
     },
   },
   {
-    id: 'default-tampere',
+    id: 'default-san-francisco',
     predictionPlace: {
-      address: 'Tampere, Finland',
-      bounds: new LatLngBounds(new LatLng(61.83657, 24.11838), new LatLng(61.42728, 23.5422)),
+      address: 'San Francisco, California, USA',
+      bounds: new LatLngBounds(
+        new LatLng(37.8324430069081, -122.354995082683),
+        new LatLng(37.6044780500533, -122.517910874663)
+      ),
     },
   },
   {
-    id: 'default-oulu',
+    id: 'default-seattle',
     predictionPlace: {
-      address: 'Oulu, Finland',
-      bounds: new LatLngBounds(new LatLng(65.56434, 26.77069), new LatLng(64.8443, 24.11494)),
+      address: 'Seattle, Washington, USA',
+      bounds: new LatLngBounds(
+        new LatLng(47.7779392908564, -122.216605992108),
+        new LatLng(47.3403950185547, -122.441233019046)
+      ),
     },
   },
   {
-    id: 'default-ruka',
+    id: 'default-portland',
     predictionPlace: {
-      address: 'Ruka, Finland',
-      bounds: new LatLngBounds(new LatLng(66.16997, 29.16773), new LatLng(66.16095, 29.13572)),
+      address: 'Portland, Oregon, USA',
+      bounds: new LatLngBounds(
+        new LatLng(45.858099013046, -122.441059986416),
+        new LatLng(45.3794799927623, -122.929215816001)
+      ),
     },
   },
 ];
