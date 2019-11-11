@@ -17,6 +17,8 @@ https://github.com/sharetribe/flex-template-web/
 
 ## Upcoming version 2019-XX-XX
 
+- [change] Change the logo, marketplace color and favicons from Saunatime to Yogatime.
+  [#36](https://github.com/sharetribe/ftw-time/pull/36)
 - [change] Change the default locations used in `Topbar` and `Footer`.
   [#35](https://github.com/sharetribe/ftw-time/pull/35)
 - [change] Hide the end date from `FieldDateAndTimeInput`. If you want to enable longer booking
