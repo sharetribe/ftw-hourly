@@ -6,6 +6,7 @@ import {
   createCurrentUser,
   createUser,
   createTransaction,
+  createOwnListing,
   createBooking,
 } from '../../util/test-data';
 import { InboxPageComponent, InboxItem, txState } from './InboxPage';
@@ -84,6 +85,50 @@ describe('InboxPage', () => {
 
     const ordersTree = renderShallow(<InboxPageComponent {...ordersProps} />);
     expect(ordersTree).toMatchSnapshot();
+
+    const ordersPropsWithListing = {
+      unitType: LINE_ITEM_NIGHT,
+      location: { search: '' },
+      history: {
+        push: () => console.log('HistoryPush called'),
+      },
+      params: {
+        tab: 'orders',
+      },
+      authInProgress: false,
+      currentUser: currentUserProvider,
+      currentUserHasListings: true,
+      currentUserListing: createOwnListing('user-has-listing'),
+      isAuthenticated: false,
+      fetchInProgress: false,
+      onLogout: noop,
+      onManageDisableScrolling: noop,
+      transactions: [
+        createTransaction({
+          id: 'order-1',
+          lastTransition: TRANSITION_CONFIRM_PAYMENT,
+          customer,
+          provider,
+          lastTransitionedAt: new Date(Date.UTC(2017, 0, 15)),
+          booking: booking1,
+        }),
+        createTransaction({
+          id: 'order-2',
+          lastTransition: TRANSITION_CONFIRM_PAYMENT,
+          customer,
+          provider,
+          lastTransitionedAt: new Date(Date.UTC(2016, 0, 15)),
+          booking: booking2,
+        }),
+      ],
+      intl: fakeIntl,
+      scrollingDisabled: false,
+      sendVerificationEmailInProgress: false,
+      onResendVerificationEmail: noop,
+    };
+
+    const ordersTreeWithListing = renderShallow(<InboxPageComponent {...ordersPropsWithListing} />);
+    expect(ordersTreeWithListing).toMatchSnapshot();
 
     const stateDataOrder = txState(fakeIntl, ordersProps.transactions[0], 'order');
 
