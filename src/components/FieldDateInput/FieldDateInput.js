@@ -108,7 +108,6 @@ FieldDateInputComponent.defaultProps = {
   showLabelAsDisabled: false,
   placeholderText: null,
   onChange: null,
-  isDayBlocked: null,
 };
 
 FieldDateInputComponent.propTypes = {
@@ -123,7 +122,6 @@ FieldDateInputComponent.propTypes = {
   input: object.isRequired,
   meta: object.isRequired,
   onChange: func,
-  isDayBlocked: func,
 };
 
 const FieldDateInput = props => {
