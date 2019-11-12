@@ -17,6 +17,8 @@ https://github.com/sharetribe/flex-template-web/
 
 ## Upcoming version 2019-XX-XX
 
+- [change] Hide inbox tabs if user doesn't have a listing.
+  [#37](https://github.com/sharetribe/ftw-time/pull/37)
 - [change] Change the logo, marketplace color and favicons from Saunatime to Yogatime.
   [#36](https://github.com/sharetribe/ftw-time/pull/36)
 - [change] Change the default locations used in `Topbar` and `Footer`.
