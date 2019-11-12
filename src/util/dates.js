@@ -420,6 +420,21 @@ export const daysBetween = (startDate, endDate) => {
 };
 
 /**
+ * Check that the given dates are pointing to the same day.
+ *
+ * @param {Date} date1 first date object
+ * @param {Date} date2 second date object
+ * @param {String} timeZone (if omitted local time zone is used)
+ *
+ * @returns {boolean} true if Date objects are pointing to the same day on given time zone.
+ */
+export const isSameDay = (date1, date2, timeZone) => {
+  const d1 = timeZone ? moment(date1).tz(timeZone) : moment(date1);
+  const d2 = timeZone ? moment(date2).tz(timeZone) : moment(date2);
+  return d1.isSame(d2, 'day');
+};
+
+/**
  * Calculate the number of minutes between the given dates
  *
  * @param {Date} startDate start of the time period

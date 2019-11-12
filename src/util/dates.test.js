@@ -13,6 +13,7 @@ import {
   getEndHours,
   nightsBetween,
   daysBetween,
+  isSameDay,
   minutesBetween,
   monthIdStringInTimeZone,
   formatDate,
@@ -240,6 +241,24 @@ describe('date utils', () => {
       const start = new Date(2017, 0, 1, 10, 35, 0);
       const end = new Date(2017, 0, 1, 10, 55, 0);
       expect(minutesBetween(start, end)).toEqual(20);
+    });
+  });
+
+  describe('isSameDay()', () => {
+    it('should fail if the dates are pointing to different days', () => {
+      const d1 = new Date(Date.UTC(2019, 0, 1, 10, 0, 0));
+      const d2 = new Date(Date.UTC(2019, 0, 2, 10, 0, 0));
+      expect(isSameDay(d1, d2, 'Etc/UTC')).toBeFalsy();
+
+      // 1 second difference around midnight
+      const d3 = new Date(Date.UTC(2019, 0, 1, 23, 59, 59));
+      const d4 = new Date(Date.UTC(2019, 0, 2, 0, 0, 0));
+      expect(isSameDay(d3, d4, 'Etc/UTC')).toBeFalsy();
+    });
+    it('should succeed if the dates are pointing to the same days', () => {
+      const d1 = new Date(Date.UTC(2019, 0, 1, 10, 0, 0));
+      const d2 = new Date(Date.UTC(2019, 0, 1, 10, 0, 0));
+      expect(isSameDay(d1, d2, 'Etc/UTC')).toBeTruthy();
     });
   });
 
