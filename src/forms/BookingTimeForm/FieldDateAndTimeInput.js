@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { func, object, string } from 'prop-types';
 import classNames from 'classnames';
-import { FormattedMessage, intlShape } from '../../util/reactIntl';
+import { intlShape } from '../../util/reactIntl';
 import {
   getStartHours,
   getEndHours,
@@ -424,9 +424,8 @@ class FieldDateAndTimeInput extends Component {
       findNextBoundary(timeZone, TODAY)
     );
 
-    const startTimeLabel = <FormattedMessage id="FieldDateTimeInput.startTime" />;
-    const endTimeLabel = <FormattedMessage id="FieldDateTimeInput.endTime" />;
-
+    const startTimeLabel = intl.formatMessage({ id: 'FieldDateTimeInput.startTime' });
+    const endTimeLabel = intl.formatMessage({ id: 'FieldDateTimeInput.endTime' });
     /**
      * NOTE: In this template the field for the end date is hidden by default.
      * If you want to enable longer booking periods, showing the end date in the form requires some code changes:
