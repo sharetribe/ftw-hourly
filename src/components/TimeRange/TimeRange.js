@@ -1,7 +1,7 @@
 import React from 'react';
 import { instanceOf, string } from 'prop-types';
 import classNames from 'classnames';
-import { daysBetween, formatDateToText } from '../../util/dates';
+import { isSameDay, formatDateToText } from '../../util/dates';
 import { injectIntl, intlShape } from '../../util/reactIntl';
 import { DATE_TYPE_DATE, DATE_TYPE_DATETIME, propTypes } from '../../util/types';
 
@@ -11,7 +11,7 @@ export const TimeRangeComponent = props => {
   const { rootClassName, className, startDate, endDate, dateType, timeZone, intl } = props;
   const start = formatDateToText(intl, startDate, timeZone);
   const end = formatDateToText(intl, endDate, timeZone);
-  const isSingleDay = daysBetween(startDate, endDate) <= 1;
+  const isSingleDay = isSameDay(startDate, endDate, timeZone);
 
   const classes = classNames(rootClassName || css.root, className);
 
