@@ -26,6 +26,7 @@ export const DateAndTimeSingleDay = {
     }),
     unitType: LINE_ITEM_UNITS,
     dateType: 'datetime',
+    timeZone: 'Etc/UTC',
   },
   group: 'inbox',
 };
@@ -48,6 +49,7 @@ export const DateAndTimeMultipleDays = {
     }),
     unitType: LINE_ITEM_UNITS,
     dateType: 'datetime',
+    timeZone: 'Etc/UTC',
   },
   group: 'inbox',
 };
@@ -70,6 +72,7 @@ export const OnlyDateSingleDay = {
     }),
     unitType: LINE_ITEM_DAY,
     dateType: 'date',
+    timeZone: 'Etc/UTC',
   },
   group: 'inbox',
 };
@@ -92,6 +95,7 @@ export const OnlyDateMultipleDays = {
     }),
     unitType: LINE_ITEM_DAY,
     dateType: 'date',
+    timeZone: 'Etc/UTC',
   },
   group: 'inbox',
 };
@@ -114,6 +118,7 @@ export const OnlyDateSingleNight = {
     }),
     unitType: LINE_ITEM_NIGHT,
     dateType: 'date',
+    timeZone: 'Etc/UTC',
   },
   group: 'inbox',
 };
@@ -136,6 +141,7 @@ export const OnlyDateMultipleNights = {
     }),
     unitType: LINE_ITEM_NIGHT,
     dateType: 'date',
+    timeZone: 'Etc/UTC',
   },
   group: 'inbox',
 };

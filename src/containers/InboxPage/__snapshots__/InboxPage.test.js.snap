@@ -787,7 +787,10 @@ exports[`InboxPage matches snapshot 3`] = `
           className=""
         >
           <span>
-            Feb 15, 12:00 AM - 12:00 AM
+            Feb 15, 12:00 AM - 
+          </span>
+          <span>
+            Feb 16, 12:00 AM
           </span>
         </div>
       </div>
@@ -1205,7 +1208,10 @@ exports[`InboxPage matches snapshot 5`] = `
           className=""
         >
           <span>
-            Feb 15, 12:00 AM - 12:00 AM
+            Feb 15, 12:00 AM - 
+          </span>
+          <span>
+            Feb 16, 12:00 AM
           </span>
         </div>
       </div>
