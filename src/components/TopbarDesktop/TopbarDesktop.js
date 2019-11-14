@@ -4,7 +4,6 @@ import { FormattedMessage, intlShape } from '../../util/reactIntl';
 import classNames from 'classnames';
 import { ACCOUNT_SETTINGS_PAGES } from '../../routeConfiguration';
 import { propTypes } from '../../util/types';
-import { createSlug } from '../../util/urlHelpers';
 import {
   Avatar,
   InlineTextButton,
@@ -14,6 +13,7 @@ import {
   MenuContent,
   MenuItem,
   NamedLink,
+  ListingLink,
   OwnListingLink,
 } from '../../components';
 import { TopbarSearchForm } from '../../forms';
@@ -28,6 +28,7 @@ const TopbarDesktop = props => {
     rootClassName,
     currentUserHasListings,
     currentUserListing,
+    currentUserListingFetched,
     notificationCount,
     intl,
     isAuthenticated,
@@ -129,26 +130,27 @@ const TopbarDesktop = props => {
     </NamedLink>
   );
 
-  const listingLink = currentUserListing ? (
-    <NamedLink
-      className={css.createListingLink}
-      name="ListingPage"
-      params={{
-        id: currentUserListing.id.uuid,
-        slug: createSlug(currentUserListing.attributes.title),
-      }}
-    >
-      <span className={css.createListing}>
-        <FormattedMessage id="TopbarDesktop.viewListing" />
-      </span>
-    </NamedLink>
-  ) : (
-    <NamedLink className={css.createListingLink} name="NewListingPage">
-      <span className={css.createListing}>
-        <FormattedMessage id="TopbarDesktop.createListing" />
-      </span>
-    </NamedLink>
-  );
+  const listingLink =
+    authenticatedOnClientSide && currentUserListingFetched && currentUserListing ? (
+      <ListingLink
+        className={css.createListingLink}
+        listing={currentUserListing}
+        children={
+          <span className={css.createListing}>
+            <FormattedMessage id="TopbarDesktop.viewListing" />
+          </span>
+        }
+      />
+    ) : null;
+
+  const createListingLink =
+    isAuthenticatedOrJustHydrated && !(currentUserListingFetched && !currentUserListing) ? null : (
+      <NamedLink className={css.createListingLink} name="NewListingPage">
+        <span className={css.createListing}>
+          <FormattedMessage id="TopbarDesktop.createListing" />
+        </span>
+      </NamedLink>
+    );
 
   return (
     <nav className={classes}>
@@ -161,6 +163,7 @@ const TopbarDesktop = props => {
       </NamedLink>
       {search}
       {listingLink}
+      {createListingLink}
       {inboxLink}
       {profileMenu}
       {signupLink}
