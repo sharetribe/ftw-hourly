@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { FormattedMessage, injectIntl, intlShape } from '../../util/reactIntl';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import classNames from 'classnames';
 import { types as sdkTypes } from '../../util/sdkLoader';
 import { REVIEW_TYPE_OF_PROVIDER, REVIEW_TYPE_OF_CUSTOMER, propTypes } from '../../util/types';
 import { ensureCurrentUser, ensureUser } from '../../util/data';
@@ -20,7 +19,6 @@ import {
   Footer,
   AvatarLarge,
   NamedLink,
-  ListingCard,
   Reviews,
   ButtonTabNavHorizontal,
 } from '../../components';
@@ -64,8 +62,6 @@ export class ProfilePageComponent extends Component {
       currentUser,
       user,
       userShowError,
-      queryListingsError,
-      listings,
       reviews,
       queryReviewsError,
       viewport,
@@ -78,7 +74,6 @@ export class ProfilePageComponent extends Component {
     const displayName = profileUser.attributes.profile.displayName;
     const bio = profileUser.attributes.profile.bio;
     const hasBio = !!bio;
-    const hasListings = listings.length > 0;
     const isMobileLayout = viewport.width < MAX_MOBILE_SCREEN_WIDTH;
 
     const editLinkMobile = isCurrentUser ? (
@@ -104,10 +99,6 @@ export class ProfilePageComponent extends Component {
         {editLinkDesktop}
       </div>
     );
-
-    const listingsContainerClasses = classNames(css.listingsContainer, {
-      [css.withBioMissingAbove]: !hasBio,
-    });
 
     const reviewsError = (
       <p className={css.error}>
@@ -187,23 +178,6 @@ export class ProfilePageComponent extends Component {
           <FormattedMessage id="ProfilePage.desktopHeading" values={{ name: displayName }} />
         </h1>
         {hasBio ? <p className={css.bio}>{bio}</p> : null}
-        {hasListings ? (
-          <div className={listingsContainerClasses}>
-            <h2 className={css.listingsTitle}>
-              <FormattedMessage
-                id="ProfilePage.listingsTitle"
-                values={{ count: listings.length }}
-              />
-            </h2>
-            <ul className={css.listings}>
-              {listings.map(l => (
-                <li className={css.listing} key={l.id.uuid}>
-                  <ListingCard listing={l} />
-                </li>
-              ))}
-            </ul>
-          </div>
-        ) : null}
         {isMobileLayout ? mobileReviews : desktopReviews}
       </div>
     );
@@ -212,7 +186,7 @@ export class ProfilePageComponent extends Component {
 
     if (userShowError && userShowError.status === 404) {
       return <NotFoundPage />;
-    } else if (userShowError || queryListingsError) {
+    } else if (userShowError) {
       content = (
         <p className={css.error}>
           <FormattedMessage id="ProfilePage.loadingDataFailed" />
@@ -261,7 +235,6 @@ ProfilePageComponent.defaultProps = {
   currentUser: null,
   user: null,
   userShowError: null,
-  queryListingsError: null,
   reviews: [],
   queryReviewsError: null,
 };
@@ -273,8 +246,6 @@ ProfilePageComponent.propTypes = {
   currentUser: propTypes.currentUser,
   user: propTypes.user,
   userShowError: propTypes.error,
-  queryListingsError: propTypes.error,
-  listings: arrayOf(propTypes.listing).isRequired,
   reviews: arrayOf(propTypes.review),
   queryReviewsError: propTypes.error,
 
@@ -290,24 +261,14 @@ ProfilePageComponent.propTypes = {
 
 const mapStateToProps = state => {
   const { currentUser } = state.user;
-  const {
-    userId,
-    userShowError,
-    queryListingsError,
-    userListingRefs,
-    reviews,
-    queryReviewsError,
-  } = state.ProfilePage;
+  const { userId, userShowError, reviews, queryReviewsError } = state.ProfilePage;
   const userMatches = getMarketplaceEntities(state, [{ type: 'user', id: userId }]);
   const user = userMatches.length === 1 ? userMatches[0] : null;
-  const listings = getMarketplaceEntities(state, userListingRefs);
   return {
     scrollingDisabled: isScrollingDisabled(state),
     currentUser,
     user,
     userShowError,
-    queryListingsError,
-    listings,
     reviews,
     queryReviewsError,
   };

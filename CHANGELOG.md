@@ -17,6 +17,8 @@ https://github.com/sharetribe/flex-template-web/
 
 ## Upcoming version 2019-XX-XX
 
+- [change] Remove listings section from `ProfilePage`.
+  [#43](https://github.com/sharetribe/ftw-time/pull/43)
 - [fix] Fix proptype checks for FieldDateAndTimeInput and FieldDateInput.
   [#39](https://github.com/sharetribe/ftw-time/pull/39)
 - [fix] Fix same date detection on TimeRange component.
