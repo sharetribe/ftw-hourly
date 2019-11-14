@@ -138,6 +138,7 @@ class TopbarComponent extends Component {
       currentUser,
       currentUserHasListings,
       currentUserListing,
+      currentUserListingFetched,
       currentUserHasOrders,
       currentPage,
       notificationCount,
@@ -220,6 +221,7 @@ class TopbarComponent extends Component {
             className={desktopClassName}
             currentUserHasListings={currentUserHasListings}
             currentUserListing={currentUserListing}
+            currentUserListingFetched={currentUserListingFetched}
             currentUser={currentUser}
             currentPage={currentPage}
             initialSearchFormValues={initialSearchFormValues}

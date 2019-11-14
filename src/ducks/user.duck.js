@@ -66,6 +66,7 @@ const initialState = {
   sendVerificationEmailInProgress: false,
   sendVerificationEmailError: null,
   currentUserListing: null,
+  currentUserListingFetched: false,
 };
 
 export default function reducer(state = initialState, action = {}) {
@@ -90,6 +91,7 @@ export default function reducer(state = initialState, action = {}) {
         currentUserNotificationCount: 0,
         currentUserNotificationCountError: null,
         currentUserListing: null,
+        currentUserListingFetched: false,
       };
 
     case FETCH_CURRENT_USER_HAS_LISTINGS_REQUEST:
@@ -99,6 +101,7 @@ export default function reducer(state = initialState, action = {}) {
         ...state,
         currentUserHasListings: payload.hasListings,
         currentUserListing: payload.listing,
+        currentUserListingFetched: true,
       };
     case FETCH_CURRENT_USER_HAS_LISTINGS_ERROR:
       console.error(payload); // eslint-disable-line
