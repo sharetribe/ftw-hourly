@@ -17,6 +17,8 @@ https://github.com/sharetribe/flex-template-web/
 
 ## Upcoming version 2019-XX-XX
 
+- [fix] Fix the listing link on `Topbar` so that link works also with listings in draft or pending
+  approval states. [#41](https://github.com/sharetribe/ftw-time/pull/41)
 - [change] Remove listings section from `ProfilePage`.
   [#43](https://github.com/sharetribe/ftw-time/pull/43)
 - [fix] Fix proptype checks for FieldDateAndTimeInput and FieldDateInput.
