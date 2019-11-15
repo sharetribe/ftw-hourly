@@ -51,8 +51,8 @@ const SearchFiltersComponent = props => {
     listingsAreLoaded,
     resultsCount,
     searchInProgress,
-    categoryFilter,
-    amenitiesFilter,
+    certificateFilter,
+    yogaStylesFilter,
     priceFilter,
     keywordFilter,
     isSearchFiltersPanelOpen,
@@ -65,24 +65,24 @@ const SearchFiltersComponent = props => {
   const hasNoResult = listingsAreLoaded && resultsCount === 0;
   const classes = classNames(rootClassName || css.root, { [css.longInfo]: hasNoResult }, className);
 
-  const categoryLabel = intl.formatMessage({
-    id: 'SearchFilters.categoryLabel',
+  const certificateLabel = intl.formatMessage({
+    id: 'SearchFilters.certificateLabel',
   });
 
-  const amenitiesLabel = intl.formatMessage({
-    id: 'SearchFilters.amenitiesLabel',
+  const yogaStylesLabel = intl.formatMessage({
+    id: 'SearchFilters.yogaStylesLabel',
   });
 
   const keywordLabel = intl.formatMessage({
     id: 'SearchFilters.keywordLabel',
   });
 
-  const initialAmenities = amenitiesFilter
-    ? initialValues(urlQueryParams, amenitiesFilter.paramName)
+  const initialyogaStyles = yogaStylesFilter
+    ? initialValues(urlQueryParams, yogaStylesFilter.paramName)
     : null;
 
-  const initialCategory = categoryFilter
-    ? initialValue(urlQueryParams, categoryFilter.paramName)
+  const initialcertificate = certificateFilter
+    ? initialValue(urlQueryParams, certificateFilter.paramName)
     : null;
 
   const initialPriceRange = priceFilter
@@ -130,28 +130,28 @@ const SearchFiltersComponent = props => {
     history.push(createResourceLocatorString('SearchPage', routeConfiguration(), {}, queryParams));
   };
 
-  const categoryFilterElement = categoryFilter ? (
+  const certificateFilterElement = certificateFilter ? (
     <SelectSingleFilter
-      urlParam={categoryFilter.paramName}
-      label={categoryLabel}
+      urlParam={certificateFilter.paramName}
+      label={certificateLabel}
       onSelect={handleSelectOption}
       showAsPopup
-      options={categoryFilter.options}
-      initialValue={initialCategory}
+      options={certificateFilter.options}
+      initialValue={initialcertificate}
       contentPlacementOffset={FILTER_DROPDOWN_OFFSET}
     />
   ) : null;
 
-  const amenitiesFilterElement = amenitiesFilter ? (
+  const yogaStylesFilterElement = yogaStylesFilter ? (
     <SelectMultipleFilter
-      id={'SearchFilters.amenitiesFilter'}
-      name="amenities"
-      urlParam={amenitiesFilter.paramName}
-      label={amenitiesLabel}
+      id={'SearchFilters.yogaStylesFilter'}
+      name="yogaStyles"
+      urlParam={yogaStylesFilter.paramName}
+      label={yogaStylesLabel}
       onSubmit={handleSelectOptions}
       showAsPopup
-      options={amenitiesFilter.options}
-      initialValues={initialAmenities}
+      options={yogaStylesFilter.options}
+      initialValues={initialyogaStyles}
       contentPlacementOffset={FILTER_DROPDOWN_OFFSET}
     />
   ) : null;
@@ -202,8 +202,8 @@ const SearchFiltersComponent = props => {
   return (
     <div className={classes}>
       <div className={css.filters}>
-        {categoryFilterElement}
-        {amenitiesFilterElement}
+        {yogaStylesFilterElement}
+        {certificateFilterElement}
         {priceFilterElement}
         {keywordFilterElement}
         {toggleSearchFiltersPanelButton}
@@ -237,8 +237,8 @@ SearchFiltersComponent.defaultProps = {
   className: null,
   resultsCount: null,
   searchingInProgress: false,
-  categoryFilter: null,
-  amenitiesFilter: null,
+  certificateFilter: null,
+  yogaStylesFilter: null,
   priceFilter: null,
   isSearchFiltersPanelOpen: false,
   toggleSearchFiltersPanel: null,
@@ -253,8 +253,8 @@ SearchFiltersComponent.propTypes = {
   resultsCount: number,
   searchingInProgress: bool,
   onManageDisableScrolling: func.isRequired,
-  categoriesFilter: propTypes.filterConfig,
-  amenitiesFilter: propTypes.filterConfig,
+  certificateFilter: propTypes.filterConfig,
+  yogaStylesFilter: propTypes.filterConfig,
   priceFilter: propTypes.filterConfig,
   isSearchFiltersPanelOpen: bool,
   toggleSearchFiltersPanel: func,

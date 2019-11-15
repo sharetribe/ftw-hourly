@@ -52,21 +52,26 @@ export class SearchPageComponent extends Component {
   }
 
   filters() {
-    const { categories, amenities, priceFilterConfig, keywordFilterConfig } = this.props;
+    const {
+      certificateConfig,
+      yogaStylesConfig,
+      priceFilterConfig,
+      keywordFilterConfig,
+    } = this.props;
 
-    // Note: "category" and "amenities" filters are not actually filtering anything by default.
+    // Note: "certificate" and "yogaStyles" filters are not actually filtering anything by default.
     // Currently, if you want to use them, we need to manually configure them to be available
     // for search queries. Read more from extended data document:
     // https://www.sharetribe.com/docs/references/extended-data/#data-schema
 
     return {
-      categoryFilter: {
-        paramName: 'pub_category',
-        options: categories,
+      certificateFilter: {
+        paramName: 'pub_certificate',
+        options: certificateConfig.filter(c => !c.hideFromFilters),
       },
-      amenitiesFilter: {
-        paramName: 'pub_amenities',
-        options: amenities,
+      yogaStylesFilter: {
+        paramName: 'pub_yogaStyles',
+        options: yogaStylesConfig,
       },
       priceFilter: {
         paramName: 'price',
@@ -99,7 +104,7 @@ export class SearchPageComponent extends Component {
     if (viewportBoundsChanged && isSearchPage) {
       const { history, location } = this.props;
 
-      // parse query parameters, including a custom attribute named category
+      // parse query parameters, including a custom attribute named certificate
       const { address, bounds, mapSearch, ...rest } = parse(location.search, {
         latlng: ['origin'],
         latlngBounds: ['bounds'],
@@ -216,8 +221,8 @@ export class SearchPageComponent extends Component {
             searchParamsForPagination={parse(location.search)}
             showAsModalMaxWidth={MODAL_BREAKPOINT}
             primaryFilters={{
-              categoryFilter: filters.categoryFilter,
-              amenitiesFilter: filters.amenitiesFilter,
+              yogaStylesFilter: filters.yogaStylesFilter,
+              certificateFilter: filters.certificateFilter,
               priceFilter: filters.priceFilter,
               keywordFilter: filters.keywordFilter,
             }}
@@ -263,8 +268,8 @@ SearchPageComponent.defaultProps = {
   searchListingsError: null,
   searchParams: {},
   tab: 'listings',
-  categories: config.custom.categories,
-  amenities: config.custom.amenities,
+  certificateConfig: config.custom.certificate,
+  yogaStylesConfig: config.custom.yogaStyles,
   priceFilterConfig: config.custom.priceFilterConfig,
   keywordFilterConfig: config.custom.keywordFilterConfig,
   activeListingId: null,
@@ -282,8 +287,8 @@ SearchPageComponent.propTypes = {
   searchListingsError: propTypes.error,
   searchParams: object,
   tab: oneOf(['filters', 'listings', 'map']).isRequired,
-  categories: array,
-  amenities: array,
+  certificateConfig: array,
+  yogaStylesConfig: array,
   priceFilterConfig: shape({
     min: number.isRequired,
     max: number.isRequired,
@@ -365,7 +370,7 @@ SearchPage.loadData = (params, search) => {
     page,
     perPage: RESULT_PAGE_SIZE,
     include: ['author', 'images'],
-    'fields.listing': ['title', 'geolocation', 'price'],
+    'fields.listing': ['title', 'geolocation', 'price', 'publicData'],
     'fields.user': ['profile.displayName', 'profile.abbreviatedName'],
     'fields.image': ['variants.landscape-crop', 'variants.landscape-crop2x'],
     'limit.images': 1,

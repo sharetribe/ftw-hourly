@@ -40,31 +40,18 @@ exports[`SearchPageComponent matches snapshot 1`] = `
       }
       primaryFilters={
         Object {
-          "amenitiesFilter": Object {
+          "certificateFilter": Object {
             "options": Array [
               Object {
-                "key": "dog1",
-                "label": "Dog 1",
+                "key": "200h",
+                "label": "Registered yoga teacher 200h",
               },
               Object {
-                "key": "dog2",
-                "label": "Dog 2",
+                "key": "500h",
+                "label": "Registered yoga teacher 500h",
               },
             ],
-            "paramName": "pub_amenities",
-          },
-          "categoryFilter": Object {
-            "options": Array [
-              Object {
-                "key": "cat1",
-                "label": "Cat 1",
-              },
-              Object {
-                "key": "cat2",
-                "label": "Cat 2",
-              },
-            ],
-            "paramName": "pub_category",
+            "paramName": "pub_certificate",
           },
           "keywordFilter": Object {
             "config": Object {
@@ -79,6 +66,35 @@ exports[`SearchPageComponent matches snapshot 1`] = `
               "step": 5,
             },
             "paramName": "price",
+          },
+          "yogaStylesFilter": Object {
+            "options": Array [
+              Object {
+                "key": "ashtanga",
+                "label": "Ashtanga",
+              },
+              Object {
+                "key": "hatha",
+                "label": "Hatha",
+              },
+              Object {
+                "key": "kundalini",
+                "label": "Kundalini",
+              },
+              Object {
+                "key": "restorative",
+                "label": "Restorative",
+              },
+              Object {
+                "key": "vinyasa",
+                "label": "Vinyasa",
+              },
+              Object {
+                "key": "yin",
+                "label": "Yin",
+              },
+            ],
+            "paramName": "pub_yogaStyles",
           },
         }
       }
