@@ -8,56 +8,30 @@ import { requiredFieldArrayCheckbox } from '../../util/validators';
 const formName = 'Styleguide.FieldCheckboxGroup';
 const formNameRequired = 'Styleguide.FieldCheckboxGroupRequired';
 
-const label = <h3>Amenities</h3>;
+const label = <h3>Yoga styles</h3>;
 
 const commonProps = {
   label: label,
   options: [
-    {
-      key: 'towels',
-      label: 'Towels',
-    },
-    {
-      key: 'bathroom',
-      label: 'Bathroom',
-    },
-    {
-      key: 'swimming_pool',
-      label: 'Swimming pool',
-    },
-    {
-      key: 'own_drinks',
-      label: 'Own drinks allowed',
-    },
-    {
-      key: 'jacuzzi',
-      label: 'Jacuzzi',
-    },
-    {
-      key: 'audiovisual_entertainment',
-      label: 'Audiovisual entertainment',
-    },
-    {
-      key: 'barbeque',
-      label: 'Barbeque',
-    },
-    {
-      key: 'own_food_allowed',
-      label: 'Own food allowed',
-    },
+    { key: 'ashtanga', label: 'Ashtanga' },
+    { key: 'hatha', label: 'Hatha' },
+    { key: 'kundalini', label: 'Kundalini' },
+    { key: 'restorative', label: 'Restorative' },
+    { key: 'vinyasa', label: 'Vinyasa' },
+    { key: 'yin', label: 'yin' },
   ],
   twoColumns: true,
 };
 
 const optionalProps = {
-  name: 'amenities-optional',
-  id: 'amenities-optional',
+  name: 'yogaStyles-optional',
+  id: 'yogaStyles-optional',
   ...commonProps,
 };
 
 const requiredProps = {
-  name: 'amenities-required',
-  id: `${formNameRequired}.amenities-required`,
+  name: 'yogaStyles-required',
+  id: `${formNameRequired}.yogaStyles-required`,
   ...commonProps,
   validate: requiredFieldArrayCheckbox('this is required'),
 };

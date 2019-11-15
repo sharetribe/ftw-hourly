@@ -106,7 +106,7 @@
   }
 }
 
-.authorInfo {
+.certificateInfo {
   /* Font */
   @apply --marketplaceTinyFontStyles;
   color: var(--matterColor);

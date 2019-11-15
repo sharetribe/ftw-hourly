@@ -6,40 +6,40 @@ import {
 } from './SearchPage.helpers.js';
 
 const urlParams = {
-  pub_category: 'smoke',
-  pub_amenities: 'towels,bathroom',
+  pub_certificate: '200h',
+  pub_yogaStyles: 'vinyasa,yin',
 };
 
 const filters = {
-  categoryFilter: {
-    paramName: 'pub_category',
-    options: [{ key: 'smoke' }, { key: 'wooden' }],
+  certificateFilter: {
+    paramName: 'pub_certificate',
+    options: [{ key: '200h' }, { key: '500h' }],
   },
-  amenitiesFilter: {
-    paramName: 'pub_amenities',
-    options: [{ key: 'towels' }, { key: 'bathroom' }],
+  yogaStylesFilter: {
+    paramName: 'pub_yogaStyles',
+    options: [{ key: 'vinyasa' }, { key: 'yin' }],
   },
 };
 
 describe('SearchPage.helpers', () => {
   describe('validURLParamForExtendedData', () => {
     it('returns a valid parameter', () => {
-      const validParam = validURLParamForExtendedData('pub_category', 'smoke', filters);
-      expect(validParam).toEqual({ pub_category: 'smoke' });
+      const validParam = validURLParamForExtendedData('pub_certificate', '200h', filters);
+      expect(validParam).toEqual({ pub_certificate: '200h' });
     });
 
     it('takes empty params', () => {
-      const validParam = validURLParamForExtendedData('pub_category', '', filters);
+      const validParam = validURLParamForExtendedData('pub_certificate', '', filters);
       expect(validParam).toEqual({});
     });
 
     it('drops an invalid param value', () => {
-      const validParam = validURLParamForExtendedData('pub_category', 'invalid', filters);
+      const validParam = validURLParamForExtendedData('pub_certificate', 'invalid', filters);
       expect(validParam).toEqual({});
     });
 
     it('drops a param with invalid name', () => {
-      const validParam = validURLParamForExtendedData('pub_invalid', 'towels', filters);
+      const validParam = validURLParamForExtendedData('pub_invalid', 'vinyasa', filters);
       expect(validParam).toEqual({});
     });
   });
@@ -56,15 +56,15 @@ describe('SearchPage.helpers', () => {
     });
 
     it('drops an invalid filter param value', () => {
-      const params = { pub_category: 'smoke', pub_amenities: 'invalid1,invalid2' };
+      const params = { pub_certificate: '200h', pub_yogaStyles: 'invalid1,invalid2' };
       const validParams = validFilterParams(params, filters);
-      expect(validParams).toEqual({ pub_category: 'smoke' });
+      expect(validParams).toEqual({ pub_certificate: '200h' });
     });
 
     it('drops non-filter params', () => {
-      const params = { pub_category: 'smoke', other_param: 'somevalue' };
+      const params = { pub_certificate: '200h', other_param: 'somevalue' };
       const validParams = validFilterParams(params, filters);
-      expect(validParams).toEqual({ pub_category: 'smoke' });
+      expect(validParams).toEqual({ pub_certificate: '200h' });
     });
   });
 
@@ -80,13 +80,13 @@ describe('SearchPage.helpers', () => {
     });
 
     it('drops an invalid filter param value', () => {
-      const params = { pub_category: 'smoke', pub_amenities: 'invalid1,invalid2' };
+      const params = { pub_certificate: '200h', pub_yogaStyles: 'invalid1,invalid2' };
       const validParams = validURLParamsForExtendedData(params, filters);
-      expect(validParams).toEqual({ pub_category: 'smoke' });
+      expect(validParams).toEqual({ pub_certificate: '200h' });
     });
 
     it('returns non-filter params', () => {
-      const params = { pub_category: 'smoke', other_param: 'somevalue' };
+      const params = { pub_certificate: '200h', other_param: 'somevalue' };
       const validParams = validURLParamsForExtendedData(params, filters);
       expect(validParams).toEqual(params);
     });
@@ -109,15 +109,15 @@ describe('SearchPage.helpers', () => {
     });
 
     it('drops an invalid filter param value', () => {
-      const params = { pub_category: 'smoke', pub_amenities: 'invalid1,invalid2' };
+      const params = { pub_certificate: '200h', pub_yogaStyles: 'invalid1,invalid2' };
       const validParams = pickSearchParamsOnly(params, filters);
-      expect(validParams).toEqual({ pub_category: 'smoke' });
+      expect(validParams).toEqual({ pub_certificate: '200h' });
     });
 
     it('drops non-search params', () => {
-      const params = { pub_category: 'smoke', other_param: 'somevalue' };
+      const params = { pub_certificate: '200h', other_param: 'somevalue' };
       const validParams = pickSearchParamsOnly(params, filters);
-      expect(validParams).toEqual({ pub_category: 'smoke' });
+      expect(validParams).toEqual({ pub_certificate: '200h' });
     });
   });
 });

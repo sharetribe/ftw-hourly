@@ -17,6 +17,12 @@ https://github.com/sharetribe/flex-template-web/
 
 ## Upcoming version 2019-XX-XX
 
+- [change] Replace amenities with yoga styles and category with certificate in search filters and
+  EditListingEizard. Show the updated public data also on ListingPage. Add new flags
+  `hideFromFilters` and `hideFromListingInfo` to certificate filter in
+  `marketplace-custom-config.js`. These new flags are used to determine if the value shoud be
+  visible in search filters or listing info (ListingPage and ListingCard).
+  [#44](https://github.com/sharetribe/ftw-time/pull/44)
 - [fix] Fix the listing link on `Topbar` so that link works also with listings in draft or pending
   approval states. [#41](https://github.com/sharetribe/ftw-time/pull/41)
 - [change] Remove listings section from `ProfilePage`.

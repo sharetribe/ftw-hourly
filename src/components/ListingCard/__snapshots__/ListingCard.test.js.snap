@@ -49,16 +49,7 @@ exports[`ListingCard matches snapshot 1`] = `
          
         title
       </div>
-      <div>
-        <FormattedMessage
-          id="ListingCard.hostedBy"
-          values={
-            Object {
-              "authorName": "user1 display name",
-            }
-          }
-        />
-      </div>
+      <div />
     </div>
   </div>
 </NamedLink>

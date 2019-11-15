@@ -54,25 +54,19 @@ exports[`EditListingDescriptionForm matches snapshot 1`] = `
     className=""
   >
     <label
-      htmlFor="category"
+      htmlFor="certificate"
     >
-      EditListingDescriptionForm.categoryLabel
+      EditListingDescriptionForm.certificateLabel
     </label>
     <select
       className=""
-      id="category"
-      name="category"
+      id="certificate"
+      name="certificate"
       onBlur={[Function]}
       onChange={[Function]}
       onFocus={[Function]}
       value=""
     >
-      <option
-        disabled={true}
-        value=""
-      >
-        EditListingDescriptionForm.categoryPlaceholder
-      </option>
       <option
         key="cat1"
         value="cat1"

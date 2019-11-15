@@ -158,8 +158,8 @@ class SearchFiltersMobileComponent extends Component {
       onMapIconClick,
       onManageDisableScrolling,
       selectedFiltersCount,
-      categoryFilter,
-      amenitiesFilter,
+      certificateFilter,
+      yogaStylesFilter,
       priceFilter,
       keywordFilter,
       intl,
@@ -183,37 +183,39 @@ class SearchFiltersMobileComponent extends Component {
     const filtersButtonClasses =
       selectedFiltersCount > 0 ? css.filtersButtonSelected : css.filtersButton;
 
-    const categoryLabel = intl.formatMessage({
-      id: 'SearchFiltersMobile.categoryLabel',
+    const certificateLabel = intl.formatMessage({
+      id: 'SearchFiltersMobile.certificateLabel',
     });
-    const initialCategory = categoryFilter ? this.initialValue(categoryFilter.paramName) : null;
+    const initialcertificate = certificateFilter
+      ? this.initialValue(certificateFilter.paramName)
+      : null;
 
-    const categoryFilterElement = categoryFilter ? (
+    const certificateFilterElement = certificateFilter ? (
       <SelectSingleFilter
-        urlParam={categoryFilter.paramName}
-        label={categoryLabel}
+        urlParam={certificateFilter.paramName}
+        label={certificateLabel}
         onSelect={this.handleSelectSingle}
         liveEdit
-        options={categoryFilter.options}
-        initialValue={initialCategory}
+        options={certificateFilter.options}
+        initialValue={initialcertificate}
         intl={intl}
       />
     ) : null;
 
-    const amenitiesLabel = intl.formatMessage({ id: 'SearchFiltersMobile.amenitiesLabel' });
+    const yogaStylesLabel = intl.formatMessage({ id: 'SearchFiltersMobile.yogaStylesLabel' });
 
-    const initialAmenities = this.initialValues(amenitiesFilter.paramName);
+    const initialyogaStyles = this.initialValues(yogaStylesFilter.paramName);
 
-    const amenitiesFilterElement = amenitiesFilter ? (
+    const yogaStylesFilterElement = yogaStylesFilter ? (
       <SelectMultipleFilter
-        id="SearchFiltersMobile.amenitiesFilter"
-        name="amenities"
-        urlParam={amenitiesFilter.paramName}
-        label={amenitiesLabel}
+        id="SearchFiltersMobile.yogaStylesFilter"
+        name="yogaStyles"
+        urlParam={yogaStylesFilter.paramName}
+        label={yogaStylesLabel}
         onSubmit={this.handleSelectMultiple}
         liveEdit
-        options={amenitiesFilter.options}
-        initialValues={initialAmenities}
+        options={yogaStylesFilter.options}
+        initialValues={initialyogaStyles}
       />
     ) : null;
 
@@ -281,8 +283,8 @@ class SearchFiltersMobileComponent extends Component {
           {this.state.isFiltersOpenOnMobile ? (
             <div className={css.filtersWrapper}>
               {keywordFilterElement}
-              {categoryFilterElement}
-              {amenitiesFilterElement}
+              {yogaStylesFilterElement}
+              {certificateFilterElement}
               {priceFilterElement}
             </div>
           ) : null}
@@ -305,8 +307,8 @@ SearchFiltersMobileComponent.defaultProps = {
   searchingInProgress: false,
   selectedFiltersCount: 0,
   filterParamNames: [],
-  categoryFilter: null,
-  amenitiesFilter: null,
+  certificateFilter: null,
+  yogaStylesFilter: null,
   priceFilter: null,
 };
 
@@ -324,8 +326,8 @@ SearchFiltersMobileComponent.propTypes = {
   onCloseModal: func.isRequired,
   selectedFiltersCount: number,
   filterParamNames: array,
-  categoriesFilter: propTypes.filterConfig,
-  amenitiesFilter: propTypes.filterConfig,
+  certificateFilter: propTypes.filterConfig,
+  yogaStylesFilter: propTypes.filterConfig,
   priceFilter: propTypes.filterConfig,
 
   // from injectIntl
