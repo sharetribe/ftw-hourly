@@ -49,7 +49,7 @@
   flex-shrink: 0;
 }
 
-.category {
+.certificate {
   @apply --EditListingDescriptionForm_formMargins;
 }
 

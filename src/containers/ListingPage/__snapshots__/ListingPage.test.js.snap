@@ -120,7 +120,18 @@ exports[`ListingPage matches snapshot 1`] = `
           />
           <div>
             <SectionHeading
-              category={null}
+              certificateConfig={
+                Array [
+                  Object {
+                    "key": "cat1",
+                    "label": "Cat 1",
+                  },
+                  Object {
+                    "key": "cat2",
+                    "label": "Cat 2",
+                  },
+                ]
+              }
               formattedPrice={55}
               hostLink={
                 <NamedLink

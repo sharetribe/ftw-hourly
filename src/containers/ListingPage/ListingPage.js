@@ -71,11 +71,6 @@ const priceData = (price, intl) => {
   return {};
 };
 
-const categoryLabel = (categories, key) => {
-  const cat = categories.find(c => c.key === key);
-  return cat ? cat.label : key;
-};
-
 export class ListingPageComponent extends Component {
   constructor(props) {
     super(props);
@@ -196,8 +191,8 @@ export class ListingPageComponent extends Component {
       sendEnquiryInProgress,
       sendEnquiryError,
       monthlyTimeSlots,
-      categoriesConfig,
-      amenitiesConfig,
+      certificateConfig,
+      yogaStylesConfig,
     } = this.props;
 
     const listingId = new UUID(rawParams.id);
@@ -377,15 +372,6 @@ export class ListingPageComponent extends Component {
         {authorDisplayName}
       </NamedLink>
     );
-
-    const category =
-      publicData && publicData.category ? (
-        <span>
-          {categoryLabel(categoriesConfig, publicData.category)}
-          <span className={css.separator}>•</span>
-        </span>
-      ) : null;
-
     return (
       <Page
         title={schemaTitle}
@@ -429,13 +415,14 @@ export class ListingPageComponent extends Component {
                     priceTitle={priceTitle}
                     formattedPrice={formattedPrice}
                     richTitle={richTitle}
-                    category={category}
+                    listingCertificate={publicData ? publicData.certificate : null}
+                    certificateConfig={certificateConfig}
                     hostLink={hostLink}
                     showContactUser={showContactUser}
                     onContactUser={this.onContactUser}
                   />
                   <SectionDescriptionMaybe description={description} />
-                  <SectionFeaturesMaybe options={amenitiesConfig} publicData={publicData} />
+                  <SectionFeaturesMaybe options={yogaStylesConfig} publicData={publicData} />
                   <SectionRulesMaybe publicData={publicData} />
                   <SectionMapMaybe
                     geolocation={geolocation}
@@ -491,8 +478,8 @@ ListingPageComponent.defaultProps = {
   fetchReviewsError: null,
   monthlyTimeSlots: null,
   sendEnquiryError: null,
-  categoriesConfig: config.custom.categories,
-  amenitiesConfig: config.custom.amenities,
+  certificateConfig: config.custom.certificate,
+  yogaStylesConfig: config.custom.yogaStyles,
 };
 
 ListingPageComponent.propTypes = {
@@ -539,8 +526,8 @@ ListingPageComponent.propTypes = {
   onSendEnquiry: func.isRequired,
   onInitializeCardPaymentData: func.isRequired,
 
-  categoriesConfig: array,
-  amenitiesConfig: array,
+  certificateConfig: array,
+  yogaStylesConfig: array,
 };
 
 const mapStateToProps = state => {
