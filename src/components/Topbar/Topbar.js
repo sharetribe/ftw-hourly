@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import { bool, func, number, shape, string } from 'prop-types';
 import { compose } from 'redux';
 import { FormattedMessage, intlShape, injectIntl } from '../../util/reactIntl';
 import pickBy from 'lodash/pickBy';
@@ -60,8 +60,6 @@ const GenericError = props => {
     </div>
   );
 };
-
-const { bool } = PropTypes;
 
 GenericError.propTypes = {
   show: bool.isRequired,
@@ -168,6 +166,7 @@ class TopbarComponent extends Component {
         isAuthenticated={isAuthenticated}
         currentUserHasListings={currentUserHasListings}
         currentUserListing={currentUserListing}
+        currentUserListingFetched={currentUserListingFetched}
         currentUser={currentUser}
         onLogout={this.handleLogout}
         notificationCount={notificationCount}
@@ -289,8 +288,6 @@ TopbarComponent.defaultProps = {
   currentPage: null,
   sendVerificationEmailError: null,
 };
-
-const { func, number, shape, string } = PropTypes;
 
 TopbarComponent.propTypes = {
   className: string,

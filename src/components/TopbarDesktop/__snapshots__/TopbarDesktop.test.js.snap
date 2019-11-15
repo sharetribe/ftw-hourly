@@ -148,20 +148,7 @@ exports[`TopbarDesktop data matches snapshot 1`] = `
         <li
           className=""
           role="menuitem"
-        >
-          <a
-            className=""
-            href="/l/new"
-            onClick={[Function]}
-            style={Object {}}
-            title={null}
-          >
-            <span />
-            <span>
-              OwnListingLink.addYourListingLink
-            </span>
-          </a>
-        </li>
+        />
         <li
           className=""
           role="menuitem"

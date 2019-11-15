@@ -17,6 +17,9 @@ https://github.com/sharetribe/flex-template-web/
 
 ## Upcoming version 2019-XX-XX
 
+- [change] Change images and update favicons. Also, update links on the `LandingPage`. Make the
+  `OwnListingLink` component more generic so that it can be used also in the `SectionHowItWorks`.
+  [#42](https://github.com/sharetribe/ftw-time/pull/42/)
 - [change] Replace amenities with yoga styles and category with certificate in search filters and
   EditListingEizard. Show the updated public data also on ListingPage. Add new flags
   `hideFromFilters` and `hideFromListingInfo` to certificate filter in
