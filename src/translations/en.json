@@ -917,6 +917,8 @@
   "Topbar.searchIcon": "Open search",
   "TopbarDesktop.accountSettingsLink": "Account settings",
   "TopbarDesktop.createListing": "Become a teacher",
+  "TopbarDesktop.addYourListingLink": "Become a teacher",
+  "TopbarDesktop.editYourListingLink": "Edit teacher profile",
   "TopbarDesktop.inbox": "Inbox",
   "TopbarDesktop.login": "Log in",
   "TopbarDesktop.logo": "Yogatime",

@@ -25,6 +25,7 @@ const TopbarMobileMenu = props => {
     currentPage,
     currentUserHasListings,
     currentUserListing,
+    currentUserListingFetched,
     currentUser,
     notificationCount,
     onLogout,
@@ -99,7 +100,11 @@ const TopbarMobileMenu = props => {
           <FormattedMessage id="TopbarMobileMenu.inboxLink" />
           {notificationCountBadge}
         </NamedLink>
-        <OwnListingLink listing={currentUserListing} className={css.navigationLink} />
+        <OwnListingLink
+          listing={currentUserListing}
+          listingFetched={currentUserListingFetched}
+          className={css.navigationLink}
+        />
         <NamedLink
           className={classNames(css.navigationLink, currentPageClass('ProfileSettingsPage'))}
           name="ProfileSettingsPage"
@@ -127,12 +132,14 @@ TopbarMobileMenu.defaultProps = {
   notificationCount: 0,
   currentPage: null,
   currentUserListing: null,
+  currentUserListingFetched: false,
 };
 
 TopbarMobileMenu.propTypes = {
   isAuthenticated: bool.isRequired,
   currentUserHasListings: bool.isRequired,
   currentUserListing: propTypes.ownListing,
+  currentUserListingFetched: bool,
   currentUser: propTypes.currentUser,
   currentPage: string,
   notificationCount: number,

@@ -84,7 +84,20 @@ const TopbarDesktop = props => {
       </MenuLabel>
       <MenuContent className={css.profileMenuContent}>
         <MenuItem key="EditListingPage">
-          <OwnListingLink listing={currentUserListing} />
+          <OwnListingLink
+            listing={currentUserListing}
+            listingFetched={currentUserListingFetched}
+            className={css.yourListingsLink}
+          >
+            <div>
+              <span className={css.menuItemBorder} />
+              {currentUserListing ? (
+                <FormattedMessage id="TopbarDesktop.editYourListingLink" />
+              ) : (
+                <FormattedMessage id="TopbarDesktop.addYourListingLink" />
+              )}
+            </div>
+          </OwnListingLink>
         </MenuItem>
         <MenuItem key="ProfileSettingsPage">
           <NamedLink
@@ -180,6 +193,7 @@ TopbarDesktop.defaultProps = {
   notificationCount: 0,
   initialSearchFormValues: {},
   currentUserListing: null,
+  currentUserListingFetched: false,
 };
 
 TopbarDesktop.propTypes = {
@@ -187,6 +201,7 @@ TopbarDesktop.propTypes = {
   className: string,
   currentUserHasListings: bool.isRequired,
   currentUserListing: propTypes.ownListing,
+  currentUserListingFetched: bool,
   currentUser: propTypes.currentUser,
   currentPage: string,
   isAuthenticated: bool.isRequired,
