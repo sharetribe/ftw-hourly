@@ -1,19 +1,24 @@
 import React from 'react';
-import { NamedLink } from '../../components';
+import { bool, object, string } from 'prop-types';
 import { FormattedMessage } from '../../util/reactIntl';
 import { ensureOwnListing } from '../../util/data';
-import { LISTING_STATE_DRAFT } from '../../util/types';
+import { propTypes, LISTING_STATE_DRAFT } from '../../util/types';
 import { getListingType, createSlug } from '../../util/urlHelpers';
+import { NamedLink } from '../../components';
 
 import css from './OwnListingLink.css';
 
 const OwnListingLink = props => {
-  const { className, listing } = props;
+  const { className, listing, listingFetched, children } = props;
+
+  if (!listingFetched) {
+    return null;
+  }
+
   if (!listing) {
     return (
-      <NamedLink className={className ? className : css.yourListingsLink} name="NewListingPage">
-        <span className={css.menuItemBorder} />
-        <FormattedMessage id="OwnListingLink.addYourListingLink" />
+      <NamedLink className={className ? className : css.defaultLinkStyle} name="NewListingPage">
+        {children ? children : <FormattedMessage id="OwnListingLink.addYourListingLink" />}
       </NamedLink>
     );
   }
@@ -36,9 +41,23 @@ const OwnListingLink = props => {
       }}
     >
       <span className={css.menuItemBorder} />
-      <FormattedMessage id="OwnListingLink.editYourListingLink" />
+      {children ? children : <FormattedMessage id="OwnListingLink.editYourListingLink" />}
     </NamedLink>
   );
+};
+
+OwnListingLink.defaultProps = {
+  className: null,
+  listing: null,
+  listingFetched: false,
+  children: null,
+};
+
+OwnListingLink.propTypes = {
+  className: string,
+  listing: propTypes.ownListing,
+  listingFetched: bool,
+  children: object,
 };
 
 export default OwnListingLink;
