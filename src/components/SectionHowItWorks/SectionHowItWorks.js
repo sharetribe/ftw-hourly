@@ -1,14 +1,14 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { FormattedMessage } from '../../util/reactIntl';
+import { bool, string } from 'prop-types';
 import classNames from 'classnames';
-
-import { NamedLink } from '../../components';
+import { FormattedMessage } from '../../util/reactIntl';
+import { propTypes } from '../../util/types';
+import { OwnListingLink } from '../../components';
 
 import css from './SectionHowItWorks.css';
 
 const SectionHowItWorks = props => {
-  const { rootClassName, className } = props;
+  const { rootClassName, className, currentUserListing, currentUserListingFetched } = props;
 
   const classes = classNames(rootClassName || css.root, className);
   return (
@@ -47,23 +47,27 @@ const SectionHowItWorks = props => {
           </p>
         </div>
       </div>
-
       <div className={css.createListingLink}>
-        <NamedLink name="NewListingPage">
+        <OwnListingLink listing={currentUserListing} listingFetched={currentUserListingFetched}>
           <FormattedMessage id="SectionHowItWorks.createListingLink" />
-        </NamedLink>
+        </OwnListingLink>
       </div>
     </div>
   );
 };
 
-SectionHowItWorks.defaultProps = { rootClassName: null, className: null };
-
-const { string } = PropTypes;
+SectionHowItWorks.defaultProps = {
+  rootClassName: null,
+  className: null,
+  currentUserListing: null,
+  currentUserListingFetched: false,
+};
 
 SectionHowItWorks.propTypes = {
   rootClassName: string,
   className: string,
+  currentUserListing: propTypes.ownListing,
+  currentUserListingFetched: bool,
 };
 
 export default SectionHowItWorks;

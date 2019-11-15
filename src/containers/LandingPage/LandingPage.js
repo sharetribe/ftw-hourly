@@ -1,10 +1,11 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { bool, object } from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { injectIntl, intlShape } from '../../util/reactIntl';
 import { isScrollingDisabled } from '../../ducks/UI.duck';
+import { propTypes } from '../../util/types';
 import config from '../../config';
 import {
   Page,
@@ -24,7 +25,14 @@ import twitterImage from '../../assets/yogatimeTwitter-600x314.jpg';
 import css from './LandingPage.css';
 
 export const LandingPageComponent = props => {
-  const { history, intl, location, scrollingDisabled } = props;
+  const {
+    history,
+    intl,
+    location,
+    scrollingDisabled,
+    currentUserListing,
+    currentUserListingFetched,
+  } = props;
 
   // Schema for search engines (helps them to understand what this page is about)
   // http://schema.org
@@ -69,7 +77,10 @@ export const LandingPageComponent = props => {
             </li>
             <li className={css.section}>
               <div className={css.sectionContent}>
-                <SectionHowItWorks />
+                <SectionHowItWorks
+                  currentUserListing={currentUserListing}
+                  currentUserListingFetched={currentUserListingFetched}
+                />
               </div>
             </li>
           </ul>
@@ -82,10 +93,15 @@ export const LandingPageComponent = props => {
   );
 };
 
-const { bool, object } = PropTypes;
+LandingPageComponent.defaultProps = {
+  currentUserListing: null,
+  currentUserListingFetched: false,
+};
 
 LandingPageComponent.propTypes = {
   scrollingDisabled: bool.isRequired,
+  currentUserListing: propTypes.ownListing,
+  currentUserListingFetched: bool,
 
   // from withRouter
   history: object.isRequired,
@@ -96,8 +112,12 @@ LandingPageComponent.propTypes = {
 };
 
 const mapStateToProps = state => {
+  const { currentUserListing, currentUserListingFetched } = state.user;
+
   return {
     scrollingDisabled: isScrollingDisabled(state),
+    currentUserListing,
+    currentUserListingFetched,
   };
 };
 
