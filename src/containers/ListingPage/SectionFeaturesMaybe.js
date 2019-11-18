@@ -11,6 +11,8 @@ const SectionFeaturesMaybe = props => {
   }
 
   const selectedOptions = publicData && publicData.yogaStyles ? publicData.yogaStyles : [];
+  const selectedConfigOptions = options.filter(o => selectedOptions.find(s => s === o.key));
+
   return (
     <div className={css.sectionFeatures}>
       <h2 className={css.featuresTitle}>
@@ -18,9 +20,9 @@ const SectionFeaturesMaybe = props => {
       </h2>
       <PropertyGroup
         id="ListingPage.yogaStyles"
-        options={options}
+        options={selectedConfigOptions}
         selectedOptions={selectedOptions}
-        twoColumns={true}
+        twoColumns={selectedConfigOptions > 5}
       />
     </div>
   );
