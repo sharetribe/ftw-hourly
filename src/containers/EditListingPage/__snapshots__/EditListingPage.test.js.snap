@@ -46,6 +46,7 @@ exports[`EditListingPageComponent matches snapshot 1`] = `
       }
     }
     newListingPublished={false}
+    onAddAvailabilityException={[Function]}
     onChange={[Function]}
     onCreateListingDraft={[Function]}
     onDeleteAvailabilityException={[Function]}
