@@ -61,7 +61,6 @@ const BookingPanel = props => {
     onSubmit,
     title,
     subTitle,
-    authorDisplayName,
     onManageDisableScrolling,
     onFetchTimeSlots,
     monthlyTimeSlots,
@@ -110,15 +109,22 @@ const BookingPanel = props => {
       >
         <div className={css.modalHeading}>
           <h1 className={css.title}>{title}</h1>
-          <div className={css.author}>
-            <FormattedMessage id="BookingPanel.hostedBy" values={{ name: authorDisplayName }} />
+        </div>
+        <div className={css.bookingHeading}>
+          <div className={css.desktopPriceContainer}>
+            <div className={css.desktopPriceValue} title={priceTitle}>
+              {formattedPrice}
+            </div>
+            <div className={css.desktopPerUnit}>
+              <FormattedMessage id={unitTranslationKey} />
+            </div>
+          </div>
+          <div className={css.bookingHeadingContainer}>
+            <h2 className={titleClasses}>{title}</h2>
+            {subTitleText ? <div className={css.bookingHelp}>{subTitleText}</div> : null}
           </div>
         </div>
 
-        <div className={css.bookingHeading}>
-          <h2 className={titleClasses}>{title}</h2>
-          {subTitleText ? <div className={css.bookingHelp}>{subTitleText}</div> : null}
-        </div>
         {showBookingTimeForm ? (
           <BookingTimeForm
             className={css.bookingForm}
