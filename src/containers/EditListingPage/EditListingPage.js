@@ -21,6 +21,8 @@ import { EditListingWizard, Footer, NamedRedirect, Page, UserNav } from '../../c
 import { TopbarContainer } from '../../containers';
 
 import {
+  requestAddAvailabilityException,
+  requestDeleteAvailabilityException,
   requestCreateListingDraft,
   requestPublishListingDraft,
   requestUpdateListing,
@@ -44,6 +46,8 @@ export const EditListingPageComponent = props => {
     getOwnListing,
     history,
     intl,
+    onAddAvailabilityException,
+    onDeleteAvailabilityException,
     onCreateListingDraft,
     onPublishListingDraft,
     onUpdateListing,
@@ -105,6 +109,9 @@ export const EditListingPageComponent = props => {
       updateListingError = null,
       showListingsError = null,
       uploadImageError = null,
+      fetchExceptionsError = null,
+      addExceptionError = null,
+      deleteExceptionError = null,
     } = page;
     const errors = {
       createListingDraftError,
@@ -113,6 +120,9 @@ export const EditListingPageComponent = props => {
       showListingsError,
       uploadImageError,
       createStripeAccountError,
+      fetchExceptionsError,
+      addExceptionError,
+      deleteExceptionError,
     };
     const newListingPublished =
       isDraftURI && currentListing && currentListingState !== LISTING_STATE_DRAFT;
@@ -162,6 +172,8 @@ export const EditListingPageComponent = props => {
           history={history}
           images={images}
           listing={currentListing}
+          onAddAvailabilityException={onAddAvailabilityException}
+          onDeleteAvailabilityException={onDeleteAvailabilityException}
           onUpdateListing={onUpdateListing}
           onCreateListingDraft={onCreateListingDraft}
           onPublishListingDraft={onPublishListingDraft}
@@ -175,6 +187,8 @@ export const EditListingPageComponent = props => {
           onManageDisableScrolling={onManageDisableScrolling}
           updatedTab={page.updatedTab}
           updateInProgress={page.updateInProgress || page.createListingDraftInProgress}
+          fetchExceptionsInProgress={page.fetchExceptionsInProgress}
+          availabilityExceptions={page.availabilityExceptions}
         />
         <Footer />
       </Page>
@@ -216,8 +230,9 @@ EditListingPageComponent.defaultProps = {
 EditListingPageComponent.propTypes = {
   createStripeAccountError: propTypes.error,
   currentUser: propTypes.currentUser,
-  fetchInProgress: bool.isRequired,
   getOwnListing: func.isRequired,
+  onAddAvailabilityException: func.isRequired,
+  onDeleteAvailabilityException: func.isRequired,
   onCreateListingDraft: func.isRequired,
   onPublishListingDraft: func.isRequired,
   onImageUpload: func.isRequired,
@@ -269,6 +284,8 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => ({
+  onAddAvailabilityException: params => dispatch(requestAddAvailabilityException(params)),
+  onDeleteAvailabilityException: params => dispatch(requestDeleteAvailabilityException(params)),
   onUpdateListing: (tab, values) => dispatch(requestUpdateListing(tab, values)),
   onCreateListingDraft: values => dispatch(requestCreateListingDraft(values)),
   onPublishListingDraft: listingId => dispatch(requestPublishListingDraft(listingId)),

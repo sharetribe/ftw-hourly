@@ -1,5 +1,6 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { array, arrayOf, bool, func, object, oneOf, shape, string } from 'prop-types';
+import { propTypes } from '../../util/types';
 import { intlShape } from '../../util/reactIntl';
 import routeConfiguration from '../../routeConfiguration';
 import {
@@ -84,6 +85,8 @@ const EditListingWizardTab = props => {
     listing,
     handleCreateFlowTabScrolling,
     handlePublishListing,
+    onAddAvailabilityException,
+    onDeleteAvailabilityException,
     onUpdateListing,
     onCreateListingDraft,
     onImageUpload,
@@ -94,6 +97,8 @@ const EditListingWizardTab = props => {
     updatedTab,
     updateInProgress,
     intl,
+    fetchExceptionsInProgress,
+    availabilityExceptions,
   } = props;
 
   const { type } = params;
@@ -236,7 +241,11 @@ const EditListingWizardTab = props => {
       return (
         <EditListingAvailabilityPanel
           {...panelProps(AVAILABILITY)}
+          fetchExceptionsInProgress={fetchExceptionsInProgress}
+          availabilityExceptions={availabilityExceptions}
           submitButtonText={intl.formatMessage({ id: submitButtonTranslationKey })}
+          onAddAvailabilityException={onAddAvailabilityException}
+          onDeleteAvailabilityException={onDeleteAvailabilityException}
           onSubmit={values => {
             // We want to return the Promise to the form,
             // so that it doesn't close its modal if an error is thrown.
@@ -278,9 +287,8 @@ const EditListingWizardTab = props => {
 EditListingWizardTab.defaultProps = {
   listing: null,
   updatedTab: null,
+  availabilityExceptions: [],
 };
-
-const { array, bool, func, object, oneOf, shape, string } = PropTypes;
 
 EditListingWizardTab.propTypes = {
   params: shape({
@@ -289,14 +297,19 @@ EditListingWizardTab.propTypes = {
     type: oneOf(LISTING_PAGE_PARAM_TYPES).isRequired,
     tab: oneOf(SUPPORTED_TABS).isRequired,
   }).isRequired,
+  availabilityExceptions: arrayOf(propTypes.availabilityException),
   errors: shape({
     createListingDraftError: object,
     publishListingError: object,
     updateListingError: object,
     showListingsError: object,
     uploadImageError: object,
+    fetchExceptionsError: object,
+    addExceptionError: object,
+    deleteExceptionError: object,
   }).isRequired,
   fetchInProgress: bool.isRequired,
+  fetchExceptionsInProgress: bool.isRequired,
   newListingPublished: bool.isRequired,
   history: shape({
     push: func.isRequired,
@@ -318,6 +331,8 @@ EditListingWizardTab.propTypes = {
 
   handleCreateFlowTabScrolling: func.isRequired,
   handlePublishListing: func.isRequired,
+  onAddAvailabilityException: func.isRequired,
+  onDeleteAvailabilityException: func.isRequired,
   onUpdateListing: func.isRequired,
   onCreateListingDraft: func.isRequired,
   onImageUpload: func.isRequired,

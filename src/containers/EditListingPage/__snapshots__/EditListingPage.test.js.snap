@@ -16,8 +16,11 @@ exports[`EditListingPageComponent matches snapshot 1`] = `
     currentUser={null}
     errors={
       Object {
+        "addExceptionError": null,
         "createListingDraftError": null,
         "createStripeAccountError": null,
+        "deleteExceptionError": null,
+        "fetchExceptionsError": null,
         "publishListingError": null,
         "showListingsError": null,
         "updateListingError": null,
@@ -45,6 +48,7 @@ exports[`EditListingPageComponent matches snapshot 1`] = `
     newListingPublished={false}
     onChange={[Function]}
     onCreateListingDraft={[Function]}
+    onDeleteAvailabilityException={[Function]}
     onImageUpload={[Function]}
     onManageDisableScrolling={[Function]}
     onPayoutDetailsFormChange={[Function]}
