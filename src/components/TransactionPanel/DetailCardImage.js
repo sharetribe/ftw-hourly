@@ -30,7 +30,7 @@ const DetailCardImage = props => {
       </div>
       {isCustomer ? (
         <div className={avatarWrapperClassName || css.avatarWrapper}>
-          <AvatarMedium user={provider} />
+          <AvatarMedium user={provider} disableProfileLink />
         </div>
       ) : null}
     </React.Fragment>
