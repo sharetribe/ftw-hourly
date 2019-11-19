@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import { array, bool, func, number, object, oneOf, shape, string } from 'prop-types';
 import { compose } from 'redux';
 import { FormattedMessage, injectIntl, intlShape } from '../../util/reactIntl';
@@ -45,6 +46,42 @@ export const TABS = [
 
 // Tabs are horizontal in small screens
 const MAX_HORIZONTAL_NAV_SCREEN_WIDTH = 1023;
+
+////////////
+// Portal //
+////////////
+
+// TODO: change all the modals to use portals at some point.
+// Portal is used here to circumvent the problems that rise
+// from different levels of z-indexes in DOM tree.
+// Note: React Portal didn't exist when we originally created modals.
+
+class Portal extends React.Component {
+  constructor(props) {
+    super(props);
+    this.el = document.createElement('div');
+  }
+
+  componentDidMount() {
+    // The portal element is inserted in the DOM tree after
+    // the Modal's children are mounted, meaning that children
+    // will be mounted on a detached DOM node. If a child
+    // component requires to be attached to the DOM tree
+    // immediately when mounted, for example to measure a
+    // DOM node, or uses 'autoFocus' in a descendant, add
+    // state to Modal and only render the children when Modal
+    // is inserted in the DOM tree.
+    this.props.portalRoot.appendChild(this.el);
+  }
+
+  componentWillUnmount() {
+    this.props.portalRoot.removeChild(this.el);
+  }
+
+  render() {
+    return ReactDOM.createPortal(this.props.children, this.el);
+  }
+}
 
 const tabLabel = (intl, tab) => {
   let key = null;
@@ -145,6 +182,7 @@ class EditListingWizard extends Component {
     this.state = {
       draftId: null,
       showPayoutDetails: false,
+      portalRoot: null,
     };
     this.handleCreateFlowTabScrolling = this.handleCreateFlowTabScrolling.bind(this);
     this.handlePublishListing = this.handlePublishListing.bind(this);
@@ -242,8 +280,14 @@ class EditListingWizard extends Component {
       return { name: 'EditListingPage', params: { ...params, tab } };
     };
 
+    const setPortalRootAfterInitialRender = () => {
+      if (!this.state.portalRoot) {
+        this.setState({ portalRoot: document.getElementById('portal-root') });
+      }
+    };
+
     return (
-      <div className={classes}>
+      <div className={classes} ref={setPortalRootAfterInitialRender}>
         <Tabs
           rootClassName={css.tabsContainer}
           navRootClassName={css.nav}
@@ -273,31 +317,35 @@ class EditListingWizard extends Component {
             );
           })}
         </Tabs>
-        <Modal
-          id="EditListingWizard.payoutModal"
-          isOpen={this.state.showPayoutDetails}
-          onClose={this.handlePayoutModalClose}
-          onManageDisableScrolling={onManageDisableScrolling}
-        >
-          <div className={css.modalPayoutDetailsWrapper}>
-            <h1 className={css.modalTitle}>
-              <FormattedMessage id="EditListingPhotosPanel.payoutModalTitleOneMoreThing" />
-              <br />
-              <FormattedMessage id="EditListingPhotosPanel.payoutModalTitlePayoutPreferences" />
-            </h1>
-            <p className={css.modalMessage}>
-              <FormattedMessage id="EditListingPhotosPanel.payoutModalInfo" />
-            </p>
-            <PayoutDetailsForm
-              className={css.payoutDetails}
-              inProgress={fetchInProgress}
-              createStripeAccountError={errors ? errors.createStripeAccountError : null}
-              currentUserId={ensureCurrentUser(this.props.currentUser).id}
-              onChange={onPayoutDetailsFormChange}
-              onSubmit={this.handlePayoutSubmit}
-            />
-          </div>
-        </Modal>
+        {this.state.portalRoot && onManageDisableScrolling ? (
+          <Portal portalRoot={this.state.portalRoot}>
+            <Modal
+              id="EditListingWizard.payoutModal"
+              isOpen={this.state.showPayoutDetails}
+              onClose={this.handlePayoutModalClose}
+              onManageDisableScrolling={onManageDisableScrolling}
+            >
+              <div className={css.modalPayoutDetailsWrapper}>
+                <h1 className={css.modalTitle}>
+                  <FormattedMessage id="EditListingPhotosPanel.payoutModalTitleOneMoreThing" />
+                  <br />
+                  <FormattedMessage id="EditListingPhotosPanel.payoutModalTitlePayoutPreferences" />
+                </h1>
+                <p className={css.modalMessage}>
+                  <FormattedMessage id="EditListingPhotosPanel.payoutModalInfo" />
+                </p>
+                <PayoutDetailsForm
+                  className={css.payoutDetails}
+                  inProgress={fetchInProgress}
+                  createStripeAccountError={errors ? errors.createStripeAccountError : null}
+                  currentUserId={ensureCurrentUser(this.props.currentUser).id}
+                  onChange={onPayoutDetailsFormChange}
+                  onSubmit={this.handlePayoutSubmit}
+                />
+              </div>
+            </Modal>
+          </Portal>
+        ) : null}
       </div>
     );
   }
