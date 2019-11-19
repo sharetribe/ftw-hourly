@@ -17,6 +17,8 @@ https://github.com/sharetribe/flex-template-web/
 
 ## Upcoming version 2019-XX-XX
 
+- [fix] Fix date formatting in example tx process email templates
+  [#48](https://github.com/sharetribe/ftw-time/pull/48)
 - [change] Change images and update favicons. Also, update links on the `LandingPage`. Make the
   `OwnListingLink` component more generic so that it can be used also in the `SectionHowItWorks`.
   [#42](https://github.com/sharetribe/ftw-time/pull/42/)
