@@ -344,6 +344,8 @@ export class TransactionPanelComponent extends Component {
               image={firstImage}
               provider={currentProvider}
               isCustomer={isCustomer}
+              listingId={currentListing.id && currentListing.id.uuid}
+              listingDeleted={listingDeleted}
             />
             {isProvider ? (
               <div className={css.avatarWrapperProviderDesktop}>
@@ -421,6 +423,8 @@ export class TransactionPanelComponent extends Component {
                 image={firstImage}
                 provider={currentProvider}
                 isCustomer={isCustomer}
+                listingId={currentListing.id && currentListing.id.uuid}
+                listingDeleted={listingDeleted}
               />
 
               <DetailCardHeadingsMaybe
