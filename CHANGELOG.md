@@ -17,6 +17,9 @@ https://github.com/sharetribe/flex-template-web/
 
 ## Upcoming version 2019-XX-XX
 
+- [change] Hide policy tab ("sauna rules") from `EditListingWizard`. Also, fix height of the page
+  when data is loading so that the footer stays in place.
+  [#49](https://github.com/sharetribe/ftw-time/pull/49)
 - [change] Changes to `ListingPage` desing: make header image full width and avatar bigger, show
   only selected yoga styles, move price from `SectionHeading` to Panel and remove hosted by text and
   the whole `SectionHostMaybe`. We also moved the `Modal` with `EnquiryForm` directly to
