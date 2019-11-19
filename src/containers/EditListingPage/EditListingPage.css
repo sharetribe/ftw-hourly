@@ -35,6 +35,7 @@
   }
 }
 
-.wizard {
+.wizard,
+.placeholderWhileLoading {
   flex-grow: 1;
 }

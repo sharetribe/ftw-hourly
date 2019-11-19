@@ -211,6 +211,7 @@ export const EditListingPageComponent = props => {
           selectedPageName={listing ? 'EditListingPage' : 'NewListingPage'}
           listing={listing}
         />
+        <div className={css.placeholderWhileLoading} />
         <Footer />
       </Page>
     );
