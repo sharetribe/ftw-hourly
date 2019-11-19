@@ -28,14 +28,6 @@
   display: block;
   width: 100%;
   position: relative;
-
-  @media (--viewportMedium) {
-    padding: 0;
-  }
-
-  @media (--viewportLarge) {
-    padding: 36px 36px 0 36px;
-  }
 }
 
 /* Firefox doesn't support image aspect ratio inside flexbox */

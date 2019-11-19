@@ -50,7 +50,6 @@ import SectionDescriptionMaybe from './SectionDescriptionMaybe';
 import SectionFeaturesMaybe from './SectionFeaturesMaybe';
 import SectionReviews from './SectionReviews';
 import SectionHostMaybe from './SectionHostMaybe';
-import SectionRulesMaybe from './SectionRulesMaybe';
 import SectionMapMaybe from './SectionMapMaybe';
 import css from './ListingPage.css';
 
@@ -423,7 +422,6 @@ export class ListingPageComponent extends Component {
                   />
                   <SectionDescriptionMaybe description={description} />
                   <SectionFeaturesMaybe options={yogaStylesConfig} publicData={publicData} />
-                  <SectionRulesMaybe publicData={publicData} />
                   <SectionMapMaybe
                     geolocation={geolocation}
                     publicData={publicData}
