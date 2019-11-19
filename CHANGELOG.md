@@ -17,6 +17,8 @@ https://github.com/sharetribe/flex-template-web/
 
 ## Upcoming version 2019-XX-XX
 
+- [fix] Recently added Footer on EditListingWizard was on top of payout details modal.
+  [#51](https://github.com/sharetribe/ftw-time/pull/51)
 - [change] Hide policy tab ("sauna rules") from `EditListingWizard`. Also, fix height of the page
   when data is loading so that the footer stays in place.
   [#49](https://github.com/sharetribe/ftw-time/pull/49)
