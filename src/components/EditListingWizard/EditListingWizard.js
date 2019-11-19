@@ -28,12 +28,15 @@ import css from './EditListingWizard.css';
 // Show availability calendar only if environment variable availabilityEnabled is true
 const availabilityMaybe = config.enableAvailability ? [AVAILABILITY] : [];
 
+// NOTE: in FTW-hourly template we don't use the POLICY tab so it's commented out.
+// If you want to add a free text field to your lisitings you can enable the POLICY tab
+
 // TODO: PHOTOS panel needs to be the last one since it currently contains PayoutDetailsForm modal
 // All the other panels can be reordered.
 export const TABS = [
   DESCRIPTION,
   FEATURES,
-  POLICY,
+  //POLICY,
   LOCATION,
   PRICING,
   ...availabilityMaybe,
