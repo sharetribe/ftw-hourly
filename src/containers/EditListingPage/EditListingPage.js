@@ -8,6 +8,7 @@ import { types as sdkTypes } from '../../util/sdkLoader';
 import {
   LISTING_PAGE_PARAM_TYPE_DRAFT,
   LISTING_PAGE_PARAM_TYPE_NEW,
+  LISTING_PAGE_PARAM_TYPE_EDIT,
   LISTING_PAGE_PARAM_TYPES,
   LISTING_PAGE_PENDING_APPROVAL_VARIANT,
   createSlug,
@@ -41,6 +42,8 @@ const { UUID } = sdkTypes;
 export const EditListingPageComponent = props => {
   const {
     currentUser,
+    currentUserListing,
+    currentUserListingFetched,
     createStripeAccountError,
     fetchInProgress,
     getOwnListing,
@@ -61,6 +64,7 @@ export const EditListingPageComponent = props => {
     page,
     params,
     scrollingDisabled,
+    allowOnlyOneListing,
   } = props;
 
   const { id, type } = params;
@@ -102,6 +106,19 @@ export const EditListingPageComponent = props => {
         };
 
     return <NamedRedirect {...redirectProps} />;
+  } else if (allowOnlyOneListing && isNewURI && currentUserListingFetched && currentUserListing) {
+    // If we allow only one listing per provider, we need to redirect to correct listing.
+    return (
+      <NamedRedirect
+        name="EditListingPage"
+        params={{
+          id: currentUserListing.id.uuid,
+          slug: createSlug(currentUserListing.attributes.title),
+          type: LISTING_PAGE_PARAM_TYPE_EDIT,
+          tab: 'description',
+        }}
+      />
+    );
   } else if (showForm) {
     const {
       createListingDraftError = null,
@@ -226,12 +243,16 @@ EditListingPageComponent.defaultProps = {
   listingDraft: null,
   notificationCount: 0,
   sendVerificationEmailError: null,
+  currentUserListing: null,
+  currentUserListingFetched: false,
 };
 
 EditListingPageComponent.propTypes = {
   createStripeAccountError: propTypes.error,
   currentUser: propTypes.currentUser,
   getOwnListing: func.isRequired,
+  currentUserListing: propTypes.ownListing,
+  currentUserListingFetched: bool,
   onAddAvailabilityException: func.isRequired,
   onDeleteAvailabilityException: func.isRequired,
   onCreateListingDraft: func.isRequired,
@@ -265,7 +286,7 @@ EditListingPageComponent.propTypes = {
 const mapStateToProps = state => {
   const page = state.EditListingPage;
   const { createStripeAccountInProgress, createStripeAccountError } = state.stripe;
-  const { currentUser } = state.user;
+  const { currentUser, currentUserListing, currentUserListingFetched } = state.user;
 
   const fetchInProgress = createStripeAccountInProgress;
 
@@ -277,6 +298,8 @@ const mapStateToProps = state => {
   return {
     createStripeAccountError,
     currentUser,
+    currentUserListing,
+    currentUserListingFetched,
     fetchInProgress,
     getOwnListing,
     page,
