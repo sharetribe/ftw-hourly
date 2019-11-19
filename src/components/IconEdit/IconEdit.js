@@ -10,7 +10,7 @@ const IconEdit = props => {
   return (
     <svg className={classes} width="14" height="14" xmlns="http://www.w3.org/2000/svg">
       <g
-        stroke="#C0392B"
+        className={css.pencil}
         fill="none"
         fillRule="evenodd"
         strokeLinecap="round"

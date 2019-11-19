@@ -1,5 +1,6 @@
 @import '../../marketplace.css';
 
-.root {
+.root,
+.pencil {
   stroke: var(--marketplaceColor);
 }
