@@ -17,6 +17,12 @@ https://github.com/sharetribe/flex-template-web/
 
 ## Upcoming version 2019-XX-XX
 
+- [change] Changes to `ListingPage` desing: make header image full width and avatar bigger, show
+  only selected yoga styles, move price from `SectionHeading` to Panel and remove hosted by text and
+  the whole `SectionHostMaybe`. We also moved the `Modal` with `EnquiryForm` directly to
+  `ListingPage`. [#46](https://github.com/sharetribe/ftw-time/pull/46)
+- [add] EditListingAvailabilityPanel: add list of current AvailabilityExceptions and edit form in
+  modal. [#45](https://github.com/sharetribe/ftw-time/pull/45)
 - [fix] Fix date formatting in example tx process email templates
   [#48](https://github.com/sharetribe/ftw-time/pull/48)
 - [change] Change images and update favicons. Also, update links on the `LandingPage`. Make the

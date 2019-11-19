@@ -1,8 +1,6 @@
 import React from 'react';
 import { FormattedMessage } from '../../util/reactIntl';
 import { InlineTextButton } from '../../components';
-import { LINE_ITEM_NIGHT, LINE_ITEM_DAY } from '../../util/types';
-import config from '../../config';
 
 import css from './ListingPage.css';
 
@@ -12,8 +10,6 @@ const getCertificateInfo = (certificateConfig, key) => {
 
 const SectionHeading = props => {
   const {
-    priceTitle,
-    formattedPrice,
     richTitle,
     listingCertificate,
     certificateConfig,
@@ -21,28 +17,10 @@ const SectionHeading = props => {
     onContactUser,
   } = props;
 
-  const unitType = config.bookingUnitType;
-  const isNightly = unitType === LINE_ITEM_NIGHT;
-  const isDaily = unitType === LINE_ITEM_DAY;
-
-  const unitTranslationKey = isNightly
-    ? 'ListingPage.perNight'
-    : isDaily
-    ? 'ListingPage.perDay'
-    : 'ListingPage.perUnit';
-
   const certificate = getCertificateInfo(certificateConfig, listingCertificate);
   const showCertificate = certificate && !certificate.hideFromListingInfo;
   return (
     <div className={css.sectionHeading}>
-      <div className={css.desktopPriceContainer}>
-        <div className={css.desktopPriceValue} title={priceTitle}>
-          {formattedPrice}
-        </div>
-        <div className={css.desktopPerUnit}>
-          <FormattedMessage id={unitTranslationKey} />
-        </div>
-      </div>
       <div className={css.heading}>
         <h1 className={css.title}>{richTitle}</h1>
         <div className={css.author}>
