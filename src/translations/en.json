@@ -372,7 +372,6 @@
   "ListingCard.perUnit": "per hour",
   "ListingCard.unsupportedPrice": "({currency})",
   "ListingCard.unsupportedPriceTitle": "Unsupported currency ({currency})",
-  "ListingPage.bookingSubTitle": "Start by choosing your date.",
   "ListingPage.bookingTitle": "Book a class with {title}",
   "ListingPage.closedListing": "This teacher profile has been closed and classes can't be booked.",
   "ListingPage.contactUser": "Contact",
