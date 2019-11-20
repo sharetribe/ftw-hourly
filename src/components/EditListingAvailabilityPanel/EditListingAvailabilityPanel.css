@@ -68,6 +68,10 @@
   & > .dayOfWeek {
     color: var(--matterColorAnti);
   }
+
+  &:hover > .dayOfWeek {
+    color: var(--matterColor);
+  }
 }
 
 .entries {
@@ -77,11 +81,17 @@
   display: block;
 }
 
-.exceptionsLoading,
-.noExceptions {
+.exceptionsLoading {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.noExceptions {
+  @apply --marketplaceH4FontStyles;
+  display: flex;
+  align-items: center;
+  margin: 0 0 24px 0;
 }
 
 .exceptions {
@@ -209,6 +219,11 @@
     padding-bottom: 25px;
     padding-right: 24px;
     padding-left: 24px;
+    cursor: pointer;
+
+    &:hover {
+      color: var(--matterColorDark);
+    }
   }
 
   .dayOfWeek {
