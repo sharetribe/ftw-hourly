@@ -6,7 +6,7 @@ export const Example = {
   component: EditListingAvailabilityPlanForm,
   props: {
     formId: 'EditListingAvailabilityPlanFormExample',
-    listingTitle: 'Sauna with a view',
+    listingTitle: 'Yogi Shawarma',
     weekdays: WEEKDAYS,
     onSubmit(values) {
       console.log('submit with values:', values);
