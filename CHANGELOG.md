@@ -17,6 +17,17 @@ https://github.com/sharetribe/flex-template-web/
 
 ## Upcoming version 2019-XX-XX
 
+- [change] Yogatime UI tweaks.
+
+  - Change hard-coded "sauna" strings and rules tab in EditListingWizard.
+  - Change font-size in Avatar.
+  - Remove booking subtitle on LandingPage.
+  - Enforce no-wrap on SelectSingleFilter.
+  - Copy-text changes.
+  - Make AvailabilityPlan clickable (opens edit form)
+
+  [#53](https://github.com/sharetribe/ftw-time/pull/53)
+
 - [change] About page. [#50](https://github.com/sharetribe/ftw-time/pull/50)
 - [change] Remove “Hosted by” text from CheckoutPage. Link provider's avatar to listing instead of
   the user profile on InboxPage and on TransactionPage. Don't add a link to profile to Avatar on
