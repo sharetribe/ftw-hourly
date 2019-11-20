@@ -17,6 +17,7 @@ https://github.com/sharetribe/flex-template-web/
 
 ## Upcoming version 2019-XX-XX
 
+- [change] About page. [#50](https://github.com/sharetribe/ftw-time/pull/50)
 - [change] Remove “Hosted by” text from CheckoutPage. Link provider's avatar to listing instead of
   the user profile on InboxPage and on TransactionPage. Don't add a link to profile to Avatar on
   ActivityFeed or Reviews. [#47](https://github.com/sharetribe/ftw-time/pull/47)
