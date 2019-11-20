@@ -258,7 +258,6 @@ exports[`ListingPage matches snapshot 1`] = `
             onFetchTimeSlots={[Function]}
             onManageDisableScrolling={[Function]}
             onSubmit={[Function]}
-            subTitle="ListingPage.bookingSubTitle"
             title={
               <FormattedMessage
                 id="ListingPage.bookingTitle"

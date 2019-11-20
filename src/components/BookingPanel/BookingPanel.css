@@ -114,6 +114,7 @@
 
 .bookingTitle {
   /* Font */
+  @apply --marketplaceH3FontStyles;
   color: var(--matterColor);
 
   margin-top: 0;

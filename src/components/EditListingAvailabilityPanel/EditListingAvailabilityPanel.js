@@ -75,11 +75,15 @@ const getEntries = (availabilityPlan, dayOfWeek) =>
   availabilityPlan.entries.filter(d => d.dayOfWeek === dayOfWeek);
 
 const Weekday = props => {
-  const { availabilityPlan, dayOfWeek } = props;
+  const { availabilityPlan, dayOfWeek, openEditModal } = props;
   const hasEntry = findEntry(availabilityPlan, dayOfWeek);
 
   return (
-    <div className={classNames(css.weekDay, { [css.blockedWeekDay]: !hasEntry })}>
+    <div
+      className={classNames(css.weekDay, { [css.blockedWeekDay]: !hasEntry })}
+      onClick={() => openEditModal(true)}
+      role="button"
+    >
       <div className={css.dayOfWeek}>
         <FormattedMessage id={`EditListingAvailabilityPanel.dayOfWeek.${dayOfWeek}`} />
       </div>
@@ -282,7 +286,12 @@ const EditListingAvailabilityPanel = props => {
         </header>
         <div className={css.week}>
           {WEEKDAYS.map(w => (
-            <Weekday dayOfWeek={w} key={w} availabilityPlan={availabilityPlan} />
+            <Weekday
+              dayOfWeek={w}
+              key={w}
+              availabilityPlan={availabilityPlan}
+              openEditModal={setIsEditPlanModalOpen}
+            />
           ))}
         </div>
       </section>
