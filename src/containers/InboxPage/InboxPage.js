@@ -15,6 +15,7 @@ import {
   txIsPaymentPending,
 } from '../../util/transaction';
 import { propTypes, DATE_TYPE_DATETIME } from '../../util/types';
+import { createSlug, stringify } from '../../util/urlHelpers';
 import { ensureCurrentUser, ensureListing } from '../../util/data';
 import { getMarketplaceEntities } from '../../ducks/marketplaceData.duck';
 import { isScrollingDisabled } from '../../ducks/UI.duck';
@@ -198,9 +199,27 @@ BookingInfoMaybe.propTypes = {
   unitType: propTypes.bookingUnitType.isRequired,
 };
 
+const createListingLink = (listing, otherUser, searchParams = {}, className = '') => {
+  const listingId = listing.id && listing.id.uuid;
+  const label = listing.attributes.title;
+  const listingDeleted = listing.attributes.deleted;
+
+  if (!listingDeleted) {
+    const params = { id: listingId, slug: createSlug(label) };
+    const to = { search: stringify(searchParams) };
+    return (
+      <NamedLink className={className} name="ListingPage" params={params} to={to}>
+        <Avatar user={otherUser} disableProfileLink />
+      </NamedLink>
+    );
+  } else {
+    return <FormattedMessage id="TransactionPanel.deletedListingOrderTitle" />;
+  }
+};
+
 export const InboxItem = props => {
   const { unitType, type, tx, intl, stateData } = props;
-  const { customer, provider } = tx;
+  const { customer, provider, listing } = tx;
   const isOrder = type === 'order';
 
   const otherUser = isOrder ? provider : customer;
@@ -215,10 +234,12 @@ export const InboxItem = props => {
     [css.bannedUserLink]: isOtherUserBanned,
   });
 
+  const listingLink = listing ? createListingLink(listing, otherUser) : null;
+
   return (
     <div className={css.item}>
       <div className={css.itemAvatar}>
-        <Avatar user={otherUser} />
+        {isOrder && listing ? listingLink : <Avatar user={otherUser} />}
       </div>
       <NamedLink
         className={linkClasses}

@@ -39,17 +39,14 @@ exports[`ActivityFeed matches snapshot 1`] = `
     key="msg1"
   >
     <div>
-      <a
+      <div
         className=""
-        href="/u/user1"
-        onClick={[Function]}
-        style={Object {}}
         title="user1 display name"
       >
         <span>
           TT
         </span>
-      </a>
+      </div>
       <div>
         <p>
           Message msg1

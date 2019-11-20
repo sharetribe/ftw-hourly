@@ -1003,7 +1003,7 @@
   "UserDisplayName.banned": "Banned user",
   "UserDisplayName.deleted": "Deleted user",
   "UserNav.newListing": "Add new listing",
-  "UserNav.editListing": "Edit listing",
-  "UserNav.profileSettingsPage": "Profile settings",
+  "UserNav.editListing": "Edit teacher profile",
+  "UserNav.profileSettingsPage": "User profile settings",
   "UserNav.contactDetailsPage": "Account settings"
 }

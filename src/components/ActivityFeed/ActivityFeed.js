@@ -38,7 +38,7 @@ const Message = props => {
   const todayString = intl.formatMessage({ id: 'ActivityFeed.today' });
   return (
     <div className={css.message}>
-      <Avatar className={css.avatar} user={message.sender} />
+      <Avatar className={css.avatar} user={message.sender} disableProfileLink />
       <div>
         <p className={css.messageContent}>{message.attributes.content}</p>
         <p className={css.messageDate}>
