@@ -1,6 +1,6 @@
 # Sharetribe Flex Template for Web: time-based process
 
-[![CircleCI](https://circleci.com/gh/sharetribe/ftw-hourly.svg?style=svg&circle-token=198451e83e5cecb0d662949260dbc3273ac44a67)](https://circleci.com/gh/sharetribe/ftw-hourly)
+[![CircleCI](https://circleci.com/gh/sharetribe/ftw-hourly.svg?style=svg)](https://circleci.com/gh/sharetribe/ftw-hourly)
 
 > **Note** If you are using day-based booking process (i.e. daily or nightly bookings), you should
 > choose the original [Flex Template for Web](https://github.com/sharetribe/ftw-daily/) instead.
