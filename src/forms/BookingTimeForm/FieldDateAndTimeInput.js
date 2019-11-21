@@ -252,6 +252,9 @@ class FieldDateAndTimeInput extends Component {
         form.change('bookingEndDate', { date: null });
         form.change('bookingEndTime', null);
       });
+      // Reset the currentMonth too if bookingStartDate is cleared
+      this.setState({ currentMonth: getMonthStartInTimeZone(TODAY, timeZone) });
+
       return;
     }
 
