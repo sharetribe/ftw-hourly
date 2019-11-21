@@ -257,7 +257,7 @@ const onMonthClick = (currentMonth, setCurrentMonth, timeZone, onMonthChanged) =
 
 // Format form's value for the react-dates input: convert timeOfDay to the local time
 const formatFieldDateInput = timeZone => v =>
-  v && v.date ? { date: timeOfDayFromTimeZoneToLocal(v.date, timeZone) } : v;
+  v && v.date ? { date: timeOfDayFromTimeZoneToLocal(v.date, timeZone) } : { date: v };
 
 // Parse react-dates input's value: convert timeOfDay to the given time zone
 const parseFieldDateInput = timeZone => v =>
