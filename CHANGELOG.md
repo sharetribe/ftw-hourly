@@ -17,6 +17,8 @@ https://github.com/sharetribe/flex-template-web/
 
 ## Upcoming version 2019-XX-XX
 
+- [fix] Reseting bookingStartDate picker didn't reset the current month.
+  [#54](https://github.com/sharetribe/ftw-time/pull/54)
 - [change] Yogatime UI tweaks.
 
   - Change hard-coded "sauna" strings and rules tab in EditListingWizard.
