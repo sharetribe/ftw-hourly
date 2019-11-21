@@ -1,10 +1,9 @@
 # Sharetribe Flex Template for Web: time-based process
 
-[![CircleCI](https://circleci.com/gh/sharetribe/flex-template-web.svg?style=svg&circle-token=198451e83e5cecb0d662949260dbc3273ac44a67)](https://circleci.com/gh/sharetribe/flex-template-web)
+[![CircleCI](https://circleci.com/gh/sharetribe/ftw-hourly.svg?style=svg&circle-token=198451e83e5cecb0d662949260dbc3273ac44a67)](https://circleci.com/gh/sharetribe/ftw-hourly)
 
 > **Note** If you are using day-based booking process (i.e. daily or nightly bookings), you should
-> choose the original [Flex Template for Web](https://github.com/sharetribe/flex-template-web/)
-> instead.
+> choose the original [Flex Template for Web](https://github.com/sharetribe/ftw-daily/) instead.
 
 This is a **beta** version of the template web application for a Sharetribe Flex marketplace using
 **time-based booking process**. Many things in the template, from things like default content pages
@@ -13,14 +12,9 @@ or viewing availability exceptions as a provider is not yet supported. This supp
 later.
 
 This repository is a fork from the existing FTW repository (which is using nightly booking process).
-So, if you have started working with the original FTW repository and you want to change to FTW-time,
-you can
+So, if you have started working with the original FTW repository and you want to change to
+FTW-hourly, you can
 [change the 'upstream' remote repository](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/configuring-a-remote-for-a-fork).
-
-> Note: we have created [another template](https://github.com/sharetribe/ftw-time) for time-based
-> processes. It is still in **beta** mode, but if you are taking time-based booking process into
-> use, you should consider using it instead. You can read more from the related
-> [Flex Docs article](https://www.sharetribe.com/docs/background/time-based-template)
 
 ## Quick start
 
@@ -28,15 +22,15 @@ you can
 > [time-based transaction process](https://www.sharetribe.com/docs/guides/how-to-take-time-based-bookings-into-use/)
 > with alias `preauth-unit-time-booking/release-1`, if you are using something else, you should
 > change the alias name from
-> [config.js](https://github.com/sharetribe/ftw-time/blob/master/src/config.js#L35) and
-> [util/transaction.js](https://github.com/sharetribe/ftw-time/blob/master/src/util/transaction.js#L111)
+> [config.js](https://github.com/sharetribe/ftw-hourly/blob/master/src/config.js#L35) and
+> [util/transaction.js](https://github.com/sharetribe/ftw-hourly/blob/master/src/util/transaction.js#L111)
 
 If you just want to get the app running quickly to test it out, first install
 [Node.js](https://nodejs.org/) and [Yarn](https://yarnpkg.com/), and follow along:
 
 ```sh
-git clone git@github.com:sharetribe/ftw-time.git      # clone this repository
-cd flex-template-web/                                          # change to the cloned directory
+git clone git@github.com:sharetribe/ftw-hourly.git             # clone this repository
+cd ftw-hourly/                                                 # change to the cloned directory
 yarn install                                                   # install dependencies
 yarn run config                                                # add the mandatory env vars to your local config
 yarn run dev                                                   # start the dev server, this will open a browser in localhost:3000
