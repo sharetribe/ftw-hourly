@@ -17,6 +17,15 @@ https://github.com/sharetribe/flex-template-web/
 
 ## Upcoming version 2019-XX-XX
 
+## [v5.0.0] 2019-11-21
+
+This release creates lots of changes to the default logic (only one listing aka teacher profile
+allowed), translations files (Saunatime is changed to Yogatime), and it also adds
+AvailabilityExceptions to EditListingAvailabilityPanel. If you have started with the original Flex
+Template for Web, you need to be extra careful when you switch to this release, since there are pull
+request that you might need to revert when you take update from upstream. (E.g. you might want to
+allow multiple listings in your marketplace.)
+
 - [change] Copy-text changes (most of them to EditListingWizard panels and all the "classes" are
   changed to "sessions") [#55](https://github.com/sharetribe/ftw-time/pull/55)
 - [fix] Reseting bookingStartDate picker didn't reset the current month.
@@ -90,6 +99,8 @@ https://github.com/sharetribe/flex-template-web/
   IconClose, and removes unused translations (EditListingAvailabilityForm was removed).
   [#31](https://github.com/sharetribe/ftw-time/pull/31)
 
+  [v5.0.0]: https://github.com/sharetribe/ftw-time/compare/v4.1.0...v5.0.0
+
 ## [v4.1.0] 2019-11-04
 
 ### One change in this template
@@ -120,7 +131,7 @@ https://github.com/sharetribe/flex-template-web/
 - [change] Add default tx process definition. Remove default email templates.
   [#1220](https://github.com/sharetribe/flex-template-web/pull/1220)
 
-  [v4.1.0]: https://github.com/sharetribe/flex-template-web/compare/v4.0.0...v4.1.0
+  [v4.1.0]: https://github.com/sharetribe/ftw-time/compare/v4.0.0...v4.1.0
 
 ## [v4.0.0] 2019-10-25
 
@@ -165,7 +176,7 @@ https://github.com/sharetribe/flex-template-web/
 - [add] add FieldTimeZoneSelect component and a script that can extract IANA time zone keys from
   moment-timezone's JSON formatted files. [#2](https://github.com/sharetribe/ftw-time/pull/2)
 
-  [v4.0.0]: https://github.com/sharetribe/flex-template-web/compare/v3.5.1...v4.0.0
+  [v4.0.0]: https://github.com/sharetribe/ftw-time/compare/v3.5.1...v4.0.0
 
 ## [v3.5.1] 2019-09-17
 
