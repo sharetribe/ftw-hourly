@@ -17,6 +17,8 @@ https://github.com/sharetribe/flex-template-web/
 
 ## Upcoming version 2019-XX-XX
 
+- [change] Copy-text changes (most of them to EditListingWizard panels and all the "classes" are
+  changed to "sessions") [#55](https://github.com/sharetribe/ftw-time/pull/55)
 - [fix] Reseting bookingStartDate picker didn't reset the current month.
   [#54](https://github.com/sharetribe/ftw-time/pull/54)
 - [change] Yogatime UI tweaks.

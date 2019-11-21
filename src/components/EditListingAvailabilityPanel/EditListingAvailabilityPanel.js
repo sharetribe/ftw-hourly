@@ -264,7 +264,13 @@ const EditListingAvailabilityPanel = props => {
         {isPublished ? (
           <FormattedMessage
             id="EditListingAvailabilityPanel.title"
-            values={{ listingTitle: <ListingLink listing={listing} /> }}
+            values={{
+              listingTitle: (
+                <ListingLink listing={listing}>
+                  <FormattedMessage id="EditListingAvailabilityPanel.listingTitle" />
+                </ListingLink>
+              ),
+            }}
           />
         ) : (
           <FormattedMessage id="EditListingAvailabilityPanel.createListingTitle" />
