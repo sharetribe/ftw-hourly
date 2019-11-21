@@ -38,7 +38,13 @@ class EditListingPhotosPanel extends Component {
     const panelTitle = isPublished ? (
       <FormattedMessage
         id="EditListingPhotosPanel.title"
-        values={{ listingTitle: <ListingLink listing={listing} /> }}
+        values={{
+          listingTitle: (
+            <ListingLink listing={listing}>
+              <FormattedMessage id="EditListingPhotosPanel.listingTitle" />
+            </ListingLink>
+          ),
+        }}
       />
     ) : (
       <FormattedMessage id="EditListingPhotosPanel.createListingTitle" />

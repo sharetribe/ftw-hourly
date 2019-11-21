@@ -33,7 +33,13 @@ const EditListingFeaturesPanel = props => {
   const panelTitle = isPublished ? (
     <FormattedMessage
       id="EditListingFeaturesPanel.title"
-      values={{ listingTitle: <ListingLink listing={listing} /> }}
+      values={{
+        listingTitle: (
+          <ListingLink listing={listing}>
+            <FormattedMessage id="EditListingFeaturesPanel.listingTitle" />
+          </ListingLink>
+        ),
+      }}
     />
   ) : (
     <FormattedMessage id="EditListingFeaturesPanel.createListingTitle" />
