@@ -17,7 +17,9 @@ https://github.com/sharetribe/flex-template-web/
 
 ## Upcoming version 2019-XX-XX
 
-- [fix] Change the text in price filter. [59](https://github.com/sharetribe/ftw-hourly/pull/59)
+- [fix] Fix proptype validation error for initialized date object for FieldDateInput
+  [#58](https://github.com/sharetribe/ftw-hourly/pull/58)
+- [fix] Change the text in price filter. [#59](https://github.com/sharetribe/ftw-hourly/pull/59)
 
 ## [v5.0.0] 2019-11-21
 
