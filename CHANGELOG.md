@@ -17,6 +17,8 @@ https://github.com/sharetribe/flex-template-web/
 
 ## Upcoming version 2019-XX-XX
 
+- [fix] Change the text in price filter. [59](https://github.com/sharetribe/ftw-hourly/pull/59)
+
 ## [v5.0.0] 2019-11-21
 
 This release creates lots of changes to the default logic (only one listing aka teacher profile
