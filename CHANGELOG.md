@@ -17,6 +17,9 @@ https://github.com/sharetribe/flex-template-web/
 
 ## Upcoming version 2019-XX-XX
 
+- [fix] Add missing translation key EditListingDescriptionPanel.createListingTitle and change link
+  name in UserNav. [#62](https://github.com/sharetribe/ftw-hourly/pull/62)
+
 ## [v5.0.1] 2019-11-22
 
 - [fix] Fix proptype validation error for initialized date object for FieldDateInput
