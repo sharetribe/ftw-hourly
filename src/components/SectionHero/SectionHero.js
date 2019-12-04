@@ -3,8 +3,18 @@ import { string } from 'prop-types';
 import { FormattedMessage } from '../../util/reactIntl';
 import classNames from 'classnames';
 import { NamedLink } from '../../components';
-
 import css from './SectionHero.css';
+import * as animationData from '../../assets/oogo-animation';
+import Lottie from "react-lottie";
+
+const LOTTIE_OPTIONS = {
+  autoplay: false, 
+  animationData: animationData,
+  renderer: 'svg',
+  rendererSettings: {
+    preserveAspectRatio: 'xMidYMid slice'
+  }
+}
 
 const SectionHero = props => {
   const { rootClassName, className } = props;
@@ -30,6 +40,9 @@ const SectionHero = props => {
         >
           <FormattedMessage id="SectionHero.browseButton" />
         </NamedLink>
+        <div className={css.heroVideoContainer}>
+          <Lottie options={LOTTIE_OPTIONS} isClickToPauseDisabled />
+        </div>
       </div>
     </div>
   );

@@ -44,7 +44,7 @@ from Flex docs: https://www.sharetribe.com/docs/guides/how-to-set-up-csp-for-ftw
 
 ## [v5.0.0] 2019-11-21
 
-This release creates lots of changes to the default logic (only one listing aka teacher profile
+This release creates lots of changes to the default logic (only one listing aka Minder profile
 allowed), translations files (Saunatime is changed to Yogatime), and it also adds
 AvailabilityExceptions to EditListingAvailabilityPanel. If you have started with the original Flex
 Template for Web, you need to be extra careful when you switch to this release, since there are pull
@@ -533,7 +533,7 @@ There was also a couple of bug fixes you should check carefully:
 
 ## [v2.13.1] 2019-03-29
 
-- [add] a comment about category and amenities filters. They don't work out-of-the-box, extended
+- [add] a comment about category and filters filters. They don't work out-of-the-box, extended
   data needs a schema before it can work as a search filter.
   [#1055](https://github.com/sharetribe/flex-template-web/pull/1055)
 - [fix] EditListingWizard: currentUser was null when the EditListingPage got reloaded causing

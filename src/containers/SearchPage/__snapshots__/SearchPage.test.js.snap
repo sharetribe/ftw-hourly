@@ -40,24 +40,37 @@ exports[`SearchPageComponent matches snapshot 1`] = `
       }
       primaryFilters={
         Object {
-          "certificateFilter": Object {
+          "categoryFilter": Object {
             "options": Array [
               Object {
-                "key": "200h",
-                "label": "Registered yoga teacher 200h",
+                "key": "cat1",
+                "label": "Cat 1",
               },
               Object {
-                "key": "500h",
-                "label": "Registered yoga teacher 500h",
+                "key": "cat2",
+                "label": "Cat 2",
               },
             ],
-            "paramName": "pub_certificate",
+            "paramName": "pub_category",
           },
-          "keywordFilter": Object {
+          "dateRangeFilter": Object {
             "config": Object {
               "active": true,
             },
             "paramName": "keywords",
+          },
+          "filtersFilter": Object {
+            "options": Array [
+              Object {
+                "key": "dog1",
+                "label": "Dog 1",
+              },
+              Object {
+                "key": "dog2",
+                "label": "Dog 2",
+              },
+            ],
+            "paramName": "pub_filters",
           },
           "priceFilter": Object {
             "config": Object {

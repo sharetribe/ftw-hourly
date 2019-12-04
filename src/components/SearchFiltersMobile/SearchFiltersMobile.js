@@ -10,7 +10,6 @@ import { createResourceLocatorString } from '../../util/routes';
 import {
   ModalInMobile,
   Button,
-  KeywordFilter,
   PriceFilter,
   SelectSingleFilter,
   SelectMultipleFilter,
@@ -158,10 +157,8 @@ class SearchFiltersMobileComponent extends Component {
       onMapIconClick,
       onManageDisableScrolling,
       selectedFiltersCount,
-      certificateFilter,
-      yogaStylesFilter,
+      filtersFilter,
       priceFilter,
-      keywordFilter,
       intl,
     } = this.props;
 
@@ -183,39 +180,20 @@ class SearchFiltersMobileComponent extends Component {
     const filtersButtonClasses =
       selectedFiltersCount > 0 ? css.filtersButtonSelected : css.filtersButton;
 
-    const certificateLabel = intl.formatMessage({
-      id: 'SearchFiltersMobile.certificateLabel',
-    });
-    const initialcertificate = certificateFilter
-      ? this.initialValue(certificateFilter.paramName)
-      : null;
+    const filtersLabel = intl.formatMessage({ id: 'SearchFiltersMobile.filtersLabel' });
 
-    const certificateFilterElement = certificateFilter ? (
-      <SelectSingleFilter
-        urlParam={certificateFilter.paramName}
-        label={certificateLabel}
-        onSelect={this.handleSelectSingle}
-        liveEdit
-        options={certificateFilter.options}
-        initialValue={initialcertificate}
-        intl={intl}
-      />
-    ) : null;
+    const initialFilters = this.initialValues(filtersFilter.paramName);
 
-    const yogaStylesLabel = intl.formatMessage({ id: 'SearchFiltersMobile.yogaStylesLabel' });
-
-    const initialyogaStyles = this.initialValues(yogaStylesFilter.paramName);
-
-    const yogaStylesFilterElement = yogaStylesFilter ? (
+    const filtersFilterElement = filtersFilter ? (
       <SelectMultipleFilter
-        id="SearchFiltersMobile.yogaStylesFilter"
-        name="yogaStyles"
-        urlParam={yogaStylesFilter.paramName}
-        label={yogaStylesLabel}
+        id="SearchFiltersMobile.filtersFilter"
+        name="filters"
+        urlParam={filtersFilter.paramName}
+        label={filtersLabel}
         onSubmit={this.handleSelectMultiple}
         liveEdit
-        options={yogaStylesFilter.options}
-        initialValues={initialyogaStyles}
+        options={filtersFilter.options}
+        initialValues={initialFilters}
       />
     ) : null;
 
@@ -231,24 +209,6 @@ class SearchFiltersMobileComponent extends Component {
         initialValues={initialPriceRange}
       />
     ) : null;
-
-    const initialKeyword = this.initialValue(keywordFilter.paramName);
-    const keywordLabel = intl.formatMessage({
-      id: 'SearchFiltersMobile.keywordLabel',
-    });
-    const keywordFilterElement =
-      keywordFilter && keywordFilter.config.active ? (
-        <KeywordFilter
-          id={'SearchFiltersMobile.keywordFilter'}
-          name="keyword"
-          urlParam={keywordFilter.paramName}
-          label={keywordLabel}
-          onSubmit={this.handleKeyword}
-          liveEdit
-          showAsPopup={false}
-          initialValues={initialKeyword}
-        />
-      ) : null;
 
     return (
       <div className={classes}>
@@ -282,9 +242,7 @@ class SearchFiltersMobileComponent extends Component {
           </div>
           {this.state.isFiltersOpenOnMobile ? (
             <div className={css.filtersWrapper}>
-              {keywordFilterElement}
-              {yogaStylesFilterElement}
-              {certificateFilterElement}
+              {filtersFilterElement}
               {priceFilterElement}
             </div>
           ) : null}
@@ -307,8 +265,7 @@ SearchFiltersMobileComponent.defaultProps = {
   searchingInProgress: false,
   selectedFiltersCount: 0,
   filterParamNames: [],
-  certificateFilter: null,
-  yogaStylesFilter: null,
+  filtersFilter: null,
   priceFilter: null,
 };
 
@@ -326,8 +283,8 @@ SearchFiltersMobileComponent.propTypes = {
   onCloseModal: func.isRequired,
   selectedFiltersCount: number,
   filterParamNames: array,
-  certificateFilter: propTypes.filterConfig,
-  yogaStylesFilter: propTypes.filterConfig,
+  categoriesFilter: propTypes.filterConfig,
+  filtersFilter: propTypes.filterConfig,
   priceFilter: propTypes.filterConfig,
 
   // from injectIntl

@@ -52,6 +52,7 @@ import SectionDescriptionMaybe from './SectionDescriptionMaybe';
 import SectionFeaturesMaybe from './SectionFeaturesMaybe';
 import SectionReviews from './SectionReviews';
 import SectionMapMaybe from './SectionMapMaybe';
+import SectionRulesMaybe from './SectionRulesMaybe';
 import css from './ListingPage.css';
 
 const MIN_LENGTH_FOR_LONG_WORDS_IN_TITLE = 16;
@@ -190,9 +191,7 @@ export class ListingPageComponent extends Component {
       fetchReviewsError,
       sendEnquiryInProgress,
       sendEnquiryError,
-      monthlyTimeSlots,
-      certificateConfig,
-      yogaStylesConfig,
+      filtersConfig,
     } = this.props;
 
     const listingId = new UUID(rawParams.id);
@@ -415,13 +414,13 @@ export class ListingPageComponent extends Component {
                     formattedPrice={formattedPrice}
                     richTitle={richTitle}
                     listingCertificate={publicData ? publicData.certificate : null}
-                    certificateConfig={certificateConfig}
                     hostLink={hostLink}
                     showContactUser={showContactUser}
                     onContactUser={this.onContactUser}
                   />
                   <SectionDescriptionMaybe description={description} />
-                  <SectionFeaturesMaybe options={yogaStylesConfig} publicData={publicData} />
+                  <SectionFeaturesMaybe options={filtersConfig} publicData={publicData} />
+                  <SectionRulesMaybe publicData={publicData} />
                   <SectionMapMaybe
                     geolocation={geolocation}
                     publicData={publicData}
@@ -438,7 +437,7 @@ export class ListingPageComponent extends Component {
                   title={bookingTitle}
                   authorDisplayName={authorDisplayName}
                   onManageDisableScrolling={onManageDisableScrolling}
-                  monthlyTimeSlots={monthlyTimeSlots}
+                  // monthlyTimeSlots={monthlyTimeSlots}
                   onFetchTimeSlots={onFetchTimeSlots}
                 />
               </div>
@@ -479,8 +478,8 @@ ListingPageComponent.defaultProps = {
   fetchReviewsError: null,
   monthlyTimeSlots: null,
   sendEnquiryError: null,
-  certificateConfig: config.custom.certificate,
-  yogaStylesConfig: config.custom.yogaStyles,
+  categoriesConfig: config.custom.categories,
+  filtersConfig: config.custom.filters,
 };
 
 ListingPageComponent.propTypes = {
@@ -527,8 +526,8 @@ ListingPageComponent.propTypes = {
   onSendEnquiry: func.isRequired,
   onInitializeCardPaymentData: func.isRequired,
 
-  certificateConfig: array,
-  yogaStylesConfig: array,
+  categoriesConfig: array,
+  filtersConfig: array,
 };
 
 const mapStateToProps = state => {

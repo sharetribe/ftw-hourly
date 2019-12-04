@@ -8,30 +8,60 @@ import { requiredFieldArrayCheckbox } from '../../util/validators';
 const formName = 'Styleguide.FieldCheckboxGroup';
 const formNameRequired = 'Styleguide.FieldCheckboxGroupRequired';
 
-const label = <h3>Yoga styles</h3>;
+const label = <h3>Filters</h3>;
 
 const commonProps = {
   label: label,
   options: [
-    { key: 'ashtanga', label: 'Ashtanga' },
-    { key: 'hatha', label: 'Hatha' },
-    { key: 'kundalini', label: 'Kundalini' },
-    { key: 'restorative', label: 'Restorative' },
-    { key: 'vinyasa', label: 'Vinyasa' },
-    { key: 'yin', label: 'yin' },
+    {
+      key: 'first_aid',
+      label: 'First Aid',
+    },
+    {
+      key: 'own_transport',
+      label: 'Own Transport',
+    },
+    {
+      key: 'non_smoker',
+      label: 'Non Smoker',
+    },
+    {
+      key: 'new_borns',
+      label: 'New Borns',
+    },
+    {
+      key: 'qualifications',
+      label: 'Qualifications',
+    },
+    {
+      key: 'overnights',
+      label: 'Overnights',
+    },
+    {
+      key: 'evenings',
+      label: 'Evenings',
+    },
+    {
+      key: 'mornings',
+      label: 'Mornings',
+    },
+    {
+      key: 'all_day',
+      label: 'All Day',
+    },
   ],
   twoColumns: true,
 };
 
 const optionalProps = {
-  name: 'yogaStyles-optional',
-  id: 'yogaStyles-optional',
+  name: 'filters-optional',
+  id: 'filters-optional',
   ...commonProps,
 };
 
 const requiredProps = {
-  name: 'yogaStyles-required',
-  id: `${formNameRequired}.yogaStyles-required`,
+  name: 'filters-required',
+  id: `${formNameRequired}.filters-required`,
   ...commonProps,
   validate: requiredFieldArrayCheckbox('this is required'),
 };
@@ -86,7 +116,7 @@ export const Optional = {
     onSubmit: values => {
       console.log('Submit values: ', values);
     },
-    initialValues: { [optionalProps.name]: ['jacuzzi', 'towels'] },
+    initialValues: { [optionalProps.name]: ['qualifications', 'first_aid'] },
     componentProps: optionalProps,
   },
   group: 'inputs',

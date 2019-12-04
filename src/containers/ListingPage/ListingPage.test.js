@@ -32,7 +32,7 @@ const noop = () => null;
 
 const certificateConfig = [{ key: 'cat1', label: 'Cat 1' }, { key: 'cat2', label: 'Cat 2' }];
 
-const yogaStylesConfig = [
+const filtersConfig = [
   { key: 'feat1', label: 'Feat 1' },
   { key: 'feat2', label: 'Feat 2' },
   { key: 'feat3', label: 'Feat 3' },
@@ -76,9 +76,8 @@ describe('ListingPage', () => {
       onInitializeCardPaymentData: noop,
       sendEnquiryInProgress: false,
       onSendEnquiry: noop,
-      onFetchTimeSlots: noop,
-      certificateConfig,
-      yogaStylesConfig,
+      categoriesConfig,
+      filtersConfig,
     };
 
     const tree = renderShallow(<ListingPageComponent {...props} />);

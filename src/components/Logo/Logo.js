@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import IconLogo from './IconLogo';
+import LogoImage from './oogo-logo.png';
+import config from '../../config';
 import css from './Logo.css';
 
 const Logo = props => {
@@ -11,6 +13,10 @@ const Logo = props => {
   // If you want to use image instead of svg as a logo you can use the following code.
   // Also, remember to import the image as LogoImage here.
   // <img className={className} src={LogoImage} alt={config.siteTitle} {...rest} />
+
+  if (format === 'desktop') {
+    return <img className={className} src={LogoImage} alt={config.siteTitle} {...rest} />;
+  }
 
   return (
     <IconLogo

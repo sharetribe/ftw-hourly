@@ -51,8 +51,7 @@ const SearchFiltersComponent = props => {
     listingsAreLoaded,
     resultsCount,
     searchInProgress,
-    certificateFilter,
-    yogaStylesFilter,
+    filtersFilter,
     priceFilter,
     keywordFilter,
     isSearchFiltersPanelOpen,
@@ -65,24 +64,12 @@ const SearchFiltersComponent = props => {
   const hasNoResult = listingsAreLoaded && resultsCount === 0;
   const classes = classNames(rootClassName || css.root, { [css.longInfo]: hasNoResult }, className);
 
-  const certificateLabel = intl.formatMessage({
-    id: 'SearchFilters.certificateLabel',
+  const filtersLabel = intl.formatMessage({
+    id: 'SearchFilters.filtersLabel',
   });
 
-  const yogaStylesLabel = intl.formatMessage({
-    id: 'SearchFilters.yogaStylesLabel',
-  });
-
-  const keywordLabel = intl.formatMessage({
-    id: 'SearchFilters.keywordLabel',
-  });
-
-  const initialyogaStyles = yogaStylesFilter
-    ? initialValues(urlQueryParams, yogaStylesFilter.paramName)
-    : null;
-
-  const initialcertificate = certificateFilter
-    ? initialValue(urlQueryParams, certificateFilter.paramName)
+  const initialFilters = filtersFilter
+    ? initialValues(urlQueryParams, filtersFilter.paramName)
     : null;
 
   const initialPriceRange = priceFilter
@@ -130,28 +117,16 @@ const SearchFiltersComponent = props => {
     history.push(createResourceLocatorString('SearchPage', routeConfiguration(), {}, queryParams));
   };
 
-  const certificateFilterElement = certificateFilter ? (
-    <SelectSingleFilter
-      urlParam={certificateFilter.paramName}
-      label={certificateLabel}
-      onSelect={handleSelectOption}
-      showAsPopup
-      options={certificateFilter.options}
-      initialValue={initialcertificate}
-      contentPlacementOffset={FILTER_DROPDOWN_OFFSET}
-    />
-  ) : null;
-
-  const yogaStylesFilterElement = yogaStylesFilter ? (
+  const filtersFilterElement = filtersFilter ? (
     <SelectMultipleFilter
-      id={'SearchFilters.yogaStylesFilter'}
-      name="yogaStyles"
-      urlParam={yogaStylesFilter.paramName}
-      label={yogaStylesLabel}
+      id={'SearchFilters.filtersFilter'}
+      name="filters"
+      urlParam={filtersFilter.paramName}
+      label={filtersLabel}
       onSubmit={handleSelectOptions}
       showAsPopup
-      options={yogaStylesFilter.options}
-      initialValues={initialyogaStyles}
+      options={filtersFilter.options}
+      initialValues={initialFilters}
       contentPlacementOffset={FILTER_DROPDOWN_OFFSET}
     />
   ) : null;
@@ -174,7 +149,7 @@ const SearchFiltersComponent = props => {
         id={'SearchFilters.keywordFilter'}
         name="keyword"
         urlParam={keywordFilter.paramName}
-        label={keywordLabel}
+        // label={keywordLabel}
         onSubmit={handleKeyword}
         showAsPopup
         initialValues={initialKeyword}
@@ -202,8 +177,7 @@ const SearchFiltersComponent = props => {
   return (
     <div className={classes}>
       <div className={css.filters}>
-        {yogaStylesFilterElement}
-        {certificateFilterElement}
+        {filtersFilterElement}
         {priceFilterElement}
         {keywordFilterElement}
         {toggleSearchFiltersPanelButton}
@@ -237,8 +211,7 @@ SearchFiltersComponent.defaultProps = {
   className: null,
   resultsCount: null,
   searchingInProgress: false,
-  certificateFilter: null,
-  yogaStylesFilter: null,
+  filtersFilter: null,
   priceFilter: null,
   isSearchFiltersPanelOpen: false,
   toggleSearchFiltersPanel: null,
@@ -253,8 +226,8 @@ SearchFiltersComponent.propTypes = {
   resultsCount: number,
   searchingInProgress: bool,
   onManageDisableScrolling: func.isRequired,
-  certificateFilter: propTypes.filterConfig,
-  yogaStylesFilter: propTypes.filterConfig,
+  categoriesFilter: propTypes.filterConfig,
+  filtersFilter: propTypes.filterConfig,
   priceFilter: propTypes.filterConfig,
   isSearchFiltersPanelOpen: bool,
   toggleSearchFiltersPanel: func,

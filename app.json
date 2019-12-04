@@ -1,11 +1,8 @@
 {
-  "name": "Sharetribe Flex Template Demo: Time-based Process",
-  "description": "Sharetribe Flex template for time-based process",
-  "keywords": [
-    "node",
-    "react"
-  ],
-  "repository": "https://github.com/sharetribe/ftw-time/",
+  "name": "öogo",
+  "description": "Book the Right-Fit Childcare, every time with öogo",
+  "keywords": ["node", "react"],
+  "repository": "https://github.com/sharetribe/flex-template-web/",
   "env": {
     "REACT_APP_MAPBOX_ACCESS_TOKEN": {
       "description": "See: Integrating to map providers documentation https://github.com/sharetribe/flex-template-web/blob/master/docs/map-providers.md"

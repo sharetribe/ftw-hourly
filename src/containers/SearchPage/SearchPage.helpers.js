@@ -78,6 +78,7 @@ export const validFilterParams = (params, filters) => {
  * @param {Object} filters Filters configuration
  */
 export const validURLParamsForExtendedData = (params, filters) => {
+  console.log(filters);
   const filterParamNames = Object.values(filters).map(f => f.paramName);
   const paramEntries = Object.entries(params);
 

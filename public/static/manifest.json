@@ -1,9 +1,9 @@
 {
-  "name": "Yogatime",
-  "short_name": "Yogatime",
+  "name": "öogo",
+  "short_name": "öogo",
   "start_url": "/",
   "display": "standalone",
-  "theme_color": "#0095b3",
+  "theme_color": "#02CFCA",
   "background_color": "#FFFFFF",
   "icons": [
     {

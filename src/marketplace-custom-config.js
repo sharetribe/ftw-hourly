@@ -2,19 +2,65 @@
  * Marketplace specific configuration.
  */
 
-export const yogaStyles = [
-  { key: 'ashtanga', label: 'Ashtanga' },
-  { key: 'hatha', label: 'Hatha' },
-  { key: 'kundalini', label: 'Kundalini' },
-  { key: 'restorative', label: 'Restorative' },
-  { key: 'vinyasa', label: 'Vinyasa' },
-  { key: 'yin', label: 'Yin' },
+// export const yogaStyles = [
+//   { key: 'ashtanga', label: 'Ashtanga' },
+//   { key: 'hatha', label: 'Hatha' },
+//   { key: 'kundalini', label: 'Kundalini' },
+//   { key: 'restorative', label: 'Restorative' },
+//   { key: 'vinyasa', label: 'Vinyasa' },
+//   { key: 'yin', label: 'Yin' },
+// ];
+
+// export const certificate = [
+//   { key: 'none', label: 'None', hideFromFilters: true, hideFromListingInfo: true },
+//   { key: '200h', label: 'Registered yoga teacher 200h' },
+//   { key: '500h', label: 'Registered yoga teacher 500h' },
+// ]
+export const filters = [
+  {
+    key: 'first_aid',
+    label: 'First Aid',
+  },
+  {
+    key: 'own_transport',
+    label: 'Own Transport',
+  },
+  {
+    key: 'non_smoker',
+    label: 'Non Smoker',
+  },
+  {
+    key: 'new_borns',
+    label: 'New Borns',
+  },
+  {
+    key: 'qualifications',
+    label: 'Qualifications',
+  },
+  {
+    key: 'overnights',
+    label: 'Overnights',
+  },
+  {
+    key: 'evenings',
+    label: 'Evenings',
+  },
+  {
+    key: 'mornings',
+    label: 'Mornings',
+  },
+  {
+    key: 'all_day',
+    label: 'All Day',
+  },
 ];
 
-export const certificate = [
-  { key: 'none', label: 'None', hideFromFilters: true, hideFromListingInfo: true },
-  { key: '200h', label: 'Registered yoga teacher 200h' },
-  { key: '500h', label: 'Registered yoga teacher 500h' },
+export const categories = [
+  { key: 'babysitter', label: 'Babysitter' },
+  { key: 'nanny', label: 'Nanny' },
+  { key: 'childminder', label: 'Childminder' },
+  { key: 'day_care', label: 'Day Care' },
+  { key: 'maternity_nurse', label: 'Maternity Nurse' },
 ];
 
 // Price filter configuration

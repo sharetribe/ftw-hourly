@@ -52,35 +52,26 @@ export class SearchPageComponent extends Component {
   }
 
   filters() {
-    const {
-      certificateConfig,
-      yogaStylesConfig,
-      priceFilterConfig,
-      keywordFilterConfig,
-    } = this.props;
+    const { categories, filters, priceFilterConfig, dateRangeFilterConfig } = this.props;
 
-    // Note: "certificate" and "yogaStyles" filters are not actually filtering anything by default.
+    // Note: "category" and "filters" filters are not actually filtering anything by default.
     // Currently, if you want to use them, we need to manually configure them to be available
     // for search queries. Read more from extended data document:
     // https://www.sharetribe.com/docs/references/extended-data/#data-schema
 
     return {
-      certificateFilter: {
-        paramName: 'pub_certificate',
-        options: certificateConfig.filter(c => !c.hideFromFilters),
-      },
-      yogaStylesFilter: {
-        paramName: 'pub_yogaStyles',
-        options: yogaStylesConfig,
+      filtersFilter: {
+        paramName: 'pub_filters',
+        options: filters,
       },
       priceFilter: {
         paramName: 'price',
         config: priceFilterConfig,
-      },
-      keywordFilter: {
-        paramName: 'keywords',
-        config: keywordFilterConfig,
-      },
+      }
+      // keywordFilter: {
+      //   paramName: 'keywords',
+      //   config: keywordFilterConfig,
+      // },
     };
   }
 
@@ -221,10 +212,8 @@ export class SearchPageComponent extends Component {
             searchParamsForPagination={parse(location.search)}
             showAsModalMaxWidth={MODAL_BREAKPOINT}
             primaryFilters={{
-              yogaStylesFilter: filters.yogaStylesFilter,
-              certificateFilter: filters.certificateFilter,
-              priceFilter: filters.priceFilter,
-              keywordFilter: filters.keywordFilter,
+              filtersFilter: filters.filtersFilter,
+              priceFilter: filters.priceFilter
             }}
           />
           <ModalInMobile
@@ -268,8 +257,8 @@ SearchPageComponent.defaultProps = {
   searchListingsError: null,
   searchParams: {},
   tab: 'listings',
-  certificateConfig: config.custom.certificate,
-  yogaStylesConfig: config.custom.yogaStyles,
+  categories: config.custom.categories,
+  filters: config.custom.filters,
   priceFilterConfig: config.custom.priceFilterConfig,
   keywordFilterConfig: config.custom.keywordFilterConfig,
   activeListingId: null,
@@ -287,8 +276,8 @@ SearchPageComponent.propTypes = {
   searchListingsError: propTypes.error,
   searchParams: object,
   tab: oneOf(['filters', 'listings', 'map']).isRequired,
-  certificateConfig: array,
-  yogaStylesConfig: array,
+  categories: array,
+  filters: array,
   priceFilterConfig: shape({
     min: number.isRequired,
     max: number.isRequired,
