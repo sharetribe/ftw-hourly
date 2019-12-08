@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import IconLogo from './IconLogo';
+import LogoImage from './audiobarn-logo.png';
+import config from '../../config';
 import css from './Logo.css';
 
 const Logo = props => {
@@ -13,11 +15,7 @@ const Logo = props => {
   // <img className={className} src={LogoImage} alt={config.siteTitle} {...rest} />
 
   return (
-    <IconLogo
-      className={format === 'desktop' ? className : mobileClasses}
-      format={format}
-      {...rest}
-    />
+    <img className={format === 'desktop' ? className : mobileClasses} src={LogoImage} alt={config.siteTitle} {...rest} />
   );
 };
 
