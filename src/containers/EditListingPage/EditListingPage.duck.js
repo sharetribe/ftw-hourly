@@ -348,6 +348,7 @@ export const deleteAvailabilityExceptionError = errorAction(DELETE_EXCEPTION_ERR
 
 export function requestShowListing(actionPayload) {
   return (dispatch, getState, sdk) => {
+    console.log("editListingPage", actionPayload);
     dispatch(showListings(actionPayload));
     return sdk.ownListings
       .show(actionPayload)

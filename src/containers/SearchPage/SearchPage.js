@@ -52,7 +52,7 @@ export class SearchPageComponent extends Component {
   }
 
   filters() {
-    const { categories, filters, priceFilterConfig, dateRangeFilterConfig } = this.props;
+    const { categories, filters, priceFilterConfig } = this.props;
 
     // Note: "category" and "filters" filters are not actually filtering anything by default.
     // Currently, if you want to use them, we need to manually configure them to be available

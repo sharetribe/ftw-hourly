@@ -181,6 +181,7 @@ export class ListingPageComponent extends Component {
       getListing,
       getOwnListing,
       intl,
+      monthlyTimeSlots,
       onManageDisableScrolling,
       onFetchTimeSlots,
       params: rawParams,
@@ -437,7 +438,7 @@ export class ListingPageComponent extends Component {
                   title={bookingTitle}
                   authorDisplayName={authorDisplayName}
                   onManageDisableScrolling={onManageDisableScrolling}
-                  // monthlyTimeSlots={monthlyTimeSlots}
+                  monthlyTimeSlots={monthlyTimeSlots}
                   onFetchTimeSlots={onFetchTimeSlots}
                 />
               </div>
