@@ -1,18 +1,25 @@
-import React from 'react';
+import React, { PureComponent } from 'react';
 import { string } from 'prop-types';
 import { FormattedMessage } from '../../util/reactIntl';
 import classNames from 'classnames';
 import { NamedLink } from '../../components';
 import css from './SectionHero.css';
 import * as animationData from '../../assets/oogo-animation';
-import Lottie from "react-lottie";
+import Lottie from 'react-lottie';
 
-const LOTTIE_OPTIONS = {
-  autoplay: false, 
-  animationData: animationData,
-  renderer: 'svg',
-  rendererSettings: {
-    preserveAspectRatio: 'xMidYMid slice'
+class LottieWrapper extends PureComponent {
+  LOTTIE_OPTIONS = {
+    autoplay: false,
+    loop: false,
+    animationData,
+    renderer: 'svg',
+    rendererSettings: {
+      preserveAspectRatio: 'xMidYMid slice',
+      progressiveLoad: true,
+    },
+  };
+  render() {
+    return <Lottie options={this.LOTTIE_OPTIONS} isClickToPauseDisabled />;
   }
 }
 
@@ -40,9 +47,8 @@ const SectionHero = props => {
         >
           <FormattedMessage id="SectionHero.browseButton" />
         </NamedLink>
-        <div className={css.heroVideoContainer}>
-          <Lottie options={LOTTIE_OPTIONS} isClickToPauseDisabled />
-        </div>
+        <div className={css.heroVideoContainer}></div>
+        <LottieWrapper />
       </div>
     </div>
   );
