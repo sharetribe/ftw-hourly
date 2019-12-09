@@ -17,6 +17,10 @@ https://github.com/sharetribe/flex-template-web/
 
 ## Upcoming version 2019-XX-XX
 
+## [v5.0.3] 2019-12-09
+
+Update from [upstream](https://github.com/sharetribe/ftw-daily): v3.6.1
+
 ## [v5.0.2] 2019-11-26
 
 - [fix] Fix XSS-vulnerability on SearchPage where URL param 'address' was exposed directly to
