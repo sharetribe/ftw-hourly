@@ -182,6 +182,8 @@ const EditListingAvailabilityPanel = props => {
     fetchExceptionsInProgress,
     onAddAvailabilityException,
     onDeleteAvailabilityException,
+    disabled,
+    ready,
     onSubmit,
     onManageDisableScrolling,
     onNextTab,
@@ -368,6 +370,8 @@ const EditListingAvailabilityPanel = props => {
           <InlineTextButton
             className={css.addExceptionButton}
             onClick={() => setIsEditExceptionsModalOpen(true)}
+            disabled={disabled}
+            ready={ready}
           >
             <FormattedMessage id="EditListingAvailabilityPanel.addException" />
           </InlineTextButton>
@@ -448,6 +452,8 @@ EditListingAvailabilityPanel.propTypes = {
 
   // We cannot use propTypes.listing since the listing might be a draft.
   listing: object,
+  disabled: bool.isRequired,
+  ready: bool.isRequired,
   availabilityExceptions: arrayOf(propTypes.availabilityException),
   fetchExceptionsInProgress: bool.isRequired,
   onAddAvailabilityException: func.isRequired,

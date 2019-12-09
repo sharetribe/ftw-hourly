@@ -17,6 +17,17 @@ https://github.com/sharetribe/flex-template-web/
 
 ## Upcoming version 2019-XX-XX
 
+## [v5.1.0] 2019-12-09
+
+- [change] Make it easier to reorder EditListingWizard tabs/panels.
+  [#1240](https://github.com/sharetribe/ftw-daily/pull/1240)
+- [change] In `PayoutDetailsForm` show states (US and AU) and provinces (CA) in dropdown instead of
+  input. Since November 18, 2019 Stripe has been validating these values (read more
+  https://support.stripe.com/questions/connect-address-validation).
+- [add] Add IconEdit [#1237](https://github.com/sharetribe/ftw-daily/pull/1237)
+
+  [v5.1.0]: https://github.com/sharetribe/flex-template-web/compare/v5.0.3...v5.1.0
+
 ## [v5.0.3] 2019-12-09
 
 Update from [upstream](https://github.com/sharetribe/ftw-daily): v3.6.1
