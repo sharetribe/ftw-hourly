@@ -79,8 +79,6 @@ exports[`LandingPage matches snapshot 1`] = `
           <div>
             <SectionHowItWorks
               className={null}
-              currentUserListing={null}
-              currentUserListingFetched={false}
               rootClassName={null}
             />
           </div>

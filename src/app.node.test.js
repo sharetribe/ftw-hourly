@@ -71,6 +71,7 @@ describe('Application - node environment', () => {
       '/order/1234/details': loginPath,
       '/sale/1234': loginPath,
       '/sale/1234/details': loginPath,
+      '/listings': loginPath,
       '/account': loginPath,
       '/account/contact-details': loginPath,
       '/account/change-password': loginPath,

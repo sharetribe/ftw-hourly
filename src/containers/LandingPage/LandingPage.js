@@ -1,11 +1,10 @@
 import React from 'react';
-import { bool, object } from 'prop-types';
+import PropTypes from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { injectIntl, intlShape } from '../../util/reactIntl';
 import { isScrollingDisabled } from '../../ducks/UI.duck';
-import { propTypes } from '../../util/types';
 import config from '../../config';
 import {
   Page,
@@ -30,8 +29,6 @@ export const LandingPageComponent = props => {
     intl,
     location,
     scrollingDisabled,
-    currentUserListing,
-    currentUserListingFetched,
   } = props;
 
   // Schema for search engines (helps them to understand what this page is about)
@@ -77,10 +74,7 @@ export const LandingPageComponent = props => {
             </li>
             <li className={css.section}>
               <div className={css.sectionContent}>
-                <SectionHowItWorks
-                  currentUserListing={currentUserListing}
-                  currentUserListingFetched={currentUserListingFetched}
-                />
+                <SectionHowItWorks />
               </div>
             </li>
           </ul>
@@ -93,15 +87,10 @@ export const LandingPageComponent = props => {
   );
 };
 
-LandingPageComponent.defaultProps = {
-  currentUserListing: null,
-  currentUserListingFetched: false,
-};
+const { bool, object } = PropTypes;
 
 LandingPageComponent.propTypes = {
   scrollingDisabled: bool.isRequired,
-  currentUserListing: propTypes.ownListing,
-  currentUserListingFetched: bool,
 
   // from withRouter
   history: object.isRequired,
@@ -112,12 +101,9 @@ LandingPageComponent.propTypes = {
 };
 
 const mapStateToProps = state => {
-  const { currentUserListing, currentUserListingFetched } = state.user;
 
   return {
     scrollingDisabled: isScrollingDisabled(state),
-    currentUserListing,
-    currentUserListingFetched,
   };
 };
 

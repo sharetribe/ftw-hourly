@@ -1,8 +1,0 @@
-@import '../../marketplace.css';
-
-:root {
-}
-
-.defaultLinkStyle {
-  @apply --marketplaceLinkStyles;
-}

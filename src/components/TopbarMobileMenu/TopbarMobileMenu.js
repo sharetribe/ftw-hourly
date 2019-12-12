@@ -14,7 +14,6 @@ import {
   InlineTextButton,
   NamedLink,
   NotificationBadge,
-  OwnListingLink,
 } from '../../components';
 
 import css from './TopbarMobileMenu.css';
@@ -25,7 +24,6 @@ const TopbarMobileMenu = props => {
     currentPage,
     currentUserHasListings,
     currentUserListing,
-    currentUserListingFetched,
     currentUser,
     notificationCount,
     onLogout,
@@ -100,11 +98,12 @@ const TopbarMobileMenu = props => {
           <FormattedMessage id="TopbarMobileMenu.inboxLink" />
           {notificationCountBadge}
         </NamedLink>
-        <OwnListingLink
-          listing={currentUserListing}
-          listingFetched={currentUserListingFetched}
-          className={css.navigationLink}
-        />
+        <NamedLink
+          className={classNames(css.navigationLink, currentPageClass('ManageListingsPage'))}	
+          name="ManageListingsPage"	
+        >	
+          <FormattedMessage id="TopbarMobileMenu.yourListingsLink" />	
+        </NamedLink>
         <NamedLink
           className={classNames(css.navigationLink, currentPageClass('ProfileSettingsPage'))}
           name="ProfileSettingsPage"
@@ -131,15 +130,11 @@ TopbarMobileMenu.defaultProps = {
   currentUser: null,
   notificationCount: 0,
   currentPage: null,
-  currentUserListing: null,
-  currentUserListingFetched: false,
 };
 
 TopbarMobileMenu.propTypes = {
   isAuthenticated: bool.isRequired,
   currentUserHasListings: bool.isRequired,
-  currentUserListing: propTypes.ownListing,
-  currentUserListingFetched: bool,
   currentUser: propTypes.currentUser,
   currentPage: string,
   notificationCount: number,
