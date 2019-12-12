@@ -148,23 +148,19 @@ exports[`TopbarDesktop data matches snapshot 1`] = `
         <li
           className=""
           role="menuitem"
-        />
-        <li
-          className=""
-          role="menuitem"
-        >
-          <a
-            className=""
-            href="/profile-settings"
-            onClick={[Function]}
-            style={Object {}}
-            title={null}
-          >
-            <span />
-            <span>
-              TopbarDesktop.profileSettingsLink
-            </span>
-          </a>
+         >
+          <a	
+            className=""	
+            href="/listings"	
+            onClick={[Function]}	
+            style={Object {}}	
+            title={null}	
+          >	
+            <span />	
+            <span>	
+              TopbarDesktop.yourListingsLink	
+            </span>	
+          </a>	
         </li>
         <li
           className=""
