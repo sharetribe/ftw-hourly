@@ -30,7 +30,7 @@ import ActionBarMaybe from './ActionBarMaybe';
 const { UUID } = sdkTypes;
 const noop = () => null;
 
-const certificateConfig = [{ key: 'cat1', label: 'Cat 1' }, { key: 'cat2', label: 'Cat 2' }];
+const categoriesConfig = [{ key: 'cat1', label: 'Cat 1' }, { key: 'cat2', label: 'Cat 2' }];
 
 const filtersConfig = [
   { key: 'feat1', label: 'Feat 1' },

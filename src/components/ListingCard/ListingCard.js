@@ -34,10 +34,6 @@ const priceData = (price, intl) => {
   return {};
 };
 
-const getCertificateInfo = (certificateConfig, key) => {
-  return certificateConfig.find(c => c.key === key);
-};
-
 class ListingImage extends Component {
   render() {
     return <ResponsiveImage {...this.props} />;
@@ -52,7 +48,6 @@ export const ListingCardComponent = props => {
     intl,
     listing,
     renderSizes,
-    certificateConfig,
     setActiveListing,
   } = props;
   const classes = classNames(rootClassName || css.root, className);

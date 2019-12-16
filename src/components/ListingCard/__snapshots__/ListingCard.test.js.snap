@@ -49,7 +49,6 @@ exports[`ListingCard matches snapshot 1`] = `
          
         title
       </div>
-      <div />
     </div>
   </div>
 </NamedLink>

@@ -53,12 +53,6 @@ exports[`SearchPageComponent matches snapshot 1`] = `
             ],
             "paramName": "pub_category",
           },
-          "dateRangeFilter": Object {
-            "config": Object {
-              "active": true,
-            },
-            "paramName": "keywords",
-          },
           "filtersFilter": Object {
             "options": Array [
               Object {
@@ -79,35 +73,6 @@ exports[`SearchPageComponent matches snapshot 1`] = `
               "step": 5,
             },
             "paramName": "price",
-          },
-          "yogaStylesFilter": Object {
-            "options": Array [
-              Object {
-                "key": "ashtanga",
-                "label": "Ashtanga",
-              },
-              Object {
-                "key": "hatha",
-                "label": "Hatha",
-              },
-              Object {
-                "key": "kundalini",
-                "label": "Kundalini",
-              },
-              Object {
-                "key": "restorative",
-                "label": "Restorative",
-              },
-              Object {
-                "key": "vinyasa",
-                "label": "Vinyasa",
-              },
-              Object {
-                "key": "yin",
-                "label": "Yin",
-              },
-            ],
-            "paramName": "pub_yogaStyles",
           },
         }
       }

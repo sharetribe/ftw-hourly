@@ -27,6 +27,22 @@ exports[`SectionHero matches snapshot 1`] = `
       </span>
     </a>
     <div />
+    <div
+      aria-label="animation"
+      onClick={[Function]}
+      role="button"
+      style={
+        Object {
+          "height": "100%",
+          "margin": "0 auto",
+          "outline": "none",
+          "overflow": "hidden",
+          "width": "100%",
+        }
+      }
+      tabIndex="0"
+      title=""
+    />
   </div>
 </div>
 `;

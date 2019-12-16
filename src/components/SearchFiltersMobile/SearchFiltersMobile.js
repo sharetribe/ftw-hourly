@@ -157,6 +157,7 @@ class SearchFiltersMobileComponent extends Component {
       onMapIconClick,
       onManageDisableScrolling,
       selectedFiltersCount,
+      categoryFilter,
       filtersFilter,
       priceFilter,
       intl,
@@ -180,9 +181,27 @@ class SearchFiltersMobileComponent extends Component {
     const filtersButtonClasses =
       selectedFiltersCount > 0 ? css.filtersButtonSelected : css.filtersButton;
 
+    const categoryLabel = intl.formatMessage({
+      id: 'SearchFilters.categoryLabel',
+    });
+
     const filtersLabel = intl.formatMessage({ id: 'SearchFiltersMobile.filtersLabel' });
 
+    const initialCategory = this.initialValues(categoryFilter.paramName);
+
     const initialFilters = this.initialValues(filtersFilter.paramName);
+
+    const categoryFilterElement = categoryFilter ? (
+      <SelectSingleFilter
+        urlParam={categoryFilter.paramName}
+        label={categoryLabel}
+        onSelect={this.handleSelectSingle}
+        liveEdit
+        options={categoryFilter.options}
+        initialValue={initialCategory}
+        intl={intl}
+      />
+    ) : null;
 
     const filtersFilterElement = filtersFilter ? (
       <SelectMultipleFilter
@@ -242,6 +261,7 @@ class SearchFiltersMobileComponent extends Component {
           </div>
           {this.state.isFiltersOpenOnMobile ? (
             <div className={css.filtersWrapper}>
+              {categoryFilterElement}
               {filtersFilterElement}
               {priceFilterElement}
             </div>

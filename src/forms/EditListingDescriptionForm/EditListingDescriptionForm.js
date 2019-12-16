@@ -7,7 +7,6 @@ import classNames from 'classnames';
 import { propTypes } from '../../util/types';
 import { maxLength, required, composeValidators } from '../../util/validators';
 import { Form, Button, FieldTextInput } from '../../components';
-import CustomCertificateSelectFieldMaybe from './CustomCertificateSelectFieldMaybe';
 
 import css from './EditListingDescriptionForm.css';
 
@@ -18,7 +17,6 @@ const EditListingDescriptionFormComponent = props => (
     {...props}
     render={fieldRenderProps => {
       const {
-        certificate,
         className,
         disabled,
         handleSubmit,
@@ -106,13 +104,6 @@ const EditListingDescriptionFormComponent = props => (
             label={descriptionMessage}
             placeholder={descriptionPlaceholderMessage}
             validate={composeValidators(required(descriptionRequiredMessage))}
-          />
-
-          <CustomCertificateSelectFieldMaybe
-            id="certificate"
-            name="certificate"
-            certificate={certificate}
-            intl={intl}
           />
 
           <Button

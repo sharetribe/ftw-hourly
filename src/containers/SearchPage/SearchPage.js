@@ -60,6 +60,10 @@ export class SearchPageComponent extends Component {
     // https://www.sharetribe.com/docs/references/extended-data/#data-schema
 
     return {
+      categoryFilter: {
+        paramName: 'pub_category',
+        options: categories
+      },
       filtersFilter: {
         paramName: 'pub_filters',
         options: filters,
@@ -212,6 +216,7 @@ export class SearchPageComponent extends Component {
             searchParamsForPagination={parse(location.search)}
             showAsModalMaxWidth={MODAL_BREAKPOINT}
             primaryFilters={{
+              categoryFilter: filters.categoryFilter,
               filtersFilter: filters.filtersFilter,
               priceFilter: filters.priceFilter
             }}

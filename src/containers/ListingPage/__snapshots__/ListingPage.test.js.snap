@@ -120,18 +120,6 @@ exports[`ListingPage matches snapshot 1`] = `
           />
           <div>
             <SectionHeading
-              certificateConfig={
-                Array [
-                  Object {
-                    "key": "cat1",
-                    "label": "Cat 1",
-                  },
-                  Object {
-                    "key": "cat2",
-                    "label": "Cat 2",
-                  },
-                ]
-              }
               formattedPrice={55}
               hostLink={
                 <NamedLink
@@ -185,6 +173,11 @@ exports[`ListingPage matches snapshot 1`] = `
                 ]
               }
               publicData={Object {}}
+            />
+            <SectionRulesMaybe
+              className={null}
+              publicData={Object {}}
+              rootClassName={null}
             />
             <SectionMapMaybe
               className={null}
@@ -255,7 +248,6 @@ exports[`ListingPage matches snapshot 1`] = `
               }
             }
             monthlyTimeSlots={null}
-            onFetchTimeSlots={[Function]}
             onManageDisableScrolling={[Function]}
             onSubmit={[Function]}
             title={

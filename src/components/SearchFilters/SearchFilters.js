@@ -51,6 +51,7 @@ const SearchFiltersComponent = props => {
     listingsAreLoaded,
     resultsCount,
     searchInProgress,
+    categoryFilter,
     filtersFilter,
     priceFilter,
     keywordFilter,
@@ -64,9 +65,17 @@ const SearchFiltersComponent = props => {
   const hasNoResult = listingsAreLoaded && resultsCount === 0;
   const classes = classNames(rootClassName || css.root, { [css.longInfo]: hasNoResult }, className);
 
+  const categoryLabel = intl.formatMessage({
+    id: 'SearchFilters.categoryLabel',
+  });
+
   const filtersLabel = intl.formatMessage({
     id: 'SearchFilters.filtersLabel',
   });
+
+  const initialCategory = categoryFilter
+    ? initialValue(urlQueryParams, categoryFilter.paramName)
+    : null;
 
   const initialFilters = filtersFilter
     ? initialValues(urlQueryParams, filtersFilter.paramName)
@@ -116,6 +125,18 @@ const SearchFiltersComponent = props => {
 
     history.push(createResourceLocatorString('SearchPage', routeConfiguration(), {}, queryParams));
   };
+
+  const categoryFilterElement = categoryFilter ? (
+    <SelectSingleFilter
+      urlParam={categoryFilter.paramName}
+      label={categoryLabel}
+      onSelect={handleSelectOption}
+      showAsPopup
+      options={categoryFilter.options}
+      initialValue={initialCategory}
+      contentPlacementOffset={FILTER_DROPDOWN_OFFSET}
+    />
+  ) : null;
 
   const filtersFilterElement = filtersFilter ? (
     <SelectMultipleFilter
@@ -177,6 +198,7 @@ const SearchFiltersComponent = props => {
   return (
     <div className={classes}>
       <div className={css.filters}>
+        {categoryFilterElement}
         {filtersFilterElement}
         {priceFilterElement}
         {keywordFilterElement}

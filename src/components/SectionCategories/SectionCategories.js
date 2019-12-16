@@ -11,7 +11,6 @@ import css from './SectionCategories.css';
 import skerriesImage from './images/location_skerries.jpg';
 import adaremanorImage from './images/location_adaremanor.jpg';
 import maynoothImage from './images/location_maynooth.jpg';
-import kinsaleImage from './images/location_kinsale.jpg';
 import fotaImage from './images/location_fota.jpg';
 
 class LocationImage extends Component {

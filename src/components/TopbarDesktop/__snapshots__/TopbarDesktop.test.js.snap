@@ -11,7 +11,7 @@ exports[`TopbarDesktop data matches snapshot 1`] = `
     style={Object {}}
     title={null}
   >
-    <svg
+    <img
       alt="TopbarDesktop.logo"
       className={null}
       src="oogo-logo.png"
