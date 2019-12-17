@@ -367,3 +367,8 @@
   align-self: center;
   margin: 0 0.5em 0 0.5em;
 }
+
+.partnerLogo {
+  height: 100%;
+  width: auto;
+}

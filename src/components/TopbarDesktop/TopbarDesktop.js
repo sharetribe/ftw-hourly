@@ -173,6 +173,13 @@ const TopbarDesktop = props => {
     </NamedLink>
   );
 
+  const partnerName =
+    currentUser &&
+    currentUser.attributes &&
+    currentUser.attributes.profile &&
+    currentUser.attributes.profile.publicData &&
+    currentUser.attributes.profile.publicData.PartnerName;
+
   return (
     <nav className={classes}>
       <NamedLink className={css.logoLink} name="LandingPage">
@@ -182,6 +189,9 @@ const TopbarDesktop = props => {
           alt={intl.formatMessage({ id: 'TopbarDesktop.logo' })}
         />
       </NamedLink>
+      {partnerName && (
+        <img className={css.partnerLogo} src={require(`../../assets/${partnerName}.jpg`)} />
+      )}
       {search}
       {listingLink}
       {createListingLink}
