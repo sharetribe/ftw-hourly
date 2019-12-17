@@ -10,6 +10,7 @@ import {
   LandingPage,
   ListingPage,
   NotFoundPage,
+  PartnersPage,
   PasswordChangePage,
   PasswordRecoveryPage,
   PasswordResetPage,
@@ -55,6 +56,11 @@ const routeConfiguration = () => {
       path: '/about',
       name: 'AboutPage',
       component: AboutPage,
+    },
+    {
+      path: '/partners',
+      name: 'PartnersPage',
+      component: props => <PartnersPage {...props} />,
     },
     {
       path: '/s',

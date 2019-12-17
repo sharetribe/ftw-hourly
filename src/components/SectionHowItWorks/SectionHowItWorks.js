@@ -8,48 +8,54 @@ import { OwnListingLink } from '../../components';
 import css from './SectionHowItWorks.css';
 
 const SectionHowItWorks = props => {
-  const { rootClassName, className, currentUserListing, currentUserListingFetched } = props;
+  const {
+    rootClassName,
+    className,
+    currentUserListing,
+    currentUserListingFetched,
+    translationKey = 'SectionHowItWorks',
+  } = props;
 
   const classes = classNames(rootClassName || css.root, className);
   return (
     <div className={classes}>
       <div className={css.title}>
-        <FormattedMessage id="SectionHowItWorks.titleLineOne" />
+        <FormattedMessage id={`${translationKey}.titleLineOne`} />
         <br />
-        <FormattedMessage id="SectionHowItWorks.titleLineTwo" />
+        <FormattedMessage id={`${translationKey}.titleLineTwo`} />
       </div>
 
       <div className={css.steps}>
         <div className={css.step}>
           <h2 className={css.stepTitle}>
-            <FormattedMessage id="SectionHowItWorks.part1Title" />
+            <FormattedMessage id={`${translationKey}.part1Title`} />
           </h2>
           <p>
-            <FormattedMessage id="SectionHowItWorks.part1Text" />
+            <FormattedMessage id={`${translationKey}.part1Text`} />
           </p>
         </div>
 
         <div className={css.step}>
           <h2 className={css.stepTitle}>
-            <FormattedMessage id="SectionHowItWorks.part2Title" />
+            <FormattedMessage id={`${translationKey}.part2Title`} />
           </h2>
           <p>
-            <FormattedMessage id="SectionHowItWorks.part2Text" />
+            <FormattedMessage id={`${translationKey}.part2Text`} />
           </p>
         </div>
 
         <div className={css.step}>
           <h2 className={css.stepTitle}>
-            <FormattedMessage id="SectionHowItWorks.part3Title" />
+            <FormattedMessage id={`${translationKey}.part3Title`} />
           </h2>
           <p>
-            <FormattedMessage id="SectionHowItWorks.part3Text" />
+            <FormattedMessage id={`${translationKey}.part3Text`} />
           </p>
         </div>
       </div>
       <div className={css.createListingLink}>
         <OwnListingLink listing={currentUserListing} listingFetched={currentUserListingFetched}>
-          <FormattedMessage id="SectionHowItWorks.createListingLink" />
+          <FormattedMessage id={`${translationKey}.createListingLink`} />
         </OwnListingLink>
       </div>
     </div>
