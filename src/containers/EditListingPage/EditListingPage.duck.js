@@ -4,6 +4,12 @@ import { resetToStartOfDay } from '../../util/dates';
 import { denormalisedResponseEntities } from '../../util/data';
 import { storableError } from '../../util/errors';
 import { addMarketplaceEntities } from '../../ducks/marketplaceData.duck';
+import {
+  createStripeAccount,
+  updateStripeAccount,
+  fetchStripeAccount,
+} from '../../ducks/stripeConnectAccount.duck';
+import { fetchCurrentUser } from '../../ducks/user.duck';
 import * as log from '../../util/log';
 
 const { UUID } = sdkTypes;
@@ -55,6 +61,10 @@ export const DELETE_EXCEPTION_REQUEST = 'app/EditListingPage/DELETE_AVAILABILITY
 export const DELETE_EXCEPTION_SUCCESS = 'app/EditListingPage/DELETE_AVAILABILITY_EXCEPTION_SUCCESS';
 export const DELETE_EXCEPTION_ERROR = 'app/EditListingPage/DELETE_AVAILABILITY_EXCEPTION_ERROR';
 
+export const SAVE_PAYOUT_DETAILS_REQUEST = 'app/EditListingPage/SAVE_PAYOUT_DETAILS_REQUEST';
+export const SAVE_PAYOUT_DETAILS_SUCCESS = 'app/EditListingPage/SAVE_PAYOUT_DETAILS_SUCCESS';
+export const SAVE_PAYOUT_DETAILS_ERROR = 'app/EditListingPage/SAVE_PAYOUT_DETAILS_ERROR';
+
 // ================ Reducer ================ //
 
 const initialState = {
@@ -81,6 +91,8 @@ const initialState = {
   listingDraft: null,
   updatedTab: null,
   updateInProgress: false,
+  payoutDetailsSaveInProgress: false,
+  payoutDetailsSaved: false,
 };
 
 export default function reducer(state = initialState, action = {}) {
@@ -273,6 +285,13 @@ export default function reducer(state = initialState, action = {}) {
         deleteExceptionInProgress: false,
       };
 
+    case SAVE_PAYOUT_DETAILS_REQUEST:
+      return { ...state, payoutDetailsSaveInProgress: true };
+    case SAVE_PAYOUT_DETAILS_ERROR:
+      return { ...state, payoutDetailsSaveInProgress: false };
+    case SAVE_PAYOUT_DETAILS_SUCCESS:
+      return { ...state, payoutDetailsSaveInProgress: false, payoutDetailsSaved: true };
+
     default:
       return state;
   }
@@ -344,6 +363,11 @@ export const addAvailabilityExceptionError = errorAction(ADD_EXCEPTION_ERROR);
 export const deleteAvailabilityExceptionRequest = requestAction(DELETE_EXCEPTION_REQUEST);
 export const deleteAvailabilityExceptionSuccess = successAction(DELETE_EXCEPTION_SUCCESS);
 export const deleteAvailabilityExceptionError = errorAction(DELETE_EXCEPTION_ERROR);
+
+export const savePayoutDetailsRequest = requestAction(SAVE_PAYOUT_DETAILS_REQUEST);
+export const savePayoutDetailsSuccess = successAction(SAVE_PAYOUT_DETAILS_SUCCESS);
+export const savePayoutDetailsError = errorAction(SAVE_PAYOUT_DETAILS_ERROR);
+
 // ================ Thunk ================ //
 
 export function requestShowListing(actionPayload) {
@@ -495,22 +519,55 @@ export const requestFetchAvailabilityExceptions = fetchParams => (dispatch, getS
     });
 };
 
+export const savePayoutDetails = (values, isUpdateCall) => (dispatch, getState, sdk) => {
+  const upsertThunk = isUpdateCall ? updateStripeAccount : createStripeAccount;
+  dispatch(savePayoutDetailsRequest());
+
+  return dispatch(upsertThunk(values, { expand: true }))
+    .then(response => {
+      dispatch(savePayoutDetailsSuccess());
+      return response;
+    })
+    .catch(() => dispatch(savePayoutDetailsError()));
+};
+
 // loadData is run for each tab of the wizard. When editing an
 // existing listing, the listing must be fetched first.
-export function loadData(params) {
-  return dispatch => {
-    dispatch(clearUpdatedTab());
-    const { id, type } = params;
-    if (type === 'new') {
-      // No need to fetch anything when creating a new listing
-      return Promise.resolve(null);
-    }
-    const payload = {
-      id: new UUID(id),
-      include: ['author', 'images'],
-      'fields.image': ['variants.landscape-crop', 'variants.landscape-crop2x'],
-    };
-    return dispatch(requestShowListing(payload)).then(response => {
+
+// loadData is run for each tab of the wizard. When editing an
+// existing listing, the listing must be fetched first.
+export const loadData = params => (dispatch, getState, sdk) => {
+  dispatch(clearUpdatedTab());
+  const { id, type } = params;
+
+  if (type === 'new') {
+    // No need to listing data when creating a new listing
+    return Promise.all([dispatch(fetchCurrentUser())])
+      .then(response => {
+        const currentUser = getState().user.currentUser;
+        if (currentUser && currentUser.stripeAccount) {
+          dispatch(fetchStripeAccount());
+        }
+        return response;
+      })
+      .catch(e => {
+        throw e;
+      });
+  }
+
+  const payload = {
+    id: new UUID(id),
+    include: ['author', 'images'],
+    'fields.image': ['variants.landscape-crop', 'variants.landscape-crop2x'],
+  };
+
+  return Promise.all([dispatch(requestShowListing(payload)), dispatch(fetchCurrentUser())])
+    .then(response => {
+      const currentUser = getState().user.currentUser;
+      if (currentUser && currentUser.stripeAccount) {
+        dispatch(fetchStripeAccount());
+      }
+
       if (response.data && response.data.data) {
         const listing = response.data.data;
         const tz = listing.attributes.availabilityPlan.timezone;
@@ -530,7 +587,10 @@ export function loadData(params) {
         };
         dispatch(requestFetchAvailabilityExceptions(params));
       }
+
       return response;
+    })
+    .catch(e => {
+      throw e;
     });
-  };
-}
+};

@@ -308,6 +308,7 @@ propTypes.stripeAccount = shape({
   type: propTypes.value('stripeAccount').isRequired,
   attributes: shape({
     stripeAccountId: string.isRequired,
+    stripeAccountData: object,
   }),
 });
 

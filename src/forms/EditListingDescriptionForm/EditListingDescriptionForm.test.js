@@ -15,7 +15,9 @@ describe('EditListingDescriptionForm', () => {
         saveActionMsg="Save description"
         updated={false}
         updateInProgress={false}
-        certificate={[{ key: 'cat1', label: 'Cat 1' }, { key: 'cat2', label: 'Cat 2' }]}
+        disabled={false}
+        ready={false}
+        categories={[{ key: 'cat1', label: 'Cat 1' }, { key: 'cat2', label: 'Cat 2' }]}
       />
     );
     expect(tree).toMatchSnapshot();
