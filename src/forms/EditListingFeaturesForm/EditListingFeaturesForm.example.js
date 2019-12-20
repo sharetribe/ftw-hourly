@@ -14,6 +14,8 @@ export const YogaStyles = {
     saveActionMsg: 'Save yoga styles',
     updated: false,
     updateInProgress: false,
+    disabled: false,
+    ready: false,
   },
   group: 'forms',
 };
