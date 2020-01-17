@@ -17,6 +17,9 @@ https://github.com/sharetribe/flex-template-web/
 
 ## Upcoming version 2019-XX-XX
 
+- [fix] Fix bug in showing availability exceptions. This bug was introduced in v6.0.0.
+  [#71](https://github.com/sharetribe/ftw-hourly/pull/71)
+
 ## [v6.0.0] 2019-12-20
 
 This is update from from [upstream](https://github.com/sharetribe/ftw-daily): v4.0.0
