@@ -568,8 +568,11 @@ export const loadData = params => (dispatch, getState, sdk) => {
         dispatch(fetchStripeAccount());
       }
 
-      if (response.data && response.data.data) {
-        const listing = response.data.data;
+      // Because of two dispatch functions, response is an array.
+      // sWe are only interest the response from requestShowListing here,
+      // so we need to pick the first one
+      if (response[0].data && response[0].data.data) {
+        const listing = response[0].data.data;
         const tz = listing.attributes.availabilityPlan.timezone;
 
         const today = new Date();
