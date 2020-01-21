@@ -15,8 +15,10 @@ https://github.com/sharetribe/flex-template-web/
 
 ---
 
-## Upcoming version 2019-XX-XX
+## Upcoming version 2020-XX-XX
 
+- [add] Add French and Spanish translations for yogatime
+  [#72](https://github.com/sharetribe/ftw-hourly/pull/72)
 - [fix] Fix bug in showing availability exceptions. This bug was introduced in v6.0.0.
   [#71](https://github.com/sharetribe/ftw-hourly/pull/71)
 
