@@ -16,7 +16,7 @@ import {
   ListingLink,
 } from '../../components';
 import { TopbarSearchForm } from '../../forms';
-
+import ReactFlagsSelect from 'react-flags-select';
 import css from './TopbarDesktop.css';
 
 const TopbarDesktop = props => {
@@ -80,13 +80,13 @@ const TopbarDesktop = props => {
         <Avatar className={css.avatar} user={currentUser} disableProfileLink />
       </MenuLabel>
       <MenuContent className={css.profileMenuContent}>
-      <MenuItem key="ManageListingsPage">
+        <MenuItem key="ManageListingsPage">
           <NamedLink
-            className={classNames(css.yourListingsLink, currentPageClass('ManageListingsPage'))}	
-            name="ManageListingsPage"	
-          >	
-            <span className={css.menuItemBorder} />	
-            <FormattedMessage id="TopbarDesktop.yourListingsLink" />	
+            className={classNames(css.yourListingsLink, currentPageClass('ManageListingsPage'))}
+            name="ManageListingsPage"
+          >
+            <span className={css.menuItemBorder} />
+            <FormattedMessage id="TopbarDesktop.yourListingsLink" />
           </NamedLink>
         </MenuItem>
         <MenuItem key="ProfileSettingsPage">
@@ -133,6 +133,28 @@ const TopbarDesktop = props => {
     </NamedLink>
   );
 
+  const languageSelector = (
+    <div className={css.languageSelectorWrapper}>
+      <span className={css.languageSelector}>
+        <ReactFlagsSelect
+          defaultCountry={'US'}
+          countries={['US', 'IT', 'ES']}
+          customLabels={{
+            ES: 'Spanish',
+            IT: 'Italian',
+            US: 'English',
+          }}
+          showSelectedLabel={true}
+          showOptionLabel={true}
+          selectedSize={18}
+          optionsSize={14}
+          searchable={false}
+          onSelect={null}
+        />
+      </span>
+    </div>
+  );
+
   return (
     <nav className={classes}>
       <NamedLink className={css.logoLink} name="LandingPage">
@@ -144,12 +166,13 @@ const TopbarDesktop = props => {
       </NamedLink>
       {search}
       <NamedLink className={css.createListingLink} name="NewListingPage">
-        <span className={css.createListing}>	
-          <FormattedMessage id="TopbarDesktop.createListing" />	
-        </span>	
+        <span className={css.createListing}>
+          <FormattedMessage id="TopbarDesktop.createListing" />
+        </span>
       </NamedLink>
       {inboxLink}
       {profileMenu}
+      {languageSelector}
       {signupLink}
       {loginLink}
     </nav>

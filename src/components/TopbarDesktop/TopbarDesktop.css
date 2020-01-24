@@ -139,6 +139,31 @@
   @apply --TopbarDesktop_label;
 }
 
+.languageSelectorWrapper {
+  /* @apply --TopbarDesktop_linkHover; */
+  @apply --marketplaceH4FontStyles;
+
+  flex-shrink: 0;
+  height: 90%;
+  padding: 0 12px 0 12px;
+  color: var(--marketplaceColor);
+  margin-top: 0;
+  margin-bottom: 10px;
+
+  /* &:hover {
+    color: var(--marketplaceColorDark);
+  } */
+
+  @media (--viewportMedium) {
+    margin-top: 0;
+    margin-bottom: 10px;
+  }
+}
+
+.languageSelector{
+  @apply --TopbarDesktop_label;
+}
+
 /* Inbox */
 .inboxLink {
   @apply --TopbarDesktop_linkHover;
