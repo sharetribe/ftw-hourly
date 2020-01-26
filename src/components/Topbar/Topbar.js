@@ -10,6 +10,7 @@ import { withViewport } from '../../util/contextHelpers';
 import { parse, stringify } from '../../util/urlHelpers';
 import { createResourceLocatorString, pathByRouteName } from '../../util/routes';
 import { propTypes } from '../../util/types';
+import { getCountryCodeFromUrl, getNewUrlFromLocation } from '../../util/data';
 import {
   Button,
   Logo,
@@ -74,6 +75,7 @@ class TopbarComponent extends Component {
     this.handleMobileSearchClose = this.handleMobileSearchClose.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
+    this.handleLanguage = this.handleLanguage.bind(this);
   }
 
   handleMobileMenuOpen() {
@@ -124,6 +126,12 @@ class TopbarComponent extends Component {
     });
   }
 
+  handleLanguage(locale) {
+    const { location } = this.props;
+    const newUrl = getNewUrlFromLocation(location, locale);
+    window.location.href = newUrl;
+  }
+
   render() {
     const {
       className,
@@ -148,6 +156,9 @@ class TopbarComponent extends Component {
       showGenericError,
     } = this.props;
 
+    const { languageCountryConfig } = config.custom;
+    const defaultCountry = getCountryCodeFromUrl(location.pathname, languageCountryConfig);
+
     const { mobilemenu, mobilesearch, address, origin, bounds } = parse(location.search, {
       latlng: ['origin'],
       latlngBounds: ['bounds'],
@@ -167,6 +178,8 @@ class TopbarComponent extends Component {
         onLogout={this.handleLogout}
         notificationCount={notificationCount}
         currentPage={currentPage}
+        defaultCountry={defaultCountry}
+        handleLanguage={this.handleLanguage}
       />
     );
 
@@ -223,6 +236,8 @@ class TopbarComponent extends Component {
             notificationCount={notificationCount}
             onLogout={this.handleLogout}
             onSearchSubmit={this.handleSubmit}
+            defaultCountry={defaultCountry}
+            handleLanguage={this.handleLanguage}
           />
         </div>
         <Modal
@@ -321,10 +336,7 @@ TopbarComponent.propTypes = {
   intl: intlShape.isRequired,
 };
 
-const Topbar = compose(
-  withViewport,
-  injectIntl
-)(TopbarComponent);
+const Topbar = compose(withViewport, injectIntl)(TopbarComponent);
 
 Topbar.displayName = 'Topbar';
 

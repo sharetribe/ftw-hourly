@@ -31,6 +31,7 @@ import { fetchCurrentUser } from './ducks/user.duck';
 import routeConfiguration from './routeConfiguration';
 import * as log from './util/log';
 import { LoggingAnalyticsHandler, GoogleAnalyticsHandler } from './analytics/handlers';
+import { getLocaleFromUrl } from './util/data';
 
 import './marketplaceIndex.css';
 
@@ -40,15 +41,31 @@ const render = (store, shouldHydrate) => {
   // If the server already loaded the auth information, render the app
   // immediately. Otherwise wait for the flag to be loaded and render
   // when auth information is present.
+  let pathname = '';
+  if (typeof window !== 'undefined') {
+    // it's safe to use window now
+    pathname = window.location.pathname;
+  }
+  const { languageCountryConfig } = config.custom;
+  const tempLocale = getLocaleFromUrl(pathname, languageCountryConfig);
+
+  const locale = tempLocale === undefined ? config.locale : tempLocale;
+
   const authInfoLoaded = store.getState().Auth.authInfoLoaded;
   const info = authInfoLoaded ? Promise.resolve({}) : store.dispatch(authInfo());
   info
     .then(() => {
       store.dispatch(fetchCurrentUser());
       if (shouldHydrate) {
-        ReactDOM.hydrate(<ClientApp store={store} />, document.getElementById('root'));
+        ReactDOM.hydrate(
+          <ClientApp store={store} locale={locale} />,
+          document.getElementById('root')
+        );
       } else {
-        ReactDOM.render(<ClientApp store={store} />, document.getElementById('root'));
+        ReactDOM.render(
+          <ClientApp store={store} locale={locale} />,
+          document.getElementById('root')
+        );
       }
     })
     .catch(e => {

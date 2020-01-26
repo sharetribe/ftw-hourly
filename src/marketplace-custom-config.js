@@ -37,3 +37,22 @@ export const dateRangeFilterConfig = {
 export const keywordFilterConfig = {
   active: true,
 };
+
+export const languageCountryConfig = {
+  UK: 'EN',
+  US: 'en',
+  IT: 'it',
+  // FR: "fr",
+  // DE: "de",
+  ES: 'es',
+};
+
+export const spokenlanguages = [
+  { key: 'english', label: 'English', label_it: 'Inglese', label_es: 'Inglesa', code: 'en' },
+  { key: 'spanish', label: 'Spanish', label_it: 'Spagnolo', label_es: 'Española', code: 'es' },
+  { key: 'italian', label: 'Italian', label_it: 'Italiano', label_es: 'Italiano', code: 'it' },
+  // { key: 'french', label: 'French', code: 'fr' },
+  // { key: 'german', label: 'German', code: 'de' },
+  // { key: 'dutch', label: 'Dutch', code: 'nl' },
+  // { key: 'chinese', label: 'Chinese', code: 'zh' },
+];

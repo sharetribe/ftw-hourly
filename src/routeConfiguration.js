@@ -24,6 +24,8 @@ import {
   TermsOfServicePage,
   TransactionPage,
 } from './containers';
+import config from './config';
+import { getLocaleFromUrl } from './util/data';
 
 // routeConfiguration needs to initialize containers first
 // Otherwise, components will import form container eventually and
@@ -46,7 +48,7 @@ const RedirectToLandingPage = () => <NamedRedirect name="LandingPage" />;
 // Our routes are exact by default.
 // See behaviour from Routes.js where Route is created.
 const routeConfiguration = () => {
-  return [
+  const routes = [
     {
       path: '/',
       name: 'LandingPage',
@@ -220,13 +222,13 @@ const routeConfiguration = () => {
       component: props => <TransactionPage {...props} transactionRole="provider" />,
       loadData: params => TransactionPage.loadData({ ...params, transactionRole: 'provider' }),
     },
-    {	
-      path: '/listings',	
-      name: 'ManageListingsPage',	
-      auth: true,	
-      authPage: 'LoginPage',	
-      component: props => <ManageListingsPage {...props} />,	
-      loadData: ManageListingsPage.loadData,	
+    {
+      path: '/listings',
+      name: 'ManageListingsPage',
+      auth: true,
+      authPage: 'LoginPage',
+      component: props => <ManageListingsPage {...props} />,
+      loadData: ManageListingsPage.loadData,
     },
     {
       path: '/account',
@@ -336,6 +338,34 @@ const routeConfiguration = () => {
       loadData: EmailVerificationPage.loadData,
     },
   ];
+
+  const initPageRoute = {
+    path: '/',
+    name: 'InitPage',
+    component: props => <NamedRedirect name="LandingPage" params={{ ...props.params }} />,
+  };
+
+  const additionalRoutes = [initPageRoute];
+
+  let pathname = '';
+  if (typeof window !== 'undefined') {
+    // it's safe to use window now
+    pathname = window.location.pathname;
+  }
+
+  const { languageCountryConfig } = config.custom;
+  const tempLocale = getLocaleFromUrl(pathname, languageCountryConfig);
+
+  const locale = tempLocale === undefined ? config.locale : tempLocale;
+
+  const updatedRoutes = routes.map(item => {
+    return {
+      ...item,
+      path: `/${locale}${item.path}`,
+    };
+  });
+
+  return updatedRoutes.concat(additionalRoutes);
 };
 
 export default routeConfiguration;

@@ -383,3 +383,52 @@ export const humanizeLineItemCode = code => {
 
   return lowercase.charAt(0).toUpperCase() + lowercase.slice(1);
 };
+
+export const getLocaleFromUrl = (url, langConfig) => {
+  const locales = Object.values(langConfig);
+
+  return url.split('/').find(item => locales.includes(item));
+};
+
+export const getCountryCodeFromUrl = (pathname, langsConfig) => {
+  const subPaths = pathname.split('/'); // we can extract language info from url..
+  const countryCodes = Object.keys(langsConfig);
+  const languages = Object.values(langsConfig);
+  return countryCodes[languages.indexOf(subPaths[1].toLowerCase())];
+};
+
+export const getCombineObjectWithKeysValues = (keys, values) => {
+  var result = {};
+  for (var i = 0; i < keys.length; i++) result[keys[i]] = values[i];
+  return result;
+};
+
+export const getLanguageLabels = (langsConfig, spokenlanguages, currentLocale = 'en') => {
+  // we need to slice language list
+  // cause the first thing is the temp lang...
+  const keys = Object.keys(langsConfig).slice(1);
+  const values = Object.values(langsConfig).slice(1);
+  const updatedValues = values.map(item => {
+    const lang = spokenlanguages.find(lang => lang.code === item);
+
+    if (currentLocale === 'en') {
+      return lang.label;
+    } else {
+      return lang[`label_${currentLocale}`];
+    }
+  });
+  const updatedLanguageLabels = getCombineObjectWithKeysValues(keys, updatedValues);
+
+  return updatedLanguageLabels;
+};
+
+export const getNewUrlFromLocation = (location, locale) => {
+  const { pathname, search } = location;
+
+  //  In general, we can get the locale info
+  // in the beginning chunk of url...
+  let subPaths = pathname.split('/');
+  subPaths[1] = locale;
+
+  return subPaths.join('/').concat(search);
+};

@@ -4,6 +4,7 @@ import { FormattedMessage, intlShape } from '../../util/reactIntl';
 import classNames from 'classnames';
 import { ACCOUNT_SETTINGS_PAGES } from '../../routeConfiguration';
 import { propTypes } from '../../util/types';
+import { getLanguageLabels, getLocaleFromUrl } from '../../util/data';
 import {
   Avatar,
   InlineTextButton,
@@ -18,6 +19,8 @@ import {
 import { TopbarSearchForm } from '../../forms';
 import ReactFlagsSelect from 'react-flags-select';
 import css from './TopbarDesktop.css';
+import config from '../../config';
+import { spokenlanguages } from '../../marketplace-custom-config';
 
 const TopbarDesktop = props => {
   const {
@@ -32,6 +35,8 @@ const TopbarDesktop = props => {
     onLogout,
     onSearchSubmit,
     initialSearchFormValues,
+    defaultCountry,
+    handleLanguage,
   } = props;
   const [mounted, setMounted] = useState(false);
 
@@ -44,6 +49,12 @@ const TopbarDesktop = props => {
 
   const classes = classNames(rootClassName || css.root, className);
 
+  const { languageCountryConfig } = config.custom;
+  const countries = Object.keys(languageCountryConfig).slice(1);
+
+  const pathname = window.location.pathname;
+  const currentLocale = getLocaleFromUrl(pathname, languageCountryConfig);
+  const customLabels = getLanguageLabels(languageCountryConfig, spokenlanguages, currentLocale);
   const search = (
     <TopbarSearchForm
       className={css.searchLink}
@@ -137,19 +148,18 @@ const TopbarDesktop = props => {
     <div className={css.languageSelectorWrapper}>
       <span className={css.languageSelector}>
         <ReactFlagsSelect
-          defaultCountry={'US'}
-          countries={['US', 'IT', 'ES']}
-          customLabels={{
-            ES: 'Spanish',
-            IT: 'Italian',
-            US: 'English',
-          }}
+          defaultCountry={defaultCountry}
+          countries={countries}
+          customLabels={customLabels}
           showSelectedLabel={true}
           showOptionLabel={true}
           selectedSize={18}
           optionsSize={14}
           searchable={false}
-          onSelect={null}
+          onSelect={countryCode => {
+            const lang = languageCountryConfig[countryCode];
+            handleLanguage(lang);
+          }}
         />
       </span>
     </div>
