@@ -17,10 +17,21 @@ https://github.com/sharetribe/flex-template-web/
 
 ## Upcoming version 2020-XX-XX
 
+## [v6.1.0] 2020-02-03
+
+Update from upstream (first 3 bullets) and a couple of pending changes.
+
+- [fix] PaymentMethodsForm: remove unused 'invalid' prop that breaks some versions of Final Form
+  [#1255](https://github.com/sharetribe/ftw-daily/pull/1255)
+- [fix] Fix `console.warn` functions. [#1252](https://github.com/sharetribe/ftw-daily/pull/1252)
+- [add] Add missing countries (e.g. MX and JP) to `StripeBankAccountTokenInput` validations.
+  [#1250](https://github.com/sharetribe/ftw-daily/pull/1250)
 - [add] Add French and Spanish translations for yogatime
   [#72](https://github.com/sharetribe/ftw-hourly/pull/72)
 - [fix] Fix bug in showing availability exceptions. This bug was introduced in v6.0.0.
   [#71](https://github.com/sharetribe/ftw-hourly/pull/71)
+
+[v6.1.0]: https://github.com/sharetribe/ftw-hourly/compare/v6.0.0...v6.1.0
 
 ## [v6.0.0] 2019-12-20
 
