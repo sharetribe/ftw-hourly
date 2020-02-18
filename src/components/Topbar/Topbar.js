@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { bool, func, number, shape, string } from 'prop-types';
+import { array, bool, func, number, shape, string } from 'prop-types';
 import { compose } from 'redux';
 import { FormattedMessage, intlShape, injectIntl } from '../../util/reactIntl';
 import pickBy from 'lodash/pickBy';
@@ -12,6 +12,7 @@ import { createResourceLocatorString, pathByRouteName } from '../../util/routes'
 import { propTypes } from '../../util/types';
 import {
   Button,
+  LimitedAccessBanner,
   Logo,
   Modal,
   ModalMissingInformation,
@@ -132,6 +133,7 @@ class TopbarComponent extends Component {
       mobileRootClassName,
       mobileClassName,
       isAuthenticated,
+      authScopes,
       authInProgress,
       currentUser,
       currentUserHasListings,
@@ -191,6 +193,13 @@ class TopbarComponent extends Component {
 
     return (
       <div className={classes}>
+        <LimitedAccessBanner
+          isAuthenticated={isAuthenticated}
+          authScopes={authScopes}
+          currentUser={currentUser}
+          onLogout={this.handleLogout}
+          currentPage={currentPage}
+        />
         <div className={classNames(mobileRootClassName || css.container, mobileClassName)}>
           <Button
             rootClassName={css.menu}
@@ -287,6 +296,7 @@ TopbarComponent.defaultProps = {
   currentUserHasOrders: null,
   currentPage: null,
   sendVerificationEmailError: null,
+  authScopes: [],
 };
 
 TopbarComponent.propTypes = {
@@ -296,6 +306,7 @@ TopbarComponent.propTypes = {
   mobileRootClassName: string,
   mobileClassName: string,
   isAuthenticated: bool.isRequired,
+  authScopes: array,
   authInProgress: bool.isRequired,
   currentUser: propTypes.currentUser,
   currentUserHasListings: bool.isRequired,
