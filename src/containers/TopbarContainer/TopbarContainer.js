@@ -1,5 +1,5 @@
 import React from 'react';
-import { bool, func, number, object, shape, string } from 'prop-types';
+import { array, bool, func, number, object, shape, string } from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
@@ -21,6 +21,7 @@ export const TopbarContainerComponent = props => {
     currentUserHasOrders,
     history,
     isAuthenticated,
+    authScopes,
     hasGenericError,
     location,
     notificationCount,
@@ -44,6 +45,7 @@ export const TopbarContainerComponent = props => {
       currentUserHasOrders={currentUserHasOrders}
       history={history}
       isAuthenticated={isAuthenticated}
+      authScopes={authScopes}
       location={location}
       notificationCount={notificationCount}
       onLogout={onLogout}
@@ -65,6 +67,7 @@ TopbarContainerComponent.defaultProps = {
   notificationCount: 0,
   sendVerificationEmailError: null,
   currentUserListing: null,
+  authScopes: null,
 };
 
 TopbarContainerComponent.propTypes = {
@@ -77,6 +80,7 @@ TopbarContainerComponent.propTypes = {
   currentUserListing: propTypes.ownListing,
   currentUserHasOrders: bool,
   isAuthenticated: bool.isRequired,
+  authScopes: array,
   notificationCount: number,
   onLogout: func.isRequired,
   onManageDisableScrolling: func.isRequired,
@@ -94,7 +98,7 @@ TopbarContainerComponent.propTypes = {
 
 const mapStateToProps = state => {
   // Topbar needs isAuthenticated
-  const { isAuthenticated, logoutError } = state.Auth;
+  const { isAuthenticated, logoutError, authScopes } = state.Auth;
   // Topbar needs user info.
   const {
     currentUser,
@@ -116,6 +120,7 @@ const mapStateToProps = state => {
     currentUserHasOrders,
     notificationCount,
     isAuthenticated,
+    authScopes,
     sendVerificationEmailInProgress,
     sendVerificationEmailError,
     hasGenericError,
