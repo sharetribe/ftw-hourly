@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import ReactDOM from 'react-dom';
 import { arrayOf, bool, func, object, string } from 'prop-types';
 import classNames from 'classnames';
 import { FormattedMessage } from '../../util/reactIntl';
@@ -28,42 +27,6 @@ const MAX_EXCEPTIONS_COUNT = 100;
 
 const defaultTimeZone = () =>
   typeof window !== 'undefined' ? getDefaultTimeZoneOnBrowser() : 'Etc/UTC';
-
-////////////
-// Portal //
-////////////
-
-// TODO: change all the modals to use portals at some point.
-// Portal is used here to circumvent the problems that rise
-// from different levels of z-indexes in DOM tree.
-// Note: React Portal didn't exist when we originally created modals.
-
-class Portal extends React.Component {
-  constructor(props) {
-    super(props);
-    this.el = document.createElement('div');
-  }
-
-  componentDidMount() {
-    // The portal element is inserted in the DOM tree after
-    // the Modal's children are mounted, meaning that children
-    // will be mounted on a detached DOM node. If a child
-    // component requires to be attached to the DOM tree
-    // immediately when mounted, for example to measure a
-    // DOM node, or uses 'autoFocus' in a descendant, add
-    // state to Modal and only render the children when Modal
-    // is inserted in the DOM tree.
-    this.props.portalRoot.appendChild(this.el);
-  }
-
-  componentWillUnmount() {
-    this.props.portalRoot.removeChild(this.el);
-  }
-
-  render() {
-    return ReactDOM.createPortal(this.props.children, this.el);
-  }
-}
 
 /////////////
 // Weekday //
@@ -194,12 +157,7 @@ const EditListingAvailabilityPanel = props => {
   // Hooks
   const [isEditPlanModalOpen, setIsEditPlanModalOpen] = useState(false);
   const [isEditExceptionsModalOpen, setIsEditExceptionsModalOpen] = useState(false);
-  const [portalRoot, setPortalRoot] = useState(null);
   const [valuesFromLastSubmit, setValuesFromLastSubmit] = useState(null);
-
-  const setPortalRootAfterInitialRender = () => {
-    setPortalRoot(document.getElementById('portal-root'));
-  };
 
   const classes = classNames(rootClassName || css.root, className);
   const currentListing = ensureOwnListing(listing);
@@ -261,7 +219,7 @@ const EditListingAvailabilityPanel = props => {
   };
 
   return (
-    <main className={classes} ref={setPortalRootAfterInitialRender}>
+    <main className={classes}>
       <h1 className={css.title}>
         {isPublished ? (
           <FormattedMessage
@@ -393,47 +351,45 @@ const EditListingAvailabilityPanel = props => {
           {submitButtonText}
         </Button>
       ) : null}
-      {portalRoot && onManageDisableScrolling ? (
-        <Portal portalRoot={portalRoot}>
-          <Modal
-            id="EditAvailabilityPlan"
-            isOpen={isEditPlanModalOpen}
-            onClose={() => setIsEditPlanModalOpen(false)}
-            onManageDisableScrolling={onManageDisableScrolling}
-            containerClassName={css.modalContainer}
-          >
-            <EditListingAvailabilityPlanForm
-              formId="EditListingAvailabilityPlanForm"
-              listingTitle={currentListing.attributes.title}
-              availabilityPlan={availabilityPlan}
-              weekdays={WEEKDAYS}
-              onSubmit={handleSubmit}
-              initialValues={initialValues}
-              inProgress={updateInProgress}
-              fetchErrors={errors}
-            />
-          </Modal>
-        </Portal>
+      {onManageDisableScrolling ? (
+        <Modal
+          id="EditAvailabilityPlan"
+          isOpen={isEditPlanModalOpen}
+          onClose={() => setIsEditPlanModalOpen(false)}
+          onManageDisableScrolling={onManageDisableScrolling}
+          containerClassName={css.modalContainer}
+          usePortal
+        >
+          <EditListingAvailabilityPlanForm
+            formId="EditListingAvailabilityPlanForm"
+            listingTitle={currentListing.attributes.title}
+            availabilityPlan={availabilityPlan}
+            weekdays={WEEKDAYS}
+            onSubmit={handleSubmit}
+            initialValues={initialValues}
+            inProgress={updateInProgress}
+            fetchErrors={errors}
+          />
+        </Modal>
       ) : null}
-      {portalRoot && onManageDisableScrolling ? (
-        <Portal portalRoot={portalRoot}>
-          <Modal
-            id="EditAvailabilityExceptions"
-            isOpen={isEditExceptionsModalOpen}
-            onClose={() => setIsEditExceptionsModalOpen(false)}
-            onManageDisableScrolling={onManageDisableScrolling}
-            containerClassName={css.modalContainer}
-          >
-            <EditListingAvailabilityExceptionForm
-              formId="EditListingAvailabilityExceptionForm"
-              onSubmit={saveException}
-              timeZone={availabilityPlan.timezone}
-              availabilityExceptions={sortedAvailabilityExceptions}
-              updateInProgress={updateInProgress}
-              fetchErrors={errors}
-            />
-          </Modal>
-        </Portal>
+      {onManageDisableScrolling ? (
+        <Modal
+          id="EditAvailabilityExceptions"
+          isOpen={isEditExceptionsModalOpen}
+          onClose={() => setIsEditExceptionsModalOpen(false)}
+          onManageDisableScrolling={onManageDisableScrolling}
+          containerClassName={css.modalContainer}
+          usePortal
+        >
+          <EditListingAvailabilityExceptionForm
+            formId="EditListingAvailabilityExceptionForm"
+            onSubmit={saveException}
+            timeZone={availabilityPlan.timezone}
+            availabilityExceptions={sortedAvailabilityExceptions}
+            updateInProgress={updateInProgress}
+            fetchErrors={errors}
+          />
+        </Modal>
       ) : null}
     </main>
   );
