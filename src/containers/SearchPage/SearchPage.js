@@ -171,9 +171,6 @@ export class SearchPageComponent extends Component {
 
     const validQueryParams = validURLParamsForExtendedData(searchInURL, filters);
 
-    const isWindowDefined = typeof window !== 'undefined';
-    const isMobileLayout = isWindowDefined && window.innerWidth < MODAL_BREAKPOINT;
-
     // map is no used at all
     const shouldShowSearchMap = false;
 
