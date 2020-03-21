@@ -191,6 +191,18 @@ class TopbarComponent extends Component {
 
     const classes = classNames(rootClassName || css.root, className);
 
+    // hide button
+    const searchButton = (
+      <Button
+        style={{visibility: 'hidden'}}
+        rootClassName={css.searchMenu}
+        onClick={this.handleMobileSearchOpen}
+        title={intl.formatMessage({ id: 'Topbar.searchIcon' })}
+      >
+        <SearchIcon className={css.searchMenuIcon} />
+      </Button>
+    );
+
     return (
       <div className={classes}>
         <LimitedAccessBanner
@@ -216,13 +228,7 @@ class TopbarComponent extends Component {
           >
             <Logo format="mobile" />
           </NamedLink>
-          <Button
-            rootClassName={css.searchMenu}
-            onClick={this.handleMobileSearchOpen}
-            title={intl.formatMessage({ id: 'Topbar.searchIcon' })}
-          >
-            <SearchIcon className={css.searchMenuIcon} />
-          </Button>
+          {searchButton}
         </div>
         <div className={css.desktop}>
           <TopbarDesktop
