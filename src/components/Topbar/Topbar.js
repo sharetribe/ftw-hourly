@@ -194,7 +194,7 @@ class TopbarComponent extends Component {
     // hide button
     const searchButton = (
       <Button
-        style={{visibility: 'hidden'}}
+        style={{ visibility: 'hidden' }}
         rootClassName={css.searchMenu}
         onClick={this.handleMobileSearchOpen}
         title={intl.formatMessage({ id: 'Topbar.searchIcon' })}

@@ -55,7 +55,9 @@ const TopbarDesktop = props => {
       onSubmit={onSearchSubmit}
       initialValues={initialSearchFormValues}
     />
-  ) : (<div className={css.searchPlaceholder}/>);
+  ) : (
+    <div className={css.searchPlaceholder} />
+  );
 
   const notificationDot = notificationCount > 0 ? <div className={css.notificationDot} /> : null;
 
