@@ -11,36 +11,52 @@ const PrivacyPolicy = props => {
   // prettier-ignore
   return (
     <div className={classes}>
-      <p className={css.lastUpdated}>Last updated: November 22, 2019</p>
+      <p className={css.lastUpdated}>Last updated: 27/3/2020</p>
 
-      <p>
-        Thank you for using Yogatime! Ut enim ad minim veniam, quis nostrud exercitation ullamco
-        laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
-        voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-        cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      <p>Coming soon.</p>
+
+      {/* <p>
+        TThis Privacy Policy explains how KenkoFit and any of its subsidiaries or affiliates, including Kenko (collectively, “Kenko Labs”, "Kenko", “we”, “our” or “us”) collects, uses, and discloses personal data or other information about you (“Personal Information”) collected through our website ​https://paradigm.market​ (the “Site”), and the products, features,content, applications, or services we provide (collectively with the Site, the “Services”). We encourage you to read the Privacy Policy carefully. When you use the Services, you are consenting to the collection, transfer, storage, disclosure, and other uses of your information as described in this Privacy Policy.
+        <br></br>
+        <br></br>
+        When you visit our website ​https://kenkofit.url, and use our services, you trust us with your personal information. We take your privacy very seriously. In this privacy notice, we describe our privacy notice. We seek to explain to you in the clearest way possible what information we collect, how we use it and what rights you have in relation to it. We hope you take some time to read through it carefully, as it is important. If there are any terms in this privacy notice that you do not agree with, please discontinue the use of our Sites and our services.
+        <br></br>
+        <br></br>
+        This privacy notice applies to all information collected through our website (such as https://kenkofit.url), and/or any related services, sales, marketing or events (we refer to them collectively in this privacy notice as the "Services"). Please read this privacy notice carefully as it will help you make informed decisions about sharing your personal information with us.
       </p>
 
-      <h2>1 Lorem ipsum dolor sit amet</h2>
+      <h2>What information do we collect?</h2>
       <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-        laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
-        voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-        cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        We collect your Personal Information to provide, maintain, and improve our Services. To be more specific, we primarily use your Personal Information to:
+        <br></br>
+        <br></br>
+
+        • Communicate with you about our news, products, services, events, technical updates, and any information that you request through the Services or that we think you might be interested;
+        <br></br>
+        • Track and analyze activities, usage, trends, numbers, and market insights related to our Services;
+        <br></br>
+        • Detect, prevent, and address security or technical issues;
+        <br></br>
+        • Prevent illegal activities and protect the rights and property of KenkoFit and the users; and
+        <br></br>
+        • Facilitate our work with vendors, agents, consultants, and other service providers.
       </p>
 
-      <h2>2 Sed ut perspiciatis unde</h2>
+      <h2>How do we use your information?</h2>
       <p>
-        Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
-        laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi
-        architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit
-        aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione
-        voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet,
-        consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et
-        dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum
-        exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi
-        consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil
-        molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?
+        In Short: We process your information for purposes based on legitimate business interests, the fulfillment of our contract with you, compliance with our legal obligations, and/or your consent. We use personal information collected via our Services for a variety of business purposes described below. We process your personal information for these purposes in reliance on our legitimate business interests, in order to enter into or perform a contract with you, with your consent, and/or for compliance with our legal obligations. We indicate the specific processing grounds we rely on next to each purpose listed below. We use the information we collect or receive:
+        <br></br>
+        <br></br>
+        To protect our Services. We may use your information as part of our efforts to keep our Services safe and secure (for example, for fraud monitoring and prevention).
+        <br></br>
+        <br></br>
+        To deliver services to the user. We may use your information to provide you with the requested service.
+        <br></br>
+        <br></br>
+        To respond to user inquiries/offer support to users. We may use your information to respond to your inquiries and solve any potential issues you might have with the use of our Services.
+        <br></br>
+        <br></br>
+        For other Business Purposes. We may use your information for other Business Purposes, such as data analysis, identifying usage trends, determining the effectiveness of our promotional campaigns and to evaluate and improve our Services, products, marketing, and your experience. We may use and store this information in aggregated and anonymized form so that it is not associated with individual end-users and does not include personal information. We will not use identifiable personal information without your consent.
       </p>
 
       <h2>3 At vero eos et accusamus</h2>
@@ -55,7 +71,7 @@ const PrivacyPolicy = props => {
         et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a
         sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis
         doloribus asperiores repellat
-      </p>
+      </p> */}
     </div>
   );
 };

@@ -44,7 +44,7 @@ const bookingUnitType = 'line-item/units';
 
 // Should the application fetch available time slots (currently defined as
 // start and end dates) to be shown on listing page.
-const enableAvailability = process.env.REACT_APP_AVAILABILITY_ENABLED === 'true';
+const enableAvailability = process.env.REACT_APP_AVAILABILITY_ENABLED === 'false';
 
 // A maximum number of days forwards during which a booking can be made.
 // This is limited due to Stripe holding funds up to 90 days from the
@@ -77,25 +77,25 @@ const sentryDsn = process.env.REACT_APP_SENTRY_DSN;
 const usingSSL = process.env.REACT_APP_SHARETRIBE_USING_SSL === 'true';
 
 // Address information is used in SEO schema for Organization (http://schema.org/PostalAddress)
-const addressCountry = 'FI';
-const addressRegion = 'Helsinki';
-const postalCode = '00100';
-const streetAddress = 'Bulevardi 14';
+const addressCountry = 'Au';
+const addressRegion = 'Sydney';
+const postalCode = '2317';
+const streetAddress = '100 George';
 
 // Canonical root url is needed in social media sharing and SEO optimization purposes.
 const canonicalRootURL = process.env.REACT_APP_CANONICAL_ROOT_URL;
 
 // Site title is needed in meta tags (bots and social media sharing reads those)
-const siteTitle = 'Yogatime';
+const siteTitle = 'KenkoFit';
 
 // Twitter handle is needed in meta tags (twitter:site). Start it with '@' character
-const siteTwitterHandle = '@sharetribe';
+const siteTwitterHandle = '@kenkofit';
 
 // Instagram page is used in SEO schema (http://schema.org/Organization)
-const siteInstagramPage = null;
+const siteInstagramPage = '@KenkoFit';
 
 // Facebook page is used in SEO schema (http://schema.org/Organization)
-const siteFacebookPage = 'https://www.facebook.com/Sharetribe/';
+const siteFacebookPage = 'https://www.facebook.com/kenkofit/';
 
 // Facebook counts shares with app or page associated by this id
 // Currently it is unset, but you can read more about fb:app_id from
@@ -152,7 +152,7 @@ const maps = {
     defaultZoomLevel: 13,
 
     // Color of the circle on the Map component.
-    circleColor: '#c0392b',
+    circleColor: '#FFA500',
   },
 
   // Custom marker image to use in the Map component.

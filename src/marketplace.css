@@ -37,9 +37,9 @@
 
   /* ================ Colors ================ */
 
-  --marketplaceColor: #0095b3;
-  --marketplaceColorLight: #00bfe6;
-  --marketplaceColorDark: #006a80;
+  --marketplaceColor: #FFA500;
+  --marketplaceColorLight: #e69d00;
+  --marketplaceColorDark: #805e00;
 
   /* Used with inline CSS SVGs */
   --marketplaceColorEncoded: %230095b3;
@@ -155,7 +155,7 @@
   /* ================ Buttons ================ */
 
   --marketplaceButtonFontStyles: {
-    font-family: 'sofiapro', Helvetica, Arial, sans-serif;
+    font-family: Rubik, Helvetica, Arial, sans-serif;
     font-weight: var(--fontWeightSemiBold);
     font-size: 18px;
     line-height: 24px;

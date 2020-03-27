@@ -13,8 +13,8 @@ export const yogaStyles = [
 
 export const certificate = [
   { key: 'none', label: 'None', hideFromFilters: true, hideFromListingInfo: true },
-  { key: '200h', label: 'Registered yoga teacher 200h' },
-  { key: '500h', label: 'Registered yoga teacher 500h' },
+  { key: '200h', label: 'Registered yoga trainer 200h' },
+  { key: '500h', label: 'Registered yoga trainer 500h' },
 ];
 
 // Price filter configuration

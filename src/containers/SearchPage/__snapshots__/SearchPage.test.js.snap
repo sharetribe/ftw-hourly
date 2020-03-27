@@ -44,11 +44,11 @@ exports[`SearchPageComponent matches snapshot 1`] = `
             "options": Array [
               Object {
                 "key": "200h",
-                "label": "Registered yoga teacher 200h",
+                "label": "Registered yoga trainer 200h",
               },
               Object {
                 "key": "500h",
-                "label": "Registered yoga teacher 500h",
+                "label": "Registered yoga trainer 500h",
               },
             ],
             "paramName": "pub_certificate",

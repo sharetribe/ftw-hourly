@@ -61,7 +61,7 @@ Update from upstream (first 3 bullets) and a couple of pending changes.
 - [fix] Fix `console.warn` functions. [#1252](https://github.com/sharetribe/ftw-daily/pull/1252)
 - [add] Add missing countries (e.g. MX and JP) to `StripeBankAccountTokenInput` validations.
   [#1250](https://github.com/sharetribe/ftw-daily/pull/1250)
-- [add] Add French and Spanish translations for yogatime
+- [add] Add French and Spanish translations for KenkoFit
   [#72](https://github.com/sharetribe/ftw-hourly/pull/72)
 - [fix] Fix bug in showing availability exceptions. This bug was introduced in v6.0.0.
   [#71](https://github.com/sharetribe/ftw-hourly/pull/71)
@@ -137,8 +137,8 @@ from Flex docs: https://www.sharetribe.com/docs/guides/how-to-set-up-csp-for-ftw
 
 ## [v5.0.0] 2019-11-21
 
-This release creates lots of changes to the default logic (only one listing aka teacher profile
-allowed), translations files (Saunatime is changed to Yogatime), and it also adds
+This release creates lots of changes to the default logic (only one listing aka trainer profile
+allowed), translations files (Saunatime is changed to KenkoFit), and it also adds
 AvailabilityExceptions to EditListingAvailabilityPanel. If you have started with the original Flex
 Template for Web, you need to be extra careful when you switch to this release, since there are pull
 request that you might need to revert when you take update from upstream. (E.g. you might want to
@@ -148,7 +148,7 @@ allow multiple listings in your marketplace.)
   changed to "sessions") [#55](https://github.com/sharetribe/ftw-time/pull/55)
 - [fix] Reseting bookingStartDate picker didn't reset the current month.
   [#54](https://github.com/sharetribe/ftw-time/pull/54)
-- [change] Yogatime UI tweaks.
+- [change] KenkoFit UI tweaks.
 
   - Change hard-coded "sauna" strings and rules tab in EditListingWizard.
   - Change font-size in Avatar.
@@ -197,7 +197,7 @@ allow multiple listings in your marketplace.)
   [#38](https://github.com/sharetribe/ftw-time/pull/38)
 - [change] Hide inbox tabs if user doesn't have a listing.
   [#37](https://github.com/sharetribe/ftw-time/pull/37)
-- [change] Change the logo, marketplace color and favicons from Saunatime to Yogatime.
+- [change] Change the logo, marketplace color and favicons from Saunatime to KenkoFit.
   [#36](https://github.com/sharetribe/ftw-time/pull/36)
 - [change] Change the default locations used in `Topbar` and `Footer`.
   [#35](https://github.com/sharetribe/ftw-time/pull/35)

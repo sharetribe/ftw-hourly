@@ -20,8 +20,8 @@ import {
 } from '../../components';
 import { TopbarContainer } from '../../containers';
 
-import facebookImage from '../../assets/yogatimeFacebook-1200x630.jpg';
-import twitterImage from '../../assets/yogatimeTwitter-600x314.jpg';
+import facebookImage from '../../assets/kenkofitFacebook-1200x630.jpg';
+import twitterImage from '../../assets/kenkofitTwitter-600x314.jpg';
 import css from './LandingPage.css';
 
 export const LandingPageComponent = props => {
@@ -70,11 +70,11 @@ export const LandingPageComponent = props => {
             <SectionHero className={css.hero} history={history} location={location} />
           </div>
           <ul className={css.sections}>
-            <li className={css.section}>
+            {/* <li className={css.section}>
               <div className={css.sectionContentFirstChild}>
                 <SectionLocations />
               </div>
-            </li>
+            </li> */}
             <li className={css.section}>
               <div className={css.sectionContent}>
                 <SectionHowItWorks
