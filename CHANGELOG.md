@@ -17,6 +17,8 @@ https://github.com/sharetribe/flex-template-web/
 
 ## Upcoming version 2020-XX-XX
 
+## [v6.4.0] 2020-04-01
+
 This is update from from [upstream](https://github.com/sharetribe/ftw-daily): v4.4.1
 
 - [change] Improve the search page sorting and filters UI for different screen sizes [#1280](https://github.com/sharetribe/ftw-daily/pull/1280)
