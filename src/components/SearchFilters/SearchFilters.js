@@ -28,6 +28,11 @@ const initialValue = (queryParams, paramName) => {
   return queryParams[paramName];
 };
 
+// resolve initial values for a multi value filter
+const initialValues = (queryParams, paramName) => {
+  return !!queryParams[paramName] ? queryParams[paramName].split(',') : [];
+};
+
 const initialPriceRangeValue = (queryParams, paramName) => {
   const price = queryParams[paramName];
   const valuesFromParams = !!price ? price.split(',').map(v => Number.parseInt(v, RADIX)) : [];
@@ -86,6 +91,25 @@ const SearchFiltersComponent = props => {
   const initialPriceRange = priceFilter
     ? initialPriceRangeValue(urlQueryParams, priceFilter.paramName)
     : null;
+
+  const handleSelectOptions = (urlParam, options) => {
+    const queryParams =
+      options && options.length > 0
+        ? { ...urlQueryParams, [urlParam]: options.join(',') }
+        : omit(urlQueryParams, urlParam);
+
+    history.push(createResourceLocatorString('SearchPage', routeConfiguration(), {}, queryParams));
+  };
+
+  const handleSelectOption = (urlParam, option) => {
+    // query parameters after selecting the option
+    // if no option is passed, clear the selection for the filter
+    const queryParams = option
+      ? { ...urlQueryParams, [urlParam]: option }
+      : omit(urlQueryParams, urlParam);
+
+    history.push(createResourceLocatorString('SearchPage', routeConfiguration(), {}, queryParams));
+  };
 
   const initialKeyword = keywordFilter
     ? initialValue(urlQueryParams, keywordFilter.paramName)
