@@ -6,11 +6,13 @@ import classNames from 'classnames';
 import { withRouter } from 'react-router-dom';
 import omit from 'lodash/omit';
 
+import config from '../../config';
 import {
   SelectSingleFilter,
   SelectMultipleFilter,
   PriceFilter,
   KeywordFilter,
+  SortBy,
 } from '../../components';
 import routeConfiguration from '../../routeConfiguration';
 import { createResourceLocatorString } from '../../util/routes';
@@ -48,6 +50,7 @@ const SearchFiltersComponent = props => {
     rootClassName,
     className,
     urlQueryParams,
+    sort,
     listingsAreLoaded,
     resultsCount,
     searchInProgress,
@@ -89,10 +92,6 @@ const SearchFiltersComponent = props => {
     ? initialPriceRangeValue(urlQueryParams, priceFilter.paramName)
     : null;
 
-  const initialKeyword = keywordFilter
-    ? initialValue(urlQueryParams, keywordFilter.paramName)
-    : null;
-
   const handleSelectOptions = (urlParam, options) => {
     const queryParams =
       options && options.length > 0
@@ -111,6 +110,12 @@ const SearchFiltersComponent = props => {
 
     history.push(createResourceLocatorString('SearchPage', routeConfiguration(), {}, queryParams));
   };
+
+  const initialKeyword = keywordFilter
+    ? initialValue(urlQueryParams, keywordFilter.paramName)
+    : null;
+
+  const isKeywordFilterActive = !!initialKeyword;
 
   const handlePrice = (urlParam, range) => {
     const { minPrice, maxPrice } = range || {};
@@ -199,8 +204,38 @@ const SearchFiltersComponent = props => {
       />
     </button>
   ) : null;
+
+  const handleSortBy = (urlParam, values) => {
+    const queryParams = values
+      ? { ...urlQueryParams, [urlParam]: values }
+      : omit(urlQueryParams, urlParam);
+
+    history.push(createResourceLocatorString('SearchPage', routeConfiguration(), {}, queryParams));
+  };
+
+  const sortBy = config.custom.sortConfig.active ? (
+    <SortBy
+      sort={sort}
+      showAsPopup
+      isKeywordFilterActive={isKeywordFilterActive}
+      onSelect={handleSortBy}
+      contentPlacementOffset={FILTER_DROPDOWN_OFFSET}
+    />
+  ) : null;
+
   return (
     <div className={classes}>
+      <div className={css.searchOptions}>
+        {listingsAreLoaded ? (
+          <div className={css.searchResultSummary}>
+            <span className={css.resultsFound}>
+              <FormattedMessage id="SearchFilters.foundResults" values={{ count: resultsCount }} />
+            </span>
+          </div>
+        ) : null}
+        {sortBy}
+      </div>
+
       <div className={css.filters}>
         {yogaStylesFilterElement}
         {certificateFilterElement}
@@ -208,14 +243,6 @@ const SearchFiltersComponent = props => {
         {keywordFilterElement}
         {toggleSearchFiltersPanelButton}
       </div>
-
-      {listingsAreLoaded && resultsCount > 0 ? (
-        <div className={css.searchResultSummary}>
-          <span className={css.resultsFound}>
-            <FormattedMessage id="SearchFilters.foundResults" values={{ count: resultsCount }} />
-          </span>
-        </div>
-      ) : null}
 
       {hasNoResult ? (
         <div className={css.noSearchResults}>
