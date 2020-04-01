@@ -6,13 +6,13 @@ import React from 'react';
 import 'react-dates/initialize';
 import { renderShallow } from '../../util/test-helpers';
 import { fakeIntl } from '../../util/test-data';
-import { BookingDateRangeFilterComponent } from './BookingDateRangeFilter';
+import { BookingDateRangeLengthFilterComponent } from './BookingDateRangeLengthFilter';
 
-describe('BookingDateRangeFilter', () => {
+describe('BookingDateRangeLengthFilter', () => {
   it('matches popup snapshot', () => {
     const tree = renderShallow(
-      <BookingDateRangeFilterComponent
-        id="BookingDateRangeFilter"
+      <BookingDateRangeLengthFilterComponent
+        id="BookingDateRangeLengthFilter"
         urlParam="dates"
         liveEdit={false}
         showAsPopup={true}
@@ -27,8 +27,8 @@ describe('BookingDateRangeFilter', () => {
 
   it('matches plain snapshot', () => {
     const tree = renderShallow(
-      <BookingDateRangeFilterComponent
-        id="BookingDateRangeFilter"
+      <BookingDateRangeLengthFilterComponent
+        id="BookingDateRangeLengthFilter"
         urlParam="dates"
         liveEdit={true}
         showAsPopup={false}

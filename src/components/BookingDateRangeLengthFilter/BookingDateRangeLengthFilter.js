@@ -3,9 +3,9 @@ import { bool, func, number, object, string } from 'prop-types';
 import { injectIntl, intlShape } from '../../util/reactIntl';
 
 import { FieldDateRangeController, FilterPopup, FilterPlain } from '../../components';
-import css from './BookingDateRangeFilter.css';
+import css from './BookingDateRangeLengthFilter.css';
 
-export class BookingDateRangeFilterComponent extends Component {
+export class BookingDateRangeLengthFilterComponent extends Component {
   constructor(props) {
     super(props);
 
@@ -43,21 +43,21 @@ export class BookingDateRangeFilterComponent extends Component {
 
     const labelForPlain = isSelected
       ? intl.formatMessage(
-          { id: 'BookingDateRangeFilter.labelSelectedPlain' },
+          { id: 'BookingDateRangeLengthFilter.labelSelectedPlain' },
           {
             dates: `${formattedStartDate} - ${formattedEndDate}`,
           }
         )
-      : intl.formatMessage({ id: 'BookingDateRangeFilter.labelPlain' });
+      : intl.formatMessage({ id: 'BookingDateRangeLengthFilter.labelPlain' });
 
     const labelForPopup = isSelected
       ? intl.formatMessage(
-          { id: 'BookingDateRangeFilter.labelSelectedPopup' },
+          { id: 'BookingDateRangeLengthFilter.labelSelectedPopup' },
           {
             dates: `${formattedStartDate} - ${formattedEndDate}`,
           }
         )
-      : intl.formatMessage({ id: 'BookingDateRangeFilter.labelPopup' });
+      : intl.formatMessage({ id: 'BookingDateRangeLengthFilter.labelPopup' });
 
     const onClearPopupMaybe =
       this.popupControllerRef && this.popupControllerRef.onReset
@@ -124,7 +124,7 @@ export class BookingDateRangeFilterComponent extends Component {
   }
 }
 
-BookingDateRangeFilterComponent.defaultProps = {
+BookingDateRangeLengthFilterComponent.defaultProps = {
   rootClassName: null,
   className: null,
   showAsPopup: true,
@@ -133,7 +133,7 @@ BookingDateRangeFilterComponent.defaultProps = {
   contentPlacementOffset: 0,
 };
 
-BookingDateRangeFilterComponent.propTypes = {
+BookingDateRangeLengthFilterComponent.propTypes = {
   rootClassName: string,
   className: string,
   id: string.isRequired,
@@ -148,6 +148,6 @@ BookingDateRangeFilterComponent.propTypes = {
   intl: intlShape.isRequired,
 };
 
-const BookingDateRangeFilter = injectIntl(BookingDateRangeFilterComponent);
+const BookingDateRangeLengthFilter = injectIntl(BookingDateRangeLengthFilterComponent);
 
-export default BookingDateRangeFilter;
+export default BookingDateRangeLengthFilter;

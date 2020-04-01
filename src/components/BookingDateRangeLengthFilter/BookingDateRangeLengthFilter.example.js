@@ -2,7 +2,7 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { stringify, parse } from '../../util/urlHelpers';
 import { parseDateFromISO8601, stringifyDateToISO8601 } from '../../util/dates';
-import BookingDateRangeFilter from './BookingDateRangeFilter';
+import BookingDateRangeLengthFilter from './BookingDateRangeLengthFilter';
 
 const URL_PARAM = 'dates';
 
@@ -18,7 +18,7 @@ const handleSubmit = (urlParam, values, history) => {
   history.push(`${window.location.pathname}${queryParams}`);
 };
 
-const BookingDateRangeFilterWrapper = withRouter(props => {
+const BookingDateRangeLengthFilterWrapper = withRouter(props => {
   const { history, location } = props;
 
   const params = parse(location.search);
@@ -33,21 +33,21 @@ const BookingDateRangeFilterWrapper = withRouter(props => {
       : { dates: null };
 
   return (
-    <BookingDateRangeFilter
+    <BookingDateRangeLengthFilter
       {...props}
       initialValues={initialValues}
       onSubmit={(urlParam, values) => {
-        console.log('Submit BookingDateRangeFilter with (unformatted) values:', values);
+        console.log('Submit BookingDateRangeLengthFilter with (unformatted) values:', values);
         handleSubmit(urlParam, values, history);
       }}
     />
   );
 });
 
-export const BookingDateRangeFilterPopup = {
-  component: BookingDateRangeFilterWrapper,
+export const BookingDateRangeLengthFilterPopup = {
+  component: BookingDateRangeLengthFilterWrapper,
   props: {
-    id: 'BookingDateRangeFilterPopupExample',
+    id: 'BookingDateRangeLengthFilterPopupExample',
     urlParam: URL_PARAM,
     liveEdit: false,
     showAsPopup: true,
@@ -58,8 +58,8 @@ export const BookingDateRangeFilterPopup = {
   group: 'misc',
 };
 
-export const BookingDateRangeFilterPlain = {
-  component: BookingDateRangeFilterWrapper,
+export const BookingDateRangeLengthFilterPlain = {
+  component: BookingDateRangeLengthFilterWrapper,
   props: {
     id: 'BookingDateRangeFilterPlainExample',
     urlParam: URL_PARAM,
