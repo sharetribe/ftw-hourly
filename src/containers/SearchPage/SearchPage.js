@@ -227,10 +227,6 @@ export class SearchPageComponent extends Component {
               priceFilter: filters.priceFilter,
               keywordFilter: filters.keywordFilter,
             }}
-            secondaryFilters={{
-              categoryFilter: filters.categoryFilter,
-              amenitiesFilter: filters.amenitiesFilter,
-            }}
           />
           <ModalInMobile
             className={css.mapPanel}
