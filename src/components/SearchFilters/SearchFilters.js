@@ -6,11 +6,13 @@ import classNames from 'classnames';
 import { withRouter } from 'react-router-dom';
 import omit from 'lodash/omit';
 
+import config from '../../config';
 import {
   SelectSingleFilter,
   SelectMultipleFilter,
   PriceFilter,
   KeywordFilter,
+  SortBy,
 } from '../../components';
 import routeConfiguration from '../../routeConfiguration';
 import { createResourceLocatorString } from '../../util/routes';
@@ -24,11 +26,6 @@ const RADIX = 10;
 // resolve initial value for a single value filter
 const initialValue = (queryParams, paramName) => {
   return queryParams[paramName];
-};
-
-// resolve initial values for a multi value filter
-const initialValues = (queryParams, paramName) => {
-  return !!queryParams[paramName] ? queryParams[paramName].split(',') : [];
 };
 
 const initialPriceRangeValue = (queryParams, paramName) => {
@@ -48,6 +45,7 @@ const SearchFiltersComponent = props => {
     rootClassName,
     className,
     urlQueryParams,
+    sort,
     listingsAreLoaded,
     resultsCount,
     searchInProgress,
@@ -93,24 +91,7 @@ const SearchFiltersComponent = props => {
     ? initialValue(urlQueryParams, keywordFilter.paramName)
     : null;
 
-  const handleSelectOptions = (urlParam, options) => {
-    const queryParams =
-      options && options.length > 0
-        ? { ...urlQueryParams, [urlParam]: options.join(',') }
-        : omit(urlQueryParams, urlParam);
-
-    history.push(createResourceLocatorString('SearchPage', routeConfiguration(), {}, queryParams));
-  };
-
-  const handleSelectOption = (urlParam, option) => {
-    // query parameters after selecting the option
-    // if no option is passed, clear the selection for the filter
-    const queryParams = option
-      ? { ...urlQueryParams, [urlParam]: option }
-      : omit(urlQueryParams, urlParam);
-
-    history.push(createResourceLocatorString('SearchPage', routeConfiguration(), {}, queryParams));
-  };
+  const isKeywordFilterActive = !!initialKeyword;
 
   const handlePrice = (urlParam, range) => {
     const { minPrice, maxPrice } = range || {};
@@ -199,8 +180,38 @@ const SearchFiltersComponent = props => {
       />
     </button>
   ) : null;
+
+  const handleSortBy = (urlParam, values) => {
+    const queryParams = values
+      ? { ...urlQueryParams, [urlParam]: values }
+      : omit(urlQueryParams, urlParam);
+
+    history.push(createResourceLocatorString('SearchPage', routeConfiguration(), {}, queryParams));
+  };
+
+  const sortBy = config.custom.sortConfig.active ? (
+    <SortBy
+      sort={sort}
+      showAsPopup
+      isKeywordFilterActive={isKeywordFilterActive}
+      onSelect={handleSortBy}
+      contentPlacementOffset={FILTER_DROPDOWN_OFFSET}
+    />
+  ) : null;
+
   return (
     <div className={classes}>
+      <div className={css.searchOptions}>
+        {listingsAreLoaded ? (
+          <div className={css.searchResultSummary}>
+            <span className={css.resultsFound}>
+              <FormattedMessage id="SearchFilters.foundResults" values={{ count: resultsCount }} />
+            </span>
+          </div>
+        ) : null}
+        {sortBy}
+      </div>
+
       <div className={css.filters}>
         {yogaStylesFilterElement}
         {certificateFilterElement}
@@ -208,14 +219,6 @@ const SearchFiltersComponent = props => {
         {keywordFilterElement}
         {toggleSearchFiltersPanelButton}
       </div>
-
-      {listingsAreLoaded && resultsCount > 0 ? (
-        <div className={css.searchResultSummary}>
-          <span className={css.resultsFound}>
-            <FormattedMessage id="SearchFilters.foundResults" values={{ count: resultsCount }} />
-          </span>
-        </div>
-      ) : null}
 
       {hasNoResult ? (
         <div className={css.noSearchResults}>
