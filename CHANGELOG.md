@@ -17,6 +17,8 @@ https://github.com/sharetribe/flex-template-web/
 
 ## Upcoming version 2020-XX-XX
 
+- [fix] Fix user display name references in example tx process email templates [#86](https://github.com/sharetribe/ftw-hourly/pull/86/)
+
 ## [v6.4.0] 2020-04-01
 
 This is update from from [upstream](https://github.com/sharetribe/ftw-daily): v4.4.1
