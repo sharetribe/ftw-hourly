@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 import config from '../../config';
-import IconLogo from './vivify-logo.png';
+import IconLogo from './IconLogo';
 import LogoImage from './vivify-logo.png';
+import MobileLogoImage from './vivify-mobile-logo.png';
 import css from './Logo.css';
 
 const Logo = props => {
@@ -15,7 +16,7 @@ const Logo = props => {
     return <img className={className} src={LogoImage} alt={config.siteTitle} {...rest} />;
   }
 
-  return <IconLogo className={mobileClasses} {...rest} />;
+  return <img className={className} src={MobileLogoImage} alt={config.siteTitle} {...rest} />;
 };
 
 const { oneOf, string } = PropTypes;
