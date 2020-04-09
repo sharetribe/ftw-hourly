@@ -17,18 +17,34 @@ https://github.com/sharetribe/flex-template-web/
 
 ## Upcoming version 2020-XX-XX
 
+## [v6.4.1] 2020-04-09
+
+### One change in this template
+
 - [fix] Fix user display name references in example tx process email templates [#86](https://github.com/sharetribe/ftw-hourly/pull/86/)
+
+
+### Updates from upstream
+
+This is update from [upstream](https://github.com/sharetribe/ftw-daily): v4.4.2
+
+- [fix] Handle deleted reviews in ActivityFeed [#1283](https://github.com/sharetribe/ftw-daily/pull/1283)
+
+[v6.4.1]: https://github.com/sharetribe/ftw-hourly/compare/v6.4.0...v6.4.1
 
 ## [v6.4.0] 2020-04-01
 
-This is update from from [upstream](https://github.com/sharetribe/ftw-daily): v4.4.1
+This is update from [upstream](https://github.com/sharetribe/ftw-daily): v4.4.1
 
 - [change] Improve the search page sorting and filters UI for different screen sizes [#1280](https://github.com/sharetribe/ftw-daily/pull/1280)
 - [add] Search result sorting [#1277](https://github.com/sharetribe/ftw-daily/pull/1277)
 
+[v6.4.0]: https://github.com/sharetribe/ftw-hourly/compare/v6.3.0...v6.4.0
+
+
 ## [v6.3.0] 2020-03-16
 
-This is update from from [upstream](https://github.com/sharetribe/ftw-daily): v4.3.0
+This is update from [upstream](https://github.com/sharetribe/ftw-daily): v4.3.0
 
 - [change] Redirect user back to Stripe during Connect Onboarding Flow when user is returned to
   failure URL provided that the Account Link generation is successful.
@@ -49,7 +65,7 @@ This is update from from [upstream](https://github.com/sharetribe/ftw-daily): v4
 
 ## [v6.2.0] 2020-02-18
 
-This is update from from [upstream](https://github.com/sharetribe/ftw-daily): v4.2.0
+This is update from [upstream](https://github.com/sharetribe/ftw-daily): v4.2.0
 
 - [add] Show a banner when a user is logged in with limited access.
   [#1259](https://github.com/sharetribe/ftw-daily/pull/1259)
@@ -79,7 +95,7 @@ Update from upstream (first 3 bullets) and a couple of pending changes.
 
 ## [v6.0.0] 2019-12-20
 
-This is update from from [upstream](https://github.com/sharetribe/ftw-daily): v4.0.0
+This is update from [upstream](https://github.com/sharetribe/ftw-daily): v4.0.0
 
 - [change] Use Stripe's [Connect onboarding](https://stripe.com/docs/connect/connect-onboarding) for
   adding and updating the identity information of the Stripe account.
