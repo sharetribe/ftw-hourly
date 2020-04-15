@@ -624,6 +624,26 @@ export const formatDateStringToUTC = dateString => {
 };
 
 /**
+ * Format given date string ('YYYY-MM-DD') to a full date string in
+ * the given time zone.
+ *
+ * This is used in search when filtering by time-based availability.
+ *
+ * Example:
+ * ('2020-04-15', 'Etc/UTC') => '2020-04-15T00:00:00.000Z'
+ * ('2020-04-15', 'Europe/Helsinki') => '2020-04-14T21:00:00.000Z'
+ *
+ * @param {String} dateString in 'YYYY-MM-DD' format
+ * @param {String} tzId time zone id, see:
+ *   https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+ *
+ * @returns {String} string in '0000-00-00T00:00:00.000Z' format
+ */
+export const formatDateStringToTz = (dateString, tzId) => {
+  return moment.tz(dateString, tzId).toDate();
+};
+
+/**
  * Not used with time-based process...
  * Formats string ('YYYY-MM-DD') to UTC format ('0000-00-00T00:00:00.000Z') and adds one day.
  * This is used as end date of the search query.
@@ -636,6 +656,25 @@ export const formatDateStringToUTC = dateString => {
 export const getExclusiveEndDate = dateString => {
   return moment
     .utc(dateString)
+    .add(1, 'days')
+    .startOf('day')
+    .toDate();
+};
+
+/**
+ * Format given date string ('YYYY-MM-DD') to a full date string in
+ * the given time zone. Adds 1 day to work with the exlusive date
+ * range in the API.
+ *
+ * @param {String} dateString in 'YYYY-MM-DD'format
+ * @param {String} tzId time zone id, see:
+ *   https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+ *
+ * @returns {String} string in '0000-00-00T00:00:00.000Z' format
+ */
+export const getExclusiveEndDateWithTz = (dateString, tzId) => {
+  return moment
+    .tz(dateString, tzId)
     .add(1, 'days')
     .startOf('day')
     .toDate();
