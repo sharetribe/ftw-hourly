@@ -2,12 +2,34 @@ import React, { Component } from 'react';
 import { bool, func, number, object, string } from 'prop-types';
 import { injectIntl, intlShape } from '../../util/reactIntl';
 
-import { FieldDateRangeController, FilterPopup, FilterPlain } from '../../components';
+import { FieldDateRangeController, FieldSelect, FilterPopup, FilterPlain } from '../../components';
+import { propTypes } from '../../util/types';
 import css from './BookingDateRangeLengthFilter.css';
+
+const formatSelectedLabel = (minDurationOptions, minDuration, startDate, endDate) => {
+  // Only show the minimum duration label for options whose key
+  // matches the given param and that have the short label defined.
+  const minDurationOption =
+    typeof minDuration === 'number'
+      ? minDurationOptions.find(option => {
+          return minDuration.toString() === option.key && option.shortLabel;
+        })
+      : null;
+  return minDurationOption
+    ? `${startDate} - ${endDate}, ${minDurationOption.shortLabel}`
+    : `${startDate} - ${endDate}`;
+};
 
 export class BookingDateRangeLengthFilterComponent extends Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      // We need to sync the currently selected dates from the
+      // datepicker so we can enable the min duration only when there
+      // are dates selected.
+      selectedDates: null,
+    };
 
     this.popupControllerRef = null;
     this.plainControllerRef = null;
@@ -17,62 +39,136 @@ export class BookingDateRangeLengthFilterComponent extends Component {
     const {
       className,
       rootClassName,
+      dateRangeLengthFilter,
       showAsPopup,
-      initialValues: initialValuesRaw,
+      initialDateValues: initialDateValuesRaw,
+      initialDurationValue,
       id,
       contentPlacementOffset,
       onSubmit,
-      urlParam,
+      datesUrlParam,
+      durationUrlParam,
       intl,
       ...rest
     } = this.props;
 
-    const isSelected = !!initialValuesRaw && !!initialValuesRaw.dates;
-    const initialValues = isSelected ? initialValuesRaw : { dates: null };
+    const isDatesSelected = !!initialDateValuesRaw && !!initialDateValuesRaw.dates;
+    const initialDateValues = isDatesSelected ? initialDateValuesRaw : { dates: null };
 
-    const startDate = isSelected ? initialValues.dates.startDate : null;
-    const endDate = isSelected ? initialValues.dates.endDate : null;
+    const startDate = isDatesSelected ? initialDateValues.dates.startDate : null;
+    const endDate = isDatesSelected ? initialDateValues.dates.endDate : null;
 
     const format = {
       month: 'short',
       day: 'numeric',
     };
 
-    const formattedStartDate = isSelected ? intl.formatDate(startDate, format) : null;
-    const formattedEndDate = isSelected ? intl.formatDate(endDate, format) : null;
+    const formattedStartDate = isDatesSelected ? intl.formatDate(startDate, format) : null;
+    const formattedEndDate = isDatesSelected ? intl.formatDate(endDate, format) : null;
 
-    const labelForPlain = isSelected
+    const labelForPlain = isDatesSelected
       ? intl.formatMessage(
           { id: 'BookingDateRangeLengthFilter.labelSelectedPlain' },
           {
-            dates: `${formattedStartDate} - ${formattedEndDate}`,
+            dates: formatSelectedLabel(
+              dateRangeLengthFilter.config.options,
+              initialDurationValue,
+              formattedStartDate,
+              formattedEndDate
+            ),
           }
         )
       : intl.formatMessage({ id: 'BookingDateRangeLengthFilter.labelPlain' });
 
-    const labelForPopup = isSelected
+    const labelForPopup = isDatesSelected
       ? intl.formatMessage(
           { id: 'BookingDateRangeLengthFilter.labelSelectedPopup' },
           {
-            dates: `${formattedStartDate} - ${formattedEndDate}`,
+            dates: formatSelectedLabel(
+              dateRangeLengthFilter.config.options,
+              initialDurationValue,
+              formattedStartDate,
+              formattedEndDate
+            ),
           }
         )
       : intl.formatMessage({ id: 'BookingDateRangeLengthFilter.labelPopup' });
 
+    const minDurationLabel = intl.formatMessage({
+      id: 'BookingDateRangeLengthFilter.minDurationLabel',
+    });
+
     const onClearPopupMaybe =
       this.popupControllerRef && this.popupControllerRef.onReset
-        ? { onClear: () => this.popupControllerRef.onReset(null, null) }
+        ? {
+            onClear: () => {
+              this.setState({ selectedDates: null });
+              this.popupControllerRef.onReset(null, null);
+            },
+          }
         : {};
 
     const onCancelPopupMaybe =
       this.popupControllerRef && this.popupControllerRef.onReset
-        ? { onCancel: () => this.popupControllerRef.onReset(startDate, endDate) }
+        ? {
+            onCancel: () => {
+              this.setState({ selectedDates: null });
+              this.popupControllerRef.onReset(startDate, endDate);
+            },
+          }
         : {};
 
     const onClearPlainMaybe =
       this.plainControllerRef && this.plainControllerRef.onReset
-        ? { onClear: () => this.plainControllerRef.onReset(null, null) }
+        ? {
+            onClear: () => {
+              this.setState({ selectedDates: null });
+              this.plainControllerRef.onReset(null, null);
+            },
+          }
         : {};
+
+    const handleSubmit = (param, values) => {
+      this.setState({ selectedDates: null });
+      onSubmit(values);
+    };
+
+    const handleChange = (param, values) => {
+      this.setState({ selectedDates: values[datesUrlParam] });
+    };
+
+    const datesSelected = !!(initialDateValues.dates || this.state.selectedDates);
+
+    const initialValues = {
+      ...initialDateValues,
+      minDuration: initialDurationValue,
+    };
+
+    const fields = (
+      <>
+        <FieldDateRangeController
+          name={datesUrlParam}
+          controllerRef={node => {
+            this.popupControllerRef = node;
+          }}
+        />
+        <FieldSelect
+          id="BookingDateRangeLengthFilter.duration"
+          name={durationUrlParam}
+          label={minDurationLabel}
+          className={css.duration}
+          disabled={!datesSelected}
+        >
+          {dateRangeLengthFilter.config.options.map(({ key, label }) => {
+            return (
+              <option key={key} value={key}>
+                {label}
+              </option>
+            );
+          })}
+        </FieldSelect>
+      </>
+    );
 
     return showAsPopup ? (
       <FilterPopup
@@ -80,45 +176,36 @@ export class BookingDateRangeLengthFilterComponent extends Component {
         rootClassName={rootClassName}
         popupClassName={css.popupSize}
         label={labelForPopup}
-        isSelected={isSelected}
+        isSelected={isDatesSelected}
         id={`${id}.popup`}
         showAsPopup
         contentPlacementOffset={contentPlacementOffset}
-        onSubmit={onSubmit}
+        onSubmit={handleSubmit}
+        onChange={handleChange}
         {...onClearPopupMaybe}
         {...onCancelPopupMaybe}
         initialValues={initialValues}
-        urlParam={urlParam}
+        urlParam={datesUrlParam}
         {...rest}
       >
-        <FieldDateRangeController
-          name="dates"
-          controllerRef={node => {
-            this.popupControllerRef = node;
-          }}
-        />
+        {fields}
       </FilterPopup>
     ) : (
       <FilterPlain
         className={className}
         rootClassName={rootClassName}
         label={labelForPlain}
-        isSelected={isSelected}
+        isSelected={isDatesSelected}
         id={`${id}.plain`}
         liveEdit
         contentPlacementOffset={contentPlacementOffset}
-        onSubmit={onSubmit}
+        onSubmit={handleSubmit}
         {...onClearPlainMaybe}
         initialValues={initialValues}
-        urlParam={urlParam}
+        urlParam={datesUrlParam}
         {...rest}
       >
-        <FieldDateRangeController
-          name="dates"
-          controllerRef={node => {
-            this.plainControllerRef = node;
-          }}
-        />
+        {fields}
       </FilterPlain>
     );
   }
@@ -127,9 +214,11 @@ export class BookingDateRangeLengthFilterComponent extends Component {
 BookingDateRangeLengthFilterComponent.defaultProps = {
   rootClassName: null,
   className: null,
+  dateRangeLengthFitler: null,
   showAsPopup: true,
   liveEdit: false,
-  initialValues: null,
+  initialDateValues: null,
+  initialDurationValue: null,
   contentPlacementOffset: 0,
 };
 
@@ -137,11 +226,14 @@ BookingDateRangeLengthFilterComponent.propTypes = {
   rootClassName: string,
   className: string,
   id: string.isRequired,
+  dateRangeLengthFitler: propTypes.filterConfig,
   showAsPopup: bool,
   liveEdit: bool,
-  urlParam: string.isRequired,
+  datesUrlParam: string.isRequired,
+  durationUrlParam: string.isRequired,
   onSubmit: func.isRequired,
-  initialValues: object,
+  initialDateValues: object,
+  initialDurationValue: number,
   contentPlacementOffset: number,
 
   // form injectIntl

@@ -2,6 +2,7 @@ import unionWith from 'lodash/unionWith';
 import { storableError } from '../../util/errors';
 import { addMarketplaceEntities } from '../../ducks/marketplaceData.duck';
 import { convertUnitToSubUnit, unitDivisor } from '../../util/currency';
+import { formatDateStringToTz, getExclusiveEndDateWithTz } from '../../util/dates';
 import config from '../../config';
 
 // ================ Action types ================ //
@@ -131,12 +132,37 @@ export const searchListings = searchParams => (dispatch, getState, sdk) => {
       : {};
   };
 
-  const { perPage, price, dates, ...rest } = searchParams;
+  const availabilityParams = (datesParam, minDurationParam) => {
+    const dateValues = datesParam ? datesParam.split(',') : [];
+    const hasDateValues = datesParam && dateValues.length === 2;
+    const startDate = hasDateValues ? dateValues[0] : null;
+    const endDate = hasDateValues ? dateValues[1] : null;
+
+    const minDurationMaybe =
+      minDurationParam && Number.isInteger(minDurationParam) && hasDateValues
+        ? { minDuration: minDurationParam }
+        : {};
+
+    const tzId = config.custom.dateRangeLengthFilterConfig.searchTimeZoneId;
+
+    return hasDateValues
+      ? {
+          start: formatDateStringToTz(startDate, tzId),
+          end: getExclusiveEndDateWithTz(endDate, tzId),
+          availability: 'time-partial',
+          ...minDurationMaybe,
+        }
+      : {};
+  };
+
+  const { perPage, price, dates, minDuration, ...rest } = searchParams;
   const priceMaybe = priceSearchParams(price);
+  const availabilityMaybe = availabilityParams(dates, minDuration);
 
   const params = {
     ...rest,
     ...priceMaybe,
+    ...availabilityMaybe,
     per_page: perPage,
   };
 
