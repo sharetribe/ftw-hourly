@@ -63,9 +63,18 @@ class MainPanel extends Component {
         }
       : {};
 
-    const hasPaginationInfo = !!pagination && pagination.totalItems != null;
-    const totalItems = searchParamsAreInSync && hasPaginationInfo ? pagination.totalItems : 0;
-    const listingsAreLoaded = !searchInProgress && searchParamsAreInSync && hasPaginationInfo;
+    // With time-based availability filtering, pagination is NOT
+    // supported. In these cases we get the pagination support info in
+    // the response meta object, and we can use the count of listings
+    // as the result count.
+    //
+    // See: https://www.sharetribe.com/api-reference/marketplace.html#availability-filtering
+    const hasPaginationInfo = !!pagination && !pagination.paginationUnsupported;
+    const listingsLength = listings ? listings.length : 0;
+    const totalItems =
+      searchParamsAreInSync && hasPaginationInfo ? pagination.totalItems : listingsLength;
+
+    const listingsAreLoaded = !searchInProgress && searchParamsAreInSync;
 
     const classes = classNames(rootClassName || css.searchResultContainer, className);
 
