@@ -402,8 +402,9 @@ propTypes.message = shape({
 propTypes.pagination = shape({
   page: number.isRequired,
   perPage: number.isRequired,
-  totalItems: number.isRequired,
-  totalPages: number.isRequired,
+  paginationUnsupported: bool,
+  totalItems: number,
+  totalPages: number,
 });
 
 // Search filter definition
