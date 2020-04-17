@@ -17,8 +17,8 @@ https://github.com/sharetribe/flex-template-web/
 
 ## Upcoming version 2020-XX-XX
 
-- [fix] Remove unnecessary required props, which were introduced accidentally in upstream update
-  (v6.3.0). [#88](https://github.com/sharetribe/ftw-hourly/pull/88/)
+- [fix] Remove unnecessary required props, which were introduced accidentally in upstream update (v6.3.0). [#88](https://github.com/sharetribe/ftw-hourly/pull/88/)
+- [add] Time-based availability filtering with a start/end date + min booking duration search filter [#85](https://github.com/sharetribe/ftw-hourly/pull/85)
 
 ## [v6.4.1] 2020-04-09
 
