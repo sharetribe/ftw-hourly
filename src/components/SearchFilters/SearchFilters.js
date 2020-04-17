@@ -7,14 +7,7 @@ import { withRouter } from 'react-router-dom';
 import omit from 'lodash/omit';
 
 import config from '../../config';
-import {
-  BookingDateRangeLengthFilter,
-  SelectSingleFilter,
-  SelectMultipleFilter,
-  PriceFilter,
-  KeywordFilter,
-  SortBy,
-} from '../../components';
+import { BookingDateRangeLengthFilter, PriceFilter, KeywordFilter, SortBy } from '../../components';
 import { parseDateFromISO8601, stringifyDateToISO8601 } from '../../util/dates';
 import routeConfiguration from '../../routeConfiguration';
 import { createResourceLocatorString } from '../../util/routes';
@@ -28,11 +21,6 @@ const RADIX = 10;
 // resolve initial value for a single value filter
 const initialValue = (queryParams, paramName) => {
   return queryParams[paramName];
-};
-
-// resolve initial values for a multi value filter
-const initialValues = (queryParams, paramName) => {
-  return !!queryParams[paramName] ? queryParams[paramName].split(',') : [];
 };
 
 const initialPriceRangeValue = (queryParams, paramName) => {
@@ -70,8 +58,6 @@ const SearchFiltersComponent = props => {
     listingsAreLoaded,
     resultsCount,
     searchInProgress,
-    certificateFilter,
-    yogaStylesFilter,
     priceFilter,
     dateRangeLengthFilter,
     keywordFilter,
@@ -85,25 +71,9 @@ const SearchFiltersComponent = props => {
   const hasNoResult = listingsAreLoaded && resultsCount === 0;
   const classes = classNames(rootClassName || css.root, className);
 
-  const certificateLabel = intl.formatMessage({
-    id: 'SearchFilters.certificateLabel',
-  });
-
-  const yogaStylesLabel = intl.formatMessage({
-    id: 'SearchFilters.yogaStylesLabel',
-  });
-
   const keywordLabel = intl.formatMessage({
     id: 'SearchFilters.keywordLabel',
   });
-
-  const initialyogaStyles = yogaStylesFilter
-    ? initialValues(urlQueryParams, yogaStylesFilter.paramName)
-    : null;
-
-  const initialcertificate = certificateFilter
-    ? initialValue(urlQueryParams, certificateFilter.paramName)
-    : null;
 
   const initialPriceRange = priceFilter
     ? initialPriceRangeValue(urlQueryParams, priceFilter.paramName)
@@ -116,25 +86,6 @@ const SearchFiltersComponent = props => {
   const initialMinDuration = dateRangeLengthFilter
     ? initialValue(urlQueryParams, dateRangeLengthFilter.minDurationParamName)
     : null;
-
-  const handleSelectOptions = (urlParam, options) => {
-    const queryParams =
-      options && options.length > 0
-        ? { ...urlQueryParams, [urlParam]: options.join(',') }
-        : omit(urlQueryParams, urlParam);
-
-    history.push(createResourceLocatorString('SearchPage', routeConfiguration(), {}, queryParams));
-  };
-
-  const handleSelectOption = (urlParam, option) => {
-    // query parameters after selecting the option
-    // if no option is passed, clear the selection for the filter
-    const queryParams = option
-      ? { ...urlQueryParams, [urlParam]: option }
-      : omit(urlQueryParams, urlParam);
-
-    history.push(createResourceLocatorString('SearchPage', routeConfiguration(), {}, queryParams));
-  };
 
   const initialKeyword = keywordFilter
     ? initialValue(urlQueryParams, keywordFilter.paramName)
@@ -159,32 +110,6 @@ const SearchFiltersComponent = props => {
 
     history.push(createResourceLocatorString('SearchPage', routeConfiguration(), {}, queryParams));
   };
-
-  const certificateFilterElement = certificateFilter ? (
-    <SelectSingleFilter
-      urlParam={certificateFilter.paramName}
-      label={certificateLabel}
-      onSelect={handleSelectOption}
-      showAsPopup
-      options={certificateFilter.options}
-      initialValue={initialcertificate}
-      contentPlacementOffset={FILTER_DROPDOWN_OFFSET}
-    />
-  ) : null;
-
-  const yogaStylesFilterElement = yogaStylesFilter ? (
-    <SelectMultipleFilter
-      id={'SearchFilters.yogaStylesFilter'}
-      name="yogaStyles"
-      urlParam={yogaStylesFilter.paramName}
-      label={yogaStylesLabel}
-      onSubmit={handleSelectOptions}
-      showAsPopup
-      options={yogaStylesFilter.options}
-      initialValues={initialyogaStyles}
-      contentPlacementOffset={FILTER_DROPDOWN_OFFSET}
-    />
-  ) : null;
 
   const priceFilterElement = priceFilter ? (
     <PriceFilter
@@ -307,10 +232,8 @@ const SearchFiltersComponent = props => {
       </div>
 
       <div className={css.filters}>
-        {yogaStylesFilterElement}
-        {certificateFilterElement}
-        {priceFilterElement}
         {dateRangeLengthFilterElement}
+        {priceFilterElement}
         {keywordFilterElement}
         {toggleSearchFiltersPanelButton}
       </div>
@@ -335,8 +258,6 @@ SearchFiltersComponent.defaultProps = {
   className: null,
   resultsCount: null,
   searchingInProgress: false,
-  certificateFilter: null,
-  yogaStylesFilter: null,
   priceFilter: null,
   dateRangeLengthFilter: null,
   isSearchFiltersPanelOpen: false,
@@ -352,8 +273,6 @@ SearchFiltersComponent.propTypes = {
   resultsCount: number,
   searchingInProgress: bool,
   onManageDisableScrolling: func.isRequired,
-  certificateFilter: propTypes.filterConfig,
-  yogaStylesFilter: propTypes.filterConfig,
   priceFilter: propTypes.filterConfig,
   dateRangeLengthFilter: propTypes.filterConfig,
   isSearchFiltersPanelOpen: bool,

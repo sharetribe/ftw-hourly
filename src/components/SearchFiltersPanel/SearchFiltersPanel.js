@@ -35,11 +35,9 @@ import omit from 'lodash/omit';
 
 import routeConfiguration from '../../routeConfiguration';
 import { createResourceLocatorString } from '../../util/routes';
+import { propTypes } from '../../util/types';
 import { SelectSingleFilter, SelectMultipleFilter, InlineTextButton } from '../../components';
 import css from './SearchFiltersPanel.css';
-
-// Dropdown container can have a positional offset (in pixels)
-const FILTER_DROPDOWN_OFFSET = -14;
 
 class SearchFiltersPanelComponent extends Component {
   constructor(props) {
@@ -154,51 +152,50 @@ class SearchFiltersPanelComponent extends Component {
   }
 
   render() {
-    const { rootClassName, className, intl, categoryFilter, amenitiesFilter } = this.props;
+    const { rootClassName, className, intl, certificateFilter, yogaStylesFilter } = this.props;
     const classes = classNames(rootClassName || css.root, className);
 
-    const initialCategory = this.initialValue(categoryFilter.paramName);
-    const initialAmenities = this.initialValues(amenitiesFilter.paramName);
-
-    const categoryLabel = intl.formatMessage({
-      id: 'SearchFiltersPanel.categoryLabel',
+    const certificateLabel = intl.formatMessage({
+      id: 'SearchFiltersPanel.certificateLabel',
     });
+    const initialcertificate = certificateFilter
+      ? this.initialValue(certificateFilter.paramName)
+      : null;
 
-    const amenitiesLabel = intl.formatMessage({
-      id: 'SearchFiltersPanel.amenitiesLabel',
-    });
-
-    const categoryFilterElement = categoryFilter ? (
+    const certificateFilterElement = certificateFilter ? (
       <SelectSingleFilter
-        urlParam={categoryFilter.paramName}
-        label={categoryLabel}
+        urlParam={certificateFilter.paramName}
+        label={certificateLabel}
         onSelect={this.handleSelectSingle}
         liveEdit
-        options={categoryFilter.options}
-        initialValue={initialCategory}
-        contentPlacementOffset={FILTER_DROPDOWN_OFFSET}
+        options={certificateFilter.options}
+        initialValue={initialcertificate}
+        intl={intl}
       />
     ) : null;
 
-    const amenitiesFilterElement = amenitiesFilter ? (
+    const yogaStylesLabel = intl.formatMessage({ id: 'SearchFiltersPanel.yogaStylesLabel' });
+
+    const initialyogaStyles = this.initialValues(yogaStylesFilter.paramName);
+
+    const yogaStylesFilterElement = yogaStylesFilter ? (
       <SelectMultipleFilter
-        id={'SearchFiltersPanel.amenitiesFilter'}
-        name="amenities"
-        urlParam={amenitiesFilter.paramName}
-        label={amenitiesLabel}
+        id="SearchFiltersPanel.yogaStylesFilter"
+        name="yogaStyles"
+        urlParam={yogaStylesFilter.paramName}
+        label={yogaStylesLabel}
         onSubmit={this.handleSelectMultiple}
         liveEdit
-        options={amenitiesFilter.options}
-        initialValues={initialAmenities}
-        contentPlacementOffset={FILTER_DROPDOWN_OFFSET}
+        options={yogaStylesFilter.options}
+        initialValues={initialyogaStyles}
       />
     ) : null;
 
     return (
       <div className={classes}>
         <div className={css.filtersWrapper}>
-          {categoryFilterElement}
-          {amenitiesFilterElement}
+          {yogaStylesFilterElement}
+          {certificateFilterElement}
         </div>
         <div className={css.footer}>
           <InlineTextButton rootClassName={css.resetAllButton} onClick={this.resetAll}>
@@ -220,6 +217,8 @@ SearchFiltersPanelComponent.defaultProps = {
   rootClassName: null,
   className: null,
   filterParamNames: [],
+  certificateFilter: null,
+  yogaStylesFilter: null,
 };
 
 SearchFiltersPanelComponent.propTypes = {
@@ -228,6 +227,8 @@ SearchFiltersPanelComponent.propTypes = {
   urlQueryParams: object.isRequired,
   onClosePanel: func.isRequired,
   filterParamNames: array,
+  certificateFilter: propTypes.filterConfig,
+  yogaStylesFilter: propTypes.filterConfig,
 
   // from injectIntl
   intl: intlShape.isRequired,

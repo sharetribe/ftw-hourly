@@ -40,19 +40,6 @@ exports[`SearchPageComponent matches snapshot 1`] = `
       }
       primaryFilters={
         Object {
-          "certificateFilter": Object {
-            "options": Array [
-              Object {
-                "key": "cat1",
-                "label": "Cat 1",
-              },
-              Object {
-                "key": "cat2",
-                "label": "Cat 2",
-              },
-            ],
-            "paramName": "pub_certificate",
-          },
           "dateRangeLengthFilter": Object {
             "config": Object {
               "active": true,
@@ -85,6 +72,29 @@ exports[`SearchPageComponent matches snapshot 1`] = `
             },
             "paramName": "price",
           },
+        }
+      }
+      resultsCount={0}
+      rootClassName={null}
+      searchInProgress={false}
+      searchListingsError={null}
+      searchParamsAreInSync={true}
+      searchParamsForPagination={Object {}}
+      secondaryFilters={
+        Object {
+          "certificateFilter": Object {
+            "options": Array [
+              Object {
+                "key": "cat1",
+                "label": "Cat 1",
+              },
+              Object {
+                "key": "cat2",
+                "label": "Cat 2",
+              },
+            ],
+            "paramName": "pub_certificate",
+          },
           "yogaStylesFilter": Object {
             "options": Array [
               Object {
@@ -100,13 +110,6 @@ exports[`SearchPageComponent matches snapshot 1`] = `
           },
         }
       }
-      resultsCount={0}
-      rootClassName={null}
-      searchInProgress={false}
-      searchListingsError={null}
-      searchParamsAreInSync={true}
-      searchParamsForPagination={Object {}}
-      secondaryFilters={null}
       showAsModalMaxWidth={768}
       urlQueryParams={Object {}}
     />
