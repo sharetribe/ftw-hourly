@@ -57,6 +57,7 @@ export class SearchPageComponent extends Component {
       yogaStylesConfig,
       priceFilterConfig,
       keywordFilterConfig,
+      dateRangeLengthFilterConfig,
     } = this.props;
 
     // Note: "certificate" and "yogaStyles" filters are not actually filtering anything by default.
@@ -65,6 +66,19 @@ export class SearchPageComponent extends Component {
     // https://www.sharetribe.com/docs/references/extended-data/#data-schema
 
     return {
+      priceFilter: {
+        paramName: 'price',
+        config: priceFilterConfig,
+      },
+      dateRangeLengthFilter: {
+        paramName: 'dates',
+        minDurationParamName: 'minDuration',
+        config: dateRangeLengthFilterConfig,
+      },
+      keywordFilter: {
+        paramName: 'keywords',
+        config: keywordFilterConfig,
+      },
       certificateFilter: {
         paramName: 'pub_certificate',
         options: certificateConfig.filter(c => !c.hideFromFilters),
@@ -72,14 +86,6 @@ export class SearchPageComponent extends Component {
       yogaStylesFilter: {
         paramName: 'pub_yogaStyles',
         options: yogaStylesConfig,
-      },
-      priceFilter: {
-        paramName: 'price',
-        config: priceFilterConfig,
-      },
-      keywordFilter: {
-        paramName: 'keywords',
-        config: keywordFilterConfig,
       },
     };
   }
@@ -222,10 +228,11 @@ export class SearchPageComponent extends Component {
             searchParamsForPagination={parse(location.search)}
             showAsModalMaxWidth={MODAL_BREAKPOINT}
             primaryFilters={{
+              priceFilter: filters.priceFilter,
+              dateRangeLengthFilter: filters.dateRangeLengthFilter,
+              keywordFilter: filters.keywordFilter,
               yogaStylesFilter: filters.yogaStylesFilter,
               certificateFilter: filters.certificateFilter,
-              priceFilter: filters.priceFilter,
-              keywordFilter: filters.keywordFilter,
             }}
           />
           <ModalInMobile
@@ -273,6 +280,7 @@ SearchPageComponent.defaultProps = {
   yogaStylesConfig: config.custom.yogaStyles,
   priceFilterConfig: config.custom.priceFilterConfig,
   keywordFilterConfig: config.custom.keywordFilterConfig,
+  dateRangeLengthFilterConfig: config.custom.dateRangeLengthFilterConfig,
   activeListingId: null,
 };
 
@@ -295,6 +303,7 @@ SearchPageComponent.propTypes = {
     max: number.isRequired,
     step: number.isRequired,
   }),
+  dateRangeLengthFilterConfig: object,
 
   // from withRouter
   history: shape({

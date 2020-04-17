@@ -43,15 +43,33 @@ exports[`SearchPageComponent matches snapshot 1`] = `
           "certificateFilter": Object {
             "options": Array [
               Object {
-                "key": "200h",
-                "label": "Registered yoga teacher 200h",
+                "key": "cat1",
+                "label": "Cat 1",
               },
               Object {
-                "key": "500h",
-                "label": "Registered yoga teacher 500h",
+                "key": "cat2",
+                "label": "Cat 2",
               },
             ],
             "paramName": "pub_certificate",
+          },
+          "dateRangeLengthFilter": Object {
+            "config": Object {
+              "active": true,
+              "options": Array [
+                Object {
+                  "key": "0",
+                  "label": "Any length",
+                },
+                Object {
+                  "key": "60",
+                  "label": "1 hour",
+                  "shortLabel": "1h",
+                },
+              ],
+            },
+            "minDurationParamName": "minDuration",
+            "paramName": "dates",
           },
           "keywordFilter": Object {
             "config": Object {
@@ -70,28 +88,12 @@ exports[`SearchPageComponent matches snapshot 1`] = `
           "yogaStylesFilter": Object {
             "options": Array [
               Object {
-                "key": "ashtanga",
-                "label": "Ashtanga",
+                "key": "dog1",
+                "label": "Dog 1",
               },
               Object {
-                "key": "hatha",
-                "label": "Hatha",
-              },
-              Object {
-                "key": "kundalini",
-                "label": "Kundalini",
-              },
-              Object {
-                "key": "restorative",
-                "label": "Restorative",
-              },
-              Object {
-                "key": "vinyasa",
-                "label": "Vinyasa",
-              },
-              Object {
-                "key": "yin",
-                "label": "Yin",
+                "key": "dog2",
+                "label": "Dog 2",
               },
             ],
             "paramName": "pub_yogaStyles",

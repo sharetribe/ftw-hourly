@@ -18,6 +18,7 @@ class FilterPopup extends Component {
     this.filterContent = null;
 
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
     this.handleClear = this.handleClear.bind(this);
     this.handleCancel = this.handleCancel.bind(this);
     this.handleBlur = this.handleBlur.bind(this);
@@ -30,6 +31,13 @@ class FilterPopup extends Component {
     const { onSubmit, urlParam } = this.props;
     this.setState({ isOpen: false });
     onSubmit(urlParam, values);
+  }
+
+  handleChange(values) {
+    const { onChange, urlParam } = this.props;
+    if (onChange) {
+      onChange(urlParam, values);
+    }
   }
 
   handleClear() {
@@ -152,6 +160,7 @@ class FilterPopup extends Component {
                 initialValues={initialValues}
                 keepDirtyOnReinitialize={keepDirtyOnReinitialize}
                 onSubmit={this.handleSubmit}
+                onChange={this.handleChange}
                 onCancel={this.handleCancel}
                 onClear={this.handleClear}
               >
@@ -169,6 +178,7 @@ FilterPopup.defaultProps = {
   rootClassName: null,
   className: null,
   popupClassName: null,
+  onChange: null,
   initialValues: null,
   keepDirtyOnReinitialize: false,
   contentPlacementOffset: 0,
@@ -184,6 +194,7 @@ FilterPopup.propTypes = {
   id: string.isRequired,
   urlParam: string.isRequired,
   onSubmit: func.isRequired,
+  onChange: func,
   initialValues: object,
   keepDirtyOnReinitialize: bool,
   contentPlacementOffset: number,
