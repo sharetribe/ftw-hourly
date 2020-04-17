@@ -149,7 +149,15 @@ export const searchListings = searchParams => (dispatch, getState, sdk) => {
       ? {
           start: formatDateStringToTz(startDate, timeZone),
           end: getExclusiveEndDateWithTz(endDate, timeZone),
+
+          // When we have `time-partial` value in the availability, the
+          // API returns listings that don't necessarily have the full
+          // start->end range available, but enough that the minDuration
+          // (in minutes) can be fulfilled.
+          //
+          // See: https://www.sharetribe.com/api-reference/marketplace.html#availability-filtering
           availability: 'time-partial',
+
           ...minDurationMaybe,
         }
       : {};
