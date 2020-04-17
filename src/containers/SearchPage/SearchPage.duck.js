@@ -143,12 +143,12 @@ export const searchListings = searchParams => (dispatch, getState, sdk) => {
         ? { minDuration: minDurationParam }
         : {};
 
-    const tzId = config.custom.dateRangeLengthFilterConfig.searchTimeZoneId;
+    const timeZone = config.custom.dateRangeLengthFilterConfig.searchTimeZone;
 
     return hasDateValues
       ? {
-          start: formatDateStringToTz(startDate, tzId),
-          end: getExclusiveEndDateWithTz(endDate, tzId),
+          start: formatDateStringToTz(startDate, timeZone),
+          end: getExclusiveEndDateWithTz(endDate, timeZone),
           availability: 'time-partial',
           ...minDurationMaybe,
         }

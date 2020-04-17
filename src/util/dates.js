@@ -634,13 +634,13 @@ export const formatDateStringToUTC = dateString => {
  * ('2020-04-15', 'Europe/Helsinki') => '2020-04-14T21:00:00.000Z'
  *
  * @param {String} dateString in 'YYYY-MM-DD' format
- * @param {String} tzId time zone id, see:
+ * @param {String} timeZone time zone id, see:
  *   https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
  *
  * @returns {String} string in '0000-00-00T00:00:00.000Z' format
  */
-export const formatDateStringToTz = (dateString, tzId) => {
-  return moment.tz(dateString, tzId).toDate();
+export const formatDateStringToTz = (dateString, timeZone) => {
+  return moment.tz(dateString, timeZone).toDate();
 };
 
 /**
@@ -667,14 +667,14 @@ export const getExclusiveEndDate = dateString => {
  * range in the API.
  *
  * @param {String} dateString in 'YYYY-MM-DD'format
- * @param {String} tzId time zone id, see:
+ * @param {String} timeZone time zone id, see:
  *   https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
  *
  * @returns {String} string in '0000-00-00T00:00:00.000Z' format
  */
-export const getExclusiveEndDateWithTz = (dateString, tzId) => {
+export const getExclusiveEndDateWithTz = (dateString, timeZone) => {
   return moment
-    .tz(dateString, tzId)
+    .tz(dateString, timeZone)
     .add(1, 'days')
     .startOf('day')
     .toDate();

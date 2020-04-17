@@ -38,7 +38,7 @@ export const dateRangeLengthFilterConfig = {
   // config value to that.
   //
   // See: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
-  searchTimeZoneId: 'Etc/UTC',
+  searchTimeZone: 'Etc/UTC',
 
   // Options for the minimum duration of the booking
   options: [
