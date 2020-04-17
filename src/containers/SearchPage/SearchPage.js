@@ -231,6 +231,8 @@ export class SearchPageComponent extends Component {
               priceFilter: filters.priceFilter,
               dateRangeLengthFilter: filters.dateRangeLengthFilter,
               keywordFilter: filters.keywordFilter,
+            }}
+            secondaryFilters={{
               yogaStylesFilter: filters.yogaStylesFilter,
               certificateFilter: filters.certificateFilter,
             }}
