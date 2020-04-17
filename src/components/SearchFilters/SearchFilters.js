@@ -83,7 +83,7 @@ const SearchFiltersComponent = props => {
   } = props;
 
   const hasNoResult = listingsAreLoaded && resultsCount === 0;
-  const classes = classNames(rootClassName || css.root, { [css.longInfo]: hasNoResult }, className);
+  const classes = classNames(rootClassName || css.root, className);
 
   const certificateLabel = intl.formatMessage({
     id: 'SearchFilters.certificateLabel',
