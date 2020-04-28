@@ -17,6 +17,9 @@ https://github.com/sharetribe/flex-template-web/
 
 ## Upcoming version 2020-XX-XX
 
+- [fix] Check length of `selectedConfigOptions` in `SectionFeaturesMaybe` to choose between one and
+  two column layout. [#92](https://github.com/sharetribe/ftw-hourly/pull/90)
+
 ## [v6.5.0] 2020-04-17
 
 - [change] Reorganize search filters [#89](https://github.com/sharetribe/ftw-hourly/pull/89)
