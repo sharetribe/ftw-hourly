@@ -17,8 +17,19 @@ https://github.com/sharetribe/flex-template-web/
 
 ## Upcoming version 2020-XX-XX
 
+## [v6.5.1] 2020-05-13
+
 - [fix] Check length of `selectedConfigOptions` in `SectionFeaturesMaybe` to choose between one and
   two column layout. [#92](https://github.com/sharetribe/ftw-hourly/pull/90)
+
+### Updates from upstream
+
+This is update from [upstream](https://github.com/sharetribe/ftw-daily): v4.4.3
+
+- [fix] Allow white space on Japanese bank account info. Japan collects bank name and account owner
+  name in addition to routing numbers. [#1287](https://github.com/sharetribe/ftw-daily/pull/1287)
+- [fix] wrongly named default props handleSubmit renamed to onSubmit
+  [#1288](https://github.com/sharetribe/ftw-daily/pull/1288)
 
 ## [v6.5.0] 2020-04-17
 
