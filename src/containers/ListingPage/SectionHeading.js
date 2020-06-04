@@ -4,20 +4,20 @@ import { InlineTextButton } from '../../components';
 
 import css from './ListingPage.css';
 
-const getCertificateInfo = (certificateConfig, key) => {
-  return certificateConfig.find(c => c.key === key);
+const getCertificateInfo = (certificateOptions, key) => {
+  return certificateOptions.find(c => c.key === key);
 };
 
 const SectionHeading = props => {
   const {
     richTitle,
     listingCertificate,
-    certificateConfig,
+    certificateOptions,
     showContactUser,
     onContactUser,
   } = props;
 
-  const certificate = getCertificateInfo(certificateConfig, listingCertificate);
+  const certificate = getCertificateInfo(certificateOptions, listingCertificate);
   const showCertificate = certificate && !certificate.hideFromListingInfo;
   return (
     <div className={css.sectionHeading}>

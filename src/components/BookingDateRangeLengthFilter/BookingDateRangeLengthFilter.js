@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
-import { bool, func, number, object, string } from 'prop-types';
+import { bool, func, number, shape, string } from 'prop-types';
 import { injectIntl, intlShape } from '../../util/reactIntl';
+import { parseDateFromISO8601, stringifyDateToISO8601 } from '../../util/dates';
+import { propTypes } from '../../util/types';
 
 import { FieldDateRangeController, FieldSelect, FilterPopup, FilterPlain } from '../../components';
-import { propTypes } from '../../util/types';
 import css from './BookingDateRangeLengthFilter.css';
+
+const RADIX = 10;
 
 const formatSelectedLabel = (minDurationOptions, minDuration, startDate, endDate) => {
   // Only show the minimum duration label for options whose key
@@ -18,6 +21,27 @@ const formatSelectedLabel = (minDurationOptions, minDuration, startDate, endDate
   return minDurationOption
     ? `${startDate} - ${endDate}, ${minDurationOption.shortLabel}`
     : `${startDate} - ${endDate}`;
+};
+
+// Parse query parameter, which should look like "2020-05-28,2020-05-31"
+const parseInitialValues = initialValues => {
+  const { dates, minDuration } = initialValues || {};
+  const rawDateValuesFromParams = dates ? dates.split(',') : [];
+  const [startDate, endDate] = rawDateValuesFromParams.map(v => parseDateFromISO8601(v));
+  const initialDates =
+    initialValues && startDate && endDate ? { dates: { startDate, endDate } } : { dates: null };
+  const initialMinDuration = minDuration ? parseInt(minDuration, RADIX) : null;
+  return { ...initialDates, minDuration: initialMinDuration };
+};
+// Format dateRange value for the query. It's given by FieldDateRangeInput:
+// { dates: { startDate, endDate } }
+const formatValues = (values, dateQueryParam, minDurationParam) => {
+  const { startDate, endDate } = values && values[dateQueryParam] ? values[dateQueryParam] : {};
+  const start = startDate ? stringifyDateToISO8601(startDate) : null;
+  const end = endDate ? stringifyDateToISO8601(endDate) : null;
+  const datesValue = start && end ? `${start},${end}` : null;
+  const minDurationValue = values && values[minDurationParam] ? values[minDurationParam] : null;
+  return { [dateQueryParam]: datesValue, [minDurationParam]: minDurationValue };
 };
 
 export class BookingDateRangeLengthFilterComponent extends Component {
@@ -41,22 +65,23 @@ export class BookingDateRangeLengthFilterComponent extends Component {
       rootClassName,
       dateRangeLengthFilter,
       showAsPopup,
-      initialDateValues: initialDateValuesRaw,
-      initialDurationValue,
+      initialValues: initialValuesRaw,
       id,
       contentPlacementOffset,
       onSubmit,
-      datesUrlParam,
-      durationUrlParam,
+      label,
       intl,
       ...rest
     } = this.props;
 
-    const isDatesSelected = !!initialDateValuesRaw && !!initialDateValuesRaw.dates;
-    const initialDateValues = isDatesSelected ? initialDateValuesRaw : { dates: null };
+    const datesQueryParamName = 'dates';
+    const minDurationQueryParamName = 'minDuration';
 
-    const startDate = isDatesSelected ? initialDateValues.dates.startDate : null;
-    const endDate = isDatesSelected ? initialDateValues.dates.endDate : null;
+    const parsedInitialValues = initialValuesRaw ? parseInitialValues(initialValuesRaw) : {};
+    const { dates: initialDates, minDuration: initialMinDuration } = parsedInitialValues;
+    const { startDate, endDate } = initialDates || {};
+
+    const isDatesSelected = !!initialDates && !!startDate && !!startDate;
 
     const format = {
       month: 'short',
@@ -72,12 +97,14 @@ export class BookingDateRangeLengthFilterComponent extends Component {
           {
             dates: formatSelectedLabel(
               dateRangeLengthFilter.config.options,
-              initialDurationValue,
+              initialMinDuration,
               formattedStartDate,
               formattedEndDate
             ),
           }
         )
+      : label
+      ? label
       : intl.formatMessage({ id: 'BookingDateRangeLengthFilter.labelPlain' });
 
     const labelForPopup = isDatesSelected
@@ -86,12 +113,14 @@ export class BookingDateRangeLengthFilterComponent extends Component {
           {
             dates: formatSelectedLabel(
               dateRangeLengthFilter.config.options,
-              initialDurationValue,
+              initialMinDuration,
               formattedStartDate,
               formattedEndDate
             ),
           }
         )
+      : label
+      ? label
       : intl.formatMessage({ id: 'BookingDateRangeLengthFilter.labelPopup' });
 
     const minDurationLabel = intl.formatMessage({
@@ -128,33 +157,34 @@ export class BookingDateRangeLengthFilterComponent extends Component {
           }
         : {};
 
-    const handleSubmit = (param, values) => {
+    const handleSubmit = values => {
       this.setState({ selectedDates: null });
-      onSubmit(values);
+      onSubmit(formatValues(values, datesQueryParamName, minDurationQueryParamName));
     };
 
-    const handleChange = (param, values) => {
-      this.setState({ selectedDates: values[datesUrlParam] });
+    const handleChange = values => {
+      this.setState({ selectedDates: values[datesQueryParamName] });
     };
 
-    const datesSelected = !!(initialDateValues.dates || this.state.selectedDates);
+    const datesSelected = !!(initialDates || this.state.selectedDates);
 
+    const selectedDatesInState = this.state.selectedDates;
     const initialValues = {
-      ...initialDateValues,
-      minDuration: initialDurationValue,
+      dates: selectedDatesInState ? selectedDatesInState : initialDates,
+      minDuration: initialMinDuration,
     };
 
     const fields = (
       <>
         <FieldDateRangeController
-          name={datesUrlParam}
+          name={datesQueryParamName}
           controllerRef={node => {
             this.popupControllerRef = node;
           }}
         />
         <FieldSelect
           id="BookingDateRangeLengthFilter.duration"
-          name={durationUrlParam}
+          name={minDurationQueryParamName}
           label={minDurationLabel}
           className={css.duration}
           disabled={!datesSelected}
@@ -185,7 +215,6 @@ export class BookingDateRangeLengthFilterComponent extends Component {
         {...onClearPopupMaybe}
         {...onCancelPopupMaybe}
         initialValues={initialValues}
-        urlParam={datesUrlParam}
         {...rest}
       >
         {fields}
@@ -202,7 +231,6 @@ export class BookingDateRangeLengthFilterComponent extends Component {
         onSubmit={handleSubmit}
         {...onClearPlainMaybe}
         initialValues={initialValues}
-        urlParam={datesUrlParam}
         {...rest}
       >
         {fields}
@@ -217,8 +245,7 @@ BookingDateRangeLengthFilterComponent.defaultProps = {
   dateRangeLengthFitler: null,
   showAsPopup: true,
   liveEdit: false,
-  initialDateValues: null,
-  initialDurationValue: null,
+  initialValues: null,
   contentPlacementOffset: 0,
 };
 
@@ -229,11 +256,11 @@ BookingDateRangeLengthFilterComponent.propTypes = {
   dateRangeLengthFitler: propTypes.filterConfig,
   showAsPopup: bool,
   liveEdit: bool,
-  datesUrlParam: string.isRequired,
-  durationUrlParam: string.isRequired,
   onSubmit: func.isRequired,
-  initialDateValues: object,
-  initialDurationValue: number,
+  initialValues: shape({
+    dates: string,
+    minDuration: string,
+  }),
   contentPlacementOffset: number,
 
   // form injectIntl

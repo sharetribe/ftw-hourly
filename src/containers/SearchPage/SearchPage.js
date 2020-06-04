@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { array, bool, func, number, oneOf, object, shape, string } from 'prop-types';
+import { array, bool, func, oneOf, object, shape, string } from 'prop-types';
 import { injectIntl, intlShape } from '../../util/reactIntl';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
@@ -45,49 +45,9 @@ export class SearchPageComponent extends Component {
 
     this.searchMapListingsInProgress = false;
 
-    this.filters = this.filters.bind(this);
     this.onMapMoveEnd = debounce(this.onMapMoveEnd.bind(this), SEARCH_WITH_MAP_DEBOUNCE);
     this.onOpenMobileModal = this.onOpenMobileModal.bind(this);
     this.onCloseMobileModal = this.onCloseMobileModal.bind(this);
-  }
-
-  filters() {
-    const {
-      certificateConfig,
-      yogaStylesConfig,
-      priceFilterConfig,
-      keywordFilterConfig,
-      dateRangeLengthFilterConfig,
-    } = this.props;
-
-    // Note: "certificate" and "yogaStyles" filters are not actually filtering anything by default.
-    // Currently, if you want to use them, we need to manually configure them to be available
-    // for search queries. Read more from extended data document:
-    // https://www.sharetribe.com/docs/references/extended-data/#data-schema
-
-    return {
-      priceFilter: {
-        paramName: 'price',
-        config: priceFilterConfig,
-      },
-      dateRangeLengthFilter: {
-        paramName: 'dates',
-        minDurationParamName: 'minDuration',
-        config: dateRangeLengthFilterConfig,
-      },
-      keywordFilter: {
-        paramName: 'keywords',
-        config: keywordFilterConfig,
-      },
-      certificateFilter: {
-        paramName: 'pub_certificate',
-        options: certificateConfig.filter(c => !c.hideFromFilters),
-      },
-      yogaStylesFilter: {
-        paramName: 'pub_yogaStyles',
-        options: yogaStylesConfig,
-      },
-    };
   }
 
   // Callback to determine if new search is needed
@@ -108,7 +68,7 @@ export class SearchPageComponent extends Component {
     // we start to react to "mapmoveend" events by generating new searches
     // (i.e. 'moveend' event in Mapbox and 'bounds_changed' in Google Maps)
     if (viewportBoundsChanged && isSearchPage) {
-      const { history, location } = this.props;
+      const { history, location, filterConfig } = this.props;
 
       // parse query parameters, including a custom attribute named certificate
       const { address, bounds, mapSearch, ...rest } = parse(location.search, {
@@ -124,7 +84,7 @@ export class SearchPageComponent extends Component {
         ...originMaybe,
         bounds: viewportBounds,
         mapSearch: true,
-        ...validFilterParams(rest, this.filters()),
+        ...validFilterParams(rest, filterConfig),
       };
 
       history.push(createResourceLocatorString('SearchPage', routes, {}, searchParams));
@@ -147,6 +107,9 @@ export class SearchPageComponent extends Component {
     const {
       intl,
       listings,
+      filterConfig,
+      sortConfig,
+      history,
       location,
       mapListings,
       onManageDisableScrolling,
@@ -159,23 +122,23 @@ export class SearchPageComponent extends Component {
       onActivateListing,
     } = this.props;
     // eslint-disable-next-line no-unused-vars
-    const { mapSearch, page, sort, ...searchInURL } = parse(location.search, {
+    const { mapSearch, page, ...searchInURL } = parse(location.search, {
       latlng: ['origin'],
       latlngBounds: ['bounds'],
     });
 
-    const filters = this.filters();
-
     // urlQueryParams doesn't contain page specific url params
     // like mapSearch, page or origin (origin depends on config.sortSearchByDistance)
-    const urlQueryParams = pickSearchParamsOnly(searchInURL, filters);
+    const urlQueryParams = pickSearchParamsOnly(searchInURL, filterConfig, sortConfig);
 
     // Page transition might initially use values from previous search
     const urlQueryString = stringify(urlQueryParams);
-    const paramsQueryString = stringify(pickSearchParamsOnly(searchParams, filters));
+    const paramsQueryString = stringify(
+      pickSearchParamsOnly(searchParams, filterConfig, sortConfig)
+    );
     const searchParamsAreInSync = urlQueryString === paramsQueryString;
 
-    const validQueryParams = validURLParamsForExtendedData(searchInURL, filters);
+    const validQueryParams = validURLParamsForExtendedData(searchInURL, filterConfig);
 
     const isWindowDefined = typeof window !== 'undefined';
     const isMobileLayout = isWindowDefined && window.innerWidth < MODAL_BREAKPOINT;
@@ -214,7 +177,6 @@ export class SearchPageComponent extends Component {
         <div className={css.container}>
           <MainPanel
             urlQueryParams={validQueryParams}
-            sort={sort}
             listings={listings}
             searchInProgress={searchInProgress}
             searchListingsError={searchListingsError}
@@ -227,15 +189,7 @@ export class SearchPageComponent extends Component {
             pagination={pagination}
             searchParamsForPagination={parse(location.search)}
             showAsModalMaxWidth={MODAL_BREAKPOINT}
-            primaryFilters={{
-              priceFilter: filters.priceFilter,
-              dateRangeLengthFilter: filters.dateRangeLengthFilter,
-              keywordFilter: filters.keywordFilter,
-            }}
-            secondaryFilters={{
-              yogaStylesFilter: filters.yogaStylesFilter,
-              certificateFilter: filters.certificateFilter,
-            }}
+            history={history}
           />
           <ModalInMobile
             className={css.mapPanel}
@@ -278,11 +232,8 @@ SearchPageComponent.defaultProps = {
   searchListingsError: null,
   searchParams: {},
   tab: 'listings',
-  certificateConfig: config.custom.certificate,
-  yogaStylesConfig: config.custom.yogaStyles,
-  priceFilterConfig: config.custom.priceFilterConfig,
-  keywordFilterConfig: config.custom.keywordFilterConfig,
-  dateRangeLengthFilterConfig: config.custom.dateRangeLengthFilterConfig,
+  filterConfig: config.custom.filters,
+  sortConfig: config.custom.sortConfig,
   activeListingId: null,
 };
 
@@ -298,14 +249,8 @@ SearchPageComponent.propTypes = {
   searchListingsError: propTypes.error,
   searchParams: object,
   tab: oneOf(['filters', 'listings', 'map']).isRequired,
-  certificateConfig: array,
-  yogaStylesConfig: array,
-  priceFilterConfig: shape({
-    min: number.isRequired,
-    max: number.isRequired,
-    step: number.isRequired,
-  }),
-  dateRangeLengthFilterConfig: object,
+  filterConfig: propTypes.filterConfig,
+  sortConfig: propTypes.sortConfig,
 
   // from withRouter
   history: shape({

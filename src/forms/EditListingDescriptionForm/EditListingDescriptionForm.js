@@ -18,7 +18,7 @@ const EditListingDescriptionFormComponent = props => (
     {...props}
     render={formRenderProps => {
       const {
-        certificate,
+        certificateOptions,
         className,
         disabled,
         ready,
@@ -112,7 +112,7 @@ const EditListingDescriptionFormComponent = props => (
           <CustomCertificateSelectFieldMaybe
             id="certificate"
             name="certificate"
-            certificate={certificate}
+            certificateOptions={certificateOptions}
             intl={intl}
           />
 
@@ -147,7 +147,7 @@ EditListingDescriptionFormComponent.propTypes = {
     showListingsError: propTypes.error,
     updateListingError: propTypes.error,
   }),
-  certificate: arrayOf(
+  certificateOptions: arrayOf(
     shape({
       key: string.isRequired,
       label: string.isRequired,
