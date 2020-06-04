@@ -40,7 +40,7 @@ const formatValues = (values, dateQueryParam, minDurationParam) => {
   const start = startDate ? stringifyDateToISO8601(startDate) : null;
   const end = endDate ? stringifyDateToISO8601(endDate) : null;
   const datesValue = start && end ? `${start},${end}` : null;
-  const minDurationValue = values && values[minDurationParam] ? values[minDurationParam]: null;
+  const minDurationValue = values && values[minDurationParam] ? values[minDurationParam] : null;
   return { [dateQueryParam]: datesValue, [minDurationParam]: minDurationValue };
 };
 
@@ -162,7 +162,7 @@ export class BookingDateRangeLengthFilterComponent extends Component {
       onSubmit(formatValues(values, datesQueryParamName, minDurationQueryParamName));
     };
 
-    const handleChange = (values) => {
+    const handleChange = values => {
       this.setState({ selectedDates: values[datesQueryParamName] });
     };
 
