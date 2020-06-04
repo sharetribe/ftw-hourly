@@ -27,14 +27,33 @@ exports[`SearchPageComponent matches snapshot 1`] = `
       filterConfig={
         Array [
           Object {
-            "config": Object {},
+            "config": Object {
+              "options": Array [
+                Object {
+                  "key": "0",
+                  "label": "Any length",
+                },
+                Object {
+                  "key": "60",
+                  "label": "1 hour",
+                  "shortLabel": "1h",
+                },
+                Object {
+                  "key": "120",
+                  "label": "2 hours",
+                  "shortLabel": "2h",
+                },
+              ],
+              "searchTimeZone": "Etc/UTC",
+            },
             "group": "primary",
-            "id": "dates",
+            "id": "dates-length",
             "label": "Dates",
             "queryParamNames": Array [
               "dates",
+              "minDuration",
             ],
-            "type": "BookingDateRangeFilter",
+            "type": "BookingDateRangeLengthFilter",
           },
           Object {
             "config": Object {
@@ -64,76 +83,66 @@ exports[`SearchPageComponent matches snapshot 1`] = `
             "config": Object {
               "options": Array [
                 Object {
-                  "key": "smoke",
-                  "label": "Smoke",
+                  "key": "ashtanga",
+                  "label": "Ashtanga",
                 },
                 Object {
-                  "key": "electric",
-                  "label": "Electric",
+                  "key": "hatha",
+                  "label": "Hatha",
                 },
                 Object {
-                  "key": "wood",
-                  "label": "Wood",
+                  "key": "kundalini",
+                  "label": "Kundalini",
                 },
                 Object {
-                  "key": "other",
-                  "label": "Other",
-                },
-              ],
-            },
-            "group": "secondary",
-            "id": "category",
-            "label": "Category",
-            "queryParamNames": Array [
-              "pub_category",
-            ],
-            "type": "SelectSingleFilter",
-          },
-          Object {
-            "config": Object {
-              "options": Array [
-                Object {
-                  "key": "towels",
-                  "label": "Towels",
+                  "key": "restorative",
+                  "label": "Restorative",
                 },
                 Object {
-                  "key": "bathroom",
-                  "label": "Bathroom",
+                  "key": "vinyasa",
+                  "label": "Vinyasa",
                 },
                 Object {
-                  "key": "swimming_pool",
-                  "label": "Swimming pool",
-                },
-                Object {
-                  "key": "own_drinks",
-                  "label": "Own drinks allowed",
-                },
-                Object {
-                  "key": "jacuzzi",
-                  "label": "Jacuzzi",
-                },
-                Object {
-                  "key": "audiovisual_entertainment",
-                  "label": "Audiovisual entertainment",
-                },
-                Object {
-                  "key": "barbeque",
-                  "label": "Barbeque",
-                },
-                Object {
-                  "key": "own_food_allowed",
-                  "label": "Own food allowed",
+                  "key": "yin",
+                  "label": "Yin",
                 },
               ],
               "searchMode": "has_all",
             },
             "group": "secondary",
-            "id": "amenities",
-            "label": "Amenities",
+            "id": "yogaStyles",
+            "label": "Yoga styles",
             "queryParamNames": Array [
-              "pub_amenities",
+              "pub_yogaStyles",
             ],
             "type": "SelectMultipleFilter",
+          },
+          Object {
+            "config": Object {
+              "options": Array [
+                Object {
+                  "hideFromFilters": true,
+                  "hideFromListingInfo": true,
+                  "key": "none",
+                  "label": "None",
+                },
+                Object {
+                  "key": "200h",
+                  "label": "Registered yoga teacher 200h",
+                },
+                Object {
+                  "key": "500h",
+                  "label": "Registered yoga teacher 500h",
+                },
+              ],
+            },
+            "group": "secondary",
+            "id": "certificate",
+            "label": "Certificate",
+            "queryParamNames": Array [
+              "pub_certificate",
+            ],
+            "type": "SelectSingleFilter",
           },
         ]
       }
