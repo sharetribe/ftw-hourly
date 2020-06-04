@@ -17,6 +17,21 @@ https://github.com/sharetribe/flex-template-web/
 
 ## Upcoming version 2020-XX-XX
 
+## [v6.6.0] 2020-06-04
+
+### Updates from upstream
+
+- [fix] In some situations, ProfileMenu has began to overflow on TopbarDesktop.
+  [#1290](https://github.com/sharetribe/ftw-daily/pull/1290)
+- [change] Update dependencies (patch updates only)
+  [#1291](https://github.com/sharetribe/ftw-daily/pull/1291)
+- [change] Refactor server API routes into separate files.
+  [#1294](https://github.com/sharetribe/ftw-daily/pull/1294)
+- [change] Start the backend API router in dev mode with a dev server.
+  [#1297](https://github.com/sharetribe/ftw-daily/pull/1297)
+
+[v6.6.0]: https://github.com/sharetribe/flex-template-web/compare/v6.5.1...v6.6.0
+
 ## [v6.5.1] 2020-05-13
 
 - [fix] Check length of `selectedConfigOptions` in `SectionFeaturesMaybe` to choose between one and
