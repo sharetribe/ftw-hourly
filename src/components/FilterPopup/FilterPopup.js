@@ -28,38 +28,38 @@ class FilterPopup extends Component {
   }
 
   handleSubmit(values) {
-    const { onSubmit, urlParam } = this.props;
+    const { onSubmit } = this.props;
     this.setState({ isOpen: false });
-    onSubmit(urlParam, values);
+    onSubmit(values);
   }
 
   handleChange(values) {
-    const { onChange, urlParam } = this.props;
+    const { onChange } = this.props;
     if (onChange) {
-      onChange(urlParam, values);
+      onChange(values);
     }
   }
 
   handleClear() {
-    const { onSubmit, onClear, urlParam } = this.props;
+    const { onSubmit, onClear } = this.props;
     this.setState({ isOpen: false });
 
     if (onClear) {
       onClear();
     }
 
-    onSubmit(urlParam, null);
+    onSubmit(null);
   }
 
   handleCancel() {
-    const { onSubmit, onCancel, initialValues, urlParam } = this.props;
+    const { onSubmit, onCancel, initialValues } = this.props;
     this.setState({ isOpen: false });
 
     if (onCancel) {
       onCancel();
     }
 
-    onSubmit(urlParam, initialValues);
+    onSubmit(initialValues);
   }
 
   handleBlur() {
@@ -192,7 +192,6 @@ FilterPopup.propTypes = {
   className: string,
   popupClassName: string,
   id: string.isRequired,
-  urlParam: string.isRequired,
   onSubmit: func.isRequired,
   onChange: func,
   initialValues: object,

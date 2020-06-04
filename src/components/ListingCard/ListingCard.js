@@ -7,6 +7,7 @@ import { LINE_ITEM_DAY, LINE_ITEM_NIGHT, propTypes } from '../../util/types';
 import { formatMoney } from '../../util/currency';
 import { ensureListing } from '../../util/data';
 import { richText } from '../../util/richText';
+import { findOptionsForSelectFilter } from '../../util/search';
 import { createSlug } from '../../util/urlHelpers';
 import config from '../../config';
 import { NamedLink, ResponsiveImage } from '../../components';
@@ -34,8 +35,8 @@ const priceData = (price, intl) => {
   return {};
 };
 
-const getCertificateInfo = (certificateConfig, key) => {
-  return certificateConfig.find(c => c.key === key);
+const getCertificateInfo = (certificateOptions, key) => {
+  return certificateOptions.find(c => c.key === key);
 };
 
 class ListingImage extends Component {
@@ -52,7 +53,7 @@ export const ListingCardComponent = props => {
     intl,
     listing,
     renderSizes,
-    certificateConfig,
+    filtersConfig,
     setActiveListing,
   } = props;
   const classes = classNames(rootClassName || css.root, className);
@@ -63,8 +64,9 @@ export const ListingCardComponent = props => {
   const firstImage =
     currentListing.images && currentListing.images.length > 0 ? currentListing.images[0] : null;
 
+  const certificateOptions = findOptionsForSelectFilter('certificate', filtersConfig);
   const certificate = publicData
-    ? getCertificateInfo(certificateConfig, publicData.certificate)
+    ? getCertificateInfo(certificateOptions, publicData.certificate)
     : null;
   const { formattedPrice, priceTitle } = priceData(price, intl);
 
@@ -126,14 +128,14 @@ ListingCardComponent.defaultProps = {
   className: null,
   rootClassName: null,
   renderSizes: null,
-  certificateConfig: config.custom.certificate,
+  filtersConfig: config.custom.filters,
   setActiveListing: () => null,
 };
 
 ListingCardComponent.propTypes = {
   className: string,
   rootClassName: string,
-  certificateConfig: array,
+  filtersConfig: array,
   intl: intlShape.isRequired,
   listing: propTypes.listing.isRequired,
 
