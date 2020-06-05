@@ -1,0 +1,65 @@
+@import '../../marketplace.css';
+.row{
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 0 20px -10px;
+  align-items: center;
+}
+.label{
+  width: 10%;
+}
+.column{
+  width: 46%;
+  padding-left: 10px;
+}
+.childGrid{
+  display: flex;
+  flex-wrap: wrap;
+  margin: 30px 0 30px -10px;
+}
+.childGrid >*{
+  padding-left: 10px;
+}
+.widthAuto{
+  width: auto;
+}
+.columnBtn{
+  width: 50%;
+@media (--viewportLarge) {
+  width: auto;
+}
+}
+.widthExpand{
+  flex: 1;
+  min-width: 1px;
+}
+.marginBottom{
+  margin-bottom: 20px;
+}
+.btnPanel{
+  display: inline-block;
+  width: 150px;
+  max-width: 100%;
+  min-height: 40px;
+}
+.submitButton {
+  margin-top: auto;
+  margin-bottom: 24px;
+@media (--viewportLarge) {
+  display: inline-block;
+  width: 241px;
+  margin-top: 100px;
+}
+}
+.addIcon{
+  margin: 0 10px;
+  fill: #fff;
+  height: 18px;
+}
+.closeIcon{
+  margin: 0 10px;
+  fill: #f0506e;
+}
+.closeIcon:hover{
+  opacity: 0.8;
+}

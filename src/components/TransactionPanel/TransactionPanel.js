@@ -36,6 +36,7 @@ import config from '../../config';
 import AddressLinkMaybe from './AddressLinkMaybe';
 import BreakdownMaybe from './BreakdownMaybe';
 import DetailCardHeadingsMaybe from './DetailCardHeadingsMaybe';
+import InvalidPriceMessageMaybe from './InvalidPriceMessageMaybe';
 import DetailCardImage from './DetailCardImage';
 import FeedSection from './FeedSection';
 import SaleActionButtonsMaybe from './SaleActionButtonsMaybe';
@@ -372,6 +373,12 @@ export class TransactionPanelComponent extends Component {
                 showAddress={stateData.showAddress}
               />
               <BreakdownMaybe transaction={currentTransaction} transactionRole={transactionRole} />
+              <InvalidPriceMessageMaybe
+                transaction={currentTransaction}
+                listing={currentListing}
+                transactionRole={transactionRole}
+                intl={intl}
+              />
             </div>
 
             {savePaymentMethodFailed ? (
@@ -454,6 +461,12 @@ export class TransactionPanelComponent extends Component {
                 className={css.breakdownContainer}
                 transaction={currentTransaction}
                 transactionRole={transactionRole}
+              />
+              <InvalidPriceMessageMaybe
+                transaction={currentTransaction}
+                listing={currentListing}
+                transactionRole={transactionRole}
+                intl={intl}
               />
 
               {stateData.showSaleButtons ? (

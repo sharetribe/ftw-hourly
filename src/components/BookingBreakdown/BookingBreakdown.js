@@ -23,6 +23,7 @@ import LineItemProviderCommissionRefundMaybe from './LineItemProviderCommissionR
 import LineItemRefundMaybe from './LineItemRefundMaybe';
 import LineItemTotalPrice from './LineItemTotalPrice';
 import LineItemUnknownItemsMaybe from './LineItemUnknownItemsMaybe';
+import LineItemAddonMaybe from './LineItemAddonMaybe';
 
 import css from './BookingBreakdown.css';
 
@@ -86,6 +87,8 @@ export const BookingBreakdownComponent = props => {
    *
    * LineItemTotalPrice: prints total price of the transaction
    *
+   * LineItemAddon: prints addons price & titles of the transaction
+   *
    */
 
   return (
@@ -96,10 +99,10 @@ export const BookingBreakdownComponent = props => {
         dateType={dateType}
         timeZone={timeZone}
       />
-      <LineItemUnitPriceMaybe transaction={transaction} unitType={unitType} intl={intl} />
 
-      <LineItemBasePriceMaybe transaction={transaction} unitType={unitType} intl={intl} />
       <LineItemUnknownItemsMaybe transaction={transaction} intl={intl} />
+
+      <LineItemAddonMaybe transaction={transaction} intl={intl} />
 
       <LineItemSubTotalMaybe
         transaction={transaction}

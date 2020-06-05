@@ -85,3 +85,14 @@
     width: 100%;
   }
 }
+
+.rowCheckbox{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.labelPrice{
+  font-weight: bold;
+  padding-left: 20px;
+}

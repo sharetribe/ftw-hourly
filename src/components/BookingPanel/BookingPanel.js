@@ -11,12 +11,14 @@ import { parse, stringify } from '../../util/urlHelpers';
 import config from '../../config';
 import { ModalInMobile, Button } from '../../components';
 import { BookingTimeForm } from '../../forms';
-
+import { types as sdkTypes } from '../../util/sdkLoader';
 import css from './BookingPanel.css';
 
 // This defines when ModalInMobile shows content as Modal
 const MODAL_BREAKPOINT = 1023;
 const TODAY = new Date();
+
+const { Money } = sdkTypes;
 
 const priceData = (price, intl) => {
   if (price && price.currency === config.currency) {
@@ -97,6 +99,16 @@ const BookingPanel = props => {
   const classes = classNames(rootClassName || css.root, className);
   const titleClasses = classNames(titleClassName || css.bookingTitle);
 
+  const addonsData = listing.attributes.publicData ? listing.attributes.publicData.addons : null;
+
+  const handleSubmit = values => {
+    const selectedAddons = addonsData.filter(addonData => values.addons.includes(addonData.addOnTitle));
+    onSubmit({
+      ...values,
+      addons: selectedAddons,
+    });
+  };
+
   return (
     <div className={classes}>
       <ModalInMobile
@@ -111,14 +123,7 @@ const BookingPanel = props => {
           <h1 className={css.title}>{title}</h1>
         </div>
         <div className={css.bookingHeading}>
-          <div className={css.desktopPriceContainer}>
-            <div className={css.desktopPriceValue} title={priceTitle}>
-              {formattedPrice}
-            </div>
-            <div className={css.desktopPerUnit}>
-              <FormattedMessage id={unitTranslationKey} />
-            </div>
-          </div>
+
           <div className={css.bookingHeadingContainer}>
             <h2 className={titleClasses}>{title}</h2>
             {subTitleText ? <div className={css.bookingHelp}>{subTitleText}</div> : null}
@@ -131,7 +136,7 @@ const BookingPanel = props => {
             formId="BookingPanel"
             submitButtonWrapperClassName={css.submitButtonWrapper}
             unitType={unitType}
-            onSubmit={onSubmit}
+            onSubmit={handleSubmit}
             price={price}
             isOwnListing={isOwnListing}
             listingId={listing.id}
@@ -140,6 +145,7 @@ const BookingPanel = props => {
             startDatePlaceholder={intl.formatDate(TODAY, dateFormattingOptions)}
             endDatePlaceholder={intl.formatDate(TODAY, dateFormattingOptions)}
             timeZone={timeZone}
+            addons={addonsData}
           />
         ) : null}
       </ModalInMobile>

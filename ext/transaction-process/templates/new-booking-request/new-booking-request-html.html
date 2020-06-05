@@ -47,10 +47,10 @@
   </head>
   <body>
     {{#with transaction}}
-    <h1>Please respond to a request by {{ customer.display - name }}</h1>
+    <h1>Please respond to a request by {{ customer.display-name }}</h1>
 
     <p>
-      Good news! {{ customer.display - name }} just requested to book {{ listing.title }} from
+      Good news! {{ customer.display-name }} just requested to book {{ listing.title }} from
       {{> format-date date=booking.start}} to {{> format-date date=booking.end}}. Here's the
       breakdown.
     </p>
