@@ -90,7 +90,7 @@ export class BookingTimeFormComponent extends Component {
             values.addons.forEach(selectedAddonTitle => {
               addons.forEach(addonData => {
                 if (addonData.addOnTitle === selectedAddonTitle) {
-                  selectedAddons.push(addonData); //new Money(addonData.addOnPrice, config.currency));
+                  selectedAddons.push(addonData);
                 }
               })
             })

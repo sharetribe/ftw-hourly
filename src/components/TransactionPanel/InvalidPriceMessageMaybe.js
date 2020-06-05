@@ -1,6 +1,7 @@
 import React from 'react';
 import Decimal from 'decimal.js';
 import {
+  LINE_ITEM_ADDON,
   LINE_ITEM_NIGHT,
   LINE_ITEM_PROVIDER_COMMISSION,
 } from '../../util/types';
@@ -42,17 +43,13 @@ const InvalidPriceMessageMaybe = props => {
     .times(quantity)
     .toNumber();
 
-  // expected cleaning fee total
-  const listingCleaningFeeData =
-    listing.attributes.publicData.cleaningFee;
-  const { amount: cleaningAmount, currency: cleaningCurrency } =
-  listingCleaningFeeData || {};
-  const listingCleaningFeePrice =
-    cleaningAmount && cleaningCurrency
-      ? new Money(cleaningAmount, cleaningCurrency)
-      : null;
-  const listingCleaningFeeTotal = listingCleaningFeePrice
-    ? convertMoneyToNumber(listingCleaningFeePrice)
+  // expected Add-Ons total
+  const listingAddonsData = transaction.attributes.lineItems.filter(
+    item => item.code === LINE_ITEM_ADDON
+  );
+
+  const addonsPriceTotal = (listingAddonsData && Array.isArray(listingAddonsData) && listingAddonsData.length > 0)
+    ? listingAddonsData.map(function(addonData) { return convertMoneyToNumber(addonData.unitPrice) }).reduce(function(a, b) { return a + b })
     : null;
 
   // provider commission
@@ -70,9 +67,10 @@ const InvalidPriceMessageMaybe = props => {
     transaction.attributes.payoutTotal
   );
   const expectedPayoutTotal = new Decimal(listingUnitTotal)
-    .plus(listingCleaningFeeTotal)
+    .plus(addonsPriceTotal)
     .plus(providerCommissionTotal)
     .toNumber();
+
   const priceInvalid = expectedPayoutTotal !== payoutTotal;
 
   const message = intl.formatMessage({

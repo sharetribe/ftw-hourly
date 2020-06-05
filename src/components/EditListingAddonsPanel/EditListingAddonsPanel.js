@@ -7,6 +7,7 @@ import { ensureOwnListing } from '../../util/data';
 import { LISTING_STATE_DRAFT } from '../../util/types';
 import { FormattedMessage } from '../../util/reactIntl';
 import { ListingLink } from '../index';
+import { convertMoneyToNumber } from '../../util/currency';
 import {Money} from "sharetribe-flex-sdk/src/types";
 import config from "../../config";
 const EditListingAddonsPanel = props => {
@@ -48,7 +49,7 @@ const EditListingAddonsPanel = props => {
           const { addons} = values;
           let formattedAddons = [];
           addons.forEach(addon => {
-            formattedAddons.push({ addOnTitle: addon.addOnTitle, addOnPrice: addon.addOnPrice.amount})
+            formattedAddons.push({ addOnTitle: addon.addOnTitle, addOnPrice: convertMoneyToNumber(addon.addOnPrice) * 100})
           });
           const updateValues = {
             // we will use only Add-Ons so need to set 0 Price instead of using Price section
