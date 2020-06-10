@@ -131,7 +131,7 @@
 CSS for hiding the end date
 
 If you want to show the field for the end date e.g. for enabling longer bookings,
-you can remove the following code. 
+you can remove the following code.
 Remember to do required code changes also in FieldDateAndTimeInput.js!
 **/
 
@@ -146,6 +146,10 @@ Remember to do required code changes also in FieldDateAndTimeInput.js!
   width: 100%;
 }
 .endDateHidden {
+  display: none;
+}
+
+.endTimeHidden {
   display: none;
 }
 

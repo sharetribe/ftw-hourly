@@ -15,18 +15,13 @@ const EditListingAddonsPanel = props => {
     className,
     rootClassName,
     listing,
-    disabled,
-    ready,
     onSubmit,
     onChange,
     submitButtonText,
-    panelUpdated,
-    errors,
   } = props;
   const currentListing = ensureOwnListing(listing);
   const { publicData } = currentListing.attributes;
   const {addons } = currentListing.attributes.publicData;
-  const { price } = currentListing.attributes;
   const classes = classNames(rootClassName || css.root, className);
   const isPublished = currentListing.id && currentListing.attributes.state !== LISTING_STATE_DRAFT;
   const panelTitle = isPublished ? (
@@ -45,8 +40,7 @@ const EditListingAddonsPanel = props => {
         initialValues={{addons}}
         publicData={publicData}
         onSubmit={values => {
-          console.warn('values', values)
-          const { addons} = values;
+          const { addons } = values;
           let formattedAddons = [];
           addons.forEach(addon => {
             formattedAddons.push({ addOnTitle: addon.addOnTitle, addOnPrice: convertMoneyToNumber(addon.addOnPrice) * 100})

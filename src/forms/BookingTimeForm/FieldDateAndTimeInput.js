@@ -519,9 +519,7 @@ class FieldDateAndTimeInput extends Component {
             </FieldSelect>
           </div>
 
-          <div className={bookingStartDate ? css.lineBetween : css.lineBetweenDisabled}>-</div>
-
-          <div className={css.field}>
+          <div className={classNames(css.field, css.endTimeHidden)}>
             <FieldSelect
               name="bookingEndTime"
               id={formId ? `${formId}.bookingEndTime` : 'bookingEndTime'}

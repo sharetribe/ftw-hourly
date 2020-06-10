@@ -7,12 +7,9 @@ import {
 } from '../../util/types';
 import { nightsBetween, daysBetween } from '../../util/dates';
 import { convertMoneyToNumber } from '../../util/currency';
-import { types as sdkTypes } from '../../util/sdkLoader';
 import config from '../../config';
 
 import css from './TransactionPanel.css';
-
-const { Money } = sdkTypes;
 
 const InvalidPriceMessageMaybe = props => {
   const { transaction, listing, transactionRole, intl } = props;

@@ -11,14 +11,11 @@ import { parse, stringify } from '../../util/urlHelpers';
 import config from '../../config';
 import { ModalInMobile, Button } from '../../components';
 import { BookingTimeForm } from '../../forms';
-import { types as sdkTypes } from '../../util/sdkLoader';
 import css from './BookingPanel.css';
 
 // This defines when ModalInMobile shows content as Modal
 const MODAL_BREAKPOINT = 1023;
 const TODAY = new Date();
-
-const { Money } = sdkTypes;
 
 const priceData = (price, intl) => {
   if (price && price.currency === config.currency) {
@@ -106,6 +103,7 @@ const BookingPanel = props => {
     onSubmit({
       ...values,
       addons: selectedAddons,
+      protectedData: selectedAddons
     });
   };
 

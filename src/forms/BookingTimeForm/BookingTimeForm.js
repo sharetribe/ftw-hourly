@@ -96,6 +96,8 @@ export class BookingTimeFormComponent extends Component {
             })
           }
 
+          const isEnabledBookingButton = selectedAddons && Array.isArray(selectedAddons) && selectedAddons.length > 0;
+
           // This is the place to collect breakdown estimation data. See the
           // EstimatedBreakdownMaybe component to change the calculations
           // for customized payment processes.
@@ -145,9 +147,9 @@ export class BookingTimeFormComponent extends Component {
 
               {Object.keys(addons).map((item, index) => {
                 return (
-                  <div className={css.rowCheckbox}>
+                  <div className={css.rowCheckbox} key={`addon.${index}`}>
                     <FieldCheckbox
-                      id={index}
+                      id={`addon-${index}`}
                       label={addons[item].addOnTitle}
                       name={'addons'}
                       value={addons[item].addOnTitle}
@@ -185,7 +187,7 @@ export class BookingTimeFormComponent extends Component {
                 />
               </p>
               <div className={submitButtonClasses}>
-                <PrimaryButton type="submit">
+                <PrimaryButton type="submit" disabled={!isEnabledBookingButton}>
                   <FormattedMessage id="BookingTimeForm.requestToBook" />
                 </PrimaryButton>
               </div>
