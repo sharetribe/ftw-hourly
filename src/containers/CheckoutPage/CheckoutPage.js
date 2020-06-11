@@ -8,7 +8,7 @@ import classNames from 'classnames';
 import config from '../../config';
 import routeConfiguration from '../../routeConfiguration';
 import { pathByRouteName, findRouteByRouteName } from '../../util/routes';
-import { propTypes, LINE_ITEM_NIGHT, LINE_ITEM_DAY, LINE_ITEM_ADDON, DATE_TYPE_DATETIME } from '../../util/types';
+import { propTypes, LINE_ITEM_ADDON, DATE_TYPE_DATETIME } from '../../util/types';
 import {
   ensureListing,
   ensureCurrentUser,
@@ -29,7 +29,6 @@ import {
   isTransactionZeroPaymentError,
   transactionInitiateOrderStripeErrors,
 } from '../../util/errors';
-import { formatMoney } from '../../util/currency';
 import { TRANSITION_ENQUIRE, txIsPaymentPending, txIsPaymentExpired } from '../../util/transaction';
 import {
   AvatarMedium,
@@ -56,7 +55,6 @@ import {
 import { storeData, storedData, clearData } from './CheckoutPageSessionHelpers';
 import css from './CheckoutPage.css';
 
-import { nightsBetween, daysBetween } from '../../util/dates';
 import { types as sdkTypes } from '../../util/sdkLoader';
 const { Money } = sdkTypes;
 
@@ -186,11 +184,12 @@ export class CheckoutPageComponent extends Component {
 
     if (shouldFetchSpeculatedTransaction) {
       const { bookingStart, bookingEnd } = pageData.bookingDates;
-      const { quantity, addons } = pageData.bookingData;
+      const { quantity, addons, customerAddress } = pageData.bookingData;
       // Add-Ons need to be formatted so flex can store them
       const addonsFormatted = addons.map(function (addonData) {
         return (addonData.addOnPrice !== undefined ? new Money(addonData.addOnPrice, config.currency) : null);
       });
+      const addonsTitles = addons.map(function (addonData) { return addonData.addOnTitle });
 
       // Fetch speculated transaction for showing price in booking breakdown
       // NOTE: if unit type is line-item/units, quantity needs to be added.
@@ -201,7 +200,9 @@ export class CheckoutPageComponent extends Component {
           bookingStart,
           bookingEnd,
           quantity,
-          addons: addonsFormatted
+          addons: addonsFormatted,
+          addonsTitles,
+          customerAddress
         })
       );
     }
@@ -217,15 +218,10 @@ export class CheckoutPageComponent extends Component {
    */
 
   customPricingParams(params) {
-    const { bookingStart, bookingEnd, listing, addons, ...rest } = params;
+    const { bookingStart, bookingEnd, listing, addons, addonsTitles, customerAddress, ...rest } = params;
     const { amount, currency } = listing.attributes.price;
 
     const unitType = config.bookingUnitType;
-    const isNightly = unitType === LINE_ITEM_NIGHT;
-
-    const quantity = isNightly
-      ? nightsBetween(bookingStart, bookingEnd)
-      : daysBetween(bookingStart, bookingEnd);
 
     let addonsLineItems = [];
 
@@ -236,8 +232,7 @@ export class CheckoutPageComponent extends Component {
           {
             code: LINE_ITEM_ADDON,
             unitPrice: new Money(Number(addonData.amount), currency),
-            quantity: 1,
-            addonTitle: 'test Addon Title' //addonData.addOnTitle
+            quantity: 1
           }
         );
 
@@ -258,6 +253,7 @@ export class CheckoutPageComponent extends Component {
           quantity: 1
         },
       ],
+      protectedData: { addonsTitles, customerAddress },
       ...rest,
     };
   }
@@ -440,13 +436,21 @@ export class CheckoutPageComponent extends Component {
       return (addonData.unitPrice.amount !== undefined ? new Money(addonData.unitPrice.amount, addonData.unitPrice.currency) : null);
     });
 
+    const addonsTitles = (pageData.bookingData && pageData.bookingData.protectedData && pageData.bookingData.protectedData.selectedAddons) ?
+      pageData.bookingData.protectedData.selectedAddons.map(function (addonData) { return addonData.addOnTitle }) :
+      [];
+
+    const customerAddress = pageData.bookingData && pageData.bookingData.protectedData && pageData.bookingData.protectedData.customerAddress || '';
+
     const orderParams = this.customPricingParams({
       listing: pageData.listing,
       bookingStart: tx.booking.attributes.start,
       bookingEnd: tx.booking.attributes.end,
       quantity: pageData.bookingData ? pageData.bookingData.quantity : null,
       ...optionalPaymentParams,
-      addons: addonsFormatted
+      addons: addonsFormatted,
+      addonsTitles,
+      customerAddress
     });
 
     return handlePaymentIntentCreation(orderParams);
@@ -784,20 +788,6 @@ export class CheckoutPageComponent extends Component {
         </p>
       );
     }
-
-    const unitType = config.bookingUnitType;
-    const isNightly = unitType === LINE_ITEM_NIGHT;
-    const isDaily = unitType === LINE_ITEM_DAY;
-
-    const unitTranslationKey = isNightly
-      ? 'CheckoutPage.perNight'
-      : isDaily
-      ? 'CheckoutPage.perDay'
-      : 'CheckoutPage.perUnit';
-
-    const price = currentListing.attributes.price;
-    const formattedPrice = formatMoney(intl, price);
-    const detailsSubTitle = `${formattedPrice} ${intl.formatMessage({ id: unitTranslationKey })}`;
 
     const showInitialMessageInput = !(
       existingTransaction && existingTransaction.attributes.lastTransition === TRANSITION_ENQUIRE

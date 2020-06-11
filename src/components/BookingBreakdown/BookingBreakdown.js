@@ -13,8 +13,6 @@ import {
 } from '../../util/types';
 
 import LineItemBookingPeriod from './LineItemBookingPeriod';
-import LineItemBasePriceMaybe from './LineItemBasePriceMaybe';
-import LineItemUnitPriceMaybe from './LineItemUnitPriceMaybe';
 import LineItemSubTotalMaybe from './LineItemSubTotalMaybe';
 import LineItemCustomerCommissionMaybe from './LineItemCustomerCommissionMaybe';
 import LineItemCustomerCommissionRefundMaybe from './LineItemCustomerCommissionRefundMaybe';
@@ -26,6 +24,7 @@ import LineItemUnknownItemsMaybe from './LineItemUnknownItemsMaybe';
 import LineItemAddonMaybe from './LineItemAddonMaybe';
 
 import css from './BookingBreakdown.css';
+import LineItemAddressMaybe from "./LineItemCustomerAddressMaybe";
 
 export const BookingBreakdownComponent = props => {
   const {
@@ -141,6 +140,9 @@ export const BookingBreakdownComponent = props => {
           <FormattedMessage id="BookingBreakdown.commissionFeeNote" />
         </span>
       ) : null}
+
+      <LineItemAddressMaybe transaction={transaction} intl={intl} />
+
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import React from 'react';import { bool, func, shape, string } from 'prop-types';
+import React from 'react';
 import { compose } from 'redux';
 import { Form as FinalForm } from 'react-final-form';
 import arrayMutators from 'final-form-arrays';

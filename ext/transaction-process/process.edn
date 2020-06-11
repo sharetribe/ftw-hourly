@@ -10,6 +10,7 @@
    [{:name :action/create-booking,
      :config {:observe-availability? true, :type :time}}
     {:name :action/set-line-items-and-total}
+    {:name :action/update-protected-data}
     {:name :action/calculate-tx-provider-commission,
      :config {:commission 0.1M}}
     {:name :action/stripe-create-payment-intent}],
@@ -20,6 +21,7 @@
    [{:name :action/create-booking,
      :config {:observe-availability? true, :type :time}}
     {:name :action/set-line-items-and-total}
+    {:name :action/update-protected-data}
     {:name :action/calculate-tx-provider-commission,
      :config {:commission 0.1M}}
     {:name :action/stripe-create-payment-intent}],

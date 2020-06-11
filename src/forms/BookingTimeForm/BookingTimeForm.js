@@ -7,7 +7,7 @@ import classNames from 'classnames';
 import { calculateQuantityFromHours, timestampToDate } from '../../util/dates';
 import { propTypes } from '../../util/types';
 import config from '../../config';
-import {FieldCheckbox, Form, PrimaryButton} from '../../components';
+import {FieldCheckbox, FieldTextInput, Form, PrimaryButton} from '../../components';
 import EstimatedBreakdownMaybe from './EstimatedBreakdownMaybe';
 import FieldDateAndTimeInput from './FieldDateAndTimeInput';
 
@@ -96,6 +96,8 @@ export class BookingTimeFormComponent extends Component {
             })
           }
 
+          const isEnabledBookingButton = selectedAddons && Array.isArray(selectedAddons) && selectedAddons.length > 0;
+
           // This is the place to collect breakdown estimation data. See the
           // EstimatedBreakdownMaybe component to change the calculations
           // for customized payment processes.
@@ -140,14 +142,18 @@ export class BookingTimeFormComponent extends Component {
             endDateInputProps,
           };
 
+          const customerAddressPlaceholder = intl.formatMessage(
+            { id: 'BookingTimeForm.customerAddressPlaceholder' }
+          );
+
           return (
             <Form onSubmit={handleSubmit} className={classes}>
 
               {Object.keys(addons).map((item, index) => {
                 return (
-                  <div className={css.rowCheckbox}>
+                  <div className={css.rowCheckbox} key={`addon.${index}`}>
                     <FieldCheckbox
-                      id={index}
+                      id={`addon-${index}`}
                       label={addons[item].addOnTitle}
                       name={'addons'}
                       value={addons[item].addOnTitle}
@@ -175,6 +181,14 @@ export class BookingTimeFormComponent extends Component {
                 />
               ) : null}
               {bookingInfo}
+              <FieldTextInput
+                inputRootClass={css.textarea}
+                type="textarea"
+                id={'customer-address'}
+                name="customerAddress"
+                placeholder={customerAddressPlaceholder}
+              />
+              <p/>
               <p className={css.smallPrint}>
                 <FormattedMessage
                   id={
@@ -185,7 +199,7 @@ export class BookingTimeFormComponent extends Component {
                 />
               </p>
               <div className={submitButtonClasses}>
-                <PrimaryButton type="submit">
+                <PrimaryButton type="submit" disabled={!isEnabledBookingButton}>
                   <FormattedMessage id="BookingTimeForm.requestToBook" />
                 </PrimaryButton>
               </div>

@@ -58,15 +58,12 @@
       <thead>
         <tr>
           <td class="left">Start date</td>
-          <td class="right">End date</td>
         </tr>
         <tr>
           <th class="left">{{> format-day-time date=booking.start}}</th>
-          <th class="right">{{> format-day-time date=booking.end}}</th>
         </tr>
         <tr class="bottom-row">
           <th class="left">{{> format-month-date date=booking.start}}</th>
-          <th class="right">{{> format-month-date date=booking.end}}</th>
         </tr>
       </thead>
       <tbody>
@@ -82,7 +79,8 @@
 
         {{#eq "line-item/addon" code}}
         <tr class="bottom-row top-row">
-          <td>Addon</td>
+          <td>Add-On
+          </td>
           <td class="right">{{> format-money money=line-total}}</td>
         </tr>
         {{/eq}}
