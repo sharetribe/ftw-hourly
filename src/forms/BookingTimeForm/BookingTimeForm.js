@@ -7,7 +7,7 @@ import classNames from 'classnames';
 import { calculateQuantityFromHours, timestampToDate } from '../../util/dates';
 import { propTypes } from '../../util/types';
 import config from '../../config';
-import {FieldCheckbox, Form, PrimaryButton} from '../../components';
+import {FieldCheckbox, FieldTextInput, Form, PrimaryButton} from '../../components';
 import EstimatedBreakdownMaybe from './EstimatedBreakdownMaybe';
 import FieldDateAndTimeInput from './FieldDateAndTimeInput';
 
@@ -142,6 +142,10 @@ export class BookingTimeFormComponent extends Component {
             endDateInputProps,
           };
 
+          const customerAddressPlaceholder = intl.formatMessage(
+            { id: 'BookingTimeForm.customerAddressPlaceholder' }
+          );
+
           return (
             <Form onSubmit={handleSubmit} className={classes}>
 
@@ -177,6 +181,14 @@ export class BookingTimeFormComponent extends Component {
                 />
               ) : null}
               {bookingInfo}
+              <FieldTextInput
+                inputRootClass={css.textarea}
+                type="textarea"
+                id={'customer-address'}
+                name="customerAddress"
+                placeholder={customerAddressPlaceholder}
+              />
+              <p/>
               <p className={css.smallPrint}>
                 <FormattedMessage
                   id={

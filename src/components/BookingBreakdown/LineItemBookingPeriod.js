@@ -6,7 +6,7 @@ import { LINE_ITEM_NIGHT, LINE_ITEM_UNITS, DATE_TYPE_DATE, propTypes } from '../
 import css from './BookingBreakdown.css';
 
 const BookingPeriod = props => {
-  const { startDate, endDate, dateType, timeZone } = props;
+  const { startDate, dateType, timeZone } = props;
 
   const timeFormatOptions =
     dateType === DATE_TYPE_DATE

@@ -103,7 +103,7 @@ const BookingPanel = props => {
     onSubmit({
       ...values,
       addons: selectedAddons,
-      protectedData: selectedAddons
+      protectedData: { selectedAddons, customerAddress: values.customerAddress }
     });
   };
 

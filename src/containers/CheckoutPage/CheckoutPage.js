@@ -184,7 +184,7 @@ export class CheckoutPageComponent extends Component {
 
     if (shouldFetchSpeculatedTransaction) {
       const { bookingStart, bookingEnd } = pageData.bookingDates;
-      const { quantity, addons } = pageData.bookingData;
+      const { quantity, addons, customerAddress } = pageData.bookingData;
       // Add-Ons need to be formatted so flex can store them
       const addonsFormatted = addons.map(function (addonData) {
         return (addonData.addOnPrice !== undefined ? new Money(addonData.addOnPrice, config.currency) : null);
@@ -201,7 +201,8 @@ export class CheckoutPageComponent extends Component {
           bookingEnd,
           quantity,
           addons: addonsFormatted,
-          addonsTitles
+          addonsTitles,
+          customerAddress
         })
       );
     }
@@ -217,7 +218,7 @@ export class CheckoutPageComponent extends Component {
    */
 
   customPricingParams(params) {
-    const { bookingStart, bookingEnd, listing, addons, addonsTitles, ...rest } = params;
+    const { bookingStart, bookingEnd, listing, addons, addonsTitles, customerAddress, ...rest } = params;
     const { amount, currency } = listing.attributes.price;
 
     const unitType = config.bookingUnitType;
@@ -231,8 +232,7 @@ export class CheckoutPageComponent extends Component {
           {
             code: LINE_ITEM_ADDON,
             unitPrice: new Money(Number(addonData.amount), currency),
-            quantity: 1,
-            addonTitle: 'test Addon Title' //addonData.addOnTitle
+            quantity: 1
           }
         );
 
@@ -253,7 +253,7 @@ export class CheckoutPageComponent extends Component {
           quantity: 1
         },
       ],
-      protectedData: { addonsTitles },
+      protectedData: { addonsTitles, customerAddress },
       ...rest,
     };
   }
@@ -436,9 +436,11 @@ export class CheckoutPageComponent extends Component {
       return (addonData.unitPrice.amount !== undefined ? new Money(addonData.unitPrice.amount, addonData.unitPrice.currency) : null);
     });
 
-    const addonsTitles = (pageData.bookingData && pageData.bookingData.protectedData) ?
-      pageData.bookingData.protectedData.map(function (addonData) { return addonData.addOnTitle }) :
+    const addonsTitles = (pageData.bookingData && pageData.bookingData.protectedData && pageData.bookingData.protectedData.selectedAddons) ?
+      pageData.bookingData.protectedData.selectedAddons.map(function (addonData) { return addonData.addOnTitle }) :
       [];
+
+    const customerAddress = pageData.bookingData && pageData.bookingData.protectedData && pageData.bookingData.protectedData.customerAddress || '';
 
     const orderParams = this.customPricingParams({
       listing: pageData.listing,
@@ -447,7 +449,8 @@ export class CheckoutPageComponent extends Component {
       quantity: pageData.bookingData ? pageData.bookingData.quantity : null,
       ...optionalPaymentParams,
       addons: addonsFormatted,
-      addonsTitles
+      addonsTitles,
+      customerAddress
     });
 
     return handlePaymentIntentCreation(orderParams);
