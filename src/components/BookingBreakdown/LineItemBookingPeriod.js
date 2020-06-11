@@ -6,7 +6,7 @@ import { LINE_ITEM_NIGHT, LINE_ITEM_UNITS, DATE_TYPE_DATE, propTypes } from '../
 import css from './BookingBreakdown.css';
 
 const BookingPeriod = props => {
-  const { startDate, endDate, dateType, timeZone } = props;
+  const { startDate, dateType, timeZone } = props;
 
   const timeFormatOptions =
     dateType === DATE_TYPE_DATE
@@ -38,18 +38,6 @@ const BookingPeriod = props => {
           </div>
           <div className={css.itemLabel}>
             <FormattedDate value={startDate} {...dateFormatOptions} {...timeZoneMaybe} />
-          </div>
-        </div>
-
-        <div className={css.bookingPeriodSectionRigth}>
-          <div className={css.dayLabel}>
-            <FormattedMessage id="BookingBreakdown.bookingEnd" />
-          </div>
-          <div className={css.dayInfo}>
-            <FormattedDate value={endDate} {...timeFormatOptions} {...timeZoneMaybe} />
-          </div>
-          <div className={css.itemLabel}>
-            <FormattedDate value={endDate} {...dateFormatOptions} {...timeZoneMaybe} />
           </div>
         </div>
       </div>

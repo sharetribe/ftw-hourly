@@ -8,7 +8,7 @@ import classNames from 'classnames';
 import config from '../../config';
 import routeConfiguration from '../../routeConfiguration';
 import { pathByRouteName, findRouteByRouteName } from '../../util/routes';
-import { propTypes, LINE_ITEM_NIGHT, LINE_ITEM_DAY, DATE_TYPE_DATETIME } from '../../util/types';
+import { propTypes, LINE_ITEM_ADDON, DATE_TYPE_DATETIME } from '../../util/types';
 import {
   ensureListing,
   ensureCurrentUser,
@@ -29,7 +29,6 @@ import {
   isTransactionZeroPaymentError,
   transactionInitiateOrderStripeErrors,
 } from '../../util/errors';
-import { formatMoney } from '../../util/currency';
 import { TRANSITION_ENQUIRE, txIsPaymentPending, txIsPaymentExpired } from '../../util/transaction';
 import {
   AvatarMedium,
@@ -55,6 +54,9 @@ import {
 } from './CheckoutPage.duck';
 import { storeData, storedData, clearData } from './CheckoutPageSessionHelpers';
 import css from './CheckoutPage.css';
+
+import { types as sdkTypes } from '../../util/sdkLoader';
+const { Money } = sdkTypes;
 
 const STORAGE_KEY = 'CheckoutPage';
 
@@ -181,22 +183,79 @@ export class CheckoutPageComponent extends Component {
       !isBookingCreated;
 
     if (shouldFetchSpeculatedTransaction) {
-      const listingId = pageData.listing.id;
       const { bookingStart, bookingEnd } = pageData.bookingDates;
-      const { quantity } = pageData.bookingData;
+      const { quantity, addons, customerAddress } = pageData.bookingData;
+      // Add-Ons need to be formatted so flex can store them
+      const addonsFormatted = addons.map(function (addonData) {
+        return (addonData.addOnPrice !== undefined ? new Money(addonData.addOnPrice, config.currency) : null);
+      });
+      const addonsTitles = addons.map(function (addonData) { return addonData.addOnTitle });
 
       // Fetch speculated transaction for showing price in booking breakdown
       // NOTE: if unit type is line-item/units, quantity needs to be added.
       // The way to pass it to checkout page is through pageData.bookingData
-      fetchSpeculatedTransaction({
-        listingId,
-        bookingStart,
-        bookingEnd,
-        quantity,
-      });
+      fetchSpeculatedTransaction(
+        this.customPricingParams({
+          listing,
+          bookingStart,
+          bookingEnd,
+          quantity,
+          addons: addonsFormatted,
+          addonsTitles,
+          customerAddress
+        })
+      );
     }
 
     this.setState({ pageData: pageData || {}, dataLoaded: true });
+  }
+
+  /**
+   * Constructs a request params object that can be used when creating bookings
+   * using custom pricing.
+   * @param {} params An object that contains bookingStart, bookingEnd and listing
+   * @return a params object for custom pricing bookings
+   */
+
+  customPricingParams(params) {
+    const { bookingStart, bookingEnd, listing, addons, addonsTitles, customerAddress, ...rest } = params;
+    const { amount, currency } = listing.attributes.price;
+
+    const unitType = config.bookingUnitType;
+
+    let addonsLineItems = [];
+
+    if (addons && Array.isArray(addons) && addons.length > 0) {
+      addons.forEach(addonData => {
+
+        addonsLineItems.push(
+          {
+            code: LINE_ITEM_ADDON,
+            unitPrice: new Money(Number(addonData.amount), currency),
+            quantity: 1
+          }
+        );
+
+      });
+    }
+
+    const addonsLineItemMaybe = addons ? addonsLineItems : [];
+
+    return {
+      listingId: listing.id,
+      bookingStart,
+      bookingEnd,
+      lineItems: [
+        ...addonsLineItemMaybe,
+        {
+          code: unitType,
+          unitPrice: new Money(amount, currency),
+          quantity: 1
+        },
+      ],
+      protectedData: { addonsTitles, customerAddress },
+      ...rest,
+    };
   }
 
   handlePaymentIntent(handlePaymentParams) {
@@ -368,13 +427,31 @@ export class CheckoutPageComponent extends Component {
         ? { setupPaymentMethodForSaving: true }
         : {};
 
-    const orderParams = {
-      listingId: pageData.listing.id,
+    const addonsLineItems = speculatedTransaction.attributes.lineItems.filter(
+      item => item.code === LINE_ITEM_ADDON
+    );
+
+    // Add-Ons need to be formatted so flex can store them
+    const addonsFormatted = addonsLineItems.map(function (addonData) {
+      return (addonData.unitPrice.amount !== undefined ? new Money(addonData.unitPrice.amount, addonData.unitPrice.currency) : null);
+    });
+
+    const addonsTitles = (pageData.bookingData && pageData.bookingData.protectedData && pageData.bookingData.protectedData.selectedAddons) ?
+      pageData.bookingData.protectedData.selectedAddons.map(function (addonData) { return addonData.addOnTitle }) :
+      [];
+
+    const customerAddress = pageData.bookingData && pageData.bookingData.protectedData && pageData.bookingData.protectedData.customerAddress || '';
+
+    const orderParams = this.customPricingParams({
+      listing: pageData.listing,
       bookingStart: tx.booking.attributes.start,
       bookingEnd: tx.booking.attributes.end,
       quantity: pageData.bookingData ? pageData.bookingData.quantity : null,
       ...optionalPaymentParams,
-    };
+      addons: addonsFormatted,
+      addonsTitles,
+      customerAddress
+    });
 
     return handlePaymentIntentCreation(orderParams);
   }
@@ -712,20 +789,6 @@ export class CheckoutPageComponent extends Component {
       );
     }
 
-    const unitType = config.bookingUnitType;
-    const isNightly = unitType === LINE_ITEM_NIGHT;
-    const isDaily = unitType === LINE_ITEM_DAY;
-
-    const unitTranslationKey = isNightly
-      ? 'CheckoutPage.perNight'
-      : isDaily
-      ? 'CheckoutPage.perDay'
-      : 'CheckoutPage.perUnit';
-
-    const price = currentListing.attributes.price;
-    const formattedPrice = formatMoney(intl, price);
-    const detailsSubTitle = `${formattedPrice} ${intl.formatMessage({ id: unitTranslationKey })}`;
-
     const showInitialMessageInput = !(
       existingTransaction && existingTransaction.attributes.lastTransition === TRANSITION_ENQUIRE
     );
@@ -830,7 +893,6 @@ export class CheckoutPageComponent extends Component {
             </div>
             <div className={css.detailsHeadings}>
               <h2 className={css.detailsTitle}>{listingTitle}</h2>
-              <p className={css.detailsSubtitle}>{detailsSubTitle}</p>
             </div>
             {speculateTransactionErrorMessage}
             {breakdown}

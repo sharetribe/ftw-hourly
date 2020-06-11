@@ -7,11 +7,14 @@ import classNames from 'classnames';
 import { calculateQuantityFromHours, timestampToDate } from '../../util/dates';
 import { propTypes } from '../../util/types';
 import config from '../../config';
-import { Form, PrimaryButton } from '../../components';
+import {FieldCheckbox, FieldTextInput, Form, PrimaryButton} from '../../components';
 import EstimatedBreakdownMaybe from './EstimatedBreakdownMaybe';
 import FieldDateAndTimeInput from './FieldDateAndTimeInput';
 
 import css from './BookingTimeForm.css';
+import {formatMoney} from "../../util/currency";
+import { types as sdkTypes } from '../../util/sdkLoader';
+const { Money } = sdkTypes;
 
 export class BookingTimeFormComponent extends Component {
   constructor(props) {
@@ -25,7 +28,7 @@ export class BookingTimeFormComponent extends Component {
   }
 
   render() {
-    const { rootClassName, className, price: unitPrice, ...rest } = this.props;
+    const { rootClassName, className, price: unitPrice, addons, ...rest } = this.props;
     const classes = classNames(rootClassName || css.root, className);
 
     if (!unitPrice) {
@@ -82,6 +85,19 @@ export class BookingTimeFormComponent extends Component {
           const startDate = startTime ? timestampToDate(startTime) : null;
           const endDate = endTime ? timestampToDate(endTime) : null;
 
+          const selectedAddons = [];
+          if (addons && Array.isArray(addons) && values && values.addons && Array.isArray(values.addons)) {
+            values.addons.forEach(selectedAddonTitle => {
+              addons.forEach(addonData => {
+                if (addonData.addOnTitle === selectedAddonTitle) {
+                  selectedAddons.push(addonData);
+                }
+              })
+            })
+          }
+
+          const isEnabledBookingButton = selectedAddons && Array.isArray(selectedAddons) && selectedAddons.length > 0;
+
           // This is the place to collect breakdown estimation data. See the
           // EstimatedBreakdownMaybe component to change the calculations
           // for customized payment processes.
@@ -96,6 +112,7 @@ export class BookingTimeFormComponent extends Component {
                   // Calculate the quantity as hours between the booking start and booking end
                   quantity: calculateQuantityFromHours(startDate, endDate),
                   timeZone,
+                  addons: selectedAddons
                 }
               : null;
           const bookingInfo = bookingData ? (
@@ -125,8 +142,29 @@ export class BookingTimeFormComponent extends Component {
             endDateInputProps,
           };
 
+          const customerAddressPlaceholder = intl.formatMessage(
+            { id: 'BookingTimeForm.customerAddressPlaceholder' }
+          );
+
           return (
             <Form onSubmit={handleSubmit} className={classes}>
+
+              {Object.keys(addons).map((item, index) => {
+                return (
+                  <div className={css.rowCheckbox} key={`addon.${index}`}>
+                    <FieldCheckbox
+                      id={`addon-${index}`}
+                      label={addons[item].addOnTitle}
+                      name={'addons'}
+                      value={addons[item].addOnTitle}
+                    />
+                    <span className={css.labelPrice}>
+                      {formatMoney(intl, new Money(addons[item].addOnPrice, config.currency))}
+                    </span>
+                  </div>
+                );
+              })}
+
               {monthlyTimeSlots && timeZone ? (
                 <FieldDateAndTimeInput
                   {...dateInputProps}
@@ -143,6 +181,14 @@ export class BookingTimeFormComponent extends Component {
                 />
               ) : null}
               {bookingInfo}
+              <FieldTextInput
+                inputRootClass={css.textarea}
+                type="textarea"
+                id={'customer-address'}
+                name="customerAddress"
+                placeholder={customerAddressPlaceholder}
+              />
+              <p/>
               <p className={css.smallPrint}>
                 <FormattedMessage
                   id={
@@ -153,7 +199,7 @@ export class BookingTimeFormComponent extends Component {
                 />
               </p>
               <div className={submitButtonClasses}>
-                <PrimaryButton type="submit">
+                <PrimaryButton type="submit" disabled={!isEnabledBookingButton}>
                   <FormattedMessage id="BookingTimeForm.requestToBook" />
                 </PrimaryButton>
               </div>

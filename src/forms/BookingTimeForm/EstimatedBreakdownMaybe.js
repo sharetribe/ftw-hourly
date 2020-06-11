@@ -29,7 +29,7 @@ import React from 'react';
 import Decimal from 'decimal.js';
 import { types as sdkTypes } from '../../util/sdkLoader';
 import { TRANSITION_REQUEST_PAYMENT, TX_TRANSITION_ACTOR_CUSTOMER } from '../../util/transaction';
-import { LINE_ITEM_UNITS } from '../../util/types';
+import { LINE_ITEM_UNITS, LINE_ITEM_ADDON } from '../../util/types';
 import { unitDivisor, convertMoneyToNumber, convertUnitToSubUnit } from '../../util/currency';
 import { BookingBreakdown } from '../../components';
 
@@ -37,7 +37,7 @@ import css from './BookingTimeForm.css';
 
 const { Money, UUID } = sdkTypes;
 
-const estimatedTotalPrice = (unitPrice, unitCount) => {
+const estimatedRentalPrice = (unitPrice, unitCount) => {
   const numericPrice = convertMoneyToNumber(unitPrice);
   const numericTotalPrice = new Decimal(numericPrice).times(unitCount).toNumber();
   return new Money(
@@ -46,12 +46,66 @@ const estimatedTotalPrice = (unitPrice, unitCount) => {
   );
 };
 
+const estimatedTotalPrice = (unitPrice, unitCount, addons) => {
+  const numericPrice = convertMoneyToNumber(unitPrice);
+  const addonsPrice = (addons && Array.isArray(addons) && addons.length > 0)
+    ? addons.map(function(addonData) { return addonData.addOnPrice }).reduce(function(a, b) { return Number(a) + Number(b) }) / 100
+    : null;
+  const numericTotalPrice = addonsPrice
+    ? new Decimal(numericPrice)
+      .times(unitCount)
+      .plus(addonsPrice)
+      .toNumber()
+    : new Decimal(numericPrice).times(unitCount).toNumber();
+  return new Money(
+    convertUnitToSubUnit(
+      numericTotalPrice,
+      unitDivisor(unitPrice.currency)
+    ),
+    unitPrice.currency
+  );
+};
+
 // When we cannot speculatively initiate a transaction (i.e. logged
 // out), we must estimate the booking breakdown. This function creates
 // an estimated transaction object for that use case.
-const estimatedTransaction = (unitType, bookingStart, bookingEnd, unitPrice, quantity) => {
+const estimatedTransaction = (unitType, bookingStart, bookingEnd, unitPrice, quantity, addons) => {
   const now = new Date();
-  const totalPrice = estimatedTotalPrice(unitPrice, quantity);
+  const totalPrice = estimatedTotalPrice(unitPrice, quantity, addons);
+
+  let addonsLineItems = [];
+
+  if (addons && Array.isArray(addons) && addons.length > 0) {
+    addons.forEach(addonData => {
+
+      addonsLineItems.push(
+        {
+          code: LINE_ITEM_ADDON,
+          includeFor: ['customer', 'provider'],
+          unitPrice: new Money(addonData.addOnPrice, unitPrice.currency),
+          quantity: new Decimal(1),
+          lineTotal: new Money(addonData.addOnPrice, unitPrice.currency),
+          reversal: false,
+          addonTitle: addonData.addOnTitle
+        }
+      );
+
+    });
+  }
+
+  const addonsLineItemMaybe = addons ? addonsLineItems : [];
+
+  const lineItems = [
+    ...addonsLineItemMaybe,
+    {
+      code: unitType,
+      includeFor: ['customer', 'provider'],
+      unitPrice: unitPrice,
+      quantity: new Decimal(quantity),
+      lineTotal: estimatedRentalPrice(unitPrice, quantity),
+      reversal: false,
+    },
+  ];
 
   return {
     id: new UUID('estimated-transaction'),
@@ -62,16 +116,7 @@ const estimatedTransaction = (unitType, bookingStart, bookingEnd, unitPrice, qua
       lastTransition: TRANSITION_REQUEST_PAYMENT,
       payinTotal: totalPrice,
       payoutTotal: totalPrice,
-      lineItems: [
-        {
-          code: unitType,
-          includeFor: ['customer', 'provider'],
-          unitPrice: unitPrice,
-          quantity: new Decimal(quantity),
-          lineTotal: totalPrice,
-          reversal: false,
-        },
-      ],
+      lineItems: lineItems,
       transitions: [
         {
           createdAt: now,
@@ -92,7 +137,7 @@ const estimatedTransaction = (unitType, bookingStart, bookingEnd, unitPrice, qua
 };
 
 const EstimatedBreakdownMaybe = props => {
-  const { unitType, unitPrice, startDate, endDate, quantity, timeZone } = props.bookingData;
+  const { unitType, unitPrice, startDate, endDate, quantity, timeZone, addons } = props.bookingData;
 
   const isUnits = unitType === LINE_ITEM_UNITS;
   const quantityIfUsingUnits = !isUnits || Number.isInteger(quantity);
@@ -101,7 +146,7 @@ const EstimatedBreakdownMaybe = props => {
     return null;
   }
 
-  const tx = estimatedTransaction(unitType, startDate, endDate, unitPrice, quantity);
+  const tx = estimatedTransaction(unitType, startDate, endDate, unitPrice, quantity, addons);
 
   return (
     <BookingBreakdown

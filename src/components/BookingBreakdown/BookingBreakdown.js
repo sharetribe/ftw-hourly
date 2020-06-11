@@ -13,8 +13,6 @@ import {
 } from '../../util/types';
 
 import LineItemBookingPeriod from './LineItemBookingPeriod';
-import LineItemBasePriceMaybe from './LineItemBasePriceMaybe';
-import LineItemUnitPriceMaybe from './LineItemUnitPriceMaybe';
 import LineItemSubTotalMaybe from './LineItemSubTotalMaybe';
 import LineItemCustomerCommissionMaybe from './LineItemCustomerCommissionMaybe';
 import LineItemCustomerCommissionRefundMaybe from './LineItemCustomerCommissionRefundMaybe';
@@ -23,8 +21,10 @@ import LineItemProviderCommissionRefundMaybe from './LineItemProviderCommissionR
 import LineItemRefundMaybe from './LineItemRefundMaybe';
 import LineItemTotalPrice from './LineItemTotalPrice';
 import LineItemUnknownItemsMaybe from './LineItemUnknownItemsMaybe';
+import LineItemAddonMaybe from './LineItemAddonMaybe';
 
 import css from './BookingBreakdown.css';
+import LineItemAddressMaybe from "./LineItemCustomerAddressMaybe";
 
 export const BookingBreakdownComponent = props => {
   const {
@@ -86,6 +86,8 @@ export const BookingBreakdownComponent = props => {
    *
    * LineItemTotalPrice: prints total price of the transaction
    *
+   * LineItemAddon: prints addons price & titles of the transaction
+   *
    */
 
   return (
@@ -96,10 +98,10 @@ export const BookingBreakdownComponent = props => {
         dateType={dateType}
         timeZone={timeZone}
       />
-      <LineItemUnitPriceMaybe transaction={transaction} unitType={unitType} intl={intl} />
 
-      <LineItemBasePriceMaybe transaction={transaction} unitType={unitType} intl={intl} />
       <LineItemUnknownItemsMaybe transaction={transaction} intl={intl} />
+
+      <LineItemAddonMaybe transaction={transaction} intl={intl} />
 
       <LineItemSubTotalMaybe
         transaction={transaction}
@@ -138,6 +140,9 @@ export const BookingBreakdownComponent = props => {
           <FormattedMessage id="BookingBreakdown.commissionFeeNote" />
         </span>
       ) : null}
+
+      <LineItemAddressMaybe transaction={transaction} intl={intl} />
+
     </div>
   );
 };
