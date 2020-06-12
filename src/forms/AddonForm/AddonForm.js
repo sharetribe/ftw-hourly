@@ -57,6 +57,15 @@ export const AddonFormComponent = props => (
       const priceValidators = config.listingMinimumPriceSubUnits
         ? validators.composeValidators(priceRequired, minPriceRequired)
         : priceRequired;
+      const titleValidator = validators.required(
+        <FormattedMessage id="EditListingPricingForm.titleRequired"/>
+      );
+      const addOnTitlePlaceholder = intl.formatMessage(
+        { id: 'EditListingPricingForm.addOnTitlePlaceholder' }
+      );
+      const addOnPricePlaceholder = intl.formatMessage(
+        { id: 'EditListingPricingForm.addOnPricePlaceholder' }
+      );
 
       return (
         <Form onSubmit={handleSubmit}>
@@ -84,16 +93,17 @@ export const AddonFormComponent = props => (
                     <FieldTextInput
                       name={`${name}.addOnTitle`}
                       type="text"
-                      placeholder="Add on title"
+                      placeholder={addOnTitlePlaceholder}
+                      autoFocus
+                      validate={titleValidator}
                     />
                   </div>
                   <div className={css.column}>
                     <FieldCurrencyInput
                       id={`${name}-addon-price`}
                       name={`${name}.addOnPrice`}
-                      autoFocus
                       label={''}
-                      placeholder="Add on Price"
+                      placeholder={addOnPricePlaceholder}
                       currencyConfig={config.currencyConfig}
                       validate={priceValidators}
                     />

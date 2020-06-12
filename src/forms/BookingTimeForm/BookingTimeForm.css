@@ -96,3 +96,11 @@
   font-weight: bold;
   padding-left: 20px;
 }
+
+.customerAddressLabel {
+  font-weight: 600;
+  margin-top: 0;
+  margin-bottom: 10px;
+  padding-top: 6px;
+  padding-bottom: 2px;
+}

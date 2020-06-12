@@ -1,12 +1,11 @@
 import React from 'react';
-import { FormattedMessage, FormattedDate } from '../../util/reactIntl';
-import moment from 'moment';
-import { LINE_ITEM_NIGHT, LINE_ITEM_UNITS, DATE_TYPE_DATE, propTypes } from '../../util/types';
+import { FormattedMessage } from '../../util/reactIntl';
+import { propTypes } from '../../util/types';
 
 import css from './BookingBreakdown.css';
 
 const LineItemCustomerAddressMaybe = props => {
-  const { transaction, intl } = props;
+  const { transaction } = props;
 
   const customerAddress = transaction && transaction.attributes &&
     transaction.attributes.protectedData && transaction.attributes.protectedData.customerAddress || '';
