@@ -8,7 +8,6 @@ const DetailCardHeadingsMaybe = props => {
   const {
     showDetailCardHeadings,
     listingTitle,
-    subTitle,
     location,
     geolocation,
     showAddress,
