@@ -150,19 +150,24 @@ export class BookingTimeFormComponent extends Component {
             <Form onSubmit={handleSubmit} className={classes}>
 
               {Object.keys(addons).map((item, index) => {
-                return (
-                  <div className={css.rowCheckbox} key={`addon.${index}`}>
-                    <FieldCheckbox
-                      id={`addon-${index}`}
-                      label={addons[item].addOnTitle}
-                      name={'addons'}
-                      value={addons[item].addOnTitle}
-                    />
-                    <span className={css.labelPrice}>
-                      {formatMoney(intl, new Money(addons[item].addOnPrice, config.currency))}
+                const addonData = addons[item];
+                if (addonData) {
+                  return (
+                    <div className={css.rowCheckbox} key={`addon.${index}`}>
+                      <FieldCheckbox
+                        id={`addon-${index}`}
+                        label={addonData.addOnTitle}
+                        name={'addons'}
+                        value={addonData.addOnTitle}
+                      />
+                      <span className={css.labelPrice}>
+                      {formatMoney(intl, new Money(addonData.addOnPrice, config.currency))}
                     </span>
-                  </div>
-                );
+                    </div>
+                  );
+                } else {
+                  return null;
+                }
               })}
 
               {monthlyTimeSlots && timeZone ? (
@@ -181,6 +186,9 @@ export class BookingTimeFormComponent extends Component {
                 />
               ) : null}
               {bookingInfo}
+              <label className={css.customerAddressLabel}>
+                <FormattedMessage id={'BookingTimeForm.customerAddressLabel'}/>
+              </label>
               <FieldTextInput
                 inputRootClass={css.textarea}
                 type="textarea"

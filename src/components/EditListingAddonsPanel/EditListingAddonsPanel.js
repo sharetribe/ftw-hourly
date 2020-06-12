@@ -18,6 +18,7 @@ const EditListingAddonsPanel = props => {
     onSubmit,
     onChange,
     submitButtonText,
+    intl
   } = props;
   const currentListing = ensureOwnListing(listing);
   const { publicData } = currentListing.attributes;
@@ -38,6 +39,7 @@ const EditListingAddonsPanel = props => {
       <AddonFormComponent
         className={css.form}
         initialValues={{addons}}
+        intl={intl}
         publicData={publicData}
         onSubmit={values => {
           const { addons } = values;
