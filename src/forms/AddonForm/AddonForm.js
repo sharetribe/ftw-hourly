@@ -60,6 +60,12 @@ export const AddonFormComponent = props => (
       const titleValidator = validators.required(
         <FormattedMessage id="EditListingPricingForm.titleRequired"/>
       );
+      const addOnTitlePlaceholder = intl.formatMessage(
+        { id: 'EditListingPricingForm.addOnTitlePlaceholder' }
+      );
+      const addOnPricePlaceholder = intl.formatMessage(
+        { id: 'EditListingPricingForm.addOnPricePlaceholder' }
+      );
 
       return (
         <Form onSubmit={handleSubmit}>
@@ -87,7 +93,7 @@ export const AddonFormComponent = props => (
                     <FieldTextInput
                       name={`${name}.addOnTitle`}
                       type="text"
-                      placeholder="Add-On title"
+                      placeholder={addOnTitlePlaceholder}
                       autoFocus
                       validate={titleValidator}
                     />
@@ -97,7 +103,7 @@ export const AddonFormComponent = props => (
                       id={`${name}-addon-price`}
                       name={`${name}.addOnPrice`}
                       label={''}
-                      placeholder="Add-On Price"
+                      placeholder={addOnPricePlaceholder}
                       currencyConfig={config.currencyConfig}
                       validate={priceValidators}
                     />
