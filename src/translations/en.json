@@ -1079,6 +1079,7 @@
   "TransactionPanel.savePaymentMethodFailed": "Saving default payment method failed. Go to {paymentMethodsPageLink} to try again.",
   "TransactionPanel.sendingMessageNotAllowed": "This user has been removed. Sending message to the user is not possible anymore.",
   "TransactionPanel.sendMessagePlaceholder": "Send a message to {name}…",
+  "TransactionPanel.endTimeSelectLabel": "Booking end",
   "UserCard.contactUser": "Contact",
   "UserCard.heading": "Hello, I'm {name}.",
   "UserCard.showFullBioLink": "more",

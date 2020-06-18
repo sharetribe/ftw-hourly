@@ -24,8 +24,8 @@ import { isMobileSafari } from '../../util/userAgent';
 import { formatMoney } from '../../util/currency';
 import {
   AvatarLarge,
-  BookingPanel,
-  NamedLink,
+  BookingPanel, FieldSelect, Form,
+  NamedLink, PrimaryButton,
   ReviewModal,
   UserDisplayName,
 } from '../../components';
@@ -52,6 +52,13 @@ import PanelHeading, {
 } from './PanelHeading';
 
 import css from './TransactionPanel.css';
+import {
+  resetToStartOfDay,
+  timestampToDate,
+  getEndHours,
+} from "../../util/dates";
+import moment from "moment-timezone/builds/moment-timezone-with-data-10-year-range.min";
+import {Form as FinalForm} from "react-final-form";
 
 // Helper function to get display names for different roles
 const displayNames = (currentUser, currentProvider, currentCustomer, intl) => {
@@ -271,6 +278,12 @@ export class TransactionPanelComponent extends Component {
       id: 'TransactionPanel.deletedListingTitle',
     });
 
+    const handleSelectEndTime = (params) => {
+      onAcceptSale(currentTransaction.id, currentTransaction.booking.attributes.start,
+        (params && params.bookingEndTime) ?
+          timestampToDate(params.bookingEndTime) : currentTransaction.booking.attributes.end);
+    };
+
     const {
       authorDisplayName,
       customerDisplayName,
@@ -333,6 +346,21 @@ export class TransactionPanelComponent extends Component {
     );
 
     const classes = classNames(rootClassName || css.root, className);
+
+    const timeZone = currentTransaction && currentTransaction.listing &&
+      currentTransaction.listing.attributes.availabilityPlan &&
+      currentTransaction.listing.attributes.availabilityPlan.timezone;
+
+    const bookingEndDate = currentTransaction && currentTransaction.booking.attributes.end;
+    const bookingStartDate = currentTransaction && currentTransaction.booking.attributes.start;
+    const startOfEndDay = resetToStartOfDay(bookingEndDate, timeZone);
+    const startLimit = bookingStartDate;
+    const endOfDay = moment(startOfEndDay).clone().add(1, 'days');
+    const availableEndTimes = getEndHours(intl, timeZone, startLimit, endOfDay);
+
+    const endTimeSelectLabel = intl.formatMessage(
+      { id: 'TransactionPanel.endTimeSelectLabel' }
+    );
 
     return (
       <div className={classes}>
@@ -468,6 +496,40 @@ export class TransactionPanelComponent extends Component {
                 transactionRole={transactionRole}
                 intl={intl}
               />
+
+              {stateData.showSaleButtons ?
+                <FinalForm
+                  onSubmit={handleSelectEndTime}
+                  render={fieldRenderProps => {
+                    const {
+                      handleSubmit,
+                    } = fieldRenderProps;
+                    return (
+                      <Form onSubmit={handleSubmit} className={css.acceptForm}>
+                        <FieldSelect
+                          name="bookingEndTime"
+                          id={'bookingEndTime'}
+                          className={css.endTimeFieldSelect}
+                          selectClassName={css.select}
+                          label={endTimeSelectLabel}
+                        >
+                          {
+                            availableEndTimes.map(p => (
+                              <option key={p.timeOfDay === '00:00' ? '24:00' : p.timeOfDay}
+                                      value={p.timestamp}>
+                                {p.timeOfDay === '00:00' ? '24:00' : p.timeOfDay}
+                              </option>
+                            ))
+                          }
+                        </FieldSelect>
+                        <PrimaryButton type="submit">
+                          <FormattedMessage id="TransactionPanel.acceptButton" />
+                        </PrimaryButton>
+                      </Form>
+                    );
+                  }}
+                /> : null
+              }
 
               {stateData.showSaleButtons ? (
                 <div className={css.desktopActionButtons}>{saleButtons}</div>
