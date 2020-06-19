@@ -57,7 +57,6 @@ const ListingCard = props => {
           </div>
         </div>
         <div className={classNames(css.info, { [css.borderRadiusInheritBottom]: !isInCarousel })}>
-          <div className={css.price}>{formattedPrice}</div>
           <div className={css.name}>{title}</div>
         </div>
       </div>

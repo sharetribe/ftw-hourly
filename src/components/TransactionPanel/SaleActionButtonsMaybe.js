@@ -49,13 +49,13 @@ const SaleActionButtonsMaybe = props => {
         >
           <FormattedMessage id="TransactionPanel.declineButton" />
         </SecondaryButton>
-        <PrimaryButton
+        {/*<PrimaryButton
           inProgress={acceptInProgress}
           disabled={buttonsDisabled}
           onClick={onAcceptSale}
         >
           <FormattedMessage id="TransactionPanel.acceptButton" />
-        </PrimaryButton>
+        </PrimaryButton>*/}
       </div>
     </div>
   ) : null;

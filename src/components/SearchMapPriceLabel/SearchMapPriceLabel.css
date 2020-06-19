@@ -28,6 +28,12 @@
    */
   position: relative;
 
+  width: 60px;
+  height: 30px;
+  background-image: url(./images/vivify_logo.png);
+  background-size: auto 20px;
+  background-position: center;
+
   /* Font */
   @apply --marketplaceH5FontStyles;
   font-weight: var(--fontWeightSemiBold);

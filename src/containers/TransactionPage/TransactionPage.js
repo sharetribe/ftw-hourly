@@ -391,7 +391,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onAcceptSale: transactionId => dispatch(acceptSale(transactionId)),
+    onAcceptSale: (transactionId, startDateTime, endDateTime) => dispatch(acceptSale(transactionId, startDateTime, endDateTime)),
     onDeclineSale: transactionId => dispatch(declineSale(transactionId)),
     onShowMoreMessages: txId => dispatch(fetchMoreMessages(txId)),
     onSendMessage: (txId, message) => dispatch(sendMessage(txId, message)),

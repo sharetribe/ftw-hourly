@@ -7,9 +7,7 @@
   {:name :transition/request-payment,
    :actor :actor.role/customer,
    :actions
-   [{:name :action/create-booking,
-     :config {:observe-availability? true, :type :time}}
-    {:name :action/set-line-items-and-total}
+   [{:name :action/set-line-items-and-total}
     {:name :action/update-protected-data}
     {:name :action/calculate-tx-provider-commission,
      :config {:commission 0.1M}}
@@ -19,7 +17,7 @@
    :actor :actor.role/customer,
    :actions
    [{:name :action/create-booking,
-     :config {:observe-availability? true, :type :time}}
+     :config {:observe-availability? false, :type :time}}
     {:name :action/set-line-items-and-total}
     {:name :action/update-protected-data}
     {:name :action/calculate-tx-provider-commission,
@@ -46,7 +44,9 @@
   {:name :transition/accept,
    :actor :actor.role/provider,
    :actions
-   [{:name :action/accept-booking}
+   [{:name :action/create-booking,
+     :config {:observe-availability? false, :type :time}}
+    {:name :action/accept-booking}
     {:name :action/stripe-capture-payment-intent}],
    :from :state/preauthorized,
    :to :state/accepted}
