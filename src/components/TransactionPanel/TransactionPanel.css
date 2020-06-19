@@ -229,6 +229,14 @@
   }
 }
 
+.acceptForm {
+  margin: 0 48px 0 48px;
+}
+
+.endTimeFieldSelect {
+  margin-bottom: 10px;
+}
+
 /* DetailCardHeadingsMaybe subcomponent */
 .detailCardHeadings {
   display: none;
