@@ -117,7 +117,7 @@ class MainPanel extends Component {
 
     return updatedURLParams => {
       const updater = prevState => {
-        const mergedQueryParams = { ...urlQueryParams, ...prevState.currentQueryParams };
+        const mergedQueryParams = { ...prevState.currentQueryParams, ...urlQueryParams };
         return { currentQueryParams: { ...mergedQueryParams, ...updatedURLParams } };
       };
 
