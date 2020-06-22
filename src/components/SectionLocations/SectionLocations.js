@@ -8,9 +8,9 @@ import { NamedLink } from '../../components';
 
 import css from './SectionLocations.css';
 
-import nyImage from './images/ny-yogi.jpg';
-import laImage from './images/la-yogi.jpg';
-import sfImage from './images/sf-yogi.jpg';
+import nyImage from './images/london.jpg';
+import laImage from './images/manchester.jpg';
+import sfImage from './images/leeds.jpg';
 
 class LocationImage extends Component {
   render() {
@@ -51,19 +51,19 @@ const SectionLocations = props => {
       </div>
       <div className={css.locations}>
         {locationLink(
-          'New York',
+          'London',
           nyImage,
-          '?address=New%20York%20City%2C%20New%20York%2C%20USA&bounds=40.917576401307%2C-73.7008392055224%2C40.477399%2C-74.2590879797556'
+          '?address=London%2C%20Greater%20London%2C%20England%2C%20United%20Kingdom&bounds=51.669993%2C0.152641%2C51.384598%2C-0.35167'
         )}
         {locationLink(
-          'Los Angeles',
+          'Manchester',
           laImage,
-          '?address=Los%20Angeles%2C%20California%2C%20USA&bounds=34.161440999758%2C-118.121305008073%2C33.9018913203336%2C-118.521456965901'
+          '?address=Manchester%2C%20Greater%20Manchester%2C%20England%2C%20United%20Kingdom&bounds=53.586199%2C-2.087698%2C53.348612%2C-2.52355'
         )}
         {locationLink(
-          'San Francisco',
+          'Leeds',
           sfImage,
-          '?address=San%20Francisco%2C%20California%2C%20USA&bounds=37.8324430069081%2C-122.354995082683%2C37.6044780500533%2C-122.517910874663'
+          '?address=Leeds%2C%20West%20Yorkshire%2C%20England%2C%20United%20Kingdom&bounds=53.955164%2C-1.161587%2C53.719309%2C-1.800362'
         )}
       </div>
     </div>
