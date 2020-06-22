@@ -102,6 +102,8 @@
   @apply --SectionHero_animation;
 
   animation-delay: 0.8s;
+  
+  background-color: #e6a7fc !important;
 
   @media (--viewportMedium) {
     display: block;
