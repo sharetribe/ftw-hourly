@@ -121,7 +121,7 @@ const Footer = props => {
                     }}
                     className={css.link}
                   >
-                    <FormattedMessage id="Footer.searchNewYork" />
+                    <FormattedMessage id="Footer.searchPositionA" />
                   </NamedLink>
                 </li>
                 <li className={css.listItem}>
@@ -133,7 +133,7 @@ const Footer = props => {
                     }}
                     className={css.link}
                   >
-                    <FormattedMessage id="Footer.searchLosAngeles" />
+                    <FormattedMessage id="Footer.searchPositionB" />
                   </NamedLink>
                 </li>
                 <li className={css.listItem}>
@@ -145,7 +145,7 @@ const Footer = props => {
                     }}
                     className={css.link}
                   >
-                    <FormattedMessage id="Footer.searchSanFrancisco" />
+                    <FormattedMessage id="Footer.searchPositionC" />
                   </NamedLink>
                 </li>
                 <li className={css.listItem}>
@@ -157,7 +157,7 @@ const Footer = props => {
                     }}
                     className={css.link}
                   >
-                    <FormattedMessage id="Footer.searchSeattle" />
+                    <FormattedMessage id="Footer.searchPositionD" />
                   </NamedLink>
                 </li>
                 <li className={css.listItem}>
@@ -169,7 +169,7 @@ const Footer = props => {
                     }}
                     className={css.link}
                   >
-                    <FormattedMessage id="Footer.searchPortland" />
+                    <FormattedMessage id="Footer.searchPositionE" />
                   </NamedLink>
                 </li>
               </ul>
@@ -185,7 +185,7 @@ const Footer = props => {
                     }}
                     className={css.link}
                   >
-                    <FormattedMessage id="Footer.searchDenver" />
+                    <FormattedMessage id="Footer.searchPositionF" />
                   </NamedLink>
                 </li>
                 <li className={css.listItem}>
@@ -197,7 +197,7 @@ const Footer = props => {
                     }}
                     className={css.link}
                   >
-                    <FormattedMessage id="Footer.searchPhiladelphia" />
+                    <FormattedMessage id="Footer.searchPositionG" />
                   </NamedLink>
                 </li>
                 <li className={css.listItem}>
@@ -209,7 +209,7 @@ const Footer = props => {
                     }}
                     className={css.link}
                   >
-                    <FormattedMessage id="Footer.searchBoston" />
+                    <FormattedMessage id="Footer.searchPositionH" />
                   </NamedLink>
                 </li>
                 <li className={css.listItem}>
@@ -221,7 +221,7 @@ const Footer = props => {
                     }}
                     className={css.link}
                   >
-                    <FormattedMessage id="Footer.searchSanDiego" />
+                    <FormattedMessage id="Footer.searchPositionI" />
                   </NamedLink>
                 </li>
                 <li className={css.listItem}>
@@ -233,7 +233,7 @@ const Footer = props => {
                     }}
                     className={css.link}
                   >
-                    <FormattedMessage id="Footer.searchBoulder" />
+                    <FormattedMessage id="Footer.searchPositionJ" />
                   </NamedLink>
                 </li>
               </ul>
