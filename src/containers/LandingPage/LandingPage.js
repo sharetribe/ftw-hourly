@@ -8,15 +8,16 @@ import { isScrollingDisabled } from '../../ducks/UI.duck';
 import { propTypes } from '../../util/types';
 import config from '../../config';
 import {
-  Page,
-  SectionHero,
-  SectionHowItWorks,
-  SectionLocations,
-  LayoutSingleColumn,
-  LayoutWrapperTopbar,
-  LayoutWrapperMain,
-  LayoutWrapperFooter,
-  Footer,
+  	Page,
+  	SectionHero,
+  	SectionHowItWorks,
+	SectionLocations,
+  	SectionCategories,
+  	LayoutSingleColumn,
+  	LayoutWrapperTopbar,
+  	LayoutWrapperMain,
+  	LayoutWrapperFooter,
+  	Footer,
 } from '../../components';
 import { TopbarContainer } from '../../containers';
 
@@ -72,7 +73,7 @@ export const LandingPageComponent = props => {
           <ul className={css.sections}>
             <li className={css.section}>
               <div className={css.sectionContentFirstChild}>
-                <SectionLocations />
+                <SectionCategories />
               </div>
             </li>
             <li className={css.section}>
@@ -81,6 +82,11 @@ export const LandingPageComponent = props => {
                   currentUserListing={currentUserListing}
                   currentUserListingFetched={currentUserListingFetched}
                 />
+              </div>
+            </li>
+<li className={css.section}>
+              <div className={css.sectionContentFirstChild}>
+                <SectionLocations />
               </div>
             </li>
           </ul>
