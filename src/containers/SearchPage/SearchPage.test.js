@@ -42,8 +42,15 @@ describe('SearchPageComponent', () => {
       onSearchMapListings: noop,
       sendVerificationEmailInProgress: false,
       onResendVerificationEmail: noop,
-      certificate: [{ key: 'cat1', label: 'Cat 1' }, { key: 'cat2', label: 'Cat 2' }],
-      yogaStyles: [{ key: 'dog1', label: 'Dog 1' }, { key: 'dog2', label: 'Dog 2' }],
+      certificateConfig: [{ key: 'cat1', label: 'Cat 1' }, { key: 'cat2', label: 'Cat 2' }],
+      yogaStylesConfig: [{ key: 'dog1', label: 'Dog 1' }, { key: 'dog2', label: 'Dog 2' }],
+      dateRangeLengthFilterConfig: {
+        active: true,
+        options: [
+          { key: '0', label: 'Any length' },
+          { key: '60', label: '1 hour', shortLabel: '1h' },
+        ],
+      },
     };
     const tree = renderShallow(<SearchPageComponent {...props} />);
     expect(tree).toMatchSnapshot();

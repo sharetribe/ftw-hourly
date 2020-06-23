@@ -18,6 +18,7 @@ class FilterPopup extends Component {
     this.filterContent = null;
 
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
     this.handleClear = this.handleClear.bind(this);
     this.handleCancel = this.handleCancel.bind(this);
     this.handleBlur = this.handleBlur.bind(this);
@@ -27,31 +28,38 @@ class FilterPopup extends Component {
   }
 
   handleSubmit(values) {
-    const { onSubmit, urlParam } = this.props;
+    const { onSubmit } = this.props;
     this.setState({ isOpen: false });
-    onSubmit(urlParam, values);
+    onSubmit(values);
+  }
+
+  handleChange(values) {
+    const { onChange } = this.props;
+    if (onChange) {
+      onChange(values);
+    }
   }
 
   handleClear() {
-    const { onSubmit, onClear, urlParam } = this.props;
+    const { onSubmit, onClear } = this.props;
     this.setState({ isOpen: false });
 
     if (onClear) {
       onClear();
     }
 
-    onSubmit(urlParam, null);
+    onSubmit(null);
   }
 
   handleCancel() {
-    const { onSubmit, onCancel, initialValues, urlParam } = this.props;
+    const { onSubmit, onCancel, initialValues } = this.props;
     this.setState({ isOpen: false });
 
     if (onCancel) {
       onCancel();
     }
 
-    onSubmit(urlParam, initialValues);
+    onSubmit(initialValues);
   }
 
   handleBlur() {
@@ -152,6 +160,7 @@ class FilterPopup extends Component {
                 initialValues={initialValues}
                 keepDirtyOnReinitialize={keepDirtyOnReinitialize}
                 onSubmit={this.handleSubmit}
+                onChange={this.handleChange}
                 onCancel={this.handleCancel}
                 onClear={this.handleClear}
               >
@@ -169,6 +178,7 @@ FilterPopup.defaultProps = {
   rootClassName: null,
   className: null,
   popupClassName: null,
+  onChange: null,
   initialValues: null,
   keepDirtyOnReinitialize: false,
   contentPlacementOffset: 0,
@@ -182,8 +192,8 @@ FilterPopup.propTypes = {
   className: string,
   popupClassName: string,
   id: string.isRequired,
-  urlParam: string.isRequired,
   onSubmit: func.isRequired,
+  onChange: func,
   initialValues: object,
   keepDirtyOnReinitialize: bool,
   contentPlacementOffset: number,

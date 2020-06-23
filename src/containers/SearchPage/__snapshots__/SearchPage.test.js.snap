@@ -24,6 +24,133 @@ exports[`SearchPageComponent matches snapshot 1`] = `
   <div>
     <MainPanel
       className={null}
+      filterConfig={
+        Array [
+          Object {
+            "config": Object {
+              "options": Array [
+                Object {
+                  "key": "0",
+                  "label": "Any length",
+                },
+                Object {
+                  "key": "60",
+                  "label": "1 hour",
+                  "shortLabel": "1h",
+                },
+                Object {
+                  "key": "120",
+                  "label": "2 hours",
+                  "shortLabel": "2h",
+                },
+              ],
+              "searchTimeZone": "Etc/UTC",
+            },
+            "group": "primary",
+            "id": "dates-length",
+            "label": "Dates",
+            "queryParamNames": Array [
+              "dates",
+              "minDuration",
+            ],
+            "type": "BookingDateRangeLengthFilter",
+          },
+          Object {
+            "config": Object {
+              "max": 1000,
+              "min": 0,
+              "step": 5,
+            },
+            "group": "primary",
+            "id": "price",
+            "label": "Price",
+            "queryParamNames": Array [
+              "price",
+            ],
+            "type": "PriceFilter",
+          },
+          Object {
+            "config": Object {},
+            "group": "primary",
+            "id": "keyword",
+            "label": "Keyword",
+            "queryParamNames": Array [
+              "keywords",
+            ],
+            "type": "KeywordFilter",
+          },
+          Object {
+            "config": Object {
+              "options": Array [
+                Object {
+                  "key": "ashtanga",
+                  "label": "Ashtanga",
+                },
+                Object {
+                  "key": "hatha",
+                  "label": "Hatha",
+                },
+                Object {
+                  "key": "kundalini",
+                  "label": "Kundalini",
+                },
+                Object {
+                  "key": "restorative",
+                  "label": "Restorative",
+                },
+                Object {
+                  "key": "vinyasa",
+                  "label": "Vinyasa",
+                },
+                Object {
+                  "key": "yin",
+                  "label": "Yin",
+                },
+              ],
+              "searchMode": "has_all",
+            },
+            "group": "secondary",
+            "id": "yogaStyles",
+            "label": "Yoga styles",
+            "queryParamNames": Array [
+              "pub_yogaStyles",
+            ],
+            "type": "SelectMultipleFilter",
+          },
+          Object {
+            "config": Object {
+              "options": Array [
+                Object {
+                  "hideFromFilters": true,
+                  "hideFromListingInfo": true,
+                  "key": "none",
+                  "label": "None",
+                },
+                Object {
+                  "key": "200h",
+                  "label": "Registered yoga teacher 200h",
+                },
+                Object {
+                  "key": "500h",
+                  "label": "Registered yoga teacher 500h",
+                },
+              ],
+            },
+            "group": "secondary",
+            "id": "certificate",
+            "label": "Certificate",
+            "queryParamNames": Array [
+              "pub_certificate",
+            ],
+            "type": "SelectSingleFilter",
+          },
+        ]
+      }
+      history={
+        Object {
+          "push": [Function],
+        }
+      }
       listings={Array []}
       onActivateListing={[Function]}
       onCloseModal={[Function]}
@@ -38,74 +165,46 @@ exports[`SearchPageComponent matches snapshot 1`] = `
           "totalPages": 2,
         }
       }
-      primaryFilters={
-        Object {
-          "certificateFilter": Object {
-            "options": Array [
-              Object {
-                "key": "200h",
-                "label": "Registered yoga teacher 200h",
-              },
-              Object {
-                "key": "500h",
-                "label": "Registered yoga teacher 500h",
-              },
-            ],
-            "paramName": "pub_certificate",
-          },
-          "keywordFilter": Object {
-            "config": Object {
-              "active": true,
-            },
-            "paramName": "keywords",
-          },
-          "priceFilter": Object {
-            "config": Object {
-              "max": 1000,
-              "min": 0,
-              "step": 5,
-            },
-            "paramName": "price",
-          },
-          "yogaStylesFilter": Object {
-            "options": Array [
-              Object {
-                "key": "ashtanga",
-                "label": "Ashtanga",
-              },
-              Object {
-                "key": "hatha",
-                "label": "Hatha",
-              },
-              Object {
-                "key": "kundalini",
-                "label": "Kundalini",
-              },
-              Object {
-                "key": "restorative",
-                "label": "Restorative",
-              },
-              Object {
-                "key": "vinyasa",
-                "label": "Vinyasa",
-              },
-              Object {
-                "key": "yin",
-                "label": "Yin",
-              },
-            ],
-            "paramName": "pub_yogaStyles",
-          },
-        }
-      }
       resultsCount={0}
       rootClassName={null}
       searchInProgress={false}
       searchListingsError={null}
       searchParamsAreInSync={true}
       searchParamsForPagination={Object {}}
-      secondaryFilters={null}
       showAsModalMaxWidth={768}
+      sortConfig={
+        Object {
+          "active": true,
+          "conflictingFilters": Array [
+            "keyword",
+          ],
+          "options": Array [
+            Object {
+              "key": "createdAt",
+              "label": "Newest",
+            },
+            Object {
+              "key": "-createdAt",
+              "label": "Oldest",
+            },
+            Object {
+              "key": "-price",
+              "label": "Lowest price",
+            },
+            Object {
+              "key": "price",
+              "label": "Highest price",
+            },
+            Object {
+              "key": "relevance",
+              "label": "Relevance",
+              "longLabel": "Relevance (Keyword search)",
+            },
+          ],
+          "queryParamName": "sort",
+          "relevanceKey": "relevance",
+        }
+      }
       urlQueryParams={Object {}}
     />
     <withViewport(ModalInMobileComponent)
