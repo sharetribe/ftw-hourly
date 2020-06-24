@@ -95,6 +95,23 @@
   }
 }
 
+.linkTextB {
+  @apply --marketplaceH2FontStyles;
+  color: var(--matterColor);
+  margin-top: 0;
+  margin-bottom: 0;
+  text-align: center;	
+
+  @media (--viewportMedium) {
+    margin-top: 5px;
+  }
+}
+
+
 .locationName {
-  color: var(--marketplaceColor);
+  color: #e49df5;
+}
+
+.locationNameB {
+  color: #4a4a4a;
 }

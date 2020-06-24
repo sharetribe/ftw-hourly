@@ -39,6 +39,20 @@ const locationLink = (name, image, searchQuery) => {
   );
 };
 
+const minilocationLink = (name, image, searchQuery) => {
+  const nameText = <span className={css.locationNameB}>{name}</span>;
+  return (
+    <NamedLink name="SearchPage" to={{ search: searchQuery }} className={css.location}>
+      <div className={css.linkTextB}>
+        <FormattedMessage
+          id="SectionLocations.minilistingsInLocation"
+          values={{ location: nameText }}
+        />
+      </div>
+    </NamedLink>
+  );
+};
+
 const SectionLocations = props => {
   const { rootClassName, className } = props;
 
@@ -62,6 +76,70 @@ const SectionLocations = props => {
         )}
         {locationLink(
           'Leeds',
+          sfImage,
+          '?address=Leeds%2C%20West%20Yorkshire%2C%20England%2C%20United%20Kingdom&bounds=53.955164%2C-1.161587%2C53.719309%2C-1.800362'
+        )}
+      </div>
+      <div className={css.locations}>
+        {minilocationLink(
+          'Belfast',
+          nyImage,
+          '?address=London%2C%20Greater%20London%2C%20England%2C%20United%20Kingdom&bounds=51.669993%2C0.152641%2C51.384598%2C-0.35167'
+        )}
+        {minilocationLink(
+          'Birmingham',
+          laImage,
+          '?address=Manchester%2C%20Greater%20Manchester%2C%20England%2C%20United%20Kingdom&bounds=53.586199%2C-2.087698%2C53.348612%2C-2.52355'
+        )}
+        {minilocationLink(
+          'Bristol',
+          sfImage,
+          '?address=Leeds%2C%20West%20Yorkshire%2C%20England%2C%20United%20Kingdom&bounds=53.955164%2C-1.161587%2C53.719309%2C-1.800362'
+        )}
+        {minilocationLink(
+          'Cardiff',
+          sfImage,
+          '?address=Leeds%2C%20West%20Yorkshire%2C%20England%2C%20United%20Kingdom&bounds=53.955164%2C-1.161587%2C53.719309%2C-1.800362'
+        )}
+        {minilocationLink(
+          'Edinburgh',
+          sfImage,
+          '?address=Leeds%2C%20West%20Yorkshire%2C%20England%2C%20United%20Kingdom&bounds=53.955164%2C-1.161587%2C53.719309%2C-1.800362'
+        )}
+        {minilocationLink(
+          'Glasgow',
+          sfImage,
+          '?address=Leeds%2C%20West%20Yorkshire%2C%20England%2C%20United%20Kingdom&bounds=53.955164%2C-1.161587%2C53.719309%2C-1.800362'
+        )}
+      </div>
+      <div className={css.locations}>
+        {minilocationLink(
+          'Leicester',
+          nyImage,
+          '?address=London%2C%20Greater%20London%2C%20England%2C%20United%20Kingdom&bounds=51.669993%2C0.152641%2C51.384598%2C-0.35167'
+        )}
+        {minilocationLink(
+          'Liverpool',
+          laImage,
+          '?address=Manchester%2C%20Greater%20Manchester%2C%20England%2C%20United%20Kingdom&bounds=53.586199%2C-2.087698%2C53.348612%2C-2.52355'
+        )}
+        {minilocationLink(
+          'Newcastle',
+          sfImage,
+          '?address=Leeds%2C%20West%20Yorkshire%2C%20England%2C%20United%20Kingdom&bounds=53.955164%2C-1.161587%2C53.719309%2C-1.800362'
+        )}
+        {minilocationLink(
+          'Sheffield',
+          sfImage,
+          '?address=Leeds%2C%20West%20Yorkshire%2C%20England%2C%20United%20Kingdom&bounds=53.955164%2C-1.161587%2C53.719309%2C-1.800362'
+        )}
+        {minilocationLink(
+          'Sunderland',
+          sfImage,
+          '?address=Leeds%2C%20West%20Yorkshire%2C%20England%2C%20United%20Kingdom&bounds=53.955164%2C-1.161587%2C53.719309%2C-1.800362'
+        )}
+        {minilocationLink(
+          'More...',
           sfImage,
           '?address=Leeds%2C%20West%20Yorkshire%2C%20England%2C%20United%20Kingdom&bounds=53.955164%2C-1.161587%2C53.719309%2C-1.800362'
         )}
