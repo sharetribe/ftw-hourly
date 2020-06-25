@@ -58,6 +58,25 @@ const FilterFormComponent = props => {
 
         const classes = classNames(css.root);
 
+        const spy =
+          liveEdit || onChange ? (
+            <FormSpy onChange={handleChange} subscription={{ values: true, dirty: true }} />
+          ) : null;
+
+        const buttons = !liveEdit ? (
+          <div className={css.buttonsWrapper}>
+            <button className={css.clearButton} type="button" onClick={onClear}>
+              {clear}
+            </button>
+            <button className={css.cancelButton} type="button" onClick={handleCancel}>
+              {cancel}
+            </button>
+            <button className={css.submitButton} type="submit">
+              {submit}
+            </button>
+          </div>
+        ) : null;
+
         return (
           <Form
             id={id}
@@ -67,22 +86,8 @@ const FilterFormComponent = props => {
             style={{ ...style }}
           >
             <div className={classNames(paddingClasses || css.contentWrapper)}>{children}</div>
-
-            {liveEdit ? (
-              <FormSpy onChange={handleChange} subscription={{ values: true, dirty: true }} />
-            ) : (
-              <div className={css.buttonsWrapper}>
-                <button className={css.clearButton} type="button" onClick={onClear}>
-                  {clear}
-                </button>
-                <button className={css.cancelButton} type="button" onClick={handleCancel}>
-                  {cancel}
-                </button>
-                <button className={css.submitButton} type="submit">
-                  {submit}
-                </button>
-              </div>
-            )}
+            {spy}
+            {buttons}
           </Form>
         );
       }}

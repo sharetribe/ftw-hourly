@@ -4,14 +4,14 @@ import { FieldSelect } from '../../components';
 import css from './EditListingDescriptionForm.css';
 
 const CustomCertificateSelectFieldMaybe = props => {
-  const { name, id, certificate, intl } = props;
+  const { name, id, certificateOptions, intl } = props;
   const certificateLabel = intl.formatMessage({
     id: 'EditListingDescriptionForm.certificateLabel',
   });
 
-  return certificate ? (
+  return certificateOptions ? (
     <FieldSelect className={css.certificate} name={name} id={id} label={certificateLabel}>
-      {certificate.map(c => (
+      {certificateOptions.map(c => (
         <option key={c.key} value={c.key}>
           {c.label}
         </option>

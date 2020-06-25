@@ -1,27 +1,13 @@
 import React, { Component } from 'react';
-import { object, string, bool, number, func, shape, array } from 'prop-types';
+import { bool, func, object, node, number, shape, string } from 'prop-types';
 import classNames from 'classnames';
 import { FormattedMessage, injectIntl, intlShape } from '../../util/reactIntl';
 import { withRouter } from 'react-router-dom';
-import omit from 'lodash/omit';
-
-import config from '../../config';
 
 import routeConfiguration from '../../routeConfiguration';
 import { createResourceLocatorString } from '../../util/routes';
-import {
-  ModalInMobile,
-  Button,
-  KeywordFilter,
-  PriceFilter,
-  SelectSingleFilter,
-  SelectMultipleFilter,
-  SortBy,
-} from '../../components';
-import { propTypes } from '../../util/types';
+import { ModalInMobile, Button } from '../../components';
 import css from './SearchFiltersMobile.css';
-
-const RADIX = 10;
 
 class SearchFiltersMobileComponent extends Component {
   constructor(props) {
@@ -32,14 +18,6 @@ class SearchFiltersMobileComponent extends Component {
     this.cancelFilters = this.cancelFilters.bind(this);
     this.closeFilters = this.closeFilters.bind(this);
     this.resetAll = this.resetAll.bind(this);
-    this.handleSelectSingle = this.handleSelectSingle.bind(this);
-    this.handleSelectMultiple = this.handleSelectMultiple.bind(this);
-    this.handlePrice = this.handlePrice.bind(this);
-    this.handleKeyword = this.handleKeyword.bind(this);
-    this.handleSortBy = this.handleSortBy.bind(this);
-    this.initialValue = this.initialValue.bind(this);
-    this.initialValues = this.initialValues.bind(this);
-    this.initialPriceRangeValue = this.initialPriceRangeValue.bind(this);
   }
 
   // Open filters modal, set the initial parameters to current ones
@@ -71,64 +49,9 @@ class SearchFiltersMobileComponent extends Component {
     this.setState({ isFiltersOpenOnMobile: false });
   }
 
-  handleSelectSingle(urlParam, option) {
-    const { urlQueryParams, history } = this.props;
-
-    // query parameters after selecting the option
-    // if no option is passed, clear the selection for the filter
-    const queryParams = option
-      ? { ...urlQueryParams, [urlParam]: option }
-      : omit(urlQueryParams, urlParam);
-
-    history.push(createResourceLocatorString('SearchPage', routeConfiguration(), {}, queryParams));
-  }
-
-  handleSelectMultiple(urlParam, options) {
-    const { urlQueryParams, history } = this.props;
-
-    const queryParams =
-      options && options.length > 0
-        ? { ...urlQueryParams, [urlParam]: options.join(',') }
-        : omit(urlQueryParams, urlParam);
-
-    history.push(createResourceLocatorString('SearchPage', routeConfiguration(), {}, queryParams));
-  }
-
-  handlePrice(urlParam, range) {
-    const { urlQueryParams, history } = this.props;
-    const { minPrice, maxPrice } = range || {};
-    const queryParams =
-      minPrice != null && maxPrice != null
-        ? { ...urlQueryParams, [urlParam]: `${minPrice},${maxPrice}` }
-        : omit(urlQueryParams, urlParam);
-
-    history.push(createResourceLocatorString('SearchPage', routeConfiguration(), {}, queryParams));
-  }
-
-  handleKeyword(urlParam, keywords) {
-    const { urlQueryParams, history } = this.props;
-    const queryParams = urlParam
-      ? { ...urlQueryParams, [urlParam]: keywords }
-      : omit(urlQueryParams, urlParam);
-
-    history.push(createResourceLocatorString('SearchPage', routeConfiguration(), {}, queryParams));
-  }
-
-  handleSortBy(urlParam, sort) {
-    const { urlQueryParams, history } = this.props;
-    const queryParams = urlParam
-      ? { ...urlQueryParams, [urlParam]: sort }
-      : omit(urlQueryParams, urlParam);
-
-    history.push(createResourceLocatorString('SearchPage', routeConfiguration(), {}, queryParams));
-  }
-
   // Reset all filter query parameters
   resetAll(e) {
-    const { urlQueryParams, history, filterParamNames } = this.props;
-
-    const queryParams = omit(urlQueryParams, filterParamNames);
-    history.push(createResourceLocatorString('SearchPage', routeConfiguration(), {}, queryParams));
+    this.props.resetAll(e);
 
     // blur event target if event is passed
     if (e && e.currentTarget) {
@@ -136,35 +59,12 @@ class SearchFiltersMobileComponent extends Component {
     }
   }
 
-  // resolve initial value for a single value filter
-  initialValue(paramName) {
-    return this.props.urlQueryParams[paramName];
-  }
-
-  // resolve initial values for a multi value filter
-  initialValues(paramName) {
-    const urlQueryParams = this.props.urlQueryParams;
-    return !!urlQueryParams[paramName] ? urlQueryParams[paramName].split(',') : [];
-  }
-
-  initialPriceRangeValue(paramName) {
-    const urlQueryParams = this.props.urlQueryParams;
-    const price = urlQueryParams[paramName];
-    const valuesFromParams = !!price ? price.split(',').map(v => Number.parseInt(v, RADIX)) : [];
-
-    return !!price && valuesFromParams.length === 2
-      ? {
-          minPrice: valuesFromParams[0],
-          maxPrice: valuesFromParams[1],
-        }
-      : null;
-  }
-
   render() {
     const {
       rootClassName,
       className,
-      sort,
+      children,
+      sortByComponent,
       listingsAreLoaded,
       resultsCount,
       searchInProgress,
@@ -172,20 +72,16 @@ class SearchFiltersMobileComponent extends Component {
       onMapIconClick,
       onManageDisableScrolling,
       selectedFiltersCount,
-      certificateFilter,
-      yogaStylesFilter,
-      priceFilter,
-      keywordFilter,
       intl,
     } = this.props;
 
     const classes = classNames(rootClassName || css.root, className);
 
     const resultsFound = (
-      <FormattedMessage id="SearchFilters.foundResults" values={{ count: resultsCount }} />
+      <FormattedMessage id="SearchFiltersMobile.foundResults" values={{ count: resultsCount }} />
     );
-    const noResults = <FormattedMessage id="SearchFilters.noResultsMobile" />;
-    const loadingResults = <FormattedMessage id="SearchFilters.loadingResultsMobile" />;
+    const noResults = <FormattedMessage id="SearchFiltersMobile.noResults" />;
+    const loadingResults = <FormattedMessage id="SearchFiltersMobile.loadingResults" />;
     const filtersHeading = intl.formatMessage({ id: 'SearchFiltersMobile.heading' });
     const modalCloseButtonMessage = intl.formatMessage({ id: 'SearchFiltersMobile.cancel' });
 
@@ -197,86 +93,6 @@ class SearchFiltersMobileComponent extends Component {
     const filtersButtonClasses =
       selectedFiltersCount > 0 ? css.filtersButtonSelected : css.filtersButton;
 
-    const certificateLabel = intl.formatMessage({
-      id: 'SearchFiltersMobile.certificateLabel',
-    });
-    const initialcertificate = certificateFilter
-      ? this.initialValue(certificateFilter.paramName)
-      : null;
-
-    const certificateFilterElement = certificateFilter ? (
-      <SelectSingleFilter
-        urlParam={certificateFilter.paramName}
-        label={certificateLabel}
-        onSelect={this.handleSelectSingle}
-        liveEdit
-        options={certificateFilter.options}
-        initialValue={initialcertificate}
-        intl={intl}
-      />
-    ) : null;
-
-    const yogaStylesLabel = intl.formatMessage({ id: 'SearchFiltersMobile.yogaStylesLabel' });
-
-    const initialyogaStyles = this.initialValues(yogaStylesFilter.paramName);
-
-    const yogaStylesFilterElement = yogaStylesFilter ? (
-      <SelectMultipleFilter
-        id="SearchFiltersMobile.yogaStylesFilter"
-        name="yogaStyles"
-        urlParam={yogaStylesFilter.paramName}
-        label={yogaStylesLabel}
-        onSubmit={this.handleSelectMultiple}
-        liveEdit
-        options={yogaStylesFilter.options}
-        initialValues={initialyogaStyles}
-      />
-    ) : null;
-
-    const initialPriceRange = this.initialPriceRangeValue(priceFilter.paramName);
-
-    const priceFilterElement = priceFilter ? (
-      <PriceFilter
-        id="SearchFiltersMobile.priceFilter"
-        urlParam={priceFilter.paramName}
-        onSubmit={this.handlePrice}
-        liveEdit
-        {...priceFilter.config}
-        initialValues={initialPriceRange}
-      />
-    ) : null;
-
-    const initialKeyword = this.initialValue(keywordFilter.paramName);
-    const keywordLabel = intl.formatMessage({
-      id: 'SearchFiltersMobile.keywordLabel',
-    });
-    const keywordFilterElement =
-      keywordFilter && keywordFilter.config.active ? (
-        <KeywordFilter
-          id={'SearchFiltersMobile.keywordFilter'}
-          name="keyword"
-          urlParam={keywordFilter.paramName}
-          label={keywordLabel}
-          onSubmit={this.handleKeyword}
-          liveEdit
-          showAsPopup={false}
-          initialValues={initialKeyword}
-        />
-      ) : null;
-
-    const isKeywordFilterActive = !!initialKeyword;
-
-    const sortBy = config.custom.sortConfig.active ? (
-      <SortBy
-        rootClassName={css.sortBy}
-        menuLabelRootClassName={css.sortByMenuLabel}
-        sort={sort}
-        showAsPopup
-        isKeywordFilterActive={isKeywordFilterActive}
-        onSelect={this.handleSortBy}
-      />
-    ) : null;
-
     return (
       <div className={classes}>
         <div className={css.searchResultSummary}>
@@ -286,11 +102,14 @@ class SearchFiltersMobileComponent extends Component {
         </div>
         <div className={css.buttons}>
           <Button rootClassName={filtersButtonClasses} onClick={this.openFilters}>
-            <FormattedMessage id="SearchFilters.filtersButtonLabel" className={css.mapIconText} />
+            <FormattedMessage
+              id="SearchFiltersMobile.filtersButtonLabel"
+              className={css.mapIconText}
+            />
           </Button>
-          {sortBy}
+          {sortByComponent}
           <div className={css.mapIcon} onClick={onMapIconClick}>
-            <FormattedMessage id="SearchFilters.openMapView" className={css.mapIconText} />
+            <FormattedMessage id="SearchFiltersMobile.openMapView" className={css.mapIconText} />
           </div>
         </div>
         <ModalInMobile
@@ -309,12 +128,7 @@ class SearchFiltersMobileComponent extends Component {
             </button>
           </div>
           {this.state.isFiltersOpenOnMobile ? (
-            <div className={css.filtersWrapper}>
-              {keywordFilterElement}
-              {yogaStylesFilterElement}
-              {certificateFilterElement}
-              {priceFilterElement}
-            </div>
+            <div className={css.filtersWrapper}>{children}</div>
           ) : null}
 
           <div className={css.showListingsContainer}>
@@ -331,34 +145,27 @@ class SearchFiltersMobileComponent extends Component {
 SearchFiltersMobileComponent.defaultProps = {
   rootClassName: null,
   className: null,
-  sort: null,
+  sortByComponent: null,
   resultsCount: null,
-  searchingInProgress: false,
+  searchInProgress: false,
   selectedFiltersCount: 0,
-  filterParamNames: [],
-  certificateFilter: null,
-  yogaStylesFilter: null,
-  priceFilter: null,
 };
 
 SearchFiltersMobileComponent.propTypes = {
   rootClassName: string,
   className: string,
   urlQueryParams: object.isRequired,
-  sort: string,
+  sortByComponent: node,
   listingsAreLoaded: bool.isRequired,
   resultsCount: number,
-  searchingInProgress: bool,
+  searchInProgress: bool,
   showAsModalMaxWidth: number.isRequired,
   onMapIconClick: func.isRequired,
   onManageDisableScrolling: func.isRequired,
   onOpenModal: func.isRequired,
   onCloseModal: func.isRequired,
+  resetAll: func.isRequired,
   selectedFiltersCount: number,
-  filterParamNames: array,
-  certificateFilter: propTypes.filterConfig,
-  yogaStylesFilter: propTypes.filterConfig,
-  priceFilter: propTypes.filterConfig,
 
   // from injectIntl
   intl: intlShape.isRequired,
