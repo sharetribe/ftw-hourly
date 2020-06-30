@@ -13,6 +13,16 @@ import EstimatedBreakdownMaybe from './EstimatedBreakdownMaybe';
 const { UUID, Money } = sdkTypes;
 
 const noop = () => null;
+const lineItems = [
+  {
+    code: 'line-item/units',
+    unitPrice: new Money(1099, 'USD'),
+    units: new Decimal(2),
+    includeFor: ['customer', 'provider'],
+    lineTotal: new Money(2198, 'USD'),
+    reversal: false,
+  },
+];
 
 const startDateInputProps = {
   name: 'bookingStartDate',
@@ -89,6 +99,9 @@ describe('BookingTimeForm', () => {
         onSubmit={noop}
         onFetchTimeSlots={noop}
         intl={fakeIntl}
+        fetchLineItemsInProgress={false}
+        onFetchTransactionLineItems={noop}
+        lineItems={lineItems}
       />
     );
     expect(tree).toMatchSnapshot();
@@ -118,14 +131,11 @@ describe('EstimatedBreakdownMaybe', () => {
     const endDate = new Date(2017, 3, 16, 14, 0, 0);
     const data = {
       unitType: LINE_ITEM_UNITS,
-      unitPrice,
       startDate,
       endDate,
-      // Calculate the quantity as hours between the booking start and booking end
-      quantity: calculateQuantityFromHours(startDate, endDate),
       timeZone: 'UTC/Etc',
     };
-    const tree = shallow(<EstimatedBreakdownMaybe bookingData={data} />);
+    const tree = shallow(<EstimatedBreakdownMaybe bookingData={data} lineItems={lineItems} />);
     const breakdown = tree.find(BookingBreakdown);
     const { userRole, unitType, transaction, booking } = breakdown.props();
 
@@ -142,7 +152,7 @@ describe('EstimatedBreakdownMaybe', () => {
         code: 'line-item/units',
         includeFor: ['customer', 'provider'],
         unitPrice,
-        quantity: new Decimal(2),
+        units: new Decimal(2),
         lineTotal: new Money(2198, 'USD'),
         reversal: false,
       },

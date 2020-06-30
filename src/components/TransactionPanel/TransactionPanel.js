@@ -191,6 +191,10 @@ export class TransactionPanelComponent extends Component {
       onSubmitBookingRequest,
       monthlyTimeSlots,
       nextTransitions,
+      onFetchTransactionLineItems,
+      lineItems,
+      fetchLineItemsInProgress,
+      fetchLineItemsError,
     } = this.props;
 
     const currentTransaction = ensureTransaction(transaction);
@@ -448,6 +452,10 @@ export class TransactionPanelComponent extends Component {
                   onManageDisableScrolling={onManageDisableScrolling}
                   monthlyTimeSlots={monthlyTimeSlots}
                   onFetchTimeSlots={onFetchTimeSlots}
+                  onFetchTransactionLineItems={onFetchTransactionLineItems}
+                  lineItems={lineItems}
+                  fetchLineItemsInProgress={fetchLineItemsInProgress}
+                  fetchLineItemsError={fetchLineItemsError}
                 />
               ) : null}
               <BreakdownMaybe
@@ -491,6 +499,8 @@ TransactionPanelComponent.defaultProps = {
   sendReviewError: null,
   monthlyTimeSlots: null,
   nextTransitions: null,
+  lineItems: null,
+  fetchLineItemsError: null,
 };
 
 TransactionPanelComponent.propTypes = {
@@ -526,6 +536,12 @@ TransactionPanelComponent.propTypes = {
   declineInProgress: bool.isRequired,
   acceptSaleError: propTypes.error,
   declineSaleError: propTypes.error,
+
+  // line items
+  onFetchTransactionLineItems: func.isRequired,
+  lineItems: array,
+  fetchLineItemsInProgress: bool.isRequired,
+  fetchLineItemsError: propTypes.error,
 
   // from injectIntl
   intl: intlShape,

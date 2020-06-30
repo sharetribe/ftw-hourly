@@ -211,7 +211,10 @@ exports[`ListingPage matches snapshot 1`] = `
           </div>
           <withRouter(injectIntl(BookingPanel))
             authorDisplayName="user-1 display name"
+            fetchLineItemsError={null}
+            fetchLineItemsInProgress={false}
             isOwnListing={false}
+            lineItems={null}
             listing={
               Object {
                 "attributes": Object {
@@ -256,6 +259,7 @@ exports[`ListingPage matches snapshot 1`] = `
             }
             monthlyTimeSlots={null}
             onFetchTimeSlots={[Function]}
+            onFetchTransactionLineItems={[Function]}
             onManageDisableScrolling={[Function]}
             onSubmit={[Function]}
             title={

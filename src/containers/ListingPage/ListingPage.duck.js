@@ -3,6 +3,8 @@ import config from '../../config';
 import { types as sdkTypes } from '../../util/sdkLoader';
 import { storableError } from '../../util/errors';
 import { addMarketplaceEntities } from '../../ducks/marketplaceData.duck';
+import { transactionLineItems } from '../../util/api';
+import * as log from '../../util/log';
 import { denormalisedResponseEntities } from '../../util/data';
 import { findNextBoundary, nextMonthFn, monthIdStringInTimeZone } from '../../util/dates';
 import { TRANSITION_ENQUIRE } from '../../util/transaction';
@@ -29,6 +31,10 @@ export const FETCH_TIME_SLOTS_REQUEST = 'app/ListingPage/FETCH_TIME_SLOTS_REQUES
 export const FETCH_TIME_SLOTS_SUCCESS = 'app/ListingPage/FETCH_TIME_SLOTS_SUCCESS';
 export const FETCH_TIME_SLOTS_ERROR = 'app/ListingPage/FETCH_TIME_SLOTS_ERROR';
 
+export const FETCH_LINE_ITEMS_REQUEST = 'app/ListingPage/FETCH_LINE_ITEMS_REQUEST';
+export const FETCH_LINE_ITEMS_SUCCESS = 'app/ListingPage/FETCH_LINE_ITEMS_SUCCESS';
+export const FETCH_LINE_ITEMS_ERROR = 'app/ListingPage/FETCH_LINE_ITEMS_ERROR';
+
 export const SEND_ENQUIRY_REQUEST = 'app/ListingPage/SEND_ENQUIRY_REQUEST';
 export const SEND_ENQUIRY_SUCCESS = 'app/ListingPage/SEND_ENQUIRY_SUCCESS';
 export const SEND_ENQUIRY_ERROR = 'app/ListingPage/SEND_ENQUIRY_ERROR';
@@ -47,6 +53,9 @@ const initialState = {
     //   fetchTimeSlotsInProgress: null,
     // },
   },
+  lineItems: null,
+  fetchLineItemsInProgress: false,
+  fetchLineItemsError: null,
   sendEnquiryInProgress: false,
   sendEnquiryError: null,
   enquiryModalOpenForListingId: null,
@@ -106,6 +115,13 @@ const listingPageReducer = (state = initialState, action = {}) => {
       return { ...state, monthlyTimeSlots };
     }
 
+    case FETCH_LINE_ITEMS_REQUEST:
+      return { ...state, fetchLineItemsInProgress: true, fetchLineItemsError: null };
+    case FETCH_LINE_ITEMS_SUCCESS:
+      return { ...state, fetchLineItemsInProgress: false, lineItems: payload };
+    case FETCH_LINE_ITEMS_ERROR:
+      return { ...state, fetchLineItemsInProgress: false, fetchLineItemsError: payload };
+
     case SEND_ENQUIRY_REQUEST:
       return { ...state, sendEnquiryInProgress: true, sendEnquiryError: null };
     case SEND_ENQUIRY_SUCCESS:
@@ -158,6 +174,17 @@ export const fetchTimeSlotsError = (monthId, error) => ({
   type: FETCH_TIME_SLOTS_ERROR,
   error: true,
   payload: { monthId, error },
+});
+
+export const fetchLineItemsRequest = () => ({ type: FETCH_LINE_ITEMS_REQUEST });
+export const fetchLineItemsSuccess = lineItems => ({
+  type: FETCH_LINE_ITEMS_SUCCESS,
+  payload: lineItems,
+});
+export const fetchLineItemsError = error => ({
+  type: FETCH_LINE_ITEMS_ERROR,
+  error: true,
+  payload: error,
 });
 
 export const sendEnquiryRequest = () => ({ type: SEND_ENQUIRY_REQUEST });
@@ -300,6 +327,22 @@ const fetchMonthlyTimeSlots = (dispatch, listing) => {
 
   // By default return an empty array
   return Promise.all([]);
+};
+
+export const fetchTransactionLineItems = ({ bookingData, listingId, isOwnListing }) => dispatch => {
+  dispatch(fetchLineItemsRequest());
+  transactionLineItems({ bookingData, listingId, isOwnListing })
+    .then(response => {
+      const lineItems = response.data;
+      dispatch(fetchLineItemsSuccess(lineItems));
+    })
+    .catch(e => {
+      dispatch(fetchLineItemsError(storableError(e)));
+      log.error(e, 'fetching-line-items-failed', {
+        listingId: listingId.uuid,
+        bookingData: bookingData,
+      });
+    });
 };
 
 export const loadData = (params, search) => dispatch => {

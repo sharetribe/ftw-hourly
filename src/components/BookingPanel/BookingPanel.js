@@ -2,7 +2,7 @@ import React from 'react';
 import { compose } from 'redux';
 import { withRouter } from 'react-router-dom';
 import { intlShape, injectIntl, FormattedMessage } from '../../util/reactIntl';
-import { bool, func, node, object, oneOfType, shape, string } from 'prop-types';
+import { array, bool, func, node, object, oneOfType, shape, string } from 'prop-types';
 import classNames from 'classnames';
 import omit from 'lodash/omit';
 import { propTypes, LISTING_STATE_CLOSED, LINE_ITEM_NIGHT, LINE_ITEM_DAY } from '../../util/types';
@@ -67,6 +67,10 @@ const BookingPanel = props => {
     history,
     location,
     intl,
+    onFetchTransactionLineItems,
+    lineItems,
+    fetchLineItemsInProgress,
+    fetchLineItemsError,
   } = props;
 
   const price = listing.attributes.price;
@@ -133,13 +137,17 @@ const BookingPanel = props => {
             unitType={unitType}
             onSubmit={onSubmit}
             price={price}
-            isOwnListing={isOwnListing}
             listingId={listing.id}
+            isOwnListing={isOwnListing}
             monthlyTimeSlots={monthlyTimeSlots}
             onFetchTimeSlots={onFetchTimeSlots}
             startDatePlaceholder={intl.formatDate(TODAY, dateFormattingOptions)}
             endDatePlaceholder={intl.formatDate(TODAY, dateFormattingOptions)}
             timeZone={timeZone}
+            onFetchTransactionLineItems={onFetchTransactionLineItems}
+            lineItems={lineItems}
+            fetchLineItemsInProgress={fetchLineItemsInProgress}
+            fetchLineItemsError={fetchLineItemsError}
           />
         ) : null}
       </ModalInMobile>
@@ -178,6 +186,8 @@ BookingPanel.defaultProps = {
   subTitle: null,
   unitType: config.bookingUnitType,
   monthlyTimeSlots: null,
+  lineItems: null,
+  fetchLineItemsError: null,
 };
 
 BookingPanel.propTypes = {
@@ -194,6 +204,10 @@ BookingPanel.propTypes = {
   onManageDisableScrolling: func.isRequired,
   onFetchTimeSlots: func.isRequired,
   monthlyTimeSlots: object,
+  onFetchTransactionLineItems: func.isRequired,
+  lineItems: array,
+  fetchLineItemsInProgress: bool.isRequired,
+  fetchLineItemsError: propTypes.error,
 
   // from withRouter
   history: shape({
