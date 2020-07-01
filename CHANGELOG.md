@@ -17,8 +17,25 @@ https://github.com/sharetribe/flex-template-web/
 
 ## Upcoming version 2020-XX-XX
 
+## [v8.1.0] 2020-07-01
+
 - [change] Change the transaction process name to be `flex-hourly-default-process/release-1`
   [#104](https://github.com/sharetribe/ftw-hourly/pull/104)
+
+### Updates from upstream (FTW-daily v6.1.0)
+
+- [fix] MainPanel: search filter bug. Address and bounds are handled outside of MainPanel, URL
+  params should be trusted instead of values stored to state.
+  [#1320](https://github.com/sharetribe/ftw-daily/pull/1320)
+- [fix] small typo. [#1319](https://github.com/sharetribe/ftw-daily/pull/1319)
+- [fix] Fix typo (which is copy-pasted in 4 files).
+  [#1318](https://github.com/sharetribe/ftw-daily/pull/1318)
+- [add] Update French translation file (Spanish and German translations have still missing keys).
+  [#1316](https://github.com/sharetribe/ftw-daily/pull/1316)
+- [fix] Sync bookingUnitType variables and update comments. Client app's API (proxy) server needs to
+  know about unit type. [#1317](https://github.com/sharetribe/ftw-daily/pull/1317)
+
+[v8.1.0]: https://github.com/sharetribe/flex-template-web/compare/v8.0.0...v8.1.0
 
 ## [v8.0.0] 2020-07-01
 

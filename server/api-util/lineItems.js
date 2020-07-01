@@ -2,7 +2,9 @@ const { calculateQuantityFromHours, calculateTotalFromLineItems } = require('./l
 const { types } = require('sharetribe-flex-sdk');
 const { Money } = types;
 
-const unitType = 'line-item/night';
+// This bookingUnitType needs to be one of the following:
+// line-item/night, line-item/day or line-item/units
+const bookingUnitType = 'line-item/units';
 const PROVIDER_COMMISSION_PERCENTAGE = -10;
 
 /** Returns collection of lineItems (max 50)
@@ -39,9 +41,9 @@ exports.transactionLineItems = (listing, bookingData) => {
    * By default BookingBreakdown prints line items inside LineItemUnknownItemsMaybe if the lineItem code is not recognized. */
 
   const booking = {
-    code: 'line-item/units',
+    code: bookingUnitType,
     unitPrice,
-    quantity: calculateQuantityFromHours(startDate, endDate, unitType),
+    quantity: calculateQuantityFromHours(startDate, endDate),
     includeFor: ['customer', 'provider'],
   };
 
