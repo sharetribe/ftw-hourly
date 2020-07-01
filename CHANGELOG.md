@@ -17,6 +17,9 @@ https://github.com/sharetribe/flex-template-web/
 
 ## Upcoming version 2020-XX-XX
 
+- [change] Change the transaction process name to be `flex-hourly-default-process/release-1`
+  [#104](https://github.com/sharetribe/ftw-hourly/pull/104)
+
 ## [v8.0.0] 2020-07-01
 
 ### Updates from upstream (FTW-daily v6.0.0)
