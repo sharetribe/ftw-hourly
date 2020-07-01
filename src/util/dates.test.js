@@ -99,7 +99,7 @@ describe('date utils', () => {
     });
     it('should return localized time for "2019-09-18T00:45:00.000Z" with 12h format', () => {
       const formattingOptions = {
-        hour: '2-digit',
+        hour: 'numeric',
         minute: '2-digit',
         hour12: true,
       };
