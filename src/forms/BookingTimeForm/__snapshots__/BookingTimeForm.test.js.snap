@@ -20,6 +20,8 @@ exports[`BookingTimeForm matches snapshot without selected dates 1`] = `
       "name": "bookingEndTime",
     }
   }
+  fetchLineItemsError={null}
+  fetchLineItemsInProgress={false}
   initialValues={
     Object {
       "bookingStartDate": Object {
@@ -40,6 +42,29 @@ exports[`BookingTimeForm matches snapshot without selected dates 1`] = `
     }
   }
   isOwnListing={false}
+  lineItems={
+    Array [
+      Object {
+        "code": "line-item/units",
+        "includeFor": Array [
+          "customer",
+          "provider",
+        ],
+        "lineTotal": Money {
+          "_sdkType": "Money",
+          "amount": 2198,
+          "currency": "USD",
+        },
+        "reversal": false,
+        "unitPrice": Money {
+          "_sdkType": "Money",
+          "amount": 1099,
+          "currency": "USD",
+        },
+        "units": "2",
+      },
+    ]
+  }
   listingId={null}
   monthlyTimeSlots={
     Object {
@@ -77,6 +102,7 @@ exports[`BookingTimeForm matches snapshot without selected dates 1`] = `
   }
   onChange={[Function]}
   onFetchTimeSlots={[Function]}
+  onFetchTransactionLineItems={[Function]}
   onSubmit={[Function]}
   render={[Function]}
   startDateInputProps={

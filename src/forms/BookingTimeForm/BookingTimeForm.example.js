@@ -75,6 +75,8 @@ export const Form = {
       console.log('Submit BookingTimeForm with values:', values);
     },
     onFetchTimeSlots: noop,
+    fetchLineItemsInProgress: false,
+    onFetchTransactionLineItems: noop,
     price: new Money(1099, 'USD'),
     timeZone: 'Etc/UTC',
   },

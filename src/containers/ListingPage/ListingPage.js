@@ -45,7 +45,13 @@ import {
 import { EnquiryForm } from '../../forms';
 import { TopbarContainer, NotFoundPage } from '../../containers';
 
-import { sendEnquiry, loadData, setInitialValues, fetchTimeSlots } from './ListingPage.duck';
+import {
+  sendEnquiry,
+  loadData,
+  setInitialValues,
+  fetchTimeSlots,
+  fetchTransactionLineItems,
+} from './ListingPage.duck';
 import SectionImages from './SectionImages';
 import SectionAvatar from './SectionAvatar';
 import SectionHeading from './SectionHeading';
@@ -193,6 +199,10 @@ export class ListingPageComponent extends Component {
       sendEnquiryError,
       monthlyTimeSlots,
       filterConfig,
+      onFetchTransactionLineItems,
+      lineItems,
+      fetchLineItemsInProgress,
+      fetchLineItemsError,
     } = this.props;
 
     const listingId = new UUID(rawParams.id);
@@ -444,6 +454,10 @@ export class ListingPageComponent extends Component {
                   onManageDisableScrolling={onManageDisableScrolling}
                   monthlyTimeSlots={monthlyTimeSlots}
                   onFetchTimeSlots={onFetchTimeSlots}
+                  onFetchTransactionLineItems={onFetchTransactionLineItems}
+                  lineItems={lineItems}
+                  fetchLineItemsInProgress={fetchLineItemsInProgress}
+                  fetchLineItemsError={fetchLineItemsError}
                 />
               </div>
             </div>
@@ -484,6 +498,8 @@ ListingPageComponent.defaultProps = {
   monthlyTimeSlots: null,
   sendEnquiryError: null,
   filterConfig: config.custom.filters,
+  lineItems: null,
+  fetchLineItemsError: null,
 };
 
 ListingPageComponent.propTypes = {
@@ -530,6 +546,10 @@ ListingPageComponent.propTypes = {
   onSendEnquiry: func.isRequired,
   onInitializeCardPaymentData: func.isRequired,
   filterConfig: array,
+  onFetchTransactionLineItems: func.isRequired,
+  lineItems: array,
+  fetchLineItemsInProgress: bool.isRequired,
+  fetchLineItemsError: propTypes.error,
 };
 
 const mapStateToProps = state => {
@@ -541,6 +561,9 @@ const mapStateToProps = state => {
     monthlyTimeSlots,
     sendEnquiryInProgress,
     sendEnquiryError,
+    lineItems,
+    fetchLineItemsInProgress,
+    fetchLineItemsError,
     enquiryModalOpenForListingId,
   } = state.ListingPage;
   const { currentUser } = state.user;
@@ -568,6 +591,9 @@ const mapStateToProps = state => {
     reviews,
     fetchReviewsError,
     monthlyTimeSlots,
+    lineItems,
+    fetchLineItemsInProgress,
+    fetchLineItemsError,
     sendEnquiryInProgress,
     sendEnquiryError,
   };
@@ -577,6 +603,8 @@ const mapDispatchToProps = dispatch => ({
   onManageDisableScrolling: (componentId, disableScrolling) =>
     dispatch(manageDisableScrolling(componentId, disableScrolling)),
   callSetInitialValues: (setInitialValues, values) => dispatch(setInitialValues(values)),
+  onFetchTransactionLineItems: (bookingData, listingId, isOwnListing) =>
+    dispatch(fetchTransactionLineItems(bookingData, listingId, isOwnListing)),
   onSendEnquiry: (listingId, message) => dispatch(sendEnquiry(listingId, message)),
   onInitializeCardPaymentData: () => dispatch(initializeCardPaymentData()),
   onFetchTimeSlots: (listingId, start, end, timeZone) =>

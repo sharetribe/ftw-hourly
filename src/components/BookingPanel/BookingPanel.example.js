@@ -14,8 +14,10 @@ export const Default = {
     title: <span>Booking title</span>,
     subTitle: 'Hosted by Author N',
     authorDisplayName: 'Author Name',
-    onManageDisableScrolling: () => null,
+    onManageDisableScrolling: noop,
     onFetchTimeSlots: noop,
+    fetchLineItemsInProgress: false,
+    onFetchTransactionLineItems: noop,
   },
 };
 
@@ -33,5 +35,7 @@ export const WithClosedListing = {
     authorDisplayName: 'Author Name',
     onManageDisableScrolling: noop,
     onFetchTimeSlots: noop,
+    fetchLineItemsInProgress: false,
+    onFetchTransactionLineItems: noop,
   },
 };

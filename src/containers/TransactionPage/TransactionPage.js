@@ -1,5 +1,5 @@
 import React from 'react';
-import { arrayOf, bool, func, number, object, oneOf, shape, string } from 'prop-types';
+import { array, arrayOf, bool, func, object, oneOf, shape, string, number } from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
@@ -36,6 +36,7 @@ import {
   sendReview,
   fetchMoreMessages,
   fetchTimeSlots,
+  fetchTransactionLineItems,
 } from './TransactionPage.duck';
 import css from './TransactionPage.css';
 
@@ -79,6 +80,10 @@ export const TransactionPageComponent = props => {
     processTransitions,
     callSetInitialValues,
     onInitializeCardPaymentData,
+    onFetchTransactionLineItems,
+    lineItems,
+    fetchLineItemsInProgress,
+    fetchLineItemsError,
   } = props;
 
   const currentTransaction = ensureTransaction(transaction);
@@ -251,6 +256,10 @@ export const TransactionPageComponent = props => {
       nextTransitions={processTransitions}
       onSubmitBookingRequest={handleSubmitBookingRequest}
       monthlyTimeSlots={monthlyTimeSlots}
+      onFetchTransactionLineItems={onFetchTransactionLineItems}
+      lineItems={lineItems}
+      fetchLineItemsInProgress={fetchLineItemsInProgress}
+      fetchLineItemsError={fetchLineItemsError}
     />
   ) : (
     loadingOrFailedFetching
@@ -287,6 +296,8 @@ TransactionPageComponent.defaultProps = {
   savePaymentMethodFailed: false,
   sendMessageError: null,
   monthlyTimeSlots: null,
+  lineItems: null,
+  fetchLineItemsError: null,
 };
 
 TransactionPageComponent.propTypes = {
@@ -324,6 +335,12 @@ TransactionPageComponent.propTypes = {
   // }
   callSetInitialValues: func.isRequired,
   onInitializeCardPaymentData: func.isRequired,
+  onFetchTransactionLineItems: func.isRequired,
+
+  // line items
+  lineItems: array,
+  fetchLineItemsInProgress: bool.isRequired,
+  fetchLineItemsError: propTypes.error,
 
   // from withRouter
   history: shape({
@@ -358,6 +375,9 @@ const mapStateToProps = state => {
     sendReviewError,
     monthlyTimeSlots,
     processTransitions,
+    lineItems,
+    fetchLineItemsInProgress,
+    fetchLineItemsError,
   } = state.TransactionPage;
   const { currentUser } = state.user;
 
@@ -386,6 +406,9 @@ const mapStateToProps = state => {
     sendReviewError,
     monthlyTimeSlots,
     processTransitions,
+    lineItems,
+    fetchLineItemsInProgress,
+    fetchLineItemsError,
   };
 };
 
@@ -403,6 +426,8 @@ const mapDispatchToProps = dispatch => {
     onInitializeCardPaymentData: () => dispatch(initializeCardPaymentData()),
     onFetchTimeSlots: (listingId, start, end, timeZone) =>
       dispatch(fetchTimeSlots(listingId, start, end, timeZone)),
+    onFetchTransactionLineItems: (bookingData, listingId, isOwnListing) =>
+      dispatch(fetchTransactionLineItems(bookingData, listingId, isOwnListing)),
   };
 };
 

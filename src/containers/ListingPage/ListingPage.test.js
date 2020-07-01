@@ -107,6 +107,8 @@ describe('ListingPage', () => {
       onSendEnquiry: noop,
       onFetchTimeSlots: noop,
       filterConfig,
+      fetchLineItemsInProgress: false,
+      onFetchTransactionLineItems: () => null,
     };
 
     const tree = renderShallow(<ListingPageComponent {...props} />);

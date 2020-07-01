@@ -17,6 +17,24 @@ https://github.com/sharetribe/flex-template-web/
 
 ## Upcoming version 2020-XX-XX
 
+## [v8.0.0] 2020-07-01
+
+### Updates from upstream (FTW-daily v6.0.0)
+
+- [change] Use privileged transitions for price calculation by default and update the process alias.
+  [#1314](https://github.com/sharetribe/ftw-daily/pull/1314)
+- [add] Add client secret enquiry to 'yarn run config' script
+  [#1313](https://github.com/sharetribe/ftw-daily/pull/1313)
+- [change] Add UI support for flexible pricing and privileged transitions. Note that this requires
+  updating the booking breakdown estimation code that is now done in the backend.
+  [#1310](https://github.com/sharetribe/ftw-daily/pull/1310)
+- [add] Add local API endpoints for flexible pricing and privileged transitions
+  [#1301](https://github.com/sharetribe/ftw-daily/pull/1301)
+- [fix] `yarn run dev-backend` was expecting NODE_ENV.
+  [#1303](https://github.com/sharetribe/ftw-daily/pull/1303)
+
+[v8.0.0]: https://github.com/sharetribe/flex-template-web/compare/v7.0.0...v8.0.0
+
 ## [v7.0.0] 2020-06-04
 
 ### Updates from upstream (FTW-daily v5.0.0)
