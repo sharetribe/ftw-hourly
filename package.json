@@ -30,7 +30,7 @@
     "helmet": "^3.21.2",
     "intl-pluralrules": "^1.0.3",
     "jstimezonedetect": "^1.0.7",
-    "lodash": "^4.17.14",
+    "lodash": "^4.17.19",
     "mapbox-gl-multitouch": "^1.0.3",
     "moment": "^2.22.2",
     "moment-timezone": "^0.5.26",
