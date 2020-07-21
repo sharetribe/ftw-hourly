@@ -17,6 +17,13 @@ https://github.com/sharetribe/flex-template-web/
 
 ## Upcoming version 2020-XX-XX
 
+## [v8.1.1] 2020-07-21
+
+- [fix] Fix config script for NodeJS v14.5.0
+  [#1327](https://github.com/sharetribe/ftw-daily/pull/1327)
+
+[v8.1.1]: https://github.com/sharetribe/ftw-hourly/compare/v8.1.0...v8.1.1
+
 ## [v8.1.0] 2020-07-01
 
 - [change] Change the transaction process name to be `flex-hourly-default-process/release-1`
@@ -35,7 +42,7 @@ https://github.com/sharetribe/flex-template-web/
 - [fix] Sync bookingUnitType variables and update comments. Client app's API (proxy) server needs to
   know about unit type. [#1317](https://github.com/sharetribe/ftw-daily/pull/1317)
 
-[v8.1.0]: https://github.com/sharetribe/flex-template-web/compare/v8.0.0...v8.1.0
+[v8.1.0]: https://github.com/sharetribe/ftw-hourly/compare/v8.0.0...v8.1.0
 
 ## [v8.0.0] 2020-07-01
 
@@ -53,7 +60,7 @@ https://github.com/sharetribe/flex-template-web/
 - [fix] `yarn run dev-backend` was expecting NODE_ENV.
   [#1303](https://github.com/sharetribe/ftw-daily/pull/1303)
 
-[v8.0.0]: https://github.com/sharetribe/flex-template-web/compare/v7.0.0...v8.0.0
+[v8.0.0]: https://github.com/sharetribe/ftw-hourly/compare/v7.0.0...v8.0.0
 
 ## [v7.0.0] 2020-06-04
 
@@ -79,7 +86,7 @@ https://github.com/sharetribe/flex-template-web/
 
   [#1296](https://github.com/sharetribe/ftw-daily/pull/1296)
 
-[v7.0.0]: https://github.com/sharetribe/flex-template-web/compare/v6.6.0...v7.0.0
+[v7.0.0]: https://github.com/sharetribe/ftw-hourly/compare/v6.6.0...v7.0.0
 
 ## [v6.6.0] 2020-06-04
 
@@ -94,7 +101,7 @@ https://github.com/sharetribe/flex-template-web/
 - [change] Start the backend API router in dev mode with a dev server.
   [#1297](https://github.com/sharetribe/ftw-daily/pull/1297)
 
-[v6.6.0]: https://github.com/sharetribe/flex-template-web/compare/v6.5.1...v6.6.0
+[v6.6.0]: https://github.com/sharetribe/ftw-hourly/compare/v6.5.1...v6.6.0
 
 ## [v6.5.1] 2020-05-13
 
