@@ -18,7 +18,7 @@ You can read more about time-based process from the related
 
 > **Note:** this template assumes that you are using
 > [time-based transaction process](https://www.sharetribe.com/docs/guides/how-to-take-time-based-bookings-into-use/)
-> with alias `preauth-unit-time-booking/release-1`, if you are using something else, you should
+> with alias `flex-hourly-default-process/release-1`, if you are using something else, you should
 > change the alias name from
 > [config.js](https://github.com/sharetribe/ftw-hourly/blob/master/src/config.js#L35) and
 > [util/transaction.js](https://github.com/sharetribe/ftw-hourly/blob/master/src/util/transaction.js#L111)
