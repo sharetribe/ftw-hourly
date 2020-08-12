@@ -17,6 +17,20 @@ https://github.com/sharetribe/flex-template-web/
 
 ## Upcoming version 2020-XX-XX
 
+## [v8.2.0] 2020-08-12
+
+### Updates from upstream (FTW-daily v6.2.0)
+
+- [fix] remove typo [#1343](https://github.com/sharetribe/ftw-daily/pull/1343)
+- [change] Request custom image variants for avatar [#1342](https://github.com/sharetribe/ftw-daily/pull/1342)
+- [change] Some dependency updates [#1337](https://github.com/sharetribe/ftw-daily/pull/1337)
+- [fix] Use Stripe's `confirmCardPayment` function instead of deprecated `handleCardPayment` to
+  confirm PaymentIntent. In addition to the rename, the arguments passed to `handleCardPayment` are
+  sligthly different. Otherwise, these changes should not affect the behavior of the function.
+  [#1339](https://github.com/sharetribe/ftw-daily/pull/1339)
+
+[v8.2.0]: https://github.com/sharetribe/ftw-hourly/compare/v8.1.1...v8.2.0
+
 ## [v8.1.1] 2020-07-21
 
 - [fix] Fix config script for NodeJS v14.5.0

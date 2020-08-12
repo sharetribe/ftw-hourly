@@ -31,12 +31,12 @@ describe('CheckoutPage', () => {
       speculateTransactionInProgress: false,
       scrollingDisabled: false,
       onConfirmPayment: noop,
-      onHandleCardPayment: noop,
+      onConfirmCardPayment: noop,
       onInitiateOrder: noop,
       onRetrievePaymentIntent: noop,
       onSavePaymentMethod: noop,
       onSendMessage: noop,
-      handleCardPaymentInProgress: false,
+      confirmCardPaymentInProgress: false,
     };
     const tree = renderShallow(<CheckoutPageComponent {...props} />);
     expect(tree).toMatchSnapshot();
