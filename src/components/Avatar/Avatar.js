@@ -19,11 +19,11 @@ const AVATAR_SIZES_MEDIUM = '60px';
 const AVATAR_SIZES_LARGE = '96px';
 
 const AVATAR_IMAGE_VARIANTS = [
-  // 240x240
-  'square-small',
+  // 40x40
+  'avatar',
 
-  // 480x480
-  'square-small2x',
+  // 80x80
+  'avatar2x',
 ];
 
 export const AvatarComponent = props => {
