@@ -64,7 +64,7 @@ class FieldDateInputComponent extends Component {
       [css.pickerError]: hasError,
     });
 
-    const { onBlur, onFocus, onChange: finalFormOnChange, type, ...restOfInput } = input;
+    const { onBlur, onFocus, onChange: finalFormOnChange, type, checked, ...restOfInput } = input;
     const inputProps = {
       onBlur: input.onBlur,
       onFocus: input.onFocus,
