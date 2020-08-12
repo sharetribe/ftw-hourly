@@ -17,6 +17,8 @@ https://github.com/sharetribe/flex-template-web/
 
 ## Upcoming version 2020-XX-XX
 
+- [change] Request custom image variants for avatar [#110](https://github.com/sharetribe/ftw-hourly/pull/110)
+
 ## [v8.1.1] 2020-07-21
 
 - [fix] Fix config script for NodeJS v14.5.0
