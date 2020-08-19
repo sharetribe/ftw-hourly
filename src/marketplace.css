@@ -155,11 +155,11 @@
   /* ================ Buttons ================ */
 
   --marketplaceButtonFontStyles: {
-    font-family: 'sofiapro', Helvetica, Arial, sans-serif;
+    font-family: 'poppins', Helvetica, Arial, sans-serif;
     font-weight: var(--fontWeightSemiBold);
-    font-size: 18px;
+    font-size: 16px;
     line-height: 24px;
-    letter-spacing: -0.3px;
+    letter-spacing: 0.2px;
 
     @media (--viewportMedium) {
       /* TODO: Make sure button text aligns with the baseline */
@@ -176,7 +176,11 @@
 
     /* Padding is only for <a> elements where button styles are applied,
 		buttons elements should have zero padding */
-    padding: 20px 0 0 0;
+    padding: 17px 0 17px 0;
+
+    @media (--viewportMedium) {
+      padding: 20px 0 20px 0;
+    }
 
     /* Borders */
     border: none;
@@ -253,6 +257,8 @@
     }
   }
 
+  --marketplaceButtonSmallDesktopPadding: 9px 16px 9px 16px;
+
   /* ================ Inputs ================ */
 
   --marketplaceInputStyles: {
@@ -284,7 +290,7 @@
     }
 
     @media (--viewportMedium) {
-      padding: 4px 0 10px 0;
+      padding: 4px 0 2px 0;
     }
   }
 
@@ -326,7 +332,7 @@
     }
 
     @media (--viewportMedium) {
-      padding: 4px 0 10px 0;
+      padding: 4px 0 2px 0;
     }
   }
 
@@ -455,7 +461,7 @@
   }
 
   --marketplaceModalHelperText {
-    @apply --marketplaceH5FontStyles;
+    @apply --marketplaceTinyFontStyles;
     color: var(--matterColorAnti);
     margin: 0;
 
@@ -465,7 +471,7 @@
   }
 
   --marketplaceModalHelperLink {
-    @apply --marketplaceH5FontStyles;
+    @apply --marketplaceTinyFontStyles;
     color: var(--matterColor);
     margin: 0;
 

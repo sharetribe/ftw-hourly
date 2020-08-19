@@ -17,12 +17,29 @@ https://github.com/sharetribe/flex-template-web/
 
 ## Upcoming version 2020-XX-XX
 
+## [v8.3.0] 2020-08-19
+
+### Updates from upstream (FTW-daily v6.2.0)
+
+- [change] We decided to change the default font to Poppins.
+  [#1349](https://github.com/sharetribe/ftw-daily/pull/1349)
+- [change] Update path-to-regexp to v6.1.0
+  [#1348](https://github.com/sharetribe/ftw-daily/pull/1348)
+- [change] Update Helmet to v4.0.0. Show warning if environment variable REACT_APP_CSP is not set or
+  if it's set to 'report' mode in production environmet. Set REACT_APP_CSP to 'report' mode by
+  default in `.env-template` file. [#1347](https://github.com/sharetribe/ftw-daily/pull/1347)
+- [change] In `StripeConnectAccountForm` show error message from Stripe if there is one when
+  fetching account link. [#1346](https://github.com/sharetribe/ftw-daily/pull/1346)
+
+[v8.3.0]: https://github.com/sharetribe/ftw-hourly/compare/v8.2.0...v8.3.0
+
 ## [v8.2.0] 2020-08-12
 
 ### Updates from upstream (FTW-daily v6.2.0)
 
 - [fix] remove typo [#1343](https://github.com/sharetribe/ftw-daily/pull/1343)
-- [change] Request custom image variants for avatar [#1342](https://github.com/sharetribe/ftw-daily/pull/1342)
+- [change] Request custom image variants for avatar
+  [#1342](https://github.com/sharetribe/ftw-daily/pull/1342)
 - [change] Some dependency updates [#1337](https://github.com/sharetribe/ftw-daily/pull/1337)
 - [fix] Use Stripe's `confirmCardPayment` function instead of deprecated `handleCardPayment` to
   confirm PaymentIntent. In addition to the rename, the arguments passed to `handleCardPayment` are
