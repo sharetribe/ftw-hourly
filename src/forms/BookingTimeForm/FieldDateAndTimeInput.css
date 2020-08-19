@@ -76,7 +76,7 @@
 
     &::after {
       left: 0;
-      bottom: 17px;
+      bottom: 12px;
     }
   }
 }
@@ -98,7 +98,7 @@
   @media (--viewportMedium) {
     &::after {
       left: 0;
-      bottom: 17px;
+      bottom: 12px;
     }
   }
 }
@@ -131,7 +131,7 @@
 CSS for hiding the end date
 
 If you want to show the field for the end date e.g. for enabling longer bookings,
-you can remove the following code. 
+you can remove the following code.
 Remember to do required code changes also in FieldDateAndTimeInput.js!
 **/
 
