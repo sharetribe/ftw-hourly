@@ -17,9 +17,16 @@ https://github.com/sharetribe/flex-template-web/
 
 ## Upcoming version 2020-XX-XX
 
+## [v8.3.1] 2020-08-19
+
+- [fix] Fix popup-button in SelectSingleFilterPopup.css and adjust Footer with correct baselines.
+  [#1353](https://github.com/sharetribe/ftw-daily/pull/1353)
+
+[v8.3.1]: https://github.com/sharetribe/ftw-hourly/compare/v8.3.0...v8.3.1
+
 ## [v8.3.0] 2020-08-19
 
-### Updates from upstream (FTW-daily v6.2.0)
+### Updates from upstream (FTW-daily v6.3.0)
 
 - [change] We decided to change the default font to Poppins.
   [#1349](https://github.com/sharetribe/ftw-daily/pull/1349)
