@@ -111,9 +111,14 @@ describe('TransactionPage - Order', () => {
       onShowMoreMessages: noop,
       onSendMessage: noop,
       onResetForm: noop,
+<<<<<<< HEAD
       onFetchTimeSlots: noop,
       fetchLineItemsInProgress: false,
       onFetchTransactionLineItems: noop,
+=======
+      onFetchTransactionLineItems: noop,
+      fetchLineItemsInProgress: false,
+>>>>>>> c5843a2f4a919a93d9bf78fa3eb3aeb15b18f455
       intl: fakeIntl,
 
       acceptInProgress: false,
