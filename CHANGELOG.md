@@ -17,6 +17,20 @@ https://github.com/sharetribe/flex-template-web/
 
 ## Upcoming version 2020-XX-XX
 
+## [v8.4.0] 2020-10-15
+
+### Updates from upstream (FTW-daily v6.4.0)
+
+- [add] Add Facebook login as a first step towards supporting social logins and SSO in FTW. This PR
+  introduces new endpoints createUserWithIdp and loginWithIdp and strategy for logging in with
+  Facebook. See the PR for the more detailed view of the changes. #1364
+- [fix] Fix missing proptype warnings in TransactionPage and TransactionPanel tests. #1363
+- [fix] Improve error handling by passing error details forward instead of creating a new error that
+  hides the details when making API call to FTW server. #1361
+- [fix] Remove duplicate page schema from body. #1355
+
+[v8.4.0]: https://github.com/sharetribe/ftw-hourly/compare/v8.3.1...v8.4.0
+
 ## [v8.3.1] 2020-08-19
 
 - [fix] Fix popup-button in SelectSingleFilterPopup.css and adjust Footer with correct baselines.
