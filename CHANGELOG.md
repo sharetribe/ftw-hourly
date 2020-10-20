@@ -17,6 +17,22 @@ https://github.com/sharetribe/flex-template-web/
 
 ## Upcoming version 2020-XX-XX
 
+## [v8.4.1] 2020-10-20
+
+### Updates from upstream (FTW-daily v6.4.1)
+
+- [add] Add new Stripe countires Bulgaria, Cyprus, Czech Republic, Malta and Romania to the
+  `StripeConnectAccountForm`. Also reorder BANK_CODE & BRANCH_CODE in UI to more logical order.
+  [#1371](https://github.com/sharetribe/ftw-daily/pull/1371)
+- [fix] Don't pass protected data key through `ConfirmSignupForm` if protected data is empty.
+  [#1370](https://github.com/sharetribe/ftw-daily/pull/1370)
+- [add] Update French translation file (Spanish and German translations have still missing keys).
+  [#1369](https://github.com/sharetribe/ftw-daily/pull/1369)
+- [fix] Pass additional values from `ConfirmSignupForm` forward as user's protected data.
+  [#1368](https://github.com/sharetribe/ftw-daily/pull/1368)
+
+  [v8.4.1]: https://github.com/sharetribe/ftw-hourly/compare/v8.4.0...v8.4.1
+
 ## [v8.4.0] 2020-10-15
 
 ### Updates from upstream (FTW-daily v6.4.0)
