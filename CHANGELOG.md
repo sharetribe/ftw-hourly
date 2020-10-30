@@ -17,6 +17,15 @@ https://github.com/sharetribe/flex-template-web/
 
 ## Upcoming version 2020-XX-XX
 
+## [v8.4.2] 2020-10-30
+
+### Updates from upstream (FTW-daily v6.4.2)
+
+- [fix] Fix the issue with form on AuthenticationPage not showing on smaller screens when using
+  Safari as browser. [#1377](https://github.com/sharetribe/ftw-daily/pull/1377)
+
+  [v6.4.2]: https://github.com/sharetribe/ftw-hourly/compare/v8.4.1...v8.4.2
+
 ## [v8.4.1] 2020-10-20
 
 ### Updates from upstream (FTW-daily v6.4.1)
