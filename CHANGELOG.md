@@ -17,6 +17,21 @@ https://github.com/sharetribe/flex-template-web/
 
 ## Upcoming version 2020-XX-XX
 
+## [v8.5.0] 2020-11-16
+
+### Updates from upstream (FTW-daily v6.5.0)
+
+- [add] Add support for Google login. This works in the same way as Facebook flow so you can check
+  the [Facebook PR](https://github.com/sharetribe/ftw-daily/pull/1364) for the more details.
+  [#1376](https://github.com/sharetribe/ftw-daily/pull/1376)
+- [fix] Routes component got double rendered due to Redux container HOC. Because navigation could
+  happen twice, loadData was also called twice.
+  [#1380](https://github.com/sharetribe/ftw-daily/pull/1380)
+- [fix] 401 return code when rendering on SSR.
+  [#1379](https://github.com/sharetribe/ftw-daily/pull/1379)
+
+[v8.5.0]: https://github.com/sharetribe/ftw-hourly/compare/v8.4.2...v8.5.0
+
 ## [v8.4.2] 2020-10-30
 
 ### Updates from upstream (FTW-daily v6.4.2)
@@ -24,7 +39,7 @@ https://github.com/sharetribe/flex-template-web/
 - [fix] Fix the issue with form on AuthenticationPage not showing on smaller screens when using
   Safari as browser. [#1377](https://github.com/sharetribe/ftw-daily/pull/1377)
 
-  [v6.4.2]: https://github.com/sharetribe/ftw-hourly/compare/v8.4.1...v8.4.2
+  [v8.4.2]: https://github.com/sharetribe/ftw-hourly/compare/v8.4.1...v8.4.2
 
 ## [v8.4.1] 2020-10-20
 
