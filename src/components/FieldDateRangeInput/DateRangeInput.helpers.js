@@ -103,7 +103,7 @@ export const apiEndDateToPickerDate = (unitType, endDate) => {
 };
 
 export const pickerEndDateToApiDate = (unitType, endDate) => {
-  const isValid = endDate instanceof moment;
+  const isValid = moment && moment.isMoment(endDate);
   const isDaily = unitType === LINE_ITEM_DAY;
 
   if (!isValid) {

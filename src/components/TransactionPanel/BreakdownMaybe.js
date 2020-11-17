@@ -5,7 +5,7 @@ import { DATE_TYPE_DATETIME } from '../../util/types';
 import { ensureListing } from '../../util/data';
 import { BookingBreakdown } from '../../components';
 
-import css from './TransactionPanel.css';
+import css from './TransactionPanel.module.css';
 
 // Functional component as a helper to build BookingBreakdown
 const BreakdownMaybe = props => {

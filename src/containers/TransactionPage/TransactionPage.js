@@ -38,7 +38,7 @@ import {
   fetchTimeSlots,
   fetchTransactionLineItems,
 } from './TransactionPage.duck';
-import css from './TransactionPage.css';
+import css from './TransactionPage.module.css';
 
 const PROVIDER = 'provider';
 const CUSTOMER = 'customer';

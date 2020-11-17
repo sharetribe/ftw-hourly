@@ -3,7 +3,7 @@ import { FormattedMessage, FormattedDate } from '../../util/reactIntl';
 import moment from 'moment';
 import { LINE_ITEM_NIGHT, LINE_ITEM_UNITS, DATE_TYPE_DATE, propTypes } from '../../util/types';
 
-import css from './BookingBreakdown.css';
+import css from './BookingBreakdown.module.css';
 
 const BookingPeriod = props => {
   const { startDate, endDate, dateType, timeZone } = props;

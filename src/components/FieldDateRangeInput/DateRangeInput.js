@@ -22,7 +22,7 @@ import {
 } from './DateRangeInput.helpers';
 
 import { IconArrowHead } from '../../components';
-import css from './DateRangeInput.css';
+import css from './DateRangeInput.module.css';
 
 export const HORIZONTAL_ORIENTATION = 'horizontal';
 export const ANCHOR_LEFT = 'left';
@@ -170,7 +170,7 @@ class DateRangeInputComponent extends Component {
       ? isBlockedBetween(timeSlots, startDate, moment(this.state.currentStartDate).add(1, 'days'))
       : false;
 
-    const startDateAsDate = startDate instanceof moment ? startDate.toDate() : null;
+    const startDateAsDate = moment && moment.isMoment(startDate) ? startDate.toDate() : null;
     const endDateAsDate = clearEndDate ? null : pickerEndDateToApiDate(unitType, endDate);
 
     this.setState(() => ({

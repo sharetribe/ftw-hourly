@@ -26,7 +26,7 @@ import { FieldDateInput, FieldSelect } from '../../components';
 
 import NextMonthIcon from './NextMonthIcon';
 import PreviousMonthIcon from './PreviousMonthIcon';
-import css from './FieldDateAndTimeInput.css';
+import css from './FieldDateAndTimeInput.module.css';
 
 const MAX_TIME_SLOTS_RANGE = 180;
 const TODAY = new Date();

@@ -17,7 +17,7 @@ import {
 } from '../../components';
 import { EditListingAvailabilityPlanForm, EditListingAvailabilityExceptionForm } from '../../forms';
 
-import css from './EditListingAvailabilityPanel.css';
+import css from './EditListingAvailabilityPanel.module.css';
 
 const WEEKDAYS = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
 

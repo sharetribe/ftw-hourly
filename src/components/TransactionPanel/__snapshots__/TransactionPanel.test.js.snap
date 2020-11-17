@@ -2,11 +2,16 @@
 
 exports[`TransactionPanel - Order accepted matches snapshot 1`] = `
 <div
-  className=""
+  className="root"
 >
-  <div>
-    <div>
+  <div
+    className="container"
+  >
+    <div
+      className="txInfo"
+    >
       <DetailCardImage
+        avatarWrapperClassName="avatarWrapperMobile"
         image={null}
         isCustomer={false}
         listingDeleted={false}
@@ -29,6 +34,7 @@ exports[`TransactionPanel - Order accepted matches snapshot 1`] = `
             "type": "user",
           }
         }
+        rootClassName="imageWrapperMobile"
       />
       <PanelHeading
         customerName={
@@ -111,7 +117,9 @@ exports[`TransactionPanel - Order accepted matches snapshot 1`] = `
           />
         }
       />
-      <div>
+      <div
+        className="bookingDetailsMobile"
+      >
         <AddressLinkMaybe
           geolocation={
             LatLng {
@@ -121,6 +129,7 @@ exports[`TransactionPanel - Order accepted matches snapshot 1`] = `
             }
           }
           location={Object {}}
+          rootClassName="addressMobile"
           showAddress={false}
         />
         <BreakdownMaybe
@@ -508,6 +517,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
         oldestMessagePageFetched={1}
         onOpenReviewModal={[Function]}
         onShowMoreMessages={[Function]}
+        rootClassName="feedContainer"
         totalMessagePages={1}
       />
       <SendMessageForm
@@ -517,12 +527,18 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
         onBlur={[Function]}
         onFocus={[Function]}
         onSubmit={[Function]}
+        rootClassName="sendMessageForm"
         sendMessageError={null}
       />
     </div>
-    <div>
-      <div>
+    <div
+      className="asideDesktop"
+    >
+      <div
+        className="detailCard"
+      >
         <DetailCardImage
+          avatarWrapperClassName="avatarWrapperDesktop"
           image={null}
           isCustomer={false}
           listingDeleted={false}
@@ -561,6 +577,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
           subTitle="55 TransactionPanel.perUnit"
         />
         <BreakdownMaybe
+          className="breakdownContainer"
           transaction={
             Object {
               "attributes": Object {
@@ -764,11 +781,16 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 
 exports[`TransactionPanel - Order autodeclined matches snapshot 1`] = `
 <div
-  className=""
+  className="root"
 >
-  <div>
-    <div>
+  <div
+    className="container"
+  >
+    <div
+      className="txInfo"
+    >
       <DetailCardImage
+        avatarWrapperClassName="avatarWrapperMobile"
         image={null}
         isCustomer={false}
         listingDeleted={false}
@@ -791,6 +813,7 @@ exports[`TransactionPanel - Order autodeclined matches snapshot 1`] = `
             "type": "user",
           }
         }
+        rootClassName="imageWrapperMobile"
       />
       <PanelHeading
         customerName={
@@ -873,7 +896,9 @@ exports[`TransactionPanel - Order autodeclined matches snapshot 1`] = `
           />
         }
       />
-      <div>
+      <div
+        className="bookingDetailsMobile"
+      >
         <AddressLinkMaybe
           geolocation={
             LatLng {
@@ -883,6 +908,7 @@ exports[`TransactionPanel - Order autodeclined matches snapshot 1`] = `
             }
           }
           location={Object {}}
+          rootClassName="addressMobile"
         />
         <BreakdownMaybe
           transaction={
@@ -1269,6 +1295,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
         oldestMessagePageFetched={1}
         onOpenReviewModal={[Function]}
         onShowMoreMessages={[Function]}
+        rootClassName="feedContainer"
         totalMessagePages={1}
       />
       <SendMessageForm
@@ -1278,12 +1305,18 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
         onBlur={[Function]}
         onFocus={[Function]}
         onSubmit={[Function]}
+        rootClassName="sendMessageForm"
         sendMessageError={null}
       />
     </div>
-    <div>
-      <div>
+    <div
+      className="asideDesktop"
+    >
+      <div
+        className="detailCard"
+      >
         <DetailCardImage
+          avatarWrapperClassName="avatarWrapperDesktop"
           image={null}
           isCustomer={false}
           listingDeleted={false}
@@ -1321,6 +1354,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
           subTitle="55 TransactionPanel.perUnit"
         />
         <BreakdownMaybe
+          className="breakdownContainer"
           transaction={
             Object {
               "attributes": Object {
@@ -1524,11 +1558,16 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 
 exports[`TransactionPanel - Order canceled matches snapshot 1`] = `
 <div
-  className=""
+  className="root"
 >
-  <div>
-    <div>
+  <div
+    className="container"
+  >
+    <div
+      className="txInfo"
+    >
       <DetailCardImage
+        avatarWrapperClassName="avatarWrapperMobile"
         image={null}
         isCustomer={false}
         listingDeleted={false}
@@ -1551,6 +1590,7 @@ exports[`TransactionPanel - Order canceled matches snapshot 1`] = `
             "type": "user",
           }
         }
+        rootClassName="imageWrapperMobile"
       />
       <PanelHeading
         customerName={
@@ -1633,7 +1673,9 @@ exports[`TransactionPanel - Order canceled matches snapshot 1`] = `
           />
         }
       />
-      <div>
+      <div
+        className="bookingDetailsMobile"
+      >
         <AddressLinkMaybe
           geolocation={
             LatLng {
@@ -1643,6 +1685,7 @@ exports[`TransactionPanel - Order canceled matches snapshot 1`] = `
             }
           }
           location={Object {}}
+          rootClassName="addressMobile"
           showAddress={false}
         />
         <BreakdownMaybe
@@ -2030,6 +2073,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
         oldestMessagePageFetched={1}
         onOpenReviewModal={[Function]}
         onShowMoreMessages={[Function]}
+        rootClassName="feedContainer"
         totalMessagePages={1}
       />
       <SendMessageForm
@@ -2039,12 +2083,18 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
         onBlur={[Function]}
         onFocus={[Function]}
         onSubmit={[Function]}
+        rootClassName="sendMessageForm"
         sendMessageError={null}
       />
     </div>
-    <div>
-      <div>
+    <div
+      className="asideDesktop"
+    >
+      <div
+        className="detailCard"
+      >
         <DetailCardImage
+          avatarWrapperClassName="avatarWrapperDesktop"
           image={null}
           isCustomer={false}
           listingDeleted={false}
@@ -2083,6 +2133,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
           subTitle="55 TransactionPanel.perUnit"
         />
         <BreakdownMaybe
+          className="breakdownContainer"
           transaction={
             Object {
               "attributes": Object {
@@ -2286,11 +2337,16 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 
 exports[`TransactionPanel - Order declined matches snapshot 1`] = `
 <div
-  className=""
+  className="root"
 >
-  <div>
-    <div>
+  <div
+    className="container"
+  >
+    <div
+      className="txInfo"
+    >
       <DetailCardImage
+        avatarWrapperClassName="avatarWrapperMobile"
         image={null}
         isCustomer={false}
         listingDeleted={false}
@@ -2313,6 +2369,7 @@ exports[`TransactionPanel - Order declined matches snapshot 1`] = `
             "type": "user",
           }
         }
+        rootClassName="imageWrapperMobile"
       />
       <PanelHeading
         customerName={
@@ -2395,7 +2452,9 @@ exports[`TransactionPanel - Order declined matches snapshot 1`] = `
           />
         }
       />
-      <div>
+      <div
+        className="bookingDetailsMobile"
+      >
         <AddressLinkMaybe
           geolocation={
             LatLng {
@@ -2405,6 +2464,7 @@ exports[`TransactionPanel - Order declined matches snapshot 1`] = `
             }
           }
           location={Object {}}
+          rootClassName="addressMobile"
         />
         <BreakdownMaybe
           transaction={
@@ -2791,6 +2851,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
         oldestMessagePageFetched={1}
         onOpenReviewModal={[Function]}
         onShowMoreMessages={[Function]}
+        rootClassName="feedContainer"
         totalMessagePages={1}
       />
       <SendMessageForm
@@ -2800,12 +2861,18 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
         onBlur={[Function]}
         onFocus={[Function]}
         onSubmit={[Function]}
+        rootClassName="sendMessageForm"
         sendMessageError={null}
       />
     </div>
-    <div>
-      <div>
+    <div
+      className="asideDesktop"
+    >
+      <div
+        className="detailCard"
+      >
         <DetailCardImage
+          avatarWrapperClassName="avatarWrapperDesktop"
           image={null}
           isCustomer={false}
           listingDeleted={false}
@@ -2843,6 +2910,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
           subTitle="55 TransactionPanel.perUnit"
         />
         <BreakdownMaybe
+          className="breakdownContainer"
           transaction={
             Object {
               "attributes": Object {
@@ -3046,11 +3114,16 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 
 exports[`TransactionPanel - Order delivered matches snapshot 1`] = `
 <div
-  className=""
+  className="root"
 >
-  <div>
-    <div>
+  <div
+    className="container"
+  >
+    <div
+      className="txInfo"
+    >
       <DetailCardImage
+        avatarWrapperClassName="avatarWrapperMobile"
         image={null}
         isCustomer={false}
         listingDeleted={false}
@@ -3073,6 +3146,7 @@ exports[`TransactionPanel - Order delivered matches snapshot 1`] = `
             "type": "user",
           }
         }
+        rootClassName="imageWrapperMobile"
       />
       <PanelHeading
         customerName={
@@ -3155,7 +3229,9 @@ exports[`TransactionPanel - Order delivered matches snapshot 1`] = `
           />
         }
       />
-      <div>
+      <div
+        className="bookingDetailsMobile"
+      >
         <AddressLinkMaybe
           geolocation={
             LatLng {
@@ -3165,6 +3241,7 @@ exports[`TransactionPanel - Order delivered matches snapshot 1`] = `
             }
           }
           location={Object {}}
+          rootClassName="addressMobile"
           showAddress={false}
         />
         <BreakdownMaybe
@@ -3562,6 +3639,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
         oldestMessagePageFetched={1}
         onOpenReviewModal={[Function]}
         onShowMoreMessages={[Function]}
+        rootClassName="feedContainer"
         totalMessagePages={1}
       />
       <SendMessageForm
@@ -3571,12 +3649,18 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
         onBlur={[Function]}
         onFocus={[Function]}
         onSubmit={[Function]}
+        rootClassName="sendMessageForm"
         sendMessageError={null}
       />
     </div>
-    <div>
-      <div>
+    <div
+      className="asideDesktop"
+    >
+      <div
+        className="detailCard"
+      >
         <DetailCardImage
+          avatarWrapperClassName="avatarWrapperDesktop"
           image={null}
           isCustomer={false}
           listingDeleted={false}
@@ -3615,6 +3699,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
           subTitle="55 TransactionPanel.perUnit"
         />
         <BreakdownMaybe
+          className="breakdownContainer"
           transaction={
             Object {
               "attributes": Object {
@@ -3823,11 +3908,16 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 
 exports[`TransactionPanel - Order enquired matches snapshot 1`] = `
 <div
-  className=""
+  className="root"
 >
-  <div>
-    <div>
+  <div
+    className="container"
+  >
+    <div
+      className="txInfo"
+    >
       <DetailCardImage
+        avatarWrapperClassName="avatarWrapperMobile"
         image={null}
         isCustomer={false}
         listingDeleted={false}
@@ -3850,6 +3940,7 @@ exports[`TransactionPanel - Order enquired matches snapshot 1`] = `
             "type": "user",
           }
         }
+        rootClassName="imageWrapperMobile"
       />
       <PanelHeading
         customerName={
@@ -3932,7 +4023,9 @@ exports[`TransactionPanel - Order enquired matches snapshot 1`] = `
           />
         }
       />
-      <div>
+      <div
+        className="bookingDetailsMobile"
+      >
         <AddressLinkMaybe
           geolocation={
             LatLng {
@@ -3942,6 +4035,7 @@ exports[`TransactionPanel - Order enquired matches snapshot 1`] = `
             }
           }
           location={Object {}}
+          rootClassName="addressMobile"
         />
         <BreakdownMaybe
           transaction={
@@ -4328,6 +4422,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
         oldestMessagePageFetched={1}
         onOpenReviewModal={[Function]}
         onShowMoreMessages={[Function]}
+        rootClassName="feedContainer"
         totalMessagePages={1}
       />
       <SendMessageForm
@@ -4337,12 +4432,18 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
         onBlur={[Function]}
         onFocus={[Function]}
         onSubmit={[Function]}
+        rootClassName="sendMessageForm"
         sendMessageError={null}
       />
     </div>
-    <div>
-      <div>
+    <div
+      className="asideDesktop"
+    >
+      <div
+        className="detailCard"
+      >
         <DetailCardImage
+          avatarWrapperClassName="avatarWrapperDesktop"
           image={null}
           isCustomer={false}
           listingDeleted={false}
@@ -4379,6 +4480,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
           subTitle="55 TransactionPanel.perUnit"
         />
         <BreakdownMaybe
+          className="breakdownContainer"
           transaction={
             Object {
               "attributes": Object {
@@ -4582,11 +4684,16 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 
 exports[`TransactionPanel - Order preauthorized matches snapshot 1`] = `
 <div
-  className=""
+  className="root"
 >
-  <div>
-    <div>
+  <div
+    className="container"
+  >
+    <div
+      className="txInfo"
+    >
       <DetailCardImage
+        avatarWrapperClassName="avatarWrapperMobile"
         image={null}
         isCustomer={false}
         listingDeleted={false}
@@ -4609,6 +4716,7 @@ exports[`TransactionPanel - Order preauthorized matches snapshot 1`] = `
             "type": "user",
           }
         }
+        rootClassName="imageWrapperMobile"
       />
       <PanelHeading
         customerName={
@@ -4691,7 +4799,9 @@ exports[`TransactionPanel - Order preauthorized matches snapshot 1`] = `
           />
         }
       />
-      <div>
+      <div
+        className="bookingDetailsMobile"
+      >
         <AddressLinkMaybe
           geolocation={
             LatLng {
@@ -4701,6 +4811,7 @@ exports[`TransactionPanel - Order preauthorized matches snapshot 1`] = `
             }
           }
           location={Object {}}
+          rootClassName="addressMobile"
         />
         <BreakdownMaybe
           transaction={
@@ -5087,6 +5198,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
         oldestMessagePageFetched={1}
         onOpenReviewModal={[Function]}
         onShowMoreMessages={[Function]}
+        rootClassName="feedContainer"
         totalMessagePages={1}
       />
       <SendMessageForm
@@ -5096,12 +5208,18 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
         onBlur={[Function]}
         onFocus={[Function]}
         onSubmit={[Function]}
+        rootClassName="sendMessageForm"
         sendMessageError={null}
       />
     </div>
-    <div>
-      <div>
+    <div
+      className="asideDesktop"
+    >
+      <div
+        className="detailCard"
+      >
         <DetailCardImage
+          avatarWrapperClassName="avatarWrapperDesktop"
           image={null}
           isCustomer={false}
           listingDeleted={false}
@@ -5139,6 +5257,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
           subTitle="55 TransactionPanel.perUnit"
         />
         <BreakdownMaybe
+          className="breakdownContainer"
           transaction={
             Object {
               "attributes": Object {
@@ -5342,11 +5461,16 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 
 exports[`TransactionPanel - Sale accepted matches snapshot 1`] = `
 <div
-  className=""
+  className="root"
 >
-  <div>
-    <div>
+  <div
+    className="container"
+  >
+    <div
+      className="txInfo"
+    >
       <DetailCardImage
+        avatarWrapperClassName="avatarWrapperMobile"
         image={null}
         isCustomer={false}
         listingDeleted={false}
@@ -5369,6 +5493,7 @@ exports[`TransactionPanel - Sale accepted matches snapshot 1`] = `
             "type": "user",
           }
         }
+        rootClassName="imageWrapperMobile"
       />
       <PanelHeading
         customerName={
@@ -5451,7 +5576,9 @@ exports[`TransactionPanel - Sale accepted matches snapshot 1`] = `
           />
         }
       />
-      <div>
+      <div
+        className="bookingDetailsMobile"
+      >
         <AddressLinkMaybe
           geolocation={
             LatLng {
@@ -5461,6 +5588,7 @@ exports[`TransactionPanel - Sale accepted matches snapshot 1`] = `
             }
           }
           location={Object {}}
+          rootClassName="addressMobile"
           showAddress={false}
         />
         <BreakdownMaybe
@@ -5848,6 +5976,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
         oldestMessagePageFetched={1}
         onOpenReviewModal={[Function]}
         onShowMoreMessages={[Function]}
+        rootClassName="feedContainer"
         totalMessagePages={1}
       />
       <SendMessageForm
@@ -5857,12 +5986,18 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
         onBlur={[Function]}
         onFocus={[Function]}
         onSubmit={[Function]}
+        rootClassName="sendMessageForm"
         sendMessageError={null}
       />
     </div>
-    <div>
-      <div>
+    <div
+      className="asideDesktop"
+    >
+      <div
+        className="detailCard"
+      >
         <DetailCardImage
+          avatarWrapperClassName="avatarWrapperDesktop"
           image={null}
           isCustomer={false}
           listingDeleted={false}
@@ -5901,6 +6036,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
           subTitle="55 TransactionPanel.perUnit"
         />
         <BreakdownMaybe
+          className="breakdownContainer"
           transaction={
             Object {
               "attributes": Object {
@@ -6104,11 +6240,16 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 
 exports[`TransactionPanel - Sale autodeclined matches snapshot 1`] = `
 <div
-  className=""
+  className="root"
 >
-  <div>
-    <div>
+  <div
+    className="container"
+  >
+    <div
+      className="txInfo"
+    >
       <DetailCardImage
+        avatarWrapperClassName="avatarWrapperMobile"
         image={null}
         isCustomer={false}
         listingDeleted={false}
@@ -6131,6 +6272,7 @@ exports[`TransactionPanel - Sale autodeclined matches snapshot 1`] = `
             "type": "user",
           }
         }
+        rootClassName="imageWrapperMobile"
       />
       <PanelHeading
         customerName={
@@ -6213,7 +6355,9 @@ exports[`TransactionPanel - Sale autodeclined matches snapshot 1`] = `
           />
         }
       />
-      <div>
+      <div
+        className="bookingDetailsMobile"
+      >
         <AddressLinkMaybe
           geolocation={
             LatLng {
@@ -6223,6 +6367,7 @@ exports[`TransactionPanel - Sale autodeclined matches snapshot 1`] = `
             }
           }
           location={Object {}}
+          rootClassName="addressMobile"
         />
         <BreakdownMaybe
           transaction={
@@ -6609,6 +6754,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
         oldestMessagePageFetched={1}
         onOpenReviewModal={[Function]}
         onShowMoreMessages={[Function]}
+        rootClassName="feedContainer"
         totalMessagePages={1}
       />
       <SendMessageForm
@@ -6618,12 +6764,18 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
         onBlur={[Function]}
         onFocus={[Function]}
         onSubmit={[Function]}
+        rootClassName="sendMessageForm"
         sendMessageError={null}
       />
     </div>
-    <div>
-      <div>
+    <div
+      className="asideDesktop"
+    >
+      <div
+        className="detailCard"
+      >
         <DetailCardImage
+          avatarWrapperClassName="avatarWrapperDesktop"
           image={null}
           isCustomer={false}
           listingDeleted={false}
@@ -6661,6 +6813,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
           subTitle="55 TransactionPanel.perUnit"
         />
         <BreakdownMaybe
+          className="breakdownContainer"
           transaction={
             Object {
               "attributes": Object {
@@ -6864,11 +7017,16 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 
 exports[`TransactionPanel - Sale canceled matches snapshot 1`] = `
 <div
-  className=""
+  className="root"
 >
-  <div>
-    <div>
+  <div
+    className="container"
+  >
+    <div
+      className="txInfo"
+    >
       <DetailCardImage
+        avatarWrapperClassName="avatarWrapperMobile"
         image={null}
         isCustomer={false}
         listingDeleted={false}
@@ -6891,6 +7049,7 @@ exports[`TransactionPanel - Sale canceled matches snapshot 1`] = `
             "type": "user",
           }
         }
+        rootClassName="imageWrapperMobile"
       />
       <PanelHeading
         customerName={
@@ -6973,7 +7132,9 @@ exports[`TransactionPanel - Sale canceled matches snapshot 1`] = `
           />
         }
       />
-      <div>
+      <div
+        className="bookingDetailsMobile"
+      >
         <AddressLinkMaybe
           geolocation={
             LatLng {
@@ -6983,6 +7144,7 @@ exports[`TransactionPanel - Sale canceled matches snapshot 1`] = `
             }
           }
           location={Object {}}
+          rootClassName="addressMobile"
           showAddress={false}
         />
         <BreakdownMaybe
@@ -7370,6 +7532,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
         oldestMessagePageFetched={1}
         onOpenReviewModal={[Function]}
         onShowMoreMessages={[Function]}
+        rootClassName="feedContainer"
         totalMessagePages={1}
       />
       <SendMessageForm
@@ -7379,12 +7542,18 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
         onBlur={[Function]}
         onFocus={[Function]}
         onSubmit={[Function]}
+        rootClassName="sendMessageForm"
         sendMessageError={null}
       />
     </div>
-    <div>
-      <div>
+    <div
+      className="asideDesktop"
+    >
+      <div
+        className="detailCard"
+      >
         <DetailCardImage
+          avatarWrapperClassName="avatarWrapperDesktop"
           image={null}
           isCustomer={false}
           listingDeleted={false}
@@ -7423,6 +7592,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
           subTitle="55 TransactionPanel.perUnit"
         />
         <BreakdownMaybe
+          className="breakdownContainer"
           transaction={
             Object {
               "attributes": Object {
@@ -7626,11 +7796,16 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 
 exports[`TransactionPanel - Sale declined matches snapshot 1`] = `
 <div
-  className=""
+  className="root"
 >
-  <div>
-    <div>
+  <div
+    className="container"
+  >
+    <div
+      className="txInfo"
+    >
       <DetailCardImage
+        avatarWrapperClassName="avatarWrapperMobile"
         image={null}
         isCustomer={false}
         listingDeleted={false}
@@ -7653,6 +7828,7 @@ exports[`TransactionPanel - Sale declined matches snapshot 1`] = `
             "type": "user",
           }
         }
+        rootClassName="imageWrapperMobile"
       />
       <PanelHeading
         customerName={
@@ -7735,7 +7911,9 @@ exports[`TransactionPanel - Sale declined matches snapshot 1`] = `
           />
         }
       />
-      <div>
+      <div
+        className="bookingDetailsMobile"
+      >
         <AddressLinkMaybe
           geolocation={
             LatLng {
@@ -7745,6 +7923,7 @@ exports[`TransactionPanel - Sale declined matches snapshot 1`] = `
             }
           }
           location={Object {}}
+          rootClassName="addressMobile"
         />
         <BreakdownMaybe
           transaction={
@@ -8131,6 +8310,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
         oldestMessagePageFetched={1}
         onOpenReviewModal={[Function]}
         onShowMoreMessages={[Function]}
+        rootClassName="feedContainer"
         totalMessagePages={1}
       />
       <SendMessageForm
@@ -8140,12 +8320,18 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
         onBlur={[Function]}
         onFocus={[Function]}
         onSubmit={[Function]}
+        rootClassName="sendMessageForm"
         sendMessageError={null}
       />
     </div>
-    <div>
-      <div>
+    <div
+      className="asideDesktop"
+    >
+      <div
+        className="detailCard"
+      >
         <DetailCardImage
+          avatarWrapperClassName="avatarWrapperDesktop"
           image={null}
           isCustomer={false}
           listingDeleted={false}
@@ -8183,6 +8369,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
           subTitle="55 TransactionPanel.perUnit"
         />
         <BreakdownMaybe
+          className="breakdownContainer"
           transaction={
             Object {
               "attributes": Object {
@@ -8386,11 +8573,16 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 
 exports[`TransactionPanel - Sale delivered matches snapshot 1`] = `
 <div
-  className=""
+  className="root"
 >
-  <div>
-    <div>
+  <div
+    className="container"
+  >
+    <div
+      className="txInfo"
+    >
       <DetailCardImage
+        avatarWrapperClassName="avatarWrapperMobile"
         image={null}
         isCustomer={false}
         listingDeleted={false}
@@ -8413,6 +8605,7 @@ exports[`TransactionPanel - Sale delivered matches snapshot 1`] = `
             "type": "user",
           }
         }
+        rootClassName="imageWrapperMobile"
       />
       <PanelHeading
         customerName={
@@ -8495,7 +8688,9 @@ exports[`TransactionPanel - Sale delivered matches snapshot 1`] = `
           />
         }
       />
-      <div>
+      <div
+        className="bookingDetailsMobile"
+      >
         <AddressLinkMaybe
           geolocation={
             LatLng {
@@ -8505,6 +8700,7 @@ exports[`TransactionPanel - Sale delivered matches snapshot 1`] = `
             }
           }
           location={Object {}}
+          rootClassName="addressMobile"
           showAddress={false}
         />
         <BreakdownMaybe
@@ -8892,6 +9088,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
         oldestMessagePageFetched={1}
         onOpenReviewModal={[Function]}
         onShowMoreMessages={[Function]}
+        rootClassName="feedContainer"
         totalMessagePages={1}
       />
       <SendMessageForm
@@ -8901,12 +9098,18 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
         onBlur={[Function]}
         onFocus={[Function]}
         onSubmit={[Function]}
+        rootClassName="sendMessageForm"
         sendMessageError={null}
       />
     </div>
-    <div>
-      <div>
+    <div
+      className="asideDesktop"
+    >
+      <div
+        className="detailCard"
+      >
         <DetailCardImage
+          avatarWrapperClassName="avatarWrapperDesktop"
           image={null}
           isCustomer={false}
           listingDeleted={false}
@@ -8945,6 +9148,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
           subTitle="55 TransactionPanel.perUnit"
         />
         <BreakdownMaybe
+          className="breakdownContainer"
           transaction={
             Object {
               "attributes": Object {
@@ -9148,11 +9352,16 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 
 exports[`TransactionPanel - Sale enquired matches snapshot 1`] = `
 <div
-  className=""
+  className="root"
 >
-  <div>
-    <div>
+  <div
+    className="container"
+  >
+    <div
+      className="txInfo"
+    >
       <DetailCardImage
+        avatarWrapperClassName="avatarWrapperMobile"
         image={null}
         isCustomer={false}
         listingDeleted={false}
@@ -9175,6 +9384,7 @@ exports[`TransactionPanel - Sale enquired matches snapshot 1`] = `
             "type": "user",
           }
         }
+        rootClassName="imageWrapperMobile"
       />
       <PanelHeading
         customerName={
@@ -9257,7 +9467,9 @@ exports[`TransactionPanel - Sale enquired matches snapshot 1`] = `
           />
         }
       />
-      <div>
+      <div
+        className="bookingDetailsMobile"
+      >
         <AddressLinkMaybe
           geolocation={
             LatLng {
@@ -9267,6 +9479,7 @@ exports[`TransactionPanel - Sale enquired matches snapshot 1`] = `
             }
           }
           location={Object {}}
+          rootClassName="addressMobile"
         />
         <BreakdownMaybe
           transaction={
@@ -9653,6 +9866,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
         oldestMessagePageFetched={1}
         onOpenReviewModal={[Function]}
         onShowMoreMessages={[Function]}
+        rootClassName="feedContainer"
         totalMessagePages={1}
       />
       <SendMessageForm
@@ -9662,12 +9876,18 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
         onBlur={[Function]}
         onFocus={[Function]}
         onSubmit={[Function]}
+        rootClassName="sendMessageForm"
         sendMessageError={null}
       />
     </div>
-    <div>
-      <div>
+    <div
+      className="asideDesktop"
+    >
+      <div
+        className="detailCard"
+      >
         <DetailCardImage
+          avatarWrapperClassName="avatarWrapperDesktop"
           image={null}
           isCustomer={false}
           listingDeleted={false}
@@ -9704,6 +9924,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
           subTitle="55 TransactionPanel.perUnit"
         />
         <BreakdownMaybe
+          className="breakdownContainer"
           transaction={
             Object {
               "attributes": Object {
@@ -9907,11 +10128,16 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 
 exports[`TransactionPanel - Sale preauthorized matches snapshot 1`] = `
 <div
-  className=""
+  className="root"
 >
-  <div>
-    <div>
+  <div
+    className="container"
+  >
+    <div
+      className="txInfo"
+    >
       <DetailCardImage
+        avatarWrapperClassName="avatarWrapperMobile"
         image={null}
         isCustomer={false}
         listingDeleted={false}
@@ -9934,6 +10160,7 @@ exports[`TransactionPanel - Sale preauthorized matches snapshot 1`] = `
             "type": "user",
           }
         }
+        rootClassName="imageWrapperMobile"
       />
       <PanelHeading
         customerName={
@@ -10016,7 +10243,9 @@ exports[`TransactionPanel - Sale preauthorized matches snapshot 1`] = `
           />
         }
       />
-      <div>
+      <div
+        className="bookingDetailsMobile"
+      >
         <AddressLinkMaybe
           geolocation={
             LatLng {
@@ -10026,6 +10255,7 @@ exports[`TransactionPanel - Sale preauthorized matches snapshot 1`] = `
             }
           }
           location={Object {}}
+          rootClassName="addressMobile"
         />
         <BreakdownMaybe
           transaction={
@@ -10412,6 +10642,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
         oldestMessagePageFetched={1}
         onOpenReviewModal={[Function]}
         onShowMoreMessages={[Function]}
+        rootClassName="feedContainer"
         totalMessagePages={1}
       />
       <SendMessageForm
@@ -10421,12 +10652,18 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
         onBlur={[Function]}
         onFocus={[Function]}
         onSubmit={[Function]}
+        rootClassName="sendMessageForm"
         sendMessageError={null}
       />
     </div>
-    <div>
-      <div>
+    <div
+      className="asideDesktop"
+    >
+      <div
+        className="detailCard"
+      >
         <DetailCardImage
+          avatarWrapperClassName="avatarWrapperDesktop"
           image={null}
           isCustomer={false}
           listingDeleted={false}
@@ -10464,6 +10701,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
           subTitle="55 TransactionPanel.perUnit"
         />
         <BreakdownMaybe
+          className="breakdownContainer"
           transaction={
             Object {
               "attributes": Object {

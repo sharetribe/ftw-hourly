@@ -22,7 +22,7 @@ import { TopbarContainer } from '../../containers';
 
 import facebookImage from '../../assets/yogatimeFacebook-1200x630.jpg';
 import twitterImage from '../../assets/yogatimeTwitter-600x314.jpg';
-import css from './LandingPage.css';
+import css from './LandingPage.module.css';
 
 export const LandingPageComponent = props => {
   const {

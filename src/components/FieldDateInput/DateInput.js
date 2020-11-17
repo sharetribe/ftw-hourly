@@ -20,7 +20,7 @@ import { intlShape, injectIntl } from '../../util/reactIntl';
 
 import NextMonthIcon from './NextMonthIcon';
 import PreviousMonthIcon from './PreviousMonthIcon';
-import css from './DateInput.css';
+import css from './DateInput.module.css';
 
 export const HORIZONTAL_ORIENTATION = 'horizontal';
 export const ANCHOR_LEFT = 'left';
@@ -115,7 +115,7 @@ class DateInputComponent extends Component {
   }
 
   onDateChange(date) {
-    const selectedDate = date instanceof moment ? date.toDate() : null;
+    const selectedDate = moment && moment.isMoment(date) ? date.toDate() : null;
     this.props.onChange({ date: selectedDate });
   }
 

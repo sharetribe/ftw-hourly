@@ -6,7 +6,7 @@ import { propTypes, LISTING_STATE_DRAFT } from '../../util/types';
 import { getListingType, createSlug } from '../../util/urlHelpers';
 import { NamedLink } from '../../components';
 
-import css from './OwnListingLink.css';
+import css from './OwnListingLink.module.css';
 
 const OwnListingLink = props => {
   const { className, listing, listingFetched, children } = props;
