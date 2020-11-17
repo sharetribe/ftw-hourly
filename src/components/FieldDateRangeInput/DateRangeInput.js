@@ -170,7 +170,7 @@ class DateRangeInputComponent extends Component {
       ? isBlockedBetween(timeSlots, startDate, moment(this.state.currentStartDate).add(1, 'days'))
       : false;
 
-    const startDateAsDate = startDate instanceof moment ? startDate.toDate() : null;
+    const startDateAsDate = moment && moment.isMoment(startDate) ? startDate.toDate() : null;
     const endDateAsDate = clearEndDate ? null : pickerEndDateToApiDate(unitType, endDate);
 
     this.setState(() => ({

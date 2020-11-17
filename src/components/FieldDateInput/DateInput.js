@@ -115,7 +115,7 @@ class DateInputComponent extends Component {
   }
 
   onDateChange(date) {
-    const selectedDate = date instanceof moment ? date.toDate() : null;
+    const selectedDate = moment && moment.isMoment(date) ? date.toDate() : null;
     this.props.onChange({ date: selectedDate });
   }
 
