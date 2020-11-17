@@ -8,7 +8,7 @@ import { ensureOwnListing } from '../../util/data';
 import { LISTING_STATE_DRAFT } from '../../util/types';
 import { getListingType, createSlug } from '../../util/urlHelpers';
 
-import css from './UserNav.css';
+import css from './UserNav.module.css';
 
 const listingTab = (listing, selectedPageName) => {
   if (!listing) {

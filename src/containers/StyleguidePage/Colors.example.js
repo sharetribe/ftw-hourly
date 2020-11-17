@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import css from './StyleguidePage.css';
+import css from './StyleguidePage.module.css';
 
 const ColorCard = props => {
   const { mpColor, name, usage } = props;
@@ -40,10 +40,6 @@ const MarketplaceColors = () => {
       <p className={css.spacing2x}>
         Marketplace colors have three groups: branding color and its variations, action colors, and
         grey palette for fine tuning UI elements.
-      </p>
-      <p className={css.spacing2x}>
-        N.B. you should import marketplace.css where ever you are going to use marketplace variables
-        (e.g. <i>@import '../../marketplace.css';</i>).
       </p>
       <div className={css.colorsContainer}>
         <div className={css.colorsGroup}>

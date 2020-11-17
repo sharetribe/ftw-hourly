@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/no-static-element-interactions */
 import React, { Component } from 'react';
 import { array, arrayOf, bool, func, object, shape, string, oneOf } from 'prop-types';
 import { FormattedMessage, intlShape, injectIntl } from '../../util/reactIntl';
@@ -59,7 +58,7 @@ import SectionDescriptionMaybe from './SectionDescriptionMaybe';
 import SectionFeaturesMaybe from './SectionFeaturesMaybe';
 import SectionReviews from './SectionReviews';
 import SectionMapMaybe from './SectionMapMaybe';
-import css from './ListingPage.css';
+import css from './ListingPage.module.css';
 
 const MIN_LENGTH_FOR_LONG_WORDS_IN_TITLE = 16;
 

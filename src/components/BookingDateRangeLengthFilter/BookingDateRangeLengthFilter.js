@@ -5,7 +5,7 @@ import { parseDateFromISO8601, stringifyDateToISO8601 } from '../../util/dates';
 import { propTypes } from '../../util/types';
 
 import { FieldDateRangeController, FieldSelect, FilterPopup, FilterPlain } from '../../components';
-import css from './BookingDateRangeLengthFilter.css';
+import css from './BookingDateRangeLengthFilter.module.css';
 
 const RADIX = 10;
 

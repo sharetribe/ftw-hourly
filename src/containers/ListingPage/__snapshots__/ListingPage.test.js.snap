@@ -20,7 +20,7 @@ exports[`ListingPage matches snapshot 1`] = `
   twitterImages={Array []}
 >
   <LayoutSingleColumn
-    className={null}
+    className="pageRoot"
     rootClassName={null}
   >
     <LayoutWrapperTopbar
@@ -92,7 +92,9 @@ exports[`ListingPage matches snapshot 1`] = `
           onManageDisableScrolling={[Function]}
           title="listing1 title"
         />
-        <div>
+        <div
+          className="contentContainer"
+        >
           <SectionAvatar
             params={
               Object {
@@ -118,7 +120,9 @@ exports[`ListingPage matches snapshot 1`] = `
               }
             }
           />
-          <div>
+          <div
+            className="mainContent"
+          >
             <SectionHeading
               certificateOptions={
                 Array [
@@ -135,6 +139,7 @@ exports[`ListingPage matches snapshot 1`] = `
               formattedPrice={55}
               hostLink={
                 <NamedLink
+                  className="authorNameLink"
                   name="ListingPage"
                   params={
                     Object {
@@ -211,6 +216,7 @@ exports[`ListingPage matches snapshot 1`] = `
           </div>
           <withRouter(injectIntl(BookingPanel))
             authorDisplayName="user-1 display name"
+            className="bookingPanel"
             fetchLineItemsError={null}
             fetchLineItemsInProgress={false}
             isOwnListing={false}
@@ -283,6 +289,7 @@ exports[`ListingPage matches snapshot 1`] = `
         </div>
       </div>
       <injectIntl(ModalComponent)
+        contentClassName="enquiryModalContent"
         id="ListingPage.enquiry"
         isOpen={false}
         onClose={[Function]}
@@ -290,10 +297,12 @@ exports[`ListingPage matches snapshot 1`] = `
       >
         <EnquiryForm
           authorDisplayName="user-1 display name"
+          className="enquiryForm"
           inProgress={false}
           listingTitle="listing1 title"
           onSubmit={[Function]}
           sendEnquiryError={null}
+          submitButtonWrapperClassName="enquirySubmitButtonWrapper"
         />
       </injectIntl(ModalComponent)>
     </LayoutWrapperMain>

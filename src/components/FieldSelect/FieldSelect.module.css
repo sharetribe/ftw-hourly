@@ -1,0 +1,30 @@
+.root {
+}
+
+.select {
+  color: var(--matterColorAnti);
+  border-bottom-color: var(--attentionColor);
+  padding-right: 20px;
+
+  & > option {
+    color: var(--matterColor);
+  }
+  & > option:disabled {
+    color: var(--matterColorAnti);
+  }
+
+  &:disabled {
+    border-bottom-color: var(--matterColorNegative);
+    color: var(--matterColorNegative);
+    cursor: default;
+  }
+}
+
+.selectSuccess {
+  color: var(--matterColor);
+  border-bottom-color: var(--successColor);
+}
+
+.selectError {
+  border-bottom-color: var(--failColor);
+}

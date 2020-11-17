@@ -17,6 +17,24 @@ https://github.com/sharetribe/flex-template-web/
 
 ## Upcoming version 2020-XX-XX
 
+## [v9.0.0] 2020-11-17
+
+This major release renames all the CSS files. If you have made custom components or customized
+existing ones, you should read the related [PR](https://github.com/sharetribe/ftw-daily/pull/1374)
+for more information.
+
+### Updates from upstream (FTW-daily v7.0.0)
+
+- [change] Update sharetribe-scripts (our fork of create-react-app) to v4.0.0. In addition to
+  changes that CRA@v4 brought along,
+
+  - We started to use`*.module.css` naming pattern for styles that use CSS Modules preprocessor.
+  - We also turned on live CSS Custom Properties (CSS Variables).
+
+  Read the PR for more info: [#1374](https://github.com/sharetribe/ftw-daily/pull/1374)
+
+  [v9.0.0]: https://github.com/sharetribe/ftw-hourly/compare/v8.5.0...v9.0.0
+
 ## [v8.5.0] 2020-11-16
 
 ### Updates from upstream (FTW-daily v6.5.0)

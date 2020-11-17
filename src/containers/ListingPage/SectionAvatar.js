@@ -1,7 +1,7 @@
 import React from 'react';
 import { AvatarLarge, AvatarMedium } from '../../components';
 
-import css from './ListingPage.css';
+import css from './ListingPage.module.css';
 
 const SectionAvatar = props => {
   const { user } = props;

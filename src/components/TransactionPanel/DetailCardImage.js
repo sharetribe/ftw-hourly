@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import { createSlug, stringify } from '../../util/urlHelpers';
 import { AvatarMedium, NamedLink, ResponsiveImage } from '../../components';
 
-import css from './TransactionPanel.css';
+import css from './TransactionPanel.module.css';
 
 const createListingLink = (
   listingId,

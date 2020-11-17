@@ -1,7 +1,7 @@
 import React from 'react';
 import { FieldSelect } from '../../components';
 
-import css from './EditListingDescriptionForm.css';
+import css from './EditListingDescriptionForm.module.css';
 
 const CustomCertificateSelectFieldMaybe = props => {
   const { name, id, certificateOptions, intl } = props;

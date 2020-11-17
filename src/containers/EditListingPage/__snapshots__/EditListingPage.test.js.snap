@@ -5,7 +5,12 @@ exports[`EditListingPageComponent matches snapshot 1`] = `
   scrollingDisabled={false}
   title="EditListingPage.titleCreateListing"
 >
-  <withRouter(Connect(TopbarContainerComponent)) />
+  <withRouter(Connect(TopbarContainerComponent))
+    className="topbar"
+    desktopClassName="desktopTopbar"
+    mobileClassName="mobileTopbar"
+    mobileRootClassName="mobileTopbar"
+  />
   <UserNav
     className={null}
     listing={null}
@@ -13,6 +18,7 @@ exports[`EditListingPageComponent matches snapshot 1`] = `
     selectedPageName="NewListingPage"
   />
   <withViewport(injectIntl(EditListingWizard))
+    className="wizard"
     currentUser={null}
     errors={
       Object {

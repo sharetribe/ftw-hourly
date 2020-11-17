@@ -17,7 +17,7 @@ import {
   OwnListingLink,
 } from '../../components';
 
-import css from './TopbarMobileMenu.css';
+import css from './TopbarMobileMenu.module.css';
 
 const TopbarMobileMenu = props => {
   const {

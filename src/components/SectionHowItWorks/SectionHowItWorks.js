@@ -5,7 +5,7 @@ import { FormattedMessage } from '../../util/reactIntl';
 import { propTypes } from '../../util/types';
 import { OwnListingLink } from '../../components';
 
-import css from './SectionHowItWorks.css';
+import css from './SectionHowItWorks.module.css';
 
 const SectionHowItWorks = props => {
   const { rootClassName, className, currentUserListing, currentUserListingFetched } = props;
