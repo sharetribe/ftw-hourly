@@ -17,6 +17,9 @@ https://github.com/sharetribe/flex-template-web/
 
 ## Upcoming version 2020-XX-XX
 
+- [fix] Remove deprecated time zone keys that Node implementation doesn't recongnize anymore.
+  [#124](https://github.com/sharetribe/ftw-hourly/pull/124)
+
 ## [v9.0.0] 2020-11-17
 
 This major release renames all the CSS files. If you have made custom components or customized
