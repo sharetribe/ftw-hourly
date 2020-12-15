@@ -17,8 +17,30 @@ https://github.com/sharetribe/flex-template-web/
 
 ## Upcoming version 2020-XX-XX
 
+## [v9.1.0] 2020-12-15
+
 - [fix] Remove deprecated time zone keys that Node implementation doesn't recongnize anymore.
   [#124](https://github.com/sharetribe/ftw-hourly/pull/124)
+
+### Updates from upstream (FTW-daily v7.1.0)
+
+- [change] Handle entity update with sparse attributes.
+  [#1392](https://github.com/sharetribe/ftw-daily/pull/1392)
+- [change] Remove react-google-maps dependency. It has not been maintained for 3 years. From now on,
+  we use Google Maps API directly. However, the default map provider is still Mapbox.
+  [#1389](https://github.com/sharetribe/ftw-daily/pull/1389)
+- [fix] Pass metadata through sanitizeUser function.
+  [#1391](https://github.com/sharetribe/ftw-daily/pull/1391)
+- [fix] Call for the same page caused unnecessary rendering
+  [#1388](https://github.com/sharetribe/ftw-daily/pull/1388)
+- [fix] Fix Google Maps default centering if no bounds or center is given.
+  [#1386](https://github.com/sharetribe/ftw-daily/pull/1386)
+- [add] Add timeout and other options for getCurrentLocation call.
+  [#1385](https://github.com/sharetribe/ftw-daily/pull/1385)
+- [fix] Fix FieldCheckbox validation on blur event on Firefox.
+  [#1384](https://github.com/sharetribe/ftw-daily/pull/1384)
+
+  [v9.1.0]: https://github.com/sharetribe/ftw-hourly/compare/v9.0.0...v9.1.0
 
 ## [v9.0.0] 2020-11-17
 
