@@ -63,7 +63,7 @@ const formComponent = country => props => (
             handleSubmit(e);
           }}
         >
-          <FormSpy onChange={onChange} />
+          <FormSpy onChange={onChange} subscription={{ values: true, dirty: true }} />
           <FieldCheckboxGroup {...componentProps} />
 
           <Button style={{ marginTop: 24 }} type="submit" disabled={submitDisabled}>

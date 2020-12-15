@@ -1,6 +1,6 @@
 {
   "name": "app",
-  "version": "9.0.0",
+  "version": "9.1.0",
   "private": true,
   "license": "Apache-2.0",
   "dependencies": {
@@ -49,7 +49,6 @@
     "react-dom": "^16.13.1",
     "react-final-form": "^6.5.1",
     "react-final-form-arrays": "^3.1.2",
-    "react-google-maps": "^9.4.5",
     "react-helmet-async": "^1.0.6",
     "react-intl": "^3.1.13",
     "react-moment-proptypes": "^1.6.0",
@@ -78,7 +77,6 @@
   },
   "resolutions": {
     "react-dates/lodash": "^4.17.19",
-    "react-google-maps/lodash": "^4.17.19",
     "react-test-renderer": "^16.13.1",
     "handlebars": "^4.5.3",
     "serialize-javascript": "^2.1.1"
