@@ -17,6 +17,15 @@ https://github.com/sharetribe/flex-template-web/
 
 ## Upcoming version 2020-XX-XX
 
+## [v9.2.0] 2020-12-16
+
+### Updates from upstream (FTW-daily v7.2.0)
+
+- [add] Add helper functions for setting up your own OIDC authentication and using FTW server as
+  proxy when needed. [#1383](https://github.com/sharetribe/ftw-daily/pull/1383)
+
+[v9.2.0]: https://github.com/sharetribe/ftw-hourly/compare/v9.1.0...v9.2.0
+
 ## [v9.1.0] 2020-12-15
 
 - [fix] Remove deprecated time zone keys that Node implementation doesn't recongnize anymore.
