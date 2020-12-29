@@ -52,8 +52,11 @@ const enableAvailability = process.env.REACT_APP_AVAILABILITY_ENABLED === 'true'
 
 // A maximum number of days forwards during which a booking can be made.
 // This is limited due to Stripe holding funds up to 90 days from the
-// moment they are charged. Also note that available time slots can only
-// be fetched for 180 days in the future.
+// moment they are charged:
+// https://stripe.com/docs/connect/account-balances#holding-funds
+//
+// See also the API reference for querying time slots:
+// https://www.sharetribe.com/api-reference/marketplace.html#query-time-slots
 const dayCountAvailableForBooking = 90;
 
 // To pass environment variables to the client app in the build

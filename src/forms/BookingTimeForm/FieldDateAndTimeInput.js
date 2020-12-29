@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { func, object, string } from 'prop-types';
 import classNames from 'classnames';
+import config from '../../config';
 import { intlShape } from '../../util/reactIntl';
 import {
   getStartHours,
@@ -28,7 +29,16 @@ import NextMonthIcon from './NextMonthIcon';
 import PreviousMonthIcon from './PreviousMonthIcon';
 import css from './FieldDateAndTimeInput.module.css';
 
-const MAX_TIME_SLOTS_RANGE = 180;
+// MAX_TIME_SLOTS_RANGE is the maximum number of days forwards during which a booking can be made.
+// This is limited due to Stripe holding funds up to 90 days from the
+// moment they are charged:
+// https://stripe.com/docs/connect/account-balances#holding-funds
+//
+// See also the API reference for querying time slots:
+// https://www.sharetribe.com/api-reference/marketplace.html#query-time-slots
+
+const MAX_TIME_SLOTS_RANGE = config.dayCountAvailableForBooking;
+
 const TODAY = new Date();
 
 const endOfRange = (date, timeZone) => {
