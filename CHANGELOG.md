@@ -17,6 +17,10 @@ https://github.com/sharetribe/flex-template-web/
 
 ## Upcoming version 2020-XX-XX
 
+- [fix] Use default timezone when fetching availability exceptions if availabilityPlan and
+  information about listing's timezone doesn't exist yet.
+  [#130](https://github.com/sharetribe/ftw-hourly/pull/130)
+
 ## [v9.2.0] 2020-12-16
 
 ### Updates from upstream (FTW-daily v7.2.0)
