@@ -1,6 +1,6 @@
 import omit from 'lodash/omit';
 import { types as sdkTypes } from '../../util/sdkLoader';
-import { resetToStartOfDay } from '../../util/dates';
+import { resetToStartOfDay, getDefaultTimeZoneOnBrowser } from '../../util/dates';
 import { denormalisedResponseEntities } from '../../util/data';
 import { storableError } from '../../util/errors';
 import { addMarketplaceEntities } from '../../ducks/marketplaceData.duck';
@@ -533,9 +533,6 @@ export const savePayoutDetails = (values, isUpdateCall) => (dispatch, getState, 
 
 // loadData is run for each tab of the wizard. When editing an
 // existing listing, the listing must be fetched first.
-
-// loadData is run for each tab of the wizard. When editing an
-// existing listing, the listing must be fetched first.
 export const loadData = params => (dispatch, getState, sdk) => {
   dispatch(clearUpdatedTab());
   const { id, type } = params;
@@ -569,11 +566,20 @@ export const loadData = params => (dispatch, getState, sdk) => {
       }
 
       // Because of two dispatch functions, response is an array.
-      // sWe are only interest the response from requestShowListing here,
+      // We are only interested in the response from requestShowListing here,
       // so we need to pick the first one
       if (response[0].data && response[0].data.data) {
         const listing = response[0].data.data;
-        const tz = listing.attributes.availabilityPlan.timezone;
+
+        // If the listing doesn't have availabilityPlan yet
+        // use the defaul timezone
+        const availabilityPlan = listing.attributes.availabilityPlan;
+
+        const tz = availabilityPlan
+          ? listing.attributes.availabilityPlan.timezone
+          : typeof window !== 'undefined'
+          ? getDefaultTimeZoneOnBrowser()
+          : 'Etc/UTC';
 
         const today = new Date();
         const start = resetToStartOfDay(today, tz, 0);
