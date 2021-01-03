@@ -44,8 +44,8 @@ const EditListingFeaturesPanel = props => {
       }}
     />
   ) : (
-    <FormattedMessage id="EditListingFeaturesPanel.createListingTitle" />
-  );
+      <FormattedMessage id="EditListingFeaturesPanel.createListingTitle" />
+    );
 
   const yogaStyles = publicData && publicData.yogaStyles;
   const initialValues = { yogaStyles };
