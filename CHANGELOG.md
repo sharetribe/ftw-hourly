@@ -17,6 +17,9 @@ https://github.com/sharetribe/flex-template-web/
 
 ## Upcoming version 2020-XX-XX
 
+- [fix] Use dayCountAvailableForBooking config instead of hard-coded value in FieldDateAndTimeInput
+  so that it matches the date range that is used in react-dates components.
+  [#129](https://github.com/sharetribe/ftw-hourly/pull/129)
 - [fix] Use default timezone when fetching availability exceptions if availabilityPlan and
   information about listing's timezone doesn't exist yet.
   [#130](https://github.com/sharetribe/ftw-hourly/pull/130)
