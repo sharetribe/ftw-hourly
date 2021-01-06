@@ -54,7 +54,7 @@ const SectionCategories = props => {
             <div className={css.title}>
                 <FormattedMessage id="SectionCategories.title" />
             </div>
-            <div className={css.category}>
+            <div className={css.categories}>
                 {categoryLink(
                     'Chef',
                     chImage,
@@ -76,7 +76,7 @@ const SectionCategories = props => {
                     '?address=San%20Francisco%2C%20California%2C%20USA&bounds=37.8324430069081%2C-122.354995082683%2C37.6044780500533%2C-122.517910874663'
                 )}
             </div>
-            <div className={css.category}>
+            <div className={css.categories}>
                 {categoryLink(
                     'Musician',
                     muImage,
