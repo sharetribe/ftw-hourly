@@ -7,7 +7,7 @@
   margin-bottom: 0;
 }
 
-.locations {
+.categories {
   display: flex;
   flex-direction: column;
   margin-top: 0px;
@@ -18,7 +18,7 @@
   }
 }
 
-.location {
+.category {
   width: 100%;
   margin-top: 25px;
 
@@ -32,14 +32,14 @@
   }
 }
 
-.location {
+.category {
   @media (--viewportMedium) {
     margin-right: 40px;
     margin-bottom: 0;
   }
 }
 
-.location:last-of-type {
+.category:last-of-type {
   @media (--viewportMedium) {
     margin-right: 0;
   }
@@ -67,7 +67,7 @@
   }
 }
 
-.locationImage {
+.CategoryImage {
   /* Layout - image will take space defined by aspect ratio wrapper */
   position: absolute;
   top: 0;
@@ -91,6 +91,6 @@
   }
 }
 
-.locationName {
+.categoryName {
   color: var(--marketplaceColor);
 }

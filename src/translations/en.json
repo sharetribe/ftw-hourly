@@ -819,6 +819,7 @@
   "SectionHowItWorks.titleLineTwo": " ",
   "SectionCategories.listingsInCategories": "{category}",
   "SectionLocations.listingsInLocation": "Yogis in {location}",
+  "SectionCategories.listingsInCategory": "{category}",
   "SectionLocations.title": "Find a professional consultant in your area of interest",
   "SelectMultipleFilter.labelSelected": "{labelText} • {count}",
   "SelectMultipleFilterPlainForm.labelSelected": "{labelText} • {count}",
