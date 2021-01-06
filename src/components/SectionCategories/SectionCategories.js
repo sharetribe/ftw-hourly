@@ -8,9 +8,14 @@ import { NamedLink } from '../../components';
 
 import css from './SectionCategories.module.css';
 
-// import nyImage from './images/ny-yogi.jpg';
-// import laImage from './images/la-yogi.jpg';
-// import sfImage from './images/sf-yogi.jpg';
+import chImage from './images/chef-170x170.jpg';
+import daImage from './images/dance-170x170.jpg';
+import deImage from './images/decorate-170x170.jpg';
+import maImage from './images/master-170x170.jpg';
+import muImage from './images/musician-170x170.jpg';
+import paImage from './images/painter-170x170.jpg';
+import phImage from './images/photographer-170x170.jpg';
+import psImage from './images/psychology-170x170.jpg';
 
 class CategoryImage extends Component {
     render() {
@@ -31,8 +36,8 @@ const categoryLink = (name, image, searchQuery) => {
             </div>
             <div className={css.linkText}>
                 <FormattedMessage
-                    id="SectionLocations.listingsInLocation"
-                    values={{ location: nameText }}
+                    id="SectionCategories.listingsInCategory"
+                    values={{ category: nameText }}
                 />
             </div>
         </NamedLink>
@@ -51,45 +56,45 @@ const SectionCategories = props => {
             </div>
             <div className={css.category}>
                 {categoryLink(
-                    'New York',
-                    nyImage,
+                    'Chef',
+                    chImage,
                     '?address=New%20York%20City%2C%20New%20York%2C%20USA&bounds=40.917576401307%2C-73.7008392055224%2C40.477399%2C-74.2590879797556'
                 )}
                 {categoryLink(
-                    'Los Angeles',
-                    laImage,
+                    'Dancer',
+                    daImage,
                     '?address=Los%20Angeles%2C%20California%2C%20USA&bounds=34.161440999758%2C-118.121305008073%2C33.9018913203336%2C-118.521456965901'
                 )}
                 {categoryLink(
-                    'San Francisco',
-                    sfImage,
+                    'Decorator',
+                    deImage,
                     '?address=San%20Francisco%2C%20California%2C%20USA&bounds=37.8324430069081%2C-122.354995082683%2C37.6044780500533%2C-122.517910874663'
                 )}
                 {categoryLink(
-                    'San Francisco',
-                    sfImage,
+                    'Master',
+                    maImage,
                     '?address=San%20Francisco%2C%20California%2C%20USA&bounds=37.8324430069081%2C-122.354995082683%2C37.6044780500533%2C-122.517910874663'
                 )}
             </div>
             <div className={css.category}>
                 {categoryLink(
-                    'New York',
-                    nyImage,
+                    'Musician',
+                    muImage,
                     '?address=New%20York%20City%2C%20New%20York%2C%20USA&bounds=40.917576401307%2C-73.7008392055224%2C40.477399%2C-74.2590879797556'
                 )}
                 {categoryLink(
-                    'Los Angeles',
-                    laImage,
+                    'Painter',
+                    paImage,
                     '?address=Los%20Angeles%2C%20California%2C%20USA&bounds=34.161440999758%2C-118.121305008073%2C33.9018913203336%2C-118.521456965901'
                 )}
                 {categoryLink(
-                    'San Francisco',
-                    sfImage,
+                    'Photographer',
+                    phImage,
                     '?address=San%20Francisco%2C%20California%2C%20USA&bounds=37.8324430069081%2C-122.354995082683%2C37.6044780500533%2C-122.517910874663'
                 )}
                 {categoryLink(
-                    'San Francisco',
-                    sfImage,
+                    'Psychologist',
+                    psImage,
                     '?address=San%20Francisco%2C%20California%2C%20USA&bounds=37.8324430069081%2C-122.354995082683%2C37.6044780500533%2C-122.517910874663'
                 )}
             </div>

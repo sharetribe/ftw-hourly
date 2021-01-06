@@ -23,6 +23,7 @@ import { TopbarContainer } from '../../containers';
 import facebookImage from '../../assets/yogatimeFacebook-1200x630.jpg';
 import twitterImage from '../../assets/yogatimeTwitter-600x314.jpg';
 import css from './LandingPage.module.css';
+import SectionCategories from '../../components/SectionCategories/SectionCategories';
 
 export const LandingPageComponent = props => {
   const {
@@ -72,7 +73,7 @@ export const LandingPageComponent = props => {
           <ul className={css.sections}>
             <li className={css.section}>
               <div className={css.sectionContentFirstChild}>
-                <SectionLocations />
+                <SectionCategories />
               </div>
             </li>
             <li className={css.section}>
