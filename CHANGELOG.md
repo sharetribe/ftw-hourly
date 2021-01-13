@@ -17,12 +17,27 @@ https://github.com/sharetribe/flex-template-web/
 
 ## Upcoming version 2020-XX-XX
 
+## [v9.3.0] 2021-01-13
+
 - [fix] Use dayCountAvailableForBooking config instead of hard-coded value in FieldDateAndTimeInput
   so that it matches the date range that is used in react-dates components.
   [#129](https://github.com/sharetribe/ftw-hourly/pull/129)
 - [fix] Use default timezone when fetching availability exceptions if availabilityPlan and
   information about listing's timezone doesn't exist yet.
   [#130](https://github.com/sharetribe/ftw-hourly/pull/130)
+
+### Updates from upstream (FTW-daily v7.3.0)
+
+- [fix] Move well-known/\* endpoints related to OIDC proxy setup from `apiRouter` to new
+  `wellKnownRouter`so that they can be enabled outside the basic auth setup. It also makes it
+  simpler to set the identity provider url, because we can drop the `/api` part of the path. Also,
+  rename the `RSA_SECRET_KEY`to `RSA_PRIVATE_KEY` for consistency.
+  [#1399](https://github.com/sharetribe/ftw-daily/pull/1399)
+- [fix] Make sure that the verify email API endpoint has been called successfully before redirecting
+  the user away from EmailVerificationPage.
+  [#1397](https://github.com/sharetribe/ftw-daily/pull/1397)
+
+  [v9.3.0]: https://github.com/sharetribe/ftw-hourly/compare/v9.2.0...v9.3.0
 
 ## [v9.2.0] 2020-12-16
 
