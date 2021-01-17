@@ -1,7 +1,7 @@
 @import '../../styles/propertySets.css';
 
 .title {
-  @apply --marketplaceH3FontStyles;
+  @apply --marketplaceH2FontStyles;
 
   margin-top: 0;
   margin-bottom: 0;
@@ -53,7 +53,7 @@
 
   &:hover {
     transform: scale(1.02);
-    box-shadow: var(--boxShadowSectionLocationHover);
+    box-shadow: 10px 10px 5px 5px #ffffff;
   }
 }
 
@@ -80,7 +80,7 @@
 }
 
 .linkText {
-  @apply --marketplaceH2FontStyles;
+  @apply --marketplaceH3FontStyles;
   color: var(--matterColor);
   margin-top: 15px;
   margin-bottom: 0;
