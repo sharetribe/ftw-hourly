@@ -59,9 +59,9 @@ export default [
         },
     },
     {
-        id: 'default-scientists-and-engineers',
+        id: 'default-fashionistas-and-beauticians',
         predictionPlace: {
-            address: 'Scientists & Engineers',
+            address: 'Fashionistas & Beauticians',
             bounds: new LatLngBounds(
                 new LatLng(45.858099013046, -122.441059986416),
                 new LatLng(45.3794799927623, -122.929215816001)

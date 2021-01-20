@@ -39,8 +39,8 @@ export const EditListingPricingFormComponent = props => (
       const translationKey = isNightly
         ? 'EditListingPricingForm.pricePerNight'
         : isDaily
-        ? 'EditListingPricingForm.pricePerDay'
-        : 'EditListingPricingForm.pricePerUnit';
+          ? 'EditListingPricingForm.pricePerDay'
+          : 'EditListingPricingForm.pricePerUnit';
 
       const pricePerUnitMessage = intl.formatMessage({
         id: translationKey,

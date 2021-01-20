@@ -8,14 +8,14 @@ import { NamedLink } from '../../components';
 
 import css from './SectionCategories.module.css';
 
-import chImage from './images/chef-170x170.jpg';
-import daImage from './images/dance-170x170.jpg';
-import deImage from './images/decorate-170x170.jpg';
-import maImage from './images/master-170x170.jpg';
-import muImage from './images/musician-170x170.jpg';
-import paImage from './images/painter-170x170.jpg';
-import phImage from './images/photographer-170x170.jpg';
-import psImage from './images/psychology-170x170.jpg';
+import acImage from './images/accountant.png';
+import edImage from './images/edu.png';
+import faImage from './images/fashion.png';
+import heImage from './images/health.png';
+import hoImage from './images/home.png';
+import itImage from './images/it.png';
+import leImage from './images/legal.png';
+import spImage from './images/sport.png';
 
 class CategoryImage extends Component {
     render() {
@@ -57,44 +57,44 @@ const SectionCategories = props => {
             <div className={css.categories}>
                 {categoryLink(
                     'Health Practitioners',
-                    chImage,
+                    heImage,
                     '?address=New%20York%20City%2C%20New%20York%2C%20USA&bounds=40.917576401307%2C-73.7008392055224%2C40.477399%2C-74.2590879797556'
                 )}
                 {categoryLink(
                     'Legal Experts',
-                    daImage,
+                    leImage,
                     '?address=Los%20Angeles%2C%20California%2C%20USA&bounds=34.161440999758%2C-118.121305008073%2C33.9018913203336%2C-118.521456965901'
                 )}
                 {categoryLink(
                     'IT & Technology Gurus',
-                    deImage,
+                    itImage,
                     '?address=San%20Francisco%2C%20California%2C%20USA&bounds=37.8324430069081%2C-122.354995082683%2C37.6044780500533%2C-122.517910874663'
                 )}
                 {categoryLink(
                     'Sports & Fitness Instructors',
-                    maImage,
+                    spImage,
                     '?address=San%20Francisco%2C%20California%2C%20USA&bounds=37.8324430069081%2C-122.354995082683%2C37.6044780500533%2C-122.517910874663'
                 )}
             </div>
             <div className={css.categories}>
                 {categoryLink(
                     'Accountants & Financial Advisors',
-                    muImage,
+                    acImage,
                     '?address=New%20York%20City%2C%20New%20York%2C%20USA&bounds=40.917576401307%2C-73.7008392055224%2C40.477399%2C-74.2590879797556'
                 )}
                 {categoryLink(
-                    'Scientists & Engineers',
-                    paImage,
+                    'Fashionistas & Beauticians',
+                    faImage,
                     '?address=Los%20Angeles%2C%20California%2C%20USA&bounds=34.161440999758%2C-118.121305008073%2C33.9018913203336%2C-118.521456965901'
                 )}
                 {categoryLink(
                     'Educators & Teachers',
-                    phImage,
+                    edImage,
                     '?address=San%20Francisco%2C%20California%2C%20USA&bounds=37.8324430069081%2C-122.354995082683%2C37.6044780500533%2C-122.517910874663'
                 )}
                 {categoryLink(
-                    'Home Improvement & Housekeeping Consultants',
-                    psImage,
+                    'Home Improvement & Housekeeping',
+                    hoImage,
                     '?address=San%20Francisco%2C%20California%2C%20USA&bounds=37.8324430069081%2C-122.354995082683%2C37.6044780500533%2C-122.517910874663'
                 )}
             </div>

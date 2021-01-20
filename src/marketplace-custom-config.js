@@ -117,6 +117,25 @@ export const filters = [
     },
   },
   {
+    id: 'savanteFields',
+    label: 'Savante Fields',
+    type: 'SelectSingleFilter',
+    group: 'secondary',
+    queryParamNames: ['pub_savanteFields'],
+    config: {
+      options: [
+        { key: 'health', label: 'Health Practitioners' },
+        { key: 'legal', label: 'Legal Experts' },
+        { key: 'fashion', label: 'Fashionistas & Beauticians' },
+        { key: 'sport', label: 'Sports & Fitness Instructors' },
+        { key: 'accountant', label: 'Accountants & Financial Advisors' },
+        { key: 'scientist', label: 'Scientists & Engineers ' },
+        { key: 'educator', label: 'Educators & Teachers' },
+        { key: 'home', label: 'Home Improvement & Housekeeping Consultants' },
+      ],
+    },
+  },
+  {
     id: 'certificate',
     label: 'Certificate',
     type: 'SelectSingleFilter',

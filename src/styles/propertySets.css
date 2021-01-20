@@ -23,13 +23,13 @@
   --backgroundImage: {
     /* Gradient direction and overlaying the black color on top of the image for better readability */
     background: linear-gradient(-45deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.6)),
-      url('../../assets/background-image.jpg');
+      url('../../assets/Savante_Main.jpg');
 
     /* Add loading color for the div */
     background-color: var(--matterColor);
 
     /* Cover the whole screen with the background image */
-    background-size: cover;
+    background-size: contain;
 
     /* Align the image within the container */
     background-position: center center;
