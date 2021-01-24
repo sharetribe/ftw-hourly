@@ -58,44 +58,44 @@ const SectionCategories = props => {
                 {categoryLink(
                     'Health Practitioners',
                     heImage,
-                    '?address=New%20York%20City%2C%20New%20York%2C%20USA&bounds=40.917576401307%2C-73.7008392055224%2C40.477399%2C-74.2590879797556'
+                    '?keywords=Health%20Practitioners&address=United%20States%20of%20America&bounds=71.540724%2C-66.885444%2C18.765563%2C-179.9'
                 )}
                 {categoryLink(
                     'Legal Experts',
                     leImage,
-                    '?address=Los%20Angeles%2C%20California%2C%20USA&bounds=34.161440999758%2C-118.121305008073%2C33.9018913203336%2C-118.521456965901'
+                    '?keywords=Legal%20Experts&address=United%20States%20of%20America&bounds=71.540724%2C-66.885444%2C18.765563%2C-179.9'
                 )}
                 {categoryLink(
                     'IT & Technology Gurus',
                     itImage,
-                    '?address=San%20Francisco%2C%20California%2C%20USA&bounds=37.8324430069081%2C-122.354995082683%2C37.6044780500533%2C-122.517910874663'
+                    '?keywords=IT%20&%20Technology%20Gurus&address=United%20States%20of%20America&bounds=71.540724%2C-66.885444%2C18.765563%2C-179.9'
                 )}
                 {categoryLink(
                     'Sports & Fitness Instructors',
                     spImage,
-                    '?address=San%20Francisco%2C%20California%2C%20USA&bounds=37.8324430069081%2C-122.354995082683%2C37.6044780500533%2C-122.517910874663'
+                    '?keywords=Sports%20&%20Fitness%20Instructors&address=United%20States%20of%20America&bounds=71.540724%2C-66.885444%2C18.765563%2C-179.9'
                 )}
             </div>
             <div className={css.categories}>
                 {categoryLink(
                     'Accountants & Financial Advisors',
                     acImage,
-                    '?address=New%20York%20City%2C%20New%20York%2C%20USA&bounds=40.917576401307%2C-73.7008392055224%2C40.477399%2C-74.2590879797556'
+                    '?keywords=Accountants%20&%20Financial%20Advisors&address=United%20States%20of%20America&bounds=71.540724%2C-66.885444%2C18.765563%2C-179.9'
                 )}
                 {categoryLink(
                     'Fashionistas & Beauticians',
                     faImage,
-                    '?address=Los%20Angeles%2C%20California%2C%20USA&bounds=34.161440999758%2C-118.121305008073%2C33.9018913203336%2C-118.521456965901'
+                    '?keywords=Fashionistas%20&%20Beauticians&address=United%20States%20of%20America&bounds=71.540724%2C-66.885444%2C18.765563%2C-179.9'
                 )}
                 {categoryLink(
                     'Educators & Teachers',
                     edImage,
-                    '?address=San%20Francisco%2C%20California%2C%20USA&bounds=37.8324430069081%2C-122.354995082683%2C37.6044780500533%2C-122.517910874663'
+                    '?keywords=Educators%20&%20Teachers&address=United%20States%20of%20America&bounds=71.540724%2C-66.885444%2C18.765563%2C-179.9'
                 )}
                 {categoryLink(
                     'Home Improvement & Housekeeping',
                     hoImage,
-                    '?address=San%20Francisco%2C%20California%2C%20USA&bounds=37.8324430069081%2C-122.354995082683%2C37.6044780500533%2C-122.517910874663'
+                    '?keywords=Home%20Improvement%20&%20Housekeeping&address=United%20States%20of%20America&bounds=71.540724%2C-66.885444%2C18.765563%2C-179.9'
                 )}
             </div>
         </div>

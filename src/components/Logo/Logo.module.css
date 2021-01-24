@@ -4,3 +4,11 @@ If you need to add css to the Logo you can do it here.
 .logoMobile {
 }
 */
+.logoDesktop {
+    width: 250px;
+    height: 50px;
+}
+
+.logoMobile {
+    height: 25px;
+}

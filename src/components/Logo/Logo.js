@@ -10,9 +10,10 @@ import css from './Logo.module.css';
 const Logo = props => {
   const { className, format, ...rest } = props;
   const isMobile = format !== 'desktop';
-  const classes = classNames(className, { [css.logoMobile]: isMobile });
+  const isDesktop = format !== 'mobile';
+  //const classes = classNames(className, { [css.logoMobile]: isMobile });
+  const classes = classNames(className, { [css.logoDesktop]: isDesktop });
   const logoImage = isMobile ? MobileLogoImage : DesktopLogoImage;
-
   return (
     <img
       className={classes}
