@@ -117,20 +117,27 @@ export const filters = [
   //   },
   // },
   {
-    id: 'savanteFields',
-    label: 'Savante Fields',
+    id: 'consultationService',
+    label: 'Consultation Service',
     type: 'SelectSingleFilter',
     group: 'secondary',
-    queryParamNames: ['pub_savanteFields'],
+    queryParamNames: ['pub_consultation'],
     config: {
+      // Optional modes: 'has_all', 'has_any'
+      // https://www.sharetribe.com/api-reference/marketplace.html#extended-data-filtering
       searchMode: 'has_all',
+
+      // "key" is the option you see in Flex Console.
+      // "label" is set here for this web app's UI only.
+      // Note: label is not added through the translation files
+      // to make filter customizations a bit easier.
       options: [
         { key: 'health', label: 'Health Practitioners' },
         { key: 'legal', label: 'Legal Experts' },
         { key: 'fashion', label: 'Fashionistas & Beauticians' },
         { key: 'sport', label: 'Sports & Fitness Instructors' },
         { key: 'accountant', label: 'Accountants & Financial Advisors' },
-        { key: 'scientist', label: 'Scientists & Engineers ' },
+        { key: 'it', label: 'IT & Technology Gurus' },
         { key: 'educator', label: 'Educators & Teachers' },
         { key: 'home', label: 'Home Improvement & Housekeeping Consultants' },
       ],
@@ -149,8 +156,11 @@ export const filters = [
       // to make filter customizations a bit easier.
       options: [
         { key: 'none', label: 'None', hideFromFilters: true, hideFromListingInfo: true },
-        { key: '200h', label: 'Registered yoga teacher 200h' },
-        { key: '500h', label: 'Registered yoga teacher 500h' },
+        { key: 'certificate', label: 'Certificate' },
+        { key: 'diploma', label: 'Diploma' },
+        { key: 'bachelor', label: 'Bachelor' },
+        { key: 'master', label: 'Master' },
+        { key: 'doctorate', label: 'Doctorate' }
       ],
     },
   },

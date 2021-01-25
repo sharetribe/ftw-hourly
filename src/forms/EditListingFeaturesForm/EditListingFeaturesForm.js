@@ -49,13 +49,19 @@ const EditListingFeaturesFormComponent = props => (
         </p>
       ) : null;
 
-      const options = findOptionsForSelectFilter('savanteFields', filterConfig);
+      const options = findOptionsForSelectFilter('consultationService', filterConfig);
+
       return (
         <Form className={classes} onSubmit={handleSubmit}>
           {errorMessage}
           {errorMessageShowListing}
 
-          <FieldCheckboxGroup className={css.features} id={name} name={name} options={options} />
+          <FieldCheckboxGroup
+            className={css.features}
+            id={name}
+            name={name}
+            options={options}
+          />
 
           <Button
             className={css.submitButton}

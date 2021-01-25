@@ -47,8 +47,12 @@ const EditListingFeaturesPanel = props => {
       <FormattedMessage id="EditListingFeaturesPanel.createListingTitle" />
     );
 
-  const savanteFields = publicData && publicData.savanteFields;
-  const initialValues = { savanteFields };
+  // const savanteFields = publicData && publicData.savanteFields;
+  // const initialValues = { savanteFields };
+
+  const consultationService = publicData && publicData.consultationService;
+  const category = publicData && publicData.category;
+  const initialValues = { consultationService, category };
 
   return (
     <div className={classes}>
@@ -58,10 +62,10 @@ const EditListingFeaturesPanel = props => {
         name={FEATURES_NAME}
         initialValues={initialValues}
         onSubmit={values => {
-          const { savanteFields = [] } = values;
+          const { consultationService = [], category = '' } = values;
 
           const updatedValues = {
-            publicData: { savanteFields },
+            publicData: { consultationService, category },
           };
           onSubmit(updatedValues);
         }}
