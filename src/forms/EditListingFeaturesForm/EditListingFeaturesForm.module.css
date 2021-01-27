@@ -38,3 +38,8 @@
     margin-top: 100px;
   }
 }
+/* 
+.nameofconsultation {
+  composes: formMargins;
+  flex-shrink: 0;
+} */

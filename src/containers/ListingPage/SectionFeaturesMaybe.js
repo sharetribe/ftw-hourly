@@ -6,24 +6,33 @@ import css from './ListingPage.module.css';
 
 const SectionFeaturesMaybe = props => {
   const { options, publicData } = props;
-  if (!publicData) {
+  const selectedOption =
+    publicData && publicData.view ? publicData.view : null;
+
+  if (!publicData || !selectedOption) {
     return null;
   }
 
-  const selectedOptions = publicData && publicData.consultationService ? publicData.consultationService : [];
-  const selectedConfigOptions = options.filter(o => selectedOptions.find(s => s === o.key));
+  const optionConfig = options.find(o => o.key === selectedOption);
+  const optionLabel = optionConfig ? optionConfig.label : null;
 
   return (
     <div className={css.sectionFeatures}>
       <h2 className={css.featuresTitle}>
         <FormattedMessage id="ListingPage.featuresTitle" />
       </h2>
-      <PropertyGroup
-        id="ListingPage.consultationService"
+      {/* <PropertyGroup
+        id="ListingPage.yogaStyles"
         options={selectedConfigOptions}
         selectedOptions={selectedOptions}
         twoColumns={selectedConfigOptions.length > 5}
-      />
+      /> */}
+      <p className={css.consultation}>
+        <FormattedMessage
+          id="ListingPage.featuresDetail"
+          values={{ consultationService: optionLabel }}
+        />
+      </p>
     </div>
   );
 };

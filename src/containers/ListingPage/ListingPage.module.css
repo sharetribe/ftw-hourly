@@ -449,6 +449,19 @@
   }
 }
 
+.consultation {
+  margin-top: 0;
+  margin-bottom: 0;
+
+  /* Preserve newlines, but collapse other whitespace */
+  white-space: pre-line;
+
+  @media (--viewportMedium) {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+}
+
 .sectionMap {
   padding: 0 24px;
   margin-bottom: 35px;

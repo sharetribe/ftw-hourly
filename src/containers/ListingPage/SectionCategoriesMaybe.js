@@ -5,7 +5,7 @@ import { FormattedMessage } from '../../util/reactIntl';
 import css from './ListingPage.module.css';
 
 // Create new React component
-const SectionViewMaybe = props => {
+const SectionCategoriesMaybe = props => {
     // Component's props should include all the possible options (from config)
     // and listing's publicData
     const { options, publicData } = props;
