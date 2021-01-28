@@ -34,6 +34,8 @@ export const TRANSITION_EXPIRE_PAYMENT = 'transition/expire-payment';
 export const TRANSITION_ACCEPT = 'transition/accept';
 export const TRANSITION_DECLINE = 'transition/decline';
 
+export const TRANSITION_DECLINE_BY_OPERATOR = 'transition/decline-preauthorized-by-operator';
+
 // The backend automatically expire the transaction.
 export const TRANSITION_EXPIRE = 'transition/expire';
 
@@ -88,6 +90,7 @@ const STATE_PENDING_PAYMENT = 'pending-payment';
 const STATE_PAYMENT_EXPIRED = 'payment-expired';
 const STATE_PREAUTHORIZED = 'preauthorized';
 const STATE_DECLINED = 'declined';
+const STATE_DECLINED_BY_OPERATOR = 'declined-by-operator';
 const STATE_ACCEPTED = 'accepted';
 const STATE_CANCELED = 'canceled';
 const STATE_DELIVERED = 'delivered';
@@ -138,12 +141,14 @@ const stateDescription = {
     [STATE_PREAUTHORIZED]: {
       on: {
         [TRANSITION_DECLINE]: STATE_DECLINED,
+        [TRANSITION_DECLINE_BY_OPERATOR]: STATE_DECLINED_BY_OPERATOR,
         [TRANSITION_EXPIRE]: STATE_DECLINED,
         [TRANSITION_ACCEPT]: STATE_ACCEPTED,
       },
     },
 
     [STATE_DECLINED]: {},
+    [STATE_DECLINED_BY_OPERATOR]: {},
     [STATE_ACCEPTED]: {
       on: {
         [TRANSITION_CANCEL]: STATE_CANCELED,
@@ -237,8 +242,14 @@ export const txIsRequested = tx =>
 export const txIsAccepted = tx =>
   getTransitionsToState(STATE_ACCEPTED).includes(txLastTransition(tx));
 
+const transitionsToDeclined = [
+  ...getTransitionsToState(STATE_DECLINED),
+  ...getTransitionsToState(STATE_DECLINED_BY_OPERATOR),
+];
+
 export const txIsDeclined = tx =>
-  getTransitionsToState(STATE_DECLINED).includes(txLastTransition(tx));
+  transitionsToDeclined.includes(txLastTransition(tx));
+// getTransitionsToState(STATE_DECLINED).includes(txLastTransition(tx));
 
 export const txIsCanceled = tx =>
   getTransitionsToState(STATE_CANCELED).includes(txLastTransition(tx));
@@ -303,6 +314,7 @@ export const isRelevantPastTransition = transition => {
     TRANSITION_COMPLETE,
     TRANSITION_CONFIRM_PAYMENT,
     TRANSITION_DECLINE,
+    TRANSITION_DECLINE_BY_OPERATOR,
     TRANSITION_EXPIRE,
     TRANSITION_REVIEW_1_BY_CUSTOMER,
     TRANSITION_REVIEW_1_BY_PROVIDER,
