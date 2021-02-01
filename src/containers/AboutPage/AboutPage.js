@@ -15,7 +15,7 @@ import css from './AboutPage.module.css';
 import image from './About.png';
 
 const AboutPage = () => {
-  const { siteTwitterHandle, siteFacebookPage } = config;
+  const { siteTwitterHandle, siteFacebookPage, siteSavanteWeb } = config;
   const siteTwitterPage = twitterPageURL(siteTwitterHandle);
 
   // prettier-ignore
@@ -25,7 +25,7 @@ const AboutPage = () => {
       schema={{
         '@context': 'http://schema.org',
         '@type': 'AboutPage',
-        description: 'About Yogatime',
+        description: 'About Savante',
         name: 'About page',
       }}
     >
@@ -35,46 +35,41 @@ const AboutPage = () => {
         </LayoutWrapperTopbar>
 
         <LayoutWrapperMain className={css.staticPageWrapper}>
-          <h1 className={css.pageTitle}>Find new depths in your yoga practice</h1>
+          <h1 className={css.pageTitle}>Savante is the place where those with professional expertise can help those in need. </h1>
           <img className={css.coverImage} src={image} alt="My first ice cream." />
 
           <div className={css.contentWrapper}>
-            <div className={css.contentSide}>
+            {/* <div className={css.contentSide}>
               <p>Yoga was listed by UNESCO as an intangible cultural heritage.</p>
-            </div>
+            </div> */}
 
             <div className={css.contentMain}>
               <h2>
-                Each yoga practitioner is an individual, and each one of us needs different care.
-                Working together with an experienced yoga teacher offers the possibility to rise
-                our practise to a whole new level.
+                Whether you are looking for an accountant, a health practitioner or an English teacher, you can find professionals ready to help you right here at Savante.
               </h2>
 
-              <p>
-                Whether it is the alignment of asanas or being able to set the focus of the class,
-                we all have our own struggles and goals. Some of these cannot be addressed in a
-                regular class of twenty yogis. Working together with the experienced yoga teachers
-                from Yogatime, you can together create just the right class for you.
+              <p className={css.paragraph}>
+                Browse for an expert of your choice, check their schedule and book an appointment. You will receive an online meeting invite. The appointment is conducted online so you don’t have to travel. You are not limited to just professionals in your local area. You can book an appointment with your favorite Savant no matter where they are located. We take care of payment transactions between you and your consultant. All you need is an Internet connection and a computer or personal device with audio/video functionality.
               </p>
 
-              <h3 className={css.subtitle}>Are you a yoga teacher?</h3>
+              <h3 className={css.subtitle}>Do you have skills that you can share with others?</h3>
 
-              <p>
-                Yogatime offers you a platform through which you can reach thousands of yoga
-                practitioners. Offering private yoga classes through Yogatime offers you a
-                possibility to grow your customer base and earn some extra income on top of your
-                regular classes.
+              <p className={css.paragraph}>
+                <ExternalLink href={siteSavanteWeb}>Savante.me</ExternalLink> offers you a platform to share your professional expertise with people in need and earn an income working from home. You can accept clients from your city, your state or across the country. Our platform offers you messaging and online conferencing services, easy payment transactions and an opportunity to reach out to a vast audience. Create your profile today and become a Savant! All you need is an Internet connection, and a computer or tablet with a webcam.
               </p>
 
               <h3 id="contact" className={css.subtitle}>
-                Create your own marketplace like Yogatime
+                Below is a sample list of professionals who are offering their expertise here at Savante.com:
               </h3>
-              <p>
-                Yogatime is brought to you by{' '}
-                <ExternalLink href="http://sharetribe.com">Sharetribe</ExternalLink>. Sharetribe
-                offers anyone a possibility to create a marketplace without restricting your own
-                creativity. Do not hesitate to reach out and learn how to best turn your
-                marketplace idea to reality.
+              <p className={css.paragraph}>
+                <strong>Health Practitioners:</strong> Doctors, Psychiatrists, Nutritionists,... <br />
+                <strong>Legal Experts:</strong> Lawyers, Legal Advisors,... <br />
+                <strong>Technology Gurus:</strong> Computer Repair, Smart Home Setup, Audiophiles <br />
+                <strong>Sports & Fitness Instructors:</strong> Yoga Instructors, Personal Trainers, Coaches,... <br />
+                <strong>Accountants & Financial Advisors:</strong> Investment Advisors, Tax Consultants, Personal Finance Advisors,... <br />
+                <strong>Educators & Teachers:</strong> English Teachers, Math Tutors, Music Teachers,... <br />
+                <strong>Home Improvement & Housekeeping Consultants:</strong> Master Chefs, Interior Decorators, DIY Instructors,... <br />
+                <strong>Fashionistas & Beauticians:</strong> Fashion Advisors, Makeup Artists
               </p>
               <p>
                 You can also checkout our{' '}

@@ -56,46 +56,46 @@ const SectionCategories = props => {
             </div>
             <div className={css.categories}>
                 {categoryLink(
-                    'Health Practitioners',
+                    'Health',
                     heImage,
-                    '?keywords=Health%20Practitioners&address=United%20States%20of%20America&bounds=71.540724%2C-66.885444%2C18.765563%2C-179.9'
+                    '?pub_consultation=health'
                 )}
                 {categoryLink(
-                    'Legal Experts',
+                    'Legal',
                     leImage,
-                    '?keywords=Legal%20Experts&address=United%20States%20of%20America&bounds=71.540724%2C-66.885444%2C18.765563%2C-179.9'
+                    '?pub_consultation=legal'
                 )}
                 {categoryLink(
-                    'IT & Technology Gurus',
+                    'Technology',
                     itImage,
-                    '?keywords=IT%20&%20Technology%20Gurus&address=United%20States%20of%20America&bounds=71.540724%2C-66.885444%2C18.765563%2C-179.9'
+                    '?pub_consultation=technology'
                 )}
                 {categoryLink(
-                    'Sports & Fitness Instructors',
+                    'Sports & Fitness',
                     spImage,
-                    '?keywords=Sports%20&%20Fitness%20Instructors&address=United%20States%20of%20America&bounds=71.540724%2C-66.885444%2C18.765563%2C-179.9'
+                    '?pub_consultation=sport'
                 )}
             </div>
             <div className={css.categories}>
                 {categoryLink(
-                    'Accountants & Financial Advisors',
+                    'Finance',
                     acImage,
-                    '?keywords=Accountants%20&%20Financial%20Advisors&address=United%20States%20of%20America&bounds=71.540724%2C-66.885444%2C18.765563%2C-179.9'
+                    '?pub_consultation=finance'
                 )}
                 {categoryLink(
-                    'Fashionistas & Beauticians',
+                    'Fashion & Beauty',
                     faImage,
-                    '?keywords=Fashionistas%20&%20Beauticians&address=United%20States%20of%20America&bounds=71.540724%2C-66.885444%2C18.765563%2C-179.9'
+                    '?pub_consultation=fashion'
                 )}
                 {categoryLink(
-                    'Educators & Teachers',
+                    'Education',
                     edImage,
-                    '?keywords=Educators%20&%20Teachers&address=United%20States%20of%20America&bounds=71.540724%2C-66.885444%2C18.765563%2C-179.9'
+                    '?pub_consultation=education'
                 )}
                 {categoryLink(
-                    'Home Improvement & Housekeeping',
+                    'Home & Housekeeping',
                     hoImage,
-                    '?keywords=Home%20Improvement%20&%20Housekeeping&address=United%20States%20of%20America&bounds=71.540724%2C-66.885444%2C18.765563%2C-179.9'
+                    '?pub_consultation=home'
                 )}
             </div>
         </div>

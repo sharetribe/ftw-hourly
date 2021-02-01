@@ -25,14 +25,14 @@
 
 .contentWrapper {
   display: flex;
+  justify-content: center;
   flex-wrap: wrap;
-
   @media (--viewportMedium) {
     flex-wrap: nowrap;
   }
 }
 
-.contentSide {
+/* .contentSide {
   font-style: italic;
 
   @media (--viewportMedium) {
@@ -40,13 +40,15 @@
     margin-right: 103px;
     margin-top: 8px;
   }
-}
+} */
 
 .contentMain {
-  width: 90%;
+  text-align:justify;
+  width: 100%;
+  display:inline-block;
 
   @media (--viewportMedium) {
-    max-width: 650px;
+    max-width: 850px;
   }
 }
 
@@ -54,4 +56,8 @@
   @apply --marketplaceH3FontStyles;
   margin-top: 32px;
   margin-bottom: 16px;
+}
+
+.paragraph{
+  margin-left: 20px;
 }

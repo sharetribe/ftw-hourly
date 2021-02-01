@@ -15,12 +15,29 @@
   }
 }
 
+.formMargins {
+  margin-bottom: 24px;
+
+  @media (--viewportMedium) {
+    margin-bottom: 32px;
+  }
+}
+
 .features {
   margin-bottom: 24px;
 
   @media (--viewportMedium) {
     margin-bottom: 32px;
   }
+}
+
+.consultation {
+  composes: formMargins;
+  flex-shrink: 0;
+}
+
+.category {
+  composes: formMargins;
 }
 
 .error {
@@ -38,8 +55,3 @@
     margin-top: 100px;
   }
 }
-/* 
-.nameofconsultation {
-  composes: formMargins;
-  flex-shrink: 0;
-} */

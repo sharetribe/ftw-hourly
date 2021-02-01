@@ -117,11 +117,11 @@ export const filters = [
     },
   },
   {
-    id: 'consultationService',
-    label: 'Consultation Service',
+    id: 'categories',
+    label: 'Categories',
     type: 'SelectSingleFilter',
     group: 'secondary',
-    queryParamNames: ['pub_consultation'],
+    queryParamNames: ['pub_categories'],
     config: {
       // Optional modes: 'has_all', 'has_any'
       // https://www.sharetribe.com/api-reference/marketplace.html#extended-data-filtering
@@ -132,14 +132,14 @@ export const filters = [
       // Note: label is not added through the translation files
       // to make filter customizations a bit easier.
       options: [
-        { key: 'health', label: 'Health Practitioners' },
-        { key: 'legal', label: 'Legal Experts' },
-        { key: 'fashion', label: 'Fashionistas & Beauticians' },
-        { key: 'sport', label: 'Sports & Fitness Instructors' },
-        { key: 'accountant', label: 'Accountants & Financial Advisors' },
-        { key: 'it', label: 'IT & Technology Gurus' },
-        { key: 'educator', label: 'Educators & Teachers' },
-        { key: 'home', label: 'Home Improvement & Housekeeping Consultants' },
+        { key: 'health', label: 'Health' },
+        { key: 'legal', label: 'Legal' },
+        { key: 'fashion', label: 'Fashion & Beauty' },
+        { key: 'sport', label: 'Sports & Fitness' },
+        { key: 'finance', label: 'Finance' },
+        { key: 'technology', label: 'Technology' },
+        { key: 'education', label: 'Education' },
+        { key: 'home', label: 'Home & Housekeeping' },
       ],
     },
   },

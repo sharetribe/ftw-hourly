@@ -101,6 +101,10 @@ const siteInstagramPage = null;
 // Facebook page is used in SEO schema (http://schema.org/Organization)
 const siteFacebookPage = 'https://www.facebook.com/Sharetribe/';
 
+const siteSavanteWeb = 'http://www.savante.me';
+
+const siteSavanteInfo = 'https://mail.google.com/mail/u/0/?ogbl#inbox?compose=DmwnWrRmVPRmtKzjDtcSdPlpXTdDzrfCnKgqdSPvtrKQcSjhPmnkVRSrHpZqfkzvZFBKDZgMmwfL';
+
 // Social logins & SSO
 
 // Note: Facebook app id is also used for tracking:
@@ -220,6 +224,8 @@ const config = {
   },
   siteTitle,
   siteFacebookPage,
+  siteSavanteWeb,
+  siteSavanteInfo,
   siteInstagramPage,
   siteTwitterHandle,
   facebookAppId,

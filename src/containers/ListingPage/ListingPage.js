@@ -58,6 +58,7 @@ import SectionDescriptionMaybe from './SectionDescriptionMaybe';
 import SectionFeaturesMaybe from './SectionFeaturesMaybe';
 import SectionReviews from './SectionReviews';
 import SectionMapMaybe from './SectionMapMaybe';
+import SectionCategoriesMaybe from './SectionCategoriesMaybe';
 import css from './ListingPage.module.css';
 
 const MIN_LENGTH_FOR_LONG_WORDS_IN_TITLE = 16;
@@ -384,7 +385,7 @@ export class ListingPageComponent extends Component {
       </NamedLink>
     );
 
-    const consultationServiceOptions = findOptionsForSelectFilter('consultationService', filterConfig);
+    const categoryOptions = findOptionsForSelectFilter('categories', filterConfig);
     const certificateOptions = findOptionsForSelectFilter('certificate', filterConfig);
 
     return (
@@ -437,7 +438,7 @@ export class ListingPageComponent extends Component {
                     onContactUser={this.onContactUser}
                   />
                   <SectionDescriptionMaybe description={description} />
-                  <SectionFeaturesMaybe options={consultationServiceOptions} publicData={publicData} />
+                  <SectionCategoriesMaybe options={categoryOptions} publicData={publicData} />
                   <SectionMapMaybe
                     geolocation={geolocation}
                     publicData={publicData}

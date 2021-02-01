@@ -10,7 +10,7 @@ import { ListingLink } from '../../components';
 
 import css from './EditListingFeaturesPanel.module.css';
 
-const FEATURES_NAME = 'consultationService';
+const FEATURES_NAME = 'categories';
 
 const EditListingFeaturesPanel = props => {
   const {
@@ -47,8 +47,8 @@ const EditListingFeaturesPanel = props => {
       <FormattedMessage id="EditListingFeaturesPanel.createListingTitle" />
     );
 
-  const consultationService = publicData && publicData.consultationService;
-  const initialValues = { consultationService };
+  const categories = publicData && publicData.consultationService;
+  const initialValues = { categories };
 
   return (
     <div className={classes}>
@@ -57,11 +57,12 @@ const EditListingFeaturesPanel = props => {
         className={css.form}
         name={FEATURES_NAME}
         initialValues={initialValues}
+
         onSubmit={values => {
-          const { consultationService = [] } = values;
+          const { categories = [] } = values;
 
           const updatedValues = {
-            publicData: { consultationService },
+            publicData: { categories },
           };
           onSubmit(updatedValues);
         }}

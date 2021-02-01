@@ -1,11 +1,13 @@
 import React from 'react';
 import { bool, func, shape, string } from 'prop-types';
+import { compose } from 'redux';
 import classNames from 'classnames';
 import { Form as FinalForm } from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
-import { FormattedMessage } from '../../util/reactIntl';
+import { intlShape, injectIntl, FormattedMessage } from '../../util/reactIntl';
 import { findOptionsForSelectFilter } from '../../util/search';
 import { propTypes } from '../../util/types';
+// import { maxLength, required, composeValidators } from '../../util/validators';
 import config from '../../config';
 import { Button, FieldCheckboxGroup, FieldSelect, FieldTextInput, Form } from '../../components';
 
@@ -29,17 +31,21 @@ const EditListingFeaturesFormComponent = props => (
         updateInProgress,
         fetchErrors,
         filterConfig,
+        // intl,
+        invalid,
       } = formRenderProps;
 
       const classes = classNames(rootClassName || css.root, className);
       const submitReady = (updated && pristine) || ready;
       const submitInProgress = updateInProgress;
-      const submitDisabled = disabled || submitInProgress;
+      const submitDisabled = invalid || disabled || submitInProgress;
 
-      // const nameOfConsultationMessage = intl.formatMessage({ id: 'EditListingFeatureForm.nameOfConsultation' });
-
-      // const titleRequiredMessage = intl.formatMessage({
-      //   id: 'EditListingFeaturesForm.titleRequired',
+      // const nameOfConsultationMessage = intl.formatMessage({ id: 'EditListingFeaturesForm.nameOfConsultationService' });
+      // const nameOfConsultationPlaceholderMessage = intl.formatMessage({
+      //   id: 'EditListingFeaturesForm.nameOfConsultationServicePlaceholder',
+      // });
+      // const nameOfConsultationRequiredMessage = intl.formatMessage({
+      //   id: 'EditListingFeaturesForm.nameOfConsultationServiceRequired',
       // });
 
       const { updateListingError, showListingsError } = fetchErrors || {};
@@ -55,7 +61,8 @@ const EditListingFeaturesFormComponent = props => (
         </p>
       ) : null;
 
-      const options = findOptionsForSelectFilter('consultationService', filterConfig);
+      const categoryKey = 'categories';
+      const categoryOptions = findOptionsForSelectFilter(categoryKey, filterConfig);
 
       return (
         <Form className={classes} onSubmit={handleSubmit}>
@@ -64,10 +71,11 @@ const EditListingFeaturesFormComponent = props => (
 
           <FieldSelect
             className={css.features}
-            name={name}
-            id={name}
+            name={categoryKey}
+            id={categoryKey}
+            label={'Service categories'}
           >
-            {options.map(o => (
+            {categoryOptions.map(o => (
               <option key={o.key} value={o.key}>
                 {o.label}
               </option>
@@ -75,13 +83,13 @@ const EditListingFeaturesFormComponent = props => (
           </FieldSelect>
 
           {/* <FieldTextInput
-            id="nameOfConsultationService"
-            name="nameOfConsultationService"
-            className={css.nameofconsultation}
+            id="consultationService"
+            name="Name of consultation service"
+            className={css.consultation}
             type="textarea"
             label={nameOfConsultationMessage}
-            placeholder={descriptionPlaceholderMessage}
-            validate={composeValidators(required(descriptionRequiredMessage))}
+            placeholder={nameOfConsultationPlaceholderMessage}
+            validate={composeValidators(required(nameOfConsultationRequiredMessage))}
           /> */}
 
           <Button
@@ -109,6 +117,7 @@ EditListingFeaturesFormComponent.defaultProps = {
 EditListingFeaturesFormComponent.propTypes = {
   rootClassName: string,
   className: string,
+  intl: intlShape.isRequired,
   name: string.isRequired,
   onSubmit: func.isRequired,
   saveActionMsg: string.isRequired,
@@ -125,4 +134,4 @@ EditListingFeaturesFormComponent.propTypes = {
 
 const EditListingFeaturesForm = EditListingFeaturesFormComponent;
 
-export default EditListingFeaturesForm;
+export default compose(injectIntl)(EditListingFeaturesForm);

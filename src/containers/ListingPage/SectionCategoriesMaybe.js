@@ -10,7 +10,7 @@ const SectionCategoriesMaybe = props => {
     // and listing's publicData
     const { options, publicData } = props;
     const selectedOption =
-        publicData && publicData.view ? publicData.view : null;
+        publicData && publicData.categories ? publicData.categories : null;
 
     // Don't return anything if public data doesn't contain view field
     // That's why we named this component as SectionViewMaybe
@@ -25,8 +25,8 @@ const SectionCategoriesMaybe = props => {
         <div className={css.sectionFeatures}>
             <h2>
                 <FormattedMessage
-                    id="ListingPage.categoriesType"
-                    values={{ view: optionLabel.toLowerCase() }}
+                    id="ListingPage.categoriesTitle"
+                    values={{ categories: optionLabel.toLowerCase() }}
                 />
             </h2>
         </div>
