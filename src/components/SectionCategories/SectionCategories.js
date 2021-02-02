@@ -58,44 +58,44 @@ const SectionCategories = props => {
                 {categoryLink(
                     'Health',
                     heImage,
-                    '?pub_consultation=health'
+                    '?pub_categories=health'
                 )}
                 {categoryLink(
                     'Legal',
                     leImage,
-                    '?pub_consultation=legal'
+                    '?pub_categories=legal'
                 )}
                 {categoryLink(
                     'Technology',
                     itImage,
-                    '?pub_consultation=technology'
+                    '?pub_categories=technology'
                 )}
                 {categoryLink(
                     'Sports & Fitness',
                     spImage,
-                    '?pub_consultation=sport'
+                    '?pub_categories=sport'
                 )}
             </div>
             <div className={css.categories}>
                 {categoryLink(
                     'Finance',
                     acImage,
-                    '?pub_consultation=finance'
+                    '?pub_categories=finance'
                 )}
                 {categoryLink(
                     'Fashion & Beauty',
                     faImage,
-                    '?pub_consultation=fashion'
+                    '?pub_categories=fashion'
                 )}
                 {categoryLink(
                     'Education',
                     edImage,
-                    '?pub_consultation=education'
+                    '?pub_categories=education'
                 )}
                 {categoryLink(
                     'Home & Housekeeping',
                     hoImage,
-                    '?pub_consultation=home'
+                    '?pub_categories=home'
                 )}
             </div>
         </div>

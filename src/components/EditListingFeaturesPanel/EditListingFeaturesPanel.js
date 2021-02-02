@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { FormattedMessage } from '../../util/reactIntl';
-
 import { LISTING_STATE_DRAFT } from '../../util/types';
 import { ensureListing } from '../../util/data';
 import { EditListingFeaturesForm } from '../../forms';
@@ -47,7 +46,7 @@ const EditListingFeaturesPanel = props => {
       <FormattedMessage id="EditListingFeaturesPanel.createListingTitle" />
     );
 
-  const categories = publicData && publicData.consultationService;
+  const categories = publicData && publicData.categories;
   const initialValues = { categories };
 
   return (
@@ -62,6 +61,7 @@ const EditListingFeaturesPanel = props => {
           const { categories = [] } = values;
 
           const updatedValues = {
+            // consultationService,
             publicData: { categories },
           };
           onSubmit(updatedValues);

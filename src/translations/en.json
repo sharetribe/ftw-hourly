@@ -234,7 +234,7 @@
   "EditListingDescriptionPanel.createListingTitle": "Create consultant profile",
   "EditListingDescriptionPanel.listingTitle": "your consultant profile",
   "EditListingDescriptionPanel.title": "Edit {listingTitle}",
-  "EditListingFeaturesForm.consultationLabel": "Service category",
+  "EditListingFeaturesForm.categoryLabel": "Service category",
   "EditListingFeaturesForm.showListingFailed": "Fetching savant profile data failed",
   "EditListingFeaturesForm.updateFailed": "Failed to update profile. Please try again.",
   "EditListingFeaturesForm.titleRequired": "You need to choose a consultation service.",

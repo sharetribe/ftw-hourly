@@ -31,7 +31,7 @@ const EditListingFeaturesFormComponent = props => (
         updateInProgress,
         fetchErrors,
         filterConfig,
-        // intl,
+        intl,
         invalid,
       } = formRenderProps;
 
@@ -40,13 +40,13 @@ const EditListingFeaturesFormComponent = props => (
       const submitInProgress = updateInProgress;
       const submitDisabled = invalid || disabled || submitInProgress;
 
-      // const nameOfConsultationMessage = intl.formatMessage({ id: 'EditListingFeaturesForm.nameOfConsultationService' });
-      // const nameOfConsultationPlaceholderMessage = intl.formatMessage({
-      //   id: 'EditListingFeaturesForm.nameOfConsultationServicePlaceholder',
-      // });
-      // const nameOfConsultationRequiredMessage = intl.formatMessage({
-      //   id: 'EditListingFeaturesForm.nameOfConsultationServiceRequired',
-      // });
+      const nameOfConsultationMessage = intl.formatMessage({ id: 'EditListingFeaturesForm.nameOfConsultationService' });
+      const nameOfConsultationPlaceholderMessage = intl.formatMessage({
+        id: 'EditListingFeaturesForm.nameOfConsultationServicePlaceholder',
+      });
+      const nameOfConsultationRequiredMessage = intl.formatMessage({
+        id: 'EditListingFeaturesForm.nameOfConsultationServiceRequired',
+      });
 
       const { updateListingError, showListingsError } = fetchErrors || {};
       const errorMessage = updateListingError ? (
