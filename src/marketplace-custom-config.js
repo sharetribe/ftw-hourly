@@ -124,6 +124,7 @@ export const filters = [
     queryParamNames: ['pub_categories'],
     config: {
       options: [
+        { key: 'none', label: 'None', hideFromFilters: true, hideFromListingInfo: true },
         { key: 'health', label: 'Health' },
         { key: 'legal', label: 'Legal' },
         { key: 'fashion', label: 'Fashion & Beauty' },
@@ -134,6 +135,19 @@ export const filters = [
         { key: 'home', label: 'Home & Housekeeping' },
       ],
     },
+  },
+  {
+    id: 'features',
+    label: 'features',
+    type: 'KeywordFilter',
+    group: 'secondary',
+    // Note: KeywordFilter is fixed filter,
+    // you can't change "queryParamNames: ['keywords'],"
+    queryParamNames: ['pub_features'],
+    // NOTE: If you are ordering search results by distance
+    // the keyword search can't be used at the same time.
+    // You can turn on/off ordering by distance from config.js file.
+    config: {},
   },
   {
     id: 'certificate',

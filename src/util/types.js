@@ -167,7 +167,7 @@ const LISTING_STATES = [
 const listingAttributes = shape({
   title: string.isRequired,
   description: string,
-  consultationService: string,
+  features: string,
   geolocation: propTypes.latlng,
   deleted: propTypes.value(false),
   state: oneOf(LISTING_STATES),
@@ -197,7 +197,7 @@ propTypes.availabilityPlan = availabilityPlan;
 const ownListingAttributes = shape({
   title: string.isRequired,
   description: string,
-  consultationService: string,
+  features: string,
   geolocation: propTypes.latlng,
   deleted: propTypes.value(false).isRequired,
   state: oneOf(LISTING_STATES).isRequired,

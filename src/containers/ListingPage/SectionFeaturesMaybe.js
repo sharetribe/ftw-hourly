@@ -7,7 +7,7 @@ import css from './ListingPage.module.css';
 const SectionFeaturesMaybe = props => {
   const { options, publicData } = props;
   const selectedOption =
-    publicData && publicData.view ? publicData.view : null;
+    publicData && publicData.categories ? publicData.categories : null;
 
   if (!publicData || !selectedOption) {
     return null;
@@ -30,7 +30,7 @@ const SectionFeaturesMaybe = props => {
       <p className={css.consultation}>
         <FormattedMessage
           id="ListingPage.featuresDetail"
-          values={{ consultationService: optionLabel }}
+          values={{ categories: optionLabel }}
         />
       </p>
     </div>

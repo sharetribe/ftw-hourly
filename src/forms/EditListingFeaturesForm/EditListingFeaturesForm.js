@@ -7,9 +7,9 @@ import arrayMutators from 'final-form-arrays';
 import { intlShape, injectIntl, FormattedMessage } from '../../util/reactIntl';
 import { findOptionsForSelectFilter } from '../../util/search';
 import { propTypes } from '../../util/types';
-// import { maxLength, required, composeValidators } from '../../util/validators';
+import { required, composeValidators } from '../../util/validators';
 import config from '../../config';
-import { Button, FieldCheckboxGroup, FieldSelect, FieldTextInput, Form } from '../../components';
+import { Button, FieldSelect, FieldTextInput, Form } from '../../components';
 
 import css from './EditListingFeaturesForm.module.css';
 
@@ -23,7 +23,6 @@ const EditListingFeaturesFormComponent = props => (
         ready,
         rootClassName,
         className,
-        name,
         handleSubmit,
         pristine,
         saveActionMsg,
@@ -40,11 +39,11 @@ const EditListingFeaturesFormComponent = props => (
       const submitInProgress = updateInProgress;
       const submitDisabled = invalid || disabled || submitInProgress;
 
-      const nameOfConsultationMessage = intl.formatMessage({ id: 'EditListingFeaturesForm.nameOfConsultationService' });
-      const nameOfConsultationPlaceholderMessage = intl.formatMessage({
+      const featuresMessage = intl.formatMessage({ id: 'EditListingFeaturesForm.nameOfConsultationService' });
+      const featuresPlaceholderMessage = intl.formatMessage({
         id: 'EditListingFeaturesForm.nameOfConsultationServicePlaceholder',
       });
-      const nameOfConsultationRequiredMessage = intl.formatMessage({
+      const featuresRequiredMessage = intl.formatMessage({
         id: 'EditListingFeaturesForm.nameOfConsultationServiceRequired',
       });
 
@@ -82,15 +81,15 @@ const EditListingFeaturesFormComponent = props => (
             ))}
           </FieldSelect>
 
-          {/* <FieldTextInput
-            id="consultationService"
-            name="Name of consultation service"
-            className={css.consultation}
+          <FieldTextInput
+            id="features"
+            name="features"
+            className={css.features}
             type="textarea"
-            label={nameOfConsultationMessage}
-            placeholder={nameOfConsultationPlaceholderMessage}
-            validate={composeValidators(required(nameOfConsultationRequiredMessage))}
-          /> */}
+            label={featuresMessage}
+            placeholder={featuresPlaceholderMessage}
+            validate={composeValidators(required(featuresRequiredMessage))}
+          />
 
           <Button
             className={css.submitButton}

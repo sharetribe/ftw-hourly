@@ -31,7 +31,7 @@
   }
 }
 
-.consultation {
+.features {
   composes: formMargins;
   flex-shrink: 0;
 }

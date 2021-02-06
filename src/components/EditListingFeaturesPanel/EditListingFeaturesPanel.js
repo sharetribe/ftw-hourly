@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { FormattedMessage } from '../../util/reactIntl';
+
 import { LISTING_STATE_DRAFT } from '../../util/types';
 import { ensureListing } from '../../util/data';
 import { EditListingFeaturesForm } from '../../forms';
@@ -47,7 +48,8 @@ const EditListingFeaturesPanel = props => {
     );
 
   const categories = publicData && publicData.categories;
-  const initialValues = { categories };
+  const features = publicData && publicData.features;
+  const initialValues = { features, categories };
 
   return (
     <div className={classes}>
@@ -58,11 +60,10 @@ const EditListingFeaturesPanel = props => {
         initialValues={initialValues}
 
         onSubmit={values => {
-          const { categories = [] } = values;
+          const { features, categories = [] } = values;
 
           const updatedValues = {
-            // consultationService,
-            publicData: { categories },
+            publicData: { features, categories },
           };
           onSubmit(updatedValues);
         }}
