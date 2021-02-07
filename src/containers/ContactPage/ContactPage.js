@@ -32,7 +32,7 @@ const ContactPage = () => {
 
                 <LayoutWrapperMain className={css.mainWrapper}>
                     <p>
-                        <strong>Send all inquiries to</strong> <ExternalLink href={siteSavanteInfor}>info@savante.com</ExternalLink>
+                        <strong>Send all inquiries to</strong> <ExternalLink href={siteSavanteInfor}>info@savante.me</ExternalLink>
                     </p>
                 </LayoutWrapperMain>
 

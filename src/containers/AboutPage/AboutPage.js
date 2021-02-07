@@ -35,7 +35,7 @@ const AboutPage = () => {
         </LayoutWrapperTopbar>
 
         <LayoutWrapperMain className={css.staticPageWrapper}>
-          <h1 className={css.pageTitle}>Savante is the place where those with professional expertise can help those in need. </h1>
+          <h1 className={css.pageTitle}>Savante is the place where those with professional expertise can help those in need.</h1>
           <img className={css.coverImage} src={image} alt="My first ice cream." />
 
           <div className={css.contentWrapper}>
@@ -44,9 +44,9 @@ const AboutPage = () => {
             </div> */}
 
             <div className={css.contentMain}>
-              <h2>
+              <h3>
                 Whether you are looking for an accountant, a health practitioner or an English teacher, you can find professionals ready to help you right here at Savante.
-              </h2>
+              </h3>
 
               <p className={css.paragraph}>
                 Browse for an expert of your choice, check their schedule and book an appointment. You will receive an online meeting invite. The appointment is conducted online so you don’t have to travel. You are not limited to just professionals in your local area. You can book an appointment with your favorite Savant no matter where they are located. We take care of payment transactions between you and your consultant. All you need is an Internet connection and a computer or personal device with audio/video functionality.
@@ -59,17 +59,17 @@ const AboutPage = () => {
               </p>
 
               <h3 id="contact" className={css.subtitle}>
-                Below is a sample list of professionals who are offering their expertise here at Savante.com:
+                Below is a sample list of professionals who are offering their expertise here at Savante:
               </h3>
               <p className={css.paragraph}>
-                <strong>Health Practitioners:</strong> Doctors, Psychiatrists, Nutritionists,... <br />
-                <strong>Legal Experts:</strong> Lawyers, Legal Advisors,... <br />
-                <strong>Technology Gurus:</strong> Computer Repair, Smart Home Setup, Audiophiles <br />
-                <strong>Sports & Fitness Instructors:</strong> Yoga Instructors, Personal Trainers, Coaches,... <br />
-                <strong>Accountants & Financial Advisors:</strong> Investment Advisors, Tax Consultants, Personal Finance Advisors,... <br />
-                <strong>Educators & Teachers:</strong> English Teachers, Math Tutors, Music Teachers,... <br />
-                <strong>Home Improvement & Housekeeping Consultants:</strong> Master Chefs, Interior Decorators, DIY Instructors,... <br />
-                <strong>Fashionistas & Beauticians:</strong> Fashion Advisors, Makeup Artists
+                1. <strong>Health:</strong>  Doctors, Mental Health Experts, Nutritionists,... <br />
+                2. <strong>Legal:</strong> Lawyers, Legal Advisors,... <br />
+                3. <strong>Technology:</strong> Audiophiles, Automobile Advisors, Electronics Gurus,... <br />
+                4. <strong>Sports & Fitness:</strong> Yoga Instructors, Personal Trainers, Coaches,... <br />
+                5. <strong>Finance:</strong>  Accountants, Investment Advisors, Tax Consultants,... <br />
+                6. <strong>Education:</strong> English Teachers, Math Tutors, Music Teachers,... <br />
+                7. <strong>Home & Housekeeping:</strong> Master Chefs, Interior Decorators, DIY Instructors,... <br />
+                8. <strong>Fashion & Beauty:</strong> Fashion Advisors, Makeup Artists,...
               </p>
               <p>
                 You can also checkout our{' '}
