@@ -23,7 +23,7 @@
   --backgroundImage: {
     /* Gradient direction and overlaying the black color on top of the image for better readability */
     background: linear-gradient(-45deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0)),
-      url('../../assets/Savante_Main.png');
+      url('../../assets/Main_Welcome.jpeg');
 
     /* Add loading color for the div */
     background-color: var(--matterColor);

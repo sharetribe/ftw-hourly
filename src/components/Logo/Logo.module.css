@@ -5,8 +5,9 @@ If you need to add css to the Logo you can do it here.
 }
 */
 .logoDesktop {
-    width: 320px;
-    height: 60px;
+    width: 200px;
+    height: 40px;
+    background-image:none;
 }
 
 .logoMobile {
