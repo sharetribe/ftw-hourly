@@ -5,11 +5,19 @@ If you need to add css to the Logo you can do it here.
 }
 */
 .logoDesktop {
-    width: 200px;
-    height: 40px;
-    background-image:none;
+    width: 331px;
+    height: 80px;
+    margin-left: -20px;
+    margin-top: -30px;
 }
 
 .logoMobile {
     height: 25px;
 }
+/* 
+.logoFooter{
+    width: 331px;
+    height: 80px;
+    margin-left: -20px;
+    margin-top: -30px;
+} */

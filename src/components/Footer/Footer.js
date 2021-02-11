@@ -75,9 +75,7 @@ const Footer = props => {
                   <FormattedMessage id="Footer.organizationDescription" />
                 </p>
                 <p className={css.organizationCopyright}>
-                  <NamedLink name="LandingPage" className={css.copyrightLink}>
-                    <FormattedMessage id="Footer.copyright" />
-                  </NamedLink>
+                  <FormattedMessage id="Footer.copyright" />
                 </p>
               </div>
             </div>

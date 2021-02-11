@@ -6,6 +6,7 @@ import { propTypes } from '../../util/types';
 import { OwnListingLink } from '../../components';
 
 import css from './SectionHowItWorks.module.css';
+import image from '../../assets/Savante_Main.png';
 
 const SectionHowItWorks = props => {
   const { rootClassName, className, currentUserListing, currentUserListingFetched } = props;
@@ -13,6 +14,7 @@ const SectionHowItWorks = props => {
   const classes = classNames(rootClassName || css.root, className);
   return (
     <div className={classes}>
+      <img className={css.coverImage} src={image} alt="My first ice cream." />
       <div className={css.title}>
         <FormattedMessage id="SectionHowItWorks.titleLineOne" />
         <br />

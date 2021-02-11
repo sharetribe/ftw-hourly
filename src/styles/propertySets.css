@@ -264,8 +264,8 @@
     @media (--viewportMedium) {
       line-height: 16px;
       /* margin-top + n * line-height + margin-bottom => x * 8px */
-      margin-top: 10.5px;
-      margin-bottom: 13.5px;
+      margin-top: 5.5px;
+      margin-bottom: 6.5px;
     }
   }
 

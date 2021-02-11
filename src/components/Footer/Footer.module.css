@@ -114,7 +114,7 @@
 
 .logoLink {
   display: block;
-  margin-bottom: 14px;
+  margin-bottom:5px;
 }
 
 .logo {
@@ -133,7 +133,7 @@
 }
 
 .organizationCopyright {
-  margin-top: 13.5px;
+  margin-top: 5.5px;
 }
 
 .copyrightLink {
@@ -241,9 +241,6 @@
 }
 
 .legalMatters {
-  /* Get extra space from parent element (which is using flexbox) */
-  flex-grow: 1;
-
   /* Layout */
   display: flex;
   flex-direction: column;

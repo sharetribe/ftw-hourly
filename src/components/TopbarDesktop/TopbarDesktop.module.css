@@ -44,8 +44,8 @@
   /* NOTE: extremely wide logos, need special handling. */
   width: auto;
   max-width: 220px;
-  object-fit: contain;
-  object-position: left center;
+  object-fit: cover;
+  object-position: center;
 }
 
 /* Search */

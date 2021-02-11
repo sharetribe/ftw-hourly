@@ -83,6 +83,7 @@
   color: var(--matterColor);
   margin-top: 15px;
   margin-bottom: 0;
+  text-align: justify;
 
   @media (--viewportMedium) {
     margin-top: 21px;
