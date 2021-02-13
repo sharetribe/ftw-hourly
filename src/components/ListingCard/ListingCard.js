@@ -71,7 +71,7 @@ export const ListingCardComponent = props => {
   // const certificateOptions = findOptionsForSelectFilter('certificate', filtersConfig);
   // const certificate = publicData
   //   ? getCertificateInfo(certificateOptions, publicData.certificate)
-  //   : null;
+  //   : null; 
 
   const featuresOptions = findOptionsForSelectFilter('pub_features', filtersConfig);
   const features = publicData
@@ -86,8 +86,8 @@ export const ListingCardComponent = props => {
   const unitTranslationKey = isNightly
     ? 'ListingCard.perNight'
     : isDaily
-    ? 'ListingCard.perDay'
-    : 'ListingCard.perUnit';
+      ? 'ListingCard.perDay'
+      : 'ListingCard.perUnit';
 
   return (
     <NamedLink className={classes} name="ListingPage" params={{ id, slug }}>
