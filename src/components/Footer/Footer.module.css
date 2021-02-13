@@ -115,6 +115,7 @@
 .logoLink {
   display: block;
   margin-bottom:5px;
+  margin-top: -30px;
 }
 
 .logo {
@@ -122,6 +123,8 @@
   object-position: left center;
   width: 100%;
   height: 27px;
+  margin-left: -20px;
+  margin-top: -30px;
 }
 
 .organizationInfo {

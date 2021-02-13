@@ -254,7 +254,7 @@
   --marketplaceTinyFontStyles: {
     font-family: var(--fontFamily);
     font-weight: var(--fontWeightRegular);
-    font-size: 13px;
+    font-size: 12px;
     line-height: 18px;
     /* margin-top + n * line-height + margin-bottom => x * 6px */
     margin-top: 9.5px;

@@ -424,7 +424,7 @@
   "ListingPage.closedListing": "This teacher profile has been closed and sessions can't be booked.",
   "ListingPage.contactUser": "Contact",
   "ListingPage.descriptionTitle": "Description",
-  "ListingPage.categoriesTitle": "Service name: { categories }",
+  "ListingPage.categoriesTitle": "Profession: { categories }",
   "ListingPage.editListing": "Edit consultant profile",
   "ListingPage.editProfileLink": "Edit user profile",
   "ListingPage.errorLoadingListingMessage": "Could not load savant profile. Please try again.",

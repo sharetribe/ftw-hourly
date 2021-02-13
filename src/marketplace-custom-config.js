@@ -138,15 +138,10 @@ export const filters = [
   },
   {
     id: 'features',
-    label: 'features',
+    label: 'Features',
     type: 'KeywordFilter',
     group: 'secondary',
-    // Note: KeywordFilter is fixed filter,
-    // you can't change "queryParamNames: ['keywords'],"
     queryParamNames: ['pub_features'],
-    // NOTE: If you are ordering search results by distance
-    // the keyword search can't be used at the same time.
-    // You can turn on/off ordering by distance from config.js file.
     config: {},
   },
   {
