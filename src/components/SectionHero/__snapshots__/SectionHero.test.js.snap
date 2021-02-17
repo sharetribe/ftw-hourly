@@ -25,6 +25,8 @@ exports[`SectionHero matches snapshot 1`] = `
       className="heroButton"
       href="/s?address=United%20States%20of%20America&bounds=71.540724%2C-66.885444%2C18.765563%2C-179.9"
       onClick={[Function]}
+      onMouseOver={[Function]}
+      onTouchStart={[Function]}
       style={Object {}}
       title={null}
     >

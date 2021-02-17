@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { FormattedMessage, injectIntl, intlShape } from '../../util/reactIntl';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { types as sdkTypes } from '../../util/sdkLoader';
 import { REVIEW_TYPE_OF_PROVIDER, REVIEW_TYPE_OF_CUSTOMER, propTypes } from '../../util/types';
 import { ensureCurrentUser, ensureUser } from '../../util/data';
 import { withViewport } from '../../util/contextHelpers';
@@ -23,12 +22,10 @@ import {
   ButtonTabNavHorizontal,
 } from '../../components';
 import { TopbarContainer, NotFoundPage } from '../../containers';
-import { loadData } from './ProfilePage.duck';
 import config from '../../config';
 
 import css from './ProfilePage.module.css';
 
-const { UUID } = sdkTypes;
 const MAX_MOBILE_SCREEN_WIDTH = 768;
 
 export class ProfilePageComponent extends Component {
@@ -279,10 +276,5 @@ const ProfilePage = compose(
   withViewport,
   injectIntl
 )(ProfilePageComponent);
-
-ProfilePage.loadData = params => {
-  const id = new UUID(params.id);
-  return loadData(id);
-};
 
 export default ProfilePage;

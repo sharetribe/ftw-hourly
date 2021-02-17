@@ -17,6 +17,25 @@ https://github.com/sharetribe/flex-template-web/
 
 ## Upcoming version 2020-XX-XX
 
+## [v10.0.0] 2021-02-17
+
+This major release adds support for code-splitting using
+[Loadable Components](https://loadable-components.com/). At this point, we added route-based code
+splitting, which meant changes to routeConfiguration.js and how "loadData" & "setInitialValues"
+functions are defined and passed to routeConfiguration. Read more from
+[Flex Docs](https://www.sharetribe.com/docs/ftw-routing/how-code-splitting-works-in-ftw/) and
+related pull requests.
+
+### Updates from upstream (FTW-daily v8.0.0)
+
+- [fix] Remove unintended Lodash usage, unspecified window-scope calls and unused vars
+  [#1413](https://github.com/sharetribe/ftw-daily/pull/1413)
+- [add] Route-based code splitting. This is done against sharetribe-scripts v5.0.0 using Loadable
+  components. Read more from the pull request.
+  [#1411](https://github.com/sharetribe/ftw-daily/pull/1411)
+
+  [v10.0.0]: https://github.com/sharetribe/ftw-hourly/compare/v9.3.0...v10.0.0
+
 ## [v9.3.0] 2021-01-13
 
 - [fix] Use dayCountAvailableForBooking config instead of hard-coded value in FieldDateAndTimeInput

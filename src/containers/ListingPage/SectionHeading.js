@@ -28,7 +28,11 @@ const SectionHeading = props => {
           {showContactUser ? (
             <span className={css.contactWrapper}>
               {showCertificate ? <span className={css.separator}>•</span> : null}
-              <InlineTextButton rootClassName={css.contactLink} onClick={onContactUser}>
+              <InlineTextButton
+                rootClassName={css.contactLink}
+                onClick={onContactUser}
+                enforcePagePreloadFor="SignupPage"
+              >
                 <FormattedMessage id="ListingPage.contactUser" />
               </InlineTextButton>
             </span>
