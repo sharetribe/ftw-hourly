@@ -33,7 +33,6 @@ import {
   requestImageUpload,
   updateImageOrder,
   removeListingImage,
-  loadData,
   clearUpdatedTab,
   savePayoutDetails,
 } from './EditListingPage.duck';
@@ -400,7 +399,5 @@ const EditListingPage = compose(
     mapDispatchToProps
   )
 )(injectIntl(EditListingPageComponent));
-
-EditListingPage.loadData = loadData;
 
 export default EditListingPage;

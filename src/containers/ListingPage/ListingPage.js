@@ -46,7 +46,6 @@ import { TopbarContainer, NotFoundPage } from '../../containers';
 
 import {
   sendEnquiry,
-  loadData,
   setInitialValues,
   fetchTimeSlots,
   fetchTransactionLineItems,
@@ -628,8 +627,5 @@ const ListingPage = compose(
   ),
   injectIntl
 )(ListingPageComponent);
-
-ListingPage.setInitialValues = initialValues => setInitialValues(initialValues);
-ListingPage.loadData = loadData;
 
 export default ListingPage;
