@@ -55,7 +55,6 @@ import SectionImages from './SectionImages';
 import SectionAvatar from './SectionAvatar';
 import SectionHeading from './SectionHeading';
 import SectionDescriptionMaybe from './SectionDescriptionMaybe';
-import SectionFeaturesMaybe from './SectionFeaturesMaybe';
 import SectionReviews from './SectionReviews';
 import SectionMapMaybe from './SectionMapMaybe';
 import SectionCategoriesMaybe from './SectionCategoriesMaybe';
@@ -386,8 +385,8 @@ export class ListingPageComponent extends Component {
     );
 
     const categoryOptions = findOptionsForSelectFilter('categories', filterConfig);
-    // const certificateOptions = findOptionsForSelectFilter('certificate', filterConfig);
-    const featuresOptions = findOptionsForSelectFilter('features', filterConfig);
+    const certificateOptions = findOptionsForSelectFilter('certificate', filterConfig);
+    // const featuresOptions = findOptionsForSelectFilter('features', filterConfig);
 
     return (
       <Page
@@ -432,10 +431,10 @@ export class ListingPageComponent extends Component {
                     priceTitle={priceTitle}
                     formattedPrice={formattedPrice}
                     richTitle={richTitle}
-                    // listingCertificate={publicData ? publicData.certificate : null}
-                    // certificateOptions={certificateOptions}
+                    listingCertificate={publicData ? publicData.certificate : null}
+                    certificateOptions={certificateOptions}
                     listingFeatures={publicData ? publicData.features : null}
-                    featuresOptions={featuresOptions}
+                    // featuresOptions={featuresOptions}
                     hostLink={hostLink}
                     showContactUser={showContactUser}
                     onContactUser={this.onContactUser}

@@ -73,7 +73,7 @@ export const ListingCardComponent = props => {
   //   ? getCertificateInfo(certificateOptions, publicData.certificate)
   //   : null; 
 
-  const featuresOptions = findOptionsForSelectFilter('pub_features', filtersConfig);
+  const featuresOptions = findOptionsForSelectFilter('features', filtersConfig);
   const features = publicData
     ? getFeaturesInfo(featuresOptions, publicData.features)
     : null;

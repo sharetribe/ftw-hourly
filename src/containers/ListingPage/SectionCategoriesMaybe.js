@@ -23,12 +23,15 @@ const SectionCategoriesMaybe = props => {
     const optionLabel = optionConfig ? optionConfig.label : null;
     return (
         <div className={css.sectionFeatures}>
-            <h2>
-                <FormattedMessage
-                    id="ListingPage.categoriesTitle"
-                    values={{ categories: optionLabel.toLowerCase() }}
-                />
+            <h2 className={css.featuresTitle}>
+                <FormattedMessage id="ListingPage.categoriesTitle" />
             </h2>
+            <p className={css.consultation}>
+                <FormattedMessage
+                    id="ListingPage.categoriesDetail"
+                    values={{ categories: optionLabel }}
+                />
+            </p>
         </div>
     );
 };

@@ -89,6 +89,8 @@
 
   @media (--viewportMedium) {
     margin-top: 21px;
+    width: 170px;
+    text-align: center;
   }
 }
 

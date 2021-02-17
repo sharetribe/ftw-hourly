@@ -136,14 +136,14 @@ export const filters = [
       ],
     },
   },
-  // {
-  //   id: 'features',
-  //   label: 'Features',
-  //   type: 'KeywordFilter',
-  //   group: 'secondary',
-  //   queryParamNames: ['pub_features'],
-  //   config: {},
-  // },
+  {
+    id: 'features',
+    label: 'Features',
+    type: 'KeywordFilter',
+    group: 'secondary',
+    queryParamNames: ['pub_features'],
+    config: {},
+  },
   {
     id: 'certificate',
     label: 'Certificate',
