@@ -39,10 +39,6 @@ const priceData = (price, intl) => {
 //   return certificateOptions.find(c => c.key === key);
 // };
 
-const getFeaturesInfo = (featuresOptions, key) => {
-  return featuresOptions.find(c => c.key === key);
-};
-
 class ListingImage extends Component {
   render() {
     return <ResponsiveImage {...this.props} />;
@@ -73,10 +69,9 @@ export const ListingCardComponent = props => {
   //   ? getCertificateInfo(certificateOptions, publicData.certificate)
   //   : null; 
 
-  const featuresOptions = findOptionsForSelectFilter('features', filtersConfig);
-  const features = publicData
-    ? getFeaturesInfo(featuresOptions, publicData.features)
-    : null;
+  const features =
+    publicData && publicData.features ? publicData.features : null;
+
   const { formattedPrice, priceTitle } = priceData(price, intl);
 
   const unitType = config.bookingUnitType;
@@ -126,9 +121,10 @@ export const ListingCardComponent = props => {
             {certificate && !certificate.hideFromListingInfo ? (
               <span>{certificate.label}</span>
             ) : null} */}
+
           <div className={css.certificateInfo}>
             {features && !features.hideFromListingInfo ? (
-              <span>{features.label}</span>
+              <span>{features}</span>
             ) : null}
           </div>
         </div>

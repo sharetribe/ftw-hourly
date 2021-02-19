@@ -58,6 +58,7 @@ import SectionDescriptionMaybe from './SectionDescriptionMaybe';
 import SectionReviews from './SectionReviews';
 import SectionMapMaybe from './SectionMapMaybe';
 import SectionCategoriesMaybe from './SectionCategoriesMaybe';
+import SectionProfessionMaybe from './SectionProfessionMaybe';
 import css from './ListingPage.module.css';
 
 const MIN_LENGTH_FOR_LONG_WORDS_IN_TITLE = 16;
@@ -386,7 +387,7 @@ export class ListingPageComponent extends Component {
 
     const categoryOptions = findOptionsForSelectFilter('categories', filterConfig);
     const certificateOptions = findOptionsForSelectFilter('certificate', filterConfig);
-    // const featuresOptions = findOptionsForSelectFilter('features', filterConfig);
+    const professionOptions = findOptionsForSelectFilter('features', filterConfig);
 
     return (
       <Page
@@ -441,6 +442,7 @@ export class ListingPageComponent extends Component {
                   />
                   <SectionDescriptionMaybe description={description} />
                   <SectionCategoriesMaybe options={categoryOptions} publicData={publicData} />
+                  <SectionProfessionMaybe options={professionOptions} publicData={publicData} />
                   <SectionMapMaybe
                     geolocation={geolocation}
                     publicData={publicData}
