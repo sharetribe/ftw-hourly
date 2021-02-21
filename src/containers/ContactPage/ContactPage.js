@@ -11,6 +11,7 @@ import {
 } from '../../components';
 
 import css from './ContactPage.module.css';
+import image from './images/contact.jpg';
 
 const ContactPage = () => {
     const { siteSavanteInfor } = config;
@@ -29,11 +30,11 @@ const ContactPage = () => {
                 <LayoutWrapperTopbar>
                     <TopbarContainer />
                 </LayoutWrapperTopbar>
-
                 <LayoutWrapperMain className={css.mainWrapper}>
                     <p>
                         <strong>Send all inquiries to</strong> <ExternalLink href={siteSavanteInfor}>info@savante.me</ExternalLink>
                     </p>
+                    <img className={css.coverImage} src={image} alt="Contact" />
                 </LayoutWrapperMain>
 
                 <LayoutWrapperFooter>

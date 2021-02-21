@@ -9,7 +9,7 @@
 
 .categories {
   display: flex;
-  flex-direction: column;
+  flex-direction: inherit;
   margin-top: 0px;
   @media (--viewportMedium) {
     flex-direction: row;
@@ -33,8 +33,9 @@
 
 .category {
   @media (--viewportMedium) {
-    margin-right: 40px;
-    margin-bottom: 0;
+    /* margin-right: 40px;
+    margin-bottom: 0; */
+    margin:0px 0px 50px 50px;
   }
 }
 
@@ -47,7 +48,8 @@
 /* A wrapper for a responsive image that holds it's aspect ratio */
 .imageWrapper {
   position: relative;
-  width: 100%;
+  max-width: 100%;
+  height: auto;
   border-radius: 4px;
   transition: var(--transitionStyleButton);
 
@@ -76,20 +78,17 @@
   height: 170px;
   border-radius: 4px;
   object-fit: cover;
-  width: 170px;
-  height: 170px;
+  margin: auto;
 }
 
 .linkText {
-  @apply --marketplaceH3FontStyles;
+  @apply --marketplaceH3FlexFontStyles;
   color: var(--matterColor);
   margin-top: 15px;
   margin-bottom: 0;
-  text-align: justify;
-
   @media (--viewportMedium) {
-    margin-top: 21px;
-    width: 170px;
+    max-width: 142.656px;
+    margin-top: 2px;
     text-align: center;
   }
 }

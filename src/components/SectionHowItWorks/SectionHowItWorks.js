@@ -14,6 +14,9 @@ const SectionHowItWorks = props => {
   const classes = classNames(rootClassName || css.root, className);
   return (
     <div className={classes}>
+      <div className={css.title}>
+        <FormattedMessage id="SectionHowItWorks.Intro" />
+      </div>
       <img className={css.coverImage} src={image} alt="My first ice cream." />
       <div className={css.title}>
         <FormattedMessage id="SectionHowItWorks.titleLineOne" />

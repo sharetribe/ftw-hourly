@@ -35,8 +35,8 @@ const AboutPage = () => {
         </LayoutWrapperTopbar>
 
         <LayoutWrapperMain className={css.staticPageWrapper}>
-          <h1 className={css.pageTitle}>Savante is the place where those with professional expertise can help those in need.</h1>
-          <img className={css.coverImage} src={image} alt="My first ice cream." />
+          <h1 className={css.pageTitle}>Savante is a community where those with expertise assist those in need.</h1>
+          <img className={css.coverImage} src={image} alt="About" />
 
           <div className={css.contentWrapper}>
             {/* <div className={css.contentSide}>

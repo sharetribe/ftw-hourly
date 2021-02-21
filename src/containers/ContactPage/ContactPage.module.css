@@ -9,3 +9,7 @@
     margin: 72px auto 36px auto;
   }
 }
+
+.coverImage{
+  max-width: 100%;
+}

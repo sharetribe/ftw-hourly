@@ -197,6 +197,21 @@
     }
   }
 
+    --marketplaceH3FlexFontStyles: {
+    font-weight: var(--fontWeightSemiBold);
+    font-size: 1.2vmax;
+    line-height: 24px;
+    /* margin-top + n * line-height + margin-bottom => x * 6px */
+    margin-top: 16px;
+    margin-bottom: 14px;
+
+    @media (--viewportMedium) {
+      /* margin-top + n * line-height + margin-bottom => x * 8px */
+      margin-top: 16px;
+      margin-bottom: 16px;
+    }
+  }
+
   --marketplaceH4FontStyles: {
     font-weight: var(--fontWeightMedium);
     font-size: 15px;

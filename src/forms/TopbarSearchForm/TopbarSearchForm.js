@@ -42,7 +42,7 @@ class TopbarSearchFormComponent extends Component {
             <Form className={classes} onSubmit={handleSubmit}>
               <Field
                 name="keywords"
-                render={({ input, meta }) => {
+                render={({ input, pub }) => {
                   return (
                     <input
                       className={
@@ -58,6 +58,7 @@ class TopbarSearchFormComponent extends Component {
                         id: 'TopbarSearchForm.placeholder',
                       })}
                       autoComplete="off"
+                      pub={pub}
                     />
                   );
                 }}
