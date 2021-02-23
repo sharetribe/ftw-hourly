@@ -8,6 +8,7 @@
 
 .content {
   @media (--viewportLarge) {
-    max-width: 563px;
+    max-width: 600px;
+    text-align: justify;
   }
 }

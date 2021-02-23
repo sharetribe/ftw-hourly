@@ -103,6 +103,12 @@ const siteFacebookPage = 'https://www.facebook.com/Sharetribe/';
 
 const siteSavanteWeb = 'http://www.savante.me';
 
+const sitePolicies = 'https://www.WebsitePolicies.com';
+
+const siteSupport = 'support@savante.me';
+
+const siteInternetCookies = 'http://internetcookies.org/';
+
 const siteSavanteInfo = 'https://mail.google.com/mail/u/0/?ogbl#inbox?compose=DmwnWrRmVPRmtKzjDtcSdPlpXTdDzrfCnKgqdSPvtrKQcSjhPmnkVRSrHpZqfkzvZFBKDZgMmwfL';
 
 // Social logins & SSO
@@ -225,6 +231,9 @@ const config = {
   siteTitle,
   siteFacebookPage,
   siteSavanteWeb,
+  sitePolicies,
+  siteSupport,
+  siteInternetCookies,
   siteSavanteInfo,
   siteInstagramPage,
   siteTwitterHandle,
