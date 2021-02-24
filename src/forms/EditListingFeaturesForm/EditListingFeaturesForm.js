@@ -72,7 +72,7 @@ const EditListingFeaturesFormComponent = props => (
             className={css.features}
             name={categoryKey}
             id={categoryKey}
-            label={'Service categories'}
+            label={'Service category'}
           >
             {categoryOptions.map(o => (
               <option key={o.key} value={o.key}>
