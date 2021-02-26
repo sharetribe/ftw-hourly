@@ -19,25 +19,24 @@ const defaultLocations = [
     },
   },
   {
-    id: 'default-los-angeles',
+    id: 'default-helsinki',
     predictionPlace: {
-      address: 'Los Angeles, California, USA',
+      address: 'Helsinki, Finland',
       bounds: new LatLngBounds(
-        new LatLng(34.161440999758, -118.121305008073),
-        new LatLng(33.9018913203336, -118.521456965901)
+        new LatLng(60.29783, 25.25448),
+        new LatLng(59.92248, 24.78287)
       ),
     },
   },
   {
-    id: 'default-san-francisco',
-    predictionPlace: {
-      address: 'San Francisco, California, USA',
-      bounds: new LatLngBounds(
-        new LatLng(37.8324430069081, -122.354995082683),
-        new LatLng(37.6044780500533, -122.517910874663)
-      ),
-    },
+  id: 'default-auckland',
+  predictionPlace: {
+    address: 'Auckland, New Zealand',
+    bounds: new LatLngBounds(
+      new LatLng(-36.545, 175.298), 
+      new LatLng(-37.047,174.498)),
   },
+},
   {
     id: 'default-seattle',
     predictionPlace: {

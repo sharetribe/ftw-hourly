@@ -10,8 +10,8 @@ import { metaTagProps } from '../../util/seo';
 import { canonicalRoutePath } from '../../util/routes';
 import { CookieConsent } from '../../components';
 
-import facebookImage from '../../assets/yogatimeFacebook-1200x630.jpg';
-import twitterImage from '../../assets/yogatimeTwitter-600x314.jpg';
+import facebookImage from '../../assets/cheftribeFacebook-1200x630.jpg';
+import twitterImage from '../../assets/cheftribeTwitter-600x315.jpg';
 import css from './Page.module.css';
 
 const preventDefault = e => {
@@ -120,7 +120,7 @@ class PageComponent extends Component {
         name: 'twitter',
         url: `${canonicalRootURL}${twitterImage}`,
         width: 600,
-        height: 314,
+        height: 315,
       },
     ];
 

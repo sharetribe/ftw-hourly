@@ -20,8 +20,8 @@ import {
 } from '../../components';
 import { TopbarContainer } from '../../containers';
 
-import facebookImage from '../../assets/yogatimeFacebook-1200x630.jpg';
-import twitterImage from '../../assets/yogatimeTwitter-600x314.jpg';
+import facebookImage from '../../assets/cheftribeFacebook-1200x630.jpg';
+import twitterImage from '../../assets/cheftribeTwitter-600x315.jpg';
 import css from './LandingPage.module.css';
 
 export const LandingPageComponent = props => {

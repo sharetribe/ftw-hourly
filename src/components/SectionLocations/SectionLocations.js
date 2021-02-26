@@ -9,7 +9,7 @@ import { NamedLink } from '../../components';
 import css from './SectionLocations.module.css';
 
 import nyImage from './images/ny-yogi.jpg';
-import laImage from './images/la-yogi.jpg';
+import hkiImage from './images/hki-chef.jpg';
 import sfImage from './images/sf-yogi.jpg';
 
 class LocationImage extends Component {
@@ -56,9 +56,9 @@ const SectionLocations = props => {
           '?address=New%20York%20City%2C%20New%20York%2C%20USA&bounds=40.917576401307%2C-73.7008392055224%2C40.477399%2C-74.2590879797556'
         )}
         {locationLink(
-          'Los Angeles',
-          laImage,
-          '?address=Los%20Angeles%2C%20California%2C%20USA&bounds=34.161440999758%2C-118.121305008073%2C33.9018913203336%2C-118.521456965901'
+          'Helsinki',
+          hkiImage,
+          '?address=Helsinki%2C%20Finland&bounds=60.2978389%2C25.254484899999966%2C59.9224887%2C24.782875800000056&origin=60.16985569999999%2C24.93837910000002'
         )}
         {locationLink(
           'San Francisco',
