@@ -191,7 +191,7 @@
   "EditListingAvailabilityPlanForm.timezonePickerTitle": "Escoger una zona horaria",
   "EditListingAvailabilityPlanForm.title": "Editar el horario predeterminado para {listingTitle}",
   "EditListingAvailabilityPlanForm.updateFailed": "Error al actualizar. Por favor, inténtalo de nuevo.",
-  "EditListingDescriptionForm.certificateLabel": "Certificado",
+  "EditListingDescriptionForm.experienceLabel": "Certificado",
   "EditListingDescriptionForm.createListingDraftError": "Error al crear el borrador. Por favor intenta de nuevo.",
   "EditListingDescriptionForm.description": "Describe tu sesión de yoga y tu personalidad",
   "EditListingDescriptionForm.descriptionPlaceholder": "¿Qué tipo de profesor eres? ¿Qué incluyen tus sesiones?",

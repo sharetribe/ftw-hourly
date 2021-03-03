@@ -205,7 +205,7 @@
   "EditListingAvailabilityPlanForm.timezonePickerTitle": "Choisissez un fuseau horaire",
   "EditListingAvailabilityPlanForm.title": "Modifier les disponibilités par défaut pour {listingTitle}",
   "EditListingAvailabilityPlanForm.updateFailed": "Impossible de mettre à jour. Veuillez essayer de nouveau.",
-  "EditListingDescriptionForm.certificateLabel": "Diplôme",
+  "EditListingDescriptionForm.experienceLabel": "Diplôme",
   "EditListingDescriptionForm.createListingDraftError": "La création du brouillon de l'annonce a échoué. Veuillez essayer de nouveau.",
   "EditListingDescriptionForm.description": "Décrivez vous et vos cours de yoga",
   "EditListingDescriptionForm.descriptionPlaceholder": "Quel genre de professeur êtes-vous ? Que proposez-vous dans vos cours ?",
