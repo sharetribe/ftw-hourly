@@ -117,20 +117,38 @@ export const filters = [
     },
   },
   {
-    id: 'certificate',
-    label: 'Certificate',
+    id: 'protein',
+    label: 'Protein',
     type: 'SelectSingleFilter',
     group: 'secondary',
-    queryParamNames: ['pub_certificate'],
+    queryParamNames: ['pub_protein'],
     config: {
       // "key" is the option you see in Flex Console.
       // "label" is set here for the UI only.
       // Note: label is not added through the translation files
       // to make filter customizations a bit easier.
       options: [
-        { key: 'none', label: 'None', hideFromFilters: true, hideFromListingInfo: true },
-        { key: '200h', label: 'Registered yoga teacher 200h' },
-        { key: '500h', label: 'Registered yoga teacher 500h' },
+        { key: 'meat', label: 'Meat'},
+        { key: 'vegetarian', label: 'Vegetarian' },
+        { key: 'vegan', label: 'Vegan' },
+      ],
+    },
+  },
+  {
+    id: 'experience',
+    label: 'Professional experience',
+    type: 'SelectSingleFilter',
+    group: 'secondary',
+    queryParamNames: ['pub_experience'],
+    config: {
+      // "key" is the option you see in Flex Console.
+      // "label" is set here for the UI only.
+      // Note: label is not added through the translation files
+      // to make filter customizations a bit easier.
+      options: [
+        { key: 'none', label: 'None', hideFromFilters: true, hideFromListingInfo: true},
+        { key: 'some', label: 'A few years of experience in restaurants' },
+        { key: 'stars', label: 'Experience in Michelin star restaurants' },
       ],
     },
   },

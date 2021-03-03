@@ -36,7 +36,7 @@
   flex-shrink: 0;
 }
 
-.certificate {
+.experience {
   composes: formMargins;
 }
 
