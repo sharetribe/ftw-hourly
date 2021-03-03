@@ -8,9 +8,9 @@ import { NamedLink } from '../../components';
 
 import css from './SectionLocations.module.css';
 
-import nyImage from './images/ny-yogi.jpg';
+import nyImage from './images/ny-chef.jpg';
 import hkiImage from './images/hki-chef.jpg';
-import sfImage from './images/sf-yogi.jpg';
+import tlImage from './images/tallinn-chef.jpg';
 
 class LocationImage extends Component {
   render() {
@@ -61,9 +61,9 @@ const SectionLocations = props => {
           '?address=Helsinki%2C%20Finland&bounds=60.2978389%2C25.254484899999966%2C59.9224887%2C24.782875800000056&origin=60.16985569999999%2C24.93837910000002'
         )}
         {locationLink(
-          'San Francisco',
-          sfImage,
-          '?address=San%20Francisco%2C%20California%2C%20USA&bounds=37.8324430069081%2C-122.354995082683%2C37.6044780500533%2C-122.517910874663'
+          'Tallinn',
+          tlImage,
+          '?address=Tallinn%2C%20Harju%2C%20Estonia&bounds=59.5914804297108%2C24.926283118856%2C59.3518058517482%2C24.5503476024885'
         )}
       </div>
     </div>
