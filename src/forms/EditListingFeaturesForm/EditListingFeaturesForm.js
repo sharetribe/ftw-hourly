@@ -7,7 +7,7 @@ import { FormattedMessage } from '../../util/reactIntl';
 import { findOptionsForSelectFilter } from '../../util/search';
 import { propTypes } from '../../util/types';
 import config from '../../config';
-import { Button, FieldCheckboxGroup, Form } from '../../components';
+import { Button, FieldCheckboxGroup, FieldSelect, Form, } from '../../components';
 
 import css from './EditListingFeaturesForm.module.css';
 
@@ -49,13 +49,30 @@ const EditListingFeaturesFormComponent = props => (
         </p>
       ) : null;
 
-      const options = findOptionsForSelectFilter('yogaStyles', filterConfig);
+      const options = findOptionsForSelectFilter('foodType', filterConfig);
+
+      const proteinKey = 'protein';
+      const proteinOptions = findOptionsForSelectFilter(proteinKey, filterConfig);
+      
       return (
         <Form className={classes} onSubmit={handleSubmit}>
           {errorMessage}
           {errorMessageShowListing}
 
-          <FieldCheckboxGroup className={css.features} id={name} name={name} options={options} />
+          <FieldCheckboxGroup className={css.features} id={name} name={name} options={options} label="Food type" />
+
+          <FieldSelect
+            className={css.features}
+            name={proteinKey}
+            id={proteinKey}
+            label={'Protein type'}
+          >
+            {proteinOptions.map(o => (
+              <option key={o.key} value={o.key}>
+                {o.label}
+              </option>
+            ))}
+          </FieldSelect>
 
           <Button
             className={css.submitButton}
