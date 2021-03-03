@@ -7,19 +7,21 @@
   {:name :transition/request-payment,
    :actor :actor.role/customer,
    :actions
-   [{:name :action/create-pending-booking}
+   [{:name :action/create-pending-booking,
+     :config {:type :time}}
     {:name :action/privileged-set-line-items}
     {:name :action/stripe-create-payment-intent}],
-   :to :state/pending-payment,
+   :to :state/pending-payment
    :privileged? true}
   {:name :transition/request-payment-after-enquiry,
    :actor :actor.role/customer,
    :actions
-   [{:name :action/create-pending-booking}
+   [{:name :action/create-pending-booking,
+     :config {:type :time}}
     {:name :action/privileged-set-line-items}
     {:name :action/stripe-create-payment-intent}],
    :from :state/enquiry,
-   :to :state/pending-payment,
+   :to :state/pending-payment
    :privileged? true}
   {:name :transition/expire-payment,
    :at
@@ -41,8 +43,6 @@
    :actor :actor.role/provider,
    :actions
    [{:name :action/accept-booking}
-    {:name :action/reveal-provider-protected-data,
-    :config {:key-mapping {:phoneNumber :providerPhoneNumber}}}
     {:name :action/stripe-capture-payment-intent}],
    :from :state/preauthorized,
    :to :state/accepted}
@@ -81,14 +81,6 @@
     {:name :action/stripe-refund-payment}],
    :from :state/accepted,
    :to :state/cancelled}
-  {:name :transition/decline-preauthorized-by-operator,
-   :actor :actor.role/operator,
-   :actions
-   [{:name :action/decline-booking}
-    {:name :action/calculate-full-refund}
-    {:name :action/stripe-refund-payment}],
-   :from :state/preauthorized,
-   :to :state/declined-by-operator}
   {:name :transition/review-1-by-provider,
    :actor :actor.role/provider,
    :actions [{:name :action/post-review-by-provider}],

@@ -114,11 +114,11 @@ export class BookingTimeFormComponent extends Component {
           const bookingData =
             startDate && endDate
               ? {
-                  unitType,
-                  startDate,
-                  endDate,
-                  timeZone,
-                }
+                unitType,
+                startDate,
+                endDate,
+                timeZone,
+              }
               : null;
 
           const showEstimatedBreakdown =

@@ -192,15 +192,15 @@ const findBookingUnitBoundaries = params => {
     // if daylight saving time (DST) creates the same time of day two times.
     const newBoundary =
       cumulatedResults &&
-      cumulatedResults.length > 0 &&
-      cumulatedResults.slice(-1)[0].timeOfDay === timeOfDay
+        cumulatedResults.length > 0 &&
+        cumulatedResults.slice(-1)[0].timeOfDay === timeOfDay
         ? []
         : [
-            {
-              timestamp: currentBoundary.valueOf(),
-              timeOfDay,
-            },
-          ];
+          {
+            timestamp: currentBoundary.valueOf(),
+            timeOfDay,
+          },
+        ];
 
     return findBookingUnitBoundaries({
       ...params,
@@ -478,8 +478,8 @@ export const isInRange = (date, start, end, scope, timeZone) => {
   const millisecondBeforeEndTime = new Date(end.getTime() - 1);
   return timeZone
     ? moment(date)
-        .tz(timeZone)
-        .isBetween(start, millisecondBeforeEndTime, scope, '[]')
+      .tz(timeZone)
+      .isBetween(start, millisecondBeforeEndTime, scope, '[]')
     : moment(date).isBetween(start, end, scope, '[)');
 };
 
@@ -691,12 +691,12 @@ export const getExclusiveEndDateWithTz = (dateString, timeZone) => {
 export const getMonthStartInTimeZone = (date, timeZone) => {
   return timeZone
     ? moment(date)
-        .tz(timeZone)
-        .startOf('month')
-        .toDate()
+      .tz(timeZone)
+      .startOf('month')
+      .toDate()
     : moment(date)
-        .startOf('month')
-        .toDate();
+      .startOf('month')
+      .toDate();
 };
 
 /**
@@ -710,16 +710,16 @@ export const getMonthStartInTimeZone = (date, timeZone) => {
 export const prevMonthFn = (date, timeZone) => {
   return timeZone
     ? moment(date)
-        .clone()
-        .tz(timeZone)
-        .subtract(1, 'months')
-        .startOf('month')
-        .toDate()
+      .clone()
+      .tz(timeZone)
+      .subtract(1, 'months')
+      .startOf('month')
+      .toDate()
     : moment(date)
-        .clone()
-        .subtract(1, 'months')
-        .startOf('month')
-        .toDate();
+      .clone()
+      .subtract(1, 'months')
+      .startOf('month')
+      .toDate();
 };
 
 /**
@@ -733,16 +733,16 @@ export const prevMonthFn = (date, timeZone) => {
 export const nextMonthFn = (currentMoment, timeZone) => {
   return timeZone
     ? moment(currentMoment)
-        .clone()
-        .tz(timeZone)
-        .add(1, 'months')
-        .startOf('month')
-        .toDate()
+      .clone()
+      .tz(timeZone)
+      .add(1, 'months')
+      .startOf('month')
+      .toDate()
     : moment(currentMoment)
-        .clone()
-        .add(1, 'months')
-        .startOf('month')
-        .toDate();
+      .clone()
+      .add(1, 'months')
+      .startOf('month')
+      .toDate();
 };
 
 /**
