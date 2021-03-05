@@ -1,23 +1,26 @@
 <html>
-  <body>
-    {{#with transaction}}
-    <h1>{{other-party.display-name}} wrote you a review. Here's what they wrote.</h1>
 
-    {{#each reviews}}
-      {{#eq recipient.id subject.id}}
-        <blockquote><i>"{{content}}"</i></blockquote>
-      {{/eq}}
-    {{/each}}
+<body>
+  {{#with transaction}}
+  <h1>{{other-party.display-name}} wrote you a review. Here's what they wrote.</h1>
 
-    <p>The review has been published on your {{marketplace.name}} profile.</p>
+  {{#each reviews}}
+  {{#eq recipient.id subject.id}}
+  <blockquote><i>"{{content}}"</i></blockquote>
+  {{/eq}}
+  {{/each}}
 
-    <p>
-      <a href="{{marketplace.url}}/u/{{url-encode recipient.id}}">View your profile.</a>
-    </p>
-    {{/with}}
+  <p>The review has been published on your {{marketplace.name}} profile.</p>
 
-    <hr />
+  <p>
+    <a href="{{marketplace.url}}/u/{{url-encode recipient.id}}">View your profile.</a>
+  </p>
+  {{/with}}
 
-    <p>You have received this email notification because you are a member of {{marketplace.name}}. If you no longer wish to receive these emails, please contact {{marketplace.name}} team.</p>
-  </body>
+  <hr />
+
+  <p>You have received this email notification because you are a member of {{marketplace.name}}. If you no longer wish
+    to receive these emails, please contact {{marketplace.name}} team.</p>
+</body>
+
 </html>

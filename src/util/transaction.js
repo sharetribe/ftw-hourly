@@ -111,7 +111,7 @@ const stateDescription = {
   // id is defined only to support Xstate format.
   // However if you have multiple transaction processes defined,
   // it is best to keep them in sync with transaction process aliases.
-  id: 'savante-hourly-booking/release-2',
+  id: 'savante-hourly-booking/release-3',
 
   // This 'initial' state is a starting point for new transaction
   initial: STATE_INITIAL,
