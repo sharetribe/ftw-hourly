@@ -7,21 +7,19 @@
   {:name :transition/request-payment,
    :actor :actor.role/customer,
    :actions
-   [{:name :action/create-pending-booking,
-     :config {:type :time}}
+   [{:name :action/create-pending-booking, :config {:type :time}}
     {:name :action/privileged-set-line-items}
     {:name :action/stripe-create-payment-intent}],
-   :to :state/pending-payment
+   :to :state/pending-payment,
    :privileged? true}
   {:name :transition/request-payment-after-enquiry,
    :actor :actor.role/customer,
    :actions
-   [{:name :action/create-pending-booking,
-     :config {:type :time}}
+   [{:name :action/create-pending-booking, :config {:type :time}}
     {:name :action/privileged-set-line-items}
     {:name :action/stripe-create-payment-intent}],
    :from :state/enquiry,
-   :to :state/pending-payment
+   :to :state/pending-payment,
    :privileged? true}
   {:name :transition/expire-payment,
    :at

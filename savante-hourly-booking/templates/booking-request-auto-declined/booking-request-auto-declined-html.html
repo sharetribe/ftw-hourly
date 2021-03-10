@@ -4,6 +4,12 @@
 {{/with}}
 {{~/inline~}}
 
+{{~#*inline "format-timezone"~}}
+{{#with transaction.listing.availability-plan}}
+{{date date format="ZZ ZZZ" tz=timezone}}
+{{/with}}
+{{~/inline~}}
+
 <html>
 
 <body>
@@ -11,7 +17,8 @@
 
   {{#with transaction}}
   <p>Unfortunately {{provider.display-name}} didn't respond to your booking request for {{listing.title}} from {{>
-    format-date date=booking.start}} to {{> format-date date=booking.end}} on time, so the request has expired. You have
+    format-date date=booking.start}} to {{> format-date date=booking.end}} ({{> format-timezone date=booking.end }}) on
+    time, so the request has expired. You have
     not been billed.</p>
   {{/with}}
 
