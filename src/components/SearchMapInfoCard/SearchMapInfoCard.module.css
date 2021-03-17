@@ -90,7 +90,7 @@
   padding: 11px 13px;
 }
 
-.price {
+.feature {
   flex-shrink: 0;
   font-weight: var(--fontWeightSemiBold);
   color: var(--marketplaceColor);

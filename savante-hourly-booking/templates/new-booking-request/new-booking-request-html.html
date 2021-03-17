@@ -4,7 +4,7 @@
 
 {{~#*inline "format-date"~}}
 {{#with transaction.listing.availability-plan}}
-{{date date format="h:mm a" tz=timezone}} on {{date date format="MMM d, YYYY" tz=timezone}}
+{{date date format="h:mm a" tz=timezone}} on {{date date format="MMM d, YYYY ZZ ZZZ" tz=timezone}}
 {{/with}}
 {{~/inline~}}
 

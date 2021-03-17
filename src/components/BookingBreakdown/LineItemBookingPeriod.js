@@ -11,13 +11,13 @@ const BookingPeriod = props => {
   const timeFormatOptions =
     dateType === DATE_TYPE_DATE
       ? {
-          weekday: 'long',
-        }
+        weekday: 'long',
+      }
       : {
-          weekday: 'short',
-          hour: 'numeric',
-          minute: 'numeric',
-        };
+        weekday: 'short',
+        hour: 'numeric',
+        minute: 'numeric',
+      };
 
   const dateFormatOptions = {
     month: 'short',
