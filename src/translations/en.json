@@ -279,6 +279,8 @@
   "EditListingPricingForm.pricePerUnit": "Price per hour in dollars",
   "EditListingPricingForm.priceRequired": "You need to add a valid price.",
   "EditListingPricingForm.priceTooLow": "Price should be at least {minPrice}.",
+  "EditListingPricingForm.cleaningFee": "What is your cleaning fee?",
+  "EditListingPricingForm.cleaningFeePlaceholder": "What will you charge if you need to clean everything…",
   "EditListingPricingForm.showListingFailed": "Fetching listing data failed",
   "EditListingPricingForm.updateFailed": "Failed to update listing. Please try again.",
   "EditListingPricingPanel.createListingTitle": "How much do your sessions cost?",

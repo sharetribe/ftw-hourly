@@ -55,6 +55,15 @@ export const EditListingPricingFormComponent = props => (
           id: 'EditListingPricingForm.priceRequired',
         })
       );
+
+      const cleaningFeeMessage = intl.formatMessage({
+        id: 'EditListingPricingForm.cleaningFee',
+      });
+
+      const cleaningFeePlaceholderMessage = intl.formatMessage({
+        id: 'EditListingPricingForm.cleaningFeePlaceholder',
+      });
+
       const minPrice = new Money(config.listingMinimumPriceSubUnits, config.currency);
       const minPriceRequired = validators.moneySubUnitAmountAtLeast(
         intl.formatMessage(
@@ -98,6 +107,16 @@ export const EditListingPricingFormComponent = props => (
             placeholder={pricePlaceholderMessage}
             currencyConfig={config.currencyConfig}
             validate={priceValidators}
+          />
+
+          <FieldCurrencyInput
+            id="cleaningFee"
+            name="cleaningFee"
+            className={css.cleaningFeeInput}
+            autoFocus
+            label={cleaningFeeMessage}
+            placeholder={cleaningFeePlaceholderMessage}
+            currencyConfig={config.currencyConfig}
           />
 
           <Button
