@@ -121,31 +121,31 @@ const resolveTransitionMessage = (
       return isOwnTransition ? (
         <FormattedMessage id="ActivityFeed.ownTransitionRequest" values={{ listingTitle }} />
       ) : (
-          <FormattedMessage
-            id="ActivityFeed.transitionRequest"
-            values={{ displayName, listingTitle }}
-          />
-        );
+        <FormattedMessage
+          id="ActivityFeed.transitionRequest"
+          values={{ displayName, listingTitle }}
+        />
+      );
     case TRANSITION_ACCEPT:
       return isOwnTransition ? (
         <FormattedMessage id="ActivityFeed.ownTransitionAccept" />
       ) : (
-          <FormattedMessage id="ActivityFeed.transitionAccept" values={{ displayName }} />
-        );
+        <FormattedMessage id="ActivityFeed.transitionAccept" values={{ displayName }} />
+      );
     case TRANSITION_DECLINE:
       return isOwnTransition ? (
         <FormattedMessage id="ActivityFeed.ownTransitionDecline" />
       ) : (
-          <FormattedMessage id="ActivityFeed.transitionDecline" values={{ displayName }} />
-        );
+        <FormattedMessage id="ActivityFeed.transitionDecline" values={{ displayName }} />
+      );
     case TRANSITION_DECLINE_BY_OPERATOR:
       return <FormattedMessage id="ActivityFeed.operatorDecline" />;
     case TRANSITION_EXPIRE:
       return txRoleIsProvider(ownRole) ? (
         <FormattedMessage id="ActivityFeed.ownTransitionExpire" />
       ) : (
-          <FormattedMessage id="ActivityFeed.transitionExpire" values={{ displayName }} />
-        );
+        <FormattedMessage id="ActivityFeed.transitionExpire" values={{ displayName }} />
+      );
     case TRANSITION_CANCEL:
       return <FormattedMessage id="ActivityFeed.transitionCancel" />;
     case TRANSITION_COMPLETE:
@@ -233,8 +233,8 @@ const Transition = props => {
   const otherUsersName = txRoleIsProvider(ownRole) ? (
     <UserDisplayName user={customer} intl={intl} />
   ) : (
-      <UserDisplayName user={provider} intl={intl} />
-    );
+    <UserDisplayName user={provider} intl={intl} />
+  );
 
   const transitionMessage = resolveTransitionMessage(
     transaction,
@@ -256,15 +256,15 @@ const Transition = props => {
       reviewComponent = review ? (
         <Review content={review.attributes.content} rating={review.attributes.rating} />
       ) : (
-          <Review content={deletedReviewContent} />
-        );
+        <Review content={deletedReviewContent} />
+      );
     } else if (isProviderReview(currentTransition)) {
       const review = reviewByAuthorId(currentTransaction, provider.id);
       reviewComponent = review ? (
         <Review content={review.attributes.content} rating={review.attributes.rating} />
       ) : (
-          <Review content={deletedReviewContent} />
-        );
+        <Review content={deletedReviewContent} />
+      );
     }
   }
 

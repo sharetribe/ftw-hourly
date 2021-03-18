@@ -15,7 +15,9 @@ import css from './SearchMapInfoCard.module.css';
 const ListingCard = props => {
   const { className, clickHandler, intl, isInCarousel, listing, urlToListing } = props;
 
-  const { title, publicData } = listing.attributes;
+  const { title, publicData, price } = listing.attributes;
+  const formattedPrice =
+    price && price.currency === config.currency ? formatMoney(intl, price) : price.currency;
   const features =
     publicData && publicData.features ? publicData.features : null;
   const firstImage = listing.images && listing.images.length > 0 ? listing.images[0] : null;
@@ -58,6 +60,7 @@ const ListingCard = props => {
         </div>
         <div className={classNames(css.info, { [css.borderRadiusInheritBottom]: !isInCarousel })}>
           <div className={css.feature}>{features}</div>
+          <div className={css.price}>{formattedPrice}</div>
           <div className={css.name}>{title}</div>
         </div>
       </div>

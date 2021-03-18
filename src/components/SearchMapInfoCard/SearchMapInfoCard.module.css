@@ -35,7 +35,7 @@
    */
   position: relative;
 
-  width: 250px;
+  max-width: 400px;
   min-height: 207px;
 
   /* Font */
@@ -94,6 +94,13 @@
   flex-shrink: 0;
   font-weight: var(--fontWeightSemiBold);
   color: var(--marketplaceColor);
+
+  margin-right: 10px;
+}
+
+.price {
+  flex-shrink: 0;
+  font-weight: var(--fontWeightSemiBold);
 
   margin-right: 10px;
 }
