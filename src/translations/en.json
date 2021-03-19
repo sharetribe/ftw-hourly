@@ -70,6 +70,7 @@
   "BookingBreakdown.total": "Total price",
   "BookingDatesForm.bookingEndTitle": "End date",
   "BookingDatesForm.bookingStartTitle": "Start date",
+  "BookingDatesForm.cleaningFeeLabel": "Cleaning fee: {fee}",
   "BookingDatesForm.fetchLineItemsError": "Oops, something went wrong. Please refresh the page and try again.",
   "BookingDatesForm.listingCurrencyInvalid": "Oops, the currency on the teacher profile doesn't match the currency of the marketplace.",
   "BookingDatesForm.listingPriceMissing": "Oops, this teacher profile has no price set!",

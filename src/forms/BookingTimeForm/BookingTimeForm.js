@@ -6,12 +6,18 @@ import classNames from 'classnames';
 import { FormattedMessage, intlShape, injectIntl } from '../../util/reactIntl';
 import { timestampToDate } from '../../util/dates';
 import { propTypes } from '../../util/types';
+import { formatMoney } from '../../util/currency';
+import { types as sdkTypes } from '../../util/sdkLoader';
 import config from '../../config';
-import { Form, IconSpinner, PrimaryButton } from '../../components';
+import { Form, IconSpinner, PrimaryButton, FieldCheckbox, } from '../../components'; //Might be breaking it here because it is not the same as saunatime
 import EstimatedBreakdownMaybe from './EstimatedBreakdownMaybe';
 import FieldDateAndTimeInput from './FieldDateAndTimeInput';
 
 import css from './BookingTimeForm.module.css';
+
+const { Money } = sdkTypes;
+
+
 
 export class BookingTimeFormComponent extends Component {
   constructor(props) {
@@ -33,13 +39,15 @@ export class BookingTimeFormComponent extends Component {
     const { bookingStartTime, bookingEndTime } = formValues.values;
     const startDate = bookingStartTime ? timestampToDate(bookingStartTime) : null;
     const endDate = bookingEndTime ? timestampToDate(bookingEndTime) : null;
+    const hasCleaningFee =
+      formValues.values.cleaningFee && formValues.values.cleaningFee.length > 0;
 
     const listingId = this.props.listingId;
     const isOwnListing = this.props.isOwnListing;
 
     if (bookingStartTime && bookingEndTime && !this.props.fetchLineItemsInProgress) {
       this.props.onFetchTransactionLineItems({
-        bookingData: { startDate, endDate },
+        bookingData: { startDate, endDate, hasCleaningFee },
         listingId,
         isOwnListing,
       });
@@ -93,6 +101,7 @@ export class BookingTimeFormComponent extends Component {
             lineItems,
             fetchLineItemsInProgress,
             fetchLineItemsError,
+            cleaningFee,
           } = fieldRenderProps;
 
           const startTime = values && values.bookingStartTime ? values.bookingStartTime : null;
@@ -120,6 +129,26 @@ export class BookingTimeFormComponent extends Component {
                   timeZone,
                 }
               : null;
+          const formattedCleaningFee = cleaningFee
+            ? formatMoney(
+                intl,
+                new Money(cleaningFee.amount, cleaningFee.currency)
+              )
+            : null;
+
+          const cleaningFeeLabel = intl.formatMessage(
+            { id: 'BookingDatesForm.cleaningFeeLabel' },
+            { fee: formattedCleaningFee }
+          );
+
+          const cleaningFeeMaybe = cleaningFee ? (
+            <FieldCheckbox
+              id="cleaningFee"
+              name="cleaningFee"
+              label={cleaningFeeLabel}
+              value="cleaningFee"
+            />
+          ) : null;  
 
           const showEstimatedBreakdown =
             bookingData && lineItems && !fetchLineItemsInProgress && !fetchLineItemsError;
@@ -184,6 +213,8 @@ export class BookingTimeFormComponent extends Component {
                   timeZone={timeZone}
                 />
               ) : null}
+
+              {cleaningFeeMaybe}
 
               {bookingInfoMaybe}
               {loadingSpinnerMaybe}

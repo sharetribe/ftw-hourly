@@ -74,6 +74,13 @@ const BookingPanel = props => {
   } = props;
 
   const price = listing.attributes.price;
+
+  const cleaningFee =
+    listing.attributes.publicData &&
+    listing.attributes.publicData.cleaningFee
+      ? listing.attributes.publicData.cleaningFee
+      : null;
+
   const timeZone =
     listing.attributes.availabilityPlan && listing.attributes.availabilityPlan.timezone;
   const hasListingState = !!listing.attributes.state;
@@ -148,6 +155,7 @@ const BookingPanel = props => {
             lineItems={lineItems}
             fetchLineItemsInProgress={fetchLineItemsInProgress}
             fetchLineItemsError={fetchLineItemsError}
+            cleaningFee={cleaningFee}
           />
         ) : null}
       </ModalInMobile>
