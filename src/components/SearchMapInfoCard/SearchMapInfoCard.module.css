@@ -101,12 +101,11 @@
 .price {
   flex-shrink: 0;
   font-weight: var(--fontWeightSemiBold);
-
-  margin-right: 10px;
 }
 
 .name {
   flex-grow: 1;
+  margin-right: 10px;
 }
 
 .paginationInfo {
