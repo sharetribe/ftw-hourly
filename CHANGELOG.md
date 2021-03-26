@@ -17,6 +17,8 @@ https://github.com/sharetribe/flex-template-web/
 
 ## Upcoming version 2020-XX-XX
 
+- [fix] currency for Poland (PLN) [#140](https://github.com/sharetribe/ftw-hourly/pull/140)
+
 ## [v10.1.0] 2021-03-11
 
 ### Updates from upstream (FTW-daily v8.1.0)
