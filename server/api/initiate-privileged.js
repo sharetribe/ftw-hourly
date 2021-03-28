@@ -3,7 +3,8 @@ const { getSdk, getTrustedSdk, handleError, serialize } = require('../api-util/s
 
 module.exports = (req, res) => {
   const { isSpeculative, bookingData, bodyParams, queryParams } = req.body;
-
+  console.log("bookingData: ", bookingData)
+  console.log("bodyParams: ", bodyParams)
   const listingId = bodyParams && bodyParams.params ? bodyParams.params.listingId : null;
 
   const sdk = getSdk(req, res);
