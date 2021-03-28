@@ -184,6 +184,8 @@ export class CheckoutPageComponent extends Component {
       const listingId = pageData.listing.id;
       const transactionId = tx ? tx.id : null;
       const { bookingStart, bookingEnd } = pageData.bookingDates;
+      const hasCleaningFee =
+        pageData.bookingData.cleaningFee && pageData.bookingData.cleaningFee.length > 0;
 
       // Fetch speculated transaction for showing price in booking breakdown
       // NOTE: if unit type is line-item/units, quantity needs to be added.
@@ -193,6 +195,7 @@ export class CheckoutPageComponent extends Component {
           listingId,
           bookingStart,
           bookingEnd,
+          hasCleaningFee,
         },
         transactionId
       );
@@ -375,6 +378,7 @@ export class CheckoutPageComponent extends Component {
       listingId: pageData.listing.id,
       bookingStart: tx.booking.attributes.start,
       bookingEnd: tx.booking.attributes.end,
+      hasCleaningFee: pageData.bookingData.cleaningFee && pageData.bookingData.cleaningFee.length > 0,
       quantity: pageData.bookingData ? pageData.bookingData.quantity : null,
       ...optionalPaymentParams,
     };
