@@ -24,6 +24,7 @@ import {
   StyleguidePage,
   TermsOfServicePage,
   TransactionPage,
+  ZoomPage
 } from './containers';
 
 // routeConfiguration needs to initialize containers first
@@ -68,6 +69,11 @@ const routeConfiguration = () => {
       path: '/faq',
       name: 'FAQPage',
       component: FAQPage,
+    },
+    {
+      path: '/zoom',
+      name: 'ZoomPage',
+      component: ZoomPage,
     },
     {
       path: '/contact',

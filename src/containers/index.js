@@ -23,4 +23,5 @@ export { default as TermsOfServicePage } from './TermsOfServicePage/TermsOfServi
 export { default as TopbarContainer } from './TopbarContainer/TopbarContainer';
 export { default as TransactionPage } from './TransactionPage/TransactionPage';
 export { default as FAQPage } from './FAQPage/FAQPage';
+export { default as ZoomPage } from './ZoomPage/ZoomPage';
 export { default as ContactPage } from './ContactPage/ContactPage';
