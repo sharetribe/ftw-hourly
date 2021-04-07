@@ -37,7 +37,9 @@ export class BookingTimeFormComponent extends Component {
     const listingId = this.props.listingId;
     const isOwnListing = this.props.isOwnListing;
 
-    if (bookingStartTime && bookingEndTime && !this.props.fetchLineItemsInProgress) {
+    const isSameTime = bookingStartTime === bookingEndTime;
+
+    if (bookingStartTime && bookingEndTime && !isSameTime && !this.props.fetchLineItemsInProgress) {
       this.props.onFetchTransactionLineItems({
         bookingData: { startDate, endDate },
         listingId,
