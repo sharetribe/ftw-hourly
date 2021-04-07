@@ -139,7 +139,7 @@ const getAllTimeValues = (
   const startTime = selectedStartTime
     ? selectedStartTime
     : startTimes.length > 0 && startTimes[0] && startTimes[0].timestamp
-    ? startTimes[0].timestamp
+    ? startTimes[0].timestamp.toString()
     : null;
 
   const startTimeAsDate = startTime ? timestampToDate(startTime) : null;
@@ -160,7 +160,9 @@ const getAllTimeValues = (
 
   const endTimes = getAvailableEndTimes(intl, timeZone, startTime, endDate, selectedTimeSlot);
   const endTime =
-    endTimes.length > 0 && endTimes[0] && endTimes[0].timestamp ? endTimes[0].timestamp : null;
+    endTimes.length > 0 && endTimes[0] && endTimes[0].timestamp
+      ? endTimes[0].timestamp.toString()
+      : null;
 
   return { startTime, endDate, endTime, selectedTimeSlot };
 };
