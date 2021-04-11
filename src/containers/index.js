@@ -24,4 +24,5 @@ export { default as TopbarContainer } from './TopbarContainer/TopbarContainer';
 export { default as TransactionPage } from './TransactionPage/TransactionPage';
 export { default as FAQPage } from './FAQPage/FAQPage';
 export { default as ZoomPage } from './ZoomPage/ZoomPage';
+export { default as ZoomVerifyPage } from './ZoomVerifyPage/ZoomVerifyPage';
 export { default as ContactPage } from './ContactPage/ContactPage';

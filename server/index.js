@@ -169,8 +169,8 @@ const httpsAgent = new https.Agent({ keepAlive: true });
 app.use('/api', apiRouter);
 
 app.get('/zoomverify/verifyzoom.html', (req, res) => {
-  res.send(process.env.zoom_verification_code)
-})
+  res.send(process.env.REACT_APP_ZOOM_VERIFICATION_CODE)
+});
 
 app.get('*', (req, res) => {
   if (req.url.startsWith('/static/')) {

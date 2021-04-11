@@ -8,6 +8,7 @@ const dev = process.env.REACT_APP_ENV === 'development';
 const zoomApi = process.env.REACT_APP_ZOOM_API_KEY;
 const zoomSecret = process.env.REACT_APP_ZOOM_API_SECRET_KEY;
 const redirectUrl = process.env.REACT_APP_ZOOM_REDIRECT_URL;
+const zoomVerification = process.env.REACT_APP_ZOOM_VERIFICATION_CODE;
 
 // If you want to change the language, remember to also change the
 // locale data and the messages in the app.js file.
@@ -207,6 +208,7 @@ const config = {
   zoomApi,
   zoomSecret,
   redirectUrl,
+  zoomVerification,
   locale,
   bookingProcessAlias,
   bookingUnitType,
