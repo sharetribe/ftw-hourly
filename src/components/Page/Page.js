@@ -10,8 +10,8 @@ import { metaTagProps } from '../../util/seo';
 import { canonicalRoutePath } from '../../util/routes';
 import { CookieConsent } from '../../components';
 
-import facebookImage from '../../assets/yogatimeFacebook-1200x630.jpg';
-import twitterImage from '../../assets/yogatimeTwitter-600x314.jpg';
+import facebookImage from '../../assets/savanteFacebook-1200x630.png';
+import twitterImage from '../../assets/savanteTwitter-600x314.png';
 import css from './Page.module.css';
 
 const preventDefault = e => {

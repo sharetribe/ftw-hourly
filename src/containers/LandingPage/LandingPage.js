@@ -20,8 +20,8 @@ import {
 } from '../../components';
 import { TopbarContainer } from '../../containers';
 
-import facebookImage from '../../assets/yogatimeFacebook-1200x630.jpg';
-import twitterImage from '../../assets/yogatimeTwitter-600x314.jpg';
+import facebookImage from '../../assets/savanteFacebook-1200x630.png';
+import twitterImage from '../../assets/savanteTwitter-600x314.png';
 import css from './LandingPage.module.css';
 import SectionCategories from '../../components/SectionCategories/SectionCategories';
 
