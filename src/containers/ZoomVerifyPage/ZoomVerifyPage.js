@@ -32,7 +32,7 @@ const ZoomVerifyPage = () => {
                 <LayoutWrapperMain className={css.mainWrapper}>
                     <div>
                         <p>
-                            2b316a61f89a4feb9d5661d90565baff
+                            a723cf53f6264c79bcf4650c8f5ce1a1
                         </p>
                     </div>
                 </LayoutWrapperMain>
