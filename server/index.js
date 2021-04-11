@@ -168,6 +168,10 @@ const httpsAgent = new https.Agent({ keepAlive: true });
 
 app.use('/api', apiRouter);
 
+app.get('/zoomverify/verifyzoom.html', (req, res) => {
+  res.send(process.env.zoom_verification_code)
+})
+
 app.get('*', (req, res) => {
   if (req.url.startsWith('/static/')) {
     // The express.static middleware only handles static resources

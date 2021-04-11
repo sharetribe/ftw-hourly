@@ -5,6 +5,9 @@ import { currencyConfiguration } from './currency-config';
 
 const env = process.env.REACT_APP_ENV;
 const dev = process.env.REACT_APP_ENV === 'development';
+const zoomApi = process.env.REACT_APP_ZOOM_API_KEY;
+const zoomSecret = process.env.REACT_APP_ZOOM_API_SECRET_KEY;
+const redirectUrl = process.env.REACT_APP_ZOOM_REDIRECT_URL;
 
 // If you want to change the language, remember to also change the
 // locale data and the messages in the app.js file.
@@ -201,6 +204,9 @@ const maps = {
 const config = {
   env,
   dev,
+  zoomApi,
+  zoomSecret,
+  redirectUrl,
   locale,
   bookingProcessAlias,
   bookingUnitType,

@@ -12,6 +12,7 @@ import {
 import css from './Zoom.module.css';
 
 const ZoomPage = () => {
+    const { zoomApi, zoomSecret, redirectUrl } = config;
 
     return (
         <StaticPage
@@ -31,7 +32,7 @@ const ZoomPage = () => {
                 <LayoutWrapperMain className={css.mainWrapper}>
                     <div>
                         <h3>Why should I use Savante?</h3>
-                        <a href={`https://zoom.us/oauth/authorize?response_type=code&client_id=${process.env.REACT_APP_ZOOM_API_KEY}&redirect_uri=${process.env.REACT_APP_ZOOM_REDIRECT_URL}`}>
+                        <a href={`https://zoom.us/oauth/authorize?response_type=code&client_id=${zoomApi}&redirect_uri=${redirectUrl}`}>
                             Connect Zoom
                         </a>
                     </div>
