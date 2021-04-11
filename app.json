@@ -45,10 +45,6 @@
     "REACT_APP_CSP": {
       "description": "See: Content Security Policy (CSP) documentation https://github.com/sharetribe/ftw-hourly/blob/master/docs/content-security-policy.md",
       "value": "report"
-    },
-    "REACT_APP_ZOOM_VERIFICATION_CODE": {
-      "description": "Optional, Your Zoom domain verification code, used to verify your domain name, found on your Zoom Submit page",
-      "value": "a723cf53f6264c79bcf4650c8f5ce1a1"
     }
   }
 }
