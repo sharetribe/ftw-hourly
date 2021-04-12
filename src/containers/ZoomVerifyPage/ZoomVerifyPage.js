@@ -24,23 +24,13 @@ const ZoomVerifyPage = () => {
                 name: 'Zoom verify page',
             }}
         >
-            <LayoutSingleColumn>
-                <LayoutWrapperTopbar>
-                    <TopbarContainer />
-                </LayoutWrapperTopbar>
-
-                <LayoutWrapperMain className={css.mainWrapper}>
-                    <div>
-                        <p>
-                            a723cf53f6264c79bcf4650c8f5ce1a1
-                        </p>
-                    </div>
-                </LayoutWrapperMain>
-
-                <LayoutWrapperFooter>
-                    <Footer />
-                </LayoutWrapperFooter>
-            </LayoutSingleColumn>
+            <LayoutWrapperMain className={css.mainWrapper}>
+                <div>
+                    <p>
+                        a723cf53f6264c79bcf4650c8f5ce1a1
+                    </p>
+                </div>
+            </LayoutWrapperMain>
         </StaticPage>
     );
 };
