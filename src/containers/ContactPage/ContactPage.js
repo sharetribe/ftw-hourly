@@ -11,7 +11,7 @@ import {
 } from '../../components';
 
 import css from './ContactPage.module.css';
-import image from './images/contact.jpg';
+import image from './images/Contact.png';
 
 const ContactPage = () => {
     const { siteSavanteInfor } = config;

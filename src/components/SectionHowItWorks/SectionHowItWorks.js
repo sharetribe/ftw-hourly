@@ -6,7 +6,7 @@ import { propTypes } from '../../util/types';
 import { OwnListingLink } from '../../components';
 
 import css from './SectionHowItWorks.module.css';
-import image from '../../assets/Savante_Main.png';
+import image from '././HowItWorkPhotos/How_It_Work_1.png';
 
 const SectionHowItWorks = props => {
   const { rootClassName, className, currentUserListing, currentUserListingFetched } = props;
