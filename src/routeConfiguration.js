@@ -77,11 +77,6 @@ const routeConfiguration = () => {
       component: ZoomPage,
     },
     {
-      path: '/zoomverify',
-      name: 'ZoomVerifyPage',
-      component: ZoomVerifyPage,
-    },
-    {
       path: '/contact',
       name: 'ContactPage',
       component: ContactPage,
