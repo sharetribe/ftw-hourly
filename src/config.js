@@ -8,7 +8,6 @@ const dev = process.env.REACT_APP_ENV === 'development';
 const zoomApi = process.env.REACT_APP_ZOOM_API_KEY;
 const zoomSecret = process.env.REACT_APP_ZOOM_API_SECRET_KEY;
 const redirectUrl = process.env.REACT_APP_ZOOM_REDIRECT_URL;
-// const zoomVerification = process.env.REACT_APP_ZOOM_VERIFICATION_CODE;
 
 // If you want to change the language, remember to also change the
 // locale data and the messages in the app.js file.
@@ -116,8 +115,6 @@ const siteInternetCookies = 'http://internetcookies.org/';
 const siteSavanteInfo = 'https://mail.google.com/mail/u/0/?ogbl#inbox?compose=DmwnWrRmVPRmtKzjDtcSdPlpXTdDzrfCnKgqdSPvtrKQcSjhPmnkVRSrHpZqfkzvZFBKDZgMmwfL';
 
 // Social logins & SSO
-
-const zoomVerification = '2b316a61f89a4feb9d5661d90565baff'
 
 // Note: Facebook app id is also used for tracking:
 // Facebook counts shares with app or page associated by this id
@@ -251,7 +248,6 @@ const config = {
   usingSSL,
   maps,
   custom,
-  zoomVerification,
 };
 
 export default config;

@@ -25,7 +25,7 @@ import {
   TermsOfServicePage,
   TransactionPage,
   ZoomPage,
-  ZoomVerifyPage
+  SupportPage
 } from './containers';
 
 // routeConfiguration needs to initialize containers first
@@ -308,6 +308,11 @@ const routeConfiguration = () => {
       path: '/privacy-policy',
       name: 'PrivacyPolicyPage',
       component: props => <PrivacyPolicyPage {...props} />,
+    },
+    {
+      path: '/support',
+      name: 'SupportPage',
+      component: props => <SupportPage {...props} />,
     },
     {
       path: '/styleguide',

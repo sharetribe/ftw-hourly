@@ -14,6 +14,7 @@ export { default as PasswordResetPage } from './PasswordResetPage/PasswordResetP
 export { default as PaymentMethodsPage } from './PaymentMethodsPage/PaymentMethodsPage';
 export { default as StripePayoutPage } from './StripePayoutPage/StripePayoutPage'
 export { default as PrivacyPolicyPage } from './PrivacyPolicyPage/PrivacyPolicyPage';
+export { default as SupportPage } from './SupportPage/SupportPage';
 export { default as ProfilePage } from './ProfilePage/ProfilePage';
 export { default as ProfileSettingsPage } from './ProfileSettingsPage/ProfileSettingsPage';
 export { default as SearchPage } from './SearchPage/SearchPage';

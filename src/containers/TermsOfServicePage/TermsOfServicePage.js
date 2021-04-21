@@ -18,6 +18,7 @@ import {
 import config from '../../config';
 
 import css from './TermsOfServicePage.module.css';
+import { findLastIndex } from 'lodash';
 
 const TermsOfServicePageComponent = props => {
   const { scrollingDisabled, intl } = props;
@@ -35,6 +36,13 @@ const TermsOfServicePageComponent = props => {
       selected: true,
       linkProps: {
         name: 'TermsOfServicePage',
+      },
+    },
+    {
+      text: intl.formatMessage({ id: 'TermsOfServicePage.supportTabTitle' }),
+      selected: false,
+      linkProps: {
+        name: 'SupportPage',
       },
     },
   ];
