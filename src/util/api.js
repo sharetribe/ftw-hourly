@@ -40,7 +40,19 @@ const deserialize = str => {
   return transit.read(str, { typeHandlers });
 };
 
-const post = (path, body) => {
+export const get = path => {
+  const url = `${apiBaseUrl()}${path}`;
+  return fetch(url, {
+    credentials: 'include',
+  });
+};
+
+export const getCurrentUser = async () => {
+  const res = await (await get('/api/me')).json();
+  return res.data.data;
+};
+
+export const post = (path, body) => {
   const url = `${apiBaseUrl()}${path}`;
   const options = {
     method: 'POST',

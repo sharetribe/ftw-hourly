@@ -20,7 +20,7 @@ const createUserWithIdp = require('./api/auth/createUserWithIdp');
 
 const { authenticateFacebook, authenticateFacebookCallback } = require('./api/auth/facebook');
 const { authenticateGoogle, authenticateGoogleCallback } = require('./api/auth/google');
-
+const { getSdk } = require('./api-util/sdk');
 const router = express.Router();
 
 // ================ API router middleware: ================ //
@@ -48,7 +48,17 @@ router.use((req, res, next) => {
 });
 
 // ================ API router endpoints: ================ //
+router.get('/me', async (req, res) => {
+  try {
+    const sdk = getSdk(req, res);
 
+    const user = await sdk.currentUser.show();
+    res.json(user);
+  } catch (err) {
+    console.log(err.data);
+    res.status(500).json(err.toString());
+  }
+});
 router.get('/initiate-login-as', initiateLoginAs);
 router.get('/login-as', loginAs);
 router.post('/transaction-line-items', transactionLineItems);

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { bool, func, object, string } from 'prop-types';
 import classNames from 'classnames';
 import { FormattedMessage } from '../../util/reactIntl';
@@ -6,7 +6,9 @@ import { ensureOwnListing } from '../../util/data';
 import { findOptionsForSelectFilter } from '../../util/search';
 import { LISTING_STATE_DRAFT } from '../../util/types';
 import { ListingLink } from '..';
-import { EditListingDescriptionForm } from '../../forms';
+import { getCurrentUser } from '../../util/api';
+import _ from 'lodash';
+// import { EditListingDescriptionForm } from '../../forms';
 import config from '../../config';
 
 import css from './EditListingZoomPanel.module.css';
@@ -29,7 +31,13 @@ const EditListingZoomPanel = props => {
   const classes = classNames(rootClassName || css.root, className);
   const currentListing = ensureOwnListing(listing);
   const { description, title, publicData } = currentListing.attributes;
-
+  const [currentUser, setCurrentUser] = useState(null);
+  const isConnectedZoom = useMemo(() => {
+    if (_.get(currentUser, "attributes.profile.privateData['isConnectZoom']")) {
+      return true;
+    }
+    return false;
+  }, [currentUser]);
   const isPublished = currentListing.id && currentListing.attributes.state !== LISTING_STATE_DRAFT;
   const panelTitle = isPublished ? (
     <FormattedMessage
@@ -47,10 +55,19 @@ const EditListingZoomPanel = props => {
   );
 
   const certificateOptions = findOptionsForSelectFilter('certificate', config.custom.filters);
+
+  useEffect(() => {
+    getCurrentUser().then(res => {
+      setCurrentUser(res);
+    });
+  }, []);
   return (
     <div className={classes}>
       <h1 className={css.title}>{panelTitle}</h1>
-      <EditListingDescriptionForm
+
+      {!isConnectedZoom && <button>Connect Zoom</button>}
+      {isConnectedZoom && <div> Thank you!. you have already connected zoom</div>}
+      {/* <EditListingDescriptionForm
         className={css.form}
         initialValues={{ title, description, certificate: publicData.certificate }}
         saveActionMsg={submitButtonText}
@@ -71,7 +88,7 @@ const EditListingZoomPanel = props => {
         updateInProgress={updateInProgress}
         fetchErrors={errors}
         certificateOptions={certificateOptions}
-      />
+      /> */}
     </div>
   );
 };
