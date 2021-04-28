@@ -315,7 +315,7 @@
   "EditListingWizard.tabLabelAvailability": "Availability",
   "EditListingWizard.tabLabelLocation": "Location",
   "EditListingWizard.tabLabelPhotos": "Photos",
-  "EditListingWizard.tabLabelZoom": "Integrate Zoom",
+  "EditListingWizard.tabLabelZoom": "Zoom Integration",
   "EditListingWizard.tabLabelPolicy": "Policies",
   "EditListingWizard.tabLabelPricing": "Pricing",
   "EmailVerificationForm.finishAccountSetup": "We will need to send you email notifications. To allow this, please verify your email address {email}.",
@@ -1139,5 +1139,6 @@
   "UserNav.contactDetailsPage": "Account settings",
   "SignupForm.phoneLabel": "Phone number",
   "SignupForm.phonePlaceholder": "+358 12 3456789",
-  "SignupForm.phoneRequired": "You need to add your phone number"
+  "SignupForm.phoneRequired": "You need to add your phone number",
+  "EditListingZoomPanel.createListingTitle": "Zoom Integration"
 }

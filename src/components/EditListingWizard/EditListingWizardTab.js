@@ -21,6 +21,7 @@ import {
 } from '../../components';
 
 import css from './EditListingWizard.module.css';
+import EditListingZoomPanel from '../EditListingZoomPanel/EditListingZoomPanel';
 
 export const AVAILABILITY = 'availability';
 export const DESCRIPTION = 'description';
@@ -282,7 +283,18 @@ const EditListingWizardTab = props => {
       );
     }
     case ZOOM: {
-      return <div>Zoom</div>;
+      const submitButtonTranslationKey = isNewListingFlow
+        ? 'EditListingWizard.saveNewPhotos'
+        : 'EditListingWizard.saveEditPhotos';
+      return (
+        <EditListingZoomPanel
+          {...panelProps(ZOOM)}
+          submitButtonText={intl.formatMessage({ id: submitButtonTranslationKey })}
+          onSubmit={values => {
+            onCompleteEditListingWizardTab(tab, values);
+          }}
+        />
+      );
     }
     default:
       return null;
