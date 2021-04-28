@@ -29,6 +29,7 @@ export const POLICY = 'policy';
 export const LOCATION = 'location';
 export const PRICING = 'pricing';
 export const PHOTOS = 'photos';
+export const ZOOM = 'zoom';
 
 // EditListingWizardTab component supports these tabs
 export const SUPPORTED_TABS = [
@@ -39,6 +40,7 @@ export const SUPPORTED_TABS = [
   PRICING,
   AVAILABILITY,
   PHOTOS,
+  ZOOM,
 ];
 
 const pathParamsToNextTab = (params, tab, marketplaceTabs) => {
@@ -278,6 +280,9 @@ const EditListingWizardTab = props => {
           onUpdateImageOrder={onUpdateImageOrder}
         />
       );
+    }
+    case ZOOM: {
+      return <div>Zoom</div>;
     }
     default:
       return null;
