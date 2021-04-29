@@ -37,6 +37,8 @@ export class BookingTimeFormComponent extends Component {
     const listingId = this.props.listingId;
     const isOwnListing = this.props.isOwnListing;
 
+    // We expect values bookingStartTime and bookingEndTime to be strings
+    // which is the default case when the value has been selected through the form
     const isSameTime = bookingStartTime === bookingEndTime;
 
     if (bookingStartTime && bookingEndTime && !isSameTime && !this.props.fetchLineItemsInProgress) {

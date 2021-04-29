@@ -136,6 +136,10 @@ const getAllTimeValues = (
         getTimeSlots(timeSlots, startDate, timeZone)
       );
 
+  // Value selectedStartTime is a string when user has selected it through the form.
+  // That's why we need to convert also the timestamp we use as a default
+  // value to string for consistency. This is expected later when we
+  // want to compare the sartTime and endTime.
   const startTime = selectedStartTime
     ? selectedStartTime
     : startTimes.length > 0 && startTimes[0] && startTimes[0].timestamp
@@ -159,6 +163,10 @@ const getAllTimeValues = (
   );
 
   const endTimes = getAvailableEndTimes(intl, timeZone, startTime, endDate, selectedTimeSlot);
+
+  // We need to convert the timestamp we use as a default value
+  // for endTime to string for consistency. This is expected later when we
+  // want to compare the sartTime and endTime.
   const endTime =
     endTimes.length > 0 && endTimes[0] && endTimes[0].timestamp
       ? endTimes[0].timestamp.toString()
