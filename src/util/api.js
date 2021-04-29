@@ -52,6 +52,11 @@ export const getCurrentUser = async () => {
   return res.data.data;
 };
 
+export const zoomExchangeAuthorizeCode = async code => {
+  const res = await (await get(`/api/zoom/authorize?code=${code}`)).json();
+  return res;
+};
+
 export const post = (path, body) => {
   const url = `${apiBaseUrl()}${path}`;
   const options = {

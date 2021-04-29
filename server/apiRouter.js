@@ -21,6 +21,7 @@ const createUserWithIdp = require('./api/auth/createUserWithIdp');
 const { authenticateFacebook, authenticateFacebookCallback } = require('./api/auth/facebook');
 const { authenticateGoogle, authenticateGoogleCallback } = require('./api/auth/google');
 const { getSdk } = require('./api-util/sdk');
+const { exchangeAuthorizeCode } = require('./zoom');
 const router = express.Router();
 
 // ================ API router middleware: ================ //
@@ -51,7 +52,6 @@ router.use((req, res, next) => {
 router.get('/me', async (req, res) => {
   try {
     const sdk = getSdk(req, res);
-
     const user = await sdk.currentUser.show();
     res.json(user);
   } catch (err) {
@@ -59,6 +59,33 @@ router.get('/me', async (req, res) => {
     res.status(500).json(err.toString());
   }
 });
+
+router.get('/zoom/authorize', async (req, res) => {
+  try {
+    const { code } = req.query;
+    console.log(code);
+    const sdk = getSdk(req, res);
+    const user = await sdk.currentUser.show();
+    const data = await exchangeAuthorizeCode(code, {
+      clientId: 'PgPAkYGTuq6tICJDMy4Bw',
+      clientSecret: 'nZzw7ZYH64S5ofgjZF3xxAKj8jVZPzE7',
+      callbackUrl: 'http://localhost:3000/zoom',
+    });
+    const oldPrivateData = user.data.data.attributes.profile.privateData;
+    await sdk.currentUser.updateProfile({
+      privateData: {
+        ...oldPrivateData,
+        isConnectZoom: true,
+        zoomData: data,
+      },
+    });
+    res.json(data);
+  } catch (err) {
+    console.log(err.toString());
+    res.status(500).send(err.toString());
+  }
+});
+
 router.get('/initiate-login-as', initiateLoginAs);
 router.get('/login-as', loginAs);
 router.post('/transaction-line-items', transactionLineItems);

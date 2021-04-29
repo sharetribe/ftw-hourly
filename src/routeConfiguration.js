@@ -25,7 +25,8 @@ import {
   TermsOfServicePage,
   TransactionPage,
   ZoomPage,
-  SupportPage
+  SupportPage,
+  ZoomIntegrationPage,
 } from './containers';
 
 // routeConfiguration needs to initialize containers first
@@ -71,11 +72,7 @@ const routeConfiguration = () => {
       name: 'FAQPage',
       component: FAQPage,
     },
-    {
-      path: '/zoom',
-      name: 'ZoomPage',
-      component: ZoomPage,
-    },
+
     {
       path: '/contact',
       name: 'ContactPage',
@@ -364,6 +361,14 @@ const routeConfiguration = () => {
       authPage: 'LoginPage',
       component: props => <EmailVerificationPage {...props} />,
       loadData: EmailVerificationPage.loadData,
+    },
+
+    {
+      path: '/zoom',
+      name: 'ZoomIntegration',
+      auth: true,
+      authPage: 'LoginPage',
+      component: props => <ZoomIntegrationPage {...props} />,
     },
   ];
 };
