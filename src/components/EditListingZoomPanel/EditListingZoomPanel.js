@@ -65,7 +65,11 @@ const EditListingZoomPanel = props => {
     <div className={classes}>
       <h1 className={css.title}>{panelTitle}</h1>
 
-      {!isConnectedZoom && <button>Connect Zoom</button>}
+      {!isConnectedZoom && (
+        <a href="https://zoom.us/oauth/authorize?client_id=PgPAkYGTuq6tICJDMy4Bw&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fzoom">
+          Connect Zoom
+        </a>
+      )}
       {isConnectedZoom && <div> Thank you!. you have already connected zoom</div>}
       {/* <EditListingDescriptionForm
         className={css.form}

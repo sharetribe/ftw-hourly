@@ -92,10 +92,66 @@ router.get('/zoom/authorize', async (req, res) => {
 
 router.post('/appointment/accept', async (req, res) => {
   try {
-    const sdk = getSdk(req, res);
-    const tran = await sdk.transactions.show({ id: req.body.id });
+    const sdk = getRootSdk();
+    const {
+      data: { data, included },
+    } = await sdk.transactions.show({
+      id: req.body.id.uuid,
+      include: 'customer,booking,provider',
+    });
+    const [provider, customer, booking] = included;
+    const providerData = {
+      email: _.get(provider, 'attributes.email'),
+      isConnectZoom: _.get(provider, 'attributes.profile.privateData.isConnectZoom'),
+      zoomData: _.get(provider, 'attributes.profile.privateData.zoomData'),
+    };
+    console.log(providerData);
+    const customerData = {
+      email: _.get(customer, 'attributes.email'),
+    };
+    const meetingData = {
+      start: _.get(booking, 'attributes.start'),
+      end: _.get(booking, 'attributes.end'),
+    };
+    meetingData['duration'] = moment
+      .duration(moment(meetingData['end']).diff(moment(meetingData['start'])))
+      .asMinutes();
+
+    if (providerData.isConnectZoom) {
+      const data = await createMeetingRoom({
+        accessToken: providerData.zoomData['access_token'],
+        refreshToken: providerData.zoomData['refresh_token'],
+        clientId: 'PgPAkYGTuq6tICJDMy4Bw',
+        clientSecret: 'nZzw7ZYH64S5ofgjZF3xxAKj8jVZPzE7',
+        userId: provider.id.uuid,
+      });
+      sendZoomMeetingInvitation({
+        password: data.password,
+        zoomLink: data.join_url,
+        to: customerData['email'],
+        duration: meetingData['duration'],
+        start: meetingData['start'],
+        end: meetingData['end'],
+      });
+      sendZoomMeetingInvitation({
+        password: data.password,
+        zoomLink: data.join_url,
+        to: providerData['email'],
+        duration: meetingData['duration'],
+        start: meetingData['start'],
+        end: meetingData['end'],
+      });
+      res.json({
+        isSuccess: true,
+        payload: 'Successfully',
+      });
+    } else {
+      res.status(401).json({
+        isSuccess: false,
+        payload: 'Missing Zoom Data',
+      });
+    }
     // console.log(data);
-    require('fs').writeFileSync('test.json', JSON.stringify(tran));
   } catch (err) {
     console.log(err.toString());
     res.status(500).send(err.toString());
@@ -117,7 +173,6 @@ router.get('/appointment/test', async (req, res) => {
       isConnectZoom: _.get(provider, 'attributes.profile.privateData.isConnectZoom'),
       zoomData: _.get(provider, 'attributes.profile.privateData.zoomData'),
     };
-    console.log(providerData);
     const customerData = {
       email: _.get(customer, 'attributes.email'),
     };

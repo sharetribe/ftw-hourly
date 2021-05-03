@@ -2,15 +2,18 @@ const sgMail = require('@sendgrid/mail');
 
 sgMail.setApiKey('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');
 
-const sendZoomMeetingInvitation = async ({ to, zoomLink, password }) => {
+const sendZoomMeetingInvitation = async ({ to, zoomLink, password, duration, start, end }) => {
   const msg = {
     to: to,
     from: 'deverpham@gmail.com',
     subject: 'Savante.me zoom meeting information',
     html: `
         <div>
-            <a href ="${zoomLink}">${zoomLink}</a>
+            <a href="${zoomLink}">${zoomLink}</a>
             <p>Password: ${password}</p>
+            <p>Duration: ${duration} mins </p>
+            <p>Start Time: ${start} </p>
+            <p>End Time: ${end} </p>
         </div>
     `,
   };

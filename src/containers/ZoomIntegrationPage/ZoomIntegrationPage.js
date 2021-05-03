@@ -47,8 +47,8 @@ export const EmailVerificationPageComponent = props => {
     if (currentUser) {
       const { code } = qs.parse(props.location.search);
       zoomExchangeAuthorizeCode(code).then(res => {
-        console.log(res);
         setIsLoading(false);
+        window.location.href = '/account/contact-details';
       });
     }
   }, [currentUser]);
