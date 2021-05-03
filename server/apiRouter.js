@@ -14,6 +14,7 @@ const initiateLoginAs = require('./api/initiate-login-as');
 const loginAs = require('./api/login-as');
 const transactionLineItems = require('./api/transaction-line-items');
 const initiatePrivileged = require('./api/initiate-privileged');
+const moment = require('moment');
 
 const transitionPrivileged = require('./api/transition-privileged');
 
@@ -22,8 +23,10 @@ const createUserWithIdp = require('./api/auth/createUserWithIdp');
 const { authenticateFacebook, authenticateFacebookCallback } = require('./api/auth/facebook');
 const { authenticateGoogle, authenticateGoogleCallback } = require('./api/auth/google');
 const { getSdk, getRootSdk } = require('./api-util/sdk');
-const { exchangeAuthorizeCode } = require('./zoom');
+const { exchangeAuthorizeCode, createMeetingRoom } = require('./zoom');
+const _ = require('lodash');
 const router = express.Router();
+const { sendZoomMeetingInvitation } = require('./sendgrid');
 
 // ================ API router middleware: ================ //
 
@@ -108,16 +111,69 @@ router.get('/appointment/test', async (req, res) => {
       id: '608f748d-d6eb-46a9-8920-2ebaac0cf277',
       include: 'customer,booking,provider',
     });
-    // res.json({ data });
     const [provider, customer, booking] = included;
+    const providerData = {
+      email: _.get(provider, 'attributes.email'),
+      isConnectZoom: _.get(provider, 'attributes.profile.privateData.isConnectZoom'),
+      zoomData: _.get(provider, 'attributes.profile.privateData.zoomData'),
+    };
+    console.log(providerData);
+    const customerData = {
+      email: _.get(customer, 'attributes.email'),
+    };
+    const meetingData = {
+      start: _.get(booking, 'attributes.start'),
+      end: _.get(booking, 'attributes.end'),
+    };
+    meetingData['duration'] = moment
+      .duration(moment(meetingData['end']).diff(moment(meetingData['start'])))
+      .asMinutes();
 
-    const [providerInfo, customerInfo] = await Promise.all([
-      sdk.users.show({ id: provider.id }),
-      sdk.users.show({
-        id: customer.id.uuid,
-      }),
-    ]);
-    res.json({ providerInfo, customerInfo, booking });
+    if (providerData.isConnectZoom) {
+      const data = await createMeetingRoom({
+        accessToken: providerData.zoomData['access_token'],
+        refreshToken: providerData.zoomData['refresh_token'],
+        clientId: 'PgPAkYGTuq6tICJDMy4Bw',
+        clientSecret: 'nZzw7ZYH64S5ofgjZF3xxAKj8jVZPzE7',
+        userId: provider.id.uuid,
+      });
+      sendZoomMeetingInvitation({
+        password: data.password,
+        zoomLink: data.join_url,
+        to: customerData['email'],
+      });
+      sendZoomMeetingInvitation({
+        password: data.password,
+        zoomLink: data.join_url,
+        to: providerData['email'],
+      });
+      res.json({
+        isSuccess: true,
+        payload: 'Successfully',
+      });
+    }
+    // res.json({
+    //   providerData,
+    //   customerData,
+    //   meetingData,
+    // });
+    // const [{ providerInfo }, customerInfo] = await Promise.all([
+    //   sdk.users.show({ id: provider.id }),
+    //   sdk.users.show({
+    //     id: customer.id.uuid,
+    //   }),
+    // ]);
+    // console.log(provider);
+    // const providerData = {
+    //   email: _.get(providerInfo, 'data.data.attributes.email'),
+    //   isConnectZoom: _.get(providerInfo, 'data.data.attributes.privateData.isConnectZoom'),
+    //   zoomData: _.get(providerInfo, 'data.data.attributes.privateData.zoomData'),
+    // };
+
+    // const customerData = {
+    //   email: _.get(customerInfo, 'data.data.attributes.email'),
+    // };
+    // res.json({ providerData, customerData, booking });
   } catch (err) {
     console.log(err.toString());
     res.status(500).send(err.toString());
