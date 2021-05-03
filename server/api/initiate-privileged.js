@@ -2,6 +2,7 @@ const { transactionLineItems } = require('../api-util/lineItems');
 const { getSdk, getTrustedSdk, handleError, serialize } = require('../api-util/sdk');
 
 module.exports = (req, res) => {
+  console.log('go through');
   const { isSpeculative, bookingData, bodyParams, queryParams } = req.body;
 
   const listingId = bodyParams && bodyParams.params ? bodyParams.params.listingId : null;
@@ -36,6 +37,7 @@ module.exports = (req, res) => {
     })
     .then(apiResponse => {
       const { status, statusText, data } = apiResponse;
+      console.log('protected data', data.data.attributes.protectedData);
       res
         .status(status)
         .set('Content-Type', 'application/transit+json')

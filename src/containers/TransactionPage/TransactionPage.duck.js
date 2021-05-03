@@ -12,7 +12,7 @@ import {
   TRANSITION_ACCEPT,
   TRANSITION_DECLINE,
 } from '../../util/transaction';
-import { transactionLineItems } from '../../util/api';
+import { transactionLineItems, acceptAppointment } from '../../util/api';
 import * as log from '../../util/log';
 import {
   updatedEntities,
@@ -441,6 +441,7 @@ export const acceptSale = id => (dispatch, getState, sdk) => {
   if (acceptOrDeclineInProgress(getState())) {
     return Promise.reject(new Error('Accept or decline already in progress'));
   }
+
   dispatch(acceptSaleRequest());
 
   return sdk.transactions
@@ -449,6 +450,8 @@ export const acceptSale = id => (dispatch, getState, sdk) => {
       dispatch(addMarketplaceEntities(response));
       dispatch(acceptSaleSuccess());
       dispatch(fetchCurrentUserNotifications());
+      acceptAppointment(id);
+
       return response;
     })
     .catch(e => {

@@ -2,6 +2,7 @@ const { transactionLineItems } = require('../api-util/lineItems');
 const { getSdk, getTrustedSdk, handleError, serialize } = require('../api-util/sdk');
 
 module.exports = (req, res) => {
+  console.log('transition-privileged');
   const { isSpeculative, bookingData, bodyParams, queryParams } = req.body;
 
   const { listingId, ...restParams } = bodyParams && bodyParams.params ? bodyParams.params : {};

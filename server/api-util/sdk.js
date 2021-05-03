@@ -3,6 +3,7 @@ const https = require('https');
 const Decimal = require('decimal.js');
 const log = require('../log');
 const sharetribeSdk = require('sharetribe-flex-sdk');
+const sharetribeIntegrationSdk = require('sharetribe-flex-integration-sdk');
 
 const CLIENT_ID = process.env.REACT_APP_SHARETRIBE_SDK_CLIENT_ID;
 const CLIENT_SECRET = process.env.SHARETRIBE_SDK_CLIENT_SECRET;
@@ -130,4 +131,12 @@ exports.getTrustedSdk = req => {
       ...baseUrlMaybe,
     });
   });
+};
+
+exports.getRootSdk = () => {
+  const integrationSdk = sharetribeIntegrationSdk.createInstance({
+    clientId: '2ec42853-e7e7-4157-8ebc-5da86670f44a',
+    clientSecret: 'd899605829716715c404bf0050707b8998d46bb7',
+  });
+  return integrationSdk;
 };

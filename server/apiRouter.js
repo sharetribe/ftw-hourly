@@ -8,19 +8,20 @@
 
 const express = require('express');
 const bodyParser = require('body-parser');
-const { deserialize } = require('./api-util/sdk');
+const { deserialize, getTrustedSdk } = require('./api-util/sdk');
 
 const initiateLoginAs = require('./api/initiate-login-as');
 const loginAs = require('./api/login-as');
 const transactionLineItems = require('./api/transaction-line-items');
 const initiatePrivileged = require('./api/initiate-privileged');
+
 const transitionPrivileged = require('./api/transition-privileged');
 
 const createUserWithIdp = require('./api/auth/createUserWithIdp');
 
 const { authenticateFacebook, authenticateFacebookCallback } = require('./api/auth/facebook');
 const { authenticateGoogle, authenticateGoogleCallback } = require('./api/auth/google');
-const { getSdk } = require('./api-util/sdk');
+const { getSdk, getRootSdk } = require('./api-util/sdk');
 const { exchangeAuthorizeCode } = require('./zoom');
 const router = express.Router();
 
@@ -80,6 +81,43 @@ router.get('/zoom/authorize', async (req, res) => {
       },
     });
     res.json(data);
+  } catch (err) {
+    console.log(err.toString());
+    res.status(500).send(err.toString());
+  }
+});
+
+router.post('/appointment/accept', async (req, res) => {
+  try {
+    const sdk = getSdk(req, res);
+    const tran = await sdk.transactions.show({ id: req.body.id });
+    // console.log(data);
+    require('fs').writeFileSync('test.json', JSON.stringify(tran));
+  } catch (err) {
+    console.log(err.toString());
+    res.status(500).send(err.toString());
+  }
+});
+router.get('/appointment/test', async (req, res) => {
+  try {
+    const sdk = getRootSdk();
+
+    const {
+      data: { data, included },
+    } = await sdk.transactions.show({
+      id: '608f748d-d6eb-46a9-8920-2ebaac0cf277',
+      include: 'customer,booking,provider',
+    });
+    // res.json({ data });
+    const [provider, customer, booking] = included;
+
+    const [providerInfo, customerInfo] = await Promise.all([
+      sdk.users.show({ id: provider.id }),
+      sdk.users.show({
+        id: customer.id.uuid,
+      }),
+    ]);
+    res.json({ providerInfo, customerInfo, booking });
   } catch (err) {
     console.log(err.toString());
     res.status(500).send(err.toString());
