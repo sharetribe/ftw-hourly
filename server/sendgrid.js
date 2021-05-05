@@ -1,19 +1,28 @@
 const sgMail = require('@sendgrid/mail');
 
-sgMail.setApiKey('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');
+sgMail.setApiKey('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');
 
-const sendZoomMeetingInvitation = async ({ to, zoomLink, password, duration, start, end }) => {
+const sendZoomMeetingInvitation = async ({
+  to,
+  zoomLink,
+  password,
+  start,
+  providerName,
+  userName,
+}) => {
   const msg = {
     to: to,
-    from: 'deverpham@gmail.com',
-    subject: 'Savante.me zoom meeting information',
+    from: 'info@savante.me',
+    subject: 'Your Savante appointment is confirmed! ',
     html: `
         <div>
-            <a href="${zoomLink}">${zoomLink}</a>
-            <p>Password: ${password}</p>
-            <p>Duration: ${duration} mins </p>
-            <p>Start Time: ${start} </p>
-            <p>End Time: ${end} </p>
+          <p>To begin the online consultation, please click on the Zoom meeting link below on the day and time of the appointment.</p>
+          <p>Topic: Savante Appointment between ${providerName} and ${userName}</p>
+          <p>Time: <b>${start}</b></p>
+          <p>Join Zoom Meeting</p>
+          <a href="${zoomLink}"><b>${zoomLink}</b></a>
+          <p>Passcode: <b>${password}</b></p>   
+          <p>Savante Team</p>
         </div>
     `,
   };

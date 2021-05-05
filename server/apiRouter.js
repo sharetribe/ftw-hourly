@@ -59,7 +59,6 @@ router.get('/me', async (req, res) => {
     const user = await sdk.currentUser.show();
     res.json(user);
   } catch (err) {
-    console.log(err.data);
     res.status(500).json(err.toString());
   }
 });
@@ -67,7 +66,6 @@ router.get('/me', async (req, res) => {
 router.get('/zoom/authorize', async (req, res) => {
   try {
     const { code } = req.query;
-    console.log(code);
     const sdk = getSdk(req, res);
     const user = await sdk.currentUser.show();
     const data = await exchangeAuthorizeCode(code, {
@@ -85,7 +83,6 @@ router.get('/zoom/authorize', async (req, res) => {
     });
     res.json(data);
   } catch (err) {
-    console.log(err.toString());
     res.status(500).send(err.toString());
   }
 });
@@ -104,18 +101,19 @@ router.post('/appointment/accept', async (req, res) => {
       email: _.get(provider, 'attributes.email'),
       isConnectZoom: _.get(provider, 'attributes.profile.privateData.isConnectZoom'),
       zoomData: _.get(provider, 'attributes.profile.privateData.zoomData'),
+      name: _.get(provider, 'attributes.profile.displayName'),
     };
-    console.log(providerData);
     const customerData = {
       email: _.get(customer, 'attributes.email'),
+      name: _.get(customer, 'attributes.profile.displayName'),
     };
     const meetingData = {
       start: _.get(booking, 'attributes.start'),
-      end: _.get(booking, 'attributes.end'),
+      // end: _.get(booking, 'attributes.end'),
     };
-    meetingData['duration'] = moment
-      .duration(moment(meetingData['end']).diff(moment(meetingData['start'])))
-      .asMinutes();
+    // meetingData['duration'] = moment
+    //   .duration(moment(meetingData['end']).diff(moment(meetingData['start'])))
+    //   .asMinutes();
 
     if (providerData.isConnectZoom) {
       const data = await createMeetingRoom({
@@ -129,17 +127,17 @@ router.post('/appointment/accept', async (req, res) => {
         password: data.password,
         zoomLink: data.join_url,
         to: customerData['email'],
-        duration: meetingData['duration'],
+        providerName: providerData['name'],
+        userName: customerData['name'],
         start: meetingData['start'],
-        end: meetingData['end'],
       });
       sendZoomMeetingInvitation({
         password: data.password,
         zoomLink: data.join_url,
         to: providerData['email'],
-        duration: meetingData['duration'],
+        providerName: providerData['name'],
+        userName: customerData['name'],
         start: meetingData['start'],
-        end: meetingData['end'],
       });
       res.json({
         isSuccess: true,
@@ -153,7 +151,6 @@ router.post('/appointment/accept', async (req, res) => {
     }
     // console.log(data);
   } catch (err) {
-    console.log(err.toString());
     res.status(500).send(err.toString());
   }
 });
@@ -168,21 +165,24 @@ router.get('/appointment/test', async (req, res) => {
       include: 'customer,booking,provider',
     });
     const [provider, customer, booking] = included;
+
     const providerData = {
       email: _.get(provider, 'attributes.email'),
       isConnectZoom: _.get(provider, 'attributes.profile.privateData.isConnectZoom'),
       zoomData: _.get(provider, 'attributes.profile.privateData.zoomData'),
+      name: _.get(provider, 'attributes.profile.displayName'),
     };
     const customerData = {
       email: _.get(customer, 'attributes.email'),
+      name: _.get(customer, 'attributes.profile.displayName'),
     };
     const meetingData = {
       start: _.get(booking, 'attributes.start'),
-      end: _.get(booking, 'attributes.end'),
+      // end: _.get(booking, 'attributes.end'),
     };
-    meetingData['duration'] = moment
-      .duration(moment(meetingData['end']).diff(moment(meetingData['start'])))
-      .asMinutes();
+    // meetingData['duration'] = moment
+    //   .duration(moment(meetingData['end']).diff(moment(meetingData['start'])))
+    //   .asMinutes();
 
     if (providerData.isConnectZoom) {
       const data = await createMeetingRoom({
@@ -196,11 +196,17 @@ router.get('/appointment/test', async (req, res) => {
         password: data.password,
         zoomLink: data.join_url,
         to: customerData['email'],
+        providerName: providerData['name'],
+        userName: customerData['name'],
+        start: meetingData['start'],
       });
       sendZoomMeetingInvitation({
         password: data.password,
         zoomLink: data.join_url,
         to: providerData['email'],
+        providerName: providerData['name'],
+        userName: customerData['name'],
+        start: meetingData['start'],
       });
       res.json({
         isSuccess: true,
@@ -230,7 +236,6 @@ router.get('/appointment/test', async (req, res) => {
     // };
     // res.json({ providerData, customerData, booking });
   } catch (err) {
-    console.log(err.toString());
     res.status(500).send(err.toString());
   }
 });
