@@ -20,27 +20,32 @@ const exchangeAuthorizeCode = async code => {
 };
 
 const getMe = async ({ accessToken, refreshToken, userId }) => {
-  console.log(accessToken, refreshToken, userId);
   try {
     const { data } = await axios.get('https://api.zoom.us/v2/users/me', {
       headers: {
         authorization: `Bearer ${accessToken}`,
       },
     });
-    return data;
+    return {
+      ...data,
+      accessToken,
+    };
   } catch (err) {
-    console.log('access_token_expired');
     const { access_token, refresh_token } = await exchangeAccessTokenByRefreshToken({
       refreshToken,
       userId,
     });
-    return getMe({
+    const res = await getMe({
       accessToken: access_token,
       refreshToken: refresh_token,
       clientId: ZOOM_CLIENT_ID,
       clientSecret: ZOOM_CLIENT_SECRET,
       userId: userId,
     });
+    return {
+      ...res,
+      accessToken: access_token,
+    };
   }
 };
 
@@ -71,7 +76,7 @@ const exchangeAccessTokenByRefreshToken = async ({ refreshToken, userId }) => {
 };
 
 const createMeetingRoom = async ({ accessToken, refreshToken, userId, start, duration }) => {
-  const startTime = monent.utc(start).format('yyyy-MM-DDTHH:mm:ss') + 'Z';
+  const startTime = moment.utc(start).format('yyyy-MM-DDTHH:mm:ss') + 'Z';
   const me = await getMe({
     accessToken: accessToken,
     refreshToken: refreshToken,
@@ -95,7 +100,7 @@ const createMeetingRoom = async ({ accessToken, refreshToken, userId, start, dur
     testForm,
     {
       headers: {
-        Authorization: `Bearer ${accessToken}`,
+        Authorization: `Bearer ${me.accessToken}`,
         'Content-Type': 'application/json',
       },
     }
