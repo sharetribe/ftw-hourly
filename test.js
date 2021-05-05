@@ -4,7 +4,7 @@ axios
   .post(
     `https://api.zoom.us/v2/users/dkh0rziJSbqytmKfGuNesw/meetings`,
     {
-      topic: 'Testing Meeting',
+      topic: 'Savante.me Meeting',
 
       start_time: '2021-06-04T18:00:00.000Z',
       duration: 60,

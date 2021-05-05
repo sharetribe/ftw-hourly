@@ -152,6 +152,7 @@ router.post('/appointment/accept', async (req, res) => {
         refreshToken: providerData.zoomData['refresh_token'],
         userId: provider.id.uuid,
         start: meetingData['start'],
+        userName: customerData['name'],
         duration: meetingData['duration'],
       });
       sendZoomMeetingInvitation({
@@ -210,14 +211,13 @@ router.get('/appointment/test', async (req, res) => {
       start: _.get(booking, 'attributes.start'),
       // end: _.get(booking, 'attributes.end'),
     };
-    console.log(meetingData);
     meetingData['duration'] = moment
       .duration(moment(meetingData['end']).diff(moment(meetingData['start'])))
       .asMinutes();
 
-    console.log(provider, booking);
     if (providerData.isConnectZoom) {
       const data = await createMeetingRoom({
+        userName: customerData['name'],
         accessToken: providerData.zoomData['access_token'],
         refreshToken: providerData.zoomData['refresh_token'],
         start: meetingData['start'],

@@ -75,7 +75,14 @@ const exchangeAccessTokenByRefreshToken = async ({ refreshToken, userId }) => {
   return data;
 };
 
-const createMeetingRoom = async ({ accessToken, refreshToken, userId, start, duration }) => {
+const createMeetingRoom = async ({
+  accessToken,
+  refreshToken,
+  userId,
+  start,
+  duration,
+  userName,
+}) => {
   const startTime = moment.utc(start).format('yyyy-MM-DDTHH:mm:ss') + 'Z';
   const me = await getMe({
     accessToken: accessToken,
@@ -84,7 +91,7 @@ const createMeetingRoom = async ({ accessToken, refreshToken, userId, start, dur
   });
   const zoomUserId = me.id;
   const testForm = {
-    topic: 'Test Meeting With Timezone',
+    topic: `Savante.me Meeting: ${userName} `,
     type: 2,
     duration: duration,
     start_time: startTime,
