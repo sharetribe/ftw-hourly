@@ -1,10 +1,9 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { bool, func } from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { FormattedMessage, injectIntl, intlShape } from '../../util/reactIntl';
 import { propTypes } from '../../util/types';
-import { ensureCurrentUser } from '../../util/data';
 import { fetchCurrentUser, sendVerificationEmail } from '../../ducks/user.duck';
 import {
   LayoutSideNavigation,
@@ -20,6 +19,8 @@ import { TopbarContainer } from '..';
 import _ from 'lodash';
 import { isScrollingDisabled } from '../../ducks/UI.duck';
 import { saveContactDetails, saveContactDetailsClear, resetPassword } from './ZoomDetailsPage.duck';
+import { getCurrentUserZoomInfo, disconnectCurrentUserZoom } from '../../util/api';
+import useForceUpdate from 'use-force-update';
 import css from './ZoomDetailsPage.module.css';
 
 export const ContactDetailsPageComponent = props => {
@@ -31,14 +32,25 @@ export const ContactDetailsPageComponent = props => {
 
     intl,
   } = props;
-
-  const user = ensureCurrentUser(currentUser);
+  const [zoomInfo, setZoomInfo] = useState(null);
   const isConnectedZoom = useMemo(() => {
     if (_.get(currentUser, "attributes.profile.privateData['isConnectZoom']")) {
       return true;
     }
     return false;
   }, [currentUser]);
+
+  const disconnect = () => {
+    disconnectCurrentUserZoom().then(() => {
+      console.log('reload');
+      window.location.reload();
+    });
+  };
+  useEffect(() => {
+    if (isConnectedZoom && zoomInfo === null) {
+      getCurrentUserZoomInfo().then(res => setZoomInfo(res));
+    }
+  }, [isConnectedZoom, zoomInfo]);
   const title = intl.formatMessage({ id: 'ZoomDetailsPage.title' });
 
   return (
@@ -63,7 +75,22 @@ export const ContactDetailsPageComponent = props => {
                 Connect Zoom
               </a>
             )}
-            {isConnectedZoom && <div> Thank you!. you have already connected zoom</div>}
+            {/* {isConnectedZoom && <div> Thank you!. you have already connected zoom</div>} */}
+            {zoomInfo && (
+              <div>
+                <p>
+                  <span>Display Name</span>: {zoomInfo['first_name']} {zoomInfo['last_name']}
+                </p>
+                <p>
+                  <span>Email</span>: {zoomInfo['email']}
+                </p>
+                <p>
+                  <span>Timezone</span>: {zoomInfo['timezone']}
+                </p>
+              </div>
+            )}
+
+            {isConnectedZoom && <button onClick={disconnect}>Disconnect</button>}
           </div>
         </LayoutWrapperMain>
         <LayoutWrapperFooter>

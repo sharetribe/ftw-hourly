@@ -51,7 +51,14 @@ export const getCurrentUser = async () => {
   const res = await (await get('/api/me')).json();
   return res.data.data;
 };
+export const getCurrentUserZoomInfo = async () => {
+  const res = await (await get('/api/zoomInfo')).json();
+  return res;
+};
 
+export const disconnectCurrentUserZoom = async () => {
+  return post('/api/zoomDisconnect');
+};
 export const zoomExchangeAuthorizeCode = async code => {
   const res = await (await get(`/api/zoom/authorize?code=${code}`)).json();
   return res;

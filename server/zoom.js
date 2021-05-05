@@ -1,20 +1,23 @@
 const axios = require('axios').default;
 const { encode, decode } = require('js-base64');
 const { getSdk, getRootSdk } = require('../server/api-util/sdk');
-const exchangeAuthorizeCode = async (code, { clientId, clientSecret, callbackUrl }) => {
+const ZOOM_CLIENT_ID = 'PgPAkYGTuq6tICJDMy4Bw';
+const ZOOM_CLIENT_SECRET = 'nZzw7ZYH64S5ofgjZF3xxAKj8jVZPzE7';
+const exchangeAuthorizeCode = async (code, { callbackUrl }) => {
   const { data } = await axios.post(
     `https://zoom.us/oauth/token?grant_type=authorization_code&code=${code}&redirect_uri=${callbackUrl}`,
     null,
     {
       headers: {
-        authorization: `Basic ${encode(`${clientId}:${clientSecret}`)}`,
+        authorization: `Basic ${encode(`${ZOOM_CLIENT_ID}:${ZOOM_CLIENT_SECRET}`)}`,
       },
     }
   );
   return data;
 };
 
-const getMe = async ({ accessToken, refreshToken, userId, clientId, clientSecret }) => {
+const getMe = async ({ accessToken, refreshToken, userId }) => {
+  console.log(accessToken, refreshToken, userId);
   try {
     const { data } = await axios.get('https://api.zoom.us/v2/users/me', {
       headers: {
@@ -23,34 +26,28 @@ const getMe = async ({ accessToken, refreshToken, userId, clientId, clientSecret
     });
     return data;
   } catch (err) {
+    console.log('access_token_expired');
     const { access_token, refresh_token } = await exchangeAccessTokenByRefreshToken({
       refreshToken,
       userId,
-      clientId,
-      clientSecret,
     });
     return getMe({
       accessToken: access_token,
       refreshToken: refresh_token,
-      clientId: clientId,
-      clientSecret: clientSecret,
+      clientId: ZOOM_CLIENT_ID,
+      clientSecret: ZOOM_CLIENT_SECRET,
       userId: userId,
     });
   }
 };
 
-const exchangeAccessTokenByRefreshToken = async ({
-  refreshToken,
-  clientId,
-  clientSecret,
-  userId,
-}) => {
+const exchangeAccessTokenByRefreshToken = async ({ refreshToken, userId }) => {
   const { data } = await axios.post(
     `https://zoom.us/oauth/token?grant_type=refresh_token&refresh_token=${refreshToken}`,
     null,
     {
       headers: {
-        authorization: `Basic ${encode(`${clientId}:${clientSecret}`)}`,
+        authorization: `Basic ${encode(`${ZOOM_CLIENT_ID}:${ZOOM_CLIENT_SECRET}`)}`,
       },
     }
   );
@@ -59,7 +56,8 @@ const exchangeAccessTokenByRefreshToken = async ({
     id: userId,
   });
   const oldPrivateData = user.data.data.attributes.profile.privateData;
-  await sdk.currentUser.updateProfile({
+  await sdk.users.updateProfile({
+    id: userId,
     privateData: {
       ...oldPrivateData,
       isConnectZoom: true,
@@ -69,20 +67,16 @@ const exchangeAccessTokenByRefreshToken = async ({
   return data;
 };
 
-const createMeetingRoom = async ({ accessToken, clientId, clientSecret, refreshToken, userId }) => {
-  console.log(accessToken, clientId, clientSecret, refreshToken, userId);
+const createMeetingRoom = async ({ accessToken, refreshToken, userId, start }) => {
   const me = await getMe({
     accessToken: accessToken,
-    clientId: clientId,
-    clientSecret: clientSecret,
     refreshToken: refreshToken,
     userId: userId,
   });
   const zoomUserId = me.id;
   const testForm = {
     topic: 'Testing Meeting',
-
-    start_time: '2021-05-04T18:00:00.000Z',
+    start_time: start,
     settings: {
       host_video: true,
       participant_video: true,
