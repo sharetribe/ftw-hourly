@@ -75,6 +75,14 @@ const LayoutWrapperAccountSettingsSideNavComponent = props => {
         name: 'PaymentMethodsPage',
       },
     },
+    {
+      text: <FormattedMessage id="LayoutWrapperAccountSettingsSideNav.zoomDetailPageTabTitle" />,
+      selected: currentTab === 'ZoomDetailPage',
+      id: 'ZoomDetailPageTab',
+      linkProps: {
+        name: 'ZoomDetailPage',
+      },
+    },
   ];
 
   return <LayoutWrapperSideNav tabs={tabs} />;

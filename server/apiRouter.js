@@ -149,7 +149,6 @@ router.post('/appointment/accept', async (req, res) => {
         payload: 'Missing Zoom Data',
       });
     }
-    // console.log(data);
   } catch (err) {
     res.status(500).send(err.toString());
   }

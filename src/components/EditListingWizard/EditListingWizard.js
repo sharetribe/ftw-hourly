@@ -25,7 +25,6 @@ import EditListingWizardTab, {
   LOCATION,
   PRICING,
   PHOTOS,
-  ZOOM,
 } from './EditListingWizardTab';
 import css from './EditListingWizard.module.css';
 
@@ -38,7 +37,7 @@ const availabilityMaybe = config.enableAvailability ? [AVAILABILITY] : [];
 // and listing publishing happens after last panel.
 // Note 3: in FTW-hourly template we don't use the POLICY tab so it's commented out.
 // If you want to add a free text field to your listings you can enable the POLICY tab
-export const TABS = [DESCRIPTION, FEATURES, LOCATION, PRICING, ...availabilityMaybe, PHOTOS, ZOOM];
+export const TABS = [DESCRIPTION, FEATURES, LOCATION, PRICING, ...availabilityMaybe, PHOTOS];
 
 // Tabs are horizontal in small screens
 const MAX_HORIZONTAL_NAV_SCREEN_WIDTH = 1023;

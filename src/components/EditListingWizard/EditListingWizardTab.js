@@ -21,7 +21,6 @@ import {
 } from '../../components';
 
 import css from './EditListingWizard.module.css';
-import EditListingZoomPanel from '../EditListingZoomPanel/EditListingZoomPanel';
 
 export const AVAILABILITY = 'availability';
 export const DESCRIPTION = 'description';
@@ -30,7 +29,6 @@ export const POLICY = 'policy';
 export const LOCATION = 'location';
 export const PRICING = 'pricing';
 export const PHOTOS = 'photos';
-export const ZOOM = 'zoom';
 
 // EditListingWizardTab component supports these tabs
 export const SUPPORTED_TABS = [
@@ -41,7 +39,6 @@ export const SUPPORTED_TABS = [
   PRICING,
   AVAILABILITY,
   PHOTOS,
-  ZOOM,
 ];
 
 const pathParamsToNextTab = (params, tab, marketplaceTabs) => {
@@ -282,20 +279,7 @@ const EditListingWizardTab = props => {
         />
       );
     }
-    case ZOOM: {
-      const submitButtonTranslationKey = isNewListingFlow
-        ? 'EditListingWizard.saveNewPhotos'
-        : 'EditListingWizard.saveEditPhotos';
-      return (
-        <EditListingZoomPanel
-          {...panelProps(ZOOM)}
-          submitButtonText={intl.formatMessage({ id: submitButtonTranslationKey })}
-          onSubmit={values => {
-            onCompleteEditListingWizardTab(tab, values);
-          }}
-        />
-      );
-    }
+
     default:
       return null;
   }

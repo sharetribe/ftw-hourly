@@ -27,3 +27,4 @@ export { default as FAQPage } from './FAQPage/FAQPage';
 export { default as ZoomPage } from './ZoomPage/ZoomPage';
 export { default as ContactPage } from './ContactPage/ContactPage';
 export { default as ZoomIntegrationPage } from './ZoomIntegrationPage/ZoomIntegrationPage';
+export { default as ZoomDetailPage} from './ZoomDetailsPage/ZoomDetailsPage';

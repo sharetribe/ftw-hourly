@@ -24,8 +24,8 @@ import {
   StyleguidePage,
   TermsOfServicePage,
   TransactionPage,
-  ZoomPage,
   SupportPage,
+  ZoomDetailPage,
   ZoomIntegrationPage,
 } from './containers';
 
@@ -295,6 +295,14 @@ const routeConfiguration = () => {
       authPage: 'LoginPage',
       component: props => <PaymentMethodsPage {...props} />,
       loadData: PaymentMethodsPage.loadData,
+    },
+    {
+      path: '/account/zoom-details',
+      name: 'ZoomDetailPage',
+      auth: true,
+      authPage: 'LoginPage',
+      component: props => <ZoomDetailPage {...props} />,
+      loadData: ZoomDetailPage.loadData,
     },
     {
       path: '/terms-of-service',
