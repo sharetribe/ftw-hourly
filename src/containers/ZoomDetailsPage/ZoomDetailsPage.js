@@ -71,7 +71,7 @@ export const ContactDetailsPageComponent = props => {
               <FormattedMessage id="ZoomDetailsPage.heading" />
             </h1>
             {!isConnectedZoom && (
-              <a href="https://zoom.us/oauth/authorize?client_id=PgPAkYGTuq6tICJDMy4Bw&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fzoom">
+              <a href="https://zoom.us/oauth/authorize?response_type=code&client_id=LwI0TKTre7NVbkdZJktw&redirect_uri=https://savante.me/zoom">
                 Connect Zoom
               </a>
             )}
