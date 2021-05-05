@@ -71,6 +71,7 @@ const exchangeAccessTokenByRefreshToken = async ({ refreshToken, userId }) => {
 };
 
 const createMeetingRoom = async ({ accessToken, refreshToken, userId, start, duration }) => {
+  const startTime = monent.utc(start).format('yyyy-MM-DDTHH:mm:ss') + 'Z';
   const me = await getMe({
     accessToken: accessToken,
     refreshToken: refreshToken,
@@ -81,7 +82,7 @@ const createMeetingRoom = async ({ accessToken, refreshToken, userId, start, dur
     topic: 'Test Meeting With Timezone',
     type: 2,
     duration: duration,
-    start_time: moment.utc(start).format('yyyy-MM-DDTHH:mm:ssZ'),
+    start_time: startTime,
     settings: {
       host_video: true,
       participant_video: true,

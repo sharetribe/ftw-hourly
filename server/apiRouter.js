@@ -191,7 +191,7 @@ router.get('/appointment/test', async (req, res) => {
     const {
       data: { data, included },
     } = await sdk.transactions.show({
-      id: '608f748d-d6eb-46a9-8920-2ebaac0cf277',
+      id: '60926885-83fc-444a-95f7-72f45f1879d1',
       include: 'customer,booking,provider',
     });
     const [provider, customer, booking] = included;
