@@ -4,6 +4,7 @@ const { getSdk, getRootSdk } = require('../server/api-util/sdk');
 const ZOOM_CLIENT_ID = process.env.ZOOM_CLIENT_ID;
 const ZOOM_CLIENT_SECRET = process.env.ZOOM_CLIENT_SECRET;
 const ZOOM_REDIRECT_URL = process.env.ZOOM_REDIRECT_URL;
+const moment = require('moment');
 
 const exchangeAuthorizeCode = async code => {
   const { data } = await axios.post(
@@ -70,6 +71,7 @@ const exchangeAccessTokenByRefreshToken = async ({ refreshToken, userId }) => {
 };
 
 const createMeetingRoom = async ({ accessToken, refreshToken, userId, start, duration }) => {
+  console.log('starttime', moment.utc(start).format('yyyy-MM-DDTHH:mm:ssZ'));
   const me = await getMe({
     accessToken: accessToken,
     refreshToken: refreshToken,
@@ -77,10 +79,10 @@ const createMeetingRoom = async ({ accessToken, refreshToken, userId, start, dur
   });
   const zoomUserId = me.id;
   const testForm = {
-    topic: 'Testing Meeting',
+    topic: 'Test Meeting With Timezone',
     type: 2,
     duration: duration,
-    start_time: start,
+    start_time: '2020-05-29T12:02:00Z',
     settings: {
       host_video: true,
       participant_video: true,
