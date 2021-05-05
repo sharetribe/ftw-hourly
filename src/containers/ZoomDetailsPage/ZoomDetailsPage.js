@@ -4,6 +4,7 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { FormattedMessage, injectIntl, intlShape } from '../../util/reactIntl';
 import { propTypes } from '../../util/types';
+import config from '../../config';
 import { fetchCurrentUser, sendVerificationEmail } from '../../ducks/user.duck';
 import {
   LayoutSideNavigation,
@@ -70,11 +71,7 @@ export const ContactDetailsPageComponent = props => {
             <h1 className={css.title}>
               <FormattedMessage id="ZoomDetailsPage.heading" />
             </h1>
-            {!isConnectedZoom && (
-              <a href="https://zoom.us/oauth/authorize?response_type=code&client_id=LwI0TKTre7NVbkdZJktw&redirect_uri=https://savante.me/zoom">
-                Connect Zoom
-              </a>
-            )}
+            {!isConnectedZoom && <a href={config.ZOOM_AUTHORIZE_URL}>Connect Zoom</a>}
             {/* {isConnectedZoom && <div> Thank you!. you have already connected zoom</div>} */}
             {zoomInfo && (
               <div>

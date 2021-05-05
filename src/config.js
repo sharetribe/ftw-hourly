@@ -8,6 +8,7 @@ const dev = process.env.REACT_APP_ENV === 'development';
 const zoomApi = process.env.REACT_APP_ZOOM_API_KEY;
 const zoomSecret = process.env.REACT_APP_ZOOM_API_SECRET_KEY;
 const redirectUrl = process.env.REACT_APP_ZOOM_REDIRECT_URL;
+const ZOOM_AUTHORIZE_URL = process.env.REACT_APP_ZOOM_AUTHORIZE_URL;
 
 // If you want to change the language, remember to also change the
 // locale data and the messages in the app.js file.
@@ -112,7 +113,8 @@ const siteSupport = 'support@savante.me';
 
 const siteInternetCookies = 'http://internetcookies.org/';
 
-const siteSavanteInfo = 'https://mail.google.com/mail/u/0/?ogbl#inbox?compose=DmwnWrRmVPRmtKzjDtcSdPlpXTdDzrfCnKgqdSPvtrKQcSjhPmnkVRSrHpZqfkzvZFBKDZgMmwfL';
+const siteSavanteInfo =
+  'https://mail.google.com/mail/u/0/?ogbl#inbox?compose=DmwnWrRmVPRmtKzjDtcSdPlpXTdDzrfCnKgqdSPvtrKQcSjhPmnkVRSrHpZqfkzvZFBKDZgMmwfL';
 
 // Social logins & SSO
 
@@ -246,8 +248,10 @@ const config = {
   facebookAppId,
   sentryDsn,
   usingSSL,
+
   maps,
   custom,
+  ZOOM_AUTHORIZE_URL,
 };
 
 export default config;

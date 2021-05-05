@@ -103,9 +103,7 @@ router.get('/zoom/authorize', async (req, res) => {
     const { code } = req.query;
     const sdk = getSdk(req, res);
     const user = await sdk.currentUser.show();
-    const data = await exchangeAuthorizeCode(code, {
-      callbackUrl: 'https://savante.me/zoom',
-    });
+    const data = await exchangeAuthorizeCode(code);
     const oldPrivateData = user.data.data.attributes.profile.privateData;
     await sdk.currentUser.updateProfile({
       privateData: {

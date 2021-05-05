@@ -1,11 +1,13 @@
 const axios = require('axios').default;
 const { encode, decode } = require('js-base64');
 const { getSdk, getRootSdk } = require('../server/api-util/sdk');
-const ZOOM_CLIENT_ID = 'PgPAkYGTuq6tICJDMy4Bw';
-const ZOOM_CLIENT_SECRET = 'nZzw7ZYH64S5ofgjZF3xxAKj8jVZPzE7';
-const exchangeAuthorizeCode = async (code, { callbackUrl }) => {
+const ZOOM_CLIENT_ID = process.env.ZOOM_CLIENT_ID;
+const ZOOM_CLIENT_SECRET = process.env.ZOOM_CLIENT_SECRET;
+const ZOOM_REDIRECT_URL = process.env.ZOOM_REDIRECT_URL;
+
+const exchangeAuthorizeCode = async code => {
   const { data } = await axios.post(
-    `https://zoom.us/oauth/token?grant_type=authorization_code&code=${code}&redirect_uri=${callbackUrl}`,
+    `https://zoom.us/oauth/token?grant_type=authorization_code&code=${code}&redirect_uri=${ZOOM_REDIRECT_URL}`,
     null,
     {
       headers: {
