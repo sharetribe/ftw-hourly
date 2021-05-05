@@ -1,15 +1,26 @@
-const { sendZoomMeetingInvitation } = require('./server/sendgrid');
-const { getMe, exchangeAccessTokenByRefreshToken } = require('./server/zoom');
+const axios = require('axios').default;
 
-(async () => {
-  try {
-    const data = await exchangeAccessTokenByRefreshToken({
-      refreshToken: `eyJhbGciOiJIUzUxMiIsInYiOiIyLjAiLCJraWQiOiI3N2Y2ZTQ2Ny00ZWI4LTRlOTYtYWNhYi02YjA3YmE4NjFhNmYifQ.eyJ2ZXIiOjcsImF1aWQiOiI2NmU1NTI4Yjg3NzU3YmUyMTkwM2M5ZDNhMjBhOTFiYyIsImNvZGUiOiJ5ZzlPWXZBUmdCXzBsbnVhV00xU3hxLUFEcFVwckVsT3ciLCJpc3MiOiJ6bTpjaWQ6UGdQQWtZR1R1cTZ0SUNKRE15NEJ3IiwiZ25vIjowLCJ0eXBlIjoxLCJ0aWQiOjAsImF1ZCI6Imh0dHBzOi8vb2F1dGguem9vbS51cyIsInVpZCI6IjBsbnVhV00xU3hxLUFEcFVwckVsT3ciLCJuYmYiOjE2MjAwMjk4NjksImV4cCI6MjA5MzA2OTg2OSwiaWF0IjoxNjIwMDI5ODY5LCJhaWQiOiJhQVZDTEFKLVFYdTFIelZYd2NmdXZRIiwianRpIjoiZGJhYzA0M2UtNGZmZi00Y2NmLThjMjctMTE4NzFlY2VmOTUxIn0.942__ML7YeFOdhI2bDOCH3VpvnbwwbjvDsPOoQ4ct7ZJAcyuPVFmXIi0LVn2-LUmLWr-hbwSOC9GCLZKmWHrpg`,
-      clientId: 'PgPAkYGTuq6tICJDMy4Bw',
-      clientSecret: 'nZzw7ZYH64S5ofgjZF3xxAKj8jVZPzE7',
-    });
-    console.log(data);
-  } catch (err) {
-    console.log(err);
-  }
-})();
+axios
+  .post(
+    `https://api.zoom.us/v2/users/dkh0rziJSbqytmKfGuNesw/meetings`,
+    {
+      topic: 'Testing Meeting',
+
+      start_time: '2021-06-04T18:00:00.000Z',
+      duration: 60,
+      settings: {
+        host_video: true,
+        participant_video: true,
+        join_before_host: true,
+        registrants_email_notification: true,
+      },
+    },
+    {
+      headers: {
+        Authorization: `Bearer eyJhbGciOiJIUzUxMiIsInYiOiIyLjAiLCJraWQiOiI0NmVmZGFmNi02MDk0LTQ3YTctODU5Mi03ZmJlYzRiNmQ4YTcifQ.eyJ2ZXIiOjcsImF1aWQiOiJhMGNkMzcwNjJkZWY2M2Y4OWZkM2Q1YTE4ZDc2ZWMzNiIsImNvZGUiOiI3V2k5RHg5aXVEX2RraDByemlKU2JxeXRtS2ZHdU5lc3ciLCJpc3MiOiJ6bTpjaWQ6THdJMFRLVHJlN05WYmtkWkprdHciLCJnbm8iOjAsInR5cGUiOjAsInRpZCI6MCwiYXVkIjoiaHR0cHM6Ly9vYXV0aC56b29tLnVzIiwidWlkIjoiZGtoMHJ6aUpTYnF5dG1LZkd1TmVzdyIsIm5iZiI6MTYyMDIwNTk3MSwiZXhwIjoxNjIwMjA5NTcxLCJpYXQiOjE2MjAyMDU5NzEsImFpZCI6InhhbWtlUGIxVDctNkJYOW9aT19kc3ciLCJqdGkiOiJjZTNjYmQwZi04YmRjLTRlMzgtYjg0ZC0wMGZiZjE1YTk2YWYifQ.Z56ZvVYQeV1fEDCeLC9XZAIkWeN-tqvi1lyQeuAK1IY_zAgx1fuvAYQPdxEmRd5AZlQEj7yNwWdiZUXpvfB2zw`,
+      },
+    }
+  )
+  .then(res => {
+    console.log(res);
+  });
