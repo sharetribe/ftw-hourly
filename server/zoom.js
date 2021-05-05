@@ -69,7 +69,7 @@ const exchangeAccessTokenByRefreshToken = async ({ refreshToken, userId }) => {
   return data;
 };
 
-const createMeetingRoom = async ({ accessToken, refreshToken, userId, start }) => {
+const createMeetingRoom = async ({ accessToken, refreshToken, userId, start, duration }) => {
   const me = await getMe({
     accessToken: accessToken,
     refreshToken: refreshToken,
@@ -78,6 +78,8 @@ const createMeetingRoom = async ({ accessToken, refreshToken, userId, start }) =
   const zoomUserId = me.id;
   const testForm = {
     topic: 'Testing Meeting',
+    type: 2,
+    duration: duration,
     start_time: start,
     settings: {
       host_video: true,
