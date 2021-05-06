@@ -37,7 +37,7 @@
     "lodash": "^4.17.19",
     "mapbox-gl-multitouch": "^1.0.3",
     "moment": "^2.29.1",
-    "moment-timezone": "^0.5.26",
+    "moment-timezone": "^0.5.33",
     "object.entries": "^1.1.2",
     "object.values": "^1.1.1",
     "passport": "^0.4.1",

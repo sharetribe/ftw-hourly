@@ -20,7 +20,7 @@ const sendZoomMeetingInvitation = async ({
           <p>Topic: Savante Appointment between ${providerName} and ${userName}</p>
           <p>Time: <b>${start}</b></p>
           <p>Join Zoom Meeting</p>
-          <a href="${zoomLink}"><b>${zoomLink}</b></a>
+          <a href="${zoomLink}" clicktracking="off"><b>${zoomLink}</b></a>
           <p>Passcode: <b>${password}</b></p>   
           <p>Savante Team</p>
         </div>

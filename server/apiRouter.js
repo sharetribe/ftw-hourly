@@ -14,7 +14,7 @@ const initiateLoginAs = require('./api/initiate-login-as');
 const loginAs = require('./api/login-as');
 const transactionLineItems = require('./api/transaction-line-items');
 const initiatePrivileged = require('./api/initiate-privileged');
-const moment = require('moment');
+const moment = require('moment-timezone');
 
 const transitionPrivileged = require('./api/transition-privileged');
 
@@ -28,6 +28,12 @@ const _ = require('lodash');
 const router = express.Router();
 const { sendZoomMeetingInvitation } = require('./sendgrid');
 
+const { pickUserTimeZoneByUserId } = require('./api-util/listing');
+const formatTime = momentTime => {
+  const suffix = momentTime.format(`dddd, MMM DD, yy hh:mmA`).toString();
+  const prefix = momentTime.format(`Z z`);
+  return `${suffix} GMT${prefix}`;
+};
 // ================ API router middleware: ================ //
 
 // Parse Transit body first to a string
@@ -138,9 +144,14 @@ router.post('/appointment/accept', async (req, res) => {
       email: _.get(customer, 'attributes.email'),
       name: _.get(customer, 'attributes.profile.displayName'),
     };
+    const [providerTimeZone, customerTimeZone] = await Promise.all([
+      pickUserTimeZoneByUserId(provider.id.uuid),
+      pickUserTimeZoneByUserId(customer.id.uuid),
+    ]);
+    providerData['timezone'] = providerTimeZone;
+    customerData['timezone'] = customerTimeZone;
     const meetingData = {
       start: _.get(booking, 'attributes.start'),
-      // end: _.get(booking, 'attributes.end'),
     };
     meetingData['duration'] = moment
       .duration(moment(meetingData['end']).diff(moment(meetingData['start'])))
@@ -148,12 +159,16 @@ router.post('/appointment/accept', async (req, res) => {
 
     if (providerData.isConnectZoom) {
       const data = await createMeetingRoom({
+        userName: customerData['name'],
         accessToken: providerData.zoomData['access_token'],
         refreshToken: providerData.zoomData['refresh_token'],
-        userId: provider.id.uuid,
-        start: meetingData['start'],
-        userName: customerData['name'],
+        start: moment(meetingData['start'])
+          .tz(providerData['timezone'])
+          .format('yyyy-MM-DDTHH:mm:ss')
+          .toString(),
+        timezone: providerData['timezone'],
         duration: meetingData['duration'],
+        userId: provider.id.uuid,
       });
       sendZoomMeetingInvitation({
         password: data.password,
@@ -161,7 +176,7 @@ router.post('/appointment/accept', async (req, res) => {
         to: customerData['email'],
         providerName: providerData['name'],
         userName: customerData['name'],
-        start: meetingData['start'],
+        start: formatTime(moment(meetingData['start']).tz(customerData['timezone'])),
       });
       sendZoomMeetingInvitation({
         password: data.password,
@@ -169,7 +184,7 @@ router.post('/appointment/accept', async (req, res) => {
         to: providerData['email'],
         providerName: providerData['name'],
         userName: customerData['name'],
-        start: meetingData['start'],
+        start: formatTime(moment(meetingData['start']).tz(providerData['timezone'])),
       });
       res.json({
         isSuccess: true,
@@ -192,7 +207,7 @@ router.get('/appointment/test', async (req, res) => {
     const {
       data: { data, included },
     } = await sdk.transactions.show({
-      id: '60926885-83fc-444a-95f7-72f45f1879d1',
+      id: '60937e94-c0b4-4666-babf-2a82bc5c076d',
       include: 'customer,booking,provider',
     });
     const [provider, customer, booking] = included;
@@ -207,9 +222,14 @@ router.get('/appointment/test', async (req, res) => {
       email: _.get(customer, 'attributes.email'),
       name: _.get(customer, 'attributes.profile.displayName'),
     };
+    const [providerTimeZone, customerTimeZone] = await Promise.all([
+      pickUserTimeZoneByUserId(provider.id.uuid),
+      pickUserTimeZoneByUserId(customer.id.uuid),
+    ]);
+    providerData['timezone'] = providerTimeZone;
+    customerData['timezone'] = customerTimeZone;
     const meetingData = {
       start: _.get(booking, 'attributes.start'),
-      // end: _.get(booking, 'attributes.end'),
     };
     meetingData['duration'] = moment
       .duration(moment(meetingData['end']).diff(moment(meetingData['start'])))
@@ -220,7 +240,11 @@ router.get('/appointment/test', async (req, res) => {
         userName: customerData['name'],
         accessToken: providerData.zoomData['access_token'],
         refreshToken: providerData.zoomData['refresh_token'],
-        start: meetingData['start'],
+        start: moment(meetingData['start'])
+          .tz(providerData['timezone'])
+          .format('yyyy-MM-DDTHH:mm:ss')
+          .toString(),
+        timezone: providerData['timezone'],
         duration: meetingData['duration'],
         userId: provider.id.uuid,
       });
@@ -230,7 +254,7 @@ router.get('/appointment/test', async (req, res) => {
         to: customerData['email'],
         providerName: providerData['name'],
         userName: customerData['name'],
-        start: meetingData['start'],
+        start: formatTime(moment(meetingData['start']).tz(customerData['timezone'])),
       });
       sendZoomMeetingInvitation({
         password: data.password,
@@ -238,7 +262,7 @@ router.get('/appointment/test', async (req, res) => {
         to: providerData['email'],
         providerName: providerData['name'],
         userName: customerData['name'],
-        start: meetingData['start'],
+        start: formatTime(moment(meetingData['start']).tz(providerData['timezone'])),
       });
       res.json({
         isSuccess: true,
@@ -251,6 +275,18 @@ router.get('/appointment/test', async (req, res) => {
   }
 });
 
+router.get('/test-timezone', async (req, res) => {
+  try {
+    const root = getRootSdk();
+    const data = await root.listings.show({
+      id: '60322bdb-10e2-4b0e-bf07-cb6c52d99758',
+    });
+    res.json(data);
+  } catch (err) {
+    console.log(err.data);
+    res.status(500).send(err.toString());
+  }
+});
 router.get('/initiate-login-as', initiateLoginAs);
 router.get('/login-as', loginAs);
 router.post('/transaction-line-items', transactionLineItems);

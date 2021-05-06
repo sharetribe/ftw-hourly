@@ -4,7 +4,6 @@ const { getSdk, getRootSdk } = require('../server/api-util/sdk');
 const ZOOM_CLIENT_ID = process.env.ZOOM_CLIENT_ID;
 const ZOOM_CLIENT_SECRET = process.env.ZOOM_CLIENT_SECRET;
 const ZOOM_REDIRECT_URL = process.env.ZOOM_REDIRECT_URL;
-const moment = require('moment');
 
 const exchangeAuthorizeCode = async code => {
   const { data } = await axios.post(
@@ -82,19 +81,20 @@ const createMeetingRoom = async ({
   start,
   duration,
   userName,
+  timezone,
 }) => {
-  const startTime = moment.utc(start).format('yyyy-MM-DDTHH:mm:ss') + 'Z';
   const me = await getMe({
     accessToken: accessToken,
     refreshToken: refreshToken,
     userId: userId,
   });
   const zoomUserId = me.id;
-  const testForm = {
+  const formBody = {
     topic: `Savante.me Meeting: ${userName} `,
     type: 2,
-    duration: duration,
-    start_time: startTime,
+    duration: 60,
+    start_time: start,
+    timezone,
     settings: {
       host_video: true,
       participant_video: true,
@@ -104,7 +104,7 @@ const createMeetingRoom = async ({
   };
   const { data } = await axios.post(
     `https://api.zoom.us/v2/users/${zoomUserId}/meetings`,
-    testForm,
+    formBody,
     {
       headers: {
         Authorization: `Bearer ${me.accessToken}`,
