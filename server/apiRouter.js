@@ -222,12 +222,9 @@ router.get('/appointment/test', async (req, res) => {
       email: _.get(customer, 'attributes.email'),
       name: _.get(customer, 'attributes.profile.displayName'),
     };
-    const [providerTimeZone, customerTimeZone] = await Promise.all([
-      pickUserTimeZoneByUserId(provider.id.uuid),
-      pickUserTimeZoneByUserId(customer.id.uuid),
-    ]);
+    const [providerTimeZone] = await Promise.all([pickUserTimeZoneByUserId(provider.id.uuid)]);
     providerData['timezone'] = providerTimeZone;
-    customerData['timezone'] = customerTimeZone;
+    customerData['timezone'] = providerTimeZone;
     const meetingData = {
       start: _.get(booking, 'attributes.start'),
     };
