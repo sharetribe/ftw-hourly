@@ -9,12 +9,12 @@ const { LatLng, LatLngBounds } = sdkTypes;
 // `predictionPlace` (util.types.place) properties.
 const defaultLocations = [
   {
-    id: 'default-new-york',
+    id: 'default-minneapolis',
     predictionPlace: {
-      address: 'New York City, New York, USA',
+      address: 'Minneapolis-St. Paul, MN',
       bounds: new LatLngBounds(
-        new LatLng(40.917576401307, -73.7008392055224),
-        new LatLng(40.477399, -74.2590879797556)
+        new LatLng(45.218064, -92.758847),
+        new LatLng(44.811299, -93.731137)
       ),
     },
   },
@@ -38,25 +38,5 @@ const defaultLocations = [
       ),
     },
   },
-  {
-    id: 'default-seattle',
-    predictionPlace: {
-      address: 'Seattle, Washington, USA',
-      bounds: new LatLngBounds(
-        new LatLng(47.7779392908564, -122.216605992108),
-        new LatLng(47.3403950185547, -122.441233019046)
-      ),
-    },
-  },
-  {
-    id: 'default-portland',
-    predictionPlace: {
-      address: 'Portland, Oregon, USA',
-      bounds: new LatLngBounds(
-        new LatLng(45.858099013046, -122.441059986416),
-        new LatLng(45.3794799927623, -122.929215816001)
-      ),
-    },
-  },
-];
+ ];
 export default defaultLocations;
