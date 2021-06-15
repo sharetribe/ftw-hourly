@@ -117,8 +117,7 @@ const Footer = props => {
                     name="SearchPage"
                     to={{
                       search:
-                        '?address=Minneapolis-St%20Paul%2C%20MN&2C&20USA&bounds=45.218064%2C-92.758847&2C
-44.811299&2C-93.731137',
+                        '?address=Minneapolis-St%20Paul%2C%20MN&2C&20USA&bounds=45.218064%2C-92.758847&2C44.811299&2C-93.731137',
                     }}
                     className={css.link}
                   >
