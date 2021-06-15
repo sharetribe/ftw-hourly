@@ -73,8 +73,8 @@ export const filters = [
     // Price filter configuration
     // Note: unlike most prices this is not handled in subunits
     config: {
-      min: 0,
-      max: 1000,
+      min: 15,
+      max: 45,
       step: 5,
     },
   },
@@ -93,7 +93,7 @@ export const filters = [
   },
   {
     id: 'yogaStyles',
-    label: 'Yoga styles',
+    label: 'Restaurant Experience',
     type: 'SelectMultipleFilter',
     group: 'secondary',
     queryParamNames: ['pub_yogaStyles'],
@@ -112,7 +112,7 @@ export const filters = [
         { key: 'kundalini', label: 'Kundalini' },
         { key: 'restorative', label: 'Restorative' },
         { key: 'vinyasa', label: 'Vinyasa' },
-        { key: 'yin', label: 'Yin' },
+        { key: 'Wendys', label: 'Wendys' },
       ],
     },
   },
