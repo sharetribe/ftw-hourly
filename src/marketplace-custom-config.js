@@ -115,6 +115,7 @@ export const filters = [
 	 { key: 'Arbys', label: 'Arbys' },
         { key: 'Burger-King', label: 'Burger King' },
         { key: 'Chik-Fil-A', label: 'Chik-Fil-A' },
+        { key: 'Chipotle', label: 'Chipotle' },
         { key: 'Culvers', label: 'Culvers' },
         { key: 'McDonalds', label: 'McDonalds' },
         { key: 'Panera-Bread', label: 'Panera Bread' },
