@@ -247,7 +247,7 @@
   "EditListingLocationForm.optionalText": "• optional",
   "EditListingLocationForm.showListingFailed": "Fetching worker profile data failed",
   "EditListingLocationForm.updateFailed": "Failed to update. Please try again.",
-  "EditListingLocationPanel.createListingTitle": "Where do you teach?",
+  "EditListingLocationPanel.createListingTitle": "What is your address?",
   "EditListingLocationPanel.listingTitle": "your sessions",
   "EditListingLocationPanel.title": "Edit the location of {listingTitle}",
   "EditListingPage.loadingListingData": "Loading listing data…",
