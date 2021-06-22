@@ -71,7 +71,15 @@ labelLayerId = layers[i].id;
 break;
 }
 }
-
+var map = new mapboxgl.Map({
+style: 'mapbox://styles/mapbox/light-v10',
+center: [-74.0066, 40.7135],
+zoom: 15.5,
+pitch: 45,
+bearing: -17.6,
+container: 'map',
+antialias: true
+});
 // The 'building' layer in the Mapbox Streets
 // vector tileset contains building height data
 // from OpenStreetMap.

@@ -66,8 +66,12 @@ class DynamicMapboxMap extends Component {
     this.map = new window.mapboxgl.Map({
       container: this.mapContainer,
       style: 'mapbox://styles/mapbox/light-v10',
-      center: position,
-      zoom,
+      center: [-74.0066, 40.7135],
+      zoom: 15.5,
+      pitch: 45,
+      bearing: -17.6,
+      container: 'map',
+      antialias: true
       scrollZoom: false,
     });
     map.on('load', function () {
