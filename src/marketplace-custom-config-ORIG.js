@@ -107,7 +107,12 @@ export const filters = [
       // Note: label is not added through the translation files
       // to make filter customizations a bit easier.
       options: [
-	      { key: 'Arbys', label: 'Arbys' },
+        { key: 'ashtanga', label: 'Ashtanga' },
+        { key: 'hatha', label: 'Hatha' },
+        { key: 'kundalini', label: 'Kundalini' },
+        { key: 'restorative', label: 'Restorative' },
+        { key: 'vinyasa', label: 'Vinyasa' },
+	 { key: 'Arbys', label: 'Arbys' },
         { key: 'Burger-King', label: 'Burger King' },
         { key: 'Chik-Fil-A', label: 'Chik-Fil-A' },
         { key: 'Chipotle', label: 'Chipotle' },
@@ -121,20 +126,20 @@ export const filters = [
     },
   },
   {
-//    id: 'certificate',
-//    label: 'Certificate',
-//    type: 'SelectSingleFilter',
-//    group: 'secondary',
-//    queryParamNames: ['pub_certificate'],
-//    config: {
+    id: 'certificate',
+    label: 'Certificate',
+    type: 'SelectSingleFilter',
+    group: 'secondary',
+    queryParamNames: ['pub_certificate'],
+    config: {
       // "key" is the option you see in Flex Console.
       // "label" is set here for the UI only.
       // Note: label is not added through the translation files
       // to make filter customizations a bit easier.
-//      options: [
-//        { key: 'none', label: 'None', hideFromFilters: true, hideFromListingInfo: true },
-//        { key: '200h', label: 'Registered yoga teacher 200h' },
-//        { key: '500h', label: 'Registered yoga teacher 500h' },
+      options: [
+        { key: 'none', label: 'None', hideFromFilters: true, hideFromListingInfo: true },
+        { key: '200h', label: 'Registered yoga teacher 200h' },
+        { key: '500h', label: 'Registered yoga teacher 500h' },
       ],
     },
   },
