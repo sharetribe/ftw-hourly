@@ -53,7 +53,7 @@ const StaticMapboxMap = props => {
 
   const overlay = mapOverlay(center, mapsConfig);
   const src =
-    'https://api.mapbox.com/styles/v1/mapbox/streets-v10/static' +
+    'https://api.mapbox.com/styles/v1/mapbox/light-v10/static' +
     (overlay ? `/${overlay}` : '') +
     `/${center.lng},${center.lat},${zoom}` +
     `/${width}x${height}` +
