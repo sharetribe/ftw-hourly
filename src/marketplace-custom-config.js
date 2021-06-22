@@ -135,7 +135,7 @@ export const filters = [
 //        { key: 'none', label: 'None', hideFromFilters: true, hideFromListingInfo: true },
 //        { key: '200h', label: 'Registered yoga teacher 200h' },
 //        { key: '500h', label: 'Registered yoga teacher 500h' },
-      ],
+//      ],
     },
   },
 ];
