@@ -71,7 +71,7 @@ class DynamicMapboxMap extends Component {
       pitch: 45,
       bearing: -17.6,
       container: 'map',
-      antialias: true
+      antialias: true,
       scrollZoom: false,
     });
     map.on('load', function () {
