@@ -136,7 +136,7 @@ export const filters = [
 //        { key: '200h', label: 'Registered yoga teacher 200h' },
 //        { key: '500h', label: 'Registered yoga teacher 500h' },
 //      ],
-    },
+//    },
   },
 ];
 
