@@ -39,6 +39,7 @@ const SectionHowItWorks = props => {
         </div>
 
         <div className={css.step}>
+        <img src="../../assets/background-1440.jpg" alt="Paris">
           <h2 className={css.stepTitle}>
             <FormattedMessage id="SectionHowItWorks.part3Title" />
           </h2>
