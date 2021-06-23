@@ -16,6 +16,7 @@ const SectionHero = props => {
       <div className={css.heroContent}>
         <h1 className={css.heroMainTitle}>
           <FormattedMessage id="SectionHero.title" />
+          </h1>
         <h2 className={css.heroMainTitle2}>
             <FormattedMessage id="SectionHero.title2" />
         </h2>
