@@ -41,7 +41,6 @@ const SectionHowItWorks = props => {
         </div>
 
         <div className={css.step}>
-        <img src=nyImage alt="TestNY" />
           <h2 className={css.stepTitle}>
             <FormattedMessage id="SectionHowItWorks.part3Title" />
           </h2>
