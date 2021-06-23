@@ -70,20 +70,10 @@
   }
 }
 
-.heroMainTitle2 {
-  @apply --marketplaceH2FontStyles;
-  composes: animation;
-  animation-delay: 0.5s;
-
-  @media (--viewportMedium) {
-    max-width: var(--SectionHero_desktopTitleMaxWidth);
-  }
-}
-
 .heroSubTitle {
   @apply --marketplaceH4FontStyles;
 
-  color: var(--matterColorDark);
+  color: var(--matterColor);
   margin: 0 0 32px 0;
 
   composes: animation;
