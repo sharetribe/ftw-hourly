@@ -4,7 +4,6 @@ import classNames from 'classnames';
 import { FormattedMessage } from '../../util/reactIntl';
 import { propTypes } from '../../util/types';
 import { OwnListingLink } from '../../components';
-import nyImage from './images/ny-yogi.jpg';
 
 import css from './SectionHowItWorks.module.css';
 
@@ -22,7 +21,6 @@ const SectionHowItWorks = props => {
 
       <div className={css.steps}>
         <div className={css.step}>
-<img nyImage />
           <h2 className={css.stepTitle}>
             <FormattedMessage id="SectionHowItWorks.part1Title" />
           </h2>
