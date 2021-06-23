@@ -98,6 +98,20 @@ exports[`LandingPage matches snapshot 1`] = `
             />
           </div>
         </li>
+        <li
+          className="section"
+        >
+          <div
+            className="sectionContent"
+          >
+            <SectionHowItWorksNew
+              className={null}
+              currentUserListing={null}
+              currentUserListingFetched={false}
+              rootClassName={null}
+            />
+          </div>
+        </li>
       </ul>
     </LayoutWrapperMain>
     <LayoutWrapperFooter
