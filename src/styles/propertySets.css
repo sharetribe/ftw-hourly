@@ -184,8 +184,8 @@
 
   --marketplaceH3FontStyles: {
     font-weight: var(--fontWeightSemiBold);
-    font-size: 18px;
-    line-height: 24px;
+    font-size: 22px;
+    line-height: 25px;
     /* margin-top + n * line-height + margin-bottom => x * 6px */
     margin-top: 16px;
     margin-bottom: 14px;
