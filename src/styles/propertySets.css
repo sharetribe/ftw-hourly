@@ -83,7 +83,7 @@
   /* ================ Hero title ================ */
 
   --marketplaceHeroTitleFontStyles: {
-    font-weight: var(--fontWeightBold);
+    font-weight: var(--fontWeightSemiBold);
     font-size: 36px;
     line-height: 36px;
     letter-spacing: -0.7px;
