@@ -73,7 +73,7 @@
 .heroSubTitle {
   @apply --marketplaceH4FontStyles;
 
-  color: var(--matterColorLight);
+  color: var(--matterColor);
   margin: 0 0 32px 0;
 
   composes: animation;
