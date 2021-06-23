@@ -6,7 +6,7 @@ import { lazyLoadWithDimensions } from '../../util/contextHelpers';
 
 import { NamedLink } from '../../components';
 
-import css from './SectionLocations.module.css';
+import css from './SectionHowItWorksNew.module.css';
 
 import nyImage from './images/ny-yogi.jpg';
 import laImage from './images/la-yogi.jpg';
@@ -31,7 +31,7 @@ const locationLink = (name, image, searchQuery) => {
       </div>
       <div className={css.linkText}>
         <FormattedMessage
-          id="SectionLocations.listingsInLocation"
+          id="SectionHowItWorksNew.listingsInLocation"
           values={{ location: nameText }}
         />
       </div>
@@ -39,7 +39,7 @@ const locationLink = (name, image, searchQuery) => {
   );
 };
 
-const SectionLocations = props => {
+const SectionHowItWorksNew = props => {
   const { rootClassName, className } = props;
 
   const classes = classNames(rootClassName || css.root, className);
@@ -47,7 +47,7 @@ const SectionLocations = props => {
   return (
     <div className={classes}>
       <div className={css.title}>
-        <FormattedMessage id="SectionLocations.title" />
+        <FormattedMessage id=".title" />
       </div>
       <div className={css.locations}>
         {locationLink(
@@ -70,13 +70,13 @@ const SectionLocations = props => {
   );
 };
 
-SectionLocations.defaultProps = { rootClassName: null, className: null };
+SectionHowItWorksNew.defaultProps = { rootClassName: null, className: null };
 
 const { string } = PropTypes;
 
-SectionLocations.propTypes = {
+SectionHowItWorksNew.propTypes = {
   rootClassName: string,
   className: string,
 };
 
-export default SectionLocations;
+export default SectionHowItWorksNew;
