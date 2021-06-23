@@ -822,6 +822,8 @@
   "SectionHowItWorks.titleLineTwo": " ",
   "SectionLocations.listingsInLocation": "Workers in {location}",
   "SectionLocations.title": "Find qualified restaurant help in your city",
+  "SectionHowItWorksNew.listingsInLocation": "Workers in {location}",
+  "SectionHowItWorksNew.title": "Find qualified restaurant help in your city",
   "SelectMultipleFilter.labelSelected": "{labelText} • {count}",
   "SelectMultipleFilterPlainForm.labelSelected": "{labelText} • {count}",
   "SelectSingleFilter.popupClear": "Clear",
