@@ -156,10 +156,10 @@
     margin-bottom: 18px;
 
     @media (--viewportMedium) {
-      font-size: 40px;
+      font-size: 36px;
       font-weight: var(--fontWeightSemiBold);
-      line-height: 48px;
-      letter-spacing: -1px;
+      line-height: 42px;
+      letter-spacing: -0px;
       /* margin-top + n * line-height + margin-bottom => x * 8px */
       margin-top: 24px;
       margin-bottom: 24px;
@@ -168,8 +168,8 @@
 
   --marketplaceH2FontStyles: {
     font-weight: var(--fontWeightSemiBold);
-    font-size: 21px;
-    line-height: 24px;
+    font-size: 24px;
+    line-height: 27px;
     /* margin-top + n * line-height + margin-bottom => x * 6px */
     margin-top: 21px;
     margin-bottom: 17px;
