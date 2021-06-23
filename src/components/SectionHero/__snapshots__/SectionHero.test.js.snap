@@ -12,6 +12,9 @@ exports[`SectionHero matches snapshot 1`] = `
     >
       <span>
         SectionHero.title
+    </h1>
+        <h1
+      className="heroMainTitle2"
         SectionHero.title2
       </span>
     </h1>
