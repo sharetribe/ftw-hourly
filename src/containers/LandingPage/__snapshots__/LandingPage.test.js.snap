@@ -78,7 +78,7 @@ exports[`LandingPage matches snapshot 1`] = `
           <div
             className="sectionContentFirstChild"
           >
-            <SectionHowItWorks
+            <SectionLocations
               className={null}
               rootClassName={null}
             />
@@ -90,7 +90,7 @@ exports[`LandingPage matches snapshot 1`] = `
           <div
             className="sectionContent"
           >
-            <SectionLocations
+            <SectionHowItWorks
               className={null}
               currentUserListing={null}
               currentUserListingFetched={false}
