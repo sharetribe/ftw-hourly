@@ -70,7 +70,7 @@
 }
 
 .heroMainTitle2 {
-  @apply --marketplaceHeroTitle2FontStyles;
+  @apply --marketplaceHeroTitleFontStyles;
   color: var(--matterColorGreen);
     composes: animation;
   animation-delay: 0.5s;
