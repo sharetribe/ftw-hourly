@@ -60,7 +60,10 @@
 
 .heroMainTitle {
   @apply --marketplaceHeroTitleFontStyles;
+<<<<<<< HEAD
 
+=======
+>>>>>>> 0efb9fc27691231d00cb4cb6d9baa23103ef6cb4
   color: var(--matterColorDark);
   composes: animation;
   animation-delay: 0.5s;
@@ -71,9 +74,13 @@
 }
 
 .heroMainTitle2 {
-  @apply --marketplaceHeroTitleFontStyles;
+  @apply --marketplaceHeroTitle2FontStyles;
   color: var(--matterColorGreen);
+<<<<<<< HEAD
   composes: animation;
+=======
+    composes: animation;
+>>>>>>> 0efb9fc27691231d00cb4cb6d9baa23103ef6cb4
   animation-delay: 0.5s;
 
   @media (--viewportMedium) {
