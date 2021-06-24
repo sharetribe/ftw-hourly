@@ -16,7 +16,6 @@ const SectionHowItWorks = props => {
   const classes = classNames(rootClassName || css.root, className);
   return (
     <div className={classes}>
-<img className={css.iconImage} src={cafeImage} alt="Cafe Icon" />
       <div className={css.title}>
         <FormattedMessage id="SectionHowItWorks.titleLineOne" />
         <br />
@@ -24,6 +23,7 @@ const SectionHowItWorks = props => {
       </div>
       <div className={css.steps}>
         <div className={css.step}>
+      <img className={css.iconImage} src={cafeImage} alt="Cafe Icon" />
           <h2 className={css.stepTitle}>
             <FormattedMessage id="SectionHowItWorks.part1Title" />
           </h2>
