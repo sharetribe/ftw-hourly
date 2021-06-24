@@ -3,6 +3,7 @@
 .title {
   @apply --marketplaceH1FontStyles;
   margin-top: 0;
+  margin-bottom: 5px;
 }
 
 .steps {
@@ -30,6 +31,7 @@
 .stepTitle {
   margin-top: 1px;
   margin-bottom: 18px;
+  text-align: center;
 
   @media (--viewportMedium) {
     margin-top: 21px;
