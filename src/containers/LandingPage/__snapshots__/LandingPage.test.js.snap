@@ -78,22 +78,8 @@ exports[`LandingPage matches snapshot 1`] = `
           <div
             className="sectionContentFirstChild"
           >
-            <SectionLocations
-              className={null}
-              rootClassName={null}
-            />
-          </div>
-        </li>
-        <li
-          className="section"
-        >
-          <div
-            className="sectionContent"
-          >
             <SectionHowItWorks
               className={null}
-              currentUserListing={null}
-              currentUserListingFetched={false}
               rootClassName={null}
             />
           </div>
@@ -104,7 +90,7 @@ exports[`LandingPage matches snapshot 1`] = `
           <div
             className="sectionContent"
           >
-            <SectionHowItWorksNew
+            <SectionLocations
               className={null}
               currentUserListing={null}
               currentUserListingFetched={false}
