@@ -28,7 +28,7 @@
 }
 
 .stepTitle {
-  margin-top: 18px;
+  margin-top: 1px;
   margin-bottom: 18px;
 
   @media (--viewportMedium) {
