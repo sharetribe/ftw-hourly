@@ -12,7 +12,6 @@ import {
   SectionHero,
   SectionHowItWorks,
   SectionLocations,
-  SectionHowItWorksNew,
   LayoutSingleColumn,
   LayoutWrapperTopbar,
   LayoutWrapperMain,
