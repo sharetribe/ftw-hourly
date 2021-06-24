@@ -33,6 +33,7 @@ const SectionHowItWorks = props => {
         </div>
 
         <div className={css.step}>
+      <img className={css.iconImage} src={workerImage} alt="Worker Icon" />
           <h2 className={css.stepTitle}>
             <FormattedMessage id="SectionHowItWorks.part2Title" />
           </h2>
@@ -42,7 +43,7 @@ const SectionHowItWorks = props => {
         </div>
 
         <div className={css.step}>
-          <h2 className={css.stepTitle}>
+      <img className={css.iconImage} src={sign} alt="Worker Icon" />          <h2 className={css.stepTitle}>
             <FormattedMessage id="SectionHowItWorks.part3Title" />
           </h2>
           <p>
