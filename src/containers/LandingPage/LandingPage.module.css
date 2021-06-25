@@ -43,6 +43,7 @@
 }
 
 .sections {
+  background-color: #fff;
   margin: 0;
   padding-top: 1px;
 }
@@ -68,9 +69,9 @@
 
 .sectionContent {
   margin: var(--LandingPage_sectionMarginTop) 24px 51px 24px;
-
   @media (--viewportMedium) {
     max-width: 100%;
+    background-color: #fff;
     margin: var(--LandingPage_sectionMarginTopMedium) 24px 60px 24px;
   }
 

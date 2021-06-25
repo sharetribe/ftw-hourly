@@ -88,7 +88,7 @@
     line-height: 36px;
     letter-spacing: -0.7px;
     /* margin-top + n * line-height + margin-bottom => x * 6px */
-    margin-top: 5px;
+    margin-top: 0px;
     margin-bottom: 5px;
 
     @media (--viewportMedium) {
