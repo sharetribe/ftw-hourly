@@ -84,7 +84,8 @@
 }
 
 .heroSubTitle {
-  @apply --marketplaceH2FontStyles;
+  @apply --marketplaceH3FontStyles;
+  font-weight: normal;
   font-style: italic;
   color: var(--matterColorDark);
   margin: 0 0 32px 0;

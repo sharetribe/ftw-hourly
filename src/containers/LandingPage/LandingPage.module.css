@@ -71,6 +71,7 @@
   margin: var(--LandingPage_sectionMarginTop) 24px 51px 24px;
   @media (--viewportMedium) {
     max-width: 100%;
+    margin-top: 0px;
     background-color: #fff;
     margin: var(--LandingPage_sectionMarginTopMedium) 24px 60px 24px;
   }

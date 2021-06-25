@@ -1,8 +1,10 @@
 @import '../../styles/propertySets.css';
 
 .title {
-  @apply --marketplaceH1FontStyles;
-  margin-top: 0;
+  @apply --marketplaceH2FontStyles;
+  font-weight: 600;
+  font-size: 38px;
+  margin-top: -80px;
   margin-bottom: 5px;
 }
 
@@ -30,11 +32,14 @@
 
 .stepTitle {
   margin-top: 1px;
+  margin-left: 5px;
+  margin-right: 5px;
   margin-bottom: 18px;
   text-align: center;
-
+  font-size: 24px;
   @media (--viewportMedium) {
-    margin-top: 21px;
+  font-size: 24px;
+  margin-top: 21px;
     margin-bottom: 18px;
   }
 }

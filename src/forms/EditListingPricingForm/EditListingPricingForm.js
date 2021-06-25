@@ -92,6 +92,7 @@ export const EditListingPricingFormComponent = props => (
           <FieldCurrencyInput
             id="price"
             name="price"
+            maximum="45"
             className={css.priceInput}
             autoFocus
             label={pricePerUnitMessage}

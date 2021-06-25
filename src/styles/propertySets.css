@@ -89,7 +89,7 @@
     letter-spacing: -0.7px;
     /* margin-top + n * line-height + margin-bottom => x * 6px */
     margin-top: 0px;
-    margin-bottom: 5px;
+    margin-bottom: -5px;
 
     @media (--viewportMedium) {
       font-size: 64px;
@@ -147,7 +147,7 @@
   /* ================ H1, H2, H3, H4, H5 & H6 ================ */
 
   --marketplaceH1FontStyles: {
-    font-weight: var(--fontWeightMedium);
+    font-weight: var(--fontWeightSemiBold);
     font-size: 24px;
     line-height: 30px;
     letter-spacing: -0.0px;
@@ -157,7 +157,7 @@
 
     @media (--viewportMedium) {
       font-size: 36px;
-      font-weight: var(--fontWeightMedium);
+      font-weight: var(--fontWeightSemiBold);
       line-height: 42px;
       letter-spacing: -0px;
       /* margin-top + n * line-height + margin-bottom => x * 8px */
@@ -167,15 +167,18 @@
   }
 
   --marketplaceH2FontStyles: {
-    font-weight: var(--fontWeightSemiBold);
+    font-weight: var(--fontWeightMedium);
+    text-decoration-color: #317a31;
     font-size: 24px;
-    line-height: 30px;
+    line-height: 27px;
     /* margin-top + n * line-height + margin-bottom => x * 6px */
     margin-top: 10px;
     margin-bottom: 18px;
 
     @media (--viewportMedium) {
-      line-height: 36px;
+      font-size: 24px;
+      text-decoration-color: #317a31;
+      line-height: 27px;
       /* margin-top + n * line-height + margin-bottom => x * 8px */
       margin-top: 10px;
       margin-bottom: 24px;

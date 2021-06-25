@@ -100,7 +100,7 @@ export const filters = [
     config: {
       // Optional modes: 'has_all', 'has_any'
       // https://www.sharetribe.com/api-reference/marketplace.html#extended-data-filtering
-      searchMode: 'has_all',
+      searchMode: 'has_any',
 
       // "key" is the option you see in Flex Console.
       // "label" is set here for this web app's UI only.
@@ -120,9 +120,37 @@ export const filters = [
       ],
     },
   },
+
+  {
+  id: 'Skills',
+  label: 'Skills',
+  type: 'SelectMultipleFilter',
+  group: 'secondary',
+  queryParamNames: ['pub_Skills'],
+  config: {
+    // Optional modes: 'has_all', 'has_any'
+    // https://www.sharetribe.com/api-reference/marketplace.html#extended-data-filtering
+    searchMode: 'has_any',
+
+    // "key" is the option you see in Flex Console.
+    // "label" is set here for this web app's UI only.
+    // Note: label is not added through the translation files
+    // to make filter customizations a bit easier.
+    options: [
+      { key: 'Dishwasher', label: 'Dishwasher' },
+      { key: 'Server', label: 'Server' },
+      { key: 'Host', label: 'Host/Hostess' },
+      { key: 'Line-Cook', label: 'Line Cook' },
+      { key: 'Manager', label: 'Management' },
+      { key: 'Prep-Cook', label: 'Prep Cook' },
+    ],
+  },
+  },
+
+
   {
       id: 'certificate',
-      label: 'Certificate',
+      label: 'Open to Long-Term Jobs',
       type: 'SelectSingleFilter',
       group: 'secondary',
       queryParamNames: ['pub_certificate'],
@@ -132,9 +160,8 @@ export const filters = [
       // Note: label is not added through the translation files
       // to make filter customizations a bit easier.
         options: [
-          { key: 'none', label: 'None', hideFromFilters: true, hideFromListingInfo: true },
-          { key: '200h', label: 'Registered yoga teacher 200h' },
-          { key: '500h', label: 'Registered yoga teacher 500h' },
+          { key: 'short-term-only', label: 'I am only interested in short-term gigs.', hideFromFilters: true, hideFromListingInfo: true },
+          { key: 'short-or-long-term', label: 'I would also consider job offers for long-term employment.', hideFromFilters: true, hideFromListingInfo: true },
         ],
       },
   },
