@@ -4,9 +4,9 @@ import classNames from 'classnames';
 import { FormattedMessage } from '../../util/reactIntl';
 import { propTypes } from '../../util/types';
 import { OwnListingLink } from '../../components';
-import cafeImage from './images/restaurant-icon.png';
-import workerImage from './images/female-food-worker.png';
-import signImage from './images/open-sign.png';
+import missingworkerImage from './images/missingworkerImage.jpeg';
+import waitressImage from './images/waitressImage.jpeg';
+import signImage from './images/opensignImage.jpeg';
 
 import css from './SectionHowItWorks.module.css';
 
@@ -21,7 +21,7 @@ const SectionHowItWorks = props => {
       </div>
       <div className={css.steps}>
         <div className={css.step}>
-      <img className={css.iconImage} src={cafeImage} alt="Cafe Icon" />
+      <img className={css.iconImage} src={missingworkerImage} alt="Cafe Icon" />
           <h2 className={css.stepTitle}>
             <FormattedMessage id="SectionHowItWorks.part1Title" />
           </h2>
@@ -31,7 +31,7 @@ const SectionHowItWorks = props => {
         </div>
 
         <div className={css.step}>
-      <img className={css.iconImage} src={workerImage} alt="Worker Icon" />
+      <img className={css.iconImage} src={waitressImage} alt="Worker Icon" />
           <h2 className={css.stepTitle}>
             <FormattedMessage id="SectionHowItWorks.part2Title" />
             </h2>
