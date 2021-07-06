@@ -45,7 +45,7 @@ export const TABS = [
   LOCATION,
   PRICING,
   ...availabilityMaybe,
-  //PHOTOS,
+  PHOTOS,
 ];
 
 // Tabs are horizontal in small screens

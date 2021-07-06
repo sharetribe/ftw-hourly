@@ -59,7 +59,7 @@
    {:fn/min
     [{:fn/plus
       [{:fn/timepoint [:time/first-entered-state :state/preauthorized]}
-       {:fn/period ["PT120M"]}]}
+       {:fn/period ["P6D"]}]}
      {:fn/plus
       [{:fn/timepoint [:time/booking-end]} {:fn/period ["P1D"]}]}]},
    :actions
