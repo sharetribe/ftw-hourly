@@ -9,7 +9,7 @@
 .heroContainer {
   display: flex;
   flex-direction: column;
-  min-height: 480px;
+  min-height: 500px;
   height: 15.5vh;
   max-height: 600px;
   padding: 0px;

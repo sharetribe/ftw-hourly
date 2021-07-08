@@ -78,19 +78,9 @@
     </script>
 
     <link rel="stylesheet" href="%PUBLIC_URL%/static/reactDates.css" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Euphoria+Script&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap" />
   </head>
   <body>
-
-    <!-- STARTING GENIUS REFERRALS TRACKING CODE -->
-    <script type="text/javascript">
-    !function(){
-    const grSetting={
-         grCookieLifeTime:"180"
-    },
-    e=window,t=document;e.addEventListener("load",function(){const e=t.createElement("script");e.type="text/javascript",e.async=!0,e.src="https://e9f87d8c82343264e6ba-2977c39e5e9390b1a89ab5ed2a171102.ssl.cf1.rackcdn.com/toolbox/geniusreferrals-toolbox_3.1.1.min.js",e.onload=function(){GRToolbox.catchReferrer(grSetting)};const n=t.getElementsByTagName("script")[0];n.parentNode.insertBefore(e,n)},!1)}();
-    </script>
-    <!-- ENDING GENIUS REFERRALS TRACKING CODE -->
 
     <div id="root"><!--!body--></div>
     <div id="portal-root"></div>
@@ -127,7 +117,7 @@
         var poppinsMedium = new FontFaceObserver('poppins', { weight: 500 });
         var poppinsSemibold = new FontFaceObserver('poppins', { weight: 600 });
         var poppinsBold = new FontFaceObserver('poppins', { weight: 700 });
-        var EuphoriaScript = new FontFaceObserver('Euphoria Script', { weight: 400 });
+        var ArchitectsDaughter = new FontFaceObserver('Architects Daughter', { weight: 400 });
 
         var fontLoadingTimeout = 5000;
 
@@ -136,7 +126,7 @@
           poppinsMedium.load(null, fontLoadingTimeout),
           poppinsSemibold.load(null, fontLoadingTimeout),
           poppinsBold.load(null, fontLoadingTimeout)
-          EuphoriaScript.load(null, fontLoadingTimeout)
+          ArchitectsDaughter.load(null, fontLoadingTimeout)
         ])
           .then(function () {
             document.documentElement.classList.add("fontsLoaded");

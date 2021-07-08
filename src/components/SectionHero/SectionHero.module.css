@@ -59,11 +59,11 @@
 
 .heroMainTitle {
   @apply --marketplaceHeroTitleFontStyles;
-  font-size: 56px;
-  line-height: 58px;
-  margin-top: 20px;
+  font-size: 48px;
+  line-height: 50px;
+  margin-top: 40px;
   margin-right: 0px;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
   color: var(--matterColorRed);
   composes: animation;
   animation-delay: 0.5s;
@@ -130,8 +130,9 @@
 .heroButton {
   @apply --marketplaceButtonStyles;
   border-radius: 15px;
-  margin-bottom: 70px;
-  width: 180px;
+  margin-bottom: 100px;
+  width: 170px;
+  height: 40px;
   composes: animation;
 
   animation-delay: 0.8s;

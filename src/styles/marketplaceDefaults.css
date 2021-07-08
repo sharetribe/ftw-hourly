@@ -41,6 +41,7 @@
   --matterColorBright: #fcfcfc;
   --matterColorGreen: #317a31;
   --matterColorRed: #860909;
+  --matterColorBlue: #098686;
   --matterColorLight: #ffffff;
   --matterColorWhite: #ffffff;
 
@@ -72,7 +73,7 @@
   --boxShadowButton: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
   --boxShadowListingCard: 0 0 50px 0 rgba(0, 0, 0, 0.1);
   --boxShadowNotFoundPageSearch: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
-  --boxShadowHeroSearch: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
+  --boxShadowHeroSearch: 0 4px 6px 0 rgba(0, 0, 0, 0.6);
   --boxShadowSectionLocationHover: 0 10px 30px 0 rgba(0, 0, 0, 0.1);
   --boxShadowBottomForm: 0 -2px 4px 0 rgba(0, 0, 0, 0.05);
   --boxShadowFilterButton: 0 4px 16px 0 rgba(0, 0, 0, 0.2);
@@ -284,7 +285,7 @@ textarea {
 
 .fontsLoaded {
   & body {
-    font-family: 'Euphoria Script';
+    font-family: 'Architects Daughter';
     font-family: 'poppins', Helvetica, Arial, sans-serif;
   }
   & button {

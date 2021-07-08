@@ -2,21 +2,23 @@
 
 .title {
   @apply --marketplaceH2FontStyles;
-  font-family: 'TimesNewRoman';
+  font-family: 'Architects Daughter';
   color: var(--matterColorRed);
   font-style: italic;
   text-align: center;
   font-weight: 400;
-  font-size: 50px;
-  line-height: 50px;
-  margin-top: 10px;
+  font-size: 54px;
+  line-height: 54px;
+  margin-top: 0px;
   margin-left: 0px;
   margin-right: 10px;
   margin-bottom: 5px;
   @media (--viewportMedium) {
   font-size: 60px;
   }
-
+  @media (--viewportLarge) {
+  font-size: 60px;
+  }
 }
 
 .steps {
@@ -41,15 +43,18 @@
 }
 
 .stepTitle {
+  @apply --marketplaceH2FontStyles;
+  font-family: 'Architects Daughter';
+  color: var(--matterColorBlue);
   margin-top: 1px;
   margin-left: 5px;
   margin-right: 5px;
   margin-bottom: 18px;
   text-align: center;
-  font-size: 24px;
+  font-size: 30px;
   @media (--viewportMedium) {
-  font-size: 24px;
-  margin-top: 21px;
+  font-size: 32px;
+  margin-top: 5px;
     margin-bottom: 18px;
   }
 }
