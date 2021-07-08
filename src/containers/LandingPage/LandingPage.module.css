@@ -9,20 +9,20 @@
 .heroContainer {
   display: flex;
   flex-direction: column;
-  min-height: 300px;
-  height: 67.5vh;
+  min-height: 480px;
+  height: 15.5vh;
   max-height: 600px;
-  padding: 0;
+  padding: 0px;
 
   @media (--viewportMedium) {
-    min-height: 500px;
+    min-height: 700px;
     height: 70vh;
     max-height: none;
   }
 
   @media (--viewportLarge) {
     max-height: 800px;
-    min-height: 600px;
+    min-height: 700px;
     height: calc(70vh - var(--topbarHeightDesktop));
   }
 }
@@ -31,20 +31,22 @@
   flex-grow: 1;
   justify-content: flex-end;
   padding-bottom: 32px;
+  justify-content: center;
 
   @media (--viewportMedium) {
-    padding-bottom: 83px;
+    justify-content: center;
+    padding-bottom: 63px;
   }
 
   @media (--viewportLarge) {
     justify-content: center;
-    padding-top: 60px;
+    padding-top: 5px;
   }
 }
 
 .sections {
   background-color: #fff;
-  margin: 0;
+  margin: 0px;
   padding-top: 1px;
 }
 
@@ -68,12 +70,12 @@
 }
 
 .sectionContent {
-  margin: var(--LandingPage_sectionMarginTop) 24px 51px 24px;
+  margin: var(--LandingPage_sectionMarginTop) 15px 51px 24px;
   @media (--viewportMedium) {
     max-width: 100%;
-    margin-top: 0px;
+    margin-top: 20px;
     background-color: #fff;
-    margin: var(--LandingPage_sectionMarginTopMedium) 24px 60px 24px;
+    margin: var(--LandingPage_sectionMarginTopMedium) 15px 60px 24px;
   }
 
   @media (--viewportLarge) {

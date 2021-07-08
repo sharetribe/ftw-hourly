@@ -6,21 +6,20 @@
   box-sizing: content-box;
   padding-left: 24px;
   margin-top: 2px;
-
   display: flex;
   width: 24px;
   align-self: stretch;
-  border-bottom: 2px solid var(--marketplaceColor);
+  border-bottom: 0px solid #ffffff;
   background-color: var(--matterColorLight);
 }
 
 .searchInput {
   flex-grow: 1;
-  height: 69px;
+  height: 55px;
   padding-left: 10px;
   margin: 0;
   line-height: unset;
-  border-bottom-width: 2px;
+  border-bottom-width: 0px;
 
   /* Safari bugfix: without this Safari will print placeholder to a wrong place */
   &::-webkit-input-placeholder {

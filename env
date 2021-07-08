@@ -1,0 +1,58 @@
+
+# Mandatory configuration
+#
+# Note: You also need to set Stripe secret key in Flex Console.
+#
+REACT_APP_SHARETRIBE_SDK_CLIENT_ID=ff418a87-fe73-4d96-a945-e534f3e27dc5
+REACT_APP_STRIPE_PUBLISHABLE_KEY=pk_test_51J2NbVKkEt2qnNgpO8P7AJpj3Womc7H5a6ylRvpC3qwudoY805ZQrYffYYMeirkDAzwJ3dsYRN4ZXUrmd1Nb2fsD00B9E9vVLj
+REACT_APP_MAPBOX_ACCESS_TOKEN=pk.eyJ1IjoiYnJ5Y2Vib3dtYW4iLCJhIjoiY2tweDU4dmdrMDNrbjJvcWUxZHAxY2E3byJ9.X6GDZzu1H-a0nymaI3e-uw
+
+# If you are using a process with privileged transitions,
+# Client Secret needs to be set too. The one related to Client ID.
+# You get this at Flex Console (Build -> Applications -> Add new).
+SHARETRIBE_SDK_CLIENT_SECRET=6f86dfbb18c11c6ede40611d8ffecff07d31fd5c
+
+# Or set up an alternative map provider (Google Maps). Check documentation.
+# REACT_APP_GOOGLE_MAPS_API_KEY=
+
+# Defaults
+#
+
+REACT_APP_SHARETRIBE_MARKETPLACE_CURRENCY=USD
+# Host/domain - don't use trailing slash: "/"
+REACT_APP_CANONICAL_ROOT_URL=http://localhost:3000
+
+# Social logins && SSO
+# If the app or client id is not set the auhtentication option is not shown in FTW
+REACT_APP_FACEBOOK_APP_ID=
+FACEBOOK_APP_SECRET=
+
+REACT_APP_GOOGLE_CLIENT_ID=
+GOOGLE_CLIENT_SECRET=
+
+# This is overwritten by configuration in .env.development and
+# .env.test. In production deployments use env variable and set it to
+# 'production'
+REACT_APP_ENV=production
+
+
+# CSP. You can use value 'report' or 'block'.
+# If the env varibale is missing, csp is disabled.
+REACT_APP_CSP=report
+
+# Options. Uncomment and set to test.
+#
+
+# REACT_APP_SHARETRIBE_USING_SSL=true
+# SERVER_SHARETRIBE_TRUST_PROXY=true
+# REACT_APP_SENTRY_DSN=change-me
+# BASIC_AUTH_USERNAME=sharetribe
+# BASIC_AUTH_PASSWORD=secret
+# REACT_APP_GOOGLE_ANALYTICS_ID=change-me
+
+
+# Features
+#
+
+REACT_APP_AVAILABILITY_ENABLED=true
+REACT_APP_DEFAULT_SEARCHES_ENABLED=true

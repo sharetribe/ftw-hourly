@@ -39,7 +39,6 @@
 
 .heroContent {
   margin: 0 24px 0 24px;
-
   @media (--viewportMedium) {
     margin: 0 7.5vw 0 7.5vw;
   }
@@ -60,20 +59,31 @@
 
 .heroMainTitle {
   @apply --marketplaceHeroTitleFontStyles;
-  margin-bottom: 0px;
-  color: var(--matterColorDark);
+  font-size: 56px;
+  line-height: 58px;
+  margin-top: 20px;
+  margin-right: 0px;
+  margin-bottom: 10px;
+  color: var(--matterColorRed);
   composes: animation;
   animation-delay: 0.5s;
 
   @media (--viewportMedium) {
     max-width: var(--SectionHero_desktopTitleMaxWidth);
+    font-size: 76px;
+    line-height: 76px;
+    font-weight: 400;
+    margin-top: 30px;
+    margin-right: 0px;
+    margin-bottom: 20px;
+    color: var(--matterColorRed);
   }
 }
 
 .heroMainTitle2 {
   @apply --marketplaceHeroTitleFontStyles;
   margin-top: -5px;
-  font-weight: 600;
+  font-weight: 400;
   color: var(--matterColorGreen);
     composes: animation;
   animation-delay: 0.5s;
@@ -84,29 +94,51 @@
 }
 
 .heroSubTitle {
-  @apply --marketplaceH3FontStyles;
-  font-weight: normal;
+  @apply --marketplaceH2FontStyles;
+  font-family: 'TimesNewRoman';
   font-style: italic;
   color: var(--matterColorDark);
-  margin: 0 0 32px 0;
-
+  margin: 0 20px 22px 0;
+  font-size: 22px;
   composes: animation;
   animation-delay: 0.65s;
 
   @media (--viewportMedium) {
     max-width: var(--SectionHero_desktopTitleMaxWidth);
-    margin: 0 0 47px 0;
+    margin: 0 200px 20px 0;
+    font-size: 32px;
   }
 }
 
+.searchFormHero {
+  max-width: 400px;
+  padding-left: 10px;
+  margin: 0px auto 40px 0px;
+  font-size: 18px;
+  border-bottom-width: 0px;
+  background-color: var(--matterColorLight);
+  border-width: 0px;
+  border-radius: 15px;
+  box-shadow: var(--boxShadowHeroSearch);
+
+  @media (--viewportMedium) {
+    margin-top: 24px;
+  max-width: 500px;
+    font-size: 20px;
+  }
+}
 .heroButton {
   @apply --marketplaceButtonStyles;
+  border-radius: 15px;
+  margin-bottom: 70px;
+  width: 180px;
   composes: animation;
 
   animation-delay: 0.8s;
 
   @media (--viewportMedium) {
     display: block;
-    width: 260px;
+    width: 200px;
+    margin-bottom: 200px;
   }
 }

@@ -22,17 +22,18 @@
   /* Full screen Background image located in root-folder/src/assets */
   --backgroundImage: {
     /* Gradient direction and overlaying the black color on top of the image for better readability */
-    background: linear-gradient(-45deg, rgba(0, 0, 0, 0.0), rgba(0, 0, 0, 0.0)),
+    background: linear-gradient(-45deg, rgba(255, 255, 255, 0.0), rgba(255, 255, 255, 0.0)),
       url('../../assets/background-1440.jpg');
 
     /* Add loading color for the div */
-    background-color: var(--matterColor);
+    background-color: #ffffff;
 
     /* Cover the whole screen with the background image */
-    background-size: cover;
+    background-size: contain;
 
     /* Align the image within the container */
-    background-position: center right;
+    background-position: bottom center;
+    background-repeat: no-repeat;
   }
 
   /**
@@ -84,19 +85,20 @@
 
   --marketplaceHeroTitleFontStyles: {
     font-weight: var(--fontWeightMedium);
+    font-family: 'Euphoria Script';
     font-size: 36px;
     line-height: 36px;
     letter-spacing: -0.7px;
     /* margin-top + n * line-height + margin-bottom => x * 6px */
     margin-top: 0px;
-    margin-bottom: -5px;
+    margin-bottom: 20px;
 
     @media (--viewportMedium) {
-      font-size: 64px;
-      line-height: 64px;
-      letter-spacing: -1.5px;
+      font-size: 80px;
+      line-height: 80px;
+      letter-spacing: 0px;
       /* margin-top + n * line-height + margin-bottom => x * 8px */
-      margin-top: 25px;
+      margin-top: 0px;
       margin-bottom: 23px;
     }
   }
@@ -169,19 +171,19 @@
   --marketplaceH2FontStyles: {
     font-weight: var(--fontWeightMedium);
     text-decoration-color: #317a31;
-    font-size: 24px;
-    line-height: 27px;
+    font-size: 26px;
+    line-height: 28px;
     /* margin-top + n * line-height + margin-bottom => x * 6px */
     margin-top: 10px;
     margin-bottom: 18px;
 
     @media (--viewportMedium) {
-      font-size: 24px;
+      font-size: 28px;
       text-decoration-color: #317a31;
-      line-height: 27px;
+      line-height: 32px;
       /* margin-top + n * line-height + margin-bottom => x * 8px */
       margin-top: 10px;
-      margin-bottom: 24px;
+      margin-bottom: 14px;
     }
   }
 

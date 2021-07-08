@@ -2,16 +2,26 @@
 
 .title {
   @apply --marketplaceH2FontStyles;
-  font-weight: 600;
-  font-size: 38px;
-  margin-top: -80px;
+  font-family: 'TimesNewRoman';
+  color: var(--matterColorRed);
+  font-style: italic;
+  text-align: center;
+  font-weight: 400;
+  font-size: 50px;
+  line-height: 50px;
+  margin-top: 10px;
+  margin-left: 0px;
+  margin-right: 10px;
   margin-bottom: 5px;
+  @media (--viewportMedium) {
+  font-size: 60px;
+  }
+
 }
 
 .steps {
   display: flex;
   flex-direction: column;
-
   @media (--viewportMedium) {
     flex-direction: row;
   }
@@ -46,7 +56,6 @@
 
 .createListingLink {
   margin-top: 18px;
-
   @media (--viewportMedium) {
     margin-top: 24px;
   }

@@ -17,7 +17,7 @@
 :root {
   /* ================ Colors ================ */
 
-  --marketplaceColor: #317a31;
+  --marketplaceColor: #860909;
   --marketplaceColorLight: #00bfe6;
   --marketplaceColorDark: #006a80;
 
@@ -40,7 +40,9 @@
   --matterColorNegative: #e7e7e7;
   --matterColorBright: #fcfcfc;
   --matterColorGreen: #317a31;
+  --matterColorRed: #860909;
   --matterColorLight: #ffffff;
+  --matterColorWhite: #ffffff;
 
   --matterColorLightTransparent: rgba(255, 255, 255, 0.65);
 
@@ -70,6 +72,7 @@
   --boxShadowButton: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
   --boxShadowListingCard: 0 0 50px 0 rgba(0, 0, 0, 0.1);
   --boxShadowNotFoundPageSearch: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
+  --boxShadowHeroSearch: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
   --boxShadowSectionLocationHover: 0 10px 30px 0 rgba(0, 0, 0, 0.1);
   --boxShadowBottomForm: 0 -2px 4px 0 rgba(0, 0, 0, 0.05);
   --boxShadowFilterButton: 0 4px 16px 0 rgba(0, 0, 0, 0.2);
@@ -138,13 +141,13 @@
 
   /* ================ SectionHero ================ */
 
-  --SectionHero_desktopTitleMaxWidth: 625px;
+  --SectionHero_desktopTitleMaxWidth: 800px;
 
   /* ================ TabNav ================ */
   --TabNav_linkWidth: 240px;
 
   /* ================ LandingPage ================ */
-  --LandingPage_sectionMarginTop: 40px;
+  --LandingPage_sectionMarginTop: 60px;
   --LandingPage_sectionMarginTopMedium: 60px;
   --LandingPage_sectionMarginTopLarge: 94px;
 
@@ -281,6 +284,7 @@ textarea {
 
 .fontsLoaded {
   & body {
+    font-family: 'Euphoria Script';
     font-family: 'poppins', Helvetica, Arial, sans-serif;
   }
   & button {
