@@ -59,11 +59,9 @@
 
 .heroMainTitle {
   @apply --marketplaceHeroTitleFontStyles;
-  font-size: 48px;
-  line-height: 50px;
-  margin-top: 40px;
-  margin-right: 0px;
-  margin-bottom: 5px;
+  font-size: 40px;
+  line-height: 42px;
+  margin: 40px auto 5px auto;
   color: var(--matterColorRed);
   composes: animation;
   animation-delay: 0.5s;
@@ -73,9 +71,7 @@
     font-size: 76px;
     line-height: 76px;
     font-weight: 400;
-    margin-top: 30px;
-    margin-right: 0px;
-    margin-bottom: 20px;
+    margin: 30px 0px 20px 0px;
     color: var(--matterColorRed);
   }
 }
@@ -141,5 +137,18 @@
     display: block;
     width: 200px;
     margin-bottom: 200px;
+  }
+}
+
+.searchForm {
+  max-width: 408px;
+  margin: 62px auto 0 auto;
+
+  background-color: var(--matterColorLight);
+  border-bottom: 4px solid var(--marketplaceColor);
+  box-shadow: var(--boxShadowNotFoundPageSearch);
+
+  @media (--viewportMedium) {
+    margin-top: 64px;
   }
 }

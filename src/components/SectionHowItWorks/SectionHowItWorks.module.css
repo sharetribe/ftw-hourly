@@ -7,8 +7,8 @@
   font-style: italic;
   text-align: center;
   font-weight: 400;
-  font-size: 54px;
-  line-height: 54px;
+  font-size: 40px;
+  line-height: 42px;
   margin-top: 0px;
   margin-left: 0px;
   margin-right: 10px;
@@ -40,7 +40,6 @@
   font-family: 'Times New Roman';
   font-weight: 600;
   font-size: 22px;
-  color: #000;
   font-style: italic;
   }
 
@@ -79,4 +78,35 @@
   border-radius: 4px;
   object-fit: contain;
   margin: 32px 0 10px;
+}
+
+/* Shared animation rules */
+.animation {
+  animation-name: animationTitle;
+  animation-duration: 0.5s;
+  animation-timing-function: ease-out;
+  -webkit-animation-fill-mode: forwards;
+
+  visibility: hidden;
+  opacity: 1;
+  position: relative;
+}
+
+.howitworksButton {
+  @apply --marketplaceButtonStyles;
+  font-size: 24px;
+  line-height: 26px;
+  padding: 7px 0 7px 0;
+  font-family: "architects daughter";
+  border-radius: 15px;
+  margin: auto;
+  width: 150px;
+  height: 65px;
+  margin-bottom: 30px;
+
+  @media (--viewportMedium) {
+    display: block;
+    width: 160px;
+    margin-bottom: 20px;
+  }
 }

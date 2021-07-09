@@ -1,10 +1,24 @@
 @import '../../styles/propertySets.css';
 
 .title {
-  @apply --marketplaceH1FontStyles;
-
-  margin-top: 0;
-  margin-bottom: 0;
+  @apply --marketplaceH2FontStyles;
+  font-family: 'Architects Daughter';
+  color: var(--matterColorRed);
+  font-style: italic;
+  text-align: center;
+  font-weight: 400;
+  font-size: 40px;
+  line-height: 42px;
+  margin-top: 0px;
+  margin-left: 0px;
+  margin-right: 10px;
+  margin-bottom: 5px;
+  @media (--viewportMedium) {
+  font-size: 60px;
+  }
+  @media (--viewportLarge) {
+  font-size: 60px;
+  }
 }
 
 .locations {
@@ -82,15 +96,20 @@
 
 .linkText {
   @apply --marketplaceH2FontStyles;
-  color: var(--matterColor);
-  margin-top: 15px;
-  margin-bottom: 0;
-
+  font-family: 'Architects Daughter';
+  color: var(--matterColorBlue);
+  margin-top: 10px;
+  margin-left: 5px;
+  margin-right: 5px;
+  margin-bottom: 18px;
+  text-align: center;
+  font-size: 30px;
   @media (--viewportMedium) {
-    margin-top: 21px;
+  font-size: 34px;
+  margin-top: 10px;
+  margin-bottom: 18px;
   }
-}
-
+  }
 .locationName {
-  color: var(--marketplaceColor);
+  color: var(--matterColorBlue);
 }
