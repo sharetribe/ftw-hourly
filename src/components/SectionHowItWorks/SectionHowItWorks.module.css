@@ -36,6 +36,14 @@
   }
 }
 
+.stepText {
+  font-family: 'Times New Roman';
+  font-weight: 600;
+  font-size: 22px;
+  color: #000;
+  font-style: italic;
+  }
+
 .step:last-of-type {
   @media (--viewportMedium) {
     margin-right: 0;
@@ -53,7 +61,7 @@
   text-align: center;
   font-size: 30px;
   @media (--viewportMedium) {
-  font-size: 32px;
+  font-size: 34px;
   margin-top: 5px;
     margin-bottom: 18px;
   }
