@@ -28,7 +28,7 @@
 .logoLink {
   @apply --TopbarDesktop_linkHover;
   flex-shrink: 0;
-  padding: 15px 24px 25px 24px;
+  padding: 15px 12px 25px 12px;
   height: 100%;
 
   @media (--viewportLarge) {
