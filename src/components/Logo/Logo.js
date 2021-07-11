@@ -3,8 +3,8 @@ import { oneOf, string } from 'prop-types';
 import classNames from 'classnames';
 
 import config from '../../config';
-import MobileLogoImage from './Cafe-Temps-Red-Small.png';
-import DesktopLogoImage from './Cafe-Temps-Red.png';
+import MobileLogoImage from './cafe-temps-red-logo-mobile.png';
+import DesktopLogoImage from './cafe-temps-red-logo-full.png';
 import css from './Logo.module.css';
 
 const Logo = props => {

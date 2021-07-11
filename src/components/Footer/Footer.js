@@ -4,6 +4,7 @@ import { FormattedMessage, injectIntl, intlShape } from '../../util/reactIntl';
 import classNames from 'classnames';
 import { twitterPageURL } from '../../util/urlHelpers';
 import config from '../../config';
+import footerLogo from '../Logo/cafe-temps-red-logo-tagline.png'
 import {
   IconSocialMediaFacebook,
   IconSocialMediaInstagram,
@@ -67,7 +68,7 @@ const Footer = props => {
             <div className={css.organization} id="organization">
               <NamedLink name="LandingPage" className={css.logoLink}>
                 <span className={css.logo}>
-                  <Logo format="desktop" />
+                  <img src={footerLogo} />
                 </span>
               </NamedLink>
               <div className={css.organizationInfo}>
