@@ -482,7 +482,9 @@ class FieldDateAndTimeInput extends Component {
               useMobileMargins
               showErrorMessage={false}
               validate={bookingDateRequired('Required')}
-              onClose={() => this.setState({currentMonth: getMonthStartInTimeZone(TODAY, this.props.timeZone)})}
+              onClose={() =>
+                this.setState({ currentMonth: getMonthStartInTimeZone(TODAY, this.props.timeZone) })
+              }
             />
           </div>
         </div>
