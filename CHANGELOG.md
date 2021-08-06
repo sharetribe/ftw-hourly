@@ -19,6 +19,8 @@ https://github.com/sharetribe/flex-template-web/
 
 ## [v10.2.0] 2021-08-06
 
+- [fix] Fix bug wrong current month after leaving date input with wrong month
+  [#161](https://github.com/sharetribe/ftw-hourly/pull/161)
 - [fix] Handle changing the start time in BookingTimeForm so that it doesn't cause error for
   fetching the lineItems. [#143](https://github.com/sharetribe/ftw-hourly/pull/143)
 
