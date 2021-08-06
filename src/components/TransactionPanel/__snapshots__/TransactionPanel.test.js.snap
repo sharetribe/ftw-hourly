@@ -3190,7 +3190,7 @@ exports[`TransactionPanel - Order delivered matches snapshot 1`] = `
         listingDeleted={false}
         listingId="listing1"
         listingTitle="listing1 title"
-        panelHeadingState="deliveded"
+        panelHeadingState="delivered"
         providerName={
           <UserDisplayName
             bannedUserDisplayName={null}
@@ -8649,7 +8649,7 @@ exports[`TransactionPanel - Sale delivered matches snapshot 1`] = `
         listingDeleted={false}
         listingId="listing1"
         listingTitle="listing1 title"
-        panelHeadingState="deliveded"
+        panelHeadingState="delivered"
         providerName={
           <UserDisplayName
             bannedUserDisplayName={null}

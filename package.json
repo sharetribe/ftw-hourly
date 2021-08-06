@@ -1,6 +1,6 @@
 {
   "name": "app",
-  "version": "10.1.1",
+  "version": "10.2.0",
   "private": true,
   "license": "Apache-2.0",
   "dependencies": {
@@ -34,7 +34,7 @@
     "intl-pluralrules": "^1.0.3",
     "jose": "3.11.4",
     "jstimezonedetect": "^1.0.7",
-    "lodash": "^4.17.19",
+    "lodash": "^4.17.21",
     "mapbox-gl-multitouch": "^1.0.3",
     "moment": "^2.22.2",
     "moment-timezone": "^0.5.26",
@@ -62,7 +62,7 @@
     "redux-thunk": "^2.3.0",
     "seedrandom": "^3.0.5",
     "sharetribe-flex-sdk": "1.13.0",
-    "sharetribe-scripts": "5.0.0",
+    "sharetribe-scripts": "5.0.1",
     "smoothscroll-polyfill": "^0.4.0",
     "source-map-support": "^0.5.9",
     "url": "^0.11.0"
@@ -79,9 +79,8 @@
     "prettier": "^1.18.2"
   },
   "resolutions": {
-    "react-dates/lodash": "^4.17.19",
+    "react-dates/lodash": "^4.17.21",
     "react-test-renderer": "^16.13.1",
-    "handlebars": "^4.5.3",
     "serialize-javascript": "^2.1.1"
   },
   "nodemonConfig": {
