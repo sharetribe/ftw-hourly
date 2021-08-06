@@ -15,10 +15,45 @@ https://github.com/sharetribe/flex-template-web/
 
 ---
 
-## Upcoming version 2020-XX-XX
+## Upcoming version 2021-XX-XX
 
+## [v10.2.0] 2021-08-06
+
+- [fix] Fix bug wrong current month after leaving date input with wrong month
+  [#161](https://github.com/sharetribe/ftw-hourly/pull/161)
 - [fix] Handle changing the start time in BookingTimeForm so that it doesn't cause error for
   fetching the lineItems. [#143](https://github.com/sharetribe/ftw-hourly/pull/143)
+
+### Updates from upstream (FTW-daily v8.2.0)
+
+- [change] Update lodash version number in package.json resolutions section.
+  [#1459](https://github.com/sharetribe/ftw-daily/pull/1459)
+- [change] Dependabot update: url-parse (v1.5.1)
+  [#1436](https://github.com/sharetribe/ftw-daily/pull/1436)
+- [change] Dependabot update: lodash (v4.17.21)
+  [#1437](https://github.com/sharetribe/ftw-daily/pull/1437)
+- [change] Dependabot update: tar (v4.4.15)
+  [#1457](https://github.com/sharetribe/ftw-daily/pull/1457)
+- [change] Dependabot update: ws (v6.2.2) [#1446](https://github.com/sharetribe/ftw-daily/pull/1446)
+- [change] Dependabot update: hosted-git-info (v2.8.9)
+  [#1438](https://github.com/sharetribe/ftw-daily/pull/1438)
+- [change] Dependabot update: trim-newlines (v3.0.1)
+  [#1449](https://github.com/sharetribe/ftw-daily/pull/1449)
+- [change] Update sharetribe-scripts to version 5.0.1 which improves the instructions that are shown
+  after running yarn build command. [#1458](https://github.com/sharetribe/ftw-daily/pull/1458)
+- [fix] Remove unused dep-resolution: handlebars.
+  [#1456](https://github.com/sharetribe/ftw-daily/pull/1456)
+- [fix] PriceFilterPopup: filter popup is not closing when clicking outside on Safari.
+  [#1455](https://github.com/sharetribe/ftw-daily/pull/1455)
+- [fix] Add missing helper: isNumber. Used when Number.MAX_SAFE_INTEGER is reached.
+  [#1453](https://github.com/sharetribe/ftw-daily/pull/1453)
+- [fix] minutesBetween: remove thrown an error on negative diff.
+  [#1444](https://github.com/sharetribe/ftw-daily/pull/1444)
+- [fix] TransactionPanel: fix typo [#1451](https://github.com/sharetribe/ftw-daily/pull/1451)
+- [fix] searchMode (has_all/has_any) disappeared, when search-by-moving-the-map was used.
+  [#1443](https://github.com/sharetribe/ftw-daily/pull/1443)
+
+  [v10.2.0]: https://github.com/sharetribe/ftw-hourly/compare/v10.1.1...v10.2.0
 
 ## [v10.1.1] 2021-04-20
 
