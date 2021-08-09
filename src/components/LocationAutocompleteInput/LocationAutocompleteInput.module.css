@@ -3,6 +3,7 @@
 .root {
   position: relative;
   display: flex;
+  width: 50%;
 }
 
 .icon {

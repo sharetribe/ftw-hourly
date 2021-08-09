@@ -164,17 +164,35 @@ const TopbarDesktop = props => {
         </span>
       </NamedLink>
     );
+  const infoLink =
+    isAuthenticatedOrJustHydrated && !(currentUserListingFetched && !currentUserListing) ? null : (
+      <NamedLink className={css.createListingLink} name="NewListingPage">
+        <span className={css.createListing}>
+          <FormattedMessage id="TopbarDesktop.info" />
+        </span>
+      </NamedLink>
+    );
+  const contactLink =
+    isAuthenticatedOrJustHydrated && !(currentUserListingFetched && !currentUserListing) ? null : (
+      <NamedLink className={css.createListingLink} name="NewListingPage">
+        <span className={css.createListing}>
+          <FormattedMessage id="TopbarDesktop.contact" />
+        </span>
+      </NamedLink>
+    );
 
   return (
     <nav className={classes}>
-      <NamedLink className={css.logoLink} name="LandingPage">
+       <NamedLink className={css.logoLink} name="LandingPage">
         <Logo
           format="desktop"
-          className={css.logo}
           alt={intl.formatMessage({ id: 'TopbarDesktop.logo' })}
         />
-      </NamedLink>
+       </NamedLink>
       {search}
+      {infoLink}
+      {contactLink}
+      {infoLink}
       {listingLink}
       {createListingLink}
       {inboxLink}

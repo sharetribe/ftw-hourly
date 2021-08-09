@@ -4,3 +4,10 @@ If you need to add css to the Logo you can do it here.
 .logoMobile {
 }
 */
+.ghost{
+  width: 16%;
+    & img {
+      width: 100%;
+      margin: 8px 0px 0px 15px;
+      }
+}

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from '../../util/reactIntl';
 import classNames from 'classnames';
 import { lazyLoadWithDimensions } from '../../util/contextHelpers';
-
+import ReactPlayer from 'react-player'
 import { NamedLink } from '../../components';
 
 import css from './SectionLocations.module.css';
@@ -46,11 +46,11 @@ const SectionLocations = props => {
 
   return (
     <div className={classes}>
-      <div className={css.title}>
+      {/* <div className={css.title}>
         <FormattedMessage id="SectionLocations.title" />
-      </div>
+      </div> */}
       <div className={css.locations}>
-        {locationLink(
+        {/* {locationLink(
           'New York',
           nyImage,
           '?address=New%20York%20City%2C%20New%20York%2C%20USA&bounds=40.917576401307%2C-73.7008392055224%2C40.477399%2C-74.2590879797556'
@@ -64,7 +64,11 @@ const SectionLocations = props => {
           'San Francisco',
           sfImage,
           '?address=San%20Francisco%2C%20California%2C%20USA&bounds=37.8324430069081%2C-122.354995082683%2C37.6044780500533%2C-122.517910874663'
-        )}
+        )} */}
+        <ReactPlayer url='https://vimeo.com/585035315'
+          playing={true} muted={true}
+          width={1200} height={1200}
+        />
       </div>
     </div>
   );

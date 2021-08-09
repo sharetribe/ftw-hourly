@@ -75,14 +75,11 @@ export const LandingPageComponent = props => {
                 <SectionLocations />
               </div>
             </li>
-            <li className={css.section}>
+            {/* <li className={css.section}>
               <div className={css.sectionContent}>
-                <SectionHowItWorks
-                  currentUserListing={currentUserListing}
-                  currentUserListingFetched={currentUserListingFetched}
-                />
+                <SectionHowItWorks />
               </div>
-            </li>
+            </li> */}
           </ul>
         </LayoutWrapperMain>
         <LayoutWrapperFooter>

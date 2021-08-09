@@ -82,6 +82,7 @@ class TopbarSearchFormComponent extends Component {
                         this.searchInput = node;
                       }}
                       input={searchInput}
+                      useDefaultPredictions={false}
                       meta={meta}
                     />
                   );

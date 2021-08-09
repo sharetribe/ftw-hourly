@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import IconLogo from './IconLogo';
 import css from './Logo.module.css';
-
+import IconGhost from "../../assets/ghost21.jpg"
 const Logo = props => {
   const { className, format, ...rest } = props;
   const mobileClasses = classNames(css.logoMobile, className);
@@ -13,11 +13,14 @@ const Logo = props => {
   // <img className={className} src={LogoImage} alt={config.siteTitle} {...rest} />
 
   return (
-    <IconLogo
-      className={format === 'desktop' ? className : mobileClasses}
-      format={format}
-      {...rest}
-    />
+    // <IconLogo
+    //   className={format === 'desktop' ? className : mobileClasses}
+    //   format={format}
+    //   {...rest}
+    // />
+    <span className={css.ghost}>
+      <img src={IconGhost} alt='ghost21' />
+    </span>
   );
 };
 

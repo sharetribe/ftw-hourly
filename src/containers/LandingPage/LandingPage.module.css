@@ -22,7 +22,7 @@
 
   @media (--viewportLarge) {
     max-height: 800px;
-    min-height: 600px;
+    min-height: 402px;
     height: calc(70vh - var(--topbarHeightDesktop));
   }
 }
@@ -38,7 +38,7 @@
 
   @media (--viewportLarge) {
     justify-content: center;
-    padding-top: 60px;
+    padding-top: 75px;
   }
 }
 
@@ -88,7 +88,7 @@
 
 .sectionContentFirstChild {
   composes: sectionContent;
-  margin-top: 3vh;
+  margin-top: -40vh;
 }
 
 /* A bar on top of light sections */

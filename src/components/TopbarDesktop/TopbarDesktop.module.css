@@ -26,13 +26,14 @@
 
 /* logo */
 .logoLink {
-  @apply --TopbarDesktop_linkHover;
+  /* @apply --TopbarDesktop_linkHover;
   flex-shrink: 0;
   padding: 21px 24px 21px 24px;
-  height: 100%;
+  height: 100%; */
 
   @media (--viewportLarge) {
-    padding: 21px 36px 21px 36px;
+    width: 10%;
+    /* padding: 21px 36px 21px 36px; */
   }
 }
 
@@ -53,12 +54,12 @@
   flex-grow: 1;
   height: 100%;
   margin-right: 24px;
-  border-left-style: solid;
+  /* border-left-style: solid;
   border-left-width: 1px;
-  border-left-color: var(--matterColorNegative);
+  border-left-color: var(--matterColorNegative); */
 
   @media (--viewportLarge) {
-    padding-left: 0;
+    margin-left: 70px;
   }
 }
 
@@ -69,11 +70,11 @@
 }
 
 .topbarSearchWithLeftPadding {
-  padding-left: 24px;
+  /* padding-left: 24px; */
   height: var(--topbarHeightDesktop);
 
   @media (--viewportLarge) {
-    padding-left: 34px;
+    /* padding-left: 34px; */
   }
 }
 
