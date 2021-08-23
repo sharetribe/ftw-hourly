@@ -167,7 +167,7 @@ export default function reducer(state = initialState, action = {}) {
     case SHOW_LISTINGS_REQUEST:
       return { ...state, showListingsError: null };
     case SHOW_LISTINGS_SUCCESS:
-      return { ...initialState };
+      return state;
 
     case SHOW_LISTINGS_ERROR:
       // eslint-disable-next-line no-console
@@ -378,7 +378,6 @@ export function requestShowListing(actionPayload) {
       .then(response => {
         // EditListingPage fetches new listing data, which also needs to be added to global data
         dispatch(addMarketplaceEntities(response));
-        // In case of success, we'll clear state.EditListingPage (user will be redirected away)
         dispatch(showListingsSuccess(response));
         return response;
       })
