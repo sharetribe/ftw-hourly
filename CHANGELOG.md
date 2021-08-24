@@ -17,6 +17,10 @@ https://github.com/sharetribe/flex-template-web/
 
 ## Upcoming version 2021-XX-XX
 
+- [fix] EditListingPage: fix an old bug (before we had draft-listing state the update flow was
+  different and we cleared state after a sequence of API calls)
+  [#164](https://github.com/sharetribe/ftw-hourly/pull/164)
+
 ## [v10.2.0] 2021-08-06
 
 - [fix] Fix bug wrong current month after leaving date input with wrong month
