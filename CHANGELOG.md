@@ -17,9 +17,30 @@ https://github.com/sharetribe/flex-template-web/
 
 ## Upcoming version 2021-XX-XX
 
+## [v10.3.0] 2021-09-22
+
 - [fix] EditListingPage: fix an old bug (before we had draft-listing state the update flow was
   different and we cleared state after a sequence of API calls)
   [#164](https://github.com/sharetribe/ftw-hourly/pull/164)
+
+### Updates from upstream (FTW-daily v8.3.0)
+
+- [change] Increase input font size on mobile to avoid Mobile Safari zooming in when focusing on
+  inputs. [#1473](https://github.com/sharetribe/ftw-daily/pull/1473)
+- [change] Update browserlist data to match modern browsers.
+  [#1468](https://github.com/sharetribe/ftw-daily/pull/1468)
+- [fix] Font-size was too big for Stripe Elements on small screens on PaymentMethodsForm.
+  [#1471](https://github.com/sharetribe/ftw-daily/pull/1471)
+- [fix] Remove unnecessary language import: fr.json
+  [#1469](https://github.com/sharetribe/ftw-daily/pull/1469)
+- [fix] Font-size for Poppins font was too big for Stripe Elements on small screens.
+  [#1465](https://github.com/sharetribe/ftw-daily/pull/1465)
+- [change] Updates to some of the libraries. React Intl had a breaking change v3 -> v5.
+  [#464](https://github.com/sharetribe/ftw-daily/pull/1464)
+- [fix] Adblockers might block Google analytics (window.ga) and cause an error.
+  [#1462](https://github.com/sharetribe/ftw-daily/pull/1462)
+
+  [v10.3.0]: https://github.com/sharetribe/ftw-hourly/compare/v10.2.0...v10.3.0
 
 ## [v10.2.0] 2021-08-06
 
