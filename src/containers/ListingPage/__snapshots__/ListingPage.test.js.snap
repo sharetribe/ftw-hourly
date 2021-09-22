@@ -269,7 +269,7 @@ exports[`ListingPage matches snapshot 1`] = `
             onManageDisableScrolling={[Function]}
             onSubmit={[Function]}
             title={
-              <FormattedMessage
+              <Memo(MemoizedFormattedMessage)
                 id="ListingPage.bookingTitle"
                 values={
                   Object {

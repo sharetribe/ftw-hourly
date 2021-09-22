@@ -29,9 +29,8 @@ exports[`InboxPage matches snapshot 1`] = `
       <h1
         className="title"
       >
-        <FormattedMessage
+        <MemoizedFormattedMessage
           id="InboxPage.title"
-          values={Object {}}
         />
       </h1>
       <div
@@ -53,7 +52,6 @@ exports[`InboxPage matches snapshot 1`] = `
             intl={
               Object {
                 "formatDate": [Function],
-                "formatHTMLMessage": [Function],
                 "formatMessage": [Function],
                 "formatNumber": [Function],
                 "formatPlural": [Function],
@@ -207,7 +205,6 @@ exports[`InboxPage matches snapshot 1`] = `
             intl={
               Object {
                 "formatDate": [Function],
-                "formatHTMLMessage": [Function],
                 "formatMessage": [Function],
                 "formatNumber": [Function],
                 "formatPlural": [Function],
@@ -394,9 +391,8 @@ exports[`InboxPage matches snapshot 2`] = `
       <h1
         className="title"
       >
-        <FormattedMessage
+        <MemoizedFormattedMessage
           id="InboxPage.title"
-          values={Object {}}
         />
       </h1>
       <TabNav
@@ -415,9 +411,8 @@ exports[`InboxPage matches snapshot 2`] = `
               },
               "selected": true,
               "text": <span>
-                <FormattedMessage
+                <Memo(MemoizedFormattedMessage)
                   id="InboxPage.ordersTabTitle"
-                  values={Object {}}
                 />
               </span>,
             },
@@ -430,9 +425,8 @@ exports[`InboxPage matches snapshot 2`] = `
               },
               "selected": false,
               "text": <span>
-                <FormattedMessage
+                <Memo(MemoizedFormattedMessage)
                   id="InboxPage.salesTabTitle"
-                  values={Object {}}
                 />
               </span>,
             },
@@ -455,7 +449,6 @@ exports[`InboxPage matches snapshot 2`] = `
             intl={
               Object {
                 "formatDate": [Function],
-                "formatHTMLMessage": [Function],
                 "formatMessage": [Function],
                 "formatNumber": [Function],
                 "formatPlural": [Function],
@@ -609,7 +602,6 @@ exports[`InboxPage matches snapshot 2`] = `
             intl={
               Object {
                 "formatDate": [Function],
-                "formatHTMLMessage": [Function],
                 "formatMessage": [Function],
                 "formatNumber": [Function],
                 "formatPlural": [Function],
@@ -881,9 +873,8 @@ exports[`InboxPage matches snapshot 4`] = `
       <h1
         className="title"
       >
-        <FormattedMessage
+        <MemoizedFormattedMessage
           id="InboxPage.title"
-          values={Object {}}
         />
       </h1>
       <div
@@ -905,7 +896,6 @@ exports[`InboxPage matches snapshot 4`] = `
             intl={
               Object {
                 "formatDate": [Function],
-                "formatHTMLMessage": [Function],
                 "formatMessage": [Function],
                 "formatNumber": [Function],
                 "formatPlural": [Function],
@@ -1059,7 +1049,6 @@ exports[`InboxPage matches snapshot 4`] = `
             intl={
               Object {
                 "formatDate": [Function],
-                "formatHTMLMessage": [Function],
                 "formatMessage": [Function],
                 "formatNumber": [Function],
                 "formatPlural": [Function],
