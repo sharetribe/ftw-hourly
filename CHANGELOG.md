@@ -17,6 +17,19 @@ https://github.com/sharetribe/flex-template-web/
 
 ## Upcoming version 2021-XX-XX
 
+- [change] Use en-US defaults for all time formatting. This changes the format from "23:00" to
+  "11:00 PM" in places where it wasn't consistent. This can be controlled with the `hourCycle`
+  option in the `formattingOptions` parameter given to the `localizeAndFormatDate` function in
+  `src/util/dates.js`.
+
+  To get the former behavior back, use `hourCycle: 'h24'`. See full list of options here:
+
+  https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale/hourCycle
+
+  This change also fixes the date util tests in a local environment.
+
+  [#171](https://github.com/sharetribe/ftw-hourly/pull/171)
+
 ## [v10.3.0] 2021-09-22
 
 - [fix] EditListingPage: fix an old bug (before we had draft-listing state the update flow was

@@ -2,9 +2,12 @@
 
 [![CircleCI](https://circleci.com/gh/sharetribe/ftw-hourly.svg?style=svg)](https://circleci.com/gh/sharetribe/ftw-hourly)
 
-> Note: We also have two more templates available: [FTW-daily](https://github.com/sharetribe/ftw-daily) and [FTW-product](https://github.com/sharetribe/ftw-product).
-> FTW-daily focuses on day-based booking processes. You can [get it from GitHub](https://github.com/sharetribe/ftw-daily).
-> FTW-product focuses on product marketplace with listing stock management. You can find more information in the [introduction to FTW-product Flex Docs](https://www.sharetribe.com/docs/ftw-introduction/ftw-product/).
+> Note: We also have two more templates available:
+> [FTW-daily](https://github.com/sharetribe/ftw-daily) and
+> [FTW-product](https://github.com/sharetribe/ftw-product). FTW-daily focuses on day-based booking
+> processes. You can [get it from GitHub](https://github.com/sharetribe/ftw-daily). FTW-product
+> focuses on product marketplace with listing stock management. You can find more information in the
+> [introduction to FTW-product Flex Docs](https://www.sharetribe.com/docs/ftw-introduction/ftw-product/).
 
 This is a template web application for a Sharetribe Flex marketplace using **time-based booking
 process**. This repository is a fork from the existing
