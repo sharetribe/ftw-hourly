@@ -17,6 +17,8 @@ https://github.com/sharetribe/flex-template-web/
 
 ## Upcoming version 2021-XX-XX
 
+- [fix] Temporarily disallow Node v17, since it causes issues with dependencies.
+  [#173](https://github.com/sharetribe/ftw-hourly/pull/173)
 - [change] Use en-US defaults for all time formatting. This changes the format from "23:00" to
   "11:00 PM" in places where it wasn't consistent. This can be controlled with the `hourCycle`
   option in the `formattingOptions` parameter given to the `localizeAndFormatDate` function in
