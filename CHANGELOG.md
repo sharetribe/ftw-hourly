@@ -17,6 +17,9 @@ https://github.com/sharetribe/flex-template-web/
 
 ## Upcoming version 2021-XX-XX
 
+- [fix] When changing calendar month, the current month was not set correctly. (Selecting date
+  closes the react-dates calendar and today was saved instead of currently selected one.)
+  [#176](https://github.com/sharetribe/ftw-hourly/pull/176)
 - [fix] Temporarily disallow Node v17, since it causes issues with dependencies.
   [#173](https://github.com/sharetribe/ftw-hourly/pull/173)
 - [change] Use en-US defaults for all time formatting. This changes the format from "23:00" to
