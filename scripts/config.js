@@ -228,11 +228,11 @@ const advancedSettings = settings => {
       name: 'REACT_APP_CANONICAL_ROOT_URL',
       message: `What is your canonical root URL?
 ${chalk.dim(
-  'Canonical root URL of the marketplace is needed for social media sharing, SEO optimization, and social logins. When developing the template application locally URL is usually http://localhost:3000 (Note: you should omit any trailing slash)'
+  'Canonical root URL of the marketplace is needed for social media sharing, SEO optimization, and social logins. When developing the template application locally URL is usually http://localhost:3800 (Note: you should omit any trailing slash)'
 )}
 `,
       default: function() {
-        return rootUrlDefault ? rootUrlDefault : 'http://localhost:3000';
+        return rootUrlDefault ? rootUrlDefault : 'http://localhost:3800';
       },
       when: function(answers) {
         return answers.showAdvancedSettings;

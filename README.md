@@ -39,7 +39,7 @@ git clone git@github.com:sharetribe/ftw-hourly.git             # clone this repo
 cd ftw-hourly/                                                 # change to the cloned directory
 yarn install                                                   # install dependencies
 yarn run config                                                # add the mandatory env vars to your local config
-yarn run dev                                                   # start the dev server, this will open a browser in localhost:3000
+yarn run dev                                                   # start the dev server, this will open a browser in localhost:3800
 ```
 
 You can also follow along the
