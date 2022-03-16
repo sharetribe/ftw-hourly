@@ -9,7 +9,7 @@
 
   @media (--viewportMedium) {
     flex-basis: 576px;
-    height: 100%;
+    height: unset;
     padding: var(--modalPaddingMedium);
     background-color: var(--matterColorLight);
     margin-top: 12.5vh;
@@ -135,13 +135,10 @@
   flex-grow: 1;
   display: flex;
   flex-direction: column;
-  /* Mobile phones introduce bottom-bar, which takes 102px vertical space.
-     In addition to that we have fixed button that takes 84px vertical space.
-  */
-  margin: 0 0 186px 0;
+  padding: 0;
 
   @media (--viewportMedium) {
-    margin: 0;
+    padding: 0;
     min-height: 400px;
   }
 
