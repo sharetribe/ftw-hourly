@@ -17,7 +17,12 @@ https://github.com/sharetribe/flex-template-web/
 
 ## Upcoming version 2022-XX-XX
 
-## [v8.4.1] 2022-03-16
+## [v10.4.1] 2022-03-16
+
+- [fix] FieldDateInput: input font-size must be min 16px for mobile. EditListingPage.duck: fix image
+  upload (dublicate images shown). [#186](https://github.com/sharetribe/ftw-daily/pull/186)
+
+### Updates from upstream (FTW-daily v8.4.1)
 
 - [fix] Portal version of Modals couldn't use 100vh on mobile Safari. Safari changes the window's
   height based on if the location bar is squeezed or not (and that depends on scroll-effect).
@@ -28,7 +33,7 @@ https://github.com/sharetribe/flex-template-web/
 - [add] Code comment about "REACT_APP" prefix in environment variables.
   [#1492](https://github.com/sharetribe/ftw-daily/pull/1492)
 
-  [v8.4.1]: https://github.com/sharetribe/ftw-daily/compare/v8.4.0...v8.4.1
+  [v10.4.1]: https://github.com/sharetribe/ftw-hourly/compare/v10.4.0...v10.4.1
 
 ## [v10.4.0] 2021-12-02
 
