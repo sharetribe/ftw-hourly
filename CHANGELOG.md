@@ -15,7 +15,20 @@ https://github.com/sharetribe/flex-template-web/
 
 ---
 
-## Upcoming version 2021-XX-XX
+## Upcoming version 2022-XX-XX
+
+## [v8.4.1] 2022-03-16
+
+- [fix] Portal version of Modals couldn't use 100vh on mobile Safari. Safari changes the window's
+  height based on if the location bar is squeezed or not (and that depends on scroll-effect).
+  [#1501](https://github.com/sharetribe/ftw-daily/pull/1501)
+- [fix] Setting multiple environment variables in Windows requires using the set command before each
+  individual variable. Updated the 'for windows users' section in documentation.
+  [#1491](https://github.com/sharetribe/ftw-daily/pull/1491)
+- [add] Code comment about "REACT_APP" prefix in environment variables.
+  [#1492](https://github.com/sharetribe/ftw-daily/pull/1492)
+
+  [v8.4.1]: https://github.com/sharetribe/ftw-daily/compare/v8.4.0...v8.4.1
 
 ## [v10.4.0] 2021-12-02
 
