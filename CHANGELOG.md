@@ -17,6 +17,9 @@ https://github.com/sharetribe/flex-template-web/
 
 ## Upcoming version 2022-XX-XX
 
+- [delete] Remove old unused translation keys.
+  [#190](https://github.com/sharetribe/ftw-hourly/pull/190)
+
 ## [v10.4.1] 2022-03-16
 
 - [fix] FieldDateInput: input font-size must be min 16px for mobile. EditListingPage.duck: fix image
