@@ -17,8 +17,28 @@ https://github.com/sharetribe/flex-template-web/
 
 ## Upcoming version 2022-XX-XX
 
+## [v10.5.0] 2022-05-16
+
+- Add support for hosted translations. (PR made in upstream repo: FTW-daily)
+
 - [delete] Remove old unused translation keys.
   [#190](https://github.com/sharetribe/ftw-hourly/pull/190)
+
+### Updates from upstream (FTW-daily v8.5.0)
+
+- [add] Add support for hosted translations.
+
+  - This PR fetches "content/translation.json" from a new Asset Delivery API. The file is editable
+    through the Flex Console.
+  - It also adds all the missing translation keys to existing non-English translation files. This
+    means that those files might now include messages in English.
+
+  [#1510](https://github.com/sharetribe/ftw-daily/pull/1510)
+
+- [delete] Remove old unused translation keys.
+  [#1511](https://github.com/sharetribe/ftw-daily/pull/1511)
+
+  [v10.5.0]: https://github.com/sharetribe/ftw-hourly/compare/v10.4.1...v10.5.0
 
 ## [v10.4.1] 2022-03-16
 
