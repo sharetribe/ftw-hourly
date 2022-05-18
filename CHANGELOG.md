@@ -15,8 +15,54 @@ https://github.com/sharetribe/flex-template-web/
 
 ---
 
-## Upcoming version 2021-XX-XX
+## Upcoming version 2022-XX-XX
 
+## [v10.5.0] 2022-05-16
+
+- Add support for hosted translations. (PR made in upstream repo: FTW-daily)
+
+- [delete] Remove old unused translation keys.
+  [#190](https://github.com/sharetribe/ftw-hourly/pull/190)
+
+### Updates from upstream (FTW-daily v8.5.0)
+
+- [add] Add support for hosted translations.
+
+  - This PR fetches "content/translation.json" from a new Asset Delivery API. The file is editable
+    through the Flex Console.
+  - It also adds all the missing translation keys to existing non-English translation files. This
+    means that those files might now include messages in English.
+
+  [#1510](https://github.com/sharetribe/ftw-daily/pull/1510)
+
+- [delete] Remove old unused translation keys.
+  [#1511](https://github.com/sharetribe/ftw-daily/pull/1511)
+
+  [v10.5.0]: https://github.com/sharetribe/ftw-hourly/compare/v10.4.1...v10.5.0
+
+## [v10.4.1] 2022-03-16
+
+- [fix] FieldDateInput: input font-size must be min 16px for mobile. EditListingPage.duck: fix image
+  upload (dublicate images shown). [#186](https://github.com/sharetribe/ftw-daily/pull/186)
+
+### Updates from upstream (FTW-daily v8.4.1)
+
+- [fix] Portal version of Modals couldn't use 100vh on mobile Safari. Safari changes the window's
+  height based on if the location bar is squeezed or not (and that depends on scroll-effect).
+  [#1501](https://github.com/sharetribe/ftw-daily/pull/1501)
+- [fix] Setting multiple environment variables in Windows requires using the set command before each
+  individual variable. Updated the 'for windows users' section in documentation.
+  [#1491](https://github.com/sharetribe/ftw-daily/pull/1491)
+- [add] Code comment about "REACT_APP" prefix in environment variables.
+  [#1492](https://github.com/sharetribe/ftw-daily/pull/1492)
+
+  [v10.4.1]: https://github.com/sharetribe/ftw-hourly/compare/v10.4.0...v10.4.1
+
+## [v10.4.0] 2021-12-02
+
+- [fix] When changing calendar month, the current month was not set correctly. (Selecting date
+  closes the react-dates calendar and today was saved instead of currently selected one.)
+  [#176](https://github.com/sharetribe/ftw-hourly/pull/176)
 - [fix] Temporarily disallow Node v17, since it causes issues with dependencies.
   [#173](https://github.com/sharetribe/ftw-hourly/pull/173)
 - [change] Use en-US defaults for all time formatting. This changes the format from "23:00" to
@@ -31,6 +77,37 @@ https://github.com/sharetribe/flex-template-web/
   This change also fixes the date util tests in a local environment.
 
   [#171](https://github.com/sharetribe/ftw-hourly/pull/171)
+
+### Updates from upstream (FTW-daily v8.4.0)
+
+- [fix] Mobile safari zooms if input-related elements have smaller font-size than 16px. This updates
+  textarea and select element styles too. [#1489](https://github.com/sharetribe/ftw-daily/pull/1489)
+- [fix] Dependabot: Bump passport-oauth2 from 1.5.0 to 1.6.1
+  [#1487](https://github.com/sharetribe/ftw-daily/pull/1487)
+- [fix] Fix bugs in checkout process:
+
+  - Submit button was enabled prematurely for onetime payments
+  - Toggling between default card and onetime payment flows was not working correctly in case of
+    error (e.g. network error).
+  - Calling Stripe.confirmCardPayment when status is requires_capture is unnecessary.
+
+  [#1486](https://github.com/sharetribe/ftw-daily/pull/1486)
+
+- [change] Update many dependencies. See full list in the package.json changes in the PR.
+  [#1483](https://github.com/sharetribe/ftw-daily/pull/1483)
+- [fix] Double click issue. Show dedicated message, when current user doesn't have a pending email
+  address, but there's a verification error.
+  [#1485](https://github.com/sharetribe/ftw-daily/pull/1485)
+- [change] Update comment about how scrollIntoView works with links using hash.
+  [#1484](https://github.com/sharetribe/ftw-daily/pull/1484)
+- [fix] Account pages: mobile tab navigation should only scroll horizontally
+  [#1481](https://github.com/sharetribe/ftw-daily/pull/1481)
+- [fix] Temporarily disallow Node v17, since it causes issues with dependencies.
+  [#1479](https://github.com/sharetribe/ftw-daily/pull/1479)
+- [fix] Fix modal close button text/icon alignment
+  [#1476](https://github.com/sharetribe/ftw-daily/pull/1476)
+
+  [v10.4.0]: https://github.com/sharetribe/ftw-hourly/compare/v10.3.0...v10.4.0
 
 ## [v10.3.0] 2021-09-22
 

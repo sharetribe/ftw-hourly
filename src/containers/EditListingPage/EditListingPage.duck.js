@@ -167,7 +167,7 @@ export default function reducer(state = initialState, action = {}) {
     case SHOW_LISTINGS_REQUEST:
       return { ...state, showListingsError: null };
     case SHOW_LISTINGS_SUCCESS:
-      return state;
+      return { ...state, images: {}, imageOrder: [], removedImageIds: [] };
 
     case SHOW_LISTINGS_ERROR:
       // eslint-disable-next-line no-console
