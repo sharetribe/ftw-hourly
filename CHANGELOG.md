@@ -17,7 +17,16 @@ https://github.com/sharetribe/flex-template-web/
 
 ## Upcoming version 2022-XX-XX
 
+## [v10.6.1] 2022-05-19
+
+- [fix] undefined REACT_APP_GOOGLE_ANALYTICS_ID caused an error. There was also invalid characters
+  (zero-width space) on added directive [#194](https://github.com/sharetribe/ftw-hourly/pull/194)
+
+  [v10.6.1]: https://github.com/sharetribe/ftw-hourly/compare/v10.6.0...v10.6.1
+
 ## [v10.6.0] 2022-05-19
+
+Note: this caused an error. Use v10.6.1 instead.
 
 ### Updates from upstream (FTW-daily v8.6.0)
 
