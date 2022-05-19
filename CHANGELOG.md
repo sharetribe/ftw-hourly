@@ -17,6 +17,21 @@ https://github.com/sharetribe/flex-template-web/
 
 ## Upcoming version 2022-XX-XX
 
+## [v10.6.0] 2022-05-19
+
+### Updates from upstream (FTW-daily v8.6.0)
+
+- [change] Google Analytics: remove Universal Analytics and start supporting GA4.
+
+  NOTE: you need to update the Google Analytics id to GA4's id (starting with 'G-' prefix).
+
+  [#1508](https://github.com/sharetribe/ftw-daily/pull/1508)
+
+- [change] Update some outdated dependencies.
+  [#1514](https://github.com/sharetribe/ftw-daily/pull/1514)
+
+  [v10.6.0]: https://github.com/sharetribe/ftw-hourly/compare/v10.5.0...v10.6.0
+
 ## [v10.5.0] 2022-05-16
 
 - Add support for hosted translations. (PR made in upstream repo: FTW-daily)
