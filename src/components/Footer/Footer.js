@@ -135,7 +135,7 @@ const Footer = props => {
                     name="SearchPage"
                     to={{
                       search:
-                        '?address=Denver%2C%20Colorado%2C%20United%20States%20of%20America&bounds=39.94623402%2C-104.600299056%2C39.62371698%2C-105.193616003506',
+                        '?address=San%20Ramon%2C%20California%2C%20United%20States&bounds=37.835101%2C-121.876978%2C37.718531%2C-122.061681',
                     }}
                     className={css.link}
                   >
@@ -152,30 +152,6 @@ const Footer = props => {
                     className={css.link}
                   >
                     <FormattedMessage id="Footer.searchPhiladelphia" />
-                  </NamedLink>
-                </li>
-                <li className={css.listItem}>
-                  <NamedLink
-                    name="SearchPage"
-                    to={{
-                      search:
-                        '?address=Boston%2C%20Massachusetts%2C%20United%20States%20of%20America&bounds=42.3974009328397%2C-70.9860500028801%2C42.3196059806256%2C-71.1255750165112',
-                    }}
-                    className={css.link}
-                  >
-                    <FormattedMessage id="Footer.searchBoston" />
-                  </NamedLink>
-                </li>
-                <li className={css.listItem}>
-                  <NamedLink
-                    name="SearchPage"
-                    to={{
-                      search:
-                        '?address=San%20Diego%2C%20California%2C%20United%20States%20of%20America&bounds=33.0722089336828%2C-116.853118984%2C32.534171982%2C-117.266223298428',
-                    }}
-                    className={css.link}
-                  >
-                    <FormattedMessage id="Footer.searchSanDiego" />
                   </NamedLink>
                 </li>
                 <li className={css.listItem}>
