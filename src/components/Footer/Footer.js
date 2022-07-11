@@ -113,19 +113,6 @@ const Footer = props => {
             <div className={css.searches}>
               <ul className={css.list}>
                 <li className={css.listItem}>
-                  
-                </li>
-                <li className={css.listItem}>
-                  <NamedLink
-                    name="SearchPage"
-                    to={{
-                      search:
-                        '?address=Los%20Angeles%2C%20California%2C%20USA&bounds=34.161440999758%2C-118.121305008073%2C33.9018913203336%2C-118.521456965901',
-                    }}
-                    className={css.link}
-                  >
-                    <FormattedMessage id="Footer.searchLosAngeles" />
-                  </NamedLink>
                 </li>
                 <li className={css.listItem}>
                   <NamedLink
@@ -137,30 +124,6 @@ const Footer = props => {
                     className={css.link}
                   >
                     <FormattedMessage id="Footer.searchSanFrancisco" />
-                  </NamedLink>
-                </li>
-                <li className={css.listItem}>
-                  <NamedLink
-                    name="SearchPage"
-                    to={{
-                      search:
-                        '?address=Seattle%2C%20Washington%2C%20USA&bounds=47.7779392908564%2C-122.216605992108%2C47.3403950185547%2C-122.441233019046',
-                    }}
-                    className={css.link}
-                  >
-                    <FormattedMessage id="Footer.searchSeattle" />
-                  </NamedLink>
-                </li>
-                <li className={css.listItem}>
-                  <NamedLink
-                    name="SearchPage"
-                    to={{
-                      search:
-                        '?address=Portland%2C%20Oregon%2C%20USA&bounds=45.858099013046%2C-122.441059986416%2C45.3794799927623%2C-122.929215816001',
-                    }}
-                    className={css.link}
-                  >
-                    <FormattedMessage id="Footer.searchPortland" />
                   </NamedLink>
                 </li>
               </ul>
