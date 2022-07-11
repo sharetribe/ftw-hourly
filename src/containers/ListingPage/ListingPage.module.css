@@ -1,5 +1,4 @@
 @import '../../styles/customMediaQueries.css';
-@import '../../styles/propertySets.css';
 
 .root {
 }
@@ -64,7 +63,7 @@
 }
 
 .ownListingText {
-  @apply --marketplaceH4FontStyles;
+  composes: h4 from global;
   margin: 14px 12px 11px 24px;
 
   @media (--viewportMedium) {
@@ -77,7 +76,7 @@
 }
 
 .closedListingText {
-  @apply --marketplaceH4FontStyles;
+  composes: h4 from global;
   margin: 14px 12px 11px 24px;
   text-align: center;
   width: 100%;
@@ -88,7 +87,7 @@
 }
 
 .editListingLink {
-  @apply --marketplaceH4FontStyles;
+  composes: h4 from global;
   flex-shrink: 0;
   margin: 0;
   padding: 14px 24px 11px 12px;
@@ -141,7 +140,7 @@
 }
 
 .viewPhotos {
-  @apply --marketplaceTinyFontStyles;
+  composes: marketplaceTinyFontStyles from global;
   font-weight: var(--fontWeightMedium);
 
   /* Position and dimensions */
@@ -311,7 +310,7 @@
 
 .desktopPriceValue {
   /* Font */
-  @apply --marketplaceModalTitleStyles;
+  composes: marketplaceModalTitleStyles from global;
   color: var(--marketplaceColor);
 
   @media (--viewportMedium) {
@@ -322,7 +321,7 @@
 
 .desktopPerUnit {
   /* Font */
-  @apply --marketplaceH5FontStyles;
+  composes: h5 from global;
   color: var(--matterColor);
 
   @media (--viewportMedium) {
@@ -343,7 +342,7 @@
 
 .title {
   /* Font */
-  @apply --marketplaceModalTitleStyles;
+  composes: marketplaceModalTitleStyles from global;
   color: var(--matterColor);
 
   /* Layout */
@@ -358,7 +357,8 @@
 
 .author {
   width: 100%;
-  @apply --marketplaceH5FontStyles;
+  composes: h5 from global;
+
   margin-top: 7px;
   margin-bottom: 0;
 
@@ -386,9 +386,33 @@
 }
 
 .contactLink {
-  @apply --marketplaceLinkStyles;
-  @apply --marketplaceH5FontStyles;
+  /* Position and dimensions */
+  display: inline;
+  padding: 0;
+
+  /* Borders */
+  border: none;
+
+  /* Colors */
+  color: var(--marketplaceColor);
+
+  /* Text size should be inherited */
+  text-decoration: none;
+
+  font-weight: var(--fontWeightMedium);
+  font-size: 14px;
+  line-height: 18px;
+  letter-spacing: 0;
   margin: 0;
+
+  &:hover {
+    text-decoration: underline;
+    cursor: pointer;
+  }
+
+  @media (--viewportMedium) {
+    line-height: 16px;
+  }
 }
 
 .sectionDescription {
@@ -403,7 +427,7 @@
 
 .descriptionTitle {
   /* Font */
-  @apply --marketplaceH3FontStyles;
+  composes: h3 from global;
   color: var(--matterColorAnti);
 
   margin-top: 0;
@@ -426,7 +450,7 @@
 
 .featuresTitle {
   /* Font */
-  @apply --marketplaceH3FontStyles;
+  composes: h3 from global;
   color: var(--matterColorAnti);
 
   margin-top: 0;
@@ -462,7 +486,7 @@
 
 .locationTitle {
   /* Font */
-  @apply --marketplaceH3FontStyles;
+  composes: h3 from global;
   color: var(--matterColorAnti);
 
   margin-top: 0;
@@ -486,7 +510,7 @@
 }
 
 .reviewsHeading {
-  @apply --marketplaceH3FontStyles;
+  composes: h3 from global;
   color: var(--matterColorAnti);
 
   margin: 52px 0 20px 0;
@@ -513,7 +537,7 @@
 }
 
 .yourHostHeading {
-  @apply --marketplaceH3FontStyles;
+  composes: h3 from global;
   color: var(--matterColorAnti);
 
   margin: 54px 0 23px 0;
