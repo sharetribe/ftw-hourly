@@ -1,4 +1,4 @@
-@import '../../styles/propertySets.css';
+@import '../../styles/customMediaQueries.css';
 
 .root {
   /* Dimensions */
@@ -151,7 +151,7 @@
 }
 
 .buttonAddNew {
-  composes: h5 from global;  
+  composes: h5 from global;
   color: var(--matterColor);
 }
 .submitButton {

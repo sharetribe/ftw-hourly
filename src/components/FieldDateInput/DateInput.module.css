@@ -275,7 +275,7 @@
     border-bottom-width: 2px;
     border-bottom-color: var(--matterColorNegative);
     border-radius: 0;
-    
+
     /* Effects */
     transition: border-bottom-color var(--transitionStyle);
     transition: all 0.15s ease-out;

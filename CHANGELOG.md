@@ -38,6 +38,8 @@ Read more from PR: https://github.com/sharetribe/ftw-daily/pull/1531
   touch swipes. [#1529](https://github.com/sharetribe/ftw-daily/pull/1529)
 - [fix] Fixing a small typo. [#1518](https://github.com/sharetribe/ftw-daily/pull/1518)
 
+[v11.0.0]: https://github.com/sharetribe/ftw-hourly/compare/v10.6.1...v11.0.0
+
 ## [v10.6.1] 2022-05-19
 
 - [fix] undefined REACT_APP_GOOGLE_ANALYTICS_ID caused an error. There was also invalid characters
