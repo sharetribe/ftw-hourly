@@ -1,5 +1,5 @@
-@import '../../styles/propertySets.css';
+@import '../../styles/customMediaQueries.css';
 
 .defaultLinkStyle {
-  @apply --marketplaceLinkStyles;
+  composes: a from global;
 }

@@ -1,5 +1,4 @@
 @import '../../styles/customMediaQueries.css';
-@import '../../styles/propertySets.css';
 
 .topbar {
   z-index: 1; /* ensure that Topbar shadow overlays content background */
@@ -68,7 +67,6 @@
 
 .title {
   /* Font */
-  @apply --marketplaceH1FontStyles;
   color: var(--matterColor);
 
   /* Layout */
@@ -241,7 +239,8 @@
 }
 
 .itemInfo {
-  @apply --marketplaceH5FontStyles;
+  composes: h5 from global;
+
   font-weight: var(--fontWeightSemiBold);
 
   /* Layout */
@@ -262,7 +261,7 @@
 
 .itemUsername {
   /* Font */
-  @apply --marketplaceH4FontStyles;
+  composes: h4 from global;
   color: var(--matterColor);
   line-height: 18px;
 
@@ -276,7 +275,7 @@
 }
 
 .bookingInfoWrapper {
-  @apply --marketplaceTinyFontStyles;
+  composes: marketplaceTinyFontStyles from global;
 
   display: flex;
   align-items: center;
@@ -303,7 +302,7 @@
 
 .itemState {
   /* Font */
-  @apply --marketplaceH5FontStyles;
+  composes: h5 from global;
 
   font-weight: var(--fontWeightMedium);
   margin-top: 6px;
@@ -316,7 +315,7 @@
 }
 
 .lastTransitionedAt {
-  @apply --marketplaceTinyFontStyles;
+  composes: marketplaceTinyFontStyles from global;
 
   margin-top: 4px;
   text-align: right;
