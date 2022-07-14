@@ -152,7 +152,7 @@
   "ContactDetailsPage.title": "Contact details",
   "CookieConsent.continue": "Continue",
   "CookieConsent.cookieLink": "cookies",
-  "CookieConsent.message": "Welcome to Yogatime, friend! We use {cookieLink} to enhance your browsing experience.",
+  "CookieConsent.message": "Welcome to Dinami Athletics, friend! We use {cookieLink} to enhance your browsing experience.",
   "EditListingAvailabilityExceptionForm.available": "Available",
   "EditListingAvailabilityExceptionForm.addException": "Save exception",
   "EditListingAvailabilityExceptionForm.exceptionEndDateLabel": "Ends",
@@ -220,7 +220,7 @@
   "EditListingLocationForm.building": "Apt, suite, building # {optionalText}",
   "EditListingLocationForm.buildingPlaceholder": "A 42",
   "EditListingLocationForm.optionalText": "• optional",
-  "EditListingLocationForm.showListingFailed": "Fetching teacher profile data failed",
+  "EditListingLocationForm.showListingFailed": "Fetching Coach profile data failed",
   "EditListingLocationForm.updateFailed": "Failed to update. Please try again.",
   "EditListingLocationPanel.createListingTitle": "Where do you teach?",
   "EditListingLocationPanel.listingTitle": "your sessions",
@@ -984,10 +984,10 @@
   "TopbarDesktop.addYourListingLink": "Become a teacher",
   "TopbarDesktop.editYourListingLink": "Edit teacher profile",
 
-  
+
   "TopbarDesktop.inbox": "Inbox",
   "TopbarDesktop.login": "Log in",
-  "TopbarDesktop.logo": "Yogatime",
+  "TopbarDesktop.logo": "dinami",
   "TopbarDesktop.logout": "Log out",
   "TopbarDesktop.profileSettingsLink": "User profile",
   "TopbarDesktop.signup": "Sign up",
