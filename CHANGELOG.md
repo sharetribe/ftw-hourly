@@ -17,6 +17,24 @@ https://github.com/sharetribe/flex-template-web/
 
 ## Upcoming version 2022-XX-XX
 
+## [v11.0.1] 2022-08-29
+
+### Updates from upstream (FTW-daily v9.0.1)
+- [fix] Use sharetribe-scripts v6.0.1. Fixes for
+
+  - GENERATE_SOURCEMAP = false
+  - async Redux Thunks
+
+  [#1546](https://github.com/sharetribe/ftw-daily/pull/1546)
+
+- [fix] Add cookie_flags and relax google analytics domain
+  [#1538](https://github.com/sharetribe/ftw-daily/pull/1538)
+- [fix] the import of customMediaQueries.css was somehow missed with these components:
+  FieldReviewRating, SearchFiltersSecondary and TopbarMobileMenu.
+  [#1537](https://github.com/sharetribe/ftw-daily/pull/1537)
+
+  [v11.0.1]: https://github.com/sharetribe/ftw-hourly/compare/v11.0.0...v11.0.1
+
 ## [v11.0.0] 2022-07-11
 
 This is a major release since it includes a major update to sharetribe-scripts aka our fork of
@@ -38,7 +56,7 @@ Read more from PR: https://github.com/sharetribe/ftw-daily/pull/1531
   touch swipes. [#1529](https://github.com/sharetribe/ftw-daily/pull/1529)
 - [fix] Fixing a small typo. [#1518](https://github.com/sharetribe/ftw-daily/pull/1518)
 
-[v11.0.0]: https://github.com/sharetribe/ftw-hourly/compare/v10.6.1...v11.0.0
+  [v11.0.0]: https://github.com/sharetribe/ftw-hourly/compare/v10.6.1...v11.0.0
 
 ## [v10.6.1] 2022-05-19
 
