@@ -773,6 +773,8 @@
   "SectionHowItWorks.titleLineTwo": " ",
   "SectionLocations.listingsInLocation": "Yogis in {location}",
   "SectionLocations.title": "Find yoga teachers in your city",
+  "SectionGuarantee.title": "Hero Guarantee",
+  "SectionGuarantee.text": "When you book with Habitat Hero, you're covered. If you're not satisfied with the service, we'll make it right, or you get your money back.",
   "SelectMultipleFilter.labelSelected": "{labelText} • {count}",
   "SelectMultipleFilterPlainForm.labelSelected": "{labelText} • {count}",
   "SelectSingleFilter.popupClear": "Clear",
