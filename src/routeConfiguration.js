@@ -69,7 +69,7 @@ const routeConfiguration = () => {
       component: AboutPage,
     },
     {
-      path: '/book',
+      path: '/book/:service',
       name: 'BookingPage',
       component: BookingPage,
     },

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { Component, useEffect, useState } from 'react';
 import { string } from 'prop-types';
 import { FormattedMessage } from '../../util/reactIntl';
 import classNames from 'classnames';
@@ -8,44 +8,61 @@ import css from './SectionHero.module.css';
 import ServicesDropdownForm from '../ServicesDropdownForm/ServicesDropdownForm';
 import { render } from 'enzyme';
 
-const SectionHero = props => {
-  const [mounted, setMounted] = useState(false);
-  const { rootClassName, className } = props;
+class SectionHero extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { service: 'cleaning' };
+    this.changeService = this.changeService.bind(this);
+  }
+  changeService(newService) {
+    this.setState(state => ({
+      service: newService,
+    }));
+  }
+  render() {
+    // const [mounted, setMounted] = useState(false);
+    const mounted = true;
+    const { rootClassName, className } = this.props;
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+    // useEffect(() => {
+    //   setMounted(true);
+    // }, []);
 
-  const classes = classNames(rootClassName || css.root, className);
-  // let myVal = document.getElementById('SectionHero.chosenService').value;
-  // console.log(myVal);
-  return (
-    <div className={classes}>
-      <div className={css.heroContent}>
-        <h1 className={classNames(css.heroMainTitle, { [css.heroMainTitleFEDelay]: mounted })}>
-          <FormattedMessage id="SectionHero.title" />
-        </h1>
-        <h2 className={classNames(css.heroSubTitle, { [css.heroSubTitleFEDelay]: mounted })}>
-          <FormattedMessage id="SectionHero.subTitle" />
-        </h2>
-        <div className={css.heroSelectionBlock}>
-          <ServicesDropdownForm id="SectionHero.chosenService" />
+    const classes = classNames(rootClassName || css.root, className);
+    let chosenService = { service: this.state.service };
+    // console.log(chosenService);
+    return (
+      <div className={classes}>
+        <div className={css.heroContent}>
+          <h1 className={classNames(css.heroMainTitle, { [css.heroMainTitleFEDelay]: mounted })}>
+            <FormattedMessage id="SectionHero.title" />
+          </h1>
+          <h2 className={classNames(css.heroSubTitle, { [css.heroSubTitleFEDelay]: mounted })}>
+            <FormattedMessage id="SectionHero.subTitle" />
+          </h2>
+          <div className={css.heroSelectionBlock}>
+            <ServicesDropdownForm
+              id="SectionHero.chosenService"
+              changeService={this.changeService}
+            />
 
-          <NamedLink
-            // name="SearchPage"
-            // to={{
-            //   search: 'address=Poland&bounds=52.43782325%2C21.21824438%2C52.06658088%2C20.76360492',
-            // }}
-            name="BookingPage"
-            className={classNames(css.heroButton, { [css.heroButtonFEDelay]: mounted })}
-          >
-            <FormattedMessage id="SectionHero.browseButton" />
-          </NamedLink>
+            <NamedLink
+              // name="SearchPage"
+              // to={{
+              //   search: 'address=Poland&bounds=52.43782325%2C21.21824438%2C52.06658088%2C20.76360492',
+              // }}
+              name="BookingPage"
+              params={chosenService}
+              className={classNames(css.heroButton, { [css.heroButtonFEDelay]: mounted })}
+            >
+              <FormattedMessage id="SectionHero.browseButton" />
+            </NamedLink>
+          </div>
         </div>
       </div>
-    </div>
-  );
-};
+    );
+  }
+}
 
 SectionHero.defaultProps = { rootClassName: null, className: null };
 

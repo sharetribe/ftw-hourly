@@ -11,17 +11,22 @@ import {
 
 import StaticPage from '../../containers/StaticPage/StaticPage';
 import CleaningBookingPage from '../../containers/BookingPage/CleaningBookingPage';
+import LandscapingBookingPage from '../../containers/BookingPage/LandscapingBookingPage';
 import TopbarContainer from '../../containers/TopbarContainer/TopbarContainer';
 
 import css from './BookingPage.module.css';
 // import image from './path/to/image.png';
 
 class BookingPage extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { service: 'Cleaning' };
-  }
   render() {
+    const { params } = this.props;
+    if (params.service == 'cleaning') {
+      var page = <CleaningBookingPage />;
+    } else if (params.service == 'landscaping') {
+      var page = <LandscapingBookingPage />;
+    } else if (params.service == 'plumbing') {
+      // let page = <PlumbingBookingPage />
+    }
     return (
       <StaticPage
         className={css.root}
@@ -38,8 +43,7 @@ class BookingPage extends Component {
             <TopbarContainer />
           </LayoutWrapperTopbar>
           <LayoutWrapperMain>
-            {/* {if (this.state.service == 'Cleaning') <CleaningBookingPage />} */}
-            <CleaningBookingPage />
+            {page}
             <div>
               <NamedLink name="LandingPage">Go to home page</NamedLink> or
               <ExternalLink href="https://google.com">Go to Google</ExternalLink>

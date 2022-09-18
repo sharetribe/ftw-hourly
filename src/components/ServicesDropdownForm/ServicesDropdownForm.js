@@ -7,13 +7,14 @@ import css from './ServicesDropdownForm.module.css';
 class ServicesDropdownForm extends Component {
   constructor(props) {
     super(props);
-    this.state = { service: 'cleaning' };
+    // this.state = { service: 'cleaning' };
     this.handleChange = this.handleChange.bind(this);
   }
   handleChange(evt) {
-    this.setState({
-      [evt.target.name]: evt.target.value,
-    });
+    // this.setState({
+    //   [evt.target.name]: evt.target.value,
+    // });
+    this.props.changeService(evt.target.value);
   }
   render() {
     const { rootClassName, className, services } = this.props;
