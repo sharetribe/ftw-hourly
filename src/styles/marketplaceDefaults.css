@@ -534,6 +534,7 @@ textarea {
 
   /* Cover the whole screen with the background image */
   background-size: calc(100% / 3), calc(100% / 3), calc(100% / 3);
+  /* background-size: contain; */
 
   /* Align the image within the container */
   background-position: left, center, right;

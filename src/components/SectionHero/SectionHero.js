@@ -5,7 +5,8 @@ import classNames from 'classnames';
 import { NamedLink } from '../../components';
 
 import css from './SectionHero.module.css';
-import ServicesDropdown from '../ServicesDropdown/ServicesDropdown';
+import ServicesDropdownForm from '../ServicesDropdownForm/ServicesDropdownForm';
+import { render } from 'enzyme';
 
 const SectionHero = props => {
   const [mounted, setMounted] = useState(false);
@@ -16,7 +17,8 @@ const SectionHero = props => {
   }, []);
 
   const classes = classNames(rootClassName || css.root, className);
-
+  // let myVal = document.getElementById('SectionHero.chosenService').value;
+  // console.log(myVal);
   return (
     <div className={classes}>
       <div className={css.heroContent}>
@@ -27,12 +29,14 @@ const SectionHero = props => {
           <FormattedMessage id="SectionHero.subTitle" />
         </h2>
         <div className={css.heroSelectionBlock}>
-          <ServicesDropdown />
+          <ServicesDropdownForm id="SectionHero.chosenService" />
+
           <NamedLink
-            name="SearchPage"
-            to={{
-              search: 'address=Poland&bounds=52.43782325%2C21.21824438%2C52.06658088%2C20.76360492',
-            }}
+            // name="SearchPage"
+            // to={{
+            //   search: 'address=Poland&bounds=52.43782325%2C21.21824438%2C52.06658088%2C20.76360492',
+            // }}
+            name="BookingPage"
             className={classNames(css.heroButton, { [css.heroButtonFEDelay]: mounted })}
           >
             <FormattedMessage id="SectionHero.browseButton" />

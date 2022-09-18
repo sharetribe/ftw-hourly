@@ -1,0 +1,14 @@
+/**
+ * Import custom media queries for the new page.
+ * FTW-template use route-based code-splitting, every page create their own CSS files.
+ * This import ensures that the page and components inside will get correct media queries,
+ * when the app is build.
+ */
+@import '../../styles/customMediaQueries.css';
+
+.root {
+  padding: 24px;
+
+  /* Use CSS variable defined in src/styles/marketplaceDefaults.css */
+  background-color: var(--marketplaceColor);
+}
