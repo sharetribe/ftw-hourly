@@ -5,6 +5,7 @@ import classNames from 'classnames';
 import { NamedLink } from '../../components';
 
 import css from './SectionHero.module.css';
+import ServicesDropdown from '../ServicesDropdown/ServicesDropdown';
 
 const SectionHero = props => {
   const [mounted, setMounted] = useState(false);
@@ -25,16 +26,18 @@ const SectionHero = props => {
         <h2 className={classNames(css.heroSubTitle, { [css.heroSubTitleFEDelay]: mounted })}>
           <FormattedMessage id="SectionHero.subTitle" />
         </h2>
-        <NamedLink
-          name="SearchPage"
-          to={{
-            search:
-              'address=United%20States%20of%20America&bounds=71.540724%2C-66.885444%2C18.765563%2C-179.9',
-          }}
-          className={classNames(css.heroButton, { [css.heroButtonFEDelay]: mounted })}
-        >
-          <FormattedMessage id="SectionHero.browseButton" />
-        </NamedLink>
+        <div className={css.heroSelectionBlock}>
+          <ServicesDropdown />
+          <NamedLink
+            name="SearchPage"
+            to={{
+              search: 'address=Poland&bounds=52.43782325%2C21.21824438%2C52.06658088%2C20.76360492',
+            }}
+            className={classNames(css.heroButton, { [css.heroButtonFEDelay]: mounted })}
+          >
+            <FormattedMessage id="SectionHero.browseButton" />
+          </NamedLink>
+        </div>
       </div>
     </div>
   );

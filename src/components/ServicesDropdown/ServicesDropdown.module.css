@@ -1,0 +1,10 @@
+.root {
+  display: inline;
+  float: left;
+  width: 40%;
+  padding: 0 20px 0 0;
+}
+
+.fillColor {
+  fill: var(--successColor);
+}

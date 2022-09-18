@@ -93,10 +93,18 @@
   composes: animation;
 
   @media (--viewportMedium) {
-    display: block;
-    width: 260px;
+    display: inline-block;
+    width: 200px;
   }
 }
 .heroButtonFEDelay {
   animation-delay: 0.3s;
+}
+
+.heroSelectionBlock {
+  /* display: inline-block; */
+
+  @media (--viewportMedium) {
+    max-width: var(--SectionHero_desktopTitleMaxWidth);
+  }
 }
