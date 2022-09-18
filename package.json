@@ -5,6 +5,10 @@
   "license": "Apache-2.0",
   "dependencies": {
     "@babel/runtime": "^7.17.9",
+    "@fortawesome/fontawesome-svg-core": "^6.2.0",
+    "@fortawesome/free-regular-svg-icons": "^6.2.0",
+    "@fortawesome/free-solid-svg-icons": "^6.2.0",
+    "@fortawesome/react-fontawesome": "^0.2.0",
     "@loadable/component": "^5.15.2",
     "@loadable/server": "^5.15.2",
     "@mapbox/polyline": "^1.1.1",
@@ -64,7 +68,9 @@
     "sharetribe-scripts": "6.0.1",
     "smoothscroll-polyfill": "^0.4.0",
     "source-map-support": "^0.5.21",
-    "url": "^0.11.0"
+    "stream": "^0.0.2",
+    "url": "^0.11.0",
+    "util": "^0.12.4"
   },
   "devDependencies": {
     "bfj": "^7.0.2",

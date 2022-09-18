@@ -1,14 +1,25 @@
 import React from 'react';
-import { bool, string } from 'prop-types';
+import { bool, string, integer, object } from 'prop-types';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMagnifyingGlass, faPersonRays } from '@fortawesome/free-solid-svg-icons';
+import { faCalendar } from '@fortawesome/free-regular-svg-icons';
 import classNames from 'classnames';
 import { FormattedMessage } from '../../util/reactIntl';
 import { propTypes } from '../../util/types';
 import { OwnListingLink } from '../../components';
+import StepHowItWorks from './StepHowItWorks';
 
 import css from './SectionHowItWorks.module.css';
 
 const SectionHowItWorks = props => {
-  const { rootClassName, className, currentUserListing, currentUserListingFetched } = props;
+  const {
+    rootClassName,
+    className,
+    currentUserListing,
+    currentUserListingFetched,
+    numSteps,
+    imgIcons,
+  } = props;
 
   const classes = classNames(rootClassName || css.root, className);
   return (
@@ -20,32 +31,16 @@ const SectionHowItWorks = props => {
       </div>
 
       <div className={css.steps}>
-        <div className={css.step}>
-          <h2 className={css.stepTitle}>
-            <FormattedMessage id="SectionHowItWorks.part1Title" />
-          </h2>
-          <p>
-            <FormattedMessage id="SectionHowItWorks.part1Text" />
-          </p>
-        </div>
-
-        <div className={css.step}>
-          <h2 className={css.stepTitle}>
-            <FormattedMessage id="SectionHowItWorks.part2Title" />
-          </h2>
-          <p>
-            <FormattedMessage id="SectionHowItWorks.part2Text" />
-          </p>
-        </div>
-
-        <div className={css.step}>
-          <h2 className={css.stepTitle}>
-            <FormattedMessage id="SectionHowItWorks.part3Title" />
-          </h2>
-          <p>
-            <FormattedMessage id="SectionHowItWorks.part3Text" />
-          </p>
-        </div>
+        {Array.from({ length: numSteps }, (_, i) => i + 1).map(function(elem) {
+          return (
+            <StepHowItWorks
+              key={elem}
+              stepTitle={`SectionHowItWorks.part${elem}Title`}
+              stepText={`SectionHowItWorks.part${elem}Text`}
+              stepImg={imgIcons[elem]}
+            />
+          );
+        })}
       </div>
       <div className={css.createListingLink}>
         <OwnListingLink listing={currentUserListing} listingFetched={currentUserListingFetched}>
@@ -61,6 +56,12 @@ SectionHowItWorks.defaultProps = {
   className: null,
   currentUserListing: null,
   currentUserListingFetched: false,
+  numSteps: 3,
+  imgIcons: {
+    1: <FontAwesomeIcon icon={faMagnifyingGlass} className="fa-4x" />,
+    2: <FontAwesomeIcon icon={faCalendar} className="fa-4x" />,
+    3: <FontAwesomeIcon icon={faPersonRays} className="fa-4x" />,
+  },
 };
 
 SectionHowItWorks.propTypes = {
@@ -68,6 +69,8 @@ SectionHowItWorks.propTypes = {
   className: string,
   currentUserListing: propTypes.ownListing,
   currentUserListingFetched: bool,
+  // numSteps: integer,
+  imgIcons: object,
 };
 
 export default SectionHowItWorks;

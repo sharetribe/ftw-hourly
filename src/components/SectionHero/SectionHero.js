@@ -47,10 +47,6 @@ class SectionHero extends Component {
             />
 
             <NamedLink
-              // name="SearchPage"
-              // to={{
-              //   search: 'address=Poland&bounds=52.43782325%2C21.21824438%2C52.06658088%2C20.76360492',
-              // }}
               name="BookingPage"
               params={chosenService}
               className={classNames(css.heroButton, { [css.heroButtonFEDelay]: mounted })}
