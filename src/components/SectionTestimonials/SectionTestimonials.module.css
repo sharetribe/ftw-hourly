@@ -8,12 +8,9 @@
 .body {
   display: flex;
   flex-direction: column;
+  padding-top: 20px;
 
   @media (--viewportMedium) {
     flex-direction: row;
   }
-}
-
-.body p {
-  padding: 0 40px;
 }
