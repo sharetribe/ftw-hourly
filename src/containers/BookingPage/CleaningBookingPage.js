@@ -1,19 +1,10 @@
 import React from 'react';
-import {
-  LayoutSingleColumn,
-  LayoutWrapperTopbar,
-  LayoutWrapperMain,
-  LayoutWrapperFooter,
-  Footer,
-  NamedLink,
-  ExternalLink,
-} from '../../components';
+import { BookingCleaningForm } from '../../forms';
+import { FormattedMessage } from '../../util/reactIntl';
 
 import StaticPage from '../../containers/StaticPage/StaticPage';
-import TopbarContainer from '../../containers/TopbarContainer/TopbarContainer';
 
 import css from './CleaningBookingPage.module.css';
-// import image from './path/to/image.png';
 
 const CleaningBookingPage = () => {
   return (
@@ -27,8 +18,13 @@ const CleaningBookingPage = () => {
         name: 'Cleaning booking page',
       }}
     >
-      <h1>Book a Cleaning Hero</h1>
-      {/* <img src={image} alt="My first ice cream." /> */}
+      <BookingCleaningForm />
+      <h2>
+        <FormattedMessage id="CleaningBookingPage.title" />
+      </h2>
+      <h3>
+        <FormattedMessage id="CleaningBookingPage.subTitle" />
+      </h3>
     </StaticPage>
   );
 };
