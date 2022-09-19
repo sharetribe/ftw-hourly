@@ -34,8 +34,11 @@ class SectionTestimonials extends Component {
 
   render() {
     const { rootClassName, className, testimonials } = this.props;
-
     const classes = classNames(rootClassName || css.root, className);
+    const showLeftArrow = this.state.testimonialId > 0;
+    const showRightArrow =
+      this.state.testimonialId < Object.keys(this.props['testimonials']).length - 1;
+
     return (
       <div className={classes}>
         <div className={css.title}>
@@ -43,12 +46,21 @@ class SectionTestimonials extends Component {
         </div>
 
         <div className={css.body}>
+          {showLeftArrow && (
+            <FontAwesomeIcon
+              icon={faPlay}
+              className="fa-3x fa-rotate-180"
+              onClick={this.moveLeft}
+            />
+          )}
           <Testimonial
             rating={testimonials[this.state.testimonialId].rating}
             text={testimonials[this.state.testimonialId].text}
             userInfo={testimonials[this.state.testimonialId].userInfo}
           />
-          <FontAwesomeIcon icon={faPlay} className="fa-3x" onClick={this.moveRight} />
+          {showRightArrow && (
+            <FontAwesomeIcon icon={faPlay} className="fa-3x" onClick={this.moveRight} />
+          )}
         </div>
       </div>
     );
@@ -68,6 +80,11 @@ SectionTestimonials.defaultProps = {
       rating: 5,
       text: 'Wow. Just wow. What heroes.',
       userInfo: 'Bartosz, Warszawa',
+    },
+    2: {
+      rating: 4.5,
+      text: 'Great experience, highly recommended!',
+      userInfo: 'Iwona, Warszawa',
     },
   },
 };
