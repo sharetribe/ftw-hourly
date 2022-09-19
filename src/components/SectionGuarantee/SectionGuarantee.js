@@ -19,7 +19,11 @@ const SectionGuarantee = props => {
       </div>
 
       <div className={css.body}>
-        <FontAwesomeIcon icon={faAward} className="fa-8x" />
+        <div className={css.icon}>
+          {' '}
+          <FontAwesomeIcon icon={faAward} className="fa-8x" />
+        </div>
+
         <p>
           <FormattedMessage id="SectionGuarantee.text" />
         </p>

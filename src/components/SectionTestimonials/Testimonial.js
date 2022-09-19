@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFaceSmileBeam, faStar as faEmptyStar } from '@fortawesome/free-regular-svg-icons';
 import { faStarHalfStroke, faStar } from '@fortawesome/free-solid-svg-icons';
-import { FormattedMessage } from '../../util/reactIntl';
+const { v4: uuidv4 } = require('uuid');
 
 import css from './Testimonial.module.css';
 
@@ -16,13 +16,13 @@ const StarRating = props => {
   return (
     <div>
       {Array.from(Array(nFullStars).keys()).map(elem => {
-        return <FontAwesomeIcon icon={faStar} className="fa-3x" />;
+        return <FontAwesomeIcon key={uuidv4()} icon={faStar} className="fa-3x" />;
       })}
       {Array.from(Array(nHalfStars).keys()).map(elem => {
-        return <FontAwesomeIcon icon={faStarHalfStroke} className="fa-3x" />;
+        return <FontAwesomeIcon key={uuidv4()} icon={faStarHalfStroke} className="fa-3x" />;
       })}
       {Array.from(Array(nEmptyStars).keys()).map(elem => {
-        return <FontAwesomeIcon icon={faEmptyStar} className="fa-3x" />;
+        return <FontAwesomeIcon key={uuidv4()} icon={faEmptyStar} className="fa-3x" />;
       })}
     </div>
   );

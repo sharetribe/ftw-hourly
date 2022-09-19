@@ -1114,3 +1114,9 @@ textarea {
     margin-top: 32px;
   }
 }
+
+/* Additional custom settings */
+
+.iconFa {
+  color: var(--marketplaceColor);
+}

@@ -26,6 +26,7 @@
 }
 
 .icon {
+  composes: iconFa from global;
   justify-content: center;
   display: flex;
   margin: 10px 0;

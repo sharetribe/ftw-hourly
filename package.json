@@ -70,7 +70,8 @@
     "source-map-support": "^0.5.21",
     "stream": "^0.0.2",
     "url": "^0.11.0",
-    "util": "^0.12.4"
+    "util": "^0.12.4",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "bfj": "^7.0.2",

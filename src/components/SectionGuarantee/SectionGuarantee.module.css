@@ -17,3 +17,7 @@
 .body p {
   padding: 0 40px;
 }
+
+.icon {
+  composes: iconFa from global;
+}

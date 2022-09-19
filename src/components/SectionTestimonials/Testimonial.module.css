@@ -14,3 +14,7 @@
 .ratingSection {
   width: 80%;
 }
+
+.icon {
+  composes: iconFa from global;
+}
