@@ -46,21 +46,26 @@ class SectionTestimonials extends Component {
         </div>
 
         <div className={css.body}>
-          {showLeftArrow && (
-            <FontAwesomeIcon
-              icon={faPlay}
-              className="fa-3x fa-rotate-180"
-              onClick={this.moveLeft}
-            />
-          )}
+          <div className={css.arrowBox}>
+            {showLeftArrow && (
+              <FontAwesomeIcon
+                icon={faPlay}
+                className="fa-2x fa-rotate-180"
+                onClick={this.moveLeft}
+              />
+            )}
+          </div>
+
           <Testimonial
             rating={testimonials[this.state.testimonialId].rating}
             text={testimonials[this.state.testimonialId].text}
             userInfo={testimonials[this.state.testimonialId].userInfo}
           />
-          {showRightArrow && (
-            <FontAwesomeIcon icon={faPlay} className="fa-3x" onClick={this.moveRight} />
-          )}
+          <div className={css.arrowBox}>
+            {showRightArrow && (
+              <FontAwesomeIcon icon={faPlay} className="fa-2x" onClick={this.moveRight} />
+            )}
+          </div>
         </div>
       </div>
     );
@@ -85,6 +90,11 @@ SectionTestimonials.defaultProps = {
       rating: 4.5,
       text: 'Great experience, highly recommended!',
       userInfo: 'Iwona, Warszawa',
+    },
+    3: {
+      rating: 3.5,
+      text: 'Was ok, but the cleaner was 10 minutes late.',
+      userInfo: 'Łukasz, Warszawa',
     },
   },
 };

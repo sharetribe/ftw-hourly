@@ -1,0 +1,16 @@
+@import '../../styles/customMediaQueries.css';
+
+.Testimonial {
+  display: flex;
+  width: 600px;
+}
+
+.userInfo {
+  width: 250px;
+  text-align: center;
+  justify-content: center;
+  padding: 0 20px;
+}
+.ratingSection {
+  width: 80%;
+}

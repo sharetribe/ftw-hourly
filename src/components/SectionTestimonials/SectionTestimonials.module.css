@@ -9,8 +9,13 @@
   display: flex;
   flex-direction: column;
   padding-top: 20px;
+  justify-content: center;
 
   @media (--viewportMedium) {
     flex-direction: row;
   }
+}
+
+.arrowBox {
+  width: 10%;
 }
