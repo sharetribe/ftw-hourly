@@ -1,0 +1,19 @@
+@import '../../styles/customMediaQueries.css';
+
+.title {
+  composes: h1 from global;
+  margin-top: 0;
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+
+  @media (--viewportMedium) {
+    flex-direction: row;
+  }
+}
+
+.body p {
+  padding: 0 40px;
+}

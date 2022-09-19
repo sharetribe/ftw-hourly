@@ -63,6 +63,7 @@
   composes: marketplaceHeroTitleFontStyles from global;
   color: var(--matterColorLight);
   composes: animation;
+  background-color: rgba(88, 86, 86, 0.5);
 
   @media (--viewportMedium) {
     max-width: var(--SectionHero_desktopTitleMaxWidth);

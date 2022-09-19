@@ -175,6 +175,8 @@ export { default as SectionHero } from './SectionHero/SectionHero';
 export { default as SectionHowItWorks } from './SectionHowItWorks/SectionHowItWorks';
 export { default as SectionLocations } from './SectionLocations/SectionLocations';
 export { default as SectionGuarantee } from './SectionGuarantee/SectionGuarantee';
+export { default as SectionServices } from './SectionServices/SectionServices';
+export { default as SectionTestimonials } from './SectionTestimonials/SectionTestimonials';
 export { default as SectionThumbnailLinks } from './SectionThumbnailLinks/SectionThumbnailLinks';
 export { default as Topbar } from './Topbar/Topbar';
 export { default as TopbarDesktop } from './TopbarDesktop/TopbarDesktop';
