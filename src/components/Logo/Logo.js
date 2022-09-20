@@ -4,8 +4,8 @@ import classNames from 'classnames';
 import IconLogo from './IconLogo';
 import css from './Logo.module.css';
 
-import MobileLogoImage from './HH_temp_logo.png';
-import DesktopLogoImage from './HH_temp_logo2.png';
+import MobileLogoImage from './HHredlogo.png';
+import DesktopLogoImage from './HHredlogo.png';
 
 const Logo = props => {
   // const { className, format, ...rest } = props;
