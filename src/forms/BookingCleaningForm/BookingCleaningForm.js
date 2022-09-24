@@ -48,11 +48,11 @@ class BookingCleaningForm extends Component {
     const submitButtonClasses = classNames(css.submitButtonWrapper);
 
     return (
-      <div>
+      <div className={classes}>
         <h1>
-          <FormattedMessage id="BookingCleaningForm.title" />{' '}
+          <FormattedMessage id="BookingCleaningForm.title" />
         </h1>
-        <form onSubmit={this.handleSubmit} className={classes}>
+        <form onSubmit={this.handleSubmit} className={css.BookingCleaningFormChild}>
           <input
             type="number"
             min="0"

@@ -1,3 +1,8 @@
+.root {
+  border: thick solid var(--marketplaceColor);
+  padding: 0 20px;
+}
+
 .submitButtonWrapper {
   flex-shrink: 0;
   padding: 0 24px 24px 24px;
@@ -24,4 +29,8 @@
     margin-top: 4px;
     margin-bottom: 21px;
   }
+}
+
+.BookingCleaningFormChild {
+  padding: auto;
 }
