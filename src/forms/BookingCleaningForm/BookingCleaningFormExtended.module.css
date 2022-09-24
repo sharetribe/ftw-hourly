@@ -27,6 +27,14 @@
   margin-left: 0;
 }
 
+.BookingCleaningFrequency:hover {
+  background-color: var(--marketplaceColor);
+}
+
+.ButtonSelected {
+  background-color: var(--marketplaceColor);
+}
+
 .BookingCleaningAddon {
   display: inline-block;
   cursor: pointer;
@@ -92,4 +100,13 @@
     margin-top: 4px;
     margin-bottom: 21px;
   }
+}
+
+fieldset {
+  border: none;
+}
+
+.BookingCleaningFrequency input {
+  text-decoration: none;
+  border: none;
 }

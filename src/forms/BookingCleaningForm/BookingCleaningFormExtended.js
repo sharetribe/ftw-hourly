@@ -12,20 +12,15 @@ class BookingCleaningFormExtended extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      numBedrooms: '',
-      numBathrooms: '',
-      date: moment(new Date())
-        .add(1, 'd')
-        .format('YYYY-MM-DD'),
-      time: '08:00',
-      postcode: '',
-      email: '',
+      frequency: 'Bi-weekly',
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
   handleChange(evt) {
+    // document.getElementById(evt.target.id).classList.add('buttonActive');
     this.setState({ [evt.target.name]: evt.target.value });
+    this.props.enterFrequencyInfo(evt.target.value);
   }
   handleSubmit(evt) {
     evt.preventDefault();
@@ -57,15 +52,24 @@ class BookingCleaningFormExtended extends Component {
               <span className={css.stepTitleNumber}>1</span>
               <FormattedMessage id="BookingCleaningFormExtended.step1" />
             </p>
-            <div className={css.BookingCleaningFrequencySection}>
+            <fieldset className={css.BookingCleaningFrequencySection}>
               {frequencies.map(elem => {
                 return (
-                  <div key={uuidv4()} className={css.BookingCleaningFrequency}>
-                    {elem}
-                  </div>
+                  <input
+                    className={
+                      css.BookingCleaningFrequency +
+                      (this.state.frequency === elem ? ' ' + css.ButtonSelected : '')
+                    }
+                    key={uuidv4()}
+                    type="button"
+                    id={'button' + elem}
+                    name="frequency"
+                    value={elem}
+                    onClick={this.handleChange}
+                  />
                 );
               })}
-            </div>
+            </fieldset>
           </section>
           <section className={css.step}>
             <p className={css.stepTitle}>

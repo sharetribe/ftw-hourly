@@ -33,7 +33,7 @@ class CleaningBookingPage extends Component {
         postcode: '',
         email: '',
       },
-      recurrency: 'Biweekly',
+      frequency: 'Bi-weekly',
       additionalServices: {
         fridge: false,
         windows: false,
@@ -43,11 +43,15 @@ class CleaningBookingPage extends Component {
       },
     };
     this.enterInitialInfo = this.enterInitialInfo.bind(this);
+    this.enterFrequencyInfo = this.enterFrequencyInfo.bind(this);
   }
   enterInitialInfo(infoFromStep1) {
     this.setState({ initialInfo: infoFromStep1, initialStage: false });
   }
 
+  enterFrequencyInfo(freq) {
+    this.setState({ frequency: freq });
+  }
   render() {
     return (
       <StaticPage
@@ -69,7 +73,7 @@ class CleaningBookingPage extends Component {
         ) : (
           <div>
             <div className={css.CleaningBookingPageMain}>
-              <BookingCleaningFormExtended />
+              <BookingCleaningFormExtended enterFrequencyInfo={this.enterFrequencyInfo} />
             </div>
             <div className={css.CleaningBookingPageRightPanel}>
               <div className={css.CleaningBookingPageSummary}>
@@ -88,7 +92,7 @@ class CleaningBookingPage extends Component {
                   {this.state.initialInfo.time}
                 </div>
                 <div>
-                  <FontAwesomeIcon icon={faRotate} /> {this.state.recurrency}
+                  <FontAwesomeIcon icon={faRotate} /> {this.state.frequency}
                 </div>
                 <div>
                   <FontAwesomeIcon icon={faCircleCheck} /> Cancel Anytime
