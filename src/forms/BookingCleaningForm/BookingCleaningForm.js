@@ -28,6 +28,7 @@ class BookingCleaningForm extends Component {
   }
   handleSubmit(evt) {
     evt.preventDefault();
+    this.props.enterInitialInfo(this.state);
     this.setState({
       numBedrooms: '',
       numBathrooms: '',

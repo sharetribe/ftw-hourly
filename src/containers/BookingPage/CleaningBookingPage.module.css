@@ -58,6 +58,37 @@
   background-color: var(--matterColorBright);
 }
 
+.CleaningBookingPageMain {
+  display: inline-flex;
+  margin: 20px 0 0 20px;
+  width: calc(0.7 * (100% - 20px));
+  /* border: solid var(--marketplaceColor); */
+}
+
+.CleaningBookingPageRightPanel {
+  display: inline-flex;
+  flex-direction: column;
+  width: calc(0.3 * (100% - 20px));
+}
+.CleaningBookingPageSummary {
+  padding: 0 20px;
+  margin: 20px;
+  border: solid var(--marketplaceColor);
+}
+
+.CleaningBookingPageAdditionalInfo {
+  padding: 0 20px;
+  margin: 20px;
+  margin-top: 20px;
+  border: solid var(--marketplaceColor);
+}
+
+#cleaningBookingPageSmallDetails {
+  font-size: 10px;
+  margin: 0;
+  padding: 0;
+}
+
 h1,
 h2,
 h3 {
@@ -76,4 +107,8 @@ h2 {
 h3 {
   font-size: 1.5em;
   /* padding-top: 20px; */
+}
+
+h4 {
+  font-weight: bold;
 }
