@@ -53,56 +53,68 @@ class BookingCleaningForm extends Component {
           <FormattedMessage id="BookingCleaningForm.title" />
         </h1>
         <form onSubmit={this.handleSubmit} className={css.BookingCleaningFormChild}>
-          <input
-            type="number"
-            min="0"
-            max="20"
-            name="numBedrooms"
-            placeholder="Number of bedrooms"
-            value={this.state.numBedrooms}
-            onChange={this.handleChange}
-          />
-          <input
-            type="number"
-            min="0"
-            max="20"
-            name="numBathrooms"
-            placeholder="Number of bathrooms"
-            value={this.state.numBathrooms}
-            onChange={this.handleChange}
-          />
-          <input
-            type="search"
-            name="postcode"
-            placeholder="Postcode"
-            value={this.state.postcode}
-            onChange={this.handleChange}
-          />
-          <input
-            type="date"
-            min={moment(new Date()).format('YYYY-MM-DD')}
-            max={moment(new Date())
-              .add(90, 'd')
-              .format('YYYY-MM-DD')}
-            name="date"
-            value={this.state.date}
-            onChange={this.handleChange}
-          />
-          <input
-            type="time"
-            min="07:00"
-            max="20:00"
-            name="time"
-            value={this.state.time}
-            onChange={this.handleChange}
-          />
-          <input
-            type="email"
-            name="email"
-            placeholder="email"
-            value={this.state.email}
-            onChange={this.handleChange}
-          />
+          <div className={css.BookingCleaningFormRow}>
+            <div className={css.BookingCleaningFormMultiBlock}>
+              <input
+                type="number"
+                min="0"
+                max="20"
+                name="numBedrooms"
+                placeholder="# Bedrooms"
+                value={this.state.numBedrooms}
+                onChange={this.handleChange}
+              />
+              <input
+                type="number"
+                min="0"
+                max="20"
+                name="numBathrooms"
+                placeholder="# Bathrooms"
+                value={this.state.numBathrooms}
+                onChange={this.handleChange}
+              />
+            </div>
+            <div className={css.BookingCleaningFormSingleBlock}>
+              <input
+                type="search"
+                name="postcode"
+                placeholder="Postcode"
+                value={this.state.postcode}
+                onChange={this.handleChange}
+              />
+            </div>
+          </div>
+          <div className={css.BookingCleaningFormRow}>
+            <div className={css.BookingCleaningFormMultiBlock}>
+              <input
+                type="date"
+                min={moment(new Date()).format('YYYY-MM-DD')}
+                max={moment(new Date())
+                  .add(90, 'd')
+                  .format('YYYY-MM-DD')}
+                name="date"
+                value={this.state.date}
+                onChange={this.handleChange}
+              />
+              <input
+                type="time"
+                min="07:00"
+                max="20:00"
+                name="time"
+                value={this.state.time}
+                onChange={this.handleChange}
+              />
+            </div>
+            <div className={css.BookingCleaningFormSingleBlock}>
+              <input
+                type="email"
+                name="email"
+                placeholder="E-mail"
+                value={this.state.email}
+                onChange={this.handleChange}
+              />
+            </div>
+          </div>
           <p className={css.smallPrint}>
             <FormattedMessage id="BookingCleaningForm.youWontBeChargedInfo" />
           </p>

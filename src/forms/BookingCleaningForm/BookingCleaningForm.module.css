@@ -1,11 +1,11 @@
 .root {
-  border: thick solid var(--marketplaceColor);
+  border: 3px solid var(--marketplaceColor);
   padding: 0 20px;
 }
 
 .submitButtonWrapper {
   flex-shrink: 0;
-  padding: 0 24px 24px 24px;
+  /* padding: 0 24px 24px 24px; */
   width: 100%;
 
   @media (--viewportMedium) {
@@ -17,7 +17,7 @@
   composes: marketplaceTinyFontStyles from global;
   color: var(--matterColorAnti);
   text-align: center;
-  margin: auto 24px 20px 24px;
+  margin: 20px 24px 20px 24px;
   flex-shrink: 0;
 
   @media (--viewportMedium) {
@@ -32,5 +32,28 @@
 }
 
 .BookingCleaningFormChild {
-  padding: auto;
+  padding: 0 24px 24px 24px;
+}
+
+.BookingCleaningFormChild input {
+  height: 3em;
+}
+
+.BookingCleaningFormRow {
+  display: flex;
+  justify-content: space-between;
+}
+
+.BookingCleaningFormMultiBlock {
+  display: flex;
+  width: 45%;
+}
+
+.BookingCleaningFormMultiBlock input:nth-of-type(1) {
+  margin-right: 5px;
+}
+
+.BookingCleaningFormSingleBlock {
+  display: flex;
+  width: 45%;
 }

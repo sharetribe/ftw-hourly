@@ -66,14 +66,14 @@ h3 {
 
 h2,
 h3 {
-  margin-top: auto;
+  /* margin-top: auto; */
 }
 h2 {
   font-size: 2em;
-  padding-top: 100px;
+  /* padding-top: 100px; */
 }
 
 h3 {
   font-size: 1.5em;
-  padding-top: 20px;
+  /* padding-top: 20px; */
 }
