@@ -1,0 +1,27 @@
+.submitButtonWrapper {
+  flex-shrink: 0;
+  padding: 0 24px 24px 24px;
+  width: 100%;
+
+  @media (--viewportMedium) {
+    padding: 0;
+    width: 100%;
+  }
+}
+.smallPrint {
+  composes: marketplaceTinyFontStyles from global;
+  color: var(--matterColorAnti);
+  text-align: center;
+  margin: auto 24px 20px 24px;
+  flex-shrink: 0;
+
+  @media (--viewportMedium) {
+    margin-top: auto;
+    margin-bottom: 20px;
+  }
+
+  @media (--viewportLarge) {
+    margin-top: 4px;
+    margin-bottom: 21px;
+  }
+}

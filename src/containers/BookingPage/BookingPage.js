@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {
+  Page,
   LayoutSingleColumn,
   LayoutWrapperTopbar,
   LayoutWrapperMain,
@@ -21,11 +22,11 @@ class BookingPage extends Component {
   render() {
     const { params } = this.props;
     if (params.service == 'cleaning') {
-      var page = <CleaningBookingPage />;
+      var bookFormPage = <CleaningBookingPage />;
     } else if (params.service == 'landscaping') {
-      var page = <LandscapingBookingPage />;
+      var bookFormPage = <LandscapingBookingPage />;
     } else if (params.service == 'plumbing') {
-      // let page = <PlumbingBookingPage />
+      // let bookFormPage = <PlumbingBookingPage />
     }
     return (
       <StaticPage
@@ -43,7 +44,7 @@ class BookingPage extends Component {
             <TopbarContainer />
           </LayoutWrapperTopbar>
           <LayoutWrapperMain>
-            {page}
+            {bookFormPage}
             <div>
               <NamedLink name="LandingPage">Go to home page</NamedLink> or
               <ExternalLink href="https://google.com">Go to Google</ExternalLink>

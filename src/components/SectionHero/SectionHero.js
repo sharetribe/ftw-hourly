@@ -11,7 +11,7 @@ import { render } from 'enzyme';
 class SectionHero extends Component {
   constructor(props) {
     super(props);
-    this.state = { service: 'cleaning' };
+    this.state = { service: 'cleaning', mounted: true };
     this.changeService = this.changeService.bind(this);
   }
   changeService(newService) {
@@ -21,7 +21,7 @@ class SectionHero extends Component {
   }
   render() {
     // const [mounted, setMounted] = useState(false);
-    const mounted = true;
+    // const mounted = true;
     const { rootClassName, className } = this.props;
 
     // useEffect(() => {
@@ -34,10 +34,18 @@ class SectionHero extends Component {
     return (
       <div className={classes}>
         <div className={css.heroContent}>
-          <h1 className={classNames(css.heroMainTitle, { [css.heroMainTitleFEDelay]: mounted })}>
+          <h1
+            className={classNames(css.heroMainTitle, {
+              [css.heroMainTitleFEDelay]: this.state.mounted,
+            })}
+          >
             <FormattedMessage id="SectionHero.title" />
           </h1>
-          <h2 className={classNames(css.heroSubTitle, { [css.heroSubTitleFEDelay]: mounted })}>
+          <h2
+            className={classNames(css.heroSubTitle, {
+              [css.heroSubTitleFEDelay]: this.state.mounted,
+            })}
+          >
             <FormattedMessage id="SectionHero.subTitle" />
           </h2>
           <div className={css.heroSelectionBlock}>
@@ -49,7 +57,9 @@ class SectionHero extends Component {
             <NamedLink
               name="BookingPage"
               params={chosenService}
-              className={classNames(css.heroButton, { [css.heroButtonFEDelay]: mounted })}
+              className={classNames(css.heroButton, {
+                [css.heroButtonFEDelay]: this.state.mounted,
+              })}
             >
               <FormattedMessage id="SectionHero.browseButton" />
             </NamedLink>

@@ -66,6 +66,8 @@
   "BookingBreakdown.subTotal": "Subtotal",
   "BookingBreakdown.total": "Total price",
   "BookingCleaningForm.title": "Home Cleaning in Warsaw",
+  "BookingCleaningForm.submit": "Get a Quote",
+  "BookingCleaningForm.youWontBeChargedInfo": "You won't be charged yet.",
   "BookingDateRangeFilter.labelPlain": "Dates",
   "BookingDateRangeFilter.labelPopup": "Dates",
   "BookingDateRangeFilter.labelSelectedPlain": "{dates}",

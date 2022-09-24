@@ -18,7 +18,12 @@ const CleaningBookingPage = () => {
         name: 'Cleaning booking page',
       }}
     >
-      <BookingCleaningForm />
+      <div className={css.heroContainer}>
+        <div className={css.heroContent}>
+          <BookingCleaningForm />
+        </div>
+      </div>
+
       <h2>
         <FormattedMessage id="CleaningBookingPage.title" />
       </h2>

@@ -4,8 +4,8 @@ import classNames from 'classnames';
 import IconLogo from './IconLogo';
 import css from './Logo.module.css';
 
-import MobileLogoImage from './HHredlogo.png';
-import DesktopLogoImage from './HHredlogo.png';
+import MobileLogoImage from './Habitat_Logo_White.png';
+import DesktopLogoImage from './Habitat_Logo_White.png';
 
 const Logo = props => {
   // const { className, format, ...rest } = props;
@@ -25,14 +25,14 @@ const Logo = props => {
     //   format={format}
     //   {...rest}
     // />
-    <img className={className} src={logoImage} alt={'Habitat Hero'} {...rest} />
+    <img className={classes} src={logoImage} alt={'Habitat Hero'} {...rest} />
   );
 };
 
 const { oneOf, string } = PropTypes;
 
 Logo.defaultProps = {
-  className: null,
+  className: 'defaultLogo',
   format: 'desktop',
 };
 

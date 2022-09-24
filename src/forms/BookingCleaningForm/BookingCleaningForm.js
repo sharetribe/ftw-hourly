@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import moment from 'moment';
 import { object, string } from 'prop-types';
 import { FormattedMessage } from '../../util/reactIntl';
+import { PrimaryButton } from '../../components';
 import classNames from 'classnames';
 
 import css from './BookingCleaningForm.module.css';
@@ -20,6 +21,7 @@ class BookingCleaningForm extends Component {
       email: '',
     };
     this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
   handleChange(evt) {
     this.setState({ [evt.target.name]: evt.target.value });
@@ -27,26 +29,30 @@ class BookingCleaningForm extends Component {
   handleSubmit(evt) {
     evt.preventDefault();
     this.setState({
-      numBedrooms: 1,
-      numBathrooms: 1,
+      numBedrooms: '',
+      numBathrooms: '',
       date: moment(new Date())
         .add(1, 'd')
         .format('YYYY-MM-DD'),
       time: '08:00',
-      postcode: '00-682',
-      email: 'aleksandrakbailey@gmail.com',
+      postcode: '',
+      email: '',
     });
   }
 
   render() {
     const { rootClassName, className, services } = this.props;
     const classes = classNames(rootClassName || css.root, className);
+
+    // const submitButtonClasses = classNames(submitButtonWrapperClassName || css.submitButtonWrapper);
+    const submitButtonClasses = classNames(css.submitButtonWrapper);
+
     return (
-      <div className={classes}>
+      <div>
         <h1>
           <FormattedMessage id="BookingCleaningForm.title" />{' '}
         </h1>
-        <form onSubmit={this.handleSubmit}>
+        <form onSubmit={this.handleSubmit} className={classes}>
           <input
             type="number"
             min="0"
@@ -97,7 +103,14 @@ class BookingCleaningForm extends Component {
             value={this.state.email}
             onChange={this.handleChange}
           />
-          <button>Submit!</button>
+          <p className={css.smallPrint}>
+            <FormattedMessage id="BookingCleaningForm.youWontBeChargedInfo" />
+          </p>
+          <div className={submitButtonClasses}>
+            <PrimaryButton type="submit">
+              <FormattedMessage id="BookingCleaningForm.submit" />
+            </PrimaryButton>
+          </div>
         </form>
       </div>
     );
@@ -107,11 +120,13 @@ class BookingCleaningForm extends Component {
 BookingCleaningForm.defaultProps = {
   rootClassName: null,
   className: null,
+  submitButtonWrapperClassName: null,
 };
 
 BookingCleaningForm.propTypes = {
   rootClassName: string,
   className: string,
+  submitButtonWrapperClassName: string,
 };
 
 export default BookingCleaningForm;
