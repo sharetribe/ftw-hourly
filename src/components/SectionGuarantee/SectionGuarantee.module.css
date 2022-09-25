@@ -5,7 +5,7 @@
   margin-top: 0;
 }
 
-.steps {
+.body {
   display: flex;
   flex-direction: column;
 
@@ -14,10 +14,10 @@
   }
 }
 
-.createListingLink {
-  margin-top: 18px;
+.body p {
+  padding: 0 40px;
+}
 
-  @media (--viewportMedium) {
-    margin-top: 24px;
-  }
+.icon {
+  composes: iconFa from global;
 }

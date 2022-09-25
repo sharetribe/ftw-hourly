@@ -1,0 +1,34 @@
+@import '../../styles/customMediaQueries.css';
+
+.step {
+  @media (--viewportMedium) {
+    width: 324px;
+    margin-right: 40px;
+    /* text-align: center; */
+  }
+}
+
+.step:last-of-type {
+  @media (--viewportMedium) {
+    margin-right: 0;
+  }
+}
+
+.stepTitle {
+  margin-top: 18px;
+  margin-bottom: 18px;
+  /* text-align: center; */
+
+  @media (--viewportMedium) {
+    margin-top: 21px;
+    margin-bottom: 18px;
+  }
+}
+
+.icon {
+  composes: iconFa from global;
+  justify-content: center;
+  display: flex;
+  margin: 10px 0;
+  padding: 10px 0;
+}

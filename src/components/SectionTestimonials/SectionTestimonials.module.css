@@ -5,19 +5,17 @@
   margin-top: 0;
 }
 
-.steps {
+.body {
   display: flex;
   flex-direction: column;
+  padding-top: 20px;
+  justify-content: center;
 
   @media (--viewportMedium) {
     flex-direction: row;
   }
 }
 
-.createListingLink {
-  margin-top: 18px;
-
-  @media (--viewportMedium) {
-    margin-top: 24px;
-  }
+.arrowBox {
+  width: 10%;
 }

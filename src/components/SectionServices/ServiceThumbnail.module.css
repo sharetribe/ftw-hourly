@@ -1,0 +1,32 @@
+@import '../../styles/customMediaQueries.css';
+
+.serviceThumbnail {
+  align-items: center;
+
+  @media (--viewportMedium) {
+    width: 324px;
+    margin-right: 40px;
+    /* text-align: center; */
+  }
+}
+.serviceThumbnail:last-of-type {
+  @media (--viewportMedium) {
+    margin-right: 0;
+  }
+}
+
+.serviceTitle {
+  text-align: center;
+}
+
+.icon {
+  composes: iconFa from global;
+  justify-content: center;
+  display: flex;
+  margin: 10px 0;
+}
+
+.icon:hover {
+  transform: scale(1.2);
+  opacity: 0.7;
+}

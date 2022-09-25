@@ -171,20 +171,24 @@
 
 body {
   font-family: Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased; /* http://szafranek.net/blog/2009/02/22/font-smoothing-explained/ */
-  -moz-osx-font-smoothing: grayscale; /* http://szafranek.net/blog/2009/02/22/font-smoothing-explained/ */
+  -webkit-font-smoothing: antialiased;
+  /* http://szafranek.net/blog/2009/02/22/font-smoothing-explained/ */
+  -moz-osx-font-smoothing: grayscale;
+  /* http://szafranek.net/blog/2009/02/22/font-smoothing-explained/ */
   text-rendering: optimizeSpeed;
 
   background-color: var(--matterColorBright);
 }
 
 ::selection {
-  background: var(--marketplaceColor); /* WebKit/Blink Browsers */
+  background: var(--marketplaceColor);
+  /* WebKit/Blink Browsers */
   color: var(--matterColorLight);
 }
 
 ::-moz-selection {
-  background: var(--marketplaceColor); /* Gecko Browsers */
+  background: var(--marketplaceColor);
+  /* Gecko Browsers */
   color: var(--matterColorLight);
 }
 
@@ -204,6 +208,7 @@ a,
   /* Text size should be inherited */
   text-decoration: none;
 }
+
 a:hover,
 .a:hover {
   text-decoration: underline;
@@ -444,6 +449,7 @@ select {
     padding: 4px 0 2px 0;
   }
 }
+
 select:hover,
 select:focus {
   border-bottom-color: var(--matterColor);
@@ -478,6 +484,7 @@ textarea,
     padding: 4px 0 2px 0;
   }
 }
+
 input:hover,
 input:focus,
 textarea:hover,
@@ -506,6 +513,7 @@ textarea {
   & body {
     font-family: 'poppins', Helvetica, Arial, sans-serif;
   }
+
   & button {
     font-family: 'poppins', Helvetica, Arial, sans-serif;
   }
@@ -516,17 +524,23 @@ textarea {
 /* Full screen Background image located in root-folder/src/assets */
 .defaultBackgroundImage {
   /* Gradient direction and overlaying the black color on top of the image for better readability */
-  background: linear-gradient(-45deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.6)),
-    url('../assets/background-1440.jpg');
+  /* background: linear-gradient(-45deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.6)),
+    url('../assets/imgmain1.jpg'); */
+  background: url('../assets/imgmain1.jpg'), url('../assets/imgmain2.jpg'),
+    url('../assets/imgmain3.jpg');
 
   /* Add loading color for the div */
   background-color: var(--matterColor);
 
   /* Cover the whole screen with the background image */
-  background-size: cover;
+  background-size: calc(100% / 3), calc(100% / 3), calc(100% / 3);
+  /* background-size: contain; */
 
   /* Align the image within the container */
-  background-position: center center;
+  background-position: left, center, right;
+
+  /* No repeat */
+  background-repeat: no-repeat, no-repeat, no-repeat;
 
   @media (--viewportLarge) {
     border-radius: 40px;
@@ -537,18 +551,24 @@ textarea {
 .defaultBackgroundImageForDesktop {
   /* Gradient direction and overlaying the black color on top of the image for better readability */
   @media (--viewportMedium) {
-    background: linear-gradient(-45deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.6)),
-      url('../assets/background-1440.jpg');
+    /* background: linear-gradient(-45deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.6)),
+    url('../assets/imgmain1.jpg'); */
+    background: url('../assets/imgmain1.jpg'), url('../assets/imgmain2.jpg'),
+      url('../assets/imgmain3.jpg');
 
     /* Add loading color for the div */
     background-color: var(--matterColor);
 
     /* Cover the whole screen with the background image */
-    background-size: cover;
+    background-size: cover cover cover;
 
     /* Align the image within the container */
-    background-position: center center;
+    background-position: center center center;
+
+    /* No repeat */
+    background-repeat: no-repeat, no-repeat, no-repeat;
   }
+
   @media (--viewportLarge) {
     border-radius: 40px;
     border: solid 36px var(--matterColorBright);
@@ -722,11 +742,13 @@ textarea {
     min-height: 65px;
   }
 }
+
 .button:focus,
 .button:hover {
   outline: none;
   box-shadow: var(--boxShadowButton);
 }
+
 .button:disabled {
   box-shadow: none;
   cursor: not-allowed;
@@ -748,6 +770,7 @@ textarea {
   text-align: center;
   text-decoration: none;
 }
+
 .buttonText:focus,
 .buttonText:hover {
   text-decoration: none;
@@ -759,6 +782,7 @@ textarea {
   border: none;
   border-radius: var(--borderRadius);
 }
+
 /* Secondary button has clear borders */
 .buttonBordersSecondary {
   border-width: 1px;
@@ -766,10 +790,12 @@ textarea {
   border-color: var(--matterColorNegative);
   border-radius: var(--borderRadius);
 }
+
 .buttonBordersSecondary:hover,
 .buttonBordersSecondary:focus {
   border-color: var(--matterColorAnti);
 }
+
 .buttonBordersSecondary:disabled {
   border-color: var(--matterColorNegative);
 }
@@ -780,10 +806,12 @@ textarea {
   background-color: var(--marketplaceColor);
   color: var(--matterColorLight);
 }
+
 .buttonColors:focus,
 .buttonColors:hover {
   background-color: var(--marketplaceColorDark);
 }
+
 .buttonColors:disabled {
   background-color: var(--matterColorNegative);
   color: var(--matterColorLight);
@@ -794,11 +822,13 @@ textarea {
   background-color: var(--successColor);
   color: var(--matterColorLight);
 }
+
 .buttonColorsPrimary:hover,
 .buttonColorsPrimary:focus {
   background-color: var(--successColorDark);
   color: var(--matterColorLight);
 }
+
 .buttonColorsPrimary:disabled {
   background-color: var(--matterColorNegative);
   color: var(--matterColorLight);
@@ -809,6 +839,7 @@ textarea {
   background-color: var(--matterColorLight);
   color: var(--matterColor);
 }
+
 .buttonColorsSecondary:disabled {
   background-color: var(--matterColorNegative);
   color: var(--matterColorLight);
@@ -1000,16 +1031,19 @@ textarea {
 
   cursor: pointer;
 }
+
 .marketplaceModalCloseStyles:enabled:hover {
   background-color: transparent;
   color: var(--matterColorDark);
   box-shadow: none;
   text-decoration: none;
 }
+
 .marketplaceModalCloseStyles:enabled:active {
   background-color: transparent;
   color: var(--matterColorDark);
 }
+
 .marketplaceModalCloseStyles:disabled {
   background-color: transparent;
 }
@@ -1079,4 +1113,10 @@ textarea {
   @media (--viewportMedium) {
     margin-top: 32px;
   }
+}
+
+/* Additional custom settings */
+
+.iconFa {
+  color: var(--marketplaceColor);
 }

@@ -1,0 +1,112 @@
+.root {
+  border: solid var(--marketplaceColor);
+  display: flex;
+  width: 100%;
+}
+
+.BookingCleaningFormChild {
+  padding: 0 24px 24px 24px;
+  width: 100%;
+}
+.BookingCleaningFrequencySection {
+}
+.BookingCleaningFrequency {
+  display: inline-block;
+  cursor: pointer;
+  vertical-align: middle;
+  max-width: 100px;
+  padding: 5px;
+  text-align: center;
+  border: 2px solid var(--marketplaceColor);
+  border-radius: 12px;
+  margin: 0 5px;
+  width: 100px;
+}
+
+.BookingCleaningFrequency:nth-of-type(1) {
+  margin-left: 0;
+}
+
+.BookingCleaningFrequency:hover {
+  background-color: var(--marketplaceColor);
+}
+
+.ButtonSelected {
+  background-color: var(--marketplaceColor);
+}
+
+.BookingCleaningAddon {
+  display: inline-block;
+  cursor: pointer;
+  vertical-align: middle;
+  max-width: 100px;
+  padding: 5px;
+  text-align: center;
+  border: 2px solid var(--marketplaceColor);
+  border-radius: 50%;
+  margin: 0 5px;
+  width: auto;
+}
+
+.BookingCleaningAddon:nth-of-type(1) {
+  margin-left: 0;
+}
+
+.step {
+  margin-bottom: 30px;
+}
+
+.stepTitle {
+  font-weight: bold;
+  font-size: 1.3em;
+}
+
+.stepTitleNumber {
+  /* border: 2px solid var(--matterColorNegative); */
+  background-color: var(--matterColorNegative);
+  border-radius: 50%;
+  text-align: center;
+  width: 100px;
+  height: 100px;
+  line-height: 50px;
+  vertical-align: middle;
+  padding: 10px 20px;
+  margin: 0 10px 0 0;
+}
+
+.submitButtonWrapper {
+  flex-shrink: 0;
+  /* padding: 0 24px 24px 24px; */
+  width: 100%;
+
+  @media (--viewportMedium) {
+    padding: 0;
+    width: 100%;
+  }
+}
+.smallPrint {
+  composes: marketplaceTinyFontStyles from global;
+  color: var(--matterColorAnti);
+  text-align: center;
+  margin: 20px 24px 20px 24px;
+  flex-shrink: 0;
+
+  @media (--viewportMedium) {
+    margin-top: auto;
+    margin-bottom: 20px;
+  }
+
+  @media (--viewportLarge) {
+    margin-top: 4px;
+    margin-bottom: 21px;
+  }
+}
+
+fieldset {
+  border: none;
+}
+
+.BookingCleaningFrequency input {
+  text-decoration: none;
+  border: none;
+}

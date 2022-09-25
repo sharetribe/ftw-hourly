@@ -63,6 +63,7 @@
   composes: marketplaceHeroTitleFontStyles from global;
   color: var(--matterColorLight);
   composes: animation;
+  background-color: rgba(88, 86, 86, 0.5);
 
   @media (--viewportMedium) {
     max-width: var(--SectionHero_desktopTitleMaxWidth);
@@ -93,10 +94,18 @@
   composes: animation;
 
   @media (--viewportMedium) {
-    display: block;
-    width: 260px;
+    display: inline-block;
+    width: 200px;
   }
 }
 .heroButtonFEDelay {
   animation-delay: 0.3s;
+}
+
+.heroSelectionBlock {
+  /* display: inline-block; */
+
+  @media (--viewportMedium) {
+    max-width: var(--SectionHero_desktopTitleMaxWidth);
+  }
 }

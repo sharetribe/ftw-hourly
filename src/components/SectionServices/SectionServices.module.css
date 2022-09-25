@@ -5,19 +5,12 @@
   margin-top: 0;
 }
 
-.steps {
+.body {
   display: flex;
   flex-direction: column;
+  padding-top: 20px;
 
   @media (--viewportMedium) {
     flex-direction: row;
-  }
-}
-
-.createListingLink {
-  margin-top: 18px;
-
-  @media (--viewportMedium) {
-    margin-top: 24px;
   }
 }

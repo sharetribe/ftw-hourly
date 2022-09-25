@@ -1,0 +1,114 @@
+/**
+ * Import custom media queries for the new page.
+ * FTW-template use route-based code-splitting, every page create their own CSS files.
+ * This import ensures that the page and components inside will get correct media queries,
+ * when the app is build.
+ */
+@import '../../styles/customMediaQueries.css';
+
+.root {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+
+  /* Text positioning is done with paddings */
+}
+.heroContainer {
+  composes: defaultBackgroundImage from global;
+  display: flex;
+  flex-direction: column;
+  min-height: 300px;
+  height: 67.5vh;
+  max-height: 600px;
+  /* padding: 0; */
+
+  @media (--viewportMedium) {
+    min-height: 500px;
+    height: 70vh;
+    max-height: none;
+  }
+
+  @media (--viewportLarge) {
+    max-height: 800px;
+    min-height: 600px;
+    height: calc(70vh - var(--topbarHeightDesktop));
+  }
+}
+
+.heroContent {
+  position: relative;
+  top: 8em;
+  width: 60%;
+  align-self: center;
+  /* margin: 0 24px 0 24px; */
+
+  @media (--viewportMedium) {
+    margin: 0 7.5vw 0 7.5vw;
+  }
+
+  /* Special viewport for adjusting the heroContent's placement */
+
+  @media only screen and (min-width: 1367px) {
+    margin: 0 auto;
+    max-width: calc(1052px + 36px + 36px);
+    /* padding: 0 36px 0 36px; */
+  }
+
+  background-color: var(--matterColorBright);
+}
+
+.CleaningBookingPageMain {
+  display: inline-flex;
+  margin: 20px 0 0 20px;
+  width: calc(0.7 * (100% - 20px));
+  /* border: solid var(--marketplaceColor); */
+}
+
+.CleaningBookingPageRightPanel {
+  display: inline-flex;
+  flex-direction: column;
+  width: calc(0.3 * (100% - 20px));
+}
+.CleaningBookingPageSummary {
+  padding: 0 20px;
+  margin: 20px;
+  border: solid var(--marketplaceColor);
+}
+
+.CleaningBookingPageAdditionalInfo {
+  padding: 0 20px;
+  margin: 20px;
+  margin-top: 20px;
+  border: solid var(--marketplaceColor);
+}
+
+#cleaningBookingPageSmallDetails {
+  font-size: 10px;
+  margin: 0;
+  padding: 0;
+}
+
+h1,
+h2,
+h3 {
+  text-align: center;
+}
+
+h2,
+h3 {
+  /* margin-top: auto; */
+}
+h2 {
+  font-size: 2em;
+  /* padding-top: 100px; */
+}
+
+h3 {
+  font-size: 1.5em;
+  /* padding-top: 20px; */
+}
+
+h4 {
+  font-weight: bold;
+}
