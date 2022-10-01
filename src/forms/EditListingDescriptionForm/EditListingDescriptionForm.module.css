@@ -42,6 +42,14 @@
   composes: formMargins;
 }
 
+.language {
+  margin-bottom: 24px;
+
+  @media (--viewportMedium) {
+    margin-bottom: 32px;
+  }
+}
+
 .submitButton {
   margin-top: auto;
   margin-bottom: 24px;

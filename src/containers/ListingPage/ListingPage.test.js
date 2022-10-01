@@ -39,7 +39,7 @@ const filterConfig = [
   },
   {
     id: 'yogaStyles',
-    label: 'yogaStyles',
+    label: '',
     type: 'SelectMultipleFilter',
     group: 'secondary',
     queryParamName: 'pub_yogaStyles',

@@ -446,13 +446,17 @@ export function requestImageUpload(actionPayload) {
 // the data to the listing, and marks the tab updated so the UI can
 // display the state.
 export function requestUpdateListing(tab, data) {
+  console.log(data);
+  console.log(tab);
   return (dispatch, getState, sdk) => {
     dispatch(updateListing(data));
     const { id } = data;
     let updateResponse;
+
     return sdk.ownListings
       .update(data)
       .then(response => {
+        console.log(response);
         updateResponse = response;
         const payload = {
           id,

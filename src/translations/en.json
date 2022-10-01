@@ -215,6 +215,7 @@
   "EditListingDescriptionForm.description": "Describe yourself and your yoga sessions",
   "EditListingDescriptionForm.descriptionPlaceholder": "What kind of a teacher are you? What is included in your sessions?",
   "EditListingDescriptionForm.descriptionRequired": "A description is required.",
+  "EditListingDescriptionForm.languageLabel": "Languages spoken",
   "EditListingDescriptionForm.maxLength": "Must be {maxLength} characters or less",
   "EditListingDescriptionForm.showListingFailed": "Fetching teacher profile data failed",
   "EditListingDescriptionForm.title": "Your name",
