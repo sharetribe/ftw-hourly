@@ -37,13 +37,13 @@ export class BookingPageComponent extends Component {
       onBookingSearchListings,
       onBookingSearchAllListings,
     } = this.props;
-    // console.log('bookingSearchAllListings isss ' + bookingSearchAllListings({}));
     if (service == 'cleaning') {
       var bookFormPage = (
         <CleaningBookingPage
           onBookingSearchAllListings={onBookingSearchAllListings}
           onBookingSearchListings={onBookingSearchListings}
           bookingSearchListings={bookingSearchListings}
+          availableListings={listings}
         />
       );
     } else if (service == 'landscaping') {
@@ -99,7 +99,8 @@ const mapStateToProps = state => {
     bookingSearchParams,
   } = state.BookingPage;
   const pageListings = getListingsById(state, currentPageResultIds);
-
+  // console.log('In mapStateToProps Booking Page');
+  // console.log(pageListings);
   return {
     listings: pageListings,
     pagination,

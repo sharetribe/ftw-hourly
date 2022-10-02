@@ -7,6 +7,7 @@ import { PrimaryButton } from '../../components';
 import classNames from 'classnames';
 
 import css from './BookingCleaningFormExtended.module.css';
+import { getMonthStartInTimeZone } from '../../util/dates';
 
 class BookingCleaningFormExtended extends Component {
   constructor(props) {
@@ -38,7 +39,14 @@ class BookingCleaningFormExtended extends Component {
   }
 
   render() {
-    const { rootClassName, className, services, frequencies, additionalServices } = this.props;
+    const {
+      rootClassName,
+      className,
+      services,
+      frequencies,
+      additionalServices,
+      availableListings,
+    } = this.props;
     const classes = classNames(rootClassName || css.root, className);
 
     // const submitButtonClasses = classNames(submitButtonWrapperClassName || css.submitButtonWrapper);
@@ -93,6 +101,16 @@ class BookingCleaningFormExtended extends Component {
               <span className={css.stepTitleNumber}>3</span>
               <FormattedMessage id="BookingCleaningFormExtended.step3" />
             </p>
+            <div>
+              Available listings are:
+              {availableListings.map(listing => {
+                return (
+                  <p key={listing.id.uuid}>
+                    {listing.id.uuid}: {listing.attributes.title}
+                  </p>
+                );
+              })}
+            </div>
           </section>
           <section className={css.step}>
             <p className={css.stepTitle}>

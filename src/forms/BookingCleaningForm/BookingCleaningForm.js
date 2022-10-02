@@ -23,11 +23,27 @@ class BookingCleaningForm extends Component {
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleClick = this.handleClick.bind(this);
+    // this.handleClick = this.handleClick.bind(this);
   }
-  handleClick(evt) {
-    console.log('Inside click');
+  // handleClick(evt) {
+  //   console.log('Inside click');
+  //   evt.preventDefault();
+  //   this.props
+  //     .onBookingSearchListings({
+  //       // perPage: 100,
+  //       startTime: formatStartTimestampForSearch(this.state.date, this.state.time),
+  //       minDuration: 60,
+  //     })
+  //     .then(data => console.log(data));
+  // }
+  handleChange(evt) {
+    this.setState({ [evt.target.name]: evt.target.value });
+  }
+  handleSubmit(evt) {
     evt.preventDefault();
+    // Update the state with the info from the initial form
+    this.props.enterInitialInfo(this.state);
+    // Search listings
     this.props
       .onBookingSearchListings({
         // perPage: 100,
@@ -35,13 +51,7 @@ class BookingCleaningForm extends Component {
         minDuration: 60,
       })
       .then(data => console.log(data));
-  }
-  handleChange(evt) {
-    this.setState({ [evt.target.name]: evt.target.value });
-  }
-  handleSubmit(evt) {
-    evt.preventDefault();
-    this.props.enterInitialInfo(this.state);
+    // Reset the state
     this.setState({
       numBedrooms: '',
       numBathrooms: '',
@@ -67,7 +77,7 @@ class BookingCleaningForm extends Component {
         <h1>
           <FormattedMessage id="BookingCleaningForm.title" />
         </h1>
-        <button onClick={this.handleClick}>Click</button>
+        {/* <button onClick={this.handleClick}>Click</button> */}
         <form onSubmit={this.handleSubmit} className={css.BookingCleaningFormChild}>
           <div className={css.BookingCleaningFormRow}>
             <div className={css.BookingCleaningFormMultiBlock}>

@@ -18,12 +18,6 @@ import StaticPage from '../../containers/StaticPage/StaticPage';
 
 import css from './CleaningBookingPage.module.css';
 
-const sharetribeSdk = require('sharetribe-flex-sdk');
-
-const sdk = sharetribeSdk.createInstance({
-  clientId: '686aa440-8bd5-425b-85ed-7807ae94c71e',
-});
-
 class CleaningBookingPage extends Component {
   constructor(props) {
     super(props);
@@ -88,7 +82,10 @@ class CleaningBookingPage extends Component {
         ) : (
           <div>
             <div className={css.CleaningBookingPageMain}>
-              <BookingCleaningFormExtended enterFrequencyInfo={this.enterFrequencyInfo} />
+              <BookingCleaningFormExtended
+                enterFrequencyInfo={this.enterFrequencyInfo}
+                availableListings={this.props.availableListings}
+              />
             </div>
             <div className={css.CleaningBookingPageRightPanel}>
               <div className={css.CleaningBookingPageSummary}>
