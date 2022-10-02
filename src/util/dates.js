@@ -830,3 +830,20 @@ export const isDayMomentInsideRange = (dayMoment, start, end, timeZone) => {
 
   return false;
 };
+
+/**
+ * Format the timestamp to the Warsaw timezone
+ *
+ * @param {String} startDate
+ * @param {String} startTime
+ * @param {Int} tzOffset
+ *
+ * @returns {String} formatted timestamp
+ *
+ */
+export const formatStartTimestampForSearch = (startDate, startTime, tzOffset = 2) => {
+  let date = new Date(startDate);
+  date = new Date(date.setHours(date.getHours() + parseInt(startTime.split(':')[0]) - tzOffset));
+  date = new Date(date.setMinutes(date.getMinutes() + parseInt(startTime.split(':')[1])));
+  return date.toISOString();
+};

@@ -52,7 +52,7 @@ export const filters = [
       // config value to that.
       //
       // See: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
-      searchTimeZone: 'Etc/UTC',
+      searchTimeZone: 'Europe/Warsaw',
 
       // Options for the minimum duration of the booking
       options: [

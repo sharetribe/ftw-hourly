@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import moment from 'moment';
 import { object, string } from 'prop-types';
+import { formatStartTimestampForSearch } from '../../util/dates';
 import { FormattedMessage } from '../../util/reactIntl';
 import { PrimaryButton } from '../../components';
 import classNames from 'classnames';
@@ -22,6 +23,18 @@ class BookingCleaningForm extends Component {
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+  }
+  handleClick(evt) {
+    console.log('Inside click');
+    evt.preventDefault();
+    this.props
+      .onBookingSearchListings({
+        // perPage: 100,
+        startTime: formatStartTimestampForSearch(this.state.date, this.state.time),
+        minDuration: 60,
+      })
+      .then(data => console.log(data));
   }
   handleChange(evt) {
     this.setState({ [evt.target.name]: evt.target.value });
@@ -42,6 +55,7 @@ class BookingCleaningForm extends Component {
   }
 
   render() {
+    console.log(new Date(this.state.date).toISOString());
     const { rootClassName, className, services } = this.props;
     const classes = classNames(rootClassName || css.root, className);
 
@@ -53,6 +67,7 @@ class BookingCleaningForm extends Component {
         <h1>
           <FormattedMessage id="BookingCleaningForm.title" />
         </h1>
+        <button onClick={this.handleClick}>Click</button>
         <form onSubmit={this.handleSubmit} className={css.BookingCleaningFormChild}>
           <div className={css.BookingCleaningFormRow}>
             <div className={css.BookingCleaningFormMultiBlock}>

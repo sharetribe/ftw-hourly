@@ -24,6 +24,9 @@ const callLoadData = props => {
     typeof loadData === 'function' && canShowComponent(props) && !logoutInProgress;
 
   if (shouldLoadData) {
+    console.log(`loading data for ${name} route`);
+    console.log(match.params);
+    console.log(loadData(match.params, location.search));
     dispatch(loadData(match.params, location.search))
       .then(() => {
         // eslint-disable-next-line no-console

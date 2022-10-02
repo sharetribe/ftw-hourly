@@ -72,6 +72,7 @@ const routeConfiguration = () => {
       path: '/book/:service',
       name: 'BookingPage',
       component: BookingPage,
+      loadData: pageDataLoadingAPI.BookingPage.loadData,
     },
     {
       path: '/s',

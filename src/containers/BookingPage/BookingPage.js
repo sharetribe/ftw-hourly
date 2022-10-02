@@ -21,19 +21,34 @@ import TopbarContainer from '../../containers/TopbarContainer/TopbarContainer';
 
 import { manageDisableScrolling, isScrollingDisabled } from '../../ducks/UI.duck';
 import { getListingsById } from '../../ducks/marketplaceData.duck';
-import { bookingSearchListings } from './BookingPage.duck';
+import { bookingSearchListings, bookingSearchAllListings } from './BookingPage.duck';
 
 import css from './BookingPage.module.css';
 // import image from './path/to/image.png';
 
 export class BookingPageComponent extends Component {
   render() {
-    const { params } = this.props;
-    if (params.service == 'cleaning') {
-      var bookFormPage = <CleaningBookingPage bookingSearchListings={bookingSearchListings} />;
-    } else if (params.service == 'landscaping') {
+    const {
+      service,
+      listings,
+      pagination,
+      bookingSearchListingsError,
+      bookingSearchParams,
+      onBookingSearchListings,
+      onBookingSearchAllListings,
+    } = this.props;
+    // console.log('bookingSearchAllListings isss ' + bookingSearchAllListings({}));
+    if (service == 'cleaning') {
+      var bookFormPage = (
+        <CleaningBookingPage
+          onBookingSearchAllListings={onBookingSearchAllListings}
+          onBookingSearchListings={onBookingSearchListings}
+          bookingSearchListings={bookingSearchListings}
+        />
+      );
+    } else if (service == 'landscaping') {
       var bookFormPage = <LandscapingBookingPage />;
-    } else if (params.service == 'plumbing') {
+    } else if (service == 'plumbing') {
       // let bookFormPage = <PlumbingBookingPage />
     }
     return (
@@ -67,6 +82,14 @@ export class BookingPageComponent extends Component {
   }
 }
 
+BookingPageComponent.defaultProps = {
+  service: 'cleaning',
+  listings: [],
+  pagination: null,
+  bookingSearchListingsError: null,
+  bookingSearchParams: {},
+};
+
 const mapStateToProps = state => {
   const {
     currentPageResultIds,
@@ -90,7 +113,10 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => ({
   onManageDisableScrolling: (componentId, disableScrolling) =>
     dispatch(manageDisableScrolling(componentId, disableScrolling)),
-  onBookingSearchListings: searchParams => dispatch(bookingSearchListings(searchParams)),
+  onBookingSearchListings: bookingSearchParams =>
+    dispatch(bookingSearchListings(bookingSearchParams)),
+  onBookingSearchAllListings: bookingSearchParams =>
+    dispatch(bookingSearchAllListings(bookingSearchParams)),
 });
 
 // Note: it is important that the withRouter HOC is **outside** the

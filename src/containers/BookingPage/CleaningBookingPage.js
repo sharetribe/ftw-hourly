@@ -18,6 +18,12 @@ import StaticPage from '../../containers/StaticPage/StaticPage';
 
 import css from './CleaningBookingPage.module.css';
 
+const sharetribeSdk = require('sharetribe-flex-sdk');
+
+const sdk = sharetribeSdk.createInstance({
+  clientId: '686aa440-8bd5-425b-85ed-7807ae94c71e',
+});
+
 class CleaningBookingPage extends Component {
   constructor(props) {
     super(props);
@@ -45,6 +51,7 @@ class CleaningBookingPage extends Component {
     this.enterInitialInfo = this.enterInitialInfo.bind(this);
     this.enterFrequencyInfo = this.enterFrequencyInfo.bind(this);
   }
+
   enterInitialInfo(infoFromStep1) {
     this.setState({ initialInfo: infoFromStep1, initialStage: false });
   }
@@ -53,6 +60,10 @@ class CleaningBookingPage extends Component {
     this.setState({ frequency: freq });
   }
   render() {
+    // sdk.listings.query({}).then(res => {
+    //   // res.data contains the response data
+    //   console.log(res);
+    // });
     return (
       <StaticPage
         className={css.root}
@@ -67,7 +78,11 @@ class CleaningBookingPage extends Component {
         {this.state.initialStage ? (
           <div className={css.heroContainer}>
             <div className={css.heroContent}>
-              <BookingCleaningForm enterInitialInfo={this.enterInitialInfo} />
+              <BookingCleaningForm
+                onBookingSearchListings={this.props.onBookingSearchListings}
+                onBookingSearchAllListings={this.props.onBookingSearchAllListings}
+                enterInitialInfo={this.enterInitialInfo}
+              />
             </div>
           </div>
         ) : (

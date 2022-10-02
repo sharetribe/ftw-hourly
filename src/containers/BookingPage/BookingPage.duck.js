@@ -124,35 +124,50 @@ export const bookingSearchListingsError = e => ({
 //   error: true,
 //   payload: e,
 // });
-
+export const bookingSearchAllListings = bookingSearchParams => (dispatch, getState, sdk) => {
+  dispatch(bookingSearchListingsRequest(bookingSearchParams));
+  return sdk.listings
+    .query({})
+    .then(response => {
+      // dispatch(addMarketplaceEntities(response));
+      dispatch(bookingSearchListingsSuccess(response));
+      return response;
+    })
+    .catch(e => {
+      dispatch(bookingSearchListingsError(storableError(e)));
+      throw e;
+    });
+};
 export const bookingSearchListings = bookingSearchParams => (dispatch, getState, sdk) => {
   dispatch(bookingSearchListingsRequest(bookingSearchParams));
 
-  const availabilityParams = (datesParam, minDurationParam) => {
-    const dateValues = datesParam ? datesParam.split(',') : [];
-    const hasDateValues = datesParam && dateValues.length === 2;
-    const startDate = hasDateValues ? dateValues[0] : null;
-    const endDate = hasDateValues ? dateValues[1] : null;
+  const availabilityParams = (startTime, minDurationParam) => {
+    const hasDateValues = startTime ? true : false;
+    const startTimeDate = new Date(startTime);
+    const endTime = hasDateValues
+      ? new Date(startTimeDate.setDate(startTimeDate.getDate() + 1)).toISOString()
+      : null;
 
     const minDurationMaybe =
       minDurationParam && Number.isInteger(minDurationParam) && hasDateValues
         ? { minDuration: minDurationParam }
         : {};
 
-    // Find configs for 'dates-length' filter
-    // (type: BookingDateRangeLengthFilter)
-    const filterConfigs = config.custom.filters;
-    const idOfBookingDateRangeLengthFilter = 'dates-length';
-    const dateLengthFilterConfig = filterConfigs.find(
-      f => f.id === idOfBookingDateRangeLengthFilter
-    );
-    // Extract time zone
-    const timeZone = dateLengthFilterConfig.config.searchTimeZone;
-
+    // // Find configs for 'dates-length' filter
+    // // (type: BookingDateRangeLengthFilter)
+    // const filterConfigs = config.custom.filters;
+    // const idOfBookingDateRangeLengthFilter = 'dates-length';
+    // const dateLengthFilterConfig = filterConfigs.find(
+    //   f => f.id === idOfBookingDateRangeLengthFilter
+    // );
+    // // Extract time zone
+    // const timeZone = dateLengthFilterConfig.config.searchTimeZone;
     return hasDateValues
       ? {
-          start: formatDateStringToTz(startDate, timeZone),
-          end: getExclusiveEndDateWithTz(endDate, timeZone),
+          // start: formatDateStringToTz(startDate, timeZone),
+          start: startTime,
+          // end: getExclusiveEndDateWithTz(endDate, timeZone),
+          end: endTime,
 
           // When we have `time-partial` value in the availability, the
           // API returns listings that don't necessarily have the full
@@ -167,8 +182,8 @@ export const bookingSearchListings = bookingSearchParams => (dispatch, getState,
       : {};
   };
 
-  const { perPage, dates, minDuration, ...rest } = bookingSearchParams;
-  const availabilityMaybe = availabilityParams(dates, minDuration);
+  const { perPage, startTime, minDuration, ...rest } = bookingSearchParams;
+  const availabilityMaybe = availabilityParams(startTime, minDuration);
 
   const params = {
     ...rest,
