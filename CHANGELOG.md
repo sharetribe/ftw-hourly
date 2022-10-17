@@ -19,6 +19,8 @@ https://github.com/sharetribe/flex-template-web/
 
 ## [v11.0.2] 2022-10-17
 
+### Updates from upstream (FTW-daily v9.0.2)
+
 - [change] Add links to free Privacy Policy and Terms of Service templates
   [#1553](https://github.com/sharetribe/ftw-daily/pull/1553)
 
