@@ -17,9 +17,17 @@ https://github.com/sharetribe/flex-template-web/
 
 ## Upcoming version 2022-XX-XX
 
+## [v11.0.2] 2022-10-17
+
+- [change] Add links to free Privacy Policy and Terms of Service templates
+  [#1553](https://github.com/sharetribe/ftw-daily/pull/1553)
+
+  [v11.0.2]: https://github.com/sharetribe/ftw-hourly/compare/v11.0.1...v11.0.2
+
 ## [v11.0.1] 2022-08-29
 
 ### Updates from upstream (FTW-daily v9.0.1)
+
 - [fix] Use sharetribe-scripts v6.0.1. Fixes for
 
   - GENERATE_SOURCEMAP = false
