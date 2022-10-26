@@ -6,7 +6,7 @@ import { Form as FinalForm } from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
 import classNames from 'classnames';
 import * as validators from '../../util/validators';
-import { Form, PrimaryButton, FieldTextInput, FieldCheckboxGroup } from '../../components';
+import { Form, PrimaryButton, FieldTextInput, FieldSelect } from '../../components';
 
 import css from './SignupForm.module.css';
 
@@ -28,18 +28,22 @@ const SignupFormComponent = props => (
         onOpenTermsOfService,
       } = fieldRenderProps;
 
-      // user type
-      const checkboxLabel = intl.formatMessage({
-        id: 'SignupForm.emailLabel',
+      // select user type
+      const userTypeSelectLabel = intl.formatMessage({
+        id: 'SignupForm.userTypeSelectLabel',
       });
-      const checkboxOptions =  [
-        { key: 'employer', label: 'Hire a Caregiver' },
-        { key: 'caregiver', label: 'Apply for Jobs' },
-      ]
-      const checkboxRequiredMessage = intl.formatMessage({
-        id: 'SignupForm.userTypeRequired',
+      const employerSelectLabel = intl.formatMessage({
+        id: 'SignupForm.employerSelectLabel',
       });
-      const checkboxRequired = validators.requiredFieldArrayCheckbox(checkboxRequiredMessage);
+      const employerSelectValue = intl.formatMessage({
+        id: 'SignupForm.employerSelectValue',
+      });
+      const caregiverSelectLabel = intl.formatMessage({
+        id: 'SignupForm.caregiverSelectLabel',
+      });
+      const caregiverSelectValue = intl.formatMessage({
+        id: 'SignupForm.caregiverSelectValue',
+      });
 
       // email
       const emailLabel = intl.formatMessage({
@@ -147,15 +151,16 @@ const SignupFormComponent = props => (
       return (
         <Form className={classes} onSubmit={handleSubmit}>
           <div>
-            <FieldCheckboxGroup 
-              id={formId ? `${formId}.userType` : 'user-type'}
-              name="user-type"
-              label={checkboxLabel}
-              twoColumns={true}
-              options={checkboxOptions}
-              validate={checkboxRequired}
-            />
+            <FieldSelect 
+              id={formId ? `${formId}.userType` : 'userType'}
+              name="userType" 
+              label={userTypeSelectLabel}
+            >
+              <option className={css.firstOption} value={employerSelectValue}>{employerSelectLabel}</option>
+              <option value={caregiverSelectValue}>{caregiverSelectLabel}</option>
+            </FieldSelect>
             <FieldTextInput
+              className={css.password}
               type="email"
               id={formId ? `${formId}.email` : 'email'}
               name="email"
