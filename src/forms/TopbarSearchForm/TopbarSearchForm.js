@@ -40,6 +40,8 @@ class TopbarSearchFormComponent extends Component {
           const classes = classNames(rootClassName, className);
           const desktopInputRootClass = desktopInputRoot || css.desktopInputRoot;
 
+          const currentUserType = this.props.currentUserType;
+
           // Allow form submit only when the place has changed
           const preventFormSubmit = e => e.preventDefault();
 
@@ -76,7 +78,7 @@ class TopbarSearchFormComponent extends Component {
                       predictionsAttributionClassName={
                         isMobile ? css.mobilePredictionsAttribution : null
                       }
-                      placeholder={intl.formatMessage({ id: 'TopbarSearchForm.placeholder' })}
+                      placeholder={intl.formatMessage(currentUserType === "employer" ? { id: 'TopbarSearchForm.employeePlaceholder' } : { id: 'TopbarSearchForm.caregiverPlaceholder' })}
                       closeOnBlur={!isMobile}
                       inputRef={node => {
                         this.searchInput = node;
@@ -107,6 +109,7 @@ TopbarSearchFormComponent.defaultProps = {
 TopbarSearchFormComponent.propTypes = {
   rootClassName: string,
   className: string,
+  currentUserType: string,
   desktopInputRoot: string,
   onSubmit: func.isRequired,
   isMobile: bool,

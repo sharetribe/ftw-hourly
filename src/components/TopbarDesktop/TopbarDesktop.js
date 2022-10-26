@@ -47,9 +47,12 @@ const TopbarDesktop = props => {
 
   const classes = classNames(rootClassName || css.root, className);
 
+  const currentUserType = currentUser?.attributes?.profile?.protectedData?.userType || "";
+
   const search = (
     <TopbarSearchForm
       className={css.searchLink}
+      currentUserType={currentUserType}
       desktopInputRoot={css.topbarSearchWithLeftPadding}
       onSubmit={onSearchSubmit}
       initialValues={initialSearchFormValues}
@@ -57,8 +60,6 @@ const TopbarDesktop = props => {
   );
 
   const notificationDot = notificationCount > 0 ? <div className={css.notificationDot} /> : null;
-
-  const currentUserType = currentUser?.attributes.profile.protectedData.userType;
 
   const inboxLink = authenticatedOnClientSide ? (
     <NamedLink
