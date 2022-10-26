@@ -3,9 +3,10 @@ import PropTypes from 'prop-types';
 import { compose } from 'redux';
 import { FormattedMessage, injectIntl, intlShape } from '../../util/reactIntl';
 import { Form as FinalForm } from 'react-final-form';
+import arrayMutators from 'final-form-arrays';
 import classNames from 'classnames';
 import * as validators from '../../util/validators';
-import { Form, PrimaryButton, FieldTextInput } from '../../components';
+import { Form, PrimaryButton, FieldTextInput, FieldCheckboxGroup } from '../../components';
 
 import css from './SignupForm.module.css';
 
@@ -14,6 +15,7 @@ const KEY_CODE_ENTER = 13;
 const SignupFormComponent = props => (
   <FinalForm
     {...props}
+    mutators={{ ...arrayMutators }}
     render={fieldRenderProps => {
       const {
         rootClassName,
@@ -25,6 +27,19 @@ const SignupFormComponent = props => (
         intl,
         onOpenTermsOfService,
       } = fieldRenderProps;
+
+      // user type
+      const checkboxLabel = intl.formatMessage({
+        id: 'SignupForm.emailLabel',
+      });
+      const checkboxOptions =  [
+        { key: 'employer', label: 'Hire a Caregiver' },
+        { key: 'caregiver', label: 'Apply for Jobs' },
+      ]
+      const checkboxRequiredMessage = intl.formatMessage({
+        id: 'SignupForm.userTypeRequired',
+      });
+      const checkboxRequired = validators.requiredFieldArrayCheckbox(checkboxRequiredMessage);
 
       // email
       const emailLabel = intl.formatMessage({
@@ -132,6 +147,14 @@ const SignupFormComponent = props => (
       return (
         <Form className={classes} onSubmit={handleSubmit}>
           <div>
+            <FieldCheckboxGroup 
+              id={formId ? `${formId}.userType` : 'user-type'}
+              name="user-type"
+              label={checkboxLabel}
+              twoColumns={true}
+              options={checkboxOptions}
+              validate={checkboxRequired}
+            />
             <FieldTextInput
               type="email"
               id={formId ? `${formId}.email` : 'email'}
