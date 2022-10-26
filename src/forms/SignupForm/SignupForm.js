@@ -15,7 +15,7 @@ const KEY_CODE_ENTER = 13;
 const SignupFormComponent = props => (
   <FinalForm
     {...props}
-    mutators={{ ...arrayMutators }}
+    initialValues={{ userType: "employer" }}
     render={fieldRenderProps => {
       const {
         rootClassName,
@@ -156,7 +156,7 @@ const SignupFormComponent = props => (
               name="userType" 
               label={userTypeSelectLabel}
             >
-              <option className={css.firstOption} value={employerSelectValue}>{employerSelectLabel}</option>
+              <option value={employerSelectValue}>{employerSelectLabel}</option>
               <option value={caregiverSelectValue}>{caregiverSelectLabel}</option>
             </FieldSelect>
             <FieldTextInput

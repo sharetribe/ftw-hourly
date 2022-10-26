@@ -172,6 +172,7 @@ export class AuthenticationPageComponent extends Component {
 
     const handleSubmitSignup = values => {
       const { fname, lname, ...rest } = values;
+      console.log(values)
       const params = { firstName: fname.trim(), lastName: lname.trim(), ...rest };
       submitSignup(params);
     };
