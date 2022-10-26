@@ -58,6 +58,8 @@ const TopbarDesktop = props => {
 
   const notificationDot = notificationCount > 0 ? <div className={css.notificationDot} /> : null;
 
+  const currentUserType = currentUser?.attributes.profile.protectedData.userType;
+
   const inboxLink = authenticatedOnClientSide ? (
     <NamedLink
       className={css.inboxLink}
@@ -165,6 +167,8 @@ const TopbarDesktop = props => {
       </NamedLink>
     );
 
+  console.log(currentUser)
+
   return (
     <nav className={classes}>
       <NamedLink className={css.logoLink} name="LandingPage">
@@ -176,7 +180,7 @@ const TopbarDesktop = props => {
       </NamedLink>
       {search}
       {listingLink}
-      {createListingLink}
+      {currentUserType === 'employer' && createListingLink}
       {inboxLink}
       {profileMenu}
       {signupLink}
