@@ -210,7 +210,8 @@ export const signup = params => (dispatch, getState, sdk) => {
   return sdk.currentUser
     .create(createUserParams)
     .then(() => dispatch(signupSuccess()))
-    .then(() => dispatch(login(email, password)))
+    //Need to change login to create profile path
+    // .then(() => dispatch(login(email, password)))
     .catch(e => {
       dispatch(signupError(storableError(e)));
       log.error(e, 'signup-failed', {

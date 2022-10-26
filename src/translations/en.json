@@ -1059,7 +1059,7 @@
   "UserDisplayName.banned": "Banned user",
   "UserDisplayName.deleted": "Deleted user",
   "UserNav.newListing": "Create teacher profile",
-  "UserNav.editListing": "Edit teacher profile",
+  "UserNav.editListing": "Edit caregiver profile",
   "UserNav.profileSettingsPage": "Edit user profile",
   "UserNav.contactDetailsPage": "Account settings"
 }
