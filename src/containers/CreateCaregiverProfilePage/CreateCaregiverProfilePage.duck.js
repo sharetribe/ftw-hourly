@@ -14,11 +14,11 @@ import * as log from '../../util/log';
 
 const { UUID } = sdkTypes;
 
-const requestAction = actionType => params => ({ type: actionType, payload: { params } });
+const requestAction = (actionType) => (params) => ({ type: actionType, payload: { params } });
 
-const successAction = actionType => result => ({ type: actionType, payload: result.data });
+const successAction = (actionType) => (result) => ({ type: actionType, payload: result.data });
 
-const errorAction = actionType => error => ({ type: actionType, payload: error, error: true });
+const errorAction = (actionType) => (error) => ({ type: actionType, payload: error, error: true });
 
 // ================ Action types ================ //
 
@@ -197,7 +197,7 @@ export default function reducer(state = initialState, action = {}) {
     case UPLOAD_IMAGE_ERROR: {
       // eslint-disable-next-line no-console
       const { id, error } = payload;
-      const imageOrder = state.imageOrder.filter(i => i !== id);
+      const imageOrder = state.imageOrder.filter((i) => i !== id);
       const images = omit(state.images, id);
       return { ...state, imageOrder, images, uploadImageError: error };
     }
@@ -216,7 +216,7 @@ export default function reducer(state = initialState, action = {}) {
       // Always remove from the draft since it might be a new image to
       // an existing listing.
       const images = omit(state.images, id);
-      const imageOrder = state.imageOrder.filter(i => i !== id);
+      const imageOrder = state.imageOrder.filter((i) => i !== id);
 
       return { ...state, images, imageOrder, removedImageIds };
     }
@@ -270,7 +270,7 @@ export default function reducer(state = initialState, action = {}) {
     case DELETE_EXCEPTION_SUCCESS: {
       const deletedExceptionId = payload.id;
       const availabilityExceptions = state.availabilityExceptions.filter(
-        e => e.id.uuid !== deletedExceptionId.uuid
+        (e) => e.id.uuid !== deletedExceptionId.uuid
       );
       return {
         ...state,
@@ -301,7 +301,7 @@ export default function reducer(state = initialState, action = {}) {
 
 // ================ Action creators ================ //
 
-export const markTabUpdated = tab => ({
+export const markTabUpdated = (tab) => ({
   type: MARK_TAB_UPDATED,
   payload: tab,
 });
@@ -310,12 +310,12 @@ export const clearUpdatedTab = () => ({
   type: CLEAR_UPDATED_TAB,
 });
 
-export const updateImageOrder = imageOrder => ({
+export const updateImageOrder = (imageOrder) => ({
   type: UPDATE_IMAGE_ORDER,
   payload: { imageOrder },
 });
 
-export const removeListingImage = imageId => ({
+export const removeListingImage = (imageId) => ({
   type: REMOVE_LISTING_IMAGE,
   payload: { imageId },
 });
@@ -375,13 +375,13 @@ export function requestShowListing(actionPayload) {
     dispatch(showListings(actionPayload));
     return sdk.ownListings
       .show(actionPayload)
-      .then(response => {
+      .then((response) => {
         // EditListingPage fetches new listing data, which also needs to be added to global data
         dispatch(addMarketplaceEntities(response));
         dispatch(showListingsSuccess(response));
         return response;
       })
-      .catch(e => dispatch(showListingsError(storableError(e))));
+      .catch((e) => dispatch(showListingsError(storableError(e))));
   };
 }
 
@@ -397,7 +397,7 @@ export function requestCreateListingDraft(data) {
 
     return sdk.ownListings
       .createDraft(data, queryParams)
-      .then(response => {
+      .then((response) => {
         //const id = response.data.data.id.uuid;
 
         // Add the created listing to the marketplace data
@@ -407,25 +407,25 @@ export function requestCreateListingDraft(data) {
         dispatch(createListingDraftSuccess(response));
         return response;
       })
-      .catch(e => {
+      .catch((e) => {
         log.error(e, 'create-listing-draft-failed', { listingData: data });
         return dispatch(createListingDraftError(storableError(e)));
       });
   };
 }
 
-export const requestPublishListingDraft = listingId => (dispatch, getState, sdk) => {
+export const requestPublishListingDraft = (listingId) => (dispatch, getState, sdk) => {
   dispatch(publishListing(listingId));
 
   return sdk.ownListings
     .publishDraft({ id: listingId }, { expand: true })
-    .then(response => {
+    .then((response) => {
       // Add the created listing to the marketplace data
       dispatch(addMarketplaceEntities(response));
       dispatch(publishListingSuccess(response));
       return response;
     })
-    .catch(e => {
+    .catch((e) => {
       dispatch(publishListingError(storableError(e)));
     });
 };
@@ -437,8 +437,8 @@ export function requestImageUpload(actionPayload) {
     dispatch(uploadImage(actionPayload));
     return sdk.images
       .upload({ image: actionPayload.file })
-      .then(resp => dispatch(uploadImageSuccess({ data: { id, imageId: resp.data.data.id } })))
-      .catch(e => dispatch(uploadImageError({ id, error: storableError(e) })));
+      .then((resp) => dispatch(uploadImageSuccess({ data: { id, imageId: resp.data.data.id } })))
+      .catch((e) => dispatch(uploadImageError({ id, error: storableError(e) })));
   };
 }
 
@@ -452,7 +452,7 @@ export function requestUpdateListing(tab, data) {
     let updateResponse;
     return sdk.ownListings
       .update(data)
-      .then(response => {
+      .then((response) => {
         updateResponse = response;
         const payload = {
           id,
@@ -466,7 +466,7 @@ export function requestUpdateListing(tab, data) {
         dispatch(updateListingSuccess(updateResponse));
         return updateResponse;
       })
-      .catch(e => {
+      .catch((e) => {
         log.error(e, 'update-listing-failed', { listingData: data });
         dispatch(updateListingError(storableError(e)));
         throw e;
@@ -474,46 +474,46 @@ export function requestUpdateListing(tab, data) {
   };
 }
 
-export const requestAddAvailabilityException = params => (dispatch, getState, sdk) => {
+export const requestAddAvailabilityException = (params) => (dispatch, getState, sdk) => {
   dispatch(addAvailabilityExceptionRequest(params));
 
   return sdk.availabilityExceptions
     .create(params, { expand: true })
-    .then(response => {
+    .then((response) => {
       const availabilityException = response.data.data;
       return dispatch(addAvailabilityExceptionSuccess({ data: availabilityException }));
     })
-    .catch(e => {
+    .catch((e) => {
       dispatch(addAvailabilityExceptionError({ error: storableError(e) }));
       throw e;
     });
 };
 
-export const requestDeleteAvailabilityException = params => (dispatch, getState, sdk) => {
+export const requestDeleteAvailabilityException = (params) => (dispatch, getState, sdk) => {
   dispatch(deleteAvailabilityExceptionRequest(params));
 
   return sdk.availabilityExceptions
     .delete(params, { expand: true })
-    .then(response => {
+    .then((response) => {
       const availabilityException = response.data.data;
       return dispatch(deleteAvailabilityExceptionSuccess({ data: availabilityException }));
     })
-    .catch(e => {
+    .catch((e) => {
       dispatch(deleteAvailabilityExceptionError({ error: storableError(e) }));
       throw e;
     });
 };
 
-export const requestFetchAvailabilityExceptions = fetchParams => (dispatch, getState, sdk) => {
+export const requestFetchAvailabilityExceptions = (fetchParams) => (dispatch, getState, sdk) => {
   dispatch(fetchAvailabilityExceptionsRequest(fetchParams));
 
   return sdk.availabilityExceptions
     .query(fetchParams, { expand: true })
-    .then(response => {
+    .then((response) => {
       const availabilityExceptions = denormalisedResponseEntities(response);
       return dispatch(fetchAvailabilityExceptionsSuccess({ data: availabilityExceptions }));
     })
-    .catch(e => {
+    .catch((e) => {
       return dispatch(fetchAvailabilityExceptionsError({ error: storableError(e) }));
     });
 };
@@ -523,7 +523,7 @@ export const savePayoutDetails = (values, isUpdateCall) => (dispatch, getState, 
   dispatch(savePayoutDetailsRequest());
 
   return dispatch(upsertThunk(values, { expand: true }))
-    .then(response => {
+    .then((response) => {
       dispatch(savePayoutDetailsSuccess());
       return response;
     })
@@ -532,21 +532,21 @@ export const savePayoutDetails = (values, isUpdateCall) => (dispatch, getState, 
 
 // loadData is run for each tab of the wizard. When editing an
 // existing listing, the listing must be fetched first.
-export const loadData = params => (dispatch, getState, sdk) => {
+export const loadData = (params) => (dispatch, getState, sdk) => {
   dispatch(clearUpdatedTab());
   const { id, type } = params;
 
   if (type === 'new') {
     // No need to listing data when creating a new listing
     return Promise.all([dispatch(fetchCurrentUser())])
-      .then(response => {
+      .then((response) => {
         const currentUser = getState().user.currentUser;
         if (currentUser && currentUser.stripeAccount) {
           dispatch(fetchStripeAccount());
         }
         return response;
       })
-      .catch(e => {
+      .catch((e) => {
         throw e;
       });
   }
@@ -558,7 +558,7 @@ export const loadData = params => (dispatch, getState, sdk) => {
   };
 
   return Promise.all([dispatch(requestShowListing(payload)), dispatch(fetchCurrentUser())])
-    .then(response => {
+    .then((response) => {
       const currentUser = getState().user.currentUser;
       if (currentUser && currentUser.stripeAccount) {
         dispatch(fetchStripeAccount());
@@ -598,7 +598,7 @@ export const loadData = params => (dispatch, getState, sdk) => {
 
       return response;
     })
-    .catch(e => {
+    .catch((e) => {
       throw e;
     });
 };

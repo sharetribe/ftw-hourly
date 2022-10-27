@@ -49,7 +49,7 @@ const STRIPE_ONBOARDING_RETURN_URL_TYPES = [
 const { UUID } = sdkTypes;
 
 // N.B. All the presentational content needs to be extracted to their own components
-export const CreateCaregiverProfilePageComponent = props => {
+export const CreateCaregiverProfilePageComponent = (props) => {
   const {
     currentUser,
     currentUserListing,
@@ -174,11 +174,11 @@ export const CreateCaregiverProfilePageComponent = props => {
 
     // Images not yet connected to the listing
     const imageOrder = page.imageOrder || [];
-    const unattachedImages = imageOrder.map(i => page.images[i]);
+    const unattachedImages = imageOrder.map((i) => page.images[i]);
 
     const allImages = currentListingImages.concat(unattachedImages);
     const removedImageIds = page.removedImageIds || [];
-    const images = allImages.filter(img => {
+    const images = allImages.filter((img) => {
       return !removedImageIds.includes(img.id);
     });
 
@@ -227,6 +227,7 @@ export const CreateCaregiverProfilePageComponent = props => {
             createStripeAccountError || updateStripeAccountError || fetchStripeAccountError
           }
           stripeAccountLinkError={getAccountLinkError}
+          pageName="CreateCaregiverProfile"
         />
       </Page>
     );
@@ -303,7 +304,7 @@ CreateCaregiverProfilePageComponent.propTypes = {
   intl: intlShape.isRequired,
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   const page = state.EditListingPage;
 
   const {
@@ -321,7 +322,7 @@ const mapStateToProps = state => {
 
   const fetchInProgress = createStripeAccountInProgress;
 
-  const getOwnListing = id => {
+  const getOwnListing = (id) => {
     const listings = getMarketplaceEntities(state, [{ id, type: 'ownListing' }]);
 
     return listings.length === 1 ? listings[0] : null;
@@ -344,21 +345,21 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = dispatch => ({
-  onAddAvailabilityException: params => dispatch(requestAddAvailabilityException(params)),
-  onDeleteAvailabilityException: params => dispatch(requestDeleteAvailabilityException(params)),
+const mapDispatchToProps = (dispatch) => ({
+  onAddAvailabilityException: (params) => dispatch(requestAddAvailabilityException(params)),
+  onDeleteAvailabilityException: (params) => dispatch(requestDeleteAvailabilityException(params)),
   onUpdateListing: (tab, values) => dispatch(requestUpdateListing(tab, values)),
-  onCreateListingDraft: values => dispatch(requestCreateListingDraft(values)),
-  onPublishListingDraft: listingId => dispatch(requestPublishListingDraft(listingId)),
-  onImageUpload: data => dispatch(requestImageUpload(data)),
+  onCreateListingDraft: (values) => dispatch(requestCreateListingDraft(values)),
+  onPublishListingDraft: (listingId) => dispatch(requestPublishListingDraft(listingId)),
+  onImageUpload: (data) => dispatch(requestImageUpload(data)),
   onManageDisableScrolling: (componentId, disableScrolling) =>
     dispatch(manageDisableScrolling(componentId, disableScrolling)),
   onPayoutDetailsFormChange: () => dispatch(stripeAccountClearError()),
   onPayoutDetailsFormSubmit: (values, isUpdateCall) =>
     dispatch(savePayoutDetails(values, isUpdateCall)),
-  onGetStripeConnectAccountLink: params => dispatch(getStripeConnectAccountLink(params)),
-  onUpdateImageOrder: imageOrder => dispatch(updateImageOrder(imageOrder)),
-  onRemoveListingImage: imageId => dispatch(removeListingImage(imageId)),
+  onGetStripeConnectAccountLink: (params) => dispatch(getStripeConnectAccountLink(params)),
+  onUpdateImageOrder: (imageOrder) => dispatch(updateImageOrder(imageOrder)),
+  onRemoveListingImage: (imageId) => dispatch(removeListingImage(imageId)),
   onChange: () => dispatch(clearUpdatedTab()),
 });
 
@@ -370,10 +371,7 @@ const mapDispatchToProps = dispatch => ({
 // See: https://github.com/ReactTraining/react-router/issues/4671
 const CreateCaregiverProfilePage = compose(
   withRouter,
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )
+  connect(mapStateToProps, mapDispatchToProps)
 )(injectIntl(CreateCaregiverProfilePageComponent));
 
 export default CreateCaregiverProfilePage;

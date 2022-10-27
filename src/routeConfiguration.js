@@ -321,14 +321,7 @@ const routeConfiguration = () => {
       path: '/create-caregiver-profile/:slug/:id/:type/:tab',
       name: 'CreateCaregiverProfile',
       component: CreateCaregiverProfilePage,
-    },
-    {
-      path: '/l/:slug/:id/:type/:tab',
-      name: 'EditListingPage',
-      auth: true,
-      component: EditListingPage,
-      extraProps: { allowOnlyOneListing: true },
-      loadData: pageDataLoadingAPI.EditListingPage.loadData,
+      loadData: pageDataLoadingAPI.CreateCaregiverProfilePage.loadData,
     },
 
 
