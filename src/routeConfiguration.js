@@ -318,10 +318,19 @@ const routeConfiguration = () => {
       component: props => <NotFoundPage {...props} />,
     },
     {
-      path: '/create-caregiver-profile',
+      path: '/create-caregiver-profile/:slug/:id/:type/:tab',
       name: 'CreateCaregiverProfile',
       component: CreateCaregiverProfilePage,
     },
+    {
+      path: '/l/:slug/:id/:type/:tab',
+      name: 'EditListingPage',
+      auth: true,
+      component: EditListingPage,
+      extraProps: { allowOnlyOneListing: true },
+      loadData: pageDataLoadingAPI.EditListingPage.loadData,
+    },
+
 
     // Do not change this path!
     //

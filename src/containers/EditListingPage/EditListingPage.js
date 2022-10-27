@@ -85,6 +85,8 @@ export const EditListingPageComponent = props => {
   } = props;
 
   const { id, type, returnURLType } = params;
+
+  console.log(params);
   const isNewURI = type === LISTING_PAGE_PARAM_TYPE_NEW;
   const isDraftURI = type === LISTING_PAGE_PARAM_TYPE_DRAFT;
   const isNewListingFlow = isNewURI || isDraftURI;

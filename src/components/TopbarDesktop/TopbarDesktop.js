@@ -47,7 +47,7 @@ const TopbarDesktop = props => {
 
   const classes = classNames(rootClassName || css.root, className);
 
-  const currentUserType = currentUser?.attributes?.profile?.protectedData?.userType || "";
+  const currentUserType = currentUser?.attributes?.profile?.protectedData?.userType || '';
 
   const search = (
     <TopbarSearchForm
@@ -167,8 +167,6 @@ const TopbarDesktop = props => {
         </span>
       </NamedLink>
     );
-
-  console.log(currentUser)
 
   return (
     <nav className={classes}>
