@@ -11,11 +11,6 @@
   }
 }
 
-.desktopTopbar,
-.mobileTopbar {
-  box-shadow: none;
-}
-
 .title {
   margin-top: 8px;
   margin-bottom: 19px;
@@ -24,3 +19,9 @@
     margin-bottom: 36px;
   }
 }
+
+.wizard,
+.placeholderWhileLoading {
+  flex-grow: 1;
+}
+

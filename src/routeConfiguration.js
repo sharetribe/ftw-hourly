@@ -30,6 +30,7 @@ const SearchPage = loadable(() => import(/* webpackChunkName: "SearchPage" */ /*
 const StripePayoutPage = loadable(() => import(/* webpackChunkName: "StripePayoutPage" */ './containers/StripePayoutPage/StripePayoutPage'));
 const TermsOfServicePage = loadable(() => import(/* webpackChunkName: "TermsOfServicePage" */ './containers/TermsOfServicePage/TermsOfServicePage'));
 const TransactionPage = loadable(() => import(/* webpackChunkName: "TransactionPage" */ './containers/TransactionPage/TransactionPage'));
+const CreateCaregiverProfilePage = loadable(() => import(/* webpackChunksFilename: "CreateCaregiverProfilePage" */ './containers/CreateCaregiverProfilePage/CreateCaregiverProfilePage'));
 
 // Styleguide helps you to review current components and develop new ones
 const StyleguidePage = loadable(() => import(/* webpackChunkName: "StyleguidePage" */ './containers/StyleguidePage/StyleguidePage'));
@@ -315,6 +316,11 @@ const routeConfiguration = () => {
       path: '/notfound',
       name: 'NotFoundPage',
       component: props => <NotFoundPage {...props} />,
+    },
+    {
+      path: '/create-caregiver-profile',
+      name: 'CreateCaregiverProfile',
+      component: CreateCaregiverProfilePage,
     },
 
     // Do not change this path!

@@ -1,21 +1,16 @@
 import React from 'react';
 import {
   LayoutSingleColumn,
-  LayoutWrapperTopbar,
   LayoutWrapperMain,
-  LayoutWrapperFooter,
-  Footer,
   NamedLink,
-  ExternalLink,
+  EditListingWizard
 } from '../../components';
 
 import StaticPage from '../../containers/StaticPage/StaticPage';
-import TopbarContainer from '../../containers/TopbarContainer/TopbarContainer';
 
-import css from './AboutPage.module.css';
-import image from './path/to/image.png';
+import css from './CreateCaregiverProfilePage.module.css';
 
-const AboutPage = () => {
+const CreateCaregiverProfilePage = () => {
   return (
     <StaticPage
       className={css.root}
@@ -28,22 +23,46 @@ const AboutPage = () => {
       }}
     >
       <LayoutSingleColumn>
-        <LayoutWrapperTopbar>
-          <TopbarContainer />
-        </LayoutWrapperTopbar>
         <LayoutWrapperMain>
-          <h1>Some content</h1>
-          <img src={image} alt="My first ice cream." />
-          <div>
-            <NamedLink name="LandingPage">Go to home page</NamedLink> or
-            <ExternalLink href="https://google.com">
-              Go to Google
-            </ExternalLink>
-          </div>
+        <EditListingWizard
+          id="EditListingWizard"
+          className={css.wizard}
+          params={params}
+          disabled={disableForm}
+          errors={errors}
+          fetchInProgress={fetchInProgress}
+          newListingPublished={newListingPublished}
+          history={history}
+          images={images}
+          listing={currentListing}
+          onAddAvailabilityException={onAddAvailabilityException}
+          onDeleteAvailabilityException={onDeleteAvailabilityException}
+          onUpdateListing={onUpdateListing}
+          onCreateListingDraft={onCreateListingDraft}
+          onPublishListingDraft={onPublishListingDraft}
+          onPayoutDetailsFormChange={onPayoutDetailsFormChange}
+          onPayoutDetailsSubmit={onPayoutDetailsFormSubmit}
+          onGetStripeConnectAccountLink={onGetStripeConnectAccountLink}
+          getAccountLinkInProgress={getAccountLinkInProgress}
+          onImageUpload={onImageUpload}
+          onUpdateImageOrder={onUpdateImageOrder}
+          onRemoveImage={onRemoveListingImage}
+          onChange={onChange}
+          currentUser={currentUser}
+          onManageDisableScrolling={onManageDisableScrolling}
+          stripeOnboardingReturnURL={params.returnURLType}
+          updatedTab={page.updatedTab}
+          updateInProgress={page.updateInProgress || page.createListingDraftInProgress}
+          fetchExceptionsInProgress={page.fetchExceptionsInProgress}
+          availabilityExceptions={page.availabilityExceptions}
+          payoutDetailsSaveInProgress={page.payoutDetailsSaveInProgress}
+          payoutDetailsSaved={page.payoutDetailsSaved}
+          stripeAccountFetched={stripeAccountFetched}
+          stripeAccount={stripeAccount}
+          stripeAccountError={
+            createStripeAccountError || updateStripeAccountError || fetchStripeAccountError
+          } />
         </LayoutWrapperMain>
-        <LayoutWrapperFooter>
-          <Footer />
-        </LayoutWrapperFooter>
       </LayoutSingleColumn>
     </StaticPage>
   );
