@@ -153,6 +153,8 @@
   "CookieConsent.continue": "Continue",
   "CookieConsent.cookieLink": "cookies",
   "CookieConsent.message": "Welcome to Yogatime, friend! We use {cookieLink} to enhance your browsing experience.",
+  "CreateCaregiverProfilePage.loadingListingData": "Loading listing data...",
+  "CreateCaregiverProfilePage.titleCreateListing": "Create a Caregiver profile",
   "EditListingAvailabilityExceptionForm.available": "Available",
   "EditListingAvailabilityExceptionForm.addException": "Save exception",
   "EditListingAvailabilityExceptionForm.exceptionEndDateLabel": "Ends",

@@ -42,7 +42,7 @@ export const SUPPORTED_TABS = [
 ];
 
 const pathParamsToNextTab = (params, tab, marketplaceTabs) => {
-  const nextTabIndex = marketplaceTabs.findIndex(s => s === tab) + 1;
+  const nextTabIndex = marketplaceTabs.findIndex((s) => s === tab) + 1;
   const nextTab =
     nextTabIndex < marketplaceTabs.length
       ? marketplaceTabs[nextTabIndex]
@@ -50,29 +50,7 @@ const pathParamsToNextTab = (params, tab, marketplaceTabs) => {
   return { ...params, tab: nextTab };
 };
 
-// When user has update draft listing, he should be redirected to next EditListingWizardTab
-const redirectAfterDraftUpdate = (listingId, params, tab, marketplaceTabs, history) => {
-  const currentPathParams = {
-    ...params,
-    type: LISTING_PAGE_PARAM_TYPE_DRAFT,
-    id: listingId,
-  };
-  const routes = routeConfiguration();
-
-  // Replace current "new" path to "draft" path.
-  // Browser's back button should lead to editing current draft instead of creating a new one.
-  if (params.type === LISTING_PAGE_PARAM_TYPE_NEW) {
-    const draftURI = createResourceLocatorString('EditListingPage', routes, currentPathParams, {});
-    history.replace(draftURI);
-  }
-
-  // Redirect to next tab
-  const nextPathParams = pathParamsToNextTab(currentPathParams, tab, marketplaceTabs);
-  const to = createResourceLocatorString('EditListingPage', routes, nextPathParams, {});
-  history.push(to);
-};
-
-const EditListingWizardTab = props => {
+const EditListingWizardTab = (props) => {
   const {
     tab,
     marketplaceTabs,
@@ -99,6 +77,7 @@ const EditListingWizardTab = props => {
     intl,
     fetchExceptionsInProgress,
     availabilityExceptions,
+    pageName,
   } = props;
 
   const { type } = params;
@@ -107,8 +86,42 @@ const EditListingWizardTab = props => {
   const isNewListingFlow = isNewURI || isDraftURI;
 
   const currentListing = ensureListing(listing);
-  const imageIds = images => {
-    return images ? images.map(img => img.imageId || img.id) : null;
+  const imageIds = (images) => {
+    return images ? images.map((img) => img.imageId || img.id) : null;
+  };
+
+  // When user has update draft listing, he should be redirected to next EditListingWizardTab
+  const redirectAfterDraftUpdate = (listingId, params, tab, marketplaceTabs, history) => {
+    const currentPathParams = {
+      ...params,
+      type: LISTING_PAGE_PARAM_TYPE_DRAFT,
+      id: listingId,
+    };
+    const routes = routeConfiguration();
+
+    // Replace current "new" path to "draft" path.
+    // Browser's back button should lead to editing current draft instead of creating a new one.
+    if (params.type === LISTING_PAGE_PARAM_TYPE_NEW) {
+      const draftURI = createResourceLocatorString(
+        pageName || 'EditListingPage',
+        routes,
+        currentPathParams,
+        {}
+      );
+      console.log(draftURI);
+      history.replace(draftURI);
+    }
+
+    // Redirect to next tab
+    const nextPathParams = pathParamsToNextTab(currentPathParams, tab, marketplaceTabs);
+    const to = createResourceLocatorString(
+      pageName || 'EditListingPage',
+      routes,
+      nextPathParams,
+      {}
+    );
+    console.log(to);
+    history.push(to);
   };
 
   const onCompleteEditListingWizardTab = (tab, updateValues, passThrownErrors = false) => {
@@ -128,7 +141,7 @@ const EditListingWizardTab = props => {
         : { ...updateValuesWithImages, id: currentListing.id };
 
       return onUpsertListingDraft(tab, upsertValues)
-        .then(r => {
+        .then((r) => {
           if (tab !== AVAILABILITY && tab !== marketplaceTabs[marketplaceTabs.length - 1]) {
             // Create listing flow: smooth scrolling polyfill to scroll to correct tab
             handleCreateFlowTabScrolling(false);
@@ -139,7 +152,7 @@ const EditListingWizardTab = props => {
             handlePublishListing(currentListing.id);
           }
         })
-        .catch(e => {
+        .catch((e) => {
           if (passThrownErrors) {
             throw e;
           }
@@ -151,7 +164,7 @@ const EditListingWizardTab = props => {
     }
   };
 
-  const panelProps = tab => {
+  const panelProps = (tab) => {
     return {
       className: css.panel,
       errors,
@@ -175,7 +188,7 @@ const EditListingWizardTab = props => {
         <EditListingDescriptionPanel
           {...panelProps(DESCRIPTION)}
           submitButtonText={intl.formatMessage({ id: submitButtonTranslationKey })}
-          onSubmit={values => {
+          onSubmit={(values) => {
             onCompleteEditListingWizardTab(tab, values);
           }}
         />
@@ -189,7 +202,7 @@ const EditListingWizardTab = props => {
         <EditListingFeaturesPanel
           {...panelProps(FEATURES)}
           submitButtonText={intl.formatMessage({ id: submitButtonTranslationKey })}
-          onSubmit={values => {
+          onSubmit={(values) => {
             onCompleteEditListingWizardTab(tab, values);
           }}
         />
@@ -203,7 +216,7 @@ const EditListingWizardTab = props => {
         <EditListingPoliciesPanel
           {...panelProps(POLICY)}
           submitButtonText={intl.formatMessage({ id: submitButtonTranslationKey })}
-          onSubmit={values => {
+          onSubmit={(values) => {
             onCompleteEditListingWizardTab(tab, values);
           }}
         />
@@ -217,7 +230,7 @@ const EditListingWizardTab = props => {
         <EditListingLocationPanel
           {...panelProps(LOCATION)}
           submitButtonText={intl.formatMessage({ id: submitButtonTranslationKey })}
-          onSubmit={values => {
+          onSubmit={(values) => {
             onCompleteEditListingWizardTab(tab, values);
           }}
         />
@@ -231,7 +244,7 @@ const EditListingWizardTab = props => {
         <EditListingPricingPanel
           {...panelProps(PRICING)}
           submitButtonText={intl.formatMessage({ id: submitButtonTranslationKey })}
-          onSubmit={values => {
+          onSubmit={(values) => {
             onCompleteEditListingWizardTab(tab, values);
           }}
         />
@@ -249,7 +262,7 @@ const EditListingWizardTab = props => {
           submitButtonText={intl.formatMessage({ id: submitButtonTranslationKey })}
           onAddAvailabilityException={onAddAvailabilityException}
           onDeleteAvailabilityException={onDeleteAvailabilityException}
-          onSubmit={values => {
+          onSubmit={(values) => {
             // We want to return the Promise to the form,
             // so that it doesn't close its modal if an error is thrown.
             return onCompleteEditListingWizardTab(tab, values, true);
@@ -272,7 +285,7 @@ const EditListingWizardTab = props => {
           images={images}
           onImageUpload={onImageUpload}
           onRemoveImage={onRemoveImage}
-          onSubmit={values => {
+          onSubmit={(values) => {
             onCompleteEditListingWizardTab(tab, values);
           }}
           onUpdateImageOrder={onUpdateImageOrder}
@@ -316,6 +329,7 @@ EditListingWizardTab.propTypes = {
     replace: func.isRequired,
   }).isRequired,
   images: array.isRequired,
+  pageName: string,
 
   // We cannot use propTypes.listing since the listing might be a draft.
   listing: shape({
