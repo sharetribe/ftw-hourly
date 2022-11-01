@@ -238,6 +238,7 @@ export const EditListingPageComponent = (props) => {
             createStripeAccountError || updateStripeAccountError || fetchStripeAccountError
           }
           stripeAccountLinkError={getAccountLinkError}
+          pageName="EditListingPage"
         />
         <Footer />
       </Page>

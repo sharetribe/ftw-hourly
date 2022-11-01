@@ -312,7 +312,7 @@ class EditListingWizard extends Component {
     }
 
     const tabLink = (tab) => {
-      return { name: pageName || 'EditListing', params: { ...params, tab } };
+      return { name: pageName || 'EditListingPage', params: { ...params, tab } };
     };
 
     const setPortalRootAfterInitialRender = () => {

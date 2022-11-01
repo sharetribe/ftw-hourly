@@ -227,7 +227,7 @@ export const CreateCaregiverProfilePageComponent = (props) => {
             createStripeAccountError || updateStripeAccountError || fetchStripeAccountError
           }
           stripeAccountLinkError={getAccountLinkError}
-          pageName="CreateCaregiverProfile"
+          pageName="CreateCaregiverProfilePage"
         />
       </Page>
     );

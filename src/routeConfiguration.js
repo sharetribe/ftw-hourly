@@ -319,7 +319,7 @@ const routeConfiguration = () => {
     },
     {
       path: '/create-caregiver-profile/:slug/:id/:type/:tab',
-      name: 'CreateCaregiverProfile',
+      name: 'CreateCaregiverProfilePage',
       component: CreateCaregiverProfilePage,
       loadData: pageDataLoadingAPI.CreateCaregiverProfilePage.loadData,
     },
