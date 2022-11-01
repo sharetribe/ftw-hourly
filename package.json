@@ -67,6 +67,7 @@
     "url": "^0.11.0"
   },
   "devDependencies": {
+    "autoprefixer": "^10.4.13",
     "bfj": "^7.0.2",
     "chalk": "^v4.1.2",
     "concurrently": "^7.2.0",
@@ -75,7 +76,10 @@
     "enzyme-to-json": "^3.6.2",
     "inquirer": "^8.2.4",
     "nodemon": "^2.0.16",
-    "prettier": "^1.18.2"
+    "postcss": "^8.4.18",
+    "postcss-cli": "^10.0.0",
+    "prettier": "^1.18.2",
+    "tailwindcss": "^3.2.1"
   },
   "resolutions": {
     "react-dates/lodash": "^4.17.21",
@@ -108,7 +112,9 @@
     "test-server": "jest ./server/**/*.test.js",
     "heroku-postbuild": "yarn run build",
     "timezones": "node scripts/parse-iana-timezones.js",
-    "translate": "node scripts/translations.js"
+    "translate": "node scripts/translations.js",
+    "build:css": "postcss src/assets/tailwind.css -o src/assets/main.css",
+    "watch:css": "postcss src/assets/tailwind.css -o src/assets/main.css"
   },
   "browserslist": {
     "production": [
