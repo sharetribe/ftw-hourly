@@ -99,15 +99,6 @@ export const EditListingLocationFormComponent = props => (
             )}
           />
 
-          <FieldTextInput
-            className={css.building}
-            type="text"
-            name="building"
-            id="building"
-            label={buildingMessage}
-            placeholder={buildingPlaceholderMessage}
-          />
-
           <Button
             className={css.submitButton}
             type="submit"

@@ -64,6 +64,8 @@ const placeBounds = prediction => {
   return null;
 };
 
+// Reverse geoencode the latitude and longtude coordinates
+// to return the address of a given location.
 export const getPlaceAddress = async place => {
   const url =
     'https://api.mapbox.com/geocoding/v5/mapbox.places/' +
