@@ -14,4 +14,13 @@
 }
 
 .textarea {
+  min-height: 8rem;
+  border: solid;
+  border-width: 2px;
+  margin-top: 2px;
+  padding: 0.5rem;
+}
+
+.textarea.inputSuccess {
+  border-color: var(--successColor);
 }

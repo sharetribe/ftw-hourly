@@ -79,7 +79,7 @@ import * as BookingTimeForm from './forms/BookingTimeForm/BookingTimeForm.exampl
 import * as FieldDateAndTimeInput from './forms/BookingTimeForm/FieldDateAndTimeInput.example';
 import * as EditListingAvailabilityExceptionForm from './forms/EditListingAvailabilityExceptionForm/EditListingAvailabilityExceptionForm.example';
 import * as EditListingAvailabilityPlanForm from './forms/EditListingAvailabilityPlanForm/EditListingAvailabilityPlanForm.example';
-import * as EditListingDescriptionForm from './forms/EditListingDescriptionForm/EditListingDescriptionForm.example';
+import * as EditListingDescriptionForm from './forms/EditListingBioForm/EditListingBioForm.example';
 import * as EditListingFeaturesForm from './forms/EditListingFeaturesForm/EditListingFeaturesForm.example';
 import * as EditListingLocationForm from './forms/EditListingLocationForm/EditListingLocationForm.example';
 import * as EditListingPhotosForm from './forms/EditListingPhotosForm/EditListingPhotosForm.example';

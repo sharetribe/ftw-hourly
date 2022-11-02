@@ -6,7 +6,7 @@ import { ensureOwnListing } from '../../util/data';
 import { findOptionsForSelectFilter } from '../../util/search';
 import { LISTING_STATE_DRAFT } from '../../util/types';
 import { ListingLink } from '..';
-import { EditListingDescriptionForm } from '../../forms';
+import { EditListingBioForm } from '../../forms';
 import config from '../../config';
 
 import css from './EditListingBioPanel.module.css';
@@ -46,11 +46,11 @@ const EditListingBioPanel = props => {
     <FormattedMessage id="EditListingDescriptionPanel.createListingTitle" />
   );
 
-  const certificateOptions = findOptionsForSelectFilter('certificate', config.custom.filters);
+  // const certificateOptions = findOptionsForSelectFilter('certificate', config.custom.filters);
   return (
     <div className={classes}>
       <h1 className={css.title}>{panelTitle}</h1>
-      <EditListingDescriptionForm
+      <EditListingBioForm
         className={css.form}
         initialValues={{ title, description, certificate: publicData.certificate }}
         saveActionMsg={submitButtonText}
@@ -70,7 +70,6 @@ const EditListingBioPanel = props => {
         updated={panelUpdated}
         updateInProgress={updateInProgress}
         fetchErrors={errors}
-        certificateOptions={certificateOptions}
       />
     </div>
   );

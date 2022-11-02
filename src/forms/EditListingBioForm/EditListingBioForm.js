@@ -9,11 +9,11 @@ import { maxLength, required, composeValidators } from '../../util/validators';
 import { Form, Button, FieldTextInput } from '../../components';
 import CustomCertificateSelectFieldMaybe from './CustomCertificateSelectFieldMaybe';
 
-import css from './EditListingDescriptionForm.module.css';
+import css from './EditListingBioForm.module.css';
 
 const TITLE_MAX_LENGTH = 60;
 
-const EditListingDescriptionFormComponent = props => (
+const EditListingBioFormComponent = props => (
   <FinalForm
     {...props}
     render={formRenderProps => {
@@ -32,48 +32,48 @@ const EditListingDescriptionFormComponent = props => (
         fetchErrors,
       } = formRenderProps;
 
-      const titleMessage = intl.formatMessage({ id: 'EditListingDescriptionForm.title' });
+      const titleMessage = intl.formatMessage({ id: 'EditListingBioForm.title' });
       const titlePlaceholderMessage = intl.formatMessage({
-        id: 'EditListingDescriptionForm.titlePlaceholder',
+        id: 'EditListingBioForm.titlePlaceholder',
       });
       const titleRequiredMessage = intl.formatMessage({
-        id: 'EditListingDescriptionForm.titleRequired',
+        id: 'EditListingBioForm.titleRequired',
       });
       const maxLengthMessage = intl.formatMessage(
-        { id: 'EditListingDescriptionForm.maxLength' },
+        { id: 'EditListingBioForm.maxLength' },
         {
           maxLength: TITLE_MAX_LENGTH,
         }
       );
 
       const descriptionMessage = intl.formatMessage({
-        id: 'EditListingDescriptionForm.description',
+        id: 'EditListingBioForm.description',
       });
       const descriptionPlaceholderMessage = intl.formatMessage({
-        id: 'EditListingDescriptionForm.descriptionPlaceholder',
+        id: 'EditListingBioForm.descriptionPlaceholder',
       });
       const maxLength60Message = maxLength(maxLengthMessage, TITLE_MAX_LENGTH);
       const descriptionRequiredMessage = intl.formatMessage({
-        id: 'EditListingDescriptionForm.descriptionRequired',
+        id: 'EditListingBioForm.descriptionRequired',
       });
 
       const { updateListingError, createListingDraftError, showListingsError } = fetchErrors || {};
       const errorMessageUpdateListing = updateListingError ? (
         <p className={css.error}>
-          <FormattedMessage id="EditListingDescriptionForm.updateFailed" />
+          <FormattedMessage id="EditListingBioForm.updateFailed" />
         </p>
       ) : null;
 
       // This error happens only on first tab (of EditListingWizard)
       const errorMessageCreateListingDraft = createListingDraftError ? (
         <p className={css.error}>
-          <FormattedMessage id="EditListingDescriptionForm.createListingDraftError" />
+          <FormattedMessage id="EditListingBioForm.createListingDraftError" />
         </p>
       ) : null;
 
       const errorMessageShowListing = showListingsError ? (
         <p className={css.error}>
-          <FormattedMessage id="EditListingDescriptionForm.showListingFailed" />
+          <FormattedMessage id="EditListingBioForm.showListingFailed" />
         </p>
       ) : null;
 
@@ -109,13 +109,6 @@ const EditListingDescriptionFormComponent = props => (
             validate={composeValidators(required(descriptionRequiredMessage))}
           />
 
-          <CustomCertificateSelectFieldMaybe
-            id="certificate"
-            name="certificate"
-            certificateOptions={certificateOptions}
-            intl={intl}
-          />
-
           <Button
             className={css.submitButton}
             type="submit"
@@ -131,9 +124,9 @@ const EditListingDescriptionFormComponent = props => (
   />
 );
 
-EditListingDescriptionFormComponent.defaultProps = { className: null, fetchErrors: null };
+EditListingBioFormComponent.defaultProps = { className: null, fetchErrors: null };
 
-EditListingDescriptionFormComponent.propTypes = {
+EditListingBioFormComponent.propTypes = {
   className: string,
   intl: intlShape.isRequired,
   onSubmit: func.isRequired,
@@ -155,4 +148,4 @@ EditListingDescriptionFormComponent.propTypes = {
   ),
 };
 
-export default compose(injectIntl)(EditListingDescriptionFormComponent);
+export default compose(injectIntl)(EditListingBioFormComponent);
