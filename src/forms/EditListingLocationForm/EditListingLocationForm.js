@@ -28,6 +28,7 @@ export const EditListingLocationFormComponent = props => (
         intl,
         invalid,
         pristine,
+        formId,
         saveActionMsg,
         updated,
         updateInProgress,
@@ -35,7 +36,10 @@ export const EditListingLocationFormComponent = props => (
         values,
       } = formRenderProps;
 
-      const titleRequiredMessage = intl.formatMessage({ id: 'EditListingLocationForm.address' });
+      // Address Text Field
+      const addressTitleRequiredMessage = intl.formatMessage({
+        id: 'EditListingLocationForm.address',
+      });
       const addressPlaceholderMessage = intl.formatMessage({
         id: 'EditListingLocationForm.addressPlaceholder',
       });
@@ -46,16 +50,15 @@ export const EditListingLocationFormComponent = props => (
         id: 'EditListingLocationForm.addressNotRecognized',
       });
 
-      const optionalText = intl.formatMessage({
-        id: 'EditListingLocationForm.optionalText',
+      // Willing Travel Distance
+      const distanceLabel = intl.formatMessage({
+        id: 'EditListingLocationForm.distanceLabel',
       });
-
-      const buildingMessage = intl.formatMessage(
-        { id: 'EditListingLocationForm.building' },
-        { optionalText: optionalText }
-      );
-      const buildingPlaceholderMessage = intl.formatMessage({
-        id: 'EditListingLocationForm.buildingPlaceholder',
+      const distanceCountLabel = intl.formatMessage({
+        id: 'EditListingLocationForm.distanceCountLabel',
+      });
+      const distanceStartingCount = intl.formatMessage({
+        id: 'EditListingLocationForm.distanceStartingCount',
       });
 
       const { updateListingError, showListingsError } = fetchErrors || {};
@@ -86,9 +89,8 @@ export const EditListingLocationFormComponent = props => (
             iconClassName={css.locationAutocompleteInputIcon}
             predictionsClassName={css.predictionsRoot}
             validClassName={css.validLocation}
-            autoFocus
             name="location"
-            label={titleRequiredMessage}
+            label={addressTitleRequiredMessage}
             placeholder={addressPlaceholderMessage}
             useDefaultPredictions={true}
             format={identity}
@@ -99,11 +101,11 @@ export const EditListingLocationFormComponent = props => (
             )}
           />
           <FieldAddSubtract
-            id="EditListingLocationForm.mileage"
-            name="buttonnames"
-            startingCount={0}
-            countLabel="Miles"
-            label="This is label"
+            id={formId ? `${formId}.mileage` : 'mileage'}
+            name="mileage"
+            startingCount={distanceStartingCount}
+            countLabel={distanceCountLabel}
+            label={distanceLabel}
           />
           <Button
             className={css.submitButton}

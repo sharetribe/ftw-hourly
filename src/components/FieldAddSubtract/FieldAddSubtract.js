@@ -31,7 +31,7 @@ class AddSubtractComponent extends Component {
 
   componentDidMount() {
     this.setState(state => ({
-      currentCount: this.props.startingCount,
+      currentCount: Number.parseInt(this.props.startingCount),
     }));
   }
 
@@ -65,7 +65,7 @@ class AddSubtractComponent extends Component {
     const { valid, invalid, touched, error } = meta;
 
     const { onChange: inputOnChange, ...restOfInput } = input;
-    const selectProps = {
+    const spanProps = {
       className,
       id,
       onChange: handleChange(onChange, inputOnChange),
@@ -80,11 +80,12 @@ class AddSubtractComponent extends Component {
           <button onClick={this.subtract} className={css.buttonClassName}>
             -
           </button>
-          <span {...selectProps}>{this.state.currentCount}</span>
+          <span {...spanProps}>{this.state.currentCount}</span>
           <button onClick={this.add} className={css.buttonClassName}>
             +
           </button>
         </div>
+        <div>{countLabel}</div>
         <ValidationError fieldMeta={meta} />
       </div>
     );
@@ -104,7 +105,7 @@ AddSubtractComponent.propTypes = {
   className: string,
   buttonClassName: string,
   countClassName: string,
-  startingCount: number,
+  startingCount: string,
   countLabel: string,
   label: string,
   onChange: func,
