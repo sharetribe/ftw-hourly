@@ -4,22 +4,9 @@ import { Field } from 'react-final-form';
 import { injectIntl, intlShape } from '../../util/reactIntl';
 import classNames from 'classnames';
 import { ValidationError } from '..';
+import { Button } from '../../components';
 
 import css from './FieldAddSubtract.module.css';
-
-const handleChange = (propsOnChange, inputOnChange) => event => {
-  // If "onChange" callback is passed through the props,
-  // it can notify the parent when the content of the input has changed.
-  if (propsOnChange) {
-    // "handleChange" function is attached to the low level <select> component
-    // value of the element needs to be picked from target
-    const value = event.nativeEvent.target.value;
-    propsOnChange(value);
-  }
-  // Notify Final Form that the input has changed.
-  // (Final Form knows how to deal with synthetic events of React.)
-  inputOnChange(event);
-};
 
 class AddSubtractComponent extends Component {
   constructor(props) {
@@ -31,61 +18,77 @@ class AddSubtractComponent extends Component {
 
   componentDidMount() {
     this.setState(state => ({
-      currentCount: Number.parseInt(this.props.startingCount),
+      currentCount: this.props.startingCount,
     }));
+
+    this.props.input.onChange(this.state.currentCount);
   }
-
-  add = () => {
-    this.setState(state => ({
-      currentCount: state.currentCount + 1,
-    }));
-  };
-
-  subtract = () => {
-    this.setState(state => ({
-      currentCount: state.currentCount - 1,
-    }));
-  };
 
   render() {
     const {
-      className,
-      id,
+      rootClassName,
       buttonClassName,
       countClassName,
+      fieldClassName,
+      id,
       startingCount,
       countLabel,
-      onChange,
       label,
       input,
       meta,
       ...rest
     } = this.props;
 
-    const { valid, invalid, touched, error } = meta;
-
     const { onChange: inputOnChange, ...restOfInput } = input;
+
+    const add = async () => {
+      await this.setState(state => ({
+        currentCount: state.currentCount + 1,
+      }));
+
+      inputOnChange(this.state.currentCount);
+    };
+
+    const subtract = async () => {
+      await this.setState(state => ({
+        currentCount: state.currentCount - 1,
+      }));
+
+      inputOnChange(this.state.currentCount);
+    };
+
     const spanProps = {
-      className,
+      className: css.count,
       id,
-      onChange: handleChange(onChange, inputOnChange),
       ...restOfInput,
       ...rest,
     };
 
+    const classes = classNames(rootClassName || css.root);
+
+    const fieldClass = classNames(fieldClassName || css.fieldRoot);
+
+    console.log(startingCount);
+
     return (
-      <div className={className}>
-        {label ? <label>{label}</label> : null}
-        <div>
-          <button onClick={this.subtract} className={css.buttonClassName}>
+      <div className={classes}>
+        {label ? (
+          <label className={css.fieldLabel} htmlFor={input.name}>
+            {label}
+          </label>
+        ) : null}
+        <div className={fieldClass}>
+          <Button type="button" onClick={subtract} className={css.button}>
             -
-          </button>
+          </Button>
           <span {...spanProps}>{this.state.currentCount}</span>
-          <button onClick={this.add} className={css.buttonClassName}>
+          <Button type="button" onClick={add} className={css.button}>
             +
-          </button>
+          </Button>
         </div>
-        <div>{countLabel}</div>
+        <div className={fieldClass}>
+          <span className={css.mileageLabel}>{countLabel}</span>
+        </div>
         <ValidationError fieldMeta={meta} />
       </div>
     );
@@ -93,19 +96,21 @@ class AddSubtractComponent extends Component {
 }
 
 AddSubtractComponent.defaultProps = {
-  className: null,
+  rootClassName: null,
   buttonClassName: null,
   countClassName: null,
+  fieldClassName: null,
   startingCount: 0,
   countLabel: null,
   label: null,
 };
 
 AddSubtractComponent.propTypes = {
-  className: string,
+  rootClassName: string,
   buttonClassName: string,
   countClassName: string,
-  startingCount: string,
+  fieldClassName: string,
+  startingCount: number,
   countLabel: string,
   label: string,
   onChange: func,

@@ -1,40 +1,27 @@
+.mainRoot {
+}
+
 .fieldRoot {
-}
-
-.inputRoot {
   display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
+  align-items: center;
+  justify-content: center;
+  width: 30%;
 }
 
-.selectWrapper {
-  flex-basis: calc(33% - 12px);
+.button {
+  margin-inline: 1rem;
+  width: 4rem;
+  font-size: xx-large;
 }
 
-.select {
-  display: inline-block;
-
-  /* Border */
-  border-bottom-width: 2px;
-  border-bottom-style: solid;
-  border-bottom-color: var(--attentionColor);
-
-  &:hover,
-  &:focus {
-    border-bottom-color: var(--matterColorDark);
-    outline: none;
-  }
+.count {
+  font-size: xx-large;
 }
 
-.notSet {
-  color: var(--matterColorAnti);
+.mileageLabel {
+  display: block;
 }
 
-.selectSuccess {
-  color: var(--matterColor);
-  border-bottom-color: var(--successColor);
-}
-
-.selectError {
-  border-bottom-color: var(--failColor);
+.fieldLabel {
+  margin-bottom: 1rem;
 }

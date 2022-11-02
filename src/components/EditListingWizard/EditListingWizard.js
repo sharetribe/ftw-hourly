@@ -84,8 +84,14 @@ const tabLabel = (intl, tab) => {
  * @return true if tab / step is completed.
  */
 const tabCompleted = (tab, listing) => {
-  const { availabilityPlan, description, geolocation, price, title, publicData } =
-    listing.attributes;
+  const {
+    availabilityPlan,
+    description,
+    geolocation,
+    price,
+    title,
+    publicData,
+  } = listing.attributes;
   const images = listing.images;
 
   switch (tab) {
@@ -119,7 +125,7 @@ const tabCompleted = (tab, listing) => {
  */
 const tabsActive = (isNew, listing) => {
   return TABS.reduce((acc, tab) => {
-    const previousTabIndex = TABS.findIndex((t) => t === tab) - 1;
+    const previousTabIndex = TABS.findIndex(t => t === tab) - 1;
     const isActive =
       previousTabIndex >= 0 ? !isNew || tabCompleted(TABS[previousTabIndex], listing) : true;
     return { ...acc, [tab]: isActive };
@@ -149,10 +155,10 @@ const createReturnURL = (returnURLType, rootURL, routes, pathParams) => {
 };
 
 // Get attribute: stripeAccountData
-const getStripeAccountData = (stripeAccount) => stripeAccount.attributes.stripeAccountData || null;
+const getStripeAccountData = stripeAccount => stripeAccount.attributes.stripeAccountData || null;
 
 // Get last 4 digits of bank account returned in Stripe account
-const getBankAccountLast4Digits = (stripeAccountData) =>
+const getBankAccountLast4Digits = stripeAccountData =>
   stripeAccountData && stripeAccountData.external_accounts.data.length > 0
     ? stripeAccountData.external_accounts.data[0].last4
     : null;
@@ -165,12 +171,12 @@ const hasRequirements = (stripeAccountData, requirementType) =>
   stripeAccountData.requirements[requirementType].length > 0;
 
 // Redirect user to Stripe's hosted Connect account onboarding form
-const handleGetStripeConnectAccountLinkFn = (getLinkFn, commonParams) => (type) => () => {
+const handleGetStripeConnectAccountLinkFn = (getLinkFn, commonParams) => type => () => {
   getLinkFn({ type, ...commonParams })
-    .then((url) => {
+    .then(url => {
       window.location.href = url;
     })
-    .catch((err) => console.error(err));
+    .catch(err => console.error(err));
 };
 
 const RedirectToStripe = ({ redirectFn }) => {
@@ -222,6 +228,8 @@ class EditListingWizard extends Component {
       (hasRequirements(stripeAccountData, 'past_due') ||
         hasRequirements(stripeAccountData, 'currently_due'));
 
+    onPublishListingDraft(id);
+
     if (stripeConnected && !requirementsMissing) {
       onPublishListingDraft(id);
     } else {
@@ -239,7 +247,7 @@ class EditListingWizard extends Component {
   handlePayoutSubmit(values) {
     this.props
       .onPayoutDetailsSubmit(values)
-      .then((response) => {
+      .then(response => {
         this.props.onManageDisableScrolling('EditListingWizard.payoutModal', false);
       })
       .catch(() => {
@@ -290,7 +298,7 @@ class EditListingWizard extends Component {
       const currentTabIndex = TABS.indexOf(selectedTab);
       const nearestActiveTab = TABS.slice(0, currentTabIndex)
         .reverse()
-        .find((t) => tabsStatus[t]);
+        .find(t => tabsStatus[t]);
 
       return <NamedRedirect name="EditListingPage" params={{ ...params, tab: nearestActiveTab }} />;
     }
@@ -311,7 +319,7 @@ class EditListingWizard extends Component {
       this.hasScrolledToTab = true;
     }
 
-    const tabLink = (tab) => {
+    const tabLink = tab => {
       return { name: pageName || 'EditListingPage', params: { ...params, tab } };
     };
 
@@ -376,7 +384,7 @@ class EditListingWizard extends Component {
           navRootClassName={css.nav}
           tabRootClassName={css.tab}
         >
-          {TABS.map((tab) => {
+          {TABS.map(tab => {
             return (
               <EditListingWizardTab
                 {...rest}

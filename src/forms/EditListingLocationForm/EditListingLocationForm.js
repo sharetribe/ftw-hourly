@@ -101,10 +101,11 @@ export const EditListingLocationFormComponent = props => (
             )}
           />
           <FieldAddSubtract
-            id={formId ? `${formId}.mileage` : 'mileage'}
-            name="mileage"
-            startingCount={distanceStartingCount}
+            id={formId ? `${formId}.travelDistance` : 'travelDistance'}
+            name="travelDistance"
+            startingCount={values.travelDistance}
             countLabel={distanceCountLabel}
+            valueFromForm={values.travelDistance}
             label={distanceLabel}
           />
           <Button
