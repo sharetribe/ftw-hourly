@@ -90,8 +90,7 @@ export const EditListingLocationFormComponent = props => (
             name="location"
             label={titleRequiredMessage}
             placeholder={addressPlaceholderMessage}
-            useDefaultPredictions={false}
-            useCurrentLocation={true}
+            useDefaultPredictions={true}
             format={identity}
             valueFromForm={values.location}
             validate={composeValidators(

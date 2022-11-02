@@ -64,6 +64,26 @@ const placeBounds = prediction => {
   return null;
 };
 
+export const getPlaceAddress = async place => {
+  const url =
+    'https://api.mapbox.com/geocoding/v5/mapbox.places/' +
+    place.origin.lng +
+    ', ' +
+    place.origin.lat +
+    '.json?access_token=' +
+    process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
+
+  const response = await fetch(url, {
+    method: 'GET',
+    headers: {
+      Accept: 'application/json',
+    },
+  });
+
+  const body = await response.json();
+  return body.features[0].place_name;
+};
+
 export const GeocoderAttribution = () => null;
 
 /**

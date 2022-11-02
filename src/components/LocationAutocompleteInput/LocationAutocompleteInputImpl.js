@@ -9,7 +9,11 @@ import config from '../../config';
 
 import IconHourGlass from './IconHourGlass';
 import IconCurrentLocation from './IconCurrentLocation';
-import Geocoder, { GeocoderAttribution, CURRENT_LOCATION_ID } from './GeocoderMapbox';
+import Geocoder, {
+  GeocoderAttribution,
+  CURRENT_LOCATION_ID,
+  getPlaceAddress,
+} from './GeocoderMapbox';
 // import Geocoder, { GeocoderAttribution, CURRENT_LOCATION_ID } from './GeocoderGoogleMaps';
 
 import css from './LocationAutocompleteInput.module.css';
@@ -131,9 +135,8 @@ LocationPredictionsList.propTypes = {
 // LocationAutocompleteInput props.
 const currentValue = props => {
   const value = props.input.value || {};
-  const useCurrentLocation = props.useCurrentLocation;
   const { search = '', predictions = [], selectedPlace = null } = value;
-  return { search, predictions, selectedPlace, useCurrentLocation };
+  return { search, predictions, selectedPlace };
 };
 
 /*
@@ -206,16 +209,10 @@ class LocationAutocompleteInputImpl extends Component {
   }
 
   currentPredictions() {
-    const { search, predictions: fetchedPredictions, useCurrentLocation } = currentValue(
-      this.props
-    );
+    const { search, predictions: fetchedPredictions } = currentValue(this.props);
     const { useDefaultPredictions } = this.props;
     const hasFetchedPredictions = fetchedPredictions && fetchedPredictions.length > 0;
     const showDefaultPredictions = !search && !hasFetchedPredictions && useDefaultPredictions;
-
-    if (useCurrentLocation) {
-      return [{ id: CURRENT_LOCATION_ID, predictionPlace: {} }];
-    }
 
     return showDefaultPredictions ? defaultPredictions : fetchedPredictions;
   }
@@ -321,11 +318,15 @@ class LocationAutocompleteInputImpl extends Component {
 
     this.getGeocoder()
       .getPlaceDetails(prediction)
-      .then(place => {
+      .then(async place => {
         if (!this._isMounted) {
           // Ignore if component already unmounted
           return;
         }
+        if (place.address === '') {
+          place.address = await getPlaceAddress(place);
+        }
+
         this.setState({ fetchingPlaceDetails: false });
         this.props.input.onChange({
           search: place.address,
@@ -542,7 +543,6 @@ LocationAutocompleteInputImpl.defaultProps = {
   validClassName: null,
   placeholder: '',
   useDefaultPredictions: true,
-  useCurrentLocation: false,
   meta: null,
   inputRef: null,
 };
@@ -559,7 +559,6 @@ LocationAutocompleteInputImpl.propTypes = {
   validClassName: string,
   placeholder: string,
   useDefaultPredictions: bool,
-  useCurrentLocation: bool,
   input: shape({
     name: string.isRequired,
     value: oneOfType([
