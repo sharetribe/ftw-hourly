@@ -10,7 +10,7 @@ import {
   autocompletePlaceSelected,
   composeValidators,
 } from '../../util/validators';
-import { Form, LocationAutocompleteInputField, Button, FieldTextInput } from '../../components';
+import { Form, LocationAutocompleteInputField, Button, FieldAddSubtract } from '../../components';
 
 import css from './EditListingLocationForm.module.css';
 
@@ -98,7 +98,13 @@ export const EditListingLocationFormComponent = props => (
               autocompletePlaceSelected(addressNotRecognizedMessage)
             )}
           />
-
+          <FieldAddSubtract
+            id="EditListingLocationForm.mileage"
+            name="buttonnames"
+            startingCount={0}
+            countLabel="Miles"
+            label="This is label"
+          />
           <Button
             className={css.submitButton}
             type="submit"
