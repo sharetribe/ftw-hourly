@@ -131,8 +131,9 @@ LocationPredictionsList.propTypes = {
 // LocationAutocompleteInput props.
 const currentValue = props => {
   const value = props.input.value || {};
+  const useCurrentLocation = props.useCurrentLocation;
   const { search = '', predictions = [], selectedPlace = null } = value;
-  return { search, predictions, selectedPlace };
+  return { search, predictions, selectedPlace, useCurrentLocation };
 };
 
 /*
@@ -205,10 +206,16 @@ class LocationAutocompleteInputImpl extends Component {
   }
 
   currentPredictions() {
-    const { search, predictions: fetchedPredictions } = currentValue(this.props);
+    const { search, predictions: fetchedPredictions, useCurrentLocation } = currentValue(
+      this.props
+    );
     const { useDefaultPredictions } = this.props;
     const hasFetchedPredictions = fetchedPredictions && fetchedPredictions.length > 0;
     const showDefaultPredictions = !search && !hasFetchedPredictions && useDefaultPredictions;
+
+    if (useCurrentLocation) {
+      return [{ id: CURRENT_LOCATION_ID, predictionPlace: {} }];
+    }
 
     return showDefaultPredictions ? defaultPredictions : fetchedPredictions;
   }
@@ -535,6 +542,7 @@ LocationAutocompleteInputImpl.defaultProps = {
   validClassName: null,
   placeholder: '',
   useDefaultPredictions: true,
+  useCurrentLocation: false,
   meta: null,
   inputRef: null,
 };
@@ -551,6 +559,7 @@ LocationAutocompleteInputImpl.propTypes = {
   validClassName: string,
   placeholder: string,
   useDefaultPredictions: bool,
+  useCurrentLocation: bool,
   input: shape({
     name: string.isRequired,
     value: oneOfType([

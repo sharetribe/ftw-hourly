@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { func, object, shape, string } from 'prop-types';
+import { func, object, shape, string, bool } from 'prop-types';
 import { Field } from 'react-final-form';
 import { ValidationError } from '../../components';
 import LocationAutocompleteInputImpl from './LocationAutocompleteInputImpl.js';
@@ -8,11 +8,17 @@ class LocationAutocompleteInputComponent extends Component {
   render() {
     /* eslint-disable no-unused-vars */
     const { rootClassName, labelClassName, ...restProps } = this.props;
-    const { input, label, meta, valueFromForm, ...otherProps } = restProps;
+    const { input, label, meta, valueFromForm, useCurrentLocation, ...otherProps } = restProps;
     /* eslint-enable no-unused-vars */
 
     const value = typeof valueFromForm !== 'undefined' ? valueFromForm : input.value;
-    const locationAutocompleteProps = { label, meta, ...otherProps, input: { ...input, value } };
+    const locationAutocompleteProps = {
+      label,
+      meta,
+      ...otherProps,
+      input: { ...input, value },
+      useCurrentLocation,
+    };
     const labelInfo = label ? (
       <label className={labelClassName} htmlFor={input.name}>
         {label}
@@ -34,6 +40,7 @@ LocationAutocompleteInputComponent.defaultProps = {
   labelClassName: null,
   type: null,
   label: null,
+  useCurrentLocation: false,
 };
 
 LocationAutocompleteInputComponent.propTypes = {
@@ -45,6 +52,7 @@ LocationAutocompleteInputComponent.propTypes = {
   }).isRequired,
   label: string,
   meta: object.isRequired,
+  useCurrentLocation: bool,
 };
 
 export default LocationAutocompleteInputImpl;

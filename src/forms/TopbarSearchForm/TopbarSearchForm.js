@@ -7,7 +7,7 @@ import { Form, LocationAutocompleteInput } from '../../components';
 
 import css from './TopbarSearchForm.module.css';
 
-const identity = (v) => v;
+const identity = v => v;
 
 class TopbarSearchFormComponent extends Component {
   constructor(props) {
@@ -34,7 +34,7 @@ class TopbarSearchFormComponent extends Component {
     return (
       <FinalForm
         {...this.props}
-        render={(formRenderProps) => {
+        render={formRenderProps => {
           const { rootClassName, className, desktopInputRoot, intl, isMobile } = formRenderProps;
 
           const classes = classNames(rootClassName, className);
@@ -43,7 +43,7 @@ class TopbarSearchFormComponent extends Component {
           const currentUserType = this.props.currentUserType;
 
           // Allow form submit only when the place has changed
-          const preventFormSubmit = (e) => e.preventDefault();
+          const preventFormSubmit = e => e.preventDefault();
 
           return (
             <Form
@@ -57,11 +57,11 @@ class TopbarSearchFormComponent extends Component {
                 render={({ input, meta }) => {
                   const { onChange, ...restInput } = input;
 
-                  // Merge the standard onChange function with custom behaviur. A better solution would
+                  // Merge the standard onChange function with custom behaviour. A better solution would
                   // be to use the FormSpy component from Final Form and pass this.onChange to the
                   // onChange prop but that breaks due to insufficient subscription handling.
                   // See: https://github.com/final-form/react-final-form/issues/159
-                  const searchOnChange = (value) => {
+                  const searchOnChange = value => {
                     onChange(value);
                     this.onChange(value);
                   };
@@ -84,7 +84,7 @@ class TopbarSearchFormComponent extends Component {
                           : { id: 'TopbarSearchForm.caregiverPlaceholder' }
                       )}
                       closeOnBlur={!isMobile}
-                      inputRef={(node) => {
+                      inputRef={node => {
                         this.searchInput = node;
                       }}
                       input={searchInput}

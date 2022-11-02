@@ -92,7 +92,7 @@ bottom of the container.
   composes: marketplaceBodyFontStyles from global;
 
   margin: 0;
-  padding: 14px 0;
+  /* padding: 14px 0; */
 
   & li {
     color: var(--matterColorLight);
@@ -101,7 +101,7 @@ bottom of the container.
     line-height: 24px;
 
     /* Assign enough vertical padding to make the element at least 44px high */
-    padding: 9px 24px;
+    /* padding: 9px 24px; */
 
     @media (--viewportMedium) {
       color: var(--matterColorLightTransparent);
