@@ -12,7 +12,7 @@ import { ensureListing } from '../../util/data';
 import { createResourceLocatorString } from '../../util/routes';
 import {
   EditListingAvailabilityPanel,
-  EditListingDescriptionPanel,
+  EditListingBioPanel,
   EditListingFeaturesPanel,
   EditListingLocationPanel,
   EditListingPhotosPanel,
@@ -23,7 +23,7 @@ import {
 import css from './EditListingWizard.module.css';
 
 export const AVAILABILITY = 'availability';
-export const DESCRIPTION = 'description';
+export const BIO = 'bio';
 export const FEATURES = 'features';
 export const POLICY = 'policy';
 export const LOCATION = 'location';
@@ -31,18 +31,10 @@ export const PRICING = 'pricing';
 export const PHOTOS = 'photos';
 
 // EditListingWizardTab component supports these tabs
-export const SUPPORTED_TABS = [
-  DESCRIPTION,
-  FEATURES,
-  POLICY,
-  LOCATION,
-  PRICING,
-  AVAILABILITY,
-  PHOTOS,
-];
+export const SUPPORTED_TABS = [BIO, FEATURES, POLICY, LOCATION, PRICING, AVAILABILITY, PHOTOS];
 
 const pathParamsToNextTab = (params, tab, marketplaceTabs) => {
-  const nextTabIndex = marketplaceTabs.findIndex((s) => s === tab) + 1;
+  const nextTabIndex = marketplaceTabs.findIndex(s => s === tab) + 1;
   const nextTab =
     nextTabIndex < marketplaceTabs.length
       ? marketplaceTabs[nextTabIndex]
@@ -50,7 +42,7 @@ const pathParamsToNextTab = (params, tab, marketplaceTabs) => {
   return { ...params, tab: nextTab };
 };
 
-const EditListingWizardTab = (props) => {
+const EditListingWizardTab = props => {
   const {
     tab,
     marketplaceTabs,
@@ -86,8 +78,8 @@ const EditListingWizardTab = (props) => {
   const isNewListingFlow = isNewURI || isDraftURI;
 
   const currentListing = ensureListing(listing);
-  const imageIds = (images) => {
-    return images ? images.map((img) => img.imageId || img.id) : null;
+  const imageIds = images => {
+    return images ? images.map(img => img.imageId || img.id) : null;
   };
 
   // When user has update draft listing, he should be redirected to next EditListingWizardTab
@@ -141,7 +133,7 @@ const EditListingWizardTab = (props) => {
         : { ...updateValuesWithImages, id: currentListing.id };
 
       return onUpsertListingDraft(tab, upsertValues)
-        .then((r) => {
+        .then(r => {
           if (tab !== AVAILABILITY && tab !== marketplaceTabs[marketplaceTabs.length - 1]) {
             // Create listing flow: smooth scrolling polyfill to scroll to correct tab
             handleCreateFlowTabScrolling(false);
@@ -152,7 +144,7 @@ const EditListingWizardTab = (props) => {
             handlePublishListing(currentListing.id);
           }
         })
-        .catch((e) => {
+        .catch(e => {
           if (passThrownErrors) {
             throw e;
           }
@@ -164,7 +156,7 @@ const EditListingWizardTab = (props) => {
     }
   };
 
-  const panelProps = (tab) => {
+  const panelProps = tab => {
     return {
       className: css.panel,
       errors,
@@ -180,15 +172,15 @@ const EditListingWizardTab = (props) => {
   };
 
   switch (tab) {
-    case DESCRIPTION: {
+    case BIO: {
       const submitButtonTranslationKey = isNewListingFlow
         ? 'EditListingWizard.saveNewDescription'
         : 'EditListingWizard.saveEditDescription';
       return (
-        <EditListingDescriptionPanel
-          {...panelProps(DESCRIPTION)}
+        <EditListingBioPanel
+          {...panelProps(BIO)}
           submitButtonText={intl.formatMessage({ id: submitButtonTranslationKey })}
-          onSubmit={(values) => {
+          onSubmit={values => {
             onCompleteEditListingWizardTab(tab, values);
           }}
         />
@@ -202,7 +194,7 @@ const EditListingWizardTab = (props) => {
         <EditListingFeaturesPanel
           {...panelProps(FEATURES)}
           submitButtonText={intl.formatMessage({ id: submitButtonTranslationKey })}
-          onSubmit={(values) => {
+          onSubmit={values => {
             onCompleteEditListingWizardTab(tab, values);
           }}
         />
@@ -216,7 +208,7 @@ const EditListingWizardTab = (props) => {
         <EditListingPoliciesPanel
           {...panelProps(POLICY)}
           submitButtonText={intl.formatMessage({ id: submitButtonTranslationKey })}
-          onSubmit={(values) => {
+          onSubmit={values => {
             onCompleteEditListingWizardTab(tab, values);
           }}
         />
@@ -230,7 +222,7 @@ const EditListingWizardTab = (props) => {
         <EditListingLocationPanel
           {...panelProps(LOCATION)}
           submitButtonText={intl.formatMessage({ id: submitButtonTranslationKey })}
-          onSubmit={(values) => {
+          onSubmit={values => {
             onCompleteEditListingWizardTab(tab, values);
           }}
         />
@@ -244,7 +236,7 @@ const EditListingWizardTab = (props) => {
         <EditListingPricingPanel
           {...panelProps(PRICING)}
           submitButtonText={intl.formatMessage({ id: submitButtonTranslationKey })}
-          onSubmit={(values) => {
+          onSubmit={values => {
             onCompleteEditListingWizardTab(tab, values);
           }}
         />
@@ -262,7 +254,7 @@ const EditListingWizardTab = (props) => {
           submitButtonText={intl.formatMessage({ id: submitButtonTranslationKey })}
           onAddAvailabilityException={onAddAvailabilityException}
           onDeleteAvailabilityException={onDeleteAvailabilityException}
-          onSubmit={(values) => {
+          onSubmit={values => {
             // We want to return the Promise to the form,
             // so that it doesn't close its modal if an error is thrown.
             return onCompleteEditListingWizardTab(tab, values, true);
@@ -285,7 +277,7 @@ const EditListingWizardTab = (props) => {
           images={images}
           onImageUpload={onImageUpload}
           onRemoveImage={onRemoveImage}
-          onSubmit={(values) => {
+          onSubmit={values => {
             onCompleteEditListingWizardTab(tab, values);
           }}
           onUpdateImageOrder={onUpdateImageOrder}

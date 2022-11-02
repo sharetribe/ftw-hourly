@@ -5,13 +5,13 @@ import { FormattedMessage } from '../../util/reactIntl';
 import { ensureOwnListing } from '../../util/data';
 import { findOptionsForSelectFilter } from '../../util/search';
 import { LISTING_STATE_DRAFT } from '../../util/types';
-import { ListingLink } from '../../components';
+import { ListingLink } from '..';
 import { EditListingDescriptionForm } from '../../forms';
 import config from '../../config';
 
-import css from './EditListingDescriptionPanel.module.css';
+import css from './EditListingBioPanel.module.css';
 
-const EditListingDescriptionPanel = props => {
+const EditListingBioPanel = props => {
   const {
     className,
     rootClassName,
@@ -76,14 +76,14 @@ const EditListingDescriptionPanel = props => {
   );
 };
 
-EditListingDescriptionPanel.defaultProps = {
+EditListingBioPanel.defaultProps = {
   className: null,
   rootClassName: null,
   errors: null,
   listing: null,
 };
 
-EditListingDescriptionPanel.propTypes = {
+EditListingBioPanel.propTypes = {
   className: string,
   rootClassName: string,
 
@@ -100,4 +100,4 @@ EditListingDescriptionPanel.propTypes = {
   errors: object.isRequired,
 };
 
-export default EditListingDescriptionPanel;
+export default EditListingBioPanel;

@@ -20,7 +20,7 @@ import { StripeConnectAccountForm } from '../../forms';
 
 import EditListingWizardTab, {
   AVAILABILITY,
-  DESCRIPTION,
+  BIO,
   FEATURES,
   POLICY,
   LOCATION,
@@ -39,7 +39,7 @@ const availabilityMaybe = config.enableAvailability ? [AVAILABILITY] : [];
 // Note 3: in FTW-hourly template we don't use the POLICY tab so it's commented out.
 // If you want to add a free text field to your listings you can enable the POLICY tab
 export const TABS = [
-  DESCRIPTION,
+  BIO,
   FEATURES,
   //POLICY,
   LOCATION,
@@ -56,8 +56,8 @@ const STRIPE_ONBOARDING_RETURN_URL_FAILURE = 'failure';
 
 const tabLabel = (intl, tab) => {
   let key = null;
-  if (tab === DESCRIPTION) {
-    key = 'EditListingWizard.tabLabelDescription';
+  if (tab === BIO) {
+    key = 'EditListingWizard.tabLabelBio';
   } else if (tab === FEATURES) {
     key = 'EditListingWizard.tabLabelFeatures';
   } else if (tab === POLICY) {
@@ -95,7 +95,7 @@ const tabCompleted = (tab, listing) => {
   const images = listing.images;
 
   switch (tab) {
-    case DESCRIPTION:
+    case BIO:
       return !!(description && title);
     case FEATURES:
       return !!(publicData && publicData.yogaStyles);
