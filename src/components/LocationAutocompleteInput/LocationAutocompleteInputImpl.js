@@ -213,8 +213,13 @@ class LocationAutocompleteInputImpl extends Component {
     const { useDefaultPredictions } = this.props;
     const hasFetchedPredictions = fetchedPredictions && fetchedPredictions.length > 0;
     const showDefaultPredictions = !search && !hasFetchedPredictions && useDefaultPredictions;
+    const currentLocationPrediction = [{ id: CURRENT_LOCATION_ID, predictionPlace: {} }];
 
-    return showDefaultPredictions ? defaultPredictions : fetchedPredictions;
+    return showDefaultPredictions
+      ? defaultPredictions
+      : this.props.useCurrentLocation && !hasFetchedPredictions
+      ? currentLocationPrediction
+      : fetchedPredictions;
   }
 
   // Interpret input key event
