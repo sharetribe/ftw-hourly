@@ -58,7 +58,7 @@ class AddSubtractComponent extends Component {
     };
 
     const spanProps = {
-      className: css.count,
+      className: css.counter + ' ' + css.largeCount,
       id,
       ...restOfInput,
       ...rest,
@@ -81,14 +81,15 @@ class AddSubtractComponent extends Component {
           <Button type="button" onClick={subtract} className={css.button}>
             -
           </Button>
-          <span {...spanProps}>{this.state.currentCount}</span>
+          <div class={css.count}>
+            <div {...spanProps}>{this.state.currentCount}</div>
+            <div className={css.counter}>{countLabel}</div>
+          </div>
           <Button type="button" onClick={add} className={css.button}>
             +
           </Button>
         </div>
-        <div className={fieldClass}>
-          <span className={css.mileageLabel}>{countLabel}</span>
-        </div>
+        <div className={fieldClass}></div>
         <ValidationError fieldMeta={meta} />
       </div>
     );

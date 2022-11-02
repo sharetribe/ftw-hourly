@@ -5,21 +5,34 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 30%;
+  width: 35%;
 }
 
 .button {
-  margin-inline: 1rem;
-  width: 4rem;
+  margin-inline: 1.5rem;
+  width: 3rem;
   font-size: xx-large;
+  min-height: 3rem;
+  @media (--viewportMedium) {
+    min-height: 3rem;
+  }
 }
 
 .count {
-  font-size: xx-large;
+  display: block;
+  text-align: center;
+  justify-content: center;
+  width: 4rem;
 }
 
-.mileageLabel {
-  display: block;
+.counter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.largeCount {
+  font-size: xx-large;
 }
 
 .fieldLabel {
