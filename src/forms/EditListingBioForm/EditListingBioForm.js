@@ -5,13 +5,15 @@ import { Form as FinalForm } from 'react-final-form';
 import { intlShape, injectIntl, FormattedMessage } from '../../util/reactIntl';
 import classNames from 'classnames';
 import { propTypes } from '../../util/types';
-import { maxLength, required, composeValidators } from '../../util/validators';
+import { minLength, maxLength, required, composeValidators } from '../../util/validators';
 import { Form, Button, FieldTextInput } from '../../components';
 import CustomCertificateSelectFieldMaybe from './CustomCertificateSelectFieldMaybe';
 
 import css from './EditListingBioForm.module.css';
 
 const TITLE_MAX_LENGTH = 60;
+const DESCRIPTION_MIN_LENGTH = 100;
+const DESCRIPTION_MAX_LENGTH = 700;
 
 const EditListingBioFormComponent = props => (
   <FinalForm
@@ -39,12 +41,13 @@ const EditListingBioFormComponent = props => (
       const titleRequiredMessage = intl.formatMessage({
         id: 'EditListingBioForm.titleRequired',
       });
-      const maxLengthMessage = intl.formatMessage(
+      const maxLengthTitleMessage = intl.formatMessage(
         { id: 'EditListingBioForm.maxLength' },
         {
           maxLength: TITLE_MAX_LENGTH,
         }
       );
+      const maxLength60Message = maxLength(maxLengthTitleMessage, TITLE_MAX_LENGTH);
 
       const descriptionMessage = intl.formatMessage({
         id: 'EditListingBioForm.description',
@@ -52,10 +55,18 @@ const EditListingBioFormComponent = props => (
       const descriptionPlaceholderMessage = intl.formatMessage({
         id: 'EditListingBioForm.descriptionPlaceholder',
       });
-      const maxLength60Message = maxLength(maxLengthMessage, TITLE_MAX_LENGTH);
       const descriptionRequiredMessage = intl.formatMessage({
         id: 'EditListingBioForm.descriptionRequired',
       });
+      const lengthDescriptionMessage = intl.formatMessage(
+        { id: 'EditListingBioForm.descriptionLength' },
+        {
+          maxLength: DESCRIPTION_MAX_LENGTH,
+          minLength: DESCRIPTION_MIN_LENGTH,
+        }
+      );
+      const maxLength700Message = maxLength(lengthDescriptionMessage, DESCRIPTION_MAX_LENGTH);
+      const minLength100Message = minLength(lengthDescriptionMessage, DESCRIPTION_MIN_LENGTH);
 
       const { updateListingError, createListingDraftError, showListingsError } = fetchErrors || {};
       const errorMessageUpdateListing = updateListingError ? (
@@ -95,7 +106,7 @@ const EditListingBioFormComponent = props => (
             label={titleMessage}
             placeholder={titlePlaceholderMessage}
             maxLength={TITLE_MAX_LENGTH}
-            validate={composeValidators(required(titleRequiredMessage), maxLength60Message)}
+            validate={composeValidators(maxLength60Message)}
             autoFocus
           />
 
@@ -106,7 +117,12 @@ const EditListingBioFormComponent = props => (
             type="textarea"
             label={descriptionMessage}
             placeholder={descriptionPlaceholderMessage}
-            validate={composeValidators(required(descriptionRequiredMessage))}
+            maxLength={DESCRIPTION_MAX_LENGTH}
+            validate={composeValidators(
+              required(descriptionRequiredMessage),
+              maxLength700Message,
+              minLength100Message
+            )}
           />
 
           <Button
