@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { arrayOf, bool, func, shape, string } from 'prop-types';
 import { compose } from 'redux';
 import { Form as FinalForm } from 'react-final-form';
@@ -93,9 +93,14 @@ const EditListingAdditionalDetailsFormComponent = props => (
       const submitDisabled = invalid || disabled || submitInProgress;
 
       const [submitReady, setSubmitReady] = useState(false);
+      const [submitted, setSubmitted] = useState(false);
+
+      useEffect(() => {
+        setSubmitReady((updated || ready) && submitted);
+      }, [pristine, ready, updated, submitted]);
 
       const onSubmit = values => {
-        setSubmitReady(true);
+        setSubmitted(true);
         handleSubmit(values);
       };
 
