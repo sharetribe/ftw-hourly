@@ -13,7 +13,7 @@ import { createResourceLocatorString } from '../../util/routes';
 import {
   EditListingAvailabilityPanel,
   EditListingBioPanel,
-  EditListingFeaturesPanel,
+  EditListingExperiencePanel,
   EditListingLocationPanel,
   EditListingPhotosPanel,
   EditListingPoliciesPanel,
@@ -24,14 +24,14 @@ import css from './EditListingWizard.module.css';
 
 export const AVAILABILITY = 'availability';
 export const BIO = 'bio';
-export const FEATURES = 'features';
+export const EXPERIENCE = 'experience';
 export const POLICY = 'policy';
 export const LOCATION = 'location';
 export const PRICING = 'pricing';
 export const PHOTOS = 'photos';
 
 // EditListingWizardTab component supports these tabs
-export const SUPPORTED_TABS = [BIO, FEATURES, POLICY, LOCATION, PRICING, AVAILABILITY, PHOTOS];
+export const SUPPORTED_TABS = [BIO, EXPERIENCE, POLICY, LOCATION, PRICING, AVAILABILITY, PHOTOS];
 
 const pathParamsToNextTab = (params, tab, marketplaceTabs) => {
   const nextTabIndex = marketplaceTabs.findIndex(s => s === tab) + 1;
@@ -186,13 +186,13 @@ const EditListingWizardTab = props => {
         />
       );
     }
-    case FEATURES: {
+    case EXPERIENCE: {
       const submitButtonTranslationKey = isNewListingFlow
-        ? 'EditListingWizard.saveNewFeatures'
-        : 'EditListingWizard.saveEditFeatures';
+        ? 'EditListingWizard.saveNewExperience'
+        : 'EditListingWizard.saveEditExperience';
       return (
-        <EditListingFeaturesPanel
-          {...panelProps(FEATURES)}
+        <EditListingExperiencePanel
+          {...panelProps(EXPERIENCE)}
           submitButtonText={intl.formatMessage({ id: submitButtonTranslationKey })}
           onSubmit={values => {
             onCompleteEditListingWizardTab(tab, values);

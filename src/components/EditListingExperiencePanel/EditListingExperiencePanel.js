@@ -6,13 +6,13 @@ import { FormattedMessage } from '../../util/reactIntl';
 import { LISTING_STATE_DRAFT } from '../../util/types';
 import { ensureListing } from '../../util/data';
 import { EditListingFeaturesForm } from '../../forms';
-import { ListingLink } from '../../components';
+import { ListingLink } from '..';
 
-import css from './EditListingFeaturesPanel.module.css';
+import css from './EditListingExperiencePanel.module.css';
 
 const FEATURES_NAME = 'yogaStyles';
 
-const EditListingFeaturesPanel = props => {
+const EditListingExperiencePanel = props => {
   const {
     rootClassName,
     className,
@@ -34,17 +34,17 @@ const EditListingFeaturesPanel = props => {
   const isPublished = currentListing.id && currentListing.attributes.state !== LISTING_STATE_DRAFT;
   const panelTitle = isPublished ? (
     <FormattedMessage
-      id="EditListingFeaturesPanel.title"
+      id="EditListingExperiencePanel.title"
       values={{
         listingTitle: (
           <ListingLink listing={listing}>
-            <FormattedMessage id="EditListingFeaturesPanel.listingTitle" />
+            <FormattedMessage id="EditListingExperiencePanel.listingTitle" />
           </ListingLink>
         ),
       }}
     />
   ) : (
-    <FormattedMessage id="EditListingFeaturesPanel.createListingTitle" />
+    <FormattedMessage id="EditListingExperiencePanel.createListingTitle" />
   );
 
   const yogaStyles = publicData && publicData.yogaStyles;
@@ -77,7 +77,7 @@ const EditListingFeaturesPanel = props => {
   );
 };
 
-EditListingFeaturesPanel.defaultProps = {
+EditListingExperiencePanel.defaultProps = {
   rootClassName: null,
   className: null,
   listing: null,
@@ -85,7 +85,7 @@ EditListingFeaturesPanel.defaultProps = {
 
 const { bool, func, object, string } = PropTypes;
 
-EditListingFeaturesPanel.propTypes = {
+EditListingExperiencePanel.propTypes = {
   rootClassName: string,
   className: string,
 
@@ -102,4 +102,4 @@ EditListingFeaturesPanel.propTypes = {
   errors: object.isRequired,
 };
 
-export default EditListingFeaturesPanel;
+export default EditListingExperiencePanel;

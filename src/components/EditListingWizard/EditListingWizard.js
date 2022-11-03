@@ -21,7 +21,7 @@ import { StripeConnectAccountForm } from '../../forms';
 import EditListingWizardTab, {
   AVAILABILITY,
   BIO,
-  FEATURES,
+  EXPERIENCE,
   POLICY,
   LOCATION,
   PRICING,
@@ -40,7 +40,7 @@ const availabilityMaybe = config.enableAvailability ? [AVAILABILITY] : [];
 // If you want to add a free text field to your listings you can enable the POLICY tab
 export const TABS = [
   BIO,
-  FEATURES,
+  EXPERIENCE,
   //POLICY,
   LOCATION,
   PRICING,
@@ -58,8 +58,8 @@ const tabLabel = (intl, tab) => {
   let key = null;
   if (tab === BIO) {
     key = 'EditListingWizard.tabLabelBio';
-  } else if (tab === FEATURES) {
-    key = 'EditListingWizard.tabLabelFeatures';
+  } else if (tab === EXPERIENCE) {
+    key = 'EditListingWizard.tabLabelExperience';
   } else if (tab === POLICY) {
     key = 'EditListingWizard.tabLabelPolicy';
   } else if (tab === LOCATION) {
@@ -94,13 +94,12 @@ const tabCompleted = (tab, listing) => {
   } = listing.attributes;
   const images = listing.images;
 
-  console.log(publicData);
-
   switch (tab) {
     case BIO:
       return !!(description && title);
-    case FEATURES:
-      return !!(publicData && publicData.yogaStyles);
+    // TODO: Update publicData to be verified
+    case EXPERIENCE:
+      return !!publicData;
     case POLICY:
       return !!(publicData && typeof publicData.rules !== 'undefined');
     case LOCATION:
