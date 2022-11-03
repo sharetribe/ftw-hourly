@@ -53,7 +53,17 @@ const EditListingPricingPanel = props => {
     <EditListingPricingForm
       className={css.form}
       initialValues={{ price }}
-      onSubmit={onSubmit}
+      onSubmit={values => {
+        const { minPrice, maxPrice } = values;
+
+        const updateValues = {
+          publicData: {
+            minPrice: minPrice.amount,
+            maxPrice: maxPrice.amount,
+          },
+        };
+        onSubmit(updateValues);
+      }}
       onChange={onChange}
       saveActionMsg={submitButtonText}
       disabled={disabled}

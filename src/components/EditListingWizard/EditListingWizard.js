@@ -94,6 +94,8 @@ const tabCompleted = (tab, listing) => {
   } = listing.attributes;
   const images = listing.images;
 
+  console.log(publicData);
+
   switch (tab) {
     case BIO:
       return !!(description && title);
@@ -102,7 +104,13 @@ const tabCompleted = (tab, listing) => {
     case POLICY:
       return !!(publicData && typeof publicData.rules !== 'undefined');
     case LOCATION:
-      return !!(geolocation && publicData && publicData.location && publicData.location.address);
+      return !!(
+        geolocation &&
+        publicData &&
+        publicData.location &&
+        publicData.location.address &&
+        publicData.travelDistance != undefined
+      );
     case PRICING:
       return !!price;
     case AVAILABILITY:

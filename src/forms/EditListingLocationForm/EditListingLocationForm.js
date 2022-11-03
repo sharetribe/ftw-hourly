@@ -57,9 +57,6 @@ export const EditListingLocationFormComponent = props => (
       const distanceCountLabel = intl.formatMessage({
         id: 'EditListingLocationForm.distanceCountLabel',
       });
-      const distanceStartingCount = intl.formatMessage({
-        id: 'EditListingLocationForm.distanceStartingCount',
-      });
 
       const { updateListingError, showListingsError } = fetchErrors || {};
       const errorMessage = updateListingError ? (
@@ -106,7 +103,6 @@ export const EditListingLocationFormComponent = props => (
             name="travelDistance"
             startingCount={values.travelDistance}
             countLabel={distanceCountLabel}
-            valueFromForm={values.travelDistance}
             label={distanceLabel}
           />
           <Button

@@ -9,7 +9,7 @@ import { LINE_ITEM_NIGHT, LINE_ITEM_DAY, propTypes } from '../../util/types';
 import * as validators from '../../util/validators';
 import { formatMoney } from '../../util/currency';
 import { types as sdkTypes } from '../../util/sdkLoader';
-import { Button, Form, FieldCurrencyInput } from '../../components';
+import { Button, Form, FieldCurrencyInput, FieldRangeSlider } from '../../components';
 import css from './EditListingPricingForm.module.css';
 
 const { Money } = sdkTypes;
@@ -24,6 +24,7 @@ export const EditListingPricingFormComponent = props => (
         ready,
         handleSubmit,
         intl,
+        formId,
         invalid,
         pristine,
         saveActionMsg,
@@ -32,27 +33,25 @@ export const EditListingPricingFormComponent = props => (
         fetchErrors,
       } = formRenderProps;
 
-      const unitType = config.bookingUnitType;
-      const isNightly = unitType === LINE_ITEM_NIGHT;
-      const isDaily = unitType === LINE_ITEM_DAY;
-
-      const translationKey = isNightly
-        ? 'EditListingPricingForm.pricePerNight'
-        : isDaily
-        ? 'EditListingPricingForm.pricePerDay'
-        : 'EditListingPricingForm.pricePerUnit';
-
-      const pricePerUnitMessage = intl.formatMessage({
-        id: translationKey,
+      const maximumPricePerUnitMessage = intl.formatMessage({
+        id: 'EditListingPricingForm.maximumPricePerUnit',
+      });
+      const minimumPricePerUnitMessage = intl.formatMessage({
+        id: 'EditListingPricingForm.minimumPricePerUnit',
       });
 
-      const pricePlaceholderMessage = intl.formatMessage({
-        id: 'EditListingPricingForm.priceInputPlaceholder',
+      // Minimum price
+      const minimumPricePlaceholderMessage = intl.formatMessage({
+        id: 'EditListingPricingForm.minimumPriceInputPlaceholder',
       });
-
-      const priceRequired = validators.required(
+      const maxPriceRequired = validators.required(
         intl.formatMessage({
-          id: 'EditListingPricingForm.priceRequired',
+          id: 'EditListingPricingForm.maximumPriceRequired',
+        })
+      );
+      const minimumPriceRequired = validators.required(
+        intl.formatMessage({
+          id: 'EditListingPricingForm.minimumPriceRequired',
         })
       );
       const minPrice = new Money(config.listingMinimumPriceSubUnits, config.currency);
@@ -67,9 +66,14 @@ export const EditListingPricingFormComponent = props => (
         ),
         config.listingMinimumPriceSubUnits
       );
-      const priceValidators = config.listingMinimumPriceSubUnits
-        ? validators.composeValidators(priceRequired, minPriceRequired)
-        : priceRequired;
+      const minimumPriceValidators = config.listingMinimumPriceSubUnits
+        ? validators.composeValidators(minimumPriceRequired, minPriceRequired)
+        : minimumPriceRequired;
+
+      //Maximum Price
+      const maximumPricePlaceholderMessage = intl.formatMessage({
+        id: 'EditListingPricingForm.maximumPriceInputPlaceholder',
+      });
 
       const classes = classNames(css.root, className);
       const submitReady = (updated && pristine) || ready;
@@ -89,15 +93,34 @@ export const EditListingPricingFormComponent = props => (
               <FormattedMessage id="EditListingPricingForm.showListingFailed" />
             </p>
           ) : null}
-          <FieldCurrencyInput
-            id="price"
-            name="price"
-            className={css.priceInput}
-            autoFocus
-            label={pricePerUnitMessage}
-            placeholder={pricePlaceholderMessage}
-            currencyConfig={config.currencyConfig}
-            validate={priceValidators}
+          <div className={css.currencyFieldContainer}>
+            <FieldCurrencyInput
+              id={formId ? `${formId}.minPrice` : 'minPrice'}
+              name="minPrice"
+              className={css.priceInput}
+              label={minimumPricePerUnitMessage}
+              placeholder={minimumPricePlaceholderMessage}
+              currencyConfig={config.currencyConfig}
+              validate={minimumPriceValidators}
+            />
+            <FieldCurrencyInput
+              id={formId ? `${formId}.maxPrice` : 'maxPrice'}
+              name="maxPrice"
+              className={css.priceInput}
+              label={maximumPricePerUnitMessage}
+              placeholder={maximumPricePlaceholderMessage}
+              currencyConfig={config.currencyConfig}
+              validate={maxPriceRequired}
+            />
+          </div>
+          <FieldRangeSlider
+            id="priceRange"
+            name="priceRange"
+            className={css.priceRange}
+            min={10}
+            max={50}
+            step={1}
+            handles={[20, 30]}
           />
 
           <Button

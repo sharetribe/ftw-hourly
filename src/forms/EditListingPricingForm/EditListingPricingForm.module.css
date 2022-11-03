@@ -20,7 +20,8 @@
 
 .priceInput {
   flex-shrink: 0;
-  width: 100%;
+  width: 35%;
+  margin-inline: 5rem;
 }
 
 .submitButton {
@@ -32,4 +33,14 @@
     width: 241px;
     margin-top: 100px;
   }
+}
+
+.currencyFieldContainer {
+  display: flex;
+  justify-content: space-evenly;
+  max-width: 75%;
+}
+
+.priceRange {
+  margin-top: 3rem;
 }

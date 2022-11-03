@@ -81,7 +81,7 @@ class AddSubtractComponent extends Component {
           <Button type="button" onClick={subtract} className={css.button}>
             -
           </Button>
-          <div class={css.count}>
+          <div className={css.count}>
             <div {...spanProps}>{this.state.currentCount}</div>
             <div className={css.counter}>{countLabel}</div>
           </div>
