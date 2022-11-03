@@ -29,6 +29,7 @@ const EditListingFeaturesFormComponent = props => (
         updateInProgress,
         fetchErrors,
         filterConfig,
+        label,
       } = formRenderProps;
 
       const classes = classNames(rootClassName || css.root, className);
@@ -49,13 +50,19 @@ const EditListingFeaturesFormComponent = props => (
         </p>
       ) : null;
 
-      const options = findOptionsForSelectFilter('yogaStyles', filterConfig);
+      const options = findOptionsForSelectFilter(name, filterConfig);
       return (
         <Form className={classes} onSubmit={handleSubmit}>
           {errorMessage}
           {errorMessageShowListing}
 
-          <FieldCheckboxGroup className={css.features} id={name} name={name} options={options} />
+          <FieldCheckboxGroup
+            className={css.features}
+            id={name}
+            name={name}
+            options={options}
+            label={label}
+          />
 
           <Button
             className={css.submitButton}
@@ -77,6 +84,7 @@ EditListingFeaturesFormComponent.defaultProps = {
   className: null,
   fetchErrors: null,
   filterConfig: config.custom.filters,
+  label: null,
 };
 
 EditListingFeaturesFormComponent.propTypes = {
@@ -94,6 +102,7 @@ EditListingFeaturesFormComponent.propTypes = {
     updateListingError: propTypes.error,
   }),
   filterConfig: propTypes.filterConfig,
+  label: propTypes.string,
 };
 
 const EditListingFeaturesForm = EditListingFeaturesFormComponent;

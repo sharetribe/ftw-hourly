@@ -92,11 +92,11 @@ export const filters = [
     config: {},
   },
   {
-    id: 'yogaStyles',
-    label: 'Yoga styles',
+    id: 'careTypes',
+    label: 'Care Types',
     type: 'SelectMultipleFilter',
     group: 'secondary',
-    queryParamNames: ['pub_yogaStyles'],
+    queryParamNames: ['pub_careTypes'],
     config: {
       // Optional modes: 'has_all', 'has_any'
       // https://www.sharetribe.com/api-reference/marketplace.html#extended-data-filtering
@@ -107,12 +107,12 @@ export const filters = [
       // Note: label is not added through the translation files
       // to make filter customizations a bit easier.
       options: [
-        { key: 'ashtanga', label: 'Ashtanga' },
-        { key: 'hatha', label: 'Hatha' },
-        { key: 'kundalini', label: 'Kundalini' },
-        { key: 'restorative', label: 'Restorative' },
-        { key: 'vinyasa', label: 'Vinyasa' },
-        { key: 'yin', label: 'Yin' },
+        { key: 'householdTasks', label: 'Household tasks' },
+        { key: 'personalCare', label: 'Personal care' },
+        { key: 'companionship', label: 'Companionship' },
+        { key: 'transportation', label: 'Transportation' },
+        { key: 'specializedCare', label: 'Specialized care' },
+        { key: 'mobilityAssistance', label: 'Mobility assistance' },
       ],
     },
   },

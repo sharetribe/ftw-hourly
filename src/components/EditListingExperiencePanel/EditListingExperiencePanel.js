@@ -8,7 +8,7 @@ import { FormattedMessage } from '../../util/reactIntl';
 import { LISTING_STATE_DRAFT } from '../../util/types';
 import { ensureListing } from '../../util/data';
 import {
-  EditListingCareTypeForm,
+  EditListingFeaturesForm,
   EditListingExperienceLevelForm,
   EditListingAdditionalDetailsForm,
 } from '../../forms';
@@ -29,21 +29,24 @@ export const CARE_TYPE = 'care-type';
 export const EXPERIENCE_LEVEL = 'experience-level';
 export const ADDITIONAL_DETAILS = 'additional-details';
 
+const FEATURES_NAME = 'careTypes';
+
 const EditListingExperiencePanel = props => {
   const {
     rootClassName,
     className,
     listing,
+    history,
     isNewListingFlow,
     disabled,
     ready,
     onSubmit,
     onChange,
-    submitButtonText,
     panelUpdated,
     updateInProgress,
     errors,
     intl,
+    onChangeQueryParam,
   } = props;
 
   const parsed = queryString.parse(location.search);
@@ -69,33 +72,47 @@ const EditListingExperiencePanel = props => {
     <FormattedMessage id="EditListingExperiencePanel.createListingTitle" />
   );
 
+  const careTypes = publicData && publicData.careTypes;
+  const initialValues = { careTypes };
+
+  const featuresLabel = intl.formatMessage({
+    id: 'EditListingExperiencePanel.featuresFormLabel',
+  });
+
   const formProps = {
     className: css.form,
     onChange,
     disabled,
+    initialValues,
     ready,
     updated: panelUpdated,
     updateInProgress,
     fetchErrors: errors,
   };
 
-  //TODO: Edit for attributes
-  // const yogaStyles = publicData && publicData.yogaStyles;
-  // const initialValues = { yogaStyles };
-
   switch (form) {
     case CARE_TYPE: {
-      const submitButtonTranslationKey = isNewListingFlow
-        ? 'EditListingWizard.saveNewDescription'
-        : 'EditListingWizard.saveEditDescription';
+      const submitButtonTranslationKey = 'EditListingExperiencePanel.featuresNextButton';
       const mess = intl.formatMessage({ id: submitButtonTranslationKey });
       return (
         <div className={classes}>
           <h1 className={css.title}>{panelTitle}</h1>
-          <EditListingCareTypeForm
+          <EditListingFeaturesForm
             {...formProps}
             saveActionMsg={mess}
-            onSubmit={() => console.log('submit')}
+            onSubmit={values => {
+              const { careTypes = [] } = values;
+
+              const updatedValues = {
+                publicData: { careTypes },
+              };
+              onSubmit(updatedValues);
+
+              const nextQuery = { form: 'experience-level' };
+              onChangeQueryParam(nextQuery);
+            }}
+            name={FEATURES_NAME}
+            label={featuresLabel}
           />
         </div>
       );
@@ -105,11 +122,14 @@ const EditListingExperiencePanel = props => {
         ? 'EditListingWizard.saveNewExperience'
         : 'EditListingWizard.saveEditExperience';
       return (
-        <EditListingExperienceLevelForm
-          {...formProps}
-          submitButtonText={intl.formatMessage({ id: submitButtonTranslationKey })}
-          onSubmit={() => console.log('submit')}
-        />
+        <div className={classes}>
+          <h1 className={css.title}>{panelTitle}</h1>
+          <EditListingExperienceLevelForm
+            {...formProps}
+            submitButtonText={intl.formatMessage({ id: submitButtonTranslationKey })}
+            onSubmit={() => console.log('submit')}
+          />
+        </div>
       );
     }
     case ADDITIONAL_DETAILS: {
@@ -162,7 +182,7 @@ EditListingExperiencePanel.defaultProps = {
   listing: null,
 };
 
-const { bool, func, object, string } = PropTypes;
+const { bool, func, object, string, shape } = PropTypes;
 
 EditListingExperiencePanel.propTypes = {
   rootClassName: string,
@@ -180,6 +200,10 @@ EditListingExperiencePanel.propTypes = {
   updateInProgress: bool.isRequired,
   errors: object.isRequired,
   intl: intlShape.isRequired,
+  history: shape({
+    push: func.isRequired,
+    replace: func.isRequired,
+  }).isRequired,
 };
 
 export default EditListingExperiencePanel;

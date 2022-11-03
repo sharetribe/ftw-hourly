@@ -1,5 +1,6 @@
 import React from 'react';
 import { array, arrayOf, bool, func, object, oneOf, shape, string } from 'prop-types';
+import queryString from 'query-string';
 import { propTypes } from '../../util/types';
 import { intlShape } from '../../util/reactIntl';
 import routeConfiguration from '../../routeConfiguration';
@@ -115,6 +116,15 @@ const EditListingWizardTab = props => {
     history.push(to);
   };
 
+  const handleChangeQueryParam = query => {
+    const searchString = queryString.stringify(query);
+
+    history.push({
+      pathName: history.location.pathName,
+      search: searchString,
+    });
+  };
+
   const onCompleteEditListingWizardTab = (tab, updateValues, passThrownErrors = false) => {
     // Normalize images for API call
     const { images: updatedImages, ...otherValues } = updateValues;
@@ -198,6 +208,7 @@ const EditListingWizardTab = props => {
           onSubmit={values => {
             onCompleteEditListingWizardTab(tab, values);
           }}
+          onChangeQueryParam={handleChangeQueryParam}
         />
       );
     }
