@@ -12,7 +12,7 @@ class AddSubtractComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentCount: 0,
+      currentCount: null,
     };
   }
 
@@ -67,8 +67,6 @@ class AddSubtractComponent extends Component {
     const classes = classNames(rootClassName || css.root);
 
     const fieldClass = classNames(fieldClassName || css.fieldRoot);
-
-    console.log(startingCount);
 
     return (
       <div className={classes}>
