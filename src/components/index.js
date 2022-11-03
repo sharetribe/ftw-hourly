@@ -103,6 +103,7 @@ export { default as FieldRangeSlider } from './FieldRangeSlider/FieldRangeSlider
 export { default as FieldTimeZoneSelect } from './FieldTimeZoneSelect/FieldTimeZoneSelect';
 export { default as FieldBoolean } from './FieldBoolean/FieldBoolean';
 export { default as FieldCheckboxGroup } from './FieldCheckboxGroup/FieldCheckboxGroup';
+export { default as FieldRadioButtonGroup } from './FieldRadioButtonGroup/FieldRadioButtonGroup';
 export { default as FieldPhoneNumberInput } from './FieldPhoneNumberInput/FieldPhoneNumberInput';
 // Fields and inputs using old naming pattern
 export { default as LocationAutocompleteInput, LocationAutocompleteInputField } from './LocationAutocompleteInput/LocationAutocompleteInput';

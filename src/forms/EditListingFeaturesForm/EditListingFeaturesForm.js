@@ -7,7 +7,7 @@ import { FormattedMessage } from '../../util/reactIntl';
 import { findOptionsForSelectFilter } from '../../util/search';
 import { propTypes } from '../../util/types';
 import config from '../../config';
-import { Button, FieldCheckboxGroup, Form } from '../../components';
+import { Button, FieldCheckboxGroup, FieldRadioButtonGroup, Form } from '../../components';
 
 import css from './EditListingFeaturesForm.module.css';
 
@@ -57,14 +57,24 @@ const EditListingFeaturesFormComponent = props => (
           {errorMessage}
           {errorMessageShowListing}
 
-          <FieldCheckboxGroup
-            className={css.features}
-            id={name}
-            name={name}
-            options={options}
-            label={label}
-            singleSelect={singleSelect}
-          />
+          {!singleSelect && (
+            <FieldCheckboxGroup
+              className={css.features}
+              id={name}
+              name={name}
+              options={options}
+              label={label}
+            />
+          )}
+          {singleSelect && (
+            <FieldRadioButtonGroup
+              className={css.features}
+              id={name}
+              name={name}
+              options={options}
+              label={label}
+            />
+          )}
 
           <Button
             className={css.submitButton}
@@ -87,6 +97,7 @@ EditListingFeaturesFormComponent.defaultProps = {
   fetchErrors: null,
   filterConfig: config.custom.filters,
   label: null,
+  singleSelect: false,
 };
 
 EditListingFeaturesFormComponent.propTypes = {
@@ -105,6 +116,7 @@ EditListingFeaturesFormComponent.propTypes = {
   }),
   filterConfig: propTypes.filterConfig,
   label: string,
+  singleSelect: bool,
 };
 
 const EditListingFeaturesForm = EditListingFeaturesFormComponent;

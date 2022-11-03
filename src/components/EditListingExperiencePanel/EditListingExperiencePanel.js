@@ -17,7 +17,7 @@ export const EXPERIENCE_LEVEL = 'experience-level';
 export const ADDITIONAL_DETAILS = 'additional-details';
 
 const CARE_TYPE_FEATURES_NAME = 'careTypes';
-const EXPERIENCE_LEVEL_FEATURES_NAME = 'experienceLevels';
+const EXPERIENCE_LEVEL_FEATURES_NAME = 'experienceLevel';
 
 const EditListingExperiencePanel = props => {
   const {

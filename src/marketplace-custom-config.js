@@ -117,8 +117,8 @@ export const filters = [
     },
   },
   {
-    id: 'experienceLevels',
-    label: 'Experience Levels',
+    id: 'experienceLevel',
+    label: 'Experience Level',
     type: 'SelectSingleFilter',
     group: 'secondary',
     queryParamNames: ['pub_experienceLevel'],

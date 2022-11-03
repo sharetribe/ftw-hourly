@@ -11,15 +11,26 @@ import React, { useState } from 'react';
 import { arrayOf, bool, node, shape, string } from 'prop-types';
 import classNames from 'classnames';
 import { FieldArray } from 'react-final-form-arrays';
-import { FieldCheckbox, ValidationError } from '../../components';
+import { FieldRadioButton, ValidationError } from '..';
 
-import css from './FieldCheckboxGroup.module.css';
+import css from './FieldRadioButtonGroup.module.css';
 
-const FieldCheckboxRenderer = props => {
-  const { className, rootClassName, label, twoColumns, id, fields, options, meta } = props;
+const FieldRadioButtonRenderer = props => {
+  const {
+    className,
+    rootClassName,
+    label,
+    twoColumns,
+    id,
+    fields,
+    options,
+    singleSelect,
+    meta,
+  } = props;
 
   const classes = classNames(rootClassName || css.root, className);
   const listClasses = twoColumns ? classNames(css.list, css.twoColumns) : css.list;
+  ``;
 
   return (
     <fieldset className={classes}>
@@ -29,11 +40,12 @@ const FieldCheckboxRenderer = props => {
           const fieldId = `${id}.${option.key}`;
           return (
             <li key={fieldId} className={css.item}>
-              <FieldCheckbox
-                id={fieldId}
+              <FieldRadioButton
+                id={fieldId.concat(index)}
                 name={fields.name}
                 label={option.label}
                 value={option.key}
+                showAsRequired={false}
               />
             </li>
           );
@@ -44,14 +56,14 @@ const FieldCheckboxRenderer = props => {
   );
 };
 
-FieldCheckboxRenderer.defaultProps = {
+FieldRadioButton.defaultProps = {
   rootClassName: null,
   className: null,
   label: null,
   twoColumns: false,
 };
 
-FieldCheckboxRenderer.propTypes = {
+FieldRadioButton.propTypes = {
   rootClassName: string,
   className: string,
   id: string.isRequired,
@@ -65,12 +77,14 @@ FieldCheckboxRenderer.propTypes = {
   twoColumns: bool,
 };
 
-const FieldCheckboxGroup = props => <FieldArray component={FieldCheckboxRenderer} {...props} />;
+const FieldRadioButtonGroup = props => (
+  <FieldArray component={FieldRadioButtonRenderer} {...props} />
+);
 
 // Name and component are required fields for FieldArray.
 // Component-prop we define in this file, name needs to be passed in
-FieldCheckboxGroup.propTypes = {
+FieldRadioButtonGroup.propTypes = {
   name: string.isRequired,
 };
 
-export default FieldCheckboxGroup;
+export default FieldRadioButtonGroup;
