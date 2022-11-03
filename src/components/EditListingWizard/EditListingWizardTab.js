@@ -164,7 +164,9 @@ const EditListingWizardTab = props => {
       onChange,
       panelUpdated: updatedTab === tab,
       updateInProgress,
+      isNewListingFlow,
       onManageDisableScrolling,
+      intl,
       // newListingPublished and fetchInProgress are flags for the last wizard tab
       ready: newListingPublished,
       disabled: fetchInProgress,

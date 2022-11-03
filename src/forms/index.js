@@ -5,6 +5,7 @@ export { default as EditListingAvailabilityPlanForm } from './EditListingAvailab
 export { default as ConfirmSignupForm } from './ConfirmSignupForm/ConfirmSignupForm';
 export { default as EditListingBioForm } from './EditListingBioForm/EditListingBioForm';
 export { default as EditListingFeaturesForm } from './EditListingFeaturesForm/EditListingFeaturesForm';
+export { default as EditListingCareTypeForm } from './EditListingCareTypeForm/EditListingCareTypeForm';
 export { default as EditListingLocationForm } from './EditListingLocationForm/EditListingLocationForm';
 export { default as EditListingPhotosForm } from './EditListingPhotosForm/EditListingPhotosForm';
 export { default as EditListingPoliciesForm } from './EditListingPoliciesForm/EditListingPoliciesForm';

@@ -1,8 +1,8 @@
 /* eslint-disable no-console */
-import EditListingExperienceForm from './EditListingExperienceForm';
+import EditListingCareTypeForm from './EditListingCareTypeForm';
 
 export const Empty = {
-  component: EditListingExperienceForm,
+  component: EditListingCareTypeForm,
   props: {
     onSubmit: values => {
       console.log('Submit EditListingDescriptionForm with (unformatted) values:', values);
