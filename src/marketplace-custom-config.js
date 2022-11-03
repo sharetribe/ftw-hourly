@@ -138,6 +138,73 @@ export const filters = [
     },
   },
   {
+    id: 'certificationsAndTraining',
+    label: 'Certifications and Training',
+    type: 'SelectMultipleFilter',
+    group: 'secondary',
+    queryParamNames: ['pub_certificationsAndTraining'],
+    config: {
+      // Optional modes: 'has_all', 'has_any'
+      // https://www.sharetribe.com/api-reference/marketplace.html#extended-data-filtering
+      searchMode: 'has_any',
+
+      // "key" is the option you see in Flex Console.
+      // "label" is set here for this web app's UI only.
+      // Note: label is not added through the translation files
+      // to make filter customizations a bit easier.
+      options: [
+        { key: 'hha', label: 'Home Health Aide or Equivalent' },
+        { key: 'cna', label: 'Certified Nursing Assistant' },
+        { key: 'rn', label: 'Registered Nurse' },
+        { key: 'cpr', label: 'CPR Training' },
+      ],
+    },
+  },
+  {
+    id: 'additionalInfo',
+    label: 'Additional Information',
+    type: 'SelectMultipleFilter',
+    group: 'secondary',
+    queryParamNames: ['pub_additionalInfo'],
+    config: {
+      // Optional modes: 'has_all', 'has_any'
+      // https://www.sharetribe.com/api-reference/marketplace.html#extended-data-filtering
+      searchMode: 'has_all',
+
+      // "key" is the option you see in Flex Console.
+      // "label" is set here for this web app's UI only.
+      // Note: label is not added through the translation files
+      // to make filter customizations a bit easier.
+      options: [
+        { key: 'nonSmoker', label: 'Non-smoker' },
+        { key: 'hasCar', label: 'Have a car' },
+        { key: 'comfortableWithPets', label: 'Comfortable with pets' },
+        { key: 'collegeDegree', label: 'Have a college degree' },
+      ],
+    },
+  },
+  {
+    id: 'languagesSpoken',
+    label: 'Languages Spoken',
+    type: 'SelectMultipleFilter',
+    group: 'secondary',
+    queryParamNames: ['pub_languagesSpoken'],
+    config: {
+      // Optional modes: 'has_all', 'has_any'
+      // https://www.sharetribe.com/api-reference/marketplace.html#extended-data-filtering
+      searchMode: 'has_all',
+
+      // "key" is the option you see in Flex Console.
+      // "label" is set here for this web app's UI only.
+      // Note: label is not added through the translation files
+      // to make filter customizations a bit easier.
+      options: [
+        { key: 'english', label: 'English' },
+        { key: 'spanish', label: 'Spanish' },
+      ],
+    },
+  },
+  {
     id: 'experienceLevel',
     label: 'Experience Level',
     type: 'SelectSingleFilter',
@@ -154,6 +221,23 @@ export const filters = [
         { key: 'proficient', label: '5-9 years' },
         { key: 'expert', label: '10+ years' },
         { key: 'beginner', label: 'I am seeking my first senior care job' },
+      ],
+    },
+  },
+  {
+    id: 'covidVaccination',
+    label: 'Covid Vaccination',
+    type: 'SelectSingleFilter',
+    group: 'secondary',
+    queryParamNames: ['pub_covidVaccination'],
+    config: {
+      // "key" is the option you see in Flex Console.
+      // "label" is set here for this web app's UI only.
+      // Note: label is not added through the translation files
+      // to make filter customizations a bit easier.
+      options: [
+        { key: 'yes', label: 'Yes' },
+        { key: 'no', label: 'No' },
       ],
     },
   },

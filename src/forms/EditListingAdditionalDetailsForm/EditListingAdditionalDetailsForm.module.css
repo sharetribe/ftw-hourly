@@ -25,6 +25,10 @@
   }
 }
 
+.languagesRadio {
+  margin-bottom: 12px;
+}
+
 .error {
   color: var(--failColor);
 }
@@ -37,8 +41,9 @@
   }
 }
 
-.title {
+.additionalLanguages {
   composes: formMargins;
+  padding-top: 0rem;
 }
 
 .description {

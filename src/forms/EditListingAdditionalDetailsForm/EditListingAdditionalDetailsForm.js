@@ -8,7 +8,13 @@ import classNames from 'classnames';
 import { propTypes } from '../../util/types';
 import { minLength, maxLength, required, composeValidators } from '../../util/validators';
 import config from '../../config';
-import { Form, Button, FieldCheckboxGroup } from '../../components';
+import {
+  Form,
+  Button,
+  FieldCheckboxGroup,
+  FieldRadioButtonGroup,
+  FieldTextInput,
+} from '../../components';
 import { findOptionsForSelectFilter } from '../../util/search';
 
 import css from './EditListingAdditionalDetailsForm.module.css';
@@ -40,6 +46,54 @@ const EditListingAdditionalDetailsFormComponent = props => (
       const experienceWithOptions = findOptionsForSelectFilter(experienceWithName, filterConfig);
       const experienceWithLabel = intl.formatMessage({
         id: 'EditListingAdditionalDetailsForm.experienceWithLabel',
+      });
+
+      // Certifications and Training
+      const certificationsName = intl.formatMessage({
+        id: 'EditListingAdditionalDetailsForm.certificationsName',
+      });
+      const certificationsOptions = findOptionsForSelectFilter(certificationsName, filterConfig);
+      const certificationsLabel = intl.formatMessage({
+        id: 'EditListingAdditionalDetailsForm.certificationsLabel',
+      });
+
+      // Additional Information
+      const additionalInfoName = intl.formatMessage({
+        id: 'EditListingAdditionalDetailsForm.additionalInfoName',
+      });
+      const additionalInfoOptions = findOptionsForSelectFilter(additionalInfoName, filterConfig);
+      const additionalInfoLabel = intl.formatMessage({
+        id: 'EditListingAdditionalDetailsForm.additionalInfoLabel',
+      });
+
+      // Covid Vaccination
+      const covidVaccinationName = intl.formatMessage({
+        id: 'EditListingAdditionalDetailsForm.covidVaccinationName',
+      });
+      const covidVaccinationOptions = findOptionsForSelectFilter(
+        covidVaccinationName,
+        filterConfig
+      );
+      const covidVaccinationLabel = intl.formatMessage({
+        id: 'EditListingAdditionalDetailsForm.covidVaccinationLabel',
+      });
+
+      // Languages Spoken
+      const languagesSpokenRadioName = intl.formatMessage({
+        id: 'EditListingAdditionalDetailsForm.languagesSpokenRadioName',
+      });
+      const languagesSpokenRadioOptions = findOptionsForSelectFilter(
+        languagesSpokenRadioName,
+        filterConfig
+      );
+      const languagesSpokenRadioLabel = intl.formatMessage({
+        id: 'EditListingAdditionalDetailsForm.languagesSpokenRadioLabel',
+      });
+      const languagesSpokenTextName = intl.formatMessage({
+        id: 'EditListingAdditionalDetailsForm.languagesSpokenRadioName',
+      });
+      const languagesSpokenTextPlaceholder = intl.formatMessage({
+        id: 'EditListingAdditionalDetailsForm.languagesSpokenTextPlaceholder',
       });
 
       const { updateListingError, createListingDraftError, showListingsError } = fetchErrors || {};
@@ -91,6 +145,45 @@ const EditListingAdditionalDetailsFormComponent = props => (
             options={experienceWithOptions}
             label={experienceWithLabel}
           />
+          <FieldCheckboxGroup
+            className={css.features}
+            id={certificationsName}
+            name={certificationsName}
+            options={certificationsOptions}
+            label={certificationsLabel}
+          />
+          <FieldCheckboxGroup
+            className={css.features}
+            id={additionalInfoName}
+            name={additionalInfoName}
+            options={additionalInfoOptions}
+            label={additionalInfoLabel}
+          />
+          <FieldRadioButtonGroup
+            className={css.features}
+            id={covidVaccinationName}
+            name={covidVaccinationName}
+            options={covidVaccinationOptions}
+            label={covidVaccinationLabel}
+          />
+
+          <div>
+            <FieldCheckboxGroup
+              className={css.features && css.languagesRadio}
+              id={languagesSpokenRadioName}
+              name={languagesSpokenRadioName}
+              options={languagesSpokenRadioOptions}
+              label={languagesSpokenRadioLabel}
+            />
+            {/* {May need to add custom onChange to this to integrate with languagesSpoken} */}
+            <FieldTextInput
+              id={languagesSpokenTextName}
+              name={languagesSpokenTextName}
+              className={css.additionalLanguages}
+              type="text"
+              placeholder={languagesSpokenTextPlaceholder}
+            />
+          </div>
 
           <Button
             className={css.submitButton}
