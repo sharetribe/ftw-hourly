@@ -41,6 +41,7 @@ export const NamedLinkComponent = props => {
   const pathname = pathByRouteName(name, routes, params);
   const { match } = props;
   const active = match.url && match.url === pathname;
+  const search = params.search;
 
   // <a> element props
   const { className, style, activeClassName } = props;
@@ -51,7 +52,12 @@ export const NamedLinkComponent = props => {
   };
 
   return (
-    <Link onMouseOver={onOver} onTouchStart={onOver} to={{ pathname, ...to }} {...aElemProps}>
+    <Link
+      onMouseOver={onOver}
+      onTouchStart={onOver}
+      to={{ pathname, ...to, search }}
+      {...aElemProps}
+    >
       {children}
     </Link>
   );

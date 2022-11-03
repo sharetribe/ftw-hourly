@@ -1,12 +1,12 @@
 import React from 'react';
 import { FieldSelect } from '../../components';
 
-import css from './EditListingCareTypeForm.module.css';
+import css from './EditListingAdditionalDetailsForm.module.css';
 
 const CustomCertificateSelectFieldMaybe = props => {
   const { name, id, certificateOptions, intl } = props;
   const certificateLabel = intl.formatMessage({
-    id: 'EditListingCareTypeForm.certificateLabel',
+    id: 'EditListingAdditionalDetailsForm.certificateLabel',
   });
 
   return certificateOptions ? (

@@ -97,8 +97,7 @@ const EditListingWizardTab = props => {
       const draftURI = createResourceLocatorString(
         pageName || 'EditListingPage',
         routes,
-        currentPathParams,
-        {}
+        currentPathParams
       );
       console.log(draftURI);
       history.replace(draftURI);

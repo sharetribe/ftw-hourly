@@ -327,7 +327,11 @@ class EditListingWizard extends Component {
     }
 
     const tabLink = tab => {
-      return { name: pageName || 'EditListingPage', params: { ...params, tab } };
+      let search = '';
+      if (tab === 'experience') {
+        search = '?form=care-type';
+      }
+      return { name: pageName || 'EditListingPage', params: { ...params, tab, search } };
     };
 
     const setPortalRootAfterInitialRender = () => {

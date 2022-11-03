@@ -7,7 +7,11 @@ import { FormattedMessage } from '../../util/reactIntl';
 
 import { LISTING_STATE_DRAFT } from '../../util/types';
 import { ensureListing } from '../../util/data';
-import { EditListingCareTypeForm } from '../../forms';
+import {
+  EditListingCareTypeForm,
+  EditListingExperienceLevelForm,
+  EditListingAdditionalDetailsForm,
+} from '../../forms';
 import { ListingLink } from '..';
 
 import css from './EditListingExperiencePanel.module.css';
@@ -22,12 +26,8 @@ const pathParamsToNextForm = (params, form, experienceForms) => {
 };
 
 export const CARE_TYPE = 'care-type';
-export const BIO = 'bio';
-export const EXPERIENCE = 'experience';
-export const POLICY = 'policy';
-export const LOCATION = 'location';
-export const PRICING = 'pricing';
-export const PHOTOS = 'photos';
+export const EXPERIENCE_LEVEL = 'experience-level';
+export const ADDITIONAL_DETAILS = 'additional-details';
 
 const EditListingExperiencePanel = props => {
   const {
@@ -100,82 +100,28 @@ const EditListingExperiencePanel = props => {
         </div>
       );
     }
-    case EXPERIENCE: {
+    case EXPERIENCE_LEVEL: {
       const submitButtonTranslationKey = isNewListingFlow
         ? 'EditListingWizard.saveNewExperience'
         : 'EditListingWizard.saveEditExperience';
       return (
-        <EditListingExperiencePanel
+        <EditListingExperienceLevelForm
           {...formProps}
           submitButtonText={intl.formatMessage({ id: submitButtonTranslationKey })}
-          onSubmit={values => {
-            onCompleteEditListingWizardTab(tab, values);
-          }}
+          onSubmit={() => console.log('submit')}
         />
       );
     }
-    case POLICY: {
+    case ADDITIONAL_DETAILS: {
       const submitButtonTranslationKey = isNewListingFlow
         ? 'EditListingWizard.saveNewPolicies'
         : 'EditListingWizard.saveEditPolicies';
       return (
-        <EditListingPoliciesPanel
+        <EditListingAdditionalDetailsForm
           {...formProps}
           submitButtonText={intl.formatMessage({ id: submitButtonTranslationKey })}
-          onSubmit={values => {
-            onCompleteEditListingWizardTab(tab, values);
-          }}
+          onSubmit={() => console.log('submit')}
         />
-      );
-    }
-    case LOCATION: {
-      const submitButtonTranslationKey = isNewListingFlow
-        ? 'EditListingWizard.saveNewLocation'
-        : 'EditListingWizard.saveEditLocation';
-      return (
-        <EditListingLocationPanel
-          {...formProps}
-          submitButtonText={intl.formatMessage({ id: submitButtonTranslationKey })}
-          onSubmit={values => {
-            onCompleteEditListingWizardTab(tab, values);
-          }}
-        />
-      );
-    }
-    case PRICING: {
-      const submitButtonTranslationKey = isNewListingFlow
-        ? 'EditListingWizard.saveNewPricing'
-        : 'EditListingWizard.saveEditPricing';
-      return (
-        <EditListingPricingPanel
-          {...formProps}
-          submitButtonText={intl.formatMessage({ id: submitButtonTranslationKey })}
-          onSubmit={values => {
-            onCompleteEditListingWizardTab(tab, values);
-          }}
-        />
-      );
-    }
-    case PHOTOS: {
-      const submitButtonTranslationKey = isNewListingFlow
-        ? 'EditListingWizard.saveNewPhotos'
-        : 'EditListingWizard.saveEditPhotos';
-
-      return (
-        <div className={classes}>
-          <h1 className={css.title}>{panelTitle}</h1>
-          <EditListingPhotosPanel
-            {...formProps}
-            submitButtonText={intl.formatMessage({ id: submitButtonTranslationKey })}
-            images={images}
-            onImageUpload={onImageUpload}
-            onRemoveImage={onRemoveImage}
-            onSubmit={values => {
-              onCompleteEditListingWizardTab(tab, values);
-            }}
-            onUpdateImageOrder={onUpdateImageOrder}
-          />
-        </div>
       );
     }
     default:

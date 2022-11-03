@@ -7,14 +7,15 @@ import classNames from 'classnames';
 import { propTypes } from '../../util/types';
 import { minLength, maxLength, required, composeValidators } from '../../util/validators';
 import { Form, Button, FieldTextInput } from '../../components';
+import CustomCertificateSelectFieldMaybe from './CustomCertificateSelectFieldMaybe';
 
-import css from './EditListingCareTypeForm.module.css';
+import css from './EditListingAdditionalDetailsForm.module.css';
 
 const TITLE_MAX_LENGTH = 60;
 const DESCRIPTION_MIN_LENGTH = 100;
 const DESCRIPTION_MAX_LENGTH = 700;
 
-const EditListingCareTypeFormComponent = props => (
+const EditListingAdditionalDetailsFormComponent = props => (
   <FinalForm
     {...props}
     render={formRenderProps => {
@@ -33,15 +34,15 @@ const EditListingCareTypeFormComponent = props => (
         fetchErrors,
       } = formRenderProps;
 
-      const titleMessage = intl.formatMessage({ id: 'EditListingCareTypeForm.title' });
+      const titleMessage = intl.formatMessage({ id: 'EditListingAdditionalDetailsForm.title' });
       const titlePlaceholderMessage = intl.formatMessage({
-        id: 'EditListingCareTypeForm.titlePlaceholder',
+        id: 'EditListingAdditionalDetailsForm.titlePlaceholder',
       });
       const titleRequiredMessage = intl.formatMessage({
-        id: 'EditListingCareTypeForm.titleRequired',
+        id: 'EditListingAdditionalDetailsForm.titleRequired',
       });
       const maxLengthTitleMessage = intl.formatMessage(
-        { id: 'EditListingCareTypeForm.maxLength' },
+        { id: 'EditListingAdditionalDetailsForm.maxLength' },
         {
           maxLength: TITLE_MAX_LENGTH,
         }
@@ -49,16 +50,16 @@ const EditListingCareTypeFormComponent = props => (
       const maxLength60Message = maxLength(maxLengthTitleMessage, TITLE_MAX_LENGTH);
 
       const descriptionMessage = intl.formatMessage({
-        id: 'EditListingCareTypeForm.description',
+        id: 'EditListingAdditionalDetailsForm.description',
       });
       const descriptionPlaceholderMessage = intl.formatMessage({
-        id: 'EditListingCareTypeForm.descriptionPlaceholder',
+        id: 'EditListingAdditionalDetailsForm.descriptionPlaceholder',
       });
       const descriptionRequiredMessage = intl.formatMessage({
-        id: 'EditListingCareTypeForm.descriptionRequired',
+        id: 'EditListingAdditionalDetailsForm.descriptionRequired',
       });
       const lengthDescriptionMessage = intl.formatMessage(
-        { id: 'EditListingCareTypeForm.descriptionLength' },
+        { id: 'EditListingAdditionalDetailsForm.descriptionLength' },
         {
           maxLength: DESCRIPTION_MAX_LENGTH,
           minLength: DESCRIPTION_MIN_LENGTH,
@@ -70,20 +71,20 @@ const EditListingCareTypeFormComponent = props => (
       const { updateListingError, createListingDraftError, showListingsError } = fetchErrors || {};
       const errorMessageUpdateListing = updateListingError ? (
         <p className={css.error}>
-          <FormattedMessage id="EditListingCareTypeForm.updateFailed" />
+          <FormattedMessage id="EditListingAdditionalDetailsForm.updateFailed" />
         </p>
       ) : null;
 
       // This error happens only on first tab (of EditListingWizard)
       const errorMessageCreateListingDraft = createListingDraftError ? (
         <p className={css.error}>
-          <FormattedMessage id="EditListingCareTypeForm.createListingDraftError" />
+          <FormattedMessage id="EditListingAdditionalDetailsForm.createListingDraftError" />
         </p>
       ) : null;
 
       const errorMessageShowListing = showListingsError ? (
         <p className={css.error}>
-          <FormattedMessage id="EditListingCareTypeForm.showListingFailed" />
+          <FormattedMessage id="EditListingAdditionalDetailsForm.showListingFailed" />
         </p>
       ) : null;
 
@@ -139,9 +140,9 @@ const EditListingCareTypeFormComponent = props => (
   />
 );
 
-EditListingCareTypeFormComponent.defaultProps = { className: null, fetchErrors: null };
+EditListingAdditionalDetailsFormComponent.defaultProps = { className: null, fetchErrors: null };
 
-EditListingCareTypeFormComponent.propTypes = {
+EditListingAdditionalDetailsFormComponent.propTypes = {
   className: string,
   intl: intlShape.isRequired,
   onSubmit: func.isRequired,
@@ -163,4 +164,4 @@ EditListingCareTypeFormComponent.propTypes = {
   ),
 };
 
-export default compose(injectIntl)(EditListingCareTypeFormComponent);
+export default compose(injectIntl)(EditListingAdditionalDetailsFormComponent);
