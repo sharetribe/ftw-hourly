@@ -81,7 +81,7 @@ const EditListingFeaturesFormComponent = props => (
             type="submit"
             inProgress={submitInProgress}
             disabled={submitDisabled}
-            ready={submitReady}
+            ready={false}
           >
             {saveActionMsg}
           </Button>

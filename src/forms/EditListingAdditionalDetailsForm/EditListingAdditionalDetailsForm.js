@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { arrayOf, bool, func, shape, string } from 'prop-types';
 import { compose } from 'redux';
 import { Form as FinalForm } from 'react-final-form';
@@ -89,12 +89,18 @@ const EditListingAdditionalDetailsFormComponent = props => (
       ) : null;
 
       const classes = classNames(css.root, className);
-      const submitReady = (updated && pristine) || ready;
       const submitInProgress = updateInProgress;
       const submitDisabled = invalid || disabled || submitInProgress;
 
+      const [submitReady, setSubmitReady] = useState(false);
+
+      const onSubmit = values => {
+        setSubmitReady(true);
+        handleSubmit(values);
+      };
+
       return (
-        <Form className={classes} onSubmit={handleSubmit}>
+        <Form className={classes} onSubmit={onSubmit}>
           {errorMessageCreateListingDraft}
           {errorMessageUpdateListing}
           {errorMessageShowListing}
@@ -140,7 +146,10 @@ const EditListingAdditionalDetailsFormComponent = props => (
   />
 );
 
-EditListingAdditionalDetailsFormComponent.defaultProps = { className: null, fetchErrors: null };
+EditListingAdditionalDetailsFormComponent.defaultProps = {
+  className: null,
+  fetchErrors: null,
+};
 
 EditListingAdditionalDetailsFormComponent.propTypes = {
   className: string,

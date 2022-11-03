@@ -139,11 +139,14 @@ const EditListingExperiencePanel = props => {
         ? 'EditListingWizard.saveNewPolicies'
         : 'EditListingWizard.saveEditPolicies';
       return (
-        <EditListingAdditionalDetailsForm
-          {...formProps}
-          submitButtonText={intl.formatMessage({ id: submitButtonTranslationKey })}
-          onSubmit={() => console.log('submit')}
-        />
+        <div className={classes}>
+          <h1 className={css.title}>{panelTitle}</h1>
+          <EditListingAdditionalDetailsForm
+            {...formProps}
+            submitButtonText={intl.formatMessage({ id: submitButtonTranslationKey })}
+            onSubmit={() => console.log('submit')}
+          />
+        </div>
       );
     }
     default:
