@@ -135,16 +135,22 @@ const EditListingExperiencePanel = props => {
       );
     }
     case ADDITIONAL_DETAILS: {
-      const submitButtonTranslationKey = isNewListingFlow
-        ? 'EditListingWizard.saveNewPolicies'
-        : 'EditListingWizard.saveEditPolicies';
+      const submitButtonTranslationKey = 'EditListingExperiencePanel.additionalDetailsNextButton';
+      const mess = intl.formatMessage({ id: submitButtonTranslationKey });
       return (
         <div className={classes}>
           <h1 className={css.title}>{panelTitle}</h1>
           <EditListingAdditionalDetailsForm
             {...formProps}
-            submitButtonText={intl.formatMessage({ id: submitButtonTranslationKey })}
-            onSubmit={() => console.log('submit')}
+            saveActionMsg={mess}
+            onSubmit={values => {
+              const { experienceWith } = values;
+
+              const updatedValues = {
+                publicData: { experienceWith },
+              };
+              onSubmit(updatedValues);
+            }}
           />
         </div>
       );

@@ -16,20 +16,10 @@ import { FieldRadioButton, ValidationError } from '..';
 import css from './FieldRadioButtonGroup.module.css';
 
 const FieldRadioButtonRenderer = props => {
-  const {
-    className,
-    rootClassName,
-    label,
-    twoColumns,
-    id,
-    fields,
-    options,
-    singleSelect,
-    meta,
-  } = props;
+  const { className, rootClassName, label, id, fields, options, meta } = props;
 
   const classes = classNames(rootClassName || css.root, className);
-  const listClasses = twoColumns ? classNames(css.list, css.twoColumns) : css.list;
+  const listClasses = css.list;
   ``;
 
   return (
@@ -60,7 +50,6 @@ FieldRadioButton.defaultProps = {
   rootClassName: null,
   className: null,
   label: null,
-  twoColumns: false,
 };
 
 FieldRadioButton.propTypes = {
@@ -74,7 +63,6 @@ FieldRadioButton.propTypes = {
       label: node.isRequired,
     })
   ).isRequired,
-  twoColumns: bool,
 };
 
 const FieldRadioButtonGroup = props => (
