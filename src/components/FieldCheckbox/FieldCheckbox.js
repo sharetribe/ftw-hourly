@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import { Field } from 'react-final-form';
 
 import css from './FieldCheckbox.module.css';
+import { info } from 'autoprefixer';
 
 const IconCheckbox = props => {
   const { className, checkedClassName, boxClassName } = props;
@@ -43,6 +44,10 @@ const FieldCheckboxComponent = props => {
     id,
     label,
     useSuccessColor,
+    onChecked,
+    checked,
+    index,
+    input,
     ...rest
   } = props;
 
@@ -52,6 +57,9 @@ const FieldCheckboxComponent = props => {
   // https://github.com/final-form/react-final-form/issues/134
   const handleOnChange = (input, event) => {
     const { onBlur, onChange } = input;
+    if (input.checked) {
+      onChecked(index);
+    }
     onChange(event);
     onBlur(event);
   };
@@ -73,7 +81,8 @@ const FieldCheckboxComponent = props => {
               id={id}
               className={css.input}
               {...input}
-              onChange={event => handleOnChange(input, event)}
+              checked={checked}
+              onClick={event => handleOnChange(input, event)}
             />
           );
         }}

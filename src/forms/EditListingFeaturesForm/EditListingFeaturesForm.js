@@ -30,6 +30,7 @@ const EditListingFeaturesFormComponent = props => (
         fetchErrors,
         filterConfig,
         label,
+        singleSelect,
       } = formRenderProps;
 
       const classes = classNames(rootClassName || css.root, className);
@@ -62,6 +63,7 @@ const EditListingFeaturesFormComponent = props => (
             name={name}
             options={options}
             label={label}
+            singleSelect={singleSelect}
           />
 
           <Button
@@ -102,7 +104,7 @@ EditListingFeaturesFormComponent.propTypes = {
     updateListingError: propTypes.error,
   }),
   filterConfig: propTypes.filterConfig,
-  label: propTypes.string,
+  label: string,
 };
 
 const EditListingFeaturesForm = EditListingFeaturesFormComponent;

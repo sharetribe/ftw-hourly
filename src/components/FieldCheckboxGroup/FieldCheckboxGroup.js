@@ -7,7 +7,7 @@
  *
  */
 
-import React from 'react';
+import React, { useState } from 'react';
 import { arrayOf, bool, node, shape, string } from 'prop-types';
 import classNames from 'classnames';
 import { FieldArray } from 'react-final-form-arrays';
@@ -16,10 +16,34 @@ import { FieldCheckbox, ValidationError } from '../../components';
 import css from './FieldCheckboxGroup.module.css';
 
 const FieldCheckboxRenderer = props => {
-  const { className, rootClassName, label, twoColumns, id, fields, options, meta } = props;
+  const {
+    className,
+    rootClassName,
+    label,
+    twoColumns,
+    id,
+    fields,
+    options,
+    singleSelect,
+    meta,
+  } = props;
 
   const classes = classNames(rootClassName || css.root, className);
   const listClasses = twoColumns ? classNames(css.list, css.twoColumns) : css.list;
+
+  const [checked, setChecked] = useState(Array(options.length).fill(false));
+
+  const handleChecked = index => {
+    if (singleSelect) {
+      const checkedTemp = Array(options.length).fill(false);
+      checkedTemp[index] = true;
+      setChecked(checkedTemp);
+    } else {
+      const checkedTemp = checked;
+      checkedTemp[index] = !checkedTemp[index];
+      setChecked(checkedTemp);
+    }
+  };
 
   return (
     <fieldset className={classes}>
@@ -34,6 +58,9 @@ const FieldCheckboxRenderer = props => {
                 name={fields.name}
                 label={option.label}
                 value={option.key}
+                onChecked={handleChecked}
+                checked={checked[index]}
+                index={index}
               />
             </li>
           );

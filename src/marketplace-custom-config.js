@@ -117,6 +117,26 @@ export const filters = [
     },
   },
   {
+    id: 'experienceLevels',
+    label: 'Experience Levels',
+    type: 'SelectSingleFilter',
+    group: 'secondary',
+    queryParamNames: ['pub_experienceLevel'],
+    config: {
+      // "key" is the option you see in Flex Console.
+      // "label" is set here for this web app's UI only.
+      // Note: label is not added through the translation files
+      // to make filter customizations a bit easier.
+      options: [
+        { key: 'novice', label: '1-2 years' },
+        { key: 'competent', label: '3-4 years' },
+        { key: 'proficient', label: '5-9 years' },
+        { key: 'expert', label: '10+ years' },
+        { key: 'beginner', label: 'I am seeking my first senior care job' },
+      ],
+    },
+  },
+  {
     id: 'certificate',
     label: 'Certificate',
     type: 'SelectSingleFilter',
