@@ -182,6 +182,9 @@ export const CreateCaregiverProfilePageComponent = props => {
       return !removedImageIds.includes(img.id);
     });
 
+    const profileImageId = currentUser.profileImage ? currentUser.profileImage.id : null;
+    const profileImage = page.image || { imageId: profileImageId };
+
     const title = isNewListingFlow
       ? intl.formatMessage({ id: 'CreateCaregiverProfilePage.titleCreateListing' })
       : intl.formatMessage({ id: 'CreateCaregiverProfilePage.titleEditListing' });
@@ -228,6 +231,7 @@ export const CreateCaregiverProfilePageComponent = props => {
           }
           stripeAccountLinkError={getAccountLinkError}
           pageName="CreateCaregiverProfilePage"
+          profileImage={profileImage}
         />
       </Page>
     );

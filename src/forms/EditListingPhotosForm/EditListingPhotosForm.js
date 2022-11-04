@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { array, bool, func, shape, string } from 'prop-types';
+import { array, bool, func, shape, string, object } from 'prop-types';
 import { compose } from 'redux';
 import { Form as FinalForm, Field } from 'react-final-form';
 import { FormattedMessage, intlShape, injectIntl } from '../../util/reactIntl';
@@ -61,6 +61,8 @@ export class EditListingPhotosFormComponent extends Component {
             saveActionMsg,
             updated,
             updateInProgress,
+            profileImage,
+            currentUser,
           } = formRenderProps;
 
           const chooseImageText = (
@@ -128,6 +130,71 @@ export class EditListingPhotosFormComponent extends Component {
 
           const classes = classNames(css.root, className);
 
+          const uploadingOverlay =
+            imageUploadRequested || this.state.uploadDelay ? (
+              <div className={css.uploadingImageOverlay}>
+                <IconSpinner />
+              </div>
+            ) : null;
+
+          const hasUploadError = !!uploadImageError && !imageUploadRequested;
+          const errorClasses = classNames({ [css.avatarUploadError]: hasUploadError });
+          const transientUserProfileImage = profileImage.uploadedImage || currentUser.profileImage;
+          const transientUser = { ...currentUser, profileImage: transientUserProfileImage };
+
+          // Ensure that file exists if imageFromFile is used
+          const fileExists = !!profileImage.file;
+          const fileimageUploadRequested = imageUploadRequested && fileExists;
+          const delayAfterUpload = profileImage.imageId && this.state.uploadDelay;
+          const imageFromFile =
+            fileExists && (fileimageUploadRequested || delayAfterUpload) ? (
+              <ImageFromFile
+                id={profileImage.id}
+                className={errorClasses}
+                rootClassName={css.uploadingImage}
+                aspectRatioClassName={css.squareAspectRatio}
+                file={profileImage.file}
+              >
+                {uploadingOverlay}
+              </ImageFromFile>
+            ) : null;
+
+          // Avatar is rendered in hidden during the upload delay
+          // Upload delay smoothes image change process:
+          // responsive img has time to load srcset stuff before it is shown to user.
+          const avatarClasses = classNames(errorClasses, css.avatar, {
+            [css.avatarInvisible]: this.state.uploadDelay,
+          });
+          const avatarComponent =
+            !fileimageUploadRequested && profileImage.imageId ? (
+              <Avatar
+                className={avatarClasses}
+                renderSizes="(max-width: 767px) 96px, 240px"
+                user={transientUser}
+                disableProfileLink
+              />
+            ) : null;
+
+          const chooseAvatarLabel =
+            profileImage.imageId || fileimageUploadRequested ? (
+              <div className={css.avatarContainer}>
+                {imageFromFile}
+                {avatarComponent}
+                <div className={css.changeAvatar}>
+                  <FormattedMessage id="ProfileSettingsForm.changeAvatar" />
+                </div>
+              </div>
+            ) : (
+              <div className={css.avatarPlaceholder}>
+                <div className={css.avatarPlaceholderText}>
+                  <FormattedMessage id="ProfileSettingsForm.addYourProfilePicture" />
+                </div>
+                <div className={css.avatarPlaceholderTextMobile}>
+                  <FormattedMessage id="ProfileSettingsForm.addYourProfilePictureMobile" />
+                </div>
+              </div>
+            );
+
           return (
             <Form
               className={classes}
@@ -141,69 +208,92 @@ export class EditListingPhotosFormComponent extends Component {
                   <FormattedMessage id="EditListingPhotosForm.updateFailed" />
                 </p>
               ) : null}
-              <AddImages
-                className={css.imagesField}
-                images={images}
-                thumbnailClassName={css.thumbnail}
-                savedImageAltText={intl.formatMessage({
-                  id: 'EditListingPhotosForm.savedImageAltText',
-                })}
-                onRemoveImage={onRemoveImage}
-              >
+              <div className={css.sectionContainer}>
+                <h3 className={css.sectionTitle}>
+                  <FormattedMessage id="ProfileSettingsForm.yourProfilePicture" />
+                </h3>
                 <Field
-                  id="addImage"
-                  name="addImage"
                   accept={ACCEPT_IMAGES}
-                  form={null}
-                  label={chooseImageText}
+                  id="profileImage"
+                  name="profileImage"
+                  label={chooseAvatarLabel}
                   type="file"
+                  form={null}
+                  uploadImageError={uploadImageError}
                   disabled={imageUploadRequested}
                 >
-                  {fieldprops => {
-                    const { accept, input, label, disabled: fieldDisabled } = fieldprops;
+                  {fieldProps => {
+                    const { accept, id, input, label, disabled, uploadImageError } = fieldProps;
                     const { name, type } = input;
                     const onChange = e => {
                       const file = e.target.files[0];
-                      form.change(`addImage`, file);
-                      form.blur(`addImage`);
-                      onImageUploadHandler(file);
+                      form.change(`profileImage`, file);
+                      form.blur(`profileImage`);
+                      if (file != null) {
+                        const tempId = `${file.name}_${Date.now()}`;
+                        onImageUpload({ id: tempId, file });
+                      }
                     };
-                    const inputProps = { accept, id: name, name, onChange, type };
-                    return (
-                      <div className={css.addImageWrapper}>
-                        <div className={css.aspectRatioWrapper}>
-                          {fieldDisabled ? null : (
-                            <input {...inputProps} className={css.addImageInput} />
-                          )}
-                          <label htmlFor={name} className={css.addImage}>
-                            {label}
-                          </label>
+
+                    let error = null;
+
+                    if (isUploadImageOverLimitError(uploadImageError)) {
+                      error = (
+                        <div className={css.error}>
+                          <FormattedMessage id="ProfileSettingsForm.imageUploadFailedFileTooLarge" />
                         </div>
+                      );
+                    } else if (uploadImageError) {
+                      error = (
+                        <div className={css.error}>
+                          <FormattedMessage id="ProfileSettingsForm.imageUploadFailed" />
+                        </div>
+                      );
+                    }
+
+                    return (
+                      <div className={css.uploadAvatarWrapper}>
+                        <label className={css.label} htmlFor={id}>
+                          {label}
+                        </label>
+                        <input
+                          accept={accept}
+                          id={id}
+                          name={name}
+                          className={css.uploadAvatarInput}
+                          disabled={disabled}
+                          onChange={onChange}
+                          type={type}
+                        />
+                        {error}
                       </div>
                     );
                   }}
                 </Field>
+                <div className={css.tip}>
+                  <FormattedMessage id="ProfileSettingsForm.tip" />
+                </div>
+                <div className={css.fileInfo}>
+                  <FormattedMessage id="ProfileSettingsForm.fileInfo" />
+                </div>
+              </div>
 
-                <Field
-                  component={props => {
-                    const { input, meta } = props;
-                    return (
-                      <div className={css.imageRequiredWrapper}>
-                        <input {...input} />
-                        <ValidationError fieldMeta={meta} />
-                      </div>
-                    );
-                  }}
-                  name="images"
-                  type="hidden"
-                  validate={composeValidators(nonEmptyArray(imageRequiredMessage))}
-                />
-              </AddImages>
+              <Field
+                component={props => {
+                  const { input, meta } = props;
+                  return (
+                    <div className={css.imageRequiredWrapper}>
+                      <input {...input} />
+                      <ValidationError fieldMeta={meta} />
+                    </div>
+                  );
+                }}
+                name="images"
+                type="hidden"
+                validate={composeValidators(nonEmptyArray(imageRequiredMessage))}
+              />
               {uploadImageFailed}
 
-              <p className={css.tip}>
-                <FormattedMessage id="EditListingPhotosForm.addImagesTip" />
-              </p>
               {publishListingFailed}
               {showListingFailed}
 
@@ -244,6 +334,7 @@ EditListingPhotosFormComponent.propTypes = {
   updated: bool.isRequired,
   updateInProgress: bool.isRequired,
   onRemoveImage: func.isRequired,
+  profileImage: object,
 };
 
 export default compose(injectIntl)(EditListingPhotosFormComponent);

@@ -71,6 +71,8 @@ const EditListingWizardTab = props => {
     fetchExceptionsInProgress,
     availabilityExceptions,
     pageName,
+    profileImage,
+    currentUser,
   } = props;
 
   const { type } = params;
@@ -292,13 +294,14 @@ const EditListingWizardTab = props => {
         <EditListingPhotosPanel
           {...panelProps(PHOTOS)}
           submitButtonText={intl.formatMessage({ id: submitButtonTranslationKey })}
-          images={images}
+          profileImage={profileImage}
           onImageUpload={onImageUpload}
           onRemoveImage={onRemoveImage}
           onSubmit={values => {
             onCompleteEditListingWizardTab(tab, values);
           }}
           onUpdateImageOrder={onUpdateImageOrder}
+          currentUser={currentUser}
         />
       );
     }
@@ -367,6 +370,7 @@ EditListingWizardTab.propTypes = {
   updateInProgress: bool.isRequired,
 
   intl: intlShape.isRequired,
+  profileImage: object,
 };
 
 export default EditListingWizardTab;

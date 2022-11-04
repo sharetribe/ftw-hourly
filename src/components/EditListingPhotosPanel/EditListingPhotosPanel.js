@@ -17,7 +17,6 @@ class EditListingPhotosPanel extends Component {
       errors,
       disabled,
       ready,
-      images,
       listing,
       onImageUpload,
       onUpdateImageOrder,
@@ -27,6 +26,8 @@ class EditListingPhotosPanel extends Component {
       onChange,
       onSubmit,
       onRemoveImage,
+      profileImage,
+      currentUser,
     } = this.props;
 
     const rootClass = rootClassName || css.root;
@@ -58,8 +59,7 @@ class EditListingPhotosPanel extends Component {
           disabled={disabled}
           ready={ready}
           fetchErrors={errors}
-          initialValues={{ images }}
-          images={images}
+          initialValues={{ profileImage }}
           onImageUpload={onImageUpload}
           onSubmit={values => {
             const { addImage, ...updateValues } = values;
@@ -71,6 +71,8 @@ class EditListingPhotosPanel extends Component {
           saveActionMsg={submitButtonText}
           updated={panelUpdated}
           updateInProgress={updateInProgress}
+          profileImage={profileImage}
+          currentUser={currentUser}
         />
       </div>
     );
@@ -104,6 +106,7 @@ EditListingPhotosPanel.propTypes = {
   panelUpdated: bool.isRequired,
   updateInProgress: bool.isRequired,
   onRemoveImage: func.isRequired,
+  profileImage: object,
 };
 
 export default EditListingPhotosPanel;

@@ -183,6 +183,11 @@ export const EditListingPageComponent = props => {
       return !removedImageIds.includes(img.id);
     });
 
+    const profileImageId = currentUser.profileImage ? currentUser.profileImage.id : null;
+    const profileImage = page.image || { imageId: profileImageId };
+
+    console.log(profileImage);
+
     const title = isNewListingFlow
       ? intl.formatMessage({ id: 'EditListingPage.titleCreateListing' })
       : intl.formatMessage({ id: 'EditListingPage.titleEditListing' });
@@ -239,6 +244,7 @@ export const EditListingPageComponent = props => {
           }
           stripeAccountLinkError={getAccountLinkError}
           pageName="EditListingPage"
+          profileImage={profileImage}
         />
         <Footer />
       </Page>

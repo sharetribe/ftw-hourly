@@ -298,6 +298,7 @@ class EditListingWizard extends Component {
       stripeAccountLinkError,
       currentUser,
       pageName,
+      profileImage,
       ...rest
     } = this.props;
 
@@ -426,6 +427,8 @@ class EditListingWizard extends Component {
                 fetchInProgress={fetchInProgress}
                 onManageDisableScrolling={onManageDisableScrolling}
                 pageName={pageName}
+                profileImage={profileImage}
+                currentUser={currentUser}
               />
             );
           })}
@@ -570,6 +573,7 @@ EditListingWizard.propTypes = {
 
   // from injectIntl
   intl: intlShape.isRequired,
+  profileImage: object,
 };
 
 export default compose(withViewport, injectIntl)(EditListingWizard);
