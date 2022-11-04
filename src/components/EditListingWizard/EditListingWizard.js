@@ -247,6 +247,16 @@ class EditListingWizard extends Component {
       (hasRequirements(stripeAccountData, 'past_due') ||
         hasRequirements(stripeAccountData, 'currently_due'));
 
+    const uploadedImage = this.props.image;
+
+    // Update profileImage only if file system has been accessed
+    const updatedValues =
+      uploadedImage && uploadedImage.imageId && uploadedImage.file
+        ? { profileImageId: uploadedImage.imageId }
+        : {};
+
+    this.props.onUpdateProfile(updatedValues);
+
     if (stripeConnected && !requirementsMissing) {
       onPublishListingDraft(id);
     } else {
@@ -299,6 +309,8 @@ class EditListingWizard extends Component {
       currentUser,
       pageName,
       profileImage,
+      onProfileImageUpload,
+      onUpdateProfile,
       ...rest
     } = this.props;
 
@@ -429,6 +441,7 @@ class EditListingWizard extends Component {
                 pageName={pageName}
                 profileImage={profileImage}
                 currentUser={currentUser}
+                onProfileImageUpload={onProfileImageUpload}
               />
             );
           })}

@@ -35,6 +35,7 @@ import {
   clearUpdatedTab,
   savePayoutDetails,
 } from './CreateCaregiverProfilePage.duck';
+import { updateProfile, uploadImage } from '../ProfileSettingsPage/ProfileSettingsPage.duck';
 
 import css from './CreateCaregiverProfilePage.module.css';
 
@@ -81,6 +82,8 @@ export const CreateCaregiverProfilePageComponent = props => {
     stripeAccountFetched,
     stripeAccount,
     updateStripeAccountError,
+    onProfileImageUpload,
+    onUpdateProfile,
   } = props;
 
   const { id, type, returnURLType } = params;
@@ -232,6 +235,8 @@ export const CreateCaregiverProfilePageComponent = props => {
           stripeAccountLinkError={getAccountLinkError}
           pageName="CreateCaregiverProfilePage"
           profileImage={profileImage}
+          onUpdateProfile={onUpdateProfile}
+          onProfileImageUpload={onProfileImageUpload}
         />
       </Page>
     );
@@ -366,6 +371,8 @@ const mapDispatchToProps = dispatch => ({
   onUpdateImageOrder: imageOrder => dispatch(updateImageOrder(imageOrder)),
   onRemoveListingImage: imageId => dispatch(removeListingImage(imageId)),
   onChange: () => dispatch(clearUpdatedTab()),
+  onProfileImageUpload: data => dispatch(uploadImage(data)),
+  onUpdateProfile: data => dispatch(updateProfile(data)),
 });
 
 // Note: it is important that the withRouter HOC is **outside** the

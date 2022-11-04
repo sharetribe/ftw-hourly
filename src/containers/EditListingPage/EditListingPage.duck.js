@@ -93,6 +93,7 @@ const initialState = {
   submittedListingId: null,
   redirectToListing: false,
   images: {},
+  image: null,
   imageOrder: [],
   removedImageIds: [],
   fetchExceptionsError: null,

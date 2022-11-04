@@ -36,6 +36,7 @@ import {
   clearUpdatedTab,
   savePayoutDetails,
 } from './EditListingPage.duck';
+import { updateProfile, uploadImage } from '../ProfileSettingsPage/ProfileSettingsPage.duck';
 
 import css from './EditListingPage.module.css';
 
@@ -62,6 +63,7 @@ export const EditListingPageComponent = props => {
     getAccountLinkInProgress,
     history,
     intl,
+    image,
     onAddAvailabilityException,
     onDeleteAvailabilityException,
     onCreateListingDraft,
@@ -82,6 +84,8 @@ export const EditListingPageComponent = props => {
     stripeAccountFetched,
     stripeAccount,
     updateStripeAccountError,
+    onProfileImageUpload,
+    onUpdateProfile,
   } = props;
 
   const { id, type, returnURLType } = params;
@@ -184,7 +188,7 @@ export const EditListingPageComponent = props => {
     });
 
     const profileImageId = currentUser.profileImage ? currentUser.profileImage.id : null;
-    const profileImage = page.image || { imageId: profileImageId };
+    const profileImage = image || { imageId: profileImageId };
 
     console.log(profileImage);
 
@@ -245,6 +249,9 @@ export const EditListingPageComponent = props => {
           stripeAccountLinkError={getAccountLinkError}
           pageName="EditListingPage"
           profileImage={profileImage}
+          onUpdateProfile={onUpdateProfile}
+          onProfileImageUpload={onProfileImageUpload}
+          image={page.image}
         />
         <Footer />
       </Page>
@@ -338,6 +345,7 @@ EditListingPageComponent.propTypes = {
 
 const mapStateToProps = state => {
   const page = state.EditListingPage;
+  const { image } = state.ProfileSettingsPage;
 
   const {
     getAccountLinkInProgress,
@@ -373,6 +381,7 @@ const mapStateToProps = state => {
     fetchInProgress,
     getOwnListing,
     page,
+    image,
     scrollingDisabled: isScrollingDisabled(state),
   };
 };
@@ -393,6 +402,8 @@ const mapDispatchToProps = dispatch => ({
   onUpdateImageOrder: imageOrder => dispatch(updateImageOrder(imageOrder)),
   onRemoveListingImage: imageId => dispatch(removeListingImage(imageId)),
   onChange: () => dispatch(clearUpdatedTab()),
+  onProfileImageUpload: data => dispatch(uploadImage(data)),
+  onUpdateProfile: data => dispatch(updateProfile(data)),
 });
 
 // Note: it is important that the withRouter HOC is **outside** the

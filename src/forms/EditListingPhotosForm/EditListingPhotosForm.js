@@ -8,7 +8,7 @@ import classNames from 'classnames';
 import { propTypes } from '../../util/types';
 import { nonEmptyArray, composeValidators } from '../../util/validators';
 import { isUploadImageOverLimitError } from '../../util/errors';
-import { AddImages, Button, Form, ValidationError } from '../../components';
+import { AddImages, Button, Form, ValidationError, IconSpinner, Avatar } from '../../components';
 
 import css from './EditListingPhotosForm.module.css';
 
@@ -63,6 +63,8 @@ export class EditListingPhotosFormComponent extends Component {
             updateInProgress,
             profileImage,
             currentUser,
+            onImageUpload,
+            onProfileImageUpload,
           } = formRenderProps;
 
           const chooseImageText = (
@@ -231,7 +233,7 @@ export class EditListingPhotosFormComponent extends Component {
                       form.blur(`profileImage`);
                       if (file != null) {
                         const tempId = `${file.name}_${Date.now()}`;
-                        onImageUpload({ id: tempId, file });
+                        onProfileImageUpload({ id: tempId, file });
                       }
                     };
 
@@ -292,7 +294,6 @@ export class EditListingPhotosFormComponent extends Component {
                 type="hidden"
                 validate={composeValidators(nonEmptyArray(imageRequiredMessage))}
               />
-              {uploadImageFailed}
 
               {publishListingFailed}
               {showListingFailed}
