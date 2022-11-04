@@ -69,6 +69,12 @@ const routeConfiguration = () => {
       component: AboutPage,
     },
     {
+      path: '/create-caregiver-profile/:slug/:id/:type/:tab',
+      name: 'CreateCaregiverProfilePage',
+      component: CreateCaregiverProfilePage,
+      loadData: pageDataLoadingAPI.CreateCaregiverProfilePage.loadData,
+    },
+    {
       path: '/s',
       name: 'SearchPage',
       component: SearchPage,
@@ -316,12 +322,6 @@ const routeConfiguration = () => {
       path: '/notfound',
       name: 'NotFoundPage',
       component: props => <NotFoundPage {...props} />,
-    },
-    {
-      path: '/create-caregiver-profile/:slug/:id/:type/:tab',
-      name: 'CreateCaregiverProfilePage',
-      component: CreateCaregiverProfilePage,
-      loadData: pageDataLoadingAPI.CreateCaregiverProfilePage.loadData,
     },
 
 

@@ -104,18 +104,21 @@ const EditListingWizardTab = props => {
       history.replace(draftURI);
     }
 
-    // Redirect to next tab
-    const nextPathParams = pathParamsToNextTab(currentPathParams, tab, marketplaceTabs);
-    const searchString = nextPathParams.tab == 'experience' ? { form: 'care-type' } : {};
+    if (tab !== 'experience' || history.location.search === '?form=additional-details') {
+      // Redirect to next tab
+      const nextPathParams = pathParamsToNextTab(currentPathParams, tab, marketplaceTabs);
+      const searchString =
+        nextPathParams.tab == 'experience' && tab == 'bio' ? { form: 'care-type' } : {};
 
-    const to = createResourceLocatorString(
-      pageName || 'EditListingPage',
-      routes,
-      nextPathParams,
-      searchString
-    );
-    console.log(to);
-    history.push(to);
+      const to = createResourceLocatorString(
+        pageName || 'EditListingPage',
+        routes,
+        nextPathParams,
+        searchString
+      );
+      console.log(to);
+      history.push(to);
+    }
   };
 
   const handleChangeQueryParam = query => {
@@ -214,20 +217,20 @@ const EditListingWizardTab = props => {
         />
       );
     }
-    case POLICY: {
-      const submitButtonTranslationKey = isNewListingFlow
-        ? 'EditListingWizard.saveNewPolicies'
-        : 'EditListingWizard.saveEditPolicies';
-      return (
-        <EditListingPoliciesPanel
-          {...panelProps(POLICY)}
-          submitButtonText={intl.formatMessage({ id: submitButtonTranslationKey })}
-          onSubmit={values => {
-            onCompleteEditListingWizardTab(tab, values);
-          }}
-        />
-      );
-    }
+    // case POLICY: {
+    //   const submitButtonTranslationKey = isNewListingFlow
+    //     ? 'EditListingWizard.saveNewPolicies'
+    //     : 'EditListingWizard.saveEditPolicies';
+    //   return (
+    //     <EditListingPoliciesPanel
+    //       {...panelProps(POLICY)}
+    //       submitButtonText={intl.formatMessage({ id: submitButtonTranslationKey })}
+    //       onSubmit={values => {
+    //         onCompleteEditListingWizardTab(tab, values);
+    //       }}
+    //     />
+    //   );
+    // }
     case LOCATION: {
       const submitButtonTranslationKey = isNewListingFlow
         ? 'EditListingWizard.saveNewLocation'

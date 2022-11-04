@@ -99,7 +99,20 @@ const tabCompleted = (tab, listing) => {
       return !!(description && title);
     // TODO: Update publicData to be verified
     case EXPERIENCE:
-      return !!publicData;
+      console.log(
+        !!(
+          publicData &&
+          publicData.careTypes &&
+          publicData.experienceLevel &&
+          publicData.covidVaccination
+        )
+      );
+      return !!(
+        publicData &&
+        publicData.careTypes &&
+        publicData.experienceLevel &&
+        publicData.covidVaccination
+      );
     case POLICY:
       return !!(publicData && typeof publicData.rules !== 'undefined');
     case LOCATION:

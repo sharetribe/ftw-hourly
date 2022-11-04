@@ -56,8 +56,10 @@ const EditListingBioPanel = props => {
         saveActionMsg={submitButtonText}
         onSubmit={values => {
           const { title, description, certificate } = values;
+
+          const trimmedTitle = title === '' ? title.trim() : title;
           const updateValues = {
-            title: title.trim(),
+            title: trimmedTitle,
             description,
             publicData: { certificate },
           };

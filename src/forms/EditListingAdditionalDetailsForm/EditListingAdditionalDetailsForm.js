@@ -16,6 +16,7 @@ import {
   FieldTextInput,
 } from '../../components';
 import { findOptionsForSelectFilter } from '../../util/search';
+import { useHistory } from 'react-router-dom';
 
 import css from './EditListingAdditionalDetailsForm.module.css';
 
@@ -127,7 +128,10 @@ const EditListingAdditionalDetailsFormComponent = props => (
         setSubmitReady((updated || ready) && submitted);
       }, [pristine, ready, updated, submitted]);
 
+      const history = useHistory();
+
       const onSubmit = values => {
+        values.preventDefault();
         setSubmitted(true);
         handleSubmit(values);
       };

@@ -4,6 +4,7 @@ import { intlShape } from '../../util/reactIntl';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { FormattedMessage } from '../../util/reactIntl';
+import { useHistory } from 'react-router-dom';
 
 import { LISTING_STATE_DRAFT } from '../../util/types';
 import { ensureListing } from '../../util/data';
@@ -80,6 +81,8 @@ const EditListingExperiencePanel = props => {
     fetchErrors: errors,
   };
 
+  const history = useHistory();
+
   switch (form) {
     case CARE_TYPE: {
       const submitButtonTranslationKey = 'EditListingExperiencePanel.careTypesNextButton';
@@ -144,11 +147,24 @@ const EditListingExperiencePanel = props => {
             {...formProps}
             saveActionMsg={mess}
             onSubmit={values => {
-              const { experienceWith } = values;
+              const {
+                experienceWith,
+                certificationsAndTraining,
+                additionalInfo,
+                covidVaccination,
+                languagesSpoken,
+              } = values;
 
               const updatedValues = {
-                publicData: { experienceWith },
+                publicData: {
+                  experienceWith,
+                  certificationsAndTraining,
+                  additionalInfo,
+                  covidVaccination,
+                  languagesSpoken,
+                },
               };
+
               onSubmit(updatedValues);
             }}
           />
