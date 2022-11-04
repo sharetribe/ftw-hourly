@@ -12,7 +12,7 @@ class AddSubtractComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentCount: null,
+      currentCount: 15,
     };
   }
 

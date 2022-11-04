@@ -132,15 +132,6 @@ const EditListingWizardTab = props => {
     history.push(to);
   };
 
-  const handleChangeQueryParam = query => {
-    const searchString = queryString.stringify(query);
-
-    history.push({
-      pathName: history.location.pathName,
-      search: searchString,
-    });
-  };
-
   const onCompleteEditListingWizardTab = (tab, updateValues, passThrownErrors = false) => {
     // Normalize images for API call
     const { images: updatedImages, ...otherValues } = updateValues;
