@@ -88,9 +88,9 @@ const tabCompleted = (tab, listing) => {
     availabilityPlan,
     description,
     geolocation,
-    price,
     title,
     publicData,
+    privateData,
   } = listing.attributes;
   const images = listing.images;
 
@@ -110,10 +110,10 @@ const tabCompleted = (tab, listing) => {
     case LOCATION:
       return !!(
         geolocation &&
-        publicData &&
-        publicData.location &&
-        publicData.location.address &&
-        publicData.travelDistance != undefined
+        privateData &&
+        privateData.location &&
+        privateData.location.address &&
+        privateData.travelDistance != undefined
       );
     case PRICING:
       return !!(publicData && publicData.minPrice && publicData.maxPrice);
