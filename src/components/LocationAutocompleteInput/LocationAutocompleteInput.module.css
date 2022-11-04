@@ -10,7 +10,6 @@
   width: 24px;
   align-self: stretch;
   border-bottom: 2px solid var(--marketplaceColor);
-  background-color: var(--matterColorLight);
 }
 
 .iconSvg {
@@ -20,6 +19,7 @@
 .iconSvgGroup {
   stroke: var(--marketplaceColor);
   stroke-width: 2.5px;
+  /* filter: invert(61%) sepia(23%) saturate(1345%) hue-rotate(93deg) brightness(105%) contrast(80%); */
 
   @media (--viewportMedium) {
     stroke-width: 2px;
@@ -29,6 +29,7 @@
 .iconSpinner {
   margin: auto;
   width: 23px;
+  background-color: var(--matterColorSuccess);
 }
 
 .input {
