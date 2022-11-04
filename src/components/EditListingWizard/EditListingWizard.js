@@ -164,12 +164,19 @@ const scrollToTab = (tabPrefix, tabId) => {
 
 // Create return URL for the Stripe onboarding form
 const createReturnURL = (returnURLType, rootURL, routes, pathParams) => {
+  if (returnURLType === 'success') {
+    const path = createResourceLocatorString('LandingPage', routes, pathParams);
+    const root = rootURL.replace(/\/$/, '');
+    return `${root}${path}`;
+  }
+
   const path = createResourceLocatorString(
     'EditListingStripeOnboardingPage',
     routes,
     { ...pathParams, returnURLType },
     {}
   );
+
   const root = rootURL.replace(/\/$/, '');
   return `${root}${path}`;
 };
