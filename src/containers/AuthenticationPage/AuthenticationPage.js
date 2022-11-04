@@ -171,15 +171,15 @@ export class AuthenticationPageComponent extends Component {
       },
     ];
 
-    const handleSubmitSignup = (values) => {
+    const handleSubmitSignup = values => {
       const { fname, lname, ...rest } = values;
       const params = { firstName: fname.trim(), lastName: lname.trim(), ...rest };
       submitSignup(params).then(() => {
-        window.location.href = `/create-caregiver-profile/draft/00000000-0000-0000-0000-000000000000/new/description`;
+        window.location.href = `/create-caregiver-profile/draft/00000000-0000-0000-0000-000000000000/new/bio`;
       });
     };
 
-    const handleSubmitConfirm = (values) => {
+    const handleSubmitConfirm = values => {
       const { idpToken, email, firstName, lastName, idpId } = this.state.authInfo;
       const { email: newEmail, firstName: newFirstName, lastName: newLastName, ...rest } = values;
 
@@ -234,7 +234,7 @@ export class AuthenticationPageComponent extends Component {
     };
 
     const idp = this.state.authInfo
-      ? this.state.authInfo.idpId.replace(/^./, (str) => str.toUpperCase())
+      ? this.state.authInfo.idpId.replace(/^./, str => str.toUpperCase())
       : null;
 
     // Form for confirming information frm IdP (e.g. Facebook)
@@ -472,7 +472,7 @@ AuthenticationPageComponent.propTypes = {
   intl: intlShape.isRequired,
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   const { isAuthenticated, loginError, signupError, confirmError } = state.Auth;
   const { currentUser, sendVerificationEmailInProgress, sendVerificationEmailError } = state.user;
   return {
@@ -488,10 +488,10 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = dispatch => ({
   submitLogin: ({ email, password }) => dispatch(login(email, password)),
-  submitSignup: (params) => dispatch(signup(params)),
-  submitSingupWithIdp: (params) => dispatch(signupWithIdp(params)),
+  submitSignup: params => dispatch(signup(params)),
+  submitSingupWithIdp: params => dispatch(signupWithIdp(params)),
   onResendVerificationEmail: () => dispatch(sendVerificationEmail()),
   onManageDisableScrolling: (componentId, disableScrolling) =>
     dispatch(manageDisableScrolling(componentId, disableScrolling)),
