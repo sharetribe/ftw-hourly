@@ -26,7 +26,7 @@ export class EditListingPhotosFormComponent extends Component {
   constructor(props) {
     super(props);
     this.state = { uploadDelay: false };
-    this.submittedImages = [];
+    this.submittedImage = null;
     this.uploadDelayTimeoutId = null;
   }
 
@@ -62,6 +62,7 @@ export class EditListingPhotosFormComponent extends Component {
             invalid,
             onImageUploadHandler,
             onRemoveImage,
+            pristine,
             disabled,
             ready,
             saveActionMsg,
@@ -120,16 +121,9 @@ export class EditListingPhotosFormComponent extends Component {
             </p>
           ) : null;
 
-          const submittedOnce = this.submittedImages.length > 0;
           // imgs can contain added images (with temp ids) and submitted images with uniq ids.
-          const arrayOfImgIds = imgs =>
-            imgs.map(i => (typeof i.id === 'string' ? i.imageId : i.id));
-          const imageIdsFromProps = arrayOfImgIds(images);
-          const imageIdsFromPreviousSubmit = arrayOfImgIds(this.submittedImages);
-          const imageArrayHasSameImages = isEqual(imageIdsFromProps, imageIdsFromPreviousSubmit);
-          const pristineSinceLastSubmit = submittedOnce && imageArrayHasSameImages;
 
-          const submitReady = (updated && pristineSinceLastSubmit) || ready;
+          const submitReady = (updated && pristine) || ready;
           const submitInProgress = updateInProgress;
           const submitDisabled =
             invalid || disabled || submitInProgress || uploadInProgress || ready;
@@ -205,7 +199,7 @@ export class EditListingPhotosFormComponent extends Component {
             <Form
               className={classes}
               onSubmit={e => {
-                this.submittedImages = images;
+                this.submittedImage = profileImage;
                 handleSubmit(e);
               }}
             >
@@ -238,6 +232,7 @@ export class EditListingPhotosFormComponent extends Component {
                       if (file != null) {
                         const tempId = `${file.name}_${Date.now()}`;
                         onProfileImageUpload({ id: tempId, file });
+                        this.submittedImage = file;
                       }
                     };
 
@@ -283,21 +278,6 @@ export class EditListingPhotosFormComponent extends Component {
                   <FormattedMessage id="ProfileSettingsForm.fileInfo" />
                 </div>
               </div>
-
-              <Field
-                component={props => {
-                  const { input, meta } = props;
-                  return (
-                    <div className={css.imageRequiredWrapper}>
-                      <input {...input} />
-                      <ValidationError fieldMeta={meta} />
-                    </div>
-                  );
-                }}
-                name="images"
-                type="hidden"
-                validate={composeValidators(nonEmptyArray(imageRequiredMessage))}
-              />
 
               {publishListingFailed}
               {showListingFailed}
