@@ -43,7 +43,7 @@ class AddSubtractComponent extends Component {
 
     const add = async () => {
       await this.setState(state => ({
-        currentCount: state.currentCount + 1,
+        currentCount: state.currentCount < 50 ? state.currentCount + 1 : state.currentCount,
       }));
 
       inputOnChange(this.state.currentCount);
@@ -51,7 +51,7 @@ class AddSubtractComponent extends Component {
 
     const subtract = async () => {
       await this.setState(state => ({
-        currentCount: state.currentCount - 1,
+        currentCount: state.currentCount > 0 ? state.currentCount - 1 : state.currentCount,
       }));
 
       inputOnChange(this.state.currentCount);
