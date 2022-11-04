@@ -106,11 +106,13 @@ const EditListingWizardTab = props => {
 
     // Redirect to next tab
     const nextPathParams = pathParamsToNextTab(currentPathParams, tab, marketplaceTabs);
+    const searchString = nextPathParams.tab == 'experience' ? { form: 'care-type' } : {};
+
     const to = createResourceLocatorString(
       pageName || 'EditListingPage',
       routes,
       nextPathParams,
-      {}
+      searchString
     );
     console.log(to);
     history.push(to);
