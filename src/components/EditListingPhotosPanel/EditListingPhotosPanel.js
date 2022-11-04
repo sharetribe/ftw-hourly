@@ -29,6 +29,7 @@ class EditListingPhotosPanel extends Component {
       profileImage,
       currentUser,
       onProfileImageUpload,
+      uploadInProgress,
     } = this.props;
 
     const rootClass = rootClassName || css.root;
@@ -75,6 +76,7 @@ class EditListingPhotosPanel extends Component {
           profileImage={profileImage}
           currentUser={currentUser}
           onProfileImageUpload={onProfileImageUpload}
+          uploadInProgress={uploadInProgress}
         />
       </div>
     );

@@ -86,6 +86,7 @@ export const EditListingPageComponent = props => {
     updateStripeAccountError,
     onProfileImageUpload,
     onUpdateProfile,
+    uploadInProgress,
   } = props;
 
   const { id, type, returnURLType } = params;
@@ -190,8 +191,6 @@ export const EditListingPageComponent = props => {
     const profileImageId = currentUser.profileImage ? currentUser.profileImage.id : null;
     const profileImage = image || { imageId: profileImageId };
 
-    console.log(profileImage);
-
     const title = isNewListingFlow
       ? intl.formatMessage({ id: 'EditListingPage.titleCreateListing' })
       : intl.formatMessage({ id: 'EditListingPage.titleEditListing' });
@@ -251,7 +250,8 @@ export const EditListingPageComponent = props => {
           profileImage={profileImage}
           onUpdateProfile={onUpdateProfile}
           onProfileImageUpload={onProfileImageUpload}
-          image={page.image}
+          image={image}
+          uploadInProgress={uploadInProgress}
         />
         <Footer />
       </Page>
@@ -345,7 +345,7 @@ EditListingPageComponent.propTypes = {
 
 const mapStateToProps = state => {
   const page = state.EditListingPage;
-  const { image } = state.ProfileSettingsPage;
+  const { image, uploadInProgress } = state.ProfileSettingsPage;
 
   const {
     getAccountLinkInProgress,
@@ -383,6 +383,7 @@ const mapStateToProps = state => {
     page,
     image,
     scrollingDisabled: isScrollingDisabled(state),
+    uploadInProgress,
   };
 };
 

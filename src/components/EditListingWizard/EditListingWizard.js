@@ -311,6 +311,7 @@ class EditListingWizard extends Component {
       profileImage,
       onProfileImageUpload,
       onUpdateProfile,
+      uploadInProgress,
       ...rest
     } = this.props;
 
@@ -442,6 +443,7 @@ class EditListingWizard extends Component {
                 profileImage={profileImage}
                 currentUser={currentUser}
                 onProfileImageUpload={onProfileImageUpload}
+                uploadInProgress={uploadInProgress}
               />
             );
           })}

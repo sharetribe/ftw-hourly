@@ -8,42 +8,48 @@ import classNames from 'classnames';
 import { propTypes } from '../../util/types';
 import { nonEmptyArray, composeValidators } from '../../util/validators';
 import { isUploadImageOverLimitError } from '../../util/errors';
-import { AddImages, Button, Form, ValidationError, IconSpinner, Avatar } from '../../components';
+import {
+  Button,
+  Form,
+  ValidationError,
+  IconSpinner,
+  Avatar,
+  ImageFromFile,
+} from '../../components';
 
 import css from './EditListingPhotosForm.module.css';
 
 const ACCEPT_IMAGES = 'image/*';
+const UPLOAD_CHANGE_DELAY = 2000; // Show spinner so that browser has time to load img srcset
 
 export class EditListingPhotosFormComponent extends Component {
   constructor(props) {
     super(props);
-    this.state = { imageUploadRequested: false };
-    this.onImageUploadHandler = this.onImageUploadHandler.bind(this);
+    this.state = { uploadDelay: false };
     this.submittedImages = [];
+    this.uploadDelayTimeoutId = null;
   }
 
-  onImageUploadHandler(file) {
-    if (file) {
-      console.log(file);
-      this.setState({ imageUploadRequested: true });
-      this.props
-        .onImageUpload({ id: `${file.name}_${Date.now()}`, file })
-        .then(() => {
-          this.setState({ imageUploadRequested: false });
-        })
-        .catch(() => {
-          this.setState({ imageUploadRequested: false });
-        });
+  componentDidUpdate(prevProps) {
+    // Upload delay is additional time window where Avatar is added to the DOM,
+    // but not yet visible (time to load image URL from srcset)
+    if (prevProps.uploadInProgress && !this.props.uploadInProgress) {
+      this.setState({ uploadDelay: true });
+      this.uploadDelayTimeoutId = window.setTimeout(() => {
+        this.setState({ uploadDelay: false });
+      }, UPLOAD_CHANGE_DELAY);
     }
+  }
+
+  componentWillUnmount() {
+    window.clearTimeout(this.uploadDelayTimeoutId);
   }
 
   render() {
     return (
       <FinalForm
         {...this.props}
-        onImageUploadHandler={this.onImageUploadHandler}
-        imageUploadRequested={this.state.imageUploadRequested}
-        initialValues={{ images: this.props.images }}
+        initialValues={{ profileImage: this.props.profileImage }}
         render={formRenderProps => {
           const {
             form,
@@ -51,7 +57,7 @@ export class EditListingPhotosFormComponent extends Component {
             fetchErrors,
             handleSubmit,
             images,
-            imageUploadRequested,
+            uploadInProgress,
             intl,
             invalid,
             onImageUploadHandler,
@@ -85,8 +91,6 @@ export class EditListingPhotosFormComponent extends Component {
           const { publishListingError, showListingsError, updateListingError, uploadImageError } =
             fetchErrors || {};
           const uploadOverLimit = isUploadImageOverLimitError(uploadImageError);
-
-          let uploadImageFailed = null;
 
           if (uploadOverLimit) {
             uploadImageFailed = (
@@ -128,28 +132,28 @@ export class EditListingPhotosFormComponent extends Component {
           const submitReady = (updated && pristineSinceLastSubmit) || ready;
           const submitInProgress = updateInProgress;
           const submitDisabled =
-            invalid || disabled || submitInProgress || imageUploadRequested || ready;
+            invalid || disabled || submitInProgress || uploadInProgress || ready;
 
           const classes = classNames(css.root, className);
 
           const uploadingOverlay =
-            imageUploadRequested || this.state.uploadDelay ? (
+            uploadInProgress || this.state.uploadDelay ? (
               <div className={css.uploadingImageOverlay}>
                 <IconSpinner />
               </div>
             ) : null;
 
-          const hasUploadError = !!uploadImageError && !imageUploadRequested;
+          const hasUploadError = !!uploadImageError && !uploadInProgress;
           const errorClasses = classNames({ [css.avatarUploadError]: hasUploadError });
           const transientUserProfileImage = profileImage.uploadedImage || currentUser.profileImage;
           const transientUser = { ...currentUser, profileImage: transientUserProfileImage };
 
           // Ensure that file exists if imageFromFile is used
           const fileExists = !!profileImage.file;
-          const fileimageUploadRequested = imageUploadRequested && fileExists;
+          const fileuploadInProgress = uploadInProgress && fileExists;
           const delayAfterUpload = profileImage.imageId && this.state.uploadDelay;
           const imageFromFile =
-            fileExists && (fileimageUploadRequested || delayAfterUpload) ? (
+            fileExists && (fileuploadInProgress || delayAfterUpload) ? (
               <ImageFromFile
                 id={profileImage.id}
                 className={errorClasses}
@@ -168,7 +172,7 @@ export class EditListingPhotosFormComponent extends Component {
             [css.avatarInvisible]: this.state.uploadDelay,
           });
           const avatarComponent =
-            !fileimageUploadRequested && profileImage.imageId ? (
+            !fileuploadInProgress && profileImage.imageId ? (
               <Avatar
                 className={avatarClasses}
                 renderSizes="(max-width: 767px) 96px, 240px"
@@ -178,7 +182,7 @@ export class EditListingPhotosFormComponent extends Component {
             ) : null;
 
           const chooseAvatarLabel =
-            profileImage.imageId || fileimageUploadRequested ? (
+            profileImage.imageId || fileuploadInProgress ? (
               <div className={css.avatarContainer}>
                 {imageFromFile}
                 {avatarComponent}
@@ -222,7 +226,7 @@ export class EditListingPhotosFormComponent extends Component {
                   type="file"
                   form={null}
                   uploadImageError={uploadImageError}
-                  disabled={imageUploadRequested}
+                  disabled={uploadInProgress}
                 >
                   {fieldProps => {
                     const { accept, id, input, label, disabled, uploadImageError } = fieldProps;

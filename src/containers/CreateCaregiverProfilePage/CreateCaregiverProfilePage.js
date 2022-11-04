@@ -84,6 +84,8 @@ export const CreateCaregiverProfilePageComponent = props => {
     updateStripeAccountError,
     onProfileImageUpload,
     onUpdateProfile,
+    image,
+    uploadInProgress,
   } = props;
 
   const { id, type, returnURLType } = params;
@@ -237,6 +239,8 @@ export const CreateCaregiverProfilePageComponent = props => {
           profileImage={profileImage}
           onUpdateProfile={onUpdateProfile}
           onProfileImageUpload={onProfileImageUpload}
+          image={image}
+          uploadInProgress={uploadInProgress}
         />
       </Page>
     );
@@ -315,7 +319,7 @@ CreateCaregiverProfilePageComponent.propTypes = {
 
 const mapStateToProps = state => {
   const page = state.CreateCaregiverProfilePage;
-  // const caregiverPage = state.CreateCaregiverProfilePage
+  const { image, uploadInProgress } = state.ProfileSettingsPage;
 
   const {
     getAccountLinkInProgress,
@@ -352,6 +356,7 @@ const mapStateToProps = state => {
     getOwnListing,
     page,
     scrollingDisabled: isScrollingDisabled(state),
+    uploadInProgress,
   };
 };
 

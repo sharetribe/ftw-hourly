@@ -74,6 +74,7 @@ const EditListingWizardTab = props => {
     profileImage,
     currentUser,
     onProfileImageUpload,
+    uploadInProgress,
   } = props;
 
   const { type } = params;
@@ -304,6 +305,7 @@ const EditListingWizardTab = props => {
           onUpdateImageOrder={onUpdateImageOrder}
           currentUser={currentUser}
           onProfileImageUpload={onProfileImageUpload}
+          uploadInProgress={uploadInProgress}
         />
       );
     }
