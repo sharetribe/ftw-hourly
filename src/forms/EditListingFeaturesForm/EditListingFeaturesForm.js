@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { bool, func, shape, string } from 'prop-types';
 import classNames from 'classnames';
 import { Form as FinalForm } from 'react-final-form';
@@ -7,6 +7,7 @@ import { FormattedMessage } from '../../util/reactIntl';
 import { findOptionsForSelectFilter } from '../../util/search';
 import { propTypes } from '../../util/types';
 import config from '../../config';
+import { intlShape } from '../../util/reactIntl';
 import { Button, FieldCheckboxGroup, FieldRadioButtonGroup, Form } from '../../components';
 
 import css from './EditListingFeaturesForm.module.css';
@@ -31,6 +32,8 @@ const EditListingFeaturesFormComponent = props => (
         filterConfig,
         label,
         singleSelect,
+        intl,
+        required,
       } = formRenderProps;
 
       const classes = classNames(rootClassName || css.root, className);
@@ -39,21 +42,49 @@ const EditListingFeaturesFormComponent = props => (
       const submitDisabled = disabled || submitInProgress;
 
       const { updateListingError, showListingsError } = fetchErrors || {};
+
+      const errorMessageNotSelected = intl.formatMessage(
+        singleSelect
+          ? { id: 'EditListingFeaturesForm.notSelectedRadio' }
+          : { id: 'EditListingFeaturesForm.notSelectedCheckbox' }
+      );
       const errorMessage = updateListingError ? (
         <p className={css.error}>
           <FormattedMessage id="EditListingFeaturesForm.updateFailed" />
         </p>
       ) : null;
-
       const errorMessageShowListing = showListingsError ? (
         <p className={css.error}>
           <FormattedMessage id="EditListingFeaturesForm.showListingFailed" />
         </p>
       ) : null;
 
+      const [formInvalid, setFormInvalid] = useState(false);
+
+      const onSubmit = values => {
+        values.preventDefault();
+        setFormInvalid(false);
+
+        if (required) {
+          let checkboxClicked = false;
+          for (let i = 1; i <= options.length; i++) {
+            if (values.target[i].checked) {
+              checkboxClicked = true;
+            }
+          }
+
+          if (!checkboxClicked) {
+            setFormInvalid(true);
+            return;
+          }
+        }
+
+        handleSubmit(values);
+      };
+
       const options = findOptionsForSelectFilter(name, filterConfig);
       return (
-        <Form className={classes} onSubmit={handleSubmit}>
+        <Form className={classes} onSubmit={onSubmit}>
           {errorMessage}
           {errorMessageShowListing}
 
@@ -64,6 +95,8 @@ const EditListingFeaturesFormComponent = props => (
               name={name}
               options={options}
               label={label}
+              invalid={formInvalid}
+              customErrorText={errorMessageNotSelected}
             />
           )}
           {singleSelect && (
@@ -73,6 +106,8 @@ const EditListingFeaturesFormComponent = props => (
               name={name}
               options={options}
               label={label}
+              invalid={formInvalid}
+              customErrorText={errorMessageNotSelected}
             />
           )}
 
@@ -117,6 +152,7 @@ EditListingFeaturesFormComponent.propTypes = {
   filterConfig: propTypes.filterConfig,
   label: string,
   singleSelect: bool,
+  intl: intlShape.isRequired,
 };
 
 const EditListingFeaturesForm = EditListingFeaturesFormComponent;

@@ -46,22 +46,21 @@ const EditListingBioPanel = props => {
     <FormattedMessage id="EditListingDescriptionPanel.createListingTitle" />
   );
 
-  // const certificateOptions = findOptionsForSelectFilter('certificate', config.custom.filters);
+  const userFullName = listing.author.attributes.profile.displayName;
+
   return (
     <div className={classes}>
       <h1 className={css.title}>{panelTitle}</h1>
       <EditListingBioForm
         className={css.form}
-        initialValues={{ title, description, certificate: publicData.certificate }}
+        initialValues={{ title, description }}
         saveActionMsg={submitButtonText}
         onSubmit={values => {
-          const { title, description, certificate } = values;
+          const { title = userFullName, description } = values;
 
-          const trimmedTitle = title === '' ? title.trim() : title;
           const updateValues = {
-            title: trimmedTitle,
+            title: title.trim(),
             description,
-            publicData: { certificate },
           };
 
           onSubmit(updateValues);

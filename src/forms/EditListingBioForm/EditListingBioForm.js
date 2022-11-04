@@ -7,7 +7,6 @@ import classNames from 'classnames';
 import { propTypes } from '../../util/types';
 import { minLength, maxLength, required, composeValidators } from '../../util/validators';
 import { Form, Button, FieldTextInput } from '../../components';
-import CustomCertificateSelectFieldMaybe from './CustomCertificateSelectFieldMaybe';
 
 import css from './EditListingBioForm.module.css';
 
@@ -20,7 +19,6 @@ const EditListingBioFormComponent = props => (
     {...props}
     render={formRenderProps => {
       const {
-        certificateOptions,
         className,
         disabled,
         ready,

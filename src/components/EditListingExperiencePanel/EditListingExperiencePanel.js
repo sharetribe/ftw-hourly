@@ -4,7 +4,6 @@ import { intlShape } from '../../util/reactIntl';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { FormattedMessage } from '../../util/reactIntl';
-import { useHistory } from 'react-router-dom';
 
 import { LISTING_STATE_DRAFT } from '../../util/types';
 import { ensureListing } from '../../util/data';
@@ -66,6 +65,7 @@ const EditListingExperiencePanel = props => {
   const careTypesFeaturesLabel = intl.formatMessage({
     id: 'EditListingExperiencePanel.careTypesFormLabel',
   });
+
   const experienceLevelFeaturesLabel = intl.formatMessage({
     id: 'EditListingExperiencePanel.experienceLevelFormLabel',
   });
@@ -79,9 +79,8 @@ const EditListingExperiencePanel = props => {
     updated: panelUpdated,
     updateInProgress,
     fetchErrors: errors,
+    intl,
   };
-
-  const history = useHistory();
 
   switch (form) {
     case CARE_TYPE: {
@@ -103,6 +102,7 @@ const EditListingExperiencePanel = props => {
             }}
             name={CARE_TYPE_FEATURES_NAME}
             label={careTypesFeaturesLabel}
+            required={true}
           />
         </div>
       );
@@ -127,6 +127,7 @@ const EditListingExperiencePanel = props => {
             name={EXPERIENCE_LEVEL_FEATURES_NAME}
             label={experienceLevelFeaturesLabel}
             singleSelect={true}
+            required={true}
           />
         </div>
       );
@@ -140,6 +141,7 @@ const EditListingExperiencePanel = props => {
           <EditListingAdditionalDetailsForm
             {...formProps}
             saveActionMsg={mess}
+            required={true}
             onSubmit={values => {
               const {
                 experienceWith,

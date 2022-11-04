@@ -16,10 +16,27 @@ import { FieldCheckbox, ValidationError } from '../../components';
 import css from './FieldCheckboxGroup.module.css';
 
 const FieldCheckboxRenderer = props => {
-  const { className, rootClassName, label, twoColumns, id, fields, options, meta } = props;
+  const {
+    className,
+    rootClassName,
+    label,
+    twoColumns,
+    id,
+    fields,
+    options,
+    invalid,
+    customErrorText,
+    meta,
+  } = props;
 
   const classes = classNames(rootClassName || css.root, className);
   const listClasses = twoColumns ? classNames(css.list, css.twoColumns) : css.list;
+
+  const { error } = meta;
+
+  const errorText = customErrorText || error;
+
+  const fieldMeta = { touched: invalid, error: errorText };
 
   return (
     <fieldset className={classes}>
@@ -39,7 +56,7 @@ const FieldCheckboxRenderer = props => {
           );
         })}
       </ul>
-      <ValidationError fieldMeta={{ ...meta }} />
+      <ValidationError fieldMeta={fieldMeta} />
     </fieldset>
   );
 };
