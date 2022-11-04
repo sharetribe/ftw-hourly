@@ -248,8 +248,6 @@ class EditListingWizard extends Component {
       (hasRequirements(stripeAccountData, 'past_due') ||
         hasRequirements(stripeAccountData, 'currently_due'));
 
-    onPublishListingDraft(id);
-
     if (stripeConnected && !requirementsMissing) {
       onPublishListingDraft(id);
     } else {
