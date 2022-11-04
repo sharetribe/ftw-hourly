@@ -44,7 +44,7 @@ export class EditListingPhotosFormComponent extends Component {
         onImageUploadHandler={this.onImageUploadHandler}
         imageUploadRequested={this.state.imageUploadRequested}
         initialValues={{ images: this.props.images }}
-        render={(formRenderProps) => {
+        render={formRenderProps => {
           const {
             form,
             className,
@@ -114,8 +114,8 @@ export class EditListingPhotosFormComponent extends Component {
 
           const submittedOnce = this.submittedImages.length > 0;
           // imgs can contain added images (with temp ids) and submitted images with uniq ids.
-          const arrayOfImgIds = (imgs) =>
-            imgs.map((i) => (typeof i.id === 'string' ? i.imageId : i.id));
+          const arrayOfImgIds = imgs =>
+            imgs.map(i => (typeof i.id === 'string' ? i.imageId : i.id));
           const imageIdsFromProps = arrayOfImgIds(images);
           const imageIdsFromPreviousSubmit = arrayOfImgIds(this.submittedImages);
           const imageArrayHasSameImages = isEqual(imageIdsFromProps, imageIdsFromPreviousSubmit);
@@ -131,7 +131,7 @@ export class EditListingPhotosFormComponent extends Component {
           return (
             <Form
               className={classes}
-              onSubmit={(e) => {
+              onSubmit={e => {
                 this.submittedImages = images;
                 handleSubmit(e);
               }}
@@ -159,10 +159,10 @@ export class EditListingPhotosFormComponent extends Component {
                   type="file"
                   disabled={imageUploadRequested}
                 >
-                  {(fieldprops) => {
+                  {fieldprops => {
                     const { accept, input, label, disabled: fieldDisabled } = fieldprops;
                     const { name, type } = input;
-                    const onChange = (e) => {
+                    const onChange = e => {
                       const file = e.target.files[0];
                       form.change(`addImage`, file);
                       form.blur(`addImage`);
@@ -185,7 +185,7 @@ export class EditListingPhotosFormComponent extends Component {
                 </Field>
 
                 <Field
-                  component={(props) => {
+                  component={props => {
                     const { input, meta } = props;
                     return (
                       <div className={css.imageRequiredWrapper}>

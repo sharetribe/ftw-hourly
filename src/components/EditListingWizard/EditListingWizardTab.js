@@ -215,7 +215,6 @@ const EditListingWizardTab = props => {
           onSubmit={values => {
             onCompleteEditListingWizardTab(tab, values);
           }}
-          onChangeQueryParam={handleChangeQueryParam}
         />
       );
     }

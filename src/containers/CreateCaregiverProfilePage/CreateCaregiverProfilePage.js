@@ -22,7 +22,6 @@ import {
   getStripeConnectAccountLink,
 } from '../../ducks/stripeConnectAccount.duck';
 import { EditListingWizard, NamedRedirect, Page } from '../../components';
-import { EditListingPageComponent } from '../EditListingPage/EditListingPage';
 
 import {
   requestAddAvailabilityException,
@@ -49,7 +48,7 @@ const STRIPE_ONBOARDING_RETURN_URL_TYPES = [
 const { UUID } = sdkTypes;
 
 // N.B. All the presentational content needs to be extracted to their own components
-export const CreateCaregiverProfilePageComponent = (props) => {
+export const CreateCaregiverProfilePageComponent = props => {
   const {
     currentUser,
     currentUserListing,
@@ -85,6 +84,7 @@ export const CreateCaregiverProfilePageComponent = (props) => {
   } = props;
 
   const { id, type, returnURLType } = params;
+
   const isNewURI = type === LISTING_PAGE_PARAM_TYPE_NEW;
   const isDraftURI = type === LISTING_PAGE_PARAM_TYPE_DRAFT;
   const isNewListingFlow = isNewURI || isDraftURI;
@@ -174,11 +174,11 @@ export const CreateCaregiverProfilePageComponent = (props) => {
 
     // Images not yet connected to the listing
     const imageOrder = page.imageOrder || [];
-    const unattachedImages = imageOrder.map((i) => page.images[i]);
+    const unattachedImages = imageOrder.map(i => page.images[i]);
 
     const allImages = currentListingImages.concat(unattachedImages);
     const removedImageIds = page.removedImageIds || [];
-    const images = allImages.filter((img) => {
+    const images = allImages.filter(img => {
       return !removedImageIds.includes(img.id);
     });
 
@@ -304,8 +304,9 @@ CreateCaregiverProfilePageComponent.propTypes = {
   intl: intlShape.isRequired,
 };
 
-const mapStateToProps = (state) => {
-  const page = state.EditListingPage;
+const mapStateToProps = state => {
+  const page = state.CreateCaregiverProfilePage;
+  // const caregiverPage = state.CreateCaregiverProfilePage
 
   const {
     getAccountLinkInProgress,
@@ -322,7 +323,7 @@ const mapStateToProps = (state) => {
 
   const fetchInProgress = createStripeAccountInProgress;
 
-  const getOwnListing = (id) => {
+  const getOwnListing = id => {
     const listings = getMarketplaceEntities(state, [{ id, type: 'ownListing' }]);
 
     return listings.length === 1 ? listings[0] : null;
@@ -345,21 +346,21 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => ({
-  onAddAvailabilityException: (params) => dispatch(requestAddAvailabilityException(params)),
-  onDeleteAvailabilityException: (params) => dispatch(requestDeleteAvailabilityException(params)),
+const mapDispatchToProps = dispatch => ({
+  onAddAvailabilityException: params => dispatch(requestAddAvailabilityException(params)),
+  onDeleteAvailabilityException: params => dispatch(requestDeleteAvailabilityException(params)),
   onUpdateListing: (tab, values) => dispatch(requestUpdateListing(tab, values)),
-  onCreateListingDraft: (values) => dispatch(requestCreateListingDraft(values)),
-  onPublishListingDraft: (listingId) => dispatch(requestPublishListingDraft(listingId)),
-  onImageUpload: (data) => dispatch(requestImageUpload(data)),
+  onCreateListingDraft: values => dispatch(requestCreateListingDraft(values)),
+  onPublishListingDraft: listingId => dispatch(requestPublishListingDraft(listingId)),
+  onImageUpload: data => dispatch(requestImageUpload(data)),
   onManageDisableScrolling: (componentId, disableScrolling) =>
     dispatch(manageDisableScrolling(componentId, disableScrolling)),
   onPayoutDetailsFormChange: () => dispatch(stripeAccountClearError()),
   onPayoutDetailsFormSubmit: (values, isUpdateCall) =>
     dispatch(savePayoutDetails(values, isUpdateCall)),
-  onGetStripeConnectAccountLink: (params) => dispatch(getStripeConnectAccountLink(params)),
-  onUpdateImageOrder: (imageOrder) => dispatch(updateImageOrder(imageOrder)),
-  onRemoveListingImage: (imageId) => dispatch(removeListingImage(imageId)),
+  onGetStripeConnectAccountLink: params => dispatch(getStripeConnectAccountLink(params)),
+  onUpdateImageOrder: imageOrder => dispatch(updateImageOrder(imageOrder)),
+  onRemoveListingImage: imageId => dispatch(removeListingImage(imageId)),
   onChange: () => dispatch(clearUpdatedTab()),
 });
 

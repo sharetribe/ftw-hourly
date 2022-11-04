@@ -24,6 +24,7 @@ export {
   CheckoutPage,
   ContactDetailsPage,
   EditListingPage,
+  CreateCaregiverProfilePage,
   InboxPage,
   ListingPage,
   ManageListingsPage,

@@ -124,7 +124,7 @@ const tabCompleted = (tab, listing) => {
         publicData.travelDistance != undefined
       );
     case PRICING:
-      return !!price;
+      return !!(publicData && publicData.minPrice && publicData.maxPrice);
     case AVAILABILITY:
       return !!availabilityPlan;
     case PHOTOS:
