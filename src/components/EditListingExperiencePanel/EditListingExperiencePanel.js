@@ -101,8 +101,8 @@ const EditListingExperiencePanel = props => {
               };
               onSubmit(updatedValues);
 
-              const nextQuery = { form: 'experience-level' };
-              onChangeQueryParam(nextQuery);
+              // const nextQuery = { form: 'experience-level' };
+              // onChangeQueryParam(nextQuery);
             }}
             name={CARE_TYPE_FEATURES_NAME}
             label={careTypesFeaturesLabel}
@@ -127,8 +127,8 @@ const EditListingExperiencePanel = props => {
               };
               onSubmit(updatedValues);
 
-              const nextQuery = { form: 'additional-details' };
-              onChangeQueryParam(nextQuery);
+              // const nextQuery = { form: 'additional-details' };
+              // onChangeQueryParam(nextQuery);
             }}
             name={EXPERIENCE_LEVEL_FEATURES_NAME}
             label={experienceLevelFeaturesLabel}

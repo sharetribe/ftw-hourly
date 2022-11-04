@@ -104,21 +104,32 @@ const EditListingWizardTab = props => {
       history.replace(draftURI);
     }
 
-    if (tab !== 'experience' || history.location.search === '?form=additional-details') {
-      // Redirect to next tab
-      const nextPathParams = pathParamsToNextTab(currentPathParams, tab, marketplaceTabs);
-      const searchString =
-        nextPathParams.tab == 'experience' && tab == 'bio' ? { form: 'care-type' } : {};
+    const currentSearch = history.location.search;
+    // Redirect to next tab
+    const nextPathParams = pathParamsToNextTab(currentPathParams, tab, marketplaceTabs);
+    const searchString =
+      nextPathParams.tab == 'experience' && tab == 'bio'
+        ? { form: 'care-type' }
+        : tab == 'experience' && currentSearch == '?form=care-type'
+        ? { form: 'experience-level' }
+        : tab == 'experience' && currentSearch == '?form=experience-level'
+        ? { form: 'additional-details' }
+        : {};
 
-      const to = createResourceLocatorString(
-        pageName || 'EditListingPage',
-        routes,
-        nextPathParams,
-        searchString
-      );
-      console.log(to);
-      history.push(to);
-    }
+    nextPathParams.tab =
+      tab == 'experience' &&
+      (currentSearch == '?form=care-type' || currentSearch == '?form=experience-level')
+        ? 'experience'
+        : nextPathParams.tab;
+
+    const to = createResourceLocatorString(
+      pageName || 'EditListingPage',
+      routes,
+      nextPathParams,
+      searchString
+    );
+    console.log(to);
+    history.push(to);
   };
 
   const handleChangeQueryParam = query => {
