@@ -46,7 +46,7 @@ const EditListingBioPanel = props => {
     <FormattedMessage id="EditListingDescriptionPanel.createListingTitle" />
   );
 
-  const userFullName = listing.author.attributes.profile.displayName;
+  const userFullName = listing?.author?.attributes.profile.displayName;
 
   return (
     <div className={classes}>

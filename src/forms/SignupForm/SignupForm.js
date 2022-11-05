@@ -7,6 +7,7 @@ import arrayMutators from 'final-form-arrays';
 import classNames from 'classnames';
 import * as validators from '../../util/validators';
 import { Form, PrimaryButton, FieldTextInput, FieldSelect } from '../../components';
+import { useHistory } from 'react-router-dom';
 
 import css from './SignupForm.module.css';
 
@@ -15,7 +16,7 @@ const KEY_CODE_ENTER = 13;
 const SignupFormComponent = props => (
   <FinalForm
     {...props}
-    initialValues={{ userType: "employer" }}
+    initialValues={{ userType: 'employer' }}
     render={fieldRenderProps => {
       const {
         rootClassName,
@@ -148,12 +149,24 @@ const SignupFormComponent = props => (
         </span>
       );
 
+      const history = useHistory();
+
+      const onSubmit = values => {
+        values.preventDefault();
+
+        handleSubmit(values);
+
+        history.push(
+          `/create-caregiver-profile/draft/00000000-0000-0000-0000-000000000000/new/bio`
+        );
+      };
+
       return (
-        <Form className={classes} onSubmit={handleSubmit}>
+        <Form className={classes} onSubmit={onSubmit}>
           <div>
-            <FieldSelect 
+            <FieldSelect
               id={formId ? `${formId}.userType` : 'userType'}
-              name="userType" 
+              name="userType"
               label={userTypeSelectLabel}
             >
               <option value={employerSelectValue}>{employerSelectLabel}</option>

@@ -63,10 +63,7 @@ class EditListingPhotosPanel extends Component {
           fetchErrors={errors}
           initialValues={{ profileImage }}
           onImageUpload={onImageUpload}
-          onSubmit={values => {
-            const { addImage, ...updateValues } = values;
-            onSubmit(updateValues);
-          }}
+          onSubmit={() => onSubmit({})}
           onChange={onChange}
           onUpdateImageOrder={onUpdateImageOrder}
           onRemoveImage={onRemoveImage}

@@ -18,6 +18,7 @@ import {
 } from '../../components';
 
 import css from './EditListingPhotosForm.module.css';
+import { error } from 'bfj/src/events';
 
 const ACCEPT_IMAGES = 'image/*';
 const UPLOAD_CHANGE_DELAY = 2000; // Show spinner so that browser has time to load img srcset
@@ -200,6 +201,7 @@ export class EditListingPhotosFormComponent extends Component {
               className={classes}
               onSubmit={e => {
                 this.submittedImage = profileImage;
+                console.log(e.target[0].value);
                 handleSubmit(e);
               }}
             >

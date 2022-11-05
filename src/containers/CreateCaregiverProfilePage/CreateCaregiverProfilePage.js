@@ -187,8 +187,9 @@ export const CreateCaregiverProfilePageComponent = props => {
       return !removedImageIds.includes(img.id);
     });
 
-    const profileImageId = currentUser.profileImage ? currentUser.profileImage.id : null;
-    const profileImage = page.image || { imageId: profileImageId };
+    const profileImageId =
+      currentUser && currentUser.profileImage ? currentUser.profileImage.id : null;
+    const profileImage = image || { imageId: profileImageId };
 
     const title = isNewListingFlow
       ? intl.formatMessage({ id: 'CreateCaregiverProfilePage.titleCreateListing' })
@@ -355,6 +356,7 @@ const mapStateToProps = state => {
     fetchInProgress,
     getOwnListing,
     page,
+    image,
     scrollingDisabled: isScrollingDisabled(state),
     uploadInProgress,
   };

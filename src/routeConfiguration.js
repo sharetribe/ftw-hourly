@@ -72,6 +72,7 @@ const routeConfiguration = () => {
       path: '/create-caregiver-profile/:slug/:id/:type/:tab',
       name: 'CreateCaregiverProfilePage',
       component: CreateCaregiverProfilePage,
+      extraProps: { allowOnlyOneListing: true },
       loadData: pageDataLoadingAPI.CreateCaregiverProfilePage.loadData,
     },
     {
@@ -113,7 +114,7 @@ const routeConfiguration = () => {
       component: () => (
         <NamedRedirect
           name="EditListingPage"
-          params={{ slug: draftSlug, id: draftId, type: 'new', tab: 'description' }}
+          params={{ slug: draftSlug, id: draftId, type: 'new', tab: 'bio' }}
         />
       ),
     },
@@ -337,6 +338,19 @@ const routeConfiguration = () => {
     // Do not change this path!
     //
     // The API expects that the application implements /verify-email endpoint
+    // {
+    //   path: '/verify-email',
+    //   name: 'CreateProfileRedirect',
+    //   auth: true,
+    //   authPage: 'LoginPage',
+    //   component: () => (
+    //     <NamedRedirect
+    //       name="CreateCaregiverProfilePage"
+    //       params={{ slug: draftSlug, id: draftId, type: 'new', tab: 'bio' }}
+    //     />
+    //   ),
+    //   loadData: pageDataLoadingAPI.EmailVerificationPage.loadData,
+    // },
     {
       path: '/verify-email',
       name: 'EmailVerificationPage',
