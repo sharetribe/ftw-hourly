@@ -21,7 +21,7 @@ import {
   stripeAccountClearError,
   getStripeConnectAccountLink,
 } from '../../ducks/stripeConnectAccount.duck';
-import { EditListingWizard, Footer, NamedRedirect, Page, UserNav } from '../../components';
+import { CaregiverEditListingWizard, Footer, NamedRedirect, Page, UserNav } from '../../components';
 import { TopbarContainer } from '../../containers';
 
 import {
@@ -207,8 +207,8 @@ export const EditListingPageComponent = props => {
           selectedPageName={listing ? 'EditListingPage' : 'NewListingPage'}
           listing={listing}
         />
-        <EditListingWizard
-          id="EditListingWizard"
+        <CaregiverEditListingWizard
+          id="CaregiverEditListingWizard"
           className={css.wizard}
           params={params}
           disabled={disableForm}

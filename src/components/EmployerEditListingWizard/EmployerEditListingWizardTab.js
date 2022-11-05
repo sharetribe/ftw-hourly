@@ -21,7 +21,7 @@ import {
   EditListingPricingPanel,
 } from '..';
 
-import css from './CaregiverEditListingWizard.module.css';
+import css from './EmployerEditListingWizard.module.css';
 
 export const AVAILABILITY = 'availability';
 export const BIO = 'bio';
@@ -31,7 +31,7 @@ export const LOCATION = 'location';
 export const PRICING = 'pricing';
 export const PHOTOS = 'photos';
 
-// CaregiverEditListingWizardTab component supports these tabs
+// EmployerEditListingWizardTab component supports these tabs
 export const SUPPORTED_TABS = [BIO, EXPERIENCE, POLICY, LOCATION, PRICING, AVAILABILITY, PHOTOS];
 
 const pathParamsToNextTab = (params, tab, marketplaceTabs) => {
@@ -43,7 +43,7 @@ const pathParamsToNextTab = (params, tab, marketplaceTabs) => {
   return { ...params, tab: nextTab };
 };
 
-const CaregiverEditListingWizardTab = props => {
+const EmployerEditListingWizardTab = props => {
   const {
     tab,
     marketplaceTabs,
@@ -87,7 +87,7 @@ const CaregiverEditListingWizardTab = props => {
     return images ? images.map(img => img.imageId || img.id) : null;
   };
 
-  // When user has update draft listing, he should be redirected to next CaregiverEditListingWizardTab
+  // When user has update draft listing, he should be redirected to next EmployerEditListingWizardTab
   const redirectAfterDraftUpdate = (listingId, params, tab, marketplaceTabs, history) => {
     const currentPathParams = {
       ...params,
@@ -136,7 +136,7 @@ const CaregiverEditListingWizardTab = props => {
     history.push(to);
   };
 
-  const onCompleteCaregiverEditListingWizardTab = (tab, updateValues, passThrownErrors = false) => {
+  const onCompleteEmployerEditListingWizardTab = (tab, updateValues, passThrownErrors = false) => {
     // Normalize images for API call
     const { images: updatedImages, ...otherValues } = updateValues;
     const imageProperty =
@@ -196,78 +196,78 @@ const CaregiverEditListingWizardTab = props => {
   switch (tab) {
     case BIO: {
       const submitButtonTranslationKey = isNewListingFlow
-        ? 'CaregiverEditListingWizard.saveNewBio'
-        : 'CaregiverEditListingWizard.saveEditBio';
+        ? 'EmployerEditListingWizard.saveNewBio'
+        : 'EmployerEditListingWizard.saveEditBio';
       return (
         <EditListingBioPanel
           {...panelProps(BIO)}
           submitButtonText={intl.formatMessage({ id: submitButtonTranslationKey })}
           onSubmit={values => {
-            onCompleteCaregiverEditListingWizardTab(tab, values);
+            onCompleteEmployerEditListingWizardTab(tab, values);
           }}
         />
       );
     }
     case EXPERIENCE: {
       const submitButtonTranslationKey = isNewListingFlow
-        ? 'CaregiverEditListingWizard.saveNewExperience'
-        : 'CaregiverEditListingWizard.saveEditExperience';
+        ? 'EmployerEditListingWizard.saveNewExperience'
+        : 'EmployerEditListingWizard.saveEditExperience';
       return (
         <EditListingExperiencePanel
           {...panelProps(EXPERIENCE)}
           submitButtonText={intl.formatMessage({ id: submitButtonTranslationKey })}
           onSubmit={values => {
-            onCompleteCaregiverEditListingWizardTab(tab, values);
+            onCompleteEmployerEditListingWizardTab(tab, values);
           }}
         />
       );
     }
     // case POLICY: {
     //   const submitButtonTranslationKey = isNewListingFlow
-    //     ? 'CaregiverEditListingWizard.saveNewPolicies'
-    //     : 'CaregiverEditListingWizard.saveEditPolicies';
+    //     ? 'EmployerEditListingWizard.saveNewPolicies'
+    //     : 'EmployerEditListingWizard.saveEditPolicies';
     //   return (
     //     <EditListingPoliciesPanel
     //       {...panelProps(POLICY)}
     //       submitButtonText={intl.formatMessage({ id: submitButtonTranslationKey })}
     //       onSubmit={values => {
-    //         onCompleteCaregiverEditListingWizardTab(tab, values);
+    //         onCompleteEmployerEditListingWizardTab(tab, values);
     //       }}
     //     />
     //   );
     // }
     case LOCATION: {
       const submitButtonTranslationKey = isNewListingFlow
-        ? 'CaregiverEditListingWizard.saveNewLocation'
-        : 'CaregiverEditListingWizard.saveEditLocation';
+        ? 'EmployerEditListingWizard.saveNewLocation'
+        : 'EmployerEditListingWizard.saveEditLocation';
       return (
         <EditListingLocationPanel
           {...panelProps(LOCATION)}
           submitButtonText={intl.formatMessage({ id: submitButtonTranslationKey })}
           onSubmit={values => {
-            onCompleteCaregiverEditListingWizardTab(tab, values);
+            onCompleteEmployerEditListingWizardTab(tab, values);
           }}
         />
       );
     }
     case PRICING: {
       const submitButtonTranslationKey = isNewListingFlow
-        ? 'CaregiverEditListingWizard.saveNewPricing'
-        : 'CaregiverEditListingWizard.saveEditPricing';
+        ? 'EmployerEditListingWizard.saveNewPricing'
+        : 'EmployerEditListingWizard.saveEditPricing';
       return (
         <EditListingPricingPanel
           {...panelProps(PRICING)}
           submitButtonText={intl.formatMessage({ id: submitButtonTranslationKey })}
           onSubmit={values => {
-            onCompleteCaregiverEditListingWizardTab(tab, values);
+            onCompleteEmployerEditListingWizardTab(tab, values);
           }}
         />
       );
     }
     case AVAILABILITY: {
       const submitButtonTranslationKey = isNewListingFlow
-        ? 'CaregiverEditListingWizard.saveNewAvailability'
-        : 'CaregiverEditListingWizard.saveEditAvailability';
+        ? 'EmployerEditListingWizard.saveNewAvailability'
+        : 'EmployerEditListingWizard.saveEditAvailability';
       return (
         <EditListingAvailabilityPanel
           {...panelProps(AVAILABILITY)}
@@ -279,7 +279,7 @@ const CaregiverEditListingWizardTab = props => {
           onSubmit={values => {
             // We want to return the Promise to the form,
             // so that it doesn't close its modal if an error is thrown.
-            return onCompleteCaregiverEditListingWizardTab(tab, values, true);
+            return onCompleteEmployerEditListingWizardTab(tab, values, true);
           }}
           onNextTab={() =>
             redirectAfterDraftUpdate(listing.id.uuid, params, tab, marketplaceTabs, history)
@@ -289,8 +289,8 @@ const CaregiverEditListingWizardTab = props => {
     }
     case PHOTOS: {
       const submitButtonTranslationKey = isNewListingFlow
-        ? 'CaregiverEditListingWizard.saveNewPhotos'
-        : 'CaregiverEditListingWizard.saveEditPhotos';
+        ? 'EmployerEditListingWizard.saveNewPhotos'
+        : 'EmployerEditListingWizard.saveEditPhotos';
 
       return (
         <EditListingPhotosPanel
@@ -300,7 +300,7 @@ const CaregiverEditListingWizardTab = props => {
           onImageUpload={onImageUpload}
           onRemoveImage={onRemoveImage}
           onSubmit={values => {
-            onCompleteCaregiverEditListingWizardTab(tab, values);
+            onCompleteEmployerEditListingWizardTab(tab, values);
           }}
           onUpdateImageOrder={onUpdateImageOrder}
           currentUser={currentUser}
@@ -314,13 +314,13 @@ const CaregiverEditListingWizardTab = props => {
   }
 };
 
-CaregiverEditListingWizardTab.defaultProps = {
+EmployerEditListingWizardTab.defaultProps = {
   listing: null,
   updatedTab: null,
   availabilityExceptions: [],
 };
 
-CaregiverEditListingWizardTab.propTypes = {
+EmployerEditListingWizardTab.propTypes = {
   params: shape({
     id: string.isRequired,
     slug: string.isRequired,
@@ -377,4 +377,4 @@ CaregiverEditListingWizardTab.propTypes = {
   profileImage: object,
 };
 
-export default CaregiverEditListingWizardTab;
+export default EmployerEditListingWizardTab;

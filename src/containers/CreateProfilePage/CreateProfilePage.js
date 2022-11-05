@@ -21,7 +21,12 @@ import {
   stripeAccountClearError,
   getStripeConnectAccountLink,
 } from '../../ducks/stripeConnectAccount.duck';
-import { EditListingWizard, NamedRedirect, Page } from '../../components';
+import {
+  CaregiverEditListingWizard,
+  EmployerEditListingWizard,
+  NamedRedirect,
+  Page,
+} from '../../components';
 
 import {
   requestAddAvailabilityException,
@@ -195,54 +200,105 @@ export const CreateProfilePageComponent = props => {
       ? intl.formatMessage({ id: 'CreateProfilePage.titleCreateListing' })
       : intl.formatMessage({ id: 'CreateProfilePage.titleEditListing' });
 
+    const isCaregiver = currentUser.userType === 'caregiver';
+
     return (
       <Page title={title} scrollingDisabled={scrollingDisabled}>
-        <EditListingWizard
-          id="EditListingWizard"
-          className={css.wizard}
-          params={params}
-          disabled={disableForm}
-          errors={errors}
-          fetchInProgress={fetchInProgress}
-          newListingPublished={newListingPublished}
-          history={history}
-          images={images}
-          listing={currentListing}
-          onAddAvailabilityException={onAddAvailabilityException}
-          onDeleteAvailabilityException={onDeleteAvailabilityException}
-          onUpdateListing={onUpdateListing}
-          onCreateListingDraft={onCreateListingDraft}
-          onPublishListingDraft={onPublishListingDraft}
-          onPayoutDetailsFormChange={onPayoutDetailsFormChange}
-          onPayoutDetailsSubmit={onPayoutDetailsFormSubmit}
-          onGetStripeConnectAccountLink={onGetStripeConnectAccountLink}
-          getAccountLinkInProgress={getAccountLinkInProgress}
-          onImageUpload={onImageUpload}
-          onUpdateImageOrder={onUpdateImageOrder}
-          onRemoveImage={onRemoveListingImage}
-          onChange={onChange}
-          currentUser={currentUser}
-          onManageDisableScrolling={onManageDisableScrolling}
-          stripeOnboardingReturnURL={params.returnURLType}
-          updatedTab={page.updatedTab}
-          updateInProgress={page.updateInProgress || page.createListingDraftInProgress}
-          fetchExceptionsInProgress={page.fetchExceptionsInProgress}
-          availabilityExceptions={page.availabilityExceptions}
-          payoutDetailsSaveInProgress={page.payoutDetailsSaveInProgress}
-          payoutDetailsSaved={page.payoutDetailsSaved}
-          stripeAccountFetched={stripeAccountFetched}
-          stripeAccount={stripeAccount}
-          stripeAccountError={
-            createStripeAccountError || updateStripeAccountError || fetchStripeAccountError
-          }
-          stripeAccountLinkError={getAccountLinkError}
-          pageName="CreateProfilePage"
-          profileImage={profileImage}
-          onUpdateProfile={onUpdateProfile}
-          onProfileImageUpload={onProfileImageUpload}
-          image={image}
-          uploadInProgress={uploadInProgress}
-        />
+        {isCaregiver ? (
+          <CaregiverEditListingWizard
+            id="CaregiverEditListingWizard"
+            className={css.wizard}
+            params={params}
+            disabled={disableForm}
+            errors={errors}
+            fetchInProgress={fetchInProgress}
+            newListingPublished={newListingPublished}
+            history={history}
+            images={images}
+            listing={currentListing}
+            onAddAvailabilityException={onAddAvailabilityException}
+            onDeleteAvailabilityException={onDeleteAvailabilityException}
+            onUpdateListing={onUpdateListing}
+            onCreateListingDraft={onCreateListingDraft}
+            onPublishListingDraft={onPublishListingDraft}
+            onPayoutDetailsFormChange={onPayoutDetailsFormChange}
+            onPayoutDetailsSubmit={onPayoutDetailsFormSubmit}
+            onGetStripeConnectAccountLink={onGetStripeConnectAccountLink}
+            getAccountLinkInProgress={getAccountLinkInProgress}
+            onImageUpload={onImageUpload}
+            onUpdateImageOrder={onUpdateImageOrder}
+            onRemoveImage={onRemoveListingImage}
+            onChange={onChange}
+            currentUser={currentUser}
+            onManageDisableScrolling={onManageDisableScrolling}
+            stripeOnboardingReturnURL={params.returnURLType}
+            updatedTab={page.updatedTab}
+            updateInProgress={page.updateInProgress || page.createListingDraftInProgress}
+            fetchExceptionsInProgress={page.fetchExceptionsInProgress}
+            availabilityExceptions={page.availabilityExceptions}
+            payoutDetailsSaveInProgress={page.payoutDetailsSaveInProgress}
+            payoutDetailsSaved={page.payoutDetailsSaved}
+            stripeAccountFetched={stripeAccountFetched}
+            stripeAccount={stripeAccount}
+            stripeAccountError={
+              createStripeAccountError || updateStripeAccountError || fetchStripeAccountError
+            }
+            stripeAccountLinkError={getAccountLinkError}
+            pageName="CreateProfilePage"
+            profileImage={profileImage}
+            onUpdateProfile={onUpdateProfile}
+            onProfileImageUpload={onProfileImageUpload}
+            image={image}
+            uploadInProgress={uploadInProgress}
+          />
+        ) : (
+          <EmployerEditListingWizard
+            id="CaregiverEditListingWizard"
+            className={css.wizard}
+            params={params}
+            disabled={disableForm}
+            errors={errors}
+            fetchInProgress={fetchInProgress}
+            newListingPublished={newListingPublished}
+            history={history}
+            images={images}
+            listing={currentListing}
+            onAddAvailabilityException={onAddAvailabilityException}
+            onDeleteAvailabilityException={onDeleteAvailabilityException}
+            onUpdateListing={onUpdateListing}
+            onCreateListingDraft={onCreateListingDraft}
+            onPublishListingDraft={onPublishListingDraft}
+            onPayoutDetailsFormChange={onPayoutDetailsFormChange}
+            onPayoutDetailsSubmit={onPayoutDetailsFormSubmit}
+            onGetStripeConnectAccountLink={onGetStripeConnectAccountLink}
+            getAccountLinkInProgress={getAccountLinkInProgress}
+            onImageUpload={onImageUpload}
+            onUpdateImageOrder={onUpdateImageOrder}
+            onRemoveImage={onRemoveListingImage}
+            onChange={onChange}
+            currentUser={currentUser}
+            onManageDisableScrolling={onManageDisableScrolling}
+            stripeOnboardingReturnURL={params.returnURLType}
+            updatedTab={page.updatedTab}
+            updateInProgress={page.updateInProgress || page.createListingDraftInProgress}
+            fetchExceptionsInProgress={page.fetchExceptionsInProgress}
+            availabilityExceptions={page.availabilityExceptions}
+            payoutDetailsSaveInProgress={page.payoutDetailsSaveInProgress}
+            payoutDetailsSaved={page.payoutDetailsSaved}
+            stripeAccountFetched={stripeAccountFetched}
+            stripeAccount={stripeAccount}
+            stripeAccountError={
+              createStripeAccountError || updateStripeAccountError || fetchStripeAccountError
+            }
+            stripeAccountLinkError={getAccountLinkError}
+            pageName="CreateProfilePage"
+            profileImage={profileImage}
+            onUpdateProfile={onUpdateProfile}
+            onProfileImageUpload={onProfileImageUpload}
+            image={image}
+            uploadInProgress={uploadInProgress}
+          />
+        )}
       </Page>
     );
   } else {
