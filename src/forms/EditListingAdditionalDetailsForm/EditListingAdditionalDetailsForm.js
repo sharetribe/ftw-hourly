@@ -6,7 +6,7 @@ import { intlShape, injectIntl, FormattedMessage } from '../../util/reactIntl';
 import arrayMutators from 'final-form-arrays';
 import classNames from 'classnames';
 import { propTypes } from '../../util/types';
-import { minLength, maxLength, required, composeValidators } from '../../util/validators';
+import { requiredFieldArrayCheckbox, requiredFieldArrayRadio } from '../../util/validators';
 import config from '../../config';
 import {
   Form,
@@ -127,56 +127,17 @@ const EditListingAdditionalDetailsFormComponent = props => (
       const submitInProgress = updateInProgress;
       const submitDisabled = invalid || disabled || submitInProgress;
 
-      const [submitReady, setSubmitReady] = useState(false);
       const [submitted, setSubmitted] = useState(false);
+      const [submitReady, setSubmitReady] = useState(false);
 
       useEffect(() => {
         setSubmitReady((updated || ready) && submitted);
       }, [pristine, ready, updated, submitted]);
 
-      const totalOptionsLength =
-        experienceWithOptions.length +
-        certificationsOptions.length +
-        additionalInfoOptions.length +
-        covidVaccinationOptions.length +
-        languagesSpokenRadioOptions.length +
-        4;
-
-      const history = useHistory();
-
-      const [vaccinationInvalid, setVaccinationInvalid] = useState(false);
-      const [languagesInvalid, setLanguagesInvalid] = useState(false);
-
-      const onSubmit = values => {
-        values.preventDefault();
-
-        setVaccinationInvalid(false);
-        setVaccinationInvalid(false);
-        if (required) {
-          let vaccinationSelected = false;
-          let languagesSelected = false;
-
-          for (let i = 1; i <= totalOptionsLength; i++) {
-            let currentTarget = values.target[i];
-            if (currentTarget.checked && currentTarget.name === 'covidVaccination') {
-              vaccinationSelected = true;
-            }
-
-            if (currentTarget.checked && currentTarget.name === 'languagesSpoken') {
-              languagesSelected = true;
-            }
-          }
-
-          setVaccinationInvalid(!vaccinationSelected);
-          setLanguagesInvalid(!languagesSelected);
-
-          if (!languagesSelected || !vaccinationSelected) {
-            return;
-          }
-        }
-
+      const onSubmit = e => {
+        e.preventDefault();
         setSubmitted(true);
-        handleSubmit(values);
+        handleSubmit(e);
       };
 
       return (
@@ -213,8 +174,7 @@ const EditListingAdditionalDetailsFormComponent = props => (
             options={covidVaccinationOptions}
             label={covidVaccinationLabel}
             required={true}
-            invalid={vaccinationInvalid}
-            customErrorText={errorVaccineNotSelected}
+            validate={requiredFieldArrayRadio(errorVaccineNotSelected)}
           />
 
           <div>
@@ -225,8 +185,7 @@ const EditListingAdditionalDetailsFormComponent = props => (
               options={languagesSpokenRadioOptions}
               label={languagesSpokenRadioLabel}
               required={true}
-              invalid={languagesInvalid}
-              customErrorText={errorLanguagesNotSelected}
+              validate={requiredFieldArrayCheckbox(errorLanguagesNotSelected)}
             />
             {/* {May need to add custom onChange to this to integrate with languagesSpoken} */}
             <FieldTextInput

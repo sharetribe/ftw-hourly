@@ -34,13 +34,14 @@ const EditListingFeaturesFormComponent = props => (
         label,
         singleSelect,
         intl,
+        invalid,
         required,
       } = formRenderProps;
 
       const classes = classNames(rootClassName || css.root, className);
       const submitReady = (updated && pristine) || ready;
       const submitInProgress = updateInProgress;
-      const submitDisabled = disabled || submitInProgress;
+      const submitDisabled = invalid || disabled || submitInProgress;
 
       const { updateListingError, showListingsError } = fetchErrors || {};
 
@@ -73,8 +74,8 @@ const EditListingFeaturesFormComponent = props => (
               name={name}
               options={options}
               label={label}
-              validate={requiredFieldArrayCheckbox(errorMessageNotSelected)}
-              required={true}
+              validate={required && requiredFieldArrayCheckbox(errorMessageNotSelected)}
+              required={required}
             />
           )}
           {singleSelect && (
@@ -84,8 +85,8 @@ const EditListingFeaturesFormComponent = props => (
               name={name}
               options={options}
               label={label}
-              validate={requiredFieldArrayRadio(errorMessageNotSelected)}
-              required={true}
+              validate={required && requiredFieldArrayRadio(errorMessageNotSelected)}
+              required={required}
             />
           )}
 
@@ -94,7 +95,7 @@ const EditListingFeaturesFormComponent = props => (
             type="submit"
             inProgress={submitInProgress}
             disabled={submitDisabled}
-            ready={false}
+            ready={submitReady}
           >
             {saveActionMsg}
           </Button>
