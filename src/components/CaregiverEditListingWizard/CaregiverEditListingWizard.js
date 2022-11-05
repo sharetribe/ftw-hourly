@@ -18,7 +18,7 @@ import { ensureCurrentUser, ensureListing } from '../../util/data';
 import { Modal, NamedRedirect, Tabs, StripeConnectAccountStatusBox } from '..';
 import { StripeConnectAccountForm } from '../../forms';
 
-import EditListingWizardTab, {
+import CaregiverEditListingWizardTab, {
   AVAILABILITY,
   BIO,
   EXPERIENCE,
@@ -26,8 +26,8 @@ import EditListingWizardTab, {
   LOCATION,
   PRICING,
   PHOTOS,
-} from './CaregiverEditListingWizardTab';
-import css from './EditListingWizard.module.css';
+} from './CaregiverCaregiverEditListingWizardTab';
+import css from './CaregiverEditListingWizard.module.css';
 
 // Show availability calendar only if environment variable availabilityEnabled is true
 const availabilityMaybe = config.enableAvailability ? [AVAILABILITY] : [];
@@ -57,19 +57,19 @@ const STRIPE_ONBOARDING_RETURN_URL_FAILURE = 'failure';
 const tabLabel = (intl, tab) => {
   let key = null;
   if (tab === BIO) {
-    key = 'EditListingWizard.tabLabelBio';
+    key = 'CaregiverEditListingWizard.tabLabelBio';
   } else if (tab === EXPERIENCE) {
-    key = 'EditListingWizard.tabLabelExperience';
+    key = 'CaregiverEditListingWizard.tabLabelExperience';
   } else if (tab === POLICY) {
-    key = 'EditListingWizard.tabLabelPolicy';
+    key = 'CaregiverEditListingWizard.tabLabelPolicy';
   } else if (tab === LOCATION) {
-    key = 'EditListingWizard.tabLabelLocation';
+    key = 'CaregiverEditListingWizard.tabLabelLocation';
   } else if (tab === PRICING) {
-    key = 'EditListingWizard.tabLabelPricing';
+    key = 'CaregiverEditListingWizard.tabLabelPricing';
   } else if (tab === AVAILABILITY) {
-    key = 'EditListingWizard.tabLabelAvailability';
+    key = 'CaregiverEditListingWizard.tabLabelAvailability';
   } else if (tab === PHOTOS) {
-    key = 'EditListingWizard.tabLabelPhotos';
+    key = 'CaregiverEditListingWizard.tabLabelPhotos';
   }
 
   return intl.formatMessage({ id: key });
@@ -200,11 +200,11 @@ const handleGetStripeConnectAccountLinkFn = (getLinkFn, commonParams) => type =>
 
 const RedirectToStripe = ({ redirectFn }) => {
   useEffect(redirectFn('custom_account_verification'), []);
-  return <FormattedMessage id="EditListingWizard.redirectingToStripe" />;
+  return <FormattedMessage id="CaregiverEditListingWizard.redirectingToStripe" />;
 };
 
-// Create a new or edit listing through EditListingWizard
-class EditListingWizard extends Component {
+// Create a new or edit listing through CaregiverEditListingWizard
+class CaregiverEditListingWizard extends Component {
   constructor(props) {
     super(props);
 
@@ -275,7 +275,7 @@ class EditListingWizard extends Component {
     this.props
       .onPayoutDetailsSubmit(values)
       .then(response => {
-        this.props.onManageDisableScrolling('EditListingWizard.payoutModal', false);
+        this.props.onManageDisableScrolling('CaregiverEditListingWizard.payoutModal', false);
       })
       .catch(() => {
         // do nothing
@@ -421,7 +421,7 @@ class EditListingWizard extends Component {
         >
           {TABS.map(tab => {
             return (
-              <EditListingWizardTab
+              <CaregiverEditListingWizardTab
                 {...rest}
                 key={tab}
                 tabId={`${id}_${tab}`}
@@ -449,7 +449,7 @@ class EditListingWizard extends Component {
           })}
         </Tabs>
         <Modal
-          id="EditListingWizard.payoutModal"
+          id="CaregiverEditListingWizard.payoutModal"
           isOpen={this.state.showPayoutDetails}
           onClose={this.handlePayoutModalClose}
           onManageDisableScrolling={onManageDisableScrolling}
@@ -457,9 +457,9 @@ class EditListingWizard extends Component {
         >
           <div className={css.modalPayoutDetailsWrapper}>
             <h1 className={css.modalTitle}>
-              <FormattedMessage id="EditListingWizard.payoutModalTitleOneMoreThing" />
+              <FormattedMessage id="CaregiverEditListingWizard.payoutModalTitleOneMoreThing" />
               <br />
-              <FormattedMessage id="EditListingWizard.payoutModalTitlePayoutPreferences" />
+              <FormattedMessage id="CaregiverEditListingWizard.payoutModalTitlePayoutPreferences" />
             </h1>
             {!currentUserLoaded ? (
               <FormattedMessage id="StripePayoutPage.loadingData" />
@@ -470,7 +470,7 @@ class EditListingWizard extends Component {
             ) : (
               <>
                 <p className={css.modalMessage}>
-                  <FormattedMessage id="EditListingWizard.payoutModalInfo" />
+                  <FormattedMessage id="CaregiverEditListingWizard.payoutModalInfo" />
                 </p>
                 <StripeConnectAccountForm
                   disabled={formDisabled}
@@ -518,7 +518,7 @@ class EditListingWizard extends Component {
   }
 }
 
-EditListingWizard.defaultProps = {
+CaregiverEditListingWizard.defaultProps = {
   className: null,
   currentUser: null,
   rootClassName: null,
@@ -533,7 +533,7 @@ EditListingWizard.defaultProps = {
   stripeAccountLinkError: null,
 };
 
-EditListingWizard.propTypes = {
+CaregiverEditListingWizard.propTypes = {
   id: string.isRequired,
   className: string,
   currentUser: propTypes.currentUser,
@@ -591,4 +591,4 @@ EditListingWizard.propTypes = {
   profileImage: object,
 };
 
-export default compose(withViewport, injectIntl)(EditListingWizard);
+export default compose(withViewport, injectIntl)(CaregiverEditListingWizard);
