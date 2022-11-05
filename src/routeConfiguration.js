@@ -30,7 +30,7 @@ const SearchPage = loadable(() => import(/* webpackChunkName: "SearchPage" */ /*
 const StripePayoutPage = loadable(() => import(/* webpackChunkName: "StripePayoutPage" */ './containers/StripePayoutPage/StripePayoutPage'));
 const TermsOfServicePage = loadable(() => import(/* webpackChunkName: "TermsOfServicePage" */ './containers/TermsOfServicePage/TermsOfServicePage'));
 const TransactionPage = loadable(() => import(/* webpackChunkName: "TransactionPage" */ './containers/TransactionPage/TransactionPage'));
-const CreateCaregiverProfilePage = loadable(() => import(/* webpackChunksFilename: "CreateCaregiverProfilePage" */ './containers/CreateCaregiverProfilePage/CreateCaregiverProfilePage'));
+const CreateProfilePage = loadable(() => import(/* webpackChunksFilename: "CreateProfilePage" */ './containers/CreateProfilePage/CreateProfilePage'));
 
 // Styleguide helps you to review current components and develop new ones
 const StyleguidePage = loadable(() => import(/* webpackChunkName: "StyleguidePage" */ './containers/StyleguidePage/StyleguidePage'));
@@ -69,11 +69,11 @@ const routeConfiguration = () => {
       component: AboutPage,
     },
     {
-      path: '/create-caregiver-profile/:slug/:id/:type/:tab',
-      name: 'CreateCaregiverProfilePage',
-      component: CreateCaregiverProfilePage,
+      path: '/create-profile/:slug/:id/:type/:tab',
+      name: 'CreateProfilePage',
+      component: CreateProfilePage,
       extraProps: { allowOnlyOneListing: true },
-      loadData: pageDataLoadingAPI.CreateCaregiverProfilePage.loadData,
+      loadData: pageDataLoadingAPI.CreateProfilePage.loadData,
     },
     {
       path: '/s',
@@ -334,23 +334,6 @@ const routeConfiguration = () => {
       name: 'PasswordResetPage',
       component: PasswordResetPage ,
     },
-
-    // Do not change this path!
-    //
-    // The API expects that the application implements /verify-email endpoint
-    // {
-    //   path: '/verify-email',
-    //   name: 'CreateProfileRedirect',
-    //   auth: true,
-    //   authPage: 'LoginPage',
-    //   component: () => (
-    //     <NamedRedirect
-    //       name="CreateCaregiverProfilePage"
-    //       params={{ slug: draftSlug, id: draftId, type: 'new', tab: 'bio' }}
-    //     />
-    //   ),
-    //   loadData: pageDataLoadingAPI.EmailVerificationPage.loadData,
-    // },
     {
       path: '/verify-email',
       name: 'EmailVerificationPage',

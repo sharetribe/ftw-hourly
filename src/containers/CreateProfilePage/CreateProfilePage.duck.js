@@ -22,48 +22,52 @@ const errorAction = actionType => error => ({ type: actionType, payload: error, 
 
 // ================ Action types ================ //
 
-export const MARK_TAB_UPDATED = 'app/EditListingPage/MARK_TAB_UPDATED';
-export const CLEAR_UPDATED_TAB = 'app/EditListingPage/CLEAR_UPDATED_TAB';
+export const MARK_TAB_UPDATED = 'app/CreateProfilePage/MARK_TAB_UPDATED';
+export const CLEAR_UPDATED_TAB = 'app/CreateProfilePage/CLEAR_UPDATED_TAB';
 
-export const CREATE_LISTING_DRAFT_REQUEST = 'app/EditListingPage/CREATE_LISTING_DRAFT_REQUEST';
-export const CREATE_LISTING_DRAFT_SUCCESS = 'app/EditListingPage/CREATE_LISTING_DRAFT_SUCCESS';
-export const CREATE_LISTING_DRAFT_ERROR = 'app/EditListingPage/CREATE_LISTING_DRAFT_ERROR';
+export const CREATE_LISTING_DRAFT_REQUEST = 'app/CreateProfilePage/CREATE_LISTING_DRAFT_REQUEST';
+export const CREATE_LISTING_DRAFT_SUCCESS = 'app/CreateProfilePage/CREATE_LISTING_DRAFT_SUCCESS';
+export const CREATE_LISTING_DRAFT_ERROR = 'app/CreateProfilePage/CREATE_LISTING_DRAFT_ERROR';
 
-export const PUBLISH_LISTING_REQUEST = 'app/EditListingPage/PUBLISH_LISTING_REQUEST';
-export const PUBLISH_LISTING_SUCCESS = 'app/EditListingPage/PUBLISH_LISTING_SUCCESS';
-export const PUBLISH_LISTING_ERROR = 'app/EditListingPage/PUBLISH_LISTING_ERROR';
+export const PUBLISH_LISTING_REQUEST = 'app/CreateProfilePage/PUBLISH_LISTING_REQUEST';
+export const PUBLISH_LISTING_SUCCESS = 'app/CreateProfilePage/PUBLISH_LISTING_SUCCESS';
+export const PUBLISH_LISTING_ERROR = 'app/CreateProfilePage/PUBLISH_LISTING_ERROR';
 
-export const UPDATE_LISTING_REQUEST = 'app/EditListingPage/UPDATE_LISTING_REQUEST';
-export const UPDATE_LISTING_SUCCESS = 'app/EditListingPage/UPDATE_LISTING_SUCCESS';
-export const UPDATE_LISTING_ERROR = 'app/EditListingPage/UPDATE_LISTING_ERROR';
+export const UPDATE_LISTING_REQUEST = 'app/CreateProfilePage/UPDATE_LISTING_REQUEST';
+export const UPDATE_LISTING_SUCCESS = 'app/CreateProfilePage/UPDATE_LISTING_SUCCESS';
+export const UPDATE_LISTING_ERROR = 'app/CreateProfilePage/UPDATE_LISTING_ERROR';
 
-export const SHOW_LISTINGS_REQUEST = 'app/EditListingPage/SHOW_LISTINGS_REQUEST';
-export const SHOW_LISTINGS_SUCCESS = 'app/EditListingPage/SHOW_LISTINGS_SUCCESS';
-export const SHOW_LISTINGS_ERROR = 'app/EditListingPage/SHOW_LISTINGS_ERROR';
+export const SHOW_LISTINGS_REQUEST = 'app/CreateProfilePage/SHOW_LISTINGS_REQUEST';
+export const SHOW_LISTINGS_SUCCESS = 'app/CreateProfilePage/SHOW_LISTINGS_SUCCESS';
+export const SHOW_LISTINGS_ERROR = 'app/CreateProfilePage/SHOW_LISTINGS_ERROR';
 
-export const UPLOAD_IMAGE_REQUEST = 'app/EditListingPage/UPLOAD_IMAGE_REQUEST';
-export const UPLOAD_IMAGE_SUCCESS = 'app/EditListingPage/UPLOAD_IMAGE_SUCCESS';
-export const UPLOAD_IMAGE_ERROR = 'app/EditListingPage/UPLOAD_IMAGE_ERROR';
+export const UPLOAD_IMAGE_REQUEST = 'app/CreateProfilePage/UPLOAD_IMAGE_REQUEST';
+export const UPLOAD_IMAGE_SUCCESS = 'app/CreateProfilePage/UPLOAD_IMAGE_SUCCESS';
+export const UPLOAD_IMAGE_ERROR = 'app/CreateProfilePage/UPLOAD_IMAGE_ERROR';
 
-export const UPDATE_IMAGE_ORDER = 'app/EditListingPage/UPDATE_IMAGE_ORDER';
+export const UPDATE_IMAGE_ORDER = 'app/CreateProfilePage/UPDATE_IMAGE_ORDER';
 
-export const REMOVE_LISTING_IMAGE = 'app/EditListingPage/REMOVE_LISTING_IMAGE';
+export const REMOVE_LISTING_IMAGE = 'app/CreateProfilePage/REMOVE_LISTING_IMAGE';
 
-export const FETCH_EXCEPTIONS_REQUEST = 'app/EditListingPage/FETCH_AVAILABILITY_EXCEPTIONS_REQUEST';
-export const FETCH_EXCEPTIONS_SUCCESS = 'app/EditListingPage/FETCH_AVAILABILITY_EXCEPTIONS_SUCCESS';
-export const FETCH_EXCEPTIONS_ERROR = 'app/EditListingPage/FETCH_AVAILABILITY_EXCEPTIONS_ERROR';
+export const FETCH_EXCEPTIONS_REQUEST =
+  'app/CreateProfilePage/FETCH_AVAILABILITY_EXCEPTIONS_REQUEST';
+export const FETCH_EXCEPTIONS_SUCCESS =
+  'app/CreateProfilePage/FETCH_AVAILABILITY_EXCEPTIONS_SUCCESS';
+export const FETCH_EXCEPTIONS_ERROR = 'app/CreateProfilePage/FETCH_AVAILABILITY_EXCEPTIONS_ERROR';
 
-export const ADD_EXCEPTION_REQUEST = 'app/EditListingPage/ADD_AVAILABILITY_EXCEPTION_REQUEST';
-export const ADD_EXCEPTION_SUCCESS = 'app/EditListingPage/ADD_AVAILABILITY_EXCEPTION_SUCCESS';
-export const ADD_EXCEPTION_ERROR = 'app/EditListingPage/ADD_AVAILABILITY_EXCEPTION_ERROR';
+export const ADD_EXCEPTION_REQUEST = 'app/CreateProfilePage/ADD_AVAILABILITY_EXCEPTION_REQUEST';
+export const ADD_EXCEPTION_SUCCESS = 'app/CreateProfilePage/ADD_AVAILABILITY_EXCEPTION_SUCCESS';
+export const ADD_EXCEPTION_ERROR = 'app/CreateProfilePage/ADD_AVAILABILITY_EXCEPTION_ERROR';
 
-export const DELETE_EXCEPTION_REQUEST = 'app/EditListingPage/DELETE_AVAILABILITY_EXCEPTION_REQUEST';
-export const DELETE_EXCEPTION_SUCCESS = 'app/EditListingPage/DELETE_AVAILABILITY_EXCEPTION_SUCCESS';
-export const DELETE_EXCEPTION_ERROR = 'app/EditListingPage/DELETE_AVAILABILITY_EXCEPTION_ERROR';
+export const DELETE_EXCEPTION_REQUEST =
+  'app/CreateProfilePage/DELETE_AVAILABILITY_EXCEPTION_REQUEST';
+export const DELETE_EXCEPTION_SUCCESS =
+  'app/CreateProfilePage/DELETE_AVAILABILITY_EXCEPTION_SUCCESS';
+export const DELETE_EXCEPTION_ERROR = 'app/CreateProfilePage/DELETE_AVAILABILITY_EXCEPTION_ERROR';
 
-export const SAVE_PAYOUT_DETAILS_REQUEST = 'app/EditListingPage/SAVE_PAYOUT_DETAILS_REQUEST';
-export const SAVE_PAYOUT_DETAILS_SUCCESS = 'app/EditListingPage/SAVE_PAYOUT_DETAILS_SUCCESS';
-export const SAVE_PAYOUT_DETAILS_ERROR = 'app/EditListingPage/SAVE_PAYOUT_DETAILS_ERROR';
+export const SAVE_PAYOUT_DETAILS_REQUEST = 'app/CreateProfilePage/SAVE_PAYOUT_DETAILS_REQUEST';
+export const SAVE_PAYOUT_DETAILS_SUCCESS = 'app/CreateProfilePage/SAVE_PAYOUT_DETAILS_SUCCESS';
+export const SAVE_PAYOUT_DETAILS_ERROR = 'app/CreateProfilePage/SAVE_PAYOUT_DETAILS_ERROR';
 
 // ================ Reducer ================ //
 
@@ -376,7 +380,7 @@ export function requestShowListing(actionPayload) {
     return sdk.ownListings
       .show(actionPayload)
       .then(response => {
-        // EditListingPage fetches new listing data, which also needs to be added to global data
+        // CreateProfilePage fetches new listing data, which also needs to be added to global data
         dispatch(addMarketplaceEntities(response));
         dispatch(showListingsSuccess(response));
         return response;

@@ -34,10 +34,10 @@ import {
   removeListingImage,
   clearUpdatedTab,
   savePayoutDetails,
-} from './CreateCaregiverProfilePage.duck';
+} from './CreateProfilePage.duck';
 import { updateProfile, uploadImage } from '../ProfileSettingsPage/ProfileSettingsPage.duck';
 
-import css from './CreateCaregiverProfilePage.module.css';
+import css from './CreateProfilePage.module.css';
 
 const STRIPE_ONBOARDING_RETURN_URL_SUCCESS = 'success';
 const STRIPE_ONBOARDING_RETURN_URL_FAILURE = 'failure';
@@ -49,7 +49,7 @@ const STRIPE_ONBOARDING_RETURN_URL_TYPES = [
 const { UUID } = sdkTypes;
 
 // N.B. All the presentational content needs to be extracted to their own components
-export const CreateCaregiverProfilePageComponent = props => {
+export const CreateProfilePageComponent = props => {
   const {
     currentUser,
     currentUserListing,
@@ -135,7 +135,7 @@ export const CreateCaregiverProfilePageComponent = props => {
     // If we allow only one listing per provider, we need to redirect to correct listing.
     return (
       <NamedRedirect
-        name="CreateCaregiverProfilePage"
+        name="CreateProfilePage"
         params={{
           id: currentUserListing.id.uuid,
           slug: createSlug(currentUserListing.attributes.title),
@@ -192,8 +192,8 @@ export const CreateCaregiverProfilePageComponent = props => {
     const profileImage = image || { imageId: profileImageId };
 
     const title = isNewListingFlow
-      ? intl.formatMessage({ id: 'CreateCaregiverProfilePage.titleCreateListing' })
-      : intl.formatMessage({ id: 'CreateCaregiverProfilePage.titleEditListing' });
+      ? intl.formatMessage({ id: 'CreateProfilePage.titleCreateListing' })
+      : intl.formatMessage({ id: 'CreateProfilePage.titleEditListing' });
 
     return (
       <Page title={title} scrollingDisabled={scrollingDisabled}>
@@ -236,7 +236,7 @@ export const CreateCaregiverProfilePageComponent = props => {
             createStripeAccountError || updateStripeAccountError || fetchStripeAccountError
           }
           stripeAccountLinkError={getAccountLinkError}
-          pageName="CreateCaregiverProfilePage"
+          pageName="CreateProfilePage"
           profileImage={profileImage}
           onUpdateProfile={onUpdateProfile}
           onProfileImageUpload={onProfileImageUpload}
@@ -249,7 +249,7 @@ export const CreateCaregiverProfilePageComponent = props => {
     // If user has come to this page through a direct linkto edit existing listing,
     // we need to load it first.
     const loadingPageMsg = {
-      id: 'CreateCaregiverProfilePage.loadingListingData',
+      id: 'CreateProfilePage.loadingListingData',
     };
     return (
       <Page title={intl.formatMessage(loadingPageMsg)} scrollingDisabled={scrollingDisabled}></Page>
@@ -257,7 +257,7 @@ export const CreateCaregiverProfilePageComponent = props => {
   }
 };
 
-CreateCaregiverProfilePageComponent.defaultProps = {
+CreateProfilePageComponent.defaultProps = {
   createStripeAccountError: null,
   fetchStripeAccountError: null,
   getAccountLinkError: null,
@@ -274,7 +274,7 @@ CreateCaregiverProfilePageComponent.defaultProps = {
   currentUserListingFetched: false,
 };
 
-CreateCaregiverProfilePageComponent.propTypes = {
+CreateProfilePageComponent.propTypes = {
   createStripeAccountError: propTypes.error,
   fetchStripeAccountError: propTypes.error,
   getAccountLinkError: propTypes.error,
@@ -319,7 +319,7 @@ CreateCaregiverProfilePageComponent.propTypes = {
 };
 
 const mapStateToProps = state => {
-  const page = state.CreateCaregiverProfilePage;
+  const page = state.CreateProfilePage;
   const { image, uploadInProgress } = state.ProfileSettingsPage;
 
   const {
@@ -388,9 +388,9 @@ const mapDispatchToProps = dispatch => ({
 // lifecycle hook.
 //
 // See: https://github.com/ReactTraining/react-router/issues/4671
-const CreateCaregiverProfilePage = compose(
+const CreateProfilePage = compose(
   withRouter,
   connect(mapStateToProps, mapDispatchToProps)
-)(injectIntl(CreateCaregiverProfilePageComponent));
+)(injectIntl(CreateProfilePageComponent));
 
-export default CreateCaregiverProfilePage;
+export default CreateProfilePage;

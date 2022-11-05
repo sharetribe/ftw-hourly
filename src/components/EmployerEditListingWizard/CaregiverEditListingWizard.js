@@ -26,7 +26,7 @@ import CaregiverEditListingWizardTab, {
   LOCATION,
   PRICING,
   PHOTOS,
-} from './CaregiverEditListingWizardTab';
+} from './CaregiverCaregiverEditListingWizardTab';
 import css from './CaregiverEditListingWizard.module.css';
 
 // Show availability calendar only if environment variable availabilityEnabled is true

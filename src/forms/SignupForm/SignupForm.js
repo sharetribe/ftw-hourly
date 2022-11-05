@@ -156,9 +156,7 @@ const SignupFormComponent = props => (
 
         handleSubmit(values);
 
-        history.push(
-          `/create-caregiver-profile/draft/00000000-0000-0000-0000-000000000000/new/bio`
-        );
+        history.push(`/create-profile/draft/00000000-0000-0000-0000-000000000000/new/bio`);
       };
 
       return (
