@@ -175,9 +175,6 @@ export class AuthenticationPageComponent extends Component {
       const { fname, lname, ...rest } = values;
       const params = { firstName: fname.trim(), lastName: lname.trim(), ...rest };
       submitSignup(params);
-      //   .then(() => {
-      //   window.location.href = `/create-caregiver-profile/draft/00000000-0000-0000-0000-000000000000/new/bio`;
-      // });
     };
 
     const handleSubmitConfirm = values => {
