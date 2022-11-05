@@ -16,14 +16,19 @@ import { FieldRadioButton, ValidationError } from '..';
 import css from './FieldRadioButtonGroup.module.css';
 
 const FieldRadioButtonRenderer = props => {
-  const { className, rootClassName, label, id, fields, options, meta } = props;
+  const { className, rootClassName, label, id, fields, options, required, meta } = props;
 
   const classes = classNames(rootClassName || css.root, className);
   const listClasses = css.list;
 
   return (
     <fieldset className={classes}>
-      {label ? <legend>{label}</legend> : null}
+      {label ? (
+        <legend>
+          {label}
+          {required ? <span className={css.requiredStar}>*</span> : null}
+        </legend>
+      ) : null}
       <ul className={listClasses}>
         {options.map((option, index) => {
           const fieldId = `${id}.${option.key}`;

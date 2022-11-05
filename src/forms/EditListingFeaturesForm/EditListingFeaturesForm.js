@@ -74,6 +74,7 @@ const EditListingFeaturesFormComponent = props => (
               options={options}
               label={label}
               validate={requiredFieldArrayCheckbox(errorMessageNotSelected)}
+              required={true}
             />
           )}
           {singleSelect && (
@@ -84,6 +85,7 @@ const EditListingFeaturesFormComponent = props => (
               options={options}
               label={label}
               validate={requiredFieldArrayRadio(errorMessageNotSelected)}
+              required={true}
             />
           )}
 

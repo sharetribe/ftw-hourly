@@ -27,3 +27,7 @@
     padding: 4px 0;
   }
 }
+
+.requiredStar {
+  color: red;
+}
