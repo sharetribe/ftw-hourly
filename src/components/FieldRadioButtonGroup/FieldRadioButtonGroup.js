@@ -16,26 +16,10 @@ import { FieldRadioButton, ValidationError } from '..';
 import css from './FieldRadioButtonGroup.module.css';
 
 const FieldRadioButtonRenderer = props => {
-  const {
-    className,
-    rootClassName,
-    label,
-    id,
-    fields,
-    options,
-    invalid,
-    customErrorText,
-    meta,
-  } = props;
+  const { className, rootClassName, label, id, fields, options, meta } = props;
 
   const classes = classNames(rootClassName || css.root, className);
   const listClasses = css.list;
-
-  const { error } = meta;
-
-  const errorText = customErrorText || error;
-
-  const fieldMeta = { touched: invalid, error: errorText };
 
   return (
     <fieldset className={classes}>
@@ -56,7 +40,7 @@ const FieldRadioButtonRenderer = props => {
           );
         })}
       </ul>
-      <ValidationError fieldMeta={fieldMeta} />
+      <ValidationError fieldMeta={{ ...meta }} />
     </fieldset>
   );
 };

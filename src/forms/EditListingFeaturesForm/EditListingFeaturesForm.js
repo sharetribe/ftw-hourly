@@ -9,6 +9,7 @@ import { propTypes } from '../../util/types';
 import config from '../../config';
 import { intlShape } from '../../util/reactIntl';
 import { Button, FieldCheckboxGroup, FieldRadioButtonGroup, Form } from '../../components';
+import { requiredFieldArrayCheckbox, requiredFieldArrayRadio } from '../../util/validators';
 
 import css from './EditListingFeaturesForm.module.css';
 
@@ -59,32 +60,9 @@ const EditListingFeaturesFormComponent = props => (
         </p>
       ) : null;
 
-      const [formInvalid, setFormInvalid] = useState(false);
-
-      const onSubmit = values => {
-        values.preventDefault();
-        setFormInvalid(false);
-
-        if (required) {
-          let checkboxClicked = false;
-          for (let i = 1; i <= options.length; i++) {
-            if (values.target[i].checked) {
-              checkboxClicked = true;
-            }
-          }
-
-          if (!checkboxClicked) {
-            setFormInvalid(true);
-            return;
-          }
-        }
-
-        handleSubmit(values);
-      };
-
       const options = findOptionsForSelectFilter(name, filterConfig);
       return (
-        <Form className={classes} onSubmit={onSubmit}>
+        <Form className={classes} onSubmit={handleSubmit}>
           {errorMessage}
           {errorMessageShowListing}
 
@@ -95,8 +73,7 @@ const EditListingFeaturesFormComponent = props => (
               name={name}
               options={options}
               label={label}
-              invalid={formInvalid}
-              customErrorText={errorMessageNotSelected}
+              validate={requiredFieldArrayCheckbox(errorMessageNotSelected)}
             />
           )}
           {singleSelect && (
@@ -106,8 +83,7 @@ const EditListingFeaturesFormComponent = props => (
               name={name}
               options={options}
               label={label}
-              invalid={formInvalid}
-              customErrorText={errorMessageNotSelected}
+              validate={requiredFieldArrayRadio(errorMessageNotSelected)}
             />
           )}
 
