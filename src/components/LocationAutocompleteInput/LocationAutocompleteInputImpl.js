@@ -319,6 +319,7 @@ class LocationAutocompleteInputImpl extends Component {
       selectedPlace: null,
     });
 
+    this.props.onChangeLoading();
     this.setState({ fetchingPlaceDetails: true });
 
     this.getGeocoder()
@@ -330,6 +331,7 @@ class LocationAutocompleteInputImpl extends Component {
         }
         if (place.address === '') {
           place.address = await getPlaceAddress(place);
+          this.props.onChangeLoading();
         }
 
         this.setState({ fetchingPlaceDetails: false });

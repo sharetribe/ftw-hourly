@@ -37,7 +37,8 @@ export const sanitizeUser = entity => {
   const { bio, displayName, abbreviatedName, publicData, metadata } = profile || {};
 
   const sanitizePublicData = publicData => {
-    // TODO: If you add public data, you should probably sanitize it here.
+    // TODO: If you add user-generated publicdata,
+    // you should probably sanitize it here.
     return publicData ? { publicData } : {};
   };
   const sanitizeMetadata = metadata => {

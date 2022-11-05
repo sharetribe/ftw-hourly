@@ -5,6 +5,25 @@ import { ValidationError } from '../../components';
 import LocationAutocompleteInputImpl from './LocationAutocompleteInputImpl.js';
 
 class LocationAutocompleteInputComponent extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      isLoading: false,
+    };
+
+    this.onChangeLoading = this.onChangeLoading.bind(this);
+  }
+
+  onChangeLoading = () => {
+    this.setState(prevState => {
+      const isLoading = !prevState.isLoading;
+      return { isLoading };
+    });
+
+    console.log(this.state.isLoading);
+  };
+
   render() {
     /* eslint-disable no-unused-vars */
     const { rootClassName, labelClassName, ...restProps } = this.props;
@@ -18,6 +37,7 @@ class LocationAutocompleteInputComponent extends Component {
       ...otherProps,
       input: { ...input, value },
       useCurrentLocation,
+      onChangeLoading: this.onChangeLoading,
     };
     const labelInfo = label ? (
       <label className={labelClassName} htmlFor={input.name}>
@@ -29,7 +49,7 @@ class LocationAutocompleteInputComponent extends Component {
       <div className={rootClassName}>
         {labelInfo}
         <LocationAutocompleteInputImpl {...locationAutocompleteProps} />
-        <ValidationError fieldMeta={meta} />
+        {!this.state.isLoading && <ValidationError fieldMeta={meta} />}
       </div>
     );
   }
