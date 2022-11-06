@@ -53,6 +53,9 @@ const STRIPE_ONBOARDING_RETURN_URL_TYPES = [
 
 const { UUID } = sdkTypes;
 
+const CAREGIVER = 'caregiver';
+const EMPLOYER = 'employer';
+
 // N.B. All the presentational content needs to be extracted to their own components
 export const CreateProfilePageComponent = props => {
   const {
@@ -200,11 +203,11 @@ export const CreateProfilePageComponent = props => {
       ? intl.formatMessage({ id: 'CreateProfilePage.titleCreateListing' })
       : intl.formatMessage({ id: 'CreateProfilePage.titleEditListing' });
 
-    const isCaregiver = currentUser.userType === 'caregiver';
+    const userType = currentUser?.attributes.profile.publicData.userType;
 
-    return (
-      <Page title={title} scrollingDisabled={scrollingDisabled}>
-        {isCaregiver ? (
+    switch (userType) {
+      case CAREGIVER: {
+        return (
           <CaregiverEditListingWizard
             id="CaregiverEditListingWizard"
             className={css.wizard}
@@ -251,7 +254,10 @@ export const CreateProfilePageComponent = props => {
             image={image}
             uploadInProgress={uploadInProgress}
           />
-        ) : (
+        );
+      }
+      case EMPLOYER: {
+        return (
           <EmployerEditListingWizard
             id="CaregiverEditListingWizard"
             className={css.wizard}
@@ -298,18 +304,20 @@ export const CreateProfilePageComponent = props => {
             image={image}
             uploadInProgress={uploadInProgress}
           />
-        )}
-      </Page>
-    );
-  } else {
-    // If user has come to this page through a direct linkto edit existing listing,
-    // we need to load it first.
-    const loadingPageMsg = {
-      id: 'CreateProfilePage.loadingListingData',
-    };
-    return (
-      <Page title={intl.formatMessage(loadingPageMsg)} scrollingDisabled={scrollingDisabled}></Page>
-    );
+        );
+      }
+      default: {
+        const loadingPageMsg = {
+          id: 'CreateProfilePage.loadingListingData',
+        };
+        return (
+          <Page
+            title={intl.formatMessage(loadingPageMsg)}
+            scrollingDisabled={scrollingDisabled}
+          ></Page>
+        );
+      }
+    }
   }
 };
 

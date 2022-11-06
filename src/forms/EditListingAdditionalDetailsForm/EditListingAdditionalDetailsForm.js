@@ -16,7 +16,6 @@ import {
   FieldTextInput,
 } from '../../components';
 import { findOptionsForSelectFilter } from '../../util/search';
-import { useHistory } from 'react-router-dom';
 
 import css from './EditListingAdditionalDetailsForm.module.css';
 
@@ -145,7 +144,6 @@ const EditListingAdditionalDetailsFormComponent = props => (
           {errorMessageCreateListingDraft}
           {errorMessageUpdateListing}
           {errorMessageShowListing}
-          {{ errorMessageOppositePricing }}
 
           <FieldCheckboxGroup
             className={css.features}
