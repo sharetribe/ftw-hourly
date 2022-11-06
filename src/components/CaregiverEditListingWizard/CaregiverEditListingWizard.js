@@ -14,6 +14,7 @@ import {
   LISTING_PAGE_PARAM_TYPES,
 } from '../../util/urlHelpers';
 import { ensureCurrentUser, ensureListing } from '../../util/data';
+import { useHistory } from 'react-router-dom';
 
 import { Modal, NamedRedirect, Tabs, StripeConnectAccountStatusBox } from '..';
 import { StripeConnectAccountForm } from '../../forms';
@@ -269,6 +270,9 @@ class CaregiverEditListingWizard extends Component {
 
   handlePayoutModalClose() {
     this.setState({ showPayoutDetails: false });
+    if (window.location.href.includes('create-profile')) {
+      window.location.href = '/';
+    }
   }
 
   handlePayoutSubmit(values) {
