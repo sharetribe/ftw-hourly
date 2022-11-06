@@ -21,11 +21,7 @@ import {
   stripeAccountClearError,
   getStripeConnectAccountLink,
 } from '../../ducks/stripeConnectAccount.duck';
-import {
-
-  NamedRedirect,
-  Page,
-} from '../../components';
+import { NamedRedirect, Page, EditListingFeaturesForm } from '../../components';
 
 import {
   requestAddAvailabilityException,
@@ -104,6 +100,36 @@ export const CareTypePageComponent = props => {
   const hasStripeOnboardingDataIfNeeded = returnURLType ? !!(currentUser && currentUser.id) : true;
   const showForm = hasStripeOnboardingDataIfNeeded && (isNewURI || currentListing.id);
 
+  const redirectAfterDraftUpdate = (listingId, params, tab, marketplaceTabs, history) => {
+    const currentPathParams = {
+      ...params,
+      type: LISTING_PAGE_PARAM_TYPE_DRAFT,
+      id: listingId,
+    };
+    const routes = routeConfiguration();
+
+    // Replace current "new" path to "draft" path.
+    // Browser's back button should lead to editing current draft instead of creating a new one.
+    const draftURI = createResourceLocatorString('CreateProfilePage', routes, currentPathParams);
+    console.log(draftURI);
+    history.push(draftURI);
+  };
+
+  const handleSubmit = upsertValues => {
+    onCreateListingDraft(upsertValues)
+      .then(r => {
+        // After successful saving of draft data, user should be redirected to Create Profile page
+        redirectAfterDraftUpdate(r.data.data.id.uuid, params, history);
+      })
+      .catch(e => {
+        if (passThrownErrors) {
+          throw e;
+        }
+        // No need for extra actions
+        // Error is logged in EditListingPage.duck file.
+      });
+  };
+
   if (shouldRedirect) {
     const isPendingApproval =
       currentListing && currentListingState === LISTING_STATE_PENDING_APPROVAL;
@@ -156,11 +182,8 @@ export const CareTypePageComponent = props => {
     } = page;
     const errors = {
       createListingDraftError,
-      publishListingError,
       updateListingError,
       showListingsError,
-      uploadImageError,
-      createStripeAccountError,
       fetchExceptionsError,
       addExceptionError,
       deleteExceptionError,
@@ -169,14 +192,70 @@ export const CareTypePageComponent = props => {
     const newListingPublished =
       isDraftURI && currentListing && currentListingState !== LISTING_STATE_DRAFT;
 
-    // Show form if user is posting a new listing or editing existing one
-    const disableForm = page.redirectToListing && !showListingsError;
+    const updateInProgress = page.updateInProgress || page.createListingDraftInProgress;
 
-    const userType = currentUser?.attributes.profile.publicData.userType;
+    const submitButtonTranslationKey = 'CareTypePage.careTypesNextButton';
+    const mess = intl.formatMessage({ id: submitButtonTranslationKey });
+
+    const careTypesFeaturesLabel = intl.formatMessage({
+      id: 'EditListingExperiencePanel.careTypesFormLabel',
+    });
+
+    const user = ensureCurrentUser(currentUser);
+
+    const careTypes = user.publicData && user.publicData.careTypes;
+    const initialValues = { careTypes };
+
+    const userType = user.attributes.profile.publicData.userType;
+
+    const formProps = {
+      className: css.form,
+      onChange,
+      disabled,
+      initialValues,
+      ready,
+      updateInProgress,
+      fetchErrors: errors,
+      intl,
+    };
 
     return (
-      <
-    )
+      <Page className={css.root} title={title} scrollingDisabled={scrollingDisabled}>
+        <LayoutSingleColumn>
+          <LayoutWrapperMain>
+            <div className={css.content}>
+              <EditListingFeaturesForm
+                {...formProps}
+                saveActionMsg={mess}
+                onSubmit={values => {
+                  const { careTypes = [] } = values;
+
+                  const updatedValues = {
+                    publicData: { careTypes },
+                  };
+                  handleSubmit(updatedValues);
+                }}
+                name="careTypes"
+                label={careTypesFeaturesLabel}
+                required={true}
+              />
+              <ProfileSettingsForm
+                className={css.form}
+                currentUser={currentUser}
+                initialValues={{ firstName, lastName, bio, profileImage: user.profileImage }}
+                profileImage={profileImage}
+                onImageUpload={e => onImageUploadHandler(e, onImageUpload)}
+                uploadInProgress={uploadInProgress}
+                updateInProgress={updateInProgress}
+                uploadImageError={uploadImageError}
+                updateProfileError={updateProfileError}
+                onSubmit={handleSubmit}
+              />
+            </div>
+          </LayoutWrapperMain>
+        </LayoutSingleColumn>
+      </Page>
+    );
   }
 };
 

@@ -20,6 +20,7 @@ const listingTab = (listing, selectedPageName) => {
       },
     };
   }
+
   const currentListing = ensureOwnListing(listing);
   const id = currentListing.id.uuid;
   const { title = '', state } = currentListing.attributes;
