@@ -145,6 +145,7 @@ const EditListingAdditionalDetailsFormComponent = props => (
           {errorMessageCreateListingDraft}
           {errorMessageUpdateListing}
           {errorMessageShowListing}
+          {{ errorMessageOppositePricing }}
 
           <FieldCheckboxGroup
             className={css.features}

@@ -7,11 +7,10 @@ import classNames from 'classnames';
 import config from '../../config';
 import { LINE_ITEM_NIGHT, LINE_ITEM_DAY, propTypes } from '../../util/types';
 import * as validators from '../../util/validators';
-import { formatMoney } from '../../util/currency';
+import { formatMoney, convertMoneyToNumber } from '../../util/currency';
 import { types as sdkTypes } from '../../util/sdkLoader';
 import { Button, Form, FieldCurrencyInput, FieldRangeSlider } from '../../components';
 import css from './EditListingPricingForm.module.css';
-import xPermittedCrossDomainPolicies from 'helmet/dist/middlewares/x-permitted-cross-domain-policies';
 
 const { Money } = sdkTypes;
 
@@ -91,18 +90,33 @@ export const EditListingPricingFormComponent = props => (
       const submitDisabled = invalid || disabled || submitInProgress;
       const { updateListingError, showListingsError } = fetchErrors || {};
 
-      const [handles, setHandles] = useState([15, 25]);
-      const [maxPrice, setMaxPrice] = useState(25);
+      // const [handles, setHandles] = useState([15, 25]);
+      // const [maxPrice, setMaxPrice] = useState(25);
 
-      const handleCurrencyFieldChange = value => {
-        setHandles([value[0], value[1]]);
-        setMaxPrice(value[1].toString());
-        setValue('minPrice', value[0].toString());
-        setValue('maxPrice', value[1].toString());
+      // const handleCurrencyFieldChange = value => {
+      //   setHandles([value[0], value[1]]);
+      //   setMaxPrice(value[1].toString());
+      //   setValue('minPrice', value[0].toString());
+      //   setValue('maxPrice', value[1].toString());
+      // };
+
+      const [priceError, setPriceError] = useState(false);
+
+      const onSubmit = e => {
+        e.preventDefault();
+
+        if (
+          Number(e.target[0].value.replace('$', '')) > Number(e.target[1].value.replace('$', ''))
+        ) {
+          setPriceError(true);
+          return;
+        }
+
+        handleSubmit(e);
       };
 
       return (
-        <Form onSubmit={handleSubmit} className={classes}>
+        <Form onSubmit={onSubmit} className={classes}>
           {updateListingError ? (
             <p className={css.error}>
               <FormattedMessage id="EditListingPricingForm.updateFailed" />
@@ -111,6 +125,11 @@ export const EditListingPricingFormComponent = props => (
           {showListingsError ? (
             <p className={css.error}>
               <FormattedMessage id="EditListingPricingForm.showListingFailed" />
+            </p>
+          ) : null}
+          {priceError ? (
+            <p className={css.error}>
+              <FormattedMessage id="EditListingPricingForm.oppositePricingError" />
             </p>
           ) : null}
           <div className={css.currencyFieldContainer}>
@@ -131,7 +150,6 @@ export const EditListingPricingFormComponent = props => (
               placeholder={maximumPricePlaceholderMessage}
               currencyConfig={config.currencyConfig}
               validate={!submitInProgress && maxPriceRequired}
-              value={maxPrice}
             />
           </div>
           {/* <FieldRangeSlider
@@ -144,7 +162,6 @@ export const EditListingPricingFormComponent = props => (
             step={1}
             handles={handles}
           /> */}
-
           <Button
             className={css.submitButton}
             type="submit"

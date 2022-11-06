@@ -280,6 +280,7 @@
   "EditListingPricingForm.maximumPricePerUnit": "Maximum price per hour",
   "EditListingPricingForm.minimumPriceRequired": "You need to add a valid minimum price.",
   "EditListingPricingForm.maximumPriceRequired": "You need to add a valid maximum price.",
+  "EditListingPricingForm.oppositePricingError": "Minimum price must be less than or equal to maximum price",
   "EditListingPricingForm.priceTooLow": "Price should be at least {minPrice}.",
   "EditListingPricingForm.showListingFailed": "Fetching listing data failed",
   "EditListingPricingForm.updateFailed": "Failed to update listing. Please try again.",
