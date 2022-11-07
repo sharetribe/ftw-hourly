@@ -30,7 +30,7 @@ const EditListingPricingPanel = props => {
 
   const classes = classNames(rootClassName || css.root, className);
   const currentListing = ensureOwnListing(listing);
-  const { price } = currentListing.attributes;
+  const { publicData } = currentListing.attributes;
 
   const isPublished = currentListing.id && currentListing.attributes.state !== LISTING_STATE_DRAFT;
   const panelTitle = isPublished ? (
@@ -48,18 +48,29 @@ const EditListingPricingPanel = props => {
     <FormattedMessage id="EditListingPricingPanel.createListingTitle" />
   );
 
-  const priceCurrencyValid = price instanceof Money ? price.currency === config.currency : true;
+  const minPrice = publicData && publicData.minPrice;
+  const maxPrice = publicData && publicData.maxPrice;
+
+  const initialValues = {
+    minPrice: minPrice,
+    maxPrice: maxPrice,
+  };
+
+  const priceCurrencyValid =
+    minPrice instanceof Money && maxPrice instanceof Money
+      ? minPrice.currency === config.currency && maxPrice.currency === config.currency
+      : true;
   const form = priceCurrencyValid ? (
     <EditListingPricingForm
       className={css.form}
-      initialValues={{ price }}
+      initialValues={initialValues}
       onSubmit={values => {
         const { minPrice, maxPrice } = values;
 
         const updateValues = {
           publicData: {
-            minPrice: minPrice.amount,
-            maxPrice: maxPrice.amount,
+            minPrice,
+            maxPrice,
           },
         };
         onSubmit(updateValues);

@@ -7,17 +7,10 @@ import { FormattedMessage } from '../../util/reactIntl';
 
 import { LISTING_STATE_DRAFT } from '../../util/types';
 import { ensureListing } from '../../util/data';
-import { EditListingFeaturesForm, EditListingAdditionalDetailsForm } from '../../forms';
+import { EditListingFeaturesForm } from '../../forms';
 import { ListingLink } from '..';
 
 import css from './EditListingExperienceLevelPanel.module.css';
-
-export const CARE_TYPE = 'care-type';
-export const EXPERIENCE_LEVEL = 'experience-level';
-export const ADDITIONAL_DETAILS = 'additional-details';
-
-const CARE_TYPE_FEATURES_NAME = 'careTypes';
-const EXPERIENCE_LEVEL_FEATURES_NAME = 'experienceLevel';
 
 const EditListingExperienceLevelPanel = props => {
   const {
@@ -33,11 +26,8 @@ const EditListingExperienceLevelPanel = props => {
     updateInProgress,
     errors,
     intl,
-    onChangeQueryParam,
+    submitButtonText,
   } = props;
-
-  const parsed = queryString.parse(location.search);
-  const form = parsed.form;
 
   const classes = classNames(rootClassName || css.root, className);
   const currentListing = ensureListing(listing);
@@ -59,12 +49,8 @@ const EditListingExperienceLevelPanel = props => {
     <FormattedMessage id="EditListingExperienceLevelPanel.createListingTitle" />
   );
 
-  const careTypes = publicData && publicData.careTypes;
-  const initialValues = { careTypes };
-
-  const careTypesFeaturesLabel = intl.formatMessage({
-    id: 'EditListingExperienceLevelPanel.careTypesFormLabel',
-  });
+  const experienceLevel = publicData && publicData.experienceLevel; //;
+  const initialValues = { experienceLevel };
 
   const experienceLevelFeaturesLabel = intl.formatMessage({
     id: 'EditListingExperienceLevelPanel.experienceLevelFormLabel',
@@ -82,96 +68,27 @@ const EditListingExperienceLevelPanel = props => {
     intl,
   };
 
-  switch (form) {
-    case CARE_TYPE: {
-      const submitButtonTranslationKey = 'EditListingExperienceLevelPanel.careTypesNextButton';
-      const mess = intl.formatMessage({ id: submitButtonTranslationKey });
-      return (
-        <div className={classes}>
-          <h1 className={css.title}>{panelTitle}</h1>
-          <EditListingFeaturesForm
-            {...formProps}
-            saveActionMsg={mess}
-            onSubmit={values => {
-              const { careTypes = [] } = values;
+  return (
+    <div className={classes}>
+      <h1 className={css.title}>{panelTitle}</h1>
+      <EditListingFeaturesForm
+        {...formProps}
+        saveActionMsg={submitButtonText}
+        onSubmit={values => {
+          const { experienceLevel } = values;
 
-              const updatedValues = {
-                publicData: { careTypes },
-              };
-              onSubmit(updatedValues);
-            }}
-            name={CARE_TYPE_FEATURES_NAME}
-            label={careTypesFeaturesLabel}
-            required={true}
-          />
-        </div>
-      );
-    }
-    case EXPERIENCE_LEVEL: {
-      const submitButtonTranslationKey =
-        'EditListingExperienceLevelPanel.experienceLevelNextButton';
-      const mess = intl.formatMessage({ id: submitButtonTranslationKey });
-      return (
-        <div className={classes}>
-          <h1 className={css.title}>{panelTitle}</h1>
-          <EditListingFeaturesForm
-            {...formProps}
-            saveActionMsg={mess}
-            onSubmit={values => {
-              const { experienceLevel } = values;
-
-              const updatedValues = {
-                publicData: { experienceLevel },
-              };
-              onSubmit(updatedValues);
-            }}
-            name={EXPERIENCE_LEVEL_FEATURES_NAME}
-            label={experienceLevelFeaturesLabel}
-            singleSelect={true}
-            required={true}
-          />
-        </div>
-      );
-    }
-    case ADDITIONAL_DETAILS: {
-      const submitButtonTranslationKey =
-        'EditListingExperienceLevelPanel.additionalDetailsNextButton';
-      const mess = intl.formatMessage({ id: submitButtonTranslationKey });
-      return (
-        <div className={classes}>
-          <h1 className={css.title}>{panelTitle}</h1>
-          <EditListingAdditionalDetailsForm
-            {...formProps}
-            saveActionMsg={mess}
-            required={true}
-            onSubmit={values => {
-              const {
-                experienceWith,
-                certificationsAndTraining,
-                additionalInfo,
-                covidVaccination,
-                languagesSpoken,
-              } = values;
-
-              const updatedValues = {
-                publicData: {
-                  experienceWith,
-                  certificationsAndTraining,
-                  additionalInfo,
-                  covidVaccination,
-                  languagesSpoken,
-                },
-              };
-
-              onSubmit(updatedValues);
-            }}
-          />
-        </div>
-      );
-    }
-    default:
-      return null;
-  }
+          const updatedValues = {
+            publicData: { experienceLevel },
+          };
+          onSubmit(updatedValues);
+        }}
+        name="experienceLevel"
+        label={experienceLevelFeaturesLabel}
+        singleSelect={true}
+        required={true}
+      />
+    </div>
+  );
 };
 
 EditListingExperienceLevelPanel.defaultProps = {

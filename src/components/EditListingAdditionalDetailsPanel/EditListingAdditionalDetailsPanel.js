@@ -12,13 +12,6 @@ import { ListingLink } from '..';
 
 import css from './EditListingAdditionalDetailsPanel.module.css';
 
-export const CARE_TYPE = 'care-type';
-export const EXPERIENCE_LEVEL = 'experience-level';
-export const ADDITIONAL_DETAILS = 'additional-details';
-
-const CARE_TYPE_FEATURES_NAME = 'careTypes';
-const EXPERIENCE_LEVEL_FEATURES_NAME = 'experienceLevel';
-
 const EditListingAdditionalDetailsPanel = props => {
   const {
     rootClassName,
@@ -33,11 +26,8 @@ const EditListingAdditionalDetailsPanel = props => {
     updateInProgress,
     errors,
     intl,
-    onChangeQueryParam,
+    submitButtonText,
   } = props;
-
-  const parsed = queryString.parse(location.search);
-  const form = parsed.form;
 
   const classes = classNames(rootClassName || css.root, className);
   const currentListing = ensureListing(listing);
@@ -59,16 +49,16 @@ const EditListingAdditionalDetailsPanel = props => {
     <FormattedMessage id="EditListingAdditionalDetailsPanel.createListingTitle" />
   );
 
-  const careTypes = publicData && publicData.careTypes;
-  const initialValues = { careTypes };
-
-  const careTypesFeaturesLabel = intl.formatMessage({
-    id: 'EditListingAdditionalDetailsPanel.careTypesFormLabel',
-  });
-
-  const experienceLevelFeaturesLabel = intl.formatMessage({
-    id: 'EditListingAdditionalDetailsPanel.experienceLevelFormLabel',
-  });
+  const additionalDetails = publicData
+    ? {
+        experienceWith: publicData.experienceWith,
+        certificationsAndTraining: publicData.certificationsAndTraining,
+        additionalInfo: publicData.additionalInfo,
+        covidVaccination: publicData.covidVaccination,
+        languagesSpoken: publicData.languagesSpoken,
+      }
+    : {};
+  const initialValues = { ...additionalDetails };
 
   const formProps = {
     className: css.form,
@@ -82,96 +72,37 @@ const EditListingAdditionalDetailsPanel = props => {
     intl,
   };
 
-  switch (form) {
-    case CARE_TYPE: {
-      const submitButtonTranslationKey = 'EditListingAdditionalDetailsPanel.careTypesNextButton';
-      const mess = intl.formatMessage({ id: submitButtonTranslationKey });
-      return (
-        <div className={classes}>
-          <h1 className={css.title}>{panelTitle}</h1>
-          <EditListingFeaturesForm
-            {...formProps}
-            saveActionMsg={mess}
-            onSubmit={values => {
-              const { careTypes = [] } = values;
+  return (
+    <div className={classes}>
+      <h1 className={css.title}>{panelTitle}</h1>
+      <EditListingAdditionalDetailsForm
+        {...formProps}
+        saveActionMsg={submitButtonText}
+        required={true}
+        onSubmit={values => {
+          const {
+            experienceWith,
+            certificationsAndTraining,
+            additionalInfo,
+            covidVaccination,
+            languagesSpoken,
+          } = values;
 
-              const updatedValues = {
-                publicData: { careTypes },
-              };
-              onSubmit(updatedValues);
-            }}
-            name={CARE_TYPE_FEATURES_NAME}
-            label={careTypesFeaturesLabel}
-            required={true}
-          />
-        </div>
-      );
-    }
-    case EXPERIENCE_LEVEL: {
-      const submitButtonTranslationKey =
-        'EditListingAdditionalDetailsPanel.experienceLevelNextButton';
-      const mess = intl.formatMessage({ id: submitButtonTranslationKey });
-      return (
-        <div className={classes}>
-          <h1 className={css.title}>{panelTitle}</h1>
-          <EditListingFeaturesForm
-            {...formProps}
-            saveActionMsg={mess}
-            onSubmit={values => {
-              const { experienceLevel } = values;
+          const updatedValues = {
+            publicData: {
+              experienceWith,
+              certificationsAndTraining,
+              additionalInfo,
+              covidVaccination,
+              languagesSpoken,
+            },
+          };
 
-              const updatedValues = {
-                publicData: { experienceLevel },
-              };
-              onSubmit(updatedValues);
-            }}
-            name={EXPERIENCE_LEVEL_FEATURES_NAME}
-            label={experienceLevelFeaturesLabel}
-            singleSelect={true}
-            required={true}
-          />
-        </div>
-      );
-    }
-    case ADDITIONAL_DETAILS: {
-      const submitButtonTranslationKey =
-        'EditListingAdditionalDetailsPanel.additionalDetailsNextButton';
-      const mess = intl.formatMessage({ id: submitButtonTranslationKey });
-      return (
-        <div className={classes}>
-          <h1 className={css.title}>{panelTitle}</h1>
-          <EditListingAdditionalDetailsForm
-            {...formProps}
-            saveActionMsg={mess}
-            required={true}
-            onSubmit={values => {
-              const {
-                experienceWith,
-                certificationsAndTraining,
-                additionalInfo,
-                covidVaccination,
-                languagesSpoken,
-              } = values;
-
-              const updatedValues = {
-                publicData: {
-                  experienceWith,
-                  certificationsAndTraining,
-                  additionalInfo,
-                  covidVaccination,
-                  languagesSpoken,
-                },
-              };
-
-              onSubmit(updatedValues);
-            }}
-          />
-        </div>
-      );
-    }
-    default:
-      return null;
-  }
+          onSubmit(updatedValues);
+        }}
+      />
+    </div>
+  );
 };
 
 EditListingAdditionalDetailsPanel.defaultProps = {
