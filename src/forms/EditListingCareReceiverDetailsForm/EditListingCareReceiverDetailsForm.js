@@ -17,9 +17,9 @@ import {
 } from '../../components';
 import { findOptionsForSelectFilter } from '../../util/search';
 
-import css from './EditListingAdditionalDetailsForm.module.css';
+import css from './EditListingCareReceiverDetailsForm.module.css';
 
-const EditListingAdditionalDetailsFormComponent = props => (
+const EditListingCareReceiverDetailsFormComponent = props => (
   <FinalForm
     {...props}
     mutators={{ ...arrayMutators }}
@@ -39,86 +39,92 @@ const EditListingAdditionalDetailsFormComponent = props => (
         fetchErrors,
       } = formRenderProps;
 
-      // Experience With
-      const experienceWithName = intl.formatMessage({
-        id: 'EditListingAdditionalDetailsForm.experienceWithName',
+      // Employer Relationship
+      const employerRelationshipName = intl.formatMessage({
+        id: 'EditListingCareReceiverDetailsForm.employerRelationshipName',
       });
-      const experienceWithOptions = findOptionsForSelectFilter(experienceWithName, filterConfig);
-      const experienceWithLabel = intl.formatMessage({
-        id: 'EditListingAdditionalDetailsForm.experienceWithLabel',
+      const employerRelationshipOptions = [
+        'My parent',
+        'My spouse',
+        'My grandparent',
+        'My friend/extended relative',
+        'Myself',
+      ];
+      const employerRelationshipLabel = intl.formatMessage({
+        id: 'EditListingCareReceiverDetailsForm.employerRelationshipLabel',
       });
 
       // Certifications and Training
       const certificationsName = intl.formatMessage({
-        id: 'EditListingAdditionalDetailsForm.certificationsName',
+        id: 'EditListingCareReceiverDetailsForm.certificationsName',
       });
       const certificationsOptions = findOptionsForSelectFilter(certificationsName, filterConfig);
       const certificationsLabel = intl.formatMessage({
-        id: 'EditListingAdditionalDetailsForm.certificationsLabel',
+        id: 'EditListingCareReceiverDetailsForm.certificationsLabel',
       });
 
       // Additional Information
       const additionalInfoName = intl.formatMessage({
-        id: 'EditListingAdditionalDetailsForm.additionalInfoName',
+        id: 'EditListingCareReceiverDetailsForm.additionalInfoName',
       });
       const additionalInfoOptions = findOptionsForSelectFilter(additionalInfoName, filterConfig);
       const additionalInfoLabel = intl.formatMessage({
-        id: 'EditListingAdditionalDetailsForm.additionalInfoLabel',
+        id: 'EditListingCareReceiverDetailsForm.additionalInfoLabel',
       });
 
       // Covid Vaccination
       const covidVaccinationName = intl.formatMessage({
-        id: 'EditListingAdditionalDetailsForm.covidVaccinationName',
+        id: 'EditListingCareReceiverDetailsForm.covidVaccinationName',
       });
       const covidVaccinationOptions = findOptionsForSelectFilter(
         covidVaccinationName,
         filterConfig
       );
       const covidVaccinationLabel = intl.formatMessage({
-        id: 'EditListingAdditionalDetailsForm.covidVaccinationLabel',
+        id: 'EditListingCareReceiverDetailsForm.covidVaccinationLabel',
       });
       const errorVaccineNotSelected = intl.formatMessage({
-        id: 'EditListingAdditionalDetailsForm.covidVaccinationNotSelected',
+        id: 'EditListingCareReceiverDetailsForm.covidVaccinationNotSelected',
       });
 
       // Languages Spoken
       const languagesSpokenRadioName = intl.formatMessage({
-        id: 'EditListingAdditionalDetailsForm.languagesSpokenRadioName',
+        id: 'EditListingCareReceiverDetailsForm.languagesSpokenRadioName',
       });
       const languagesSpokenRadioOptions = findOptionsForSelectFilter(
         languagesSpokenRadioName,
         filterConfig
       );
       const languagesSpokenRadioLabel = intl.formatMessage({
-        id: 'EditListingAdditionalDetailsForm.languagesSpokenRadioLabel',
+        id: 'EditListingCareReceiverDetailsForm.languagesSpokenRadioLabel',
       });
       const errorLanguagesNotSelected = intl.formatMessage({
-        id: 'EditListingAdditionalDetailsForm.languagesSpokenNotSelected',
+        id: 'EditListingCareReceiverDetailsForm.languagesSpokenNotSelected',
       });
       const languagesSpokenTextName = intl.formatMessage({
-        id: 'EditListingAdditionalDetailsForm.languagesSpokenRadioName',
+        id: 'EditListingCareReceiverDetailsForm.languagesSpokenRadioName',
       });
       const languagesSpokenTextPlaceholder = intl.formatMessage({
-        id: 'EditListingAdditionalDetailsForm.languagesSpokenTextPlaceholder',
+        id: 'EditListingCareReceiverDetailsForm.languagesSpokenTextPlaceholder',
       });
 
       const { updateListingError, createListingDraftError, showListingsError } = fetchErrors || {};
       const errorMessageUpdateListing = updateListingError ? (
         <p className={css.error}>
-          <FormattedMessage id="EditListingAdditionalDetailsForm.updateFailed" />
+          <FormattedMessage id="EditListingCareReceiverDetailsForm.updateFailed" />
         </p>
       ) : null;
 
       // This error happens only on first tab (of EditListingWizard)
       const errorMessageCreateListingDraft = createListingDraftError ? (
         <p className={css.error}>
-          <FormattedMessage id="EditListingAdditionalDetailsForm.createListingDraftError" />
+          <FormattedMessage id="EditListingCareReceiverDetailsForm.createListingDraftError" />
         </p>
       ) : null;
 
       const errorMessageShowListing = showListingsError ? (
         <p className={css.error}>
-          <FormattedMessage id="EditListingAdditionalDetailsForm.showListingFailed" />
+          <FormattedMessage id="EditListingCareReceiverDetailsForm.showListingFailed" />
         </p>
       ) : null;
 
@@ -135,10 +141,10 @@ const EditListingAdditionalDetailsFormComponent = props => (
 
           <FieldCheckboxGroup
             className={css.features}
-            id={experienceWithName}
-            name={experienceWithName}
-            options={experienceWithOptions}
-            label={experienceWithLabel}
+            id={employerRelationshipName}
+            name={employerRelationshipName}
+            options={employerRelationshipOptions}
+            label={employerRelationshipLabel}
           />
           <FieldCheckboxGroup
             className={css.features}
@@ -199,13 +205,13 @@ const EditListingAdditionalDetailsFormComponent = props => (
   />
 );
 
-EditListingAdditionalDetailsFormComponent.defaultProps = {
+EditListingCareReceiverDetailsFormComponent.defaultProps = {
   className: null,
   fetchErrors: null,
   filterConfig: config.custom.filters,
 };
 
-EditListingAdditionalDetailsFormComponent.propTypes = {
+EditListingCareReceiverDetailsFormComponent.propTypes = {
   className: string,
   intl: intlShape.isRequired,
   onSubmit: func.isRequired,
@@ -228,4 +234,4 @@ EditListingAdditionalDetailsFormComponent.propTypes = {
   filterConfig: propTypes.filterConfig,
 };
 
-export default compose(injectIntl)(EditListingAdditionalDetailsFormComponent);
+export default compose(injectIntl)(EditListingCareReceiverDetailsFormComponent);

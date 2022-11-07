@@ -168,6 +168,7 @@ export { default as TermsOfService } from './TermsOfService/TermsOfService';
 export { default as EditListingAdditionalDetailsPanel } from './EditListingAdditionalDetailsPanel/EditListingAdditionalDetailsPanel';
 export { default as EditListingAvailabilityPanel } from './EditListingAvailabilityPanel/EditListingAvailabilityPanel';
 export { default as EditListingCareTypesPanel } from './EditListingCareTypesPanel/EditListingCareTypesPanel';
+export { default as EditListingCareReceiverDetailsPanel } from './EditListingCareReceiverDetailsPanel/EditListingCareReceiverDetailsPanel';
 export { default as EditListingBioPanel } from './EditListingBioPanel/EditListingBioPanel';
 export { default as EditListingExperienceLevelPanel } from './EditListingExperienceLevelPanel/EditListingExperienceLevelPanel';
 export { default as EditListingLocationPanel } from './EditListingLocationPanel/EditListingLocationPanel';
