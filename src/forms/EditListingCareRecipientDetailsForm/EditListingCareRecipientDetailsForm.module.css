@@ -25,8 +25,10 @@
   }
 }
 
-.languagesRadio {
-  margin-bottom: 12px;
+.select {
+  margin-top: 1.5rem;
+  margin-bottom: 2.5rem;
+  width: 4rem;
 }
 
 .error {
@@ -41,18 +43,11 @@
   }
 }
 
-.additionalLanguages {
-  composes: formMargins;
-  padding-top: 0rem;
-}
-
-.description {
+.textarea {
   composes: formMargins;
   flex-shrink: 0;
-}
-
-.certificate {
-  composes: formMargins;
+  margin-top: 1.5rem;
+  margin-bottom: 4rem;
 }
 
 .submitButton {

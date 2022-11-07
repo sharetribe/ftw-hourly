@@ -156,12 +156,6 @@ const SignupFormComponent = props => (
 
         handleSubmit(values);
 
-        // if (values.target[0].value === 'caregiver') {
-        //   history.push(`/create-profile/draft/00000000-0000-0000-0000-000000000000/new/bio`);
-        // } else {
-        //   history.push(`/create-profile/draft/00000000-0000-0000-0000-000000000000/new/`);
-        // }
-
         history.push(`/select-care-types/draft/00000000-0000-0000-0000-000000000000/new`);
       };
 

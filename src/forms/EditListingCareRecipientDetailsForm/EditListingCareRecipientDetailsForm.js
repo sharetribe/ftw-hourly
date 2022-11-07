@@ -6,7 +6,14 @@ import { intlShape, injectIntl, FormattedMessage } from '../../util/reactIntl';
 import arrayMutators from 'final-form-arrays';
 import classNames from 'classnames';
 import { propTypes } from '../../util/types';
-import { requiredFieldArrayCheckbox, requiredFieldArrayRadio } from '../../util/validators';
+import {
+  requiredFieldArrayCheckbox,
+  requiredFieldArrayRadio,
+  required,
+  maxLength,
+  minLength,
+  composeValidators,
+} from '../../util/validators';
 import config from '../../config';
 import {
   Form,
@@ -14,10 +21,14 @@ import {
   FieldCheckboxGroup,
   FieldRadioButtonGroup,
   FieldTextInput,
+  FieldSelect,
 } from '../../components';
 import { findOptionsForSelectFilter } from '../../util/search';
 
 import css from './EditListingCareRecipientDetailsForm.module.css';
+
+const RECIPIENT_DETAILS_MIN_LENGTH = 100;
+const RECIPIENT_DETAILS_MAX_LENGTH = 700;
 
 const EditListingCareRecipientDetailsFormComponent = props => (
   <FinalForm
@@ -72,50 +83,38 @@ const EditListingCareRecipientDetailsFormComponent = props => (
         id: 'EditListingCareRecipientDetailsForm.genderErrorMessage',
       });
 
-      // Additional Information
-      const additionalInfoName = intl.formatMessage({
-        id: 'EditListingCareRecipientDetailsForm.additionalInfoName',
+      // Age
+      const ageSelectLabel = intl.formatMessage({
+        id: 'EditListingCareRecipientDetailsForm.ageSelectLabel',
       });
-      const additionalInfoOptions = findOptionsForSelectFilter(additionalInfoName, filterConfig);
-      const additionalInfoLabel = intl.formatMessage({
-        id: 'EditListingCareRecipientDetailsForm.additionalInfoLabel',
-      });
+      const ageSelectOptions = [
+        { value: '30s', label: "30's" },
+        { value: '40s', label: "40's" },
+        { value: '50s', label: "50's" },
+        { value: '60s', label: "60's" },
+        { value: '70s', label: "70's" },
+        { value: '80s', label: "80's" },
+        { value: '90s', label: "90's" },
+        { value: '100s', label: "100's" },
+      ];
 
-      // Covid Vaccination
-      const covidVaccinationName = intl.formatMessage({
-        id: 'EditListingCareRecipientDetailsForm.covidVaccinationName',
+      // Recipient Details
+      const recipientDetailsMessage = intl.formatMessage({
+        id: 'EditListingCareRecipientDetailsForm.recipientDetailsLabel',
       });
-      const covidVaccinationOptions = findOptionsForSelectFilter(
-        covidVaccinationName,
-        filterConfig
+      const recipientDetailsPlaceholderMessage = intl.formatMessage({
+        id: 'EditListingCareRecipientDetailsForm.recipientDetailsPlaceholder',
+      });
+      const lengthRecipientDetailsMessage = intl.formatMessage(
+        { id: 'EditListingCareRecipientDetailsForm.recipientDetailsLength' },
+        {
+          maxLength: RECIPIENT_DETAILS_MAX_LENGTH,
+        }
       );
-      const covidVaccinationLabel = intl.formatMessage({
-        id: 'EditListingCareRecipientDetailsForm.covidVaccinationLabel',
-      });
-      const errorVaccineNotSelected = intl.formatMessage({
-        id: 'EditListingCareRecipientDetailsForm.covidVaccinationNotSelected',
-      });
-
-      // Languages Spoken
-      const languagesSpokenRadioName = intl.formatMessage({
-        id: 'EditListingCareRecipientDetailsForm.languagesSpokenRadioName',
-      });
-      const languagesSpokenRadioOptions = findOptionsForSelectFilter(
-        languagesSpokenRadioName,
-        filterConfig
+      const maxLength700Message = maxLength(
+        lengthRecipientDetailsMessage,
+        RECIPIENT_DETAILS_MAX_LENGTH
       );
-      const languagesSpokenRadioLabel = intl.formatMessage({
-        id: 'EditListingCareRecipientDetailsForm.languagesSpokenRadioLabel',
-      });
-      const errorLanguagesNotSelected = intl.formatMessage({
-        id: 'EditListingCareRecipientDetailsForm.languagesSpokenNotSelected',
-      });
-      const languagesSpokenTextName = intl.formatMessage({
-        id: 'EditListingCareRecipientDetailsForm.languagesSpokenRadioName',
-      });
-      const languagesSpokenTextPlaceholder = intl.formatMessage({
-        id: 'EditListingCareRecipientDetailsForm.languagesSpokenTextPlaceholder',
-      });
 
       const { updateListingError, createListingDraftError, showListingsError } = fetchErrors || {};
       const errorMessageUpdateListing = updateListingError ? (
@@ -157,7 +156,7 @@ const EditListingCareRecipientDetailsFormComponent = props => (
             required={true}
             validate={requiredFieldArrayRadio(recipientRelationshipErrorMessage)}
           />
-          <FieldCheckboxGroup
+          <FieldRadioButtonGroup
             className={css.features}
             id={genderName}
             name={genderName}
@@ -166,42 +165,26 @@ const EditListingCareRecipientDetailsFormComponent = props => (
             required={true}
             validate={requiredFieldArrayRadio(genderErrorMessage)}
           />
-          <FieldCheckboxGroup
-            className={css.features}
-            id={additionalInfoName}
-            name={additionalInfoName}
-            options={additionalInfoOptions}
-            label={additionalInfoLabel}
+          <label htmlFor="age">{ageSelectLabel}</label>
+          <FieldSelect className={css.select} id="age" name="age">
+            {ageSelectOptions.map(item => {
+              return (
+                <option key={item.value} value={item.value}>
+                  {item.label}
+                </option>
+              );
+            })}
+          </FieldSelect>
+          <label htmlFor="recipientDetails">{recipientDetailsMessage}</label>
+          <FieldTextInput
+            id="recipientDetails"
+            name="recipientDetails"
+            className={css.textarea}
+            type="textarea"
+            placeholder={recipientDetailsPlaceholderMessage}
+            maxLength={RECIPIENT_DETAILS_MAX_LENGTH}
+            validate={maxLength700Message}
           />
-          <FieldRadioButtonGroup
-            className={css.features}
-            id={covidVaccinationName}
-            name={covidVaccinationName}
-            options={covidVaccinationOptions}
-            label={covidVaccinationLabel}
-            required={true}
-            validate={requiredFieldArrayRadio(errorVaccineNotSelected)}
-          />
-
-          <div>
-            <FieldCheckboxGroup
-              className={css.features && css.languagesRadio}
-              id={languagesSpokenRadioName}
-              name={languagesSpokenRadioName}
-              options={languagesSpokenRadioOptions}
-              label={languagesSpokenRadioLabel}
-              required={true}
-              validate={requiredFieldArrayCheckbox(errorLanguagesNotSelected)}
-            />
-            {/* {May need to add custom onChange to this to integrate with languagesSpoken} */}
-            <FieldTextInput
-              id={languagesSpokenTextName}
-              name={languagesSpokenTextName}
-              className={css.additionalLanguages}
-              type="text"
-              placeholder={languagesSpokenTextPlaceholder}
-            />
-          </div>
 
           <Button
             className={css.submitButton}
