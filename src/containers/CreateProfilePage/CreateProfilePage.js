@@ -23,7 +23,7 @@ import {
 } from '../../ducks/stripeConnectAccount.duck';
 import {
   CaregiverEditListingWizard,
-  // EmployerEditListingWizard,
+  EmployerEditListingWizard,
   NamedRedirect,
   Page,
 } from '../../components';
@@ -103,8 +103,7 @@ export const CreateProfilePageComponent = props => {
   const isNewListingFlow = isNewURI || isDraftURI;
 
   const listingId = currentUserListing?.id || (id ? new UUID(id) : null);
-  const listing = getOwnListing(listingId);
-  const currentListing = ensureOwnListing(listing);
+  const currentListing = ensureOwnListing(currentUserListing || null);
   const { state: currentListingState } = currentListing.attributes;
 
   const isPastDraft = currentListingState && currentListingState !== LISTING_STATE_DRAFT;
@@ -256,7 +255,54 @@ export const CreateProfilePageComponent = props => {
           />
         );
       case EMPLOYER:
-        return null;
+        return (
+          <EmployerEditListingWizard
+            id="EditListingWizard"
+            className={css.wizard}
+            params={params}
+            disabled={disableForm}
+            errors={errors}
+            fetchInProgress={fetchInProgress}
+            newListingPublished={newListingPublished}
+            history={history}
+            images={images}
+            listing={currentListing}
+            onAddAvailabilityException={onAddAvailabilityException}
+            onDeleteAvailabilityException={onDeleteAvailabilityException}
+            onUpdateListing={onUpdateListing}
+            onCreateListingDraft={onCreateListingDraft}
+            onPublishListingDraft={onPublishListingDraft}
+            onPayoutDetailsFormChange={onPayoutDetailsFormChange}
+            onPayoutDetailsSubmit={onPayoutDetailsFormSubmit}
+            onGetStripeConnectAccountLink={onGetStripeConnectAccountLink}
+            getAccountLinkInProgress={getAccountLinkInProgress}
+            onImageUpload={onImageUpload}
+            onUpdateImageOrder={onUpdateImageOrder}
+            onRemoveImage={onRemoveListingImage}
+            onChange={onChange}
+            currentUser={currentUser}
+            onManageDisableScrolling={onManageDisableScrolling}
+            stripeOnboardingReturnURL={params.returnURLType}
+            updatedTab={page.updatedTab}
+            updateInProgress={page.updateInProgress || page.createListingDraftInProgress}
+            fetchExceptionsInProgress={page.fetchExceptionsInProgress}
+            availabilityExceptions={page.availabilityExceptions}
+            payoutDetailsSaveInProgress={page.payoutDetailsSaveInProgress}
+            payoutDetailsSaved={page.payoutDetailsSaved}
+            stripeAccountFetched={stripeAccountFetched}
+            stripeAccount={stripeAccount}
+            stripeAccountError={
+              createStripeAccountError || updateStripeAccountError || fetchStripeAccountError
+            }
+            stripeAccountLinkError={getAccountLinkError}
+            pageName="CreateProfilePage"
+            profileImage={profileImage}
+            onUpdateProfile={onUpdateProfile}
+            onProfileImageUpload={onProfileImageUpload}
+            image={image}
+            uploadInProgress={uploadInProgress}
+          />
+        );
       default: {
         const loadingPageMsg = {
           id: 'CreateProfilePage.loadingListingData',

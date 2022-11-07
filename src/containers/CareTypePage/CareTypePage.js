@@ -81,7 +81,7 @@ export const CareTypePageComponent = props => {
       type: LISTING_PAGE_PARAM_TYPE_DRAFT,
       id: listingId,
       // Change depending on user type
-      tab: 'bio',
+      tab: userType === 'caregiver' ? 'bio' : 'location',
     };
     const routes = routeConfiguration();
 
@@ -140,7 +140,7 @@ export const CareTypePageComponent = props => {
           id: currentUserListing.id.uuid,
           slug: createSlug(currentUserListing.attributes.title),
           type: LISTING_PAGE_PARAM_TYPE_EDIT,
-          tab: 'description',
+          tab: userType === 'caregiver' ? 'bio' : 'location',
         }}
       />
     );

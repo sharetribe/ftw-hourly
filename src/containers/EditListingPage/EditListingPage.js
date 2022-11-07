@@ -21,7 +21,14 @@ import {
   stripeAccountClearError,
   getStripeConnectAccountLink,
 } from '../../ducks/stripeConnectAccount.duck';
-import { CaregiverEditListingWizard, Footer, NamedRedirect, Page, UserNav } from '../../components';
+import {
+  CaregiverEditListingWizard,
+  EmployerEditListingWizard,
+  Footer,
+  NamedRedirect,
+  Page,
+  UserNav,
+} from '../../components';
 import { TopbarContainer } from '../../containers';
 
 import {
@@ -205,7 +212,7 @@ export const EditListingPageComponent = props => {
     if (userType === CAREGIVER) {
       editListingWizard = (
         <CaregiverEditListingWizard
-          id="EditListingWizard"
+          id="CaregiverEditListingWizard"
           className={css.wizard}
           params={params}
           disabled={disableForm}
@@ -252,7 +259,54 @@ export const EditListingPageComponent = props => {
         />
       );
     } else if (userType === EMPLOYER) {
-      editListingWizard = null;
+      editListingWizard = (
+        <EmployerEditListingWizard
+          id="EmployerEditListingWizard"
+          className={css.wizard}
+          params={params}
+          disabled={disableForm}
+          errors={errors}
+          fetchInProgress={fetchInProgress}
+          newListingPublished={newListingPublished}
+          history={history}
+          images={images}
+          listing={currentListing}
+          onAddAvailabilityException={onAddAvailabilityException}
+          onDeleteAvailabilityException={onDeleteAvailabilityException}
+          onUpdateListing={onUpdateListing}
+          onCreateListingDraft={onCreateListingDraft}
+          onPublishListingDraft={onPublishListingDraft}
+          onPayoutDetailsFormChange={onPayoutDetailsFormChange}
+          onPayoutDetailsSubmit={onPayoutDetailsFormSubmit}
+          onGetStripeConnectAccountLink={onGetStripeConnectAccountLink}
+          getAccountLinkInProgress={getAccountLinkInProgress}
+          onImageUpload={onImageUpload}
+          onUpdateImageOrder={onUpdateImageOrder}
+          onRemoveImage={onRemoveListingImage}
+          onChange={onChange}
+          currentUser={currentUser}
+          onManageDisableScrolling={onManageDisableScrolling}
+          stripeOnboardingReturnURL={params.returnURLType}
+          updatedTab={page.updatedTab}
+          updateInProgress={page.updateInProgress || page.createListingDraftInProgress}
+          fetchExceptionsInProgress={page.fetchExceptionsInProgress}
+          availabilityExceptions={page.availabilityExceptions}
+          payoutDetailsSaveInProgress={page.payoutDetailsSaveInProgress}
+          payoutDetailsSaved={page.payoutDetailsSaved}
+          stripeAccountFetched={stripeAccountFetched}
+          stripeAccount={stripeAccount}
+          stripeAccountError={
+            createStripeAccountError || updateStripeAccountError || fetchStripeAccountError
+          }
+          stripeAccountLinkError={getAccountLinkError}
+          pageName="EditListingPage"
+          profileImage={profileImage}
+          onUpdateProfile={onUpdateProfile}
+          onProfileImageUpload={onProfileImageUpload}
+          image={image}
+          uploadInProgress={uploadInProgress}
+        />
+      );
     } else {
       const loadingPageMsg = {
         id: 'CreateProfilePage.loadingListingData',
