@@ -23,6 +23,7 @@ import {
 
 import css from './CaregiverEditListingWizard.module.css';
 
+export const CARETYPES = 'careTypes';
 export const AVAILABILITY = 'availability';
 export const BIO = 'bio';
 export const EXPERIENCE = 'experience';
@@ -32,7 +33,16 @@ export const PRICING = 'pricing';
 export const PHOTOS = 'photos';
 
 // CaregiverEditListingWizardTab component supports these tabs
-export const SUPPORTED_TABS = [BIO, EXPERIENCE, POLICY, LOCATION, PRICING, AVAILABILITY, PHOTOS];
+export const SUPPORTED_TABS = [
+  CARETYPES,
+  BIO,
+  EXPERIENCE,
+  POLICY,
+  LOCATION,
+  PRICING,
+  AVAILABILITY,
+  PHOTOS,
+];
 
 const pathParamsToNextTab = (params, tab, marketplaceTabs) => {
   const nextTabIndex = marketplaceTabs.findIndex(s => s === tab) + 1;
@@ -194,6 +204,18 @@ const CaregiverEditListingWizardTab = props => {
   };
 
   switch (tab) {
+    case CARETYPES: {
+      const submitButtonTranslationKey = 'CaregiverEditListingWizard.saveCareTypes';
+      return (
+        <EditListingCareTypesPanel
+          {...panelProps(CARETYPES)}
+          submitButtonText={intl.formatMessage({ id: submitButtonTranslationKey })}
+          onSubmit={values => {
+            onCompleteCaregiverEditListingWizardTab(tab, values);
+          }}
+        />
+      );
+    }
     case BIO: {
       const submitButtonTranslationKey = isNewListingFlow
         ? 'CaregiverEditListingWizard.saveNewBio'
@@ -318,6 +340,7 @@ CaregiverEditListingWizardTab.defaultProps = {
   listing: null,
   updatedTab: null,
   availabilityExceptions: [],
+  pageName: 'EditListingPage',
 };
 
 CaregiverEditListingWizardTab.propTypes = {

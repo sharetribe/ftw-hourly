@@ -20,6 +20,7 @@ import { Modal, NamedRedirect, Tabs, StripeConnectAccountStatusBox } from '..';
 import { StripeConnectAccountForm } from '../../forms';
 
 import CaregiverEditListingWizardTab, {
+  CARETYPES,
   AVAILABILITY,
   BIO,
   EXPERIENCE,
@@ -32,6 +33,7 @@ import css from './CaregiverEditListingWizard.module.css';
 
 // Show availability calendar only if environment variable availabilityEnabled is true
 const availabilityMaybe = config.enableAvailability ? [AVAILABILITY] : [];
+const careTypesMaybe = this.props.pageName === 'EditListingPage' ? [CARETYPES] : [];
 
 // You can reorder these panels.
 // Note 1: You need to change save button translations for new listing flow
@@ -40,6 +42,7 @@ const availabilityMaybe = config.enableAvailability ? [AVAILABILITY] : [];
 // Note 3: in FTW-hourly template we don't use the POLICY tab so it's commented out.
 // If you want to add a free text field to your listings you can enable the POLICY tab
 export const TABS = [
+  ...careTypesMaybe,
   BIO,
   EXPERIENCE,
   //POLICY,
@@ -57,7 +60,9 @@ const STRIPE_ONBOARDING_RETURN_URL_FAILURE = 'failure';
 
 const tabLabel = (intl, tab) => {
   let key = null;
-  if (tab === BIO) {
+  if (tab === CARETYPES) {
+    key = 'CaregiverEditListingWizard.tabLabelCareTypes';
+  } else if (tab === BIO) {
     key = 'CaregiverEditListingWizard.tabLabelBio';
   } else if (tab === EXPERIENCE) {
     key = 'CaregiverEditListingWizard.tabLabelExperience';
@@ -96,6 +101,8 @@ const tabCompleted = (tab, listing) => {
   const images = listing.images;
 
   switch (tab) {
+    case CARETYPES:
+      return !!(publicData && publicData.careTypes);
     case BIO:
       return !!(description && title);
     // TODO: Update publicData to be verified
@@ -535,6 +542,7 @@ CaregiverEditListingWizard.defaultProps = {
   fetchStripeAccountError: null,
   stripeAccountError: null,
   stripeAccountLinkError: null,
+  pageName: 'EditListingPage',
 };
 
 CaregiverEditListingWizard.propTypes = {
