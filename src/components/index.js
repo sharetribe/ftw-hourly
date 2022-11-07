@@ -166,6 +166,7 @@ export { default as ReviewModal } from './ReviewModal/ReviewModal';
 export { default as PrivacyPolicy } from './PrivacyPolicy/PrivacyPolicy';
 export { default as TermsOfService } from './TermsOfService/TermsOfService';
 export { default as EditListingAvailabilityPanel } from './EditListingAvailabilityPanel/EditListingAvailabilityPanel';
+export { default as EditListingCareTypesPanel } from './EditListingCareTypesPanel/EditListingCareTypesPanel';
 export { default as EditListingBioPanel } from './EditListingBioPanel/EditListingBioPanel';
 export { default as EditListingExperiencePanel } from './EditListingExperiencePanel/EditListingExperiencePanel';
 export { default as EditListingLocationPanel } from './EditListingLocationPanel/EditListingLocationPanel';

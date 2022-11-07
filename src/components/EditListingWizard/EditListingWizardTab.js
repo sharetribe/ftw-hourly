@@ -17,7 +17,7 @@ import {
   EditListingExperiencePanel,
   EditListingLocationPanel,
   EditListingPhotosPanel,
-  EditListingPoliciesPanel,
+  EditListingCareTypesPanel,
   EditListingPricingPanel,
 } from '..';
 
@@ -200,12 +200,15 @@ const EditListingWizardTab = props => {
       // newListingPublished and fetchInProgress are flags for the last wizard tab
       ready: newListingPublished,
       disabled: fetchInProgress,
+      currentUser,
     };
   };
 
   switch (tab) {
     case CARETYPES: {
-      const submitButtonTranslationKey = 'EditListingWizard.saveCareTypes';
+      const submitButtonTranslationKey = isNewListingFlow
+        ? 'EditListingWizard.saveNewCareTypes'
+        : 'EditListingWizard.saveEditCareTypes';
       return (
         <EditListingCareTypesPanel
           {...panelProps(CARETYPES)}
@@ -325,7 +328,6 @@ const EditListingWizardTab = props => {
             onCompleteEditListingWizardTab(tab, values);
           }}
           onUpdateImageOrder={onUpdateImageOrder}
-          currentUser={currentUser}
           onProfileImageUpload={onProfileImageUpload}
           uploadInProgress={uploadInProgress}
         />
