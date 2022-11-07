@@ -14,7 +14,8 @@ import { createResourceLocatorString } from '../../util/routes';
 import {
   EditListingAvailabilityPanel,
   EditListingBioPanel,
-  EditListingExperiencePanel,
+  EditListingExperienceLevelPanel,
+  EditListingAdditionalDetailsPanel,
   EditListingLocationPanel,
   EditListingPhotosPanel,
   EditListingCareTypesPanel,
@@ -26,7 +27,8 @@ import css from './EditListingWizard.module.css';
 export const CARETYPES = 'careTypes';
 export const AVAILABILITY = 'availability';
 export const BIO = 'bio';
-export const EXPERIENCE = 'experience';
+export const EXPERIENCE_LEVEL = 'experience-level';
+export const ADDITIONAL_DETAILS = 'additional-details';
 export const POLICY = 'policy';
 export const LOCATION = 'location';
 export const PRICING = 'pricing';
@@ -36,7 +38,8 @@ export const PHOTOS = 'photos';
 export const SUPPORTED_TABS = [
   CARETYPES,
   BIO,
-  EXPERIENCE,
+  EXPERIENCE_LEVEL,
+  ADDITIONAL_DETAILS,
   POLICY,
   LOCATION,
   PRICING,
@@ -118,30 +121,10 @@ const EditListingWizardTab = props => {
       history.replace(draftURI);
     }
 
-    const currentSearch = history.location.search;
     // Redirect to next tab
     const nextPathParams = pathParamsToNextTab(currentPathParams, tab, marketplaceTabs);
-    const searchString =
-      nextPathParams.tab == 'experience' && tab == 'bio'
-        ? { form: 'care-type' }
-        : tab == 'experience' && currentSearch == '?form=care-type'
-        ? { form: 'experience-level' }
-        : tab == 'experience' && currentSearch == '?form=experience-level'
-        ? { form: 'additional-details' }
-        : {};
 
-    nextPathParams.tab =
-      tab == 'experience' &&
-      (currentSearch == '?form=care-type' || currentSearch == '?form=experience-level')
-        ? 'experience'
-        : nextPathParams.tab;
-
-    const to = createResourceLocatorString(
-      pageName || 'EditListingPage',
-      routes,
-      nextPathParams,
-      searchString
-    );
+    const to = createResourceLocatorString(pageName || 'EditListingPage', routes, nextPathParams);
     console.log(to);
     history.push(to);
   };
@@ -233,13 +216,27 @@ const EditListingWizardTab = props => {
         />
       );
     }
-    case EXPERIENCE: {
+    case EXPERIENCE_LEVEL: {
       const submitButtonTranslationKey = isNewListingFlow
-        ? 'EditListingWizard.saveNewExperience'
-        : 'EditListingWizard.saveEditExperience';
+        ? 'EditListingWizard.saveNewExperienceLevel'
+        : 'EditListingWizard.saveEditExperienceLevel';
       return (
-        <EditListingExperiencePanel
-          {...panelProps(EXPERIENCE)}
+        <EditListingExperienceLevelPanel
+          {...panelProps(EXPERIENCE_LEVEL)}
+          submitButtonText={intl.formatMessage({ id: submitButtonTranslationKey })}
+          onSubmit={values => {
+            onCompleteEditListingWizardTab(tab, values);
+          }}
+        />
+      );
+    }
+    case ADDITIONAL_DETAILS: {
+      const submitButtonTranslationKey = isNewListingFlow
+        ? 'EditListingWizard.saveNewAdditionalDetails'
+        : 'EditListingWizard.saveEditAdditionalDetails';
+      return (
+        <EditListingAdditionalDetailsPanel
+          {...panelProps(ADDITIONAL_DETAILS)}
           submitButtonText={intl.formatMessage({ id: submitButtonTranslationKey })}
           onSubmit={values => {
             onCompleteEditListingWizardTab(tab, values);

@@ -22,7 +22,8 @@ import EditListingWizardTab, {
   CARETYPES,
   AVAILABILITY,
   BIO,
-  EXPERIENCE,
+  EXPERIENCE_LEVEL,
+  ADDITIONAL_DETAILS,
   POLICY,
   LOCATION,
   PRICING,
@@ -43,7 +44,8 @@ const careTypesMaybe = window.location.href.includes('create-profile') ? [] : [C
 export const TABS = [
   ...careTypesMaybe,
   BIO,
-  EXPERIENCE,
+  EXPERIENCE_LEVEL,
+  ADDITIONAL_DETAILS,
   //POLICY,
   LOCATION,
   PRICING,
@@ -63,8 +65,10 @@ const tabLabel = (intl, tab) => {
     key = 'EditListingWizard.tabLabelCareTypes';
   } else if (tab === BIO) {
     key = 'EditListingWizard.tabLabelBio';
-  } else if (tab === EXPERIENCE) {
-    key = 'EditListingWizard.tabLabelExperience';
+  } else if (tab === EXPERIENCE_LEVEL) {
+    key = 'EditListingWizard.tabLabelExperienceLevel';
+  } else if (tab === ADDITIONAL_DETAILS) {
+    key = 'EditListingWizard.tabLabelAdditionalDetails';
   } else if (tab === POLICY) {
     key = 'EditListingWizard.tabLabelPolicy';
   } else if (tab === LOCATION) {
@@ -105,13 +109,10 @@ const tabCompleted = (tab, listing) => {
     case BIO:
       return !!(description && title);
     // TODO: Update publicData to be verified
-    case EXPERIENCE:
-      return !!(
-        publicData &&
-        publicData.careTypes &&
-        publicData.experienceLevel &&
-        publicData.covidVaccination
-      );
+    case EXPERIENCE_LEVEL:
+      return !!(publicData && publicData.experienceLevel);
+    case ADDITIONAL_DETAILS:
+      return !!(publicData && publicData.covidVaccination && publicData.languagesSpoken);
     case POLICY:
       return !!(publicData && typeof publicData.rules !== 'undefined');
     case LOCATION:
@@ -361,11 +362,7 @@ class EditListingWizard extends Component {
     }
 
     const tabLink = tab => {
-      let search = '';
-      if (tab === 'experience') {
-        search = '?form=care-type';
-      }
-      return { name: pageName || 'EditListingPage', params: { ...params, tab, search } };
+      return { name: pageName || 'EditListingPage', params: { ...params, tab } };
     };
 
     const setPortalRootAfterInitialRender = () => {
