@@ -88,7 +88,6 @@ const tabCompleted = (tab, listing) => {
     publicData,
     privateData,
   } = listing.attributes;
-  const images = listing.images;
 
   switch (tab) {
     case CARETYPES:
@@ -106,7 +105,13 @@ const tabCompleted = (tab, listing) => {
     case AVAILABILITY:
       return !!availabilityPlan;
     case CARE_RECEIVER_DETAILS:
-      return true;
+      return !!(
+        publicData &&
+        publicData.recipientRelationship &&
+        publicData.gender &&
+        publicData.age &&
+        publicData.recipientDetails
+      );
     case CAREGIVER_DETAILS:
       return true;
     default:

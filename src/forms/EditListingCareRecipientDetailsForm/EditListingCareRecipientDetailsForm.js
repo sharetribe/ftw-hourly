@@ -50,7 +50,7 @@ const EditListingCareRecipientDetailsFormComponent = props => (
         fetchErrors,
       } = formRenderProps;
 
-      // Employer Relationship
+      // Recipient Relationship
       const recipientRelationshipName = intl.formatMessage({
         id: 'EditListingCareRecipientDetailsForm.recipientRelationshipName',
       });
