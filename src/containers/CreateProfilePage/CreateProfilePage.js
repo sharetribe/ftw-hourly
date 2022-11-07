@@ -102,7 +102,7 @@ export const CreateProfilePageComponent = props => {
   const isDraftURI = type === LISTING_PAGE_PARAM_TYPE_DRAFT;
   const isNewListingFlow = isNewURI || isDraftURI;
 
-  const listingId = page.submittedListingId || (id ? new UUID(id) : null);
+  const listingId = currentUserListing.id || (id ? new UUID(id) : null);
   const listing = getOwnListing(listingId);
   const currentListing = ensureOwnListing(listing);
   const { state: currentListingState } = currentListing.attributes;

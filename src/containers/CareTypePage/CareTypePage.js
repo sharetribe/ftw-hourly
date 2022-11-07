@@ -73,7 +73,7 @@ export const CareTypePageComponent = props => {
   const showForm = hasStripeOnboardingDataIfNeeded && (isNewURI || currentListing.id);
 
   const user = ensureCurrentUser(currentUser);
-  const userType = user.attributes.profile.publicData.userType;
+  const userType = user.attributes?.profile.publicData.userType;
 
   const redirectAfterDraftUpdate = (listingId, params, history) => {
     const currentPathParams = {
