@@ -17,23 +17,14 @@ import { LISTING_STATE_DRAFT, LISTING_STATE_PENDING_APPROVAL, propTypes } from '
 import { ensureOwnListing } from '../../util/data';
 import { getMarketplaceEntities } from '../../ducks/marketplaceData.duck';
 import { manageDisableScrolling, isScrollingDisabled } from '../../ducks/UI.duck';
-import {
-  stripeAccountClearError,
-  getStripeConnectAccountLink,
-} from '../../ducks/stripeConnectAccount.duck';
 import { NamedRedirect, Page, EditListingFeaturesForm } from '../../components';
 
 import {
   requestAddAvailabilityException,
   requestDeleteAvailabilityException,
   requestCreateListingDraft,
-  requestPublishListingDraft,
   requestUpdateListing,
-  requestImageUpload,
-  updateImageOrder,
-  removeListingImage,
   clearUpdatedTab,
-  savePayoutDetails,
 } from '../CreateProfilePage/CreateProfilePage.duck';
 
 import css from './CareTypePage.module.css';
@@ -49,38 +40,16 @@ export const CareTypePageComponent = props => {
     currentUser,
     currentUserListing,
     currentUserListingFetched,
-    createStripeAccountError,
-    fetchInProgress,
-    fetchStripeAccountError,
     getOwnListing,
-    getAccountLinkError,
-    getAccountLinkInProgress,
     history,
     intl,
-    onAddAvailabilityException,
-    onDeleteAvailabilityException,
     onCreateListingDraft,
-    onPublishListingDraft,
     onUpdateListing,
-    onImageUpload,
-    onRemoveListingImage,
-    onManageDisableScrolling,
-    onPayoutDetailsFormSubmit,
-    onPayoutDetailsFormChange,
-    onGetStripeConnectAccountLink,
-    onUpdateImageOrder,
     onChange,
     page,
     params,
     scrollingDisabled,
     allowOnlyOneListing,
-    stripeAccountFetched,
-    stripeAccount,
-    updateStripeAccountError,
-    onProfileImageUpload,
-    onUpdateProfile,
-    image,
-    uploadInProgress,
   } = props;
 
   const { id, type, returnURLType } = params;
@@ -172,10 +141,8 @@ export const CareTypePageComponent = props => {
   } else if (showForm) {
     const {
       createListingDraftError = null,
-      publishListingError = null,
       updateListingError = null,
       showListingsError = null,
-      uploadImageError = null,
       fetchExceptionsError = null,
       addExceptionError = null,
       deleteExceptionError = null,
@@ -188,9 +155,6 @@ export const CareTypePageComponent = props => {
       addExceptionError,
       deleteExceptionError,
     };
-    // TODO: is this dead code? (shouldRedirect is checked before)
-    const newListingPublished =
-      isDraftURI && currentListing && currentListingState !== LISTING_STATE_DRAFT;
 
     const updateInProgress = page.updateInProgress || page.createListingDraftInProgress;
 
@@ -238,18 +202,6 @@ export const CareTypePageComponent = props => {
                 name="careTypes"
                 label={careTypesFeaturesLabel}
                 required={true}
-              />
-              <ProfileSettingsForm
-                className={css.form}
-                currentUser={currentUser}
-                initialValues={{ firstName, lastName, bio, profileImage: user.profileImage }}
-                profileImage={profileImage}
-                onImageUpload={e => onImageUploadHandler(e, onImageUpload)}
-                uploadInProgress={uploadInProgress}
-                updateInProgress={updateInProgress}
-                uploadImageError={uploadImageError}
-                updateProfileError={updateProfileError}
-                onSubmit={handleSubmit}
               />
             </div>
           </LayoutWrapperMain>
@@ -322,22 +274,8 @@ CareTypePageComponent.propTypes = {
 
 const mapStateToProps = state => {
   const page = state.CareTypePage;
-  const { image, uploadInProgress } = state.ProfileSettingsPage;
-
-  const {
-    getAccountLinkInProgress,
-    getAccountLinkError,
-    createStripeAccountInProgress,
-    createStripeAccountError,
-    updateStripeAccountError,
-    fetchStripeAccountError,
-    stripeAccount,
-    stripeAccountFetched,
-  } = state.stripeConnectAccount;
 
   const { currentUser, currentUserListing, currentUserListingFetched } = state.user;
-
-  const fetchInProgress = createStripeAccountInProgress;
 
   const getOwnListing = id => {
     const listings = getMarketplaceEntities(state, [{ id, type: 'ownListing' }]);
@@ -345,22 +283,13 @@ const mapStateToProps = state => {
     return listings.length === 1 ? listings[0] : null;
   };
   return {
-    getAccountLinkInProgress,
-    getAccountLinkError,
-    createStripeAccountError,
-    updateStripeAccountError,
-    fetchStripeAccountError,
-    stripeAccount,
-    stripeAccountFetched,
     currentUser,
     currentUserListing,
     currentUserListingFetched,
     fetchInProgress,
     getOwnListing,
     page,
-    image,
     scrollingDisabled: isScrollingDisabled(state),
-    uploadInProgress,
   };
 };
 
@@ -369,19 +298,7 @@ const mapDispatchToProps = dispatch => ({
   onDeleteAvailabilityException: params => dispatch(requestDeleteAvailabilityException(params)),
   onUpdateListing: (tab, values) => dispatch(requestUpdateListing(tab, values)),
   onCreateListingDraft: values => dispatch(requestCreateListingDraft(values)),
-  onPublishListingDraft: listingId => dispatch(requestPublishListingDraft(listingId)),
-  onImageUpload: data => dispatch(requestImageUpload(data)),
-  onManageDisableScrolling: (componentId, disableScrolling) =>
-    dispatch(manageDisableScrolling(componentId, disableScrolling)),
-  onPayoutDetailsFormChange: () => dispatch(stripeAccountClearError()),
-  onPayoutDetailsFormSubmit: (values, isUpdateCall) =>
-    dispatch(savePayoutDetails(values, isUpdateCall)),
-  onGetStripeConnectAccountLink: params => dispatch(getStripeConnectAccountLink(params)),
-  onUpdateImageOrder: imageOrder => dispatch(updateImageOrder(imageOrder)),
-  onRemoveListingImage: imageId => dispatch(removeListingImage(imageId)),
   onChange: () => dispatch(clearUpdatedTab()),
-  onProfileImageUpload: data => dispatch(uploadImage(data)),
-  onUpdateProfile: data => dispatch(updateProfile(data)),
 });
 
 // Note: it is important that the withRouter HOC is **outside** the
