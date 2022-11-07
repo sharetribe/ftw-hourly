@@ -230,7 +230,7 @@
   "EditListingBioForm.updateFailed": "Failed to update. Please try again.",
   "EditListingCareRecipientDetailsForm.ageSelectLabel": "Age",
   "EditListingCareRecipientDetailsForm.genderErrorMessage": "Please select care recipient's gender",
-  "EditListingCareRecipientDetailsForm.gendrName": "gender",
+  "EditListingCareRecipientDetailsForm.genderName": "gender",
   "EditListingCareRecipientDetailsForm.genderLabel": "Gender",
   "EditListingCareRecipientDetailsForm.recipientDetailsLabel": "What should we know about them?",
   "EditListingCareRecipientDetailsForm.recipientDetailsPlaceholder": "Share details here",

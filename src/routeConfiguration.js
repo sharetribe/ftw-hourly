@@ -73,8 +73,6 @@ const routeConfiguration = () => {
       path: '/create-profile/:slug/:id/:type/:tab',
       name: 'CreateProfilePage',
       component: CreateProfilePage,
-      extraProps: { allowOnlyOneListing: true },
-      loadData: pageDataLoadingAPI.CreateProfilePage.loadData,
     },
     {
       path: '/select-care-types/:slug/:id/:type',

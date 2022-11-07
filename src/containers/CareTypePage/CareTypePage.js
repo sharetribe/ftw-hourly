@@ -28,7 +28,7 @@ import {
   requestCreateListingDraft,
   requestUpdateListing,
   clearUpdatedTab,
-} from '../CreateProfilePage/CreateProfilePage.duck';
+} from '../EditListingPage/EditListingPage.duck';
 
 import css from './CareTypePage.module.css';
 
@@ -266,7 +266,7 @@ CareTypePageComponent.propTypes = {
 };
 
 const mapStateToProps = state => {
-  const createProfilePage = state.CreateProfilePage;
+  const createProfilePage = state.EditListingPage;
 
   const { currentUser, currentUserListing, currentUserListingFetched } = state.user;
 

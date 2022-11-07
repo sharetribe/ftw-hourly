@@ -39,7 +39,7 @@ import {
   removeListingImage,
   clearUpdatedTab,
   savePayoutDetails,
-} from './CreateProfilePage.duck';
+} from '../EditListingPage/EditListingPage.duck';
 import { updateProfile, uploadImage } from '../ProfileSettingsPage/ProfileSettingsPage.duck';
 
 import css from './CreateProfilePage.module.css';
@@ -103,7 +103,8 @@ export const CreateProfilePageComponent = props => {
   const isNewListingFlow = isNewURI || isDraftURI;
 
   const listingId = currentUserListing?.id || (id ? new UUID(id) : null);
-  const currentListing = ensureOwnListing(currentUserListing || null);
+  const listing = getOwnListing(listingId);
+  const currentListing = ensureOwnListing(listing);
   const { state: currentListingState } = currentListing.attributes;
 
   const isPastDraft = currentListingState && currentListingState !== LISTING_STATE_DRAFT;
@@ -380,7 +381,7 @@ CreateProfilePageComponent.propTypes = {
 };
 
 const mapStateToProps = state => {
-  const page = state.CreateProfilePage;
+  const page = state.EditListingPage;
   const { image, uploadInProgress } = state.ProfileSettingsPage;
 
   const {

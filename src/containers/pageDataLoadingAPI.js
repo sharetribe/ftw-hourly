@@ -26,9 +26,6 @@ const getPageDataLoadingAPI = () => {
     ContactDetailsPage: {
       loadData: ContactDetailsPageLoader,
     },
-    CreateProfilePage: {
-      loadData: CreateProfilePageLoader,
-    },
     EditListingPage: {
       loadData: EditListingPageLoader,
     },

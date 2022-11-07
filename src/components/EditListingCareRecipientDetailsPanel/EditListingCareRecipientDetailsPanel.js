@@ -80,21 +80,14 @@ const EditListingCareRecipientDetailsPanel = props => {
         saveActionMsg={submitButtonText}
         required={true}
         onSubmit={values => {
-          const {
-            experienceWith,
-            certificationsAndTraining,
-            additionalInfo,
-            covidVaccination,
-            languagesSpoken,
-          } = values;
+          const { recipientRelationship, gender, age, recipientDetails } = values;
 
           const updatedValues = {
             publicData: {
-              experienceWith,
-              certificationsAndTraining,
-              additionalInfo,
-              covidVaccination,
-              languagesSpoken,
+              recipientRelationship,
+              gender,
+              age,
+              recipientDetails,
             },
           };
 
