@@ -72,6 +72,9 @@ export const CareTypePageComponent = props => {
   const hasStripeOnboardingDataIfNeeded = returnURLType ? !!(currentUser && currentUser.id) : true;
   const showForm = hasStripeOnboardingDataIfNeeded && (isNewURI || currentListing.id);
 
+  const user = ensureCurrentUser(currentUser);
+  const userType = user.attributes.profile.publicData.userType;
+
   const redirectAfterDraftUpdate = (listingId, params, history) => {
     const currentPathParams = {
       ...params,
@@ -165,16 +168,14 @@ export const CareTypePageComponent = props => {
     const submitButtonTranslationKey = 'CareTypePage.careTypesNextButton';
     const mess = intl.formatMessage({ id: submitButtonTranslationKey });
 
-    const careTypesFeaturesLabel = intl.formatMessage({
-      id: 'EditListingExperiencePanel.careTypesFormLabel',
-    });
-
-    const user = ensureCurrentUser(currentUser);
+    const careTypesFeaturesLabel = intl.formatMessage(
+      userType === 'caregiver'
+        ? { id: 'CareTypePage.caregiverFormLabel' }
+        : { id: 'CareTypePage.employerFormLabel' }
+    );
 
     const careTypes = user.publicData && user.publicData.careTypes;
     const initialValues = { careTypes };
-
-    // const userType = user.attributes.profile.publicData.userType;
 
     const formProps = {
       className: css.form,
