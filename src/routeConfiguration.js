@@ -77,7 +77,7 @@ const routeConfiguration = () => {
       loadData: pageDataLoadingAPI.CreateProfilePage.loadData,
     },
     {
-      path: '/select-care-type/:slug/:id/:type/:tab',
+      path: '/select-care-types/:slug/:id/:type',
       name: 'CareTypePage',
       component: CareTypePage,
     },

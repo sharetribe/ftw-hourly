@@ -13,11 +13,14 @@ import {
   LISTING_PAGE_PENDING_APPROVAL_VARIANT,
   createSlug,
 } from '../../util/urlHelpers';
+import routeConfiguration from '../../routeConfiguration';
+import { createResourceLocatorString } from '../../util/routes';
 import { LISTING_STATE_DRAFT, LISTING_STATE_PENDING_APPROVAL, propTypes } from '../../util/types';
-import { ensureOwnListing } from '../../util/data';
+import { ensureOwnListing, ensureCurrentUser } from '../../util/data';
 import { getMarketplaceEntities } from '../../ducks/marketplaceData.duck';
 import { manageDisableScrolling, isScrollingDisabled } from '../../ducks/UI.duck';
-import { NamedRedirect, Page, EditListingFeaturesForm } from '../../components';
+import { NamedRedirect, Page } from '../../components';
+import { EditListingFeaturesForm } from '../../forms';
 
 import {
   requestAddAvailabilityException,
@@ -46,7 +49,7 @@ export const CareTypePageComponent = props => {
     onCreateListingDraft,
     onUpdateListing,
     onChange,
-    page,
+    createProfilePage,
     params,
     scrollingDisabled,
     allowOnlyOneListing,
@@ -58,7 +61,7 @@ export const CareTypePageComponent = props => {
   const isDraftURI = type === LISTING_PAGE_PARAM_TYPE_DRAFT;
   const isNewListingFlow = isNewURI || isDraftURI;
 
-  const listingId = page.submittedListingId || (id ? new UUID(id) : null);
+  const listingId = createProfilePage.submittedListingId || (id ? new UUID(id) : null);
   const listing = getOwnListing(listingId);
   const currentListing = ensureOwnListing(listing);
   const { state: currentListingState } = currentListing.attributes;
@@ -69,11 +72,13 @@ export const CareTypePageComponent = props => {
   const hasStripeOnboardingDataIfNeeded = returnURLType ? !!(currentUser && currentUser.id) : true;
   const showForm = hasStripeOnboardingDataIfNeeded && (isNewURI || currentListing.id);
 
-  const redirectAfterDraftUpdate = (listingId, params, tab, marketplaceTabs, history) => {
+  const redirectAfterDraftUpdate = (listingId, params, history) => {
     const currentPathParams = {
       ...params,
       type: LISTING_PAGE_PARAM_TYPE_DRAFT,
       id: listingId,
+      // Change depending on user type
+      tab: 'bio',
     };
     const routes = routeConfiguration();
 
@@ -91,9 +96,7 @@ export const CareTypePageComponent = props => {
         redirectAfterDraftUpdate(r.data.data.id.uuid, params, history);
       })
       .catch(e => {
-        if (passThrownErrors) {
-          throw e;
-        }
+        throw e;
         // No need for extra actions
         // Error is logged in EditListingPage.duck file.
       });
@@ -146,7 +149,7 @@ export const CareTypePageComponent = props => {
       fetchExceptionsError = null,
       addExceptionError = null,
       deleteExceptionError = null,
-    } = page;
+    } = createProfilePage;
     const errors = {
       createListingDraftError,
       updateListingError,
@@ -156,7 +159,8 @@ export const CareTypePageComponent = props => {
       deleteExceptionError,
     };
 
-    const updateInProgress = page.updateInProgress || page.createListingDraftInProgress;
+    const updateInProgress =
+      createProfilePage.updateInProgress || createProfilePage.createListingDraftInProgress;
 
     const submitButtonTranslationKey = 'CareTypePage.careTypesNextButton';
     const mess = intl.formatMessage({ id: submitButtonTranslationKey });
@@ -170,55 +174,53 @@ export const CareTypePageComponent = props => {
     const careTypes = user.publicData && user.publicData.careTypes;
     const initialValues = { careTypes };
 
-    const userType = user.attributes.profile.publicData.userType;
+    // const userType = user.attributes.profile.publicData.userType;
 
     const formProps = {
       className: css.form,
       onChange,
-      disabled,
       initialValues,
-      ready,
       updateInProgress,
       fetchErrors: errors,
       intl,
     };
 
+    const title = isNewListingFlow
+      ? intl.formatMessage({ id: 'CreateProfilePage.titleCreateListing' })
+      : intl.formatMessage({ id: 'CreateProfilePage.titleEditListing' });
+
     return (
       <Page className={css.root} title={title} scrollingDisabled={scrollingDisabled}>
-        <LayoutSingleColumn>
-          <LayoutWrapperMain>
-            <div className={css.content}>
-              <EditListingFeaturesForm
-                {...formProps}
-                saveActionMsg={mess}
-                onSubmit={values => {
-                  const { careTypes = [] } = values;
+        <div className={css.content}>
+          <EditListingFeaturesForm
+            {...formProps}
+            rootClassName={css.form}
+            saveActionMsg={mess}
+            onSubmit={values => {
+              const { careTypes = [] } = values;
 
-                  const updatedValues = {
-                    publicData: { careTypes },
-                  };
-                  handleSubmit(updatedValues);
-                }}
-                name="careTypes"
-                label={careTypesFeaturesLabel}
-                required={true}
-              />
-            </div>
-          </LayoutWrapperMain>
-        </LayoutSingleColumn>
+              const updatedValues = {
+                title: 'Title',
+                publicData: { careTypes },
+              };
+              handleSubmit(updatedValues);
+            }}
+            name="careTypes"
+            label={careTypesFeaturesLabel}
+            required={true}
+            disabled={false}
+            ready={false}
+            updated={false}
+          />
+        </div>
       </Page>
     );
   }
 };
 
 CareTypePageComponent.defaultProps = {
-  createStripeAccountError: null,
-  fetchStripeAccountError: null,
-  getAccountLinkError: null,
-  getAccountLinkInProgress: null,
   stripeAccountFetched: null,
   currentUser: null,
-  stripeAccount: null,
   currentUserHasOrders: null,
   listing: null,
   listingDraft: null,
@@ -240,24 +242,14 @@ CareTypePageComponent.propTypes = {
   currentUserListingFetched: bool,
   onAddAvailabilityException: func.isRequired,
   onDeleteAvailabilityException: func.isRequired,
-  onGetStripeConnectAccountLink: func.isRequired,
   onCreateListingDraft: func.isRequired,
-  onPublishListingDraft: func.isRequired,
-  onImageUpload: func.isRequired,
-  onManageDisableScrolling: func.isRequired,
-  onPayoutDetailsFormChange: func.isRequired,
-  onPayoutDetailsFormSubmit: func.isRequired,
-  onUpdateImageOrder: func.isRequired,
-  onRemoveListingImage: func.isRequired,
   onUpdateListing: func.isRequired,
   onChange: func.isRequired,
-  page: object.isRequired,
+  createProfilePage: object.isRequired,
   params: shape({
     id: string.isRequired,
     slug: string.isRequired,
     type: oneOf(LISTING_PAGE_PARAM_TYPES).isRequired,
-    tab: string.isRequired,
-    returnURLType: oneOf(STRIPE_ONBOARDING_RETURN_URL_TYPES),
   }).isRequired,
   stripeAccountFetched: bool,
   stripeAccount: object,
@@ -273,7 +265,7 @@ CareTypePageComponent.propTypes = {
 };
 
 const mapStateToProps = state => {
-  const page = state.CareTypePage;
+  const createProfilePage = state.CreateProfilePage;
 
   const { currentUser, currentUserListing, currentUserListingFetched } = state.user;
 
@@ -286,9 +278,8 @@ const mapStateToProps = state => {
     currentUser,
     currentUserListing,
     currentUserListingFetched,
-    fetchInProgress,
     getOwnListing,
-    page,
+    createProfilePage,
     scrollingDisabled: isScrollingDisabled(state),
   };
 };
