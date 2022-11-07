@@ -20,6 +20,7 @@ import {
   EditListingPhotosPanel,
   EditListingCareTypesPanel,
   EditListingPricingPanel,
+  EditListingCareReceiverDetailsPanel,
 } from '..';
 
 import css from './EditListingWizardTab.module.css';
@@ -336,22 +337,16 @@ const EditListingWizardTab = props => {
     }
     case CARE_RECEIVER_DETAILS: {
       const submitButtonTranslationKey = isNewListingFlow
-        ? 'EditListingWizard.saveNewPhotos'
-        : 'EditListingWizard.saveEditPhotos';
+        ? 'EditListingWizard.saveNewCareReceiverDetails'
+        : 'EditListingWizard.saveEditCareReceiverDetails';
 
       return (
-        <EditListingPhotosPanel
-          {...panelProps(PHOTOS)}
+        <EditListingCareReceiverDetailsPanel
+          {...panelProps(CARE_RECEIVER_DETAILS)}
           submitButtonText={intl.formatMessage({ id: submitButtonTranslationKey })}
-          profileImage={profileImage}
-          onImageUpload={onImageUpload}
-          onRemoveImage={onRemoveImage}
           onSubmit={values => {
             onCompleteEditListingWizardTab(tab, values);
           }}
-          onUpdateImageOrder={onUpdateImageOrder}
-          onProfileImageUpload={onProfileImageUpload}
-          uploadInProgress={uploadInProgress}
         />
       );
     }

@@ -44,11 +44,11 @@ const EditListingCareReceiverDetailsFormComponent = props => (
         id: 'EditListingCareReceiverDetailsForm.employerRelationshipName',
       });
       const employerRelationshipOptions = [
-        'My parent',
-        'My spouse',
-        'My grandparent',
-        'My friend/extended relative',
-        'Myself',
+        { key: 'parent', label: 'My parent' },
+        { key: 'spouse', label: 'My spouse' },
+        { key: 'grandparent', label: 'My grandparent' },
+        { key: 'friend', label: 'My friend/extended relative' },
+        { key: 'myself', label: 'Myself' },
       ];
       const employerRelationshipLabel = intl.formatMessage({
         id: 'EditListingCareReceiverDetailsForm.employerRelationshipLabel',

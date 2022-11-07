@@ -4,8 +4,8 @@ export { default as EditListingAvailabilityExceptionForm } from './EditListingAv
 export { default as EditListingAvailabilityPlanForm } from './EditListingAvailabilityPlanForm/EditListingAvailabilityPlanForm';
 export { default as ConfirmSignupForm } from './ConfirmSignupForm/ConfirmSignupForm';
 export { default as EditListingAdditionalDetailsForm } from './EditListingAdditionalDetailsForm/EditListingAdditionalDetailsForm';
-export { default as EditListingBioForm } from './EditListingCareReceiverDetailsForm/EditListingCareReceiverDetailsForm';
-export { default as EditListingCareReceiverDetailsForm } from './EditListingBioForm/EditListingBioForm';
+export { default as EditListingBioForm } from './EditListingBioForm/EditListingBioForm';
+export { default as EditListingCareReceiverDetailsForm } from './EditListingCareReceiverDetailsForm/EditListingCareReceiverDetailsForm';
 export { default as EditListingFeaturesForm } from './EditListingFeaturesForm/EditListingFeaturesForm';
 export { default as EditListingLocationForm } from './EditListingLocationForm/EditListingLocationForm';
 export { default as EditListingPhotosForm } from './EditListingPhotosForm/EditListingPhotosForm';

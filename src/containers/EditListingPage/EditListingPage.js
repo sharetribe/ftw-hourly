@@ -105,9 +105,8 @@ export const EditListingPageComponent = props => {
   const isDraftURI = type === LISTING_PAGE_PARAM_TYPE_DRAFT;
   const isNewListingFlow = isNewURI || isDraftURI;
 
-  const listingId = page.submittedListingId || (id ? new UUID(id) : null);
-  const listing = getOwnListing(listingId);
-  const currentListing = ensureOwnListing(listing);
+  const listingId = currentUserListing?.id || (id ? new UUID(id) : null);
+  const currentListing = ensureOwnListing(currentUserListing || null);
   const { state: currentListingState } = currentListing.attributes;
 
   const isPastDraft = currentListingState && currentListingState !== LISTING_STATE_DRAFT;
@@ -328,8 +327,8 @@ export const EditListingPageComponent = props => {
           mobileClassName={css.mobileTopbar}
         />
         <UserNav
-          selectedPageName={listing ? 'EditListingPage' : 'NewListingPage'}
-          listing={listing}
+          selectedPageName={currentListing ? 'EditListingPage' : 'NewListingPage'}
+          listing={currentListing}
         />
         {editListingWizard}
         <Footer />
