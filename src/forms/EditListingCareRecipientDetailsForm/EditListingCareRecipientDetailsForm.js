@@ -40,30 +40,36 @@ const EditListingCareRecipientDetailsFormComponent = props => (
       } = formRenderProps;
 
       // Employer Relationship
-      const employerRelationshipName = intl.formatMessage({
-        id: 'EditListingCareRecipientDetailsForm.employerRelationshipName',
+      const recipientRelationshipName = intl.formatMessage({
+        id: 'EditListingCareRecipientDetailsForm.recipientRelationshipName',
       });
-      const employerRelationshipOptions = [
+      const recipientRelationshipOptions = [
         { key: 'parent', label: 'My parent' },
         { key: 'spouse', label: 'My spouse' },
         { key: 'grandparent', label: 'My grandparent' },
         { key: 'friend', label: 'My friend/extended relative' },
         { key: 'myself', label: 'Myself' },
       ];
-      const employerRelationshipLabel = intl.formatMessage({
-        id: 'EditListingCareRecipientDetailsForm.employerRelationshipLabel',
+      const recipientRelationshipLabel = intl.formatMessage({
+        id: 'EditListingCareRecipientDetailsForm.recipientRelationshipLabel',
       });
-      const employerRelationshipErrorMessage = intl.formatMessage({
-        id: 'EditListingCareRecipientDetailsForm.employerRelationshipErrorMessage',
+      const recipientRelationshipErrorMessage = intl.formatMessage({
+        id: 'EditListingCareRecipientDetailsForm.recipientRelationshipErrorMessage',
       });
 
-      // Certifications and Training
-      const certificationsName = intl.formatMessage({
-        id: 'EditListingCareRecipientDetailsForm.certificationsName',
+      // Gender
+      const genderName = intl.formatMessage({
+        id: 'EditListingCareRecipientDetailsForm.genderName',
       });
-      const certificationsOptions = findOptionsForSelectFilter(certificationsName, filterConfig);
-      const certificationsLabel = intl.formatMessage({
-        id: 'EditListingCareRecipientDetailsForm.certificationsLabel',
+      const genderOptions = [
+        { key: 'male', label: 'Male' },
+        { key: 'female', label: 'Female' },
+      ];
+      const genderLabel = intl.formatMessage({
+        id: 'EditListingCareRecipientDetailsForm.genderLabel',
+      });
+      const genderErrorMessage = intl.formatMessage({
+        id: 'EditListingCareRecipientDetailsForm.genderErrorMessage',
       });
 
       // Additional Information
@@ -144,19 +150,21 @@ const EditListingCareRecipientDetailsFormComponent = props => (
 
           <FieldRadioButtonGroup
             className={css.features}
-            id={employerRelationshipName}
-            name={employerRelationshipName}
-            options={employerRelationshipOptions}
-            label={employerRelationshipLabel}
+            id={recipientRelationshipName}
+            name={recipientRelationshipName}
+            options={recipientRelationshipOptions}
+            label={recipientRelationshipLabel}
             required={true}
-            validate={requiredFieldArrayRadio()}
+            validate={requiredFieldArrayRadio(recipientRelationshipErrorMessage)}
           />
           <FieldCheckboxGroup
             className={css.features}
-            id={certificationsName}
-            name={certificationsName}
-            options={certificationsOptions}
-            label={certificationsLabel}
+            id={genderName}
+            name={genderName}
+            options={genderOptions}
+            label={genderLabel}
+            required={true}
+            validate={requiredFieldArrayRadio(genderErrorMessage)}
           />
           <FieldCheckboxGroup
             className={css.features}

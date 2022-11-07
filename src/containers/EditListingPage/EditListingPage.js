@@ -326,7 +326,7 @@ export const EditListingPageComponent = props => {
           desktopClassName={css.desktopTopbar}
           mobileClassName={css.mobileTopbar}
         />
-        {currentListing && (
+        {currentListing && currentListing.id && currentListing.id.uuid !== null && (
           <UserNav
             selectedPageName={currentListing ? 'EditListingPage' : 'NewListingPage'}
             listing={currentListing}
@@ -350,7 +350,7 @@ export const EditListingPageComponent = props => {
           desktopClassName={css.desktopTopbar}
           mobileClassName={css.mobileTopbar}
         />
-        {currentListing && (
+        {currentListing && currentListing.id && currentListing.id.uuid !== null && (
           <UserNav
             selectedPageName={currentListing ? 'EditListingPage' : 'NewListingPage'}
             listing={currentListing}
