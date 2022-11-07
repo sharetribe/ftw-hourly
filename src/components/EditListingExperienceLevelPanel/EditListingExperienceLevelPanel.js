@@ -10,7 +10,7 @@ import { ensureListing } from '../../util/data';
 import { EditListingFeaturesForm, EditListingAdditionalDetailsForm } from '../../forms';
 import { ListingLink } from '..';
 
-import css from './EditListingExperiencePanel.module.css';
+import css from './EditListingExperienceLevelPanel.module.css';
 
 export const CARE_TYPE = 'care-type';
 export const EXPERIENCE_LEVEL = 'experience-level';
@@ -19,7 +19,7 @@ export const ADDITIONAL_DETAILS = 'additional-details';
 const CARE_TYPE_FEATURES_NAME = 'careTypes';
 const EXPERIENCE_LEVEL_FEATURES_NAME = 'experienceLevel';
 
-const EditListingExperiencePanel = props => {
+const EditListingExperienceLevelPanel = props => {
   const {
     rootClassName,
     className,
@@ -46,28 +46,28 @@ const EditListingExperiencePanel = props => {
   const isPublished = currentListing.id && currentListing.attributes.state !== LISTING_STATE_DRAFT;
   const panelTitle = isPublished ? (
     <FormattedMessage
-      id="EditListingExperiencePanel.title"
+      id="EditListingExperienceLevelPanel.title"
       values={{
         listingTitle: (
           <ListingLink listing={listing}>
-            <FormattedMessage id="EditListingExperiencePanel.listingTitle" />
+            <FormattedMessage id="EditListingExperienceLevelPanel.listingTitle" />
           </ListingLink>
         ),
       }}
     />
   ) : (
-    <FormattedMessage id="EditListingExperiencePanel.createListingTitle" />
+    <FormattedMessage id="EditListingExperienceLevelPanel.createListingTitle" />
   );
 
   const careTypes = publicData && publicData.careTypes;
   const initialValues = { careTypes };
 
   const careTypesFeaturesLabel = intl.formatMessage({
-    id: 'EditListingExperiencePanel.careTypesFormLabel',
+    id: 'EditListingExperienceLevelPanel.careTypesFormLabel',
   });
 
   const experienceLevelFeaturesLabel = intl.formatMessage({
-    id: 'EditListingExperiencePanel.experienceLevelFormLabel',
+    id: 'EditListingExperienceLevelPanel.experienceLevelFormLabel',
   });
 
   const formProps = {
@@ -84,7 +84,7 @@ const EditListingExperiencePanel = props => {
 
   switch (form) {
     case CARE_TYPE: {
-      const submitButtonTranslationKey = 'EditListingExperiencePanel.careTypesNextButton';
+      const submitButtonTranslationKey = 'EditListingExperienceLevelPanel.careTypesNextButton';
       const mess = intl.formatMessage({ id: submitButtonTranslationKey });
       return (
         <div className={classes}>
@@ -108,7 +108,8 @@ const EditListingExperiencePanel = props => {
       );
     }
     case EXPERIENCE_LEVEL: {
-      const submitButtonTranslationKey = 'EditListingExperiencePanel.experienceLevelNextButton';
+      const submitButtonTranslationKey =
+        'EditListingExperienceLevelPanel.experienceLevelNextButton';
       const mess = intl.formatMessage({ id: submitButtonTranslationKey });
       return (
         <div className={classes}>
@@ -133,7 +134,8 @@ const EditListingExperiencePanel = props => {
       );
     }
     case ADDITIONAL_DETAILS: {
-      const submitButtonTranslationKey = 'EditListingExperiencePanel.additionalDetailsNextButton';
+      const submitButtonTranslationKey =
+        'EditListingExperienceLevelPanel.additionalDetailsNextButton';
       const mess = intl.formatMessage({ id: submitButtonTranslationKey });
       return (
         <div className={classes}>
@@ -172,7 +174,7 @@ const EditListingExperiencePanel = props => {
   }
 };
 
-EditListingExperiencePanel.defaultProps = {
+EditListingExperienceLevelPanel.defaultProps = {
   rootClassName: null,
   className: null,
   listing: null,
@@ -180,7 +182,7 @@ EditListingExperiencePanel.defaultProps = {
 
 const { bool, func, object, string, shape } = PropTypes;
 
-EditListingExperiencePanel.propTypes = {
+EditListingExperienceLevelPanel.propTypes = {
   rootClassName: string,
   className: string,
 
@@ -198,4 +200,4 @@ EditListingExperiencePanel.propTypes = {
   intl: intlShape.isRequired,
 };
 
-export default EditListingExperiencePanel;
+export default EditListingExperienceLevelPanel;
