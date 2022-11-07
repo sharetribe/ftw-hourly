@@ -21,7 +21,7 @@ import {
   stripeAccountClearError,
   getStripeConnectAccountLink,
 } from '../../ducks/stripeConnectAccount.duck';
-import { EditListingWizard, Footer, NamedRedirect, Page, UserNav } from '../../components';
+import { CaregiverEditListingWizard, Footer, NamedRedirect, Page, UserNav } from '../../components';
 import { TopbarContainer } from '../../containers';
 
 import {
@@ -48,6 +48,9 @@ const STRIPE_ONBOARDING_RETURN_URL_TYPES = [
 ];
 
 const { UUID } = sdkTypes;
+
+const CAREGIVER = 'caregiver';
+const EMPLOYER = 'employer';
 
 // N.B. All the presentational content needs to be extracted to their own components
 export const EditListingPageComponent = props => {
@@ -195,19 +198,13 @@ export const EditListingPageComponent = props => {
       ? intl.formatMessage({ id: 'EditListingPage.titleCreateListing' })
       : intl.formatMessage({ id: 'EditListingPage.titleEditListing' });
 
-    return (
-      <Page title={title} scrollingDisabled={scrollingDisabled}>
-        <TopbarContainer
-          className={css.topbar}
-          mobileRootClassName={css.mobileTopbar}
-          desktopClassName={css.desktopTopbar}
-          mobileClassName={css.mobileTopbar}
-        />
-        <UserNav
-          selectedPageName={listing ? 'EditListingPage' : 'NewListingPage'}
-          listing={listing}
-        />
-        <EditListingWizard
+    let editListingWizard = null;
+
+    const userType = currentUser?.attributes.profile.publicData.userType;
+
+    if (userType === CAREGIVER) {
+      editListingWizard = (
+        <CaregiverEditListingWizard
           id="EditListingWizard"
           className={css.wizard}
           params={params}
@@ -253,6 +250,34 @@ export const EditListingPageComponent = props => {
           image={image}
           uploadInProgress={uploadInProgress}
         />
+      );
+    } else if (userType === EMPLOYER) {
+      editListingWizard = null;
+    } else {
+      const loadingPageMsg = {
+        id: 'CreateProfilePage.loadingListingData',
+      };
+      editListingWizard = (
+        <Page
+          title={intl.formatMessage(loadingPageMsg)}
+          scrollingDisabled={scrollingDisabled}
+        ></Page>
+      );
+    }
+
+    return (
+      <Page title={title} scrollingDisabled={scrollingDisabled}>
+        <TopbarContainer
+          className={css.topbar}
+          mobileRootClassName={css.mobileTopbar}
+          desktopClassName={css.desktopTopbar}
+          mobileClassName={css.mobileTopbar}
+        />
+        <UserNav
+          selectedPageName={listing ? 'EditListingPage' : 'NewListingPage'}
+          listing={listing}
+        />
+        {editListingWizard}
         <Footer />
       </Page>
     );

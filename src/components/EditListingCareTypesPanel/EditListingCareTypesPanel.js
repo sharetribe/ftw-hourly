@@ -84,6 +84,7 @@ const EditListingCareTypesPanel = props => {
 
           const updatedValues = {
             publicData: { careTypes },
+            title: currentListing.attributes.title ? currentListing.attributes.title : 'Title',
           };
           onSubmit(updatedValues);
         }}

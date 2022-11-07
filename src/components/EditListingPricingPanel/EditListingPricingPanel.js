@@ -52,15 +52,15 @@ const EditListingPricingPanel = props => {
   const maxPrice = publicData && publicData.maxPrice;
 
   const initialValues = {
-    minPrice: minPrice,
-    maxPrice: maxPrice,
+    minPrice: minPrice ? new Money(minPrice, 'USD') : null,
+    maxPrice: maxPrice ? new Money(maxPrice, 'USD') : null,
   };
 
-  const priceCurrencyValid =
-    minPrice instanceof Money && maxPrice instanceof Money
-      ? minPrice.currency === config.currency && maxPrice.currency === config.currency
-      : true;
-  const form = priceCurrencyValid ? (
+  // const priceCurrencyValid =
+  //   minPrice instanceof Money && maxPrice instanceof Money
+  //     ? minPrice.currency === config.currency && maxPrice.currency === config.currency
+  //     : true;
+  const form = (
     <EditListingPricingForm
       className={css.form}
       initialValues={initialValues}
@@ -69,8 +69,8 @@ const EditListingPricingPanel = props => {
 
         const updateValues = {
           publicData: {
-            minPrice,
-            maxPrice,
+            minPrice: minPrice.amount,
+            maxPrice: maxPrice.amount,
           },
         };
         onSubmit(updateValues);
@@ -83,11 +83,12 @@ const EditListingPricingPanel = props => {
       updateInProgress={updateInProgress}
       fetchErrors={errors}
     />
-  ) : (
-    <div className={css.priceCurrencyInvalid}>
-      <FormattedMessage id="EditListingPricingPanel.listingPriceCurrencyInvalid" />
-    </div>
   );
+  // ) : (
+  //   <div className={css.priceCurrencyInvalid}>
+  //     <FormattedMessage id="EditListingPricingPanel.listingPriceCurrencyInvalid" />
+  //   </div>
+  // );
 
   return (
     <div className={classes}>
