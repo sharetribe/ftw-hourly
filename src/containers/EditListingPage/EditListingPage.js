@@ -349,8 +349,8 @@ export const EditListingPageComponent = props => {
           mobileClassName={css.mobileTopbar}
         />
         <UserNav
-          selectedPageName={listing ? 'EditListingPage' : 'NewListingPage'}
-          listing={listing}
+          selectedPageName={currentListing ? 'EditListingPage' : 'NewListingPage'}
+          listing={currentListing}
         />
         <div className={css.placeholderWhileLoading} />
         <Footer />
