@@ -17,9 +17,9 @@ import {
 } from '../../components';
 import { findOptionsForSelectFilter } from '../../util/search';
 
-import css from './EditListingCareReceiverDetailsForm.module.css';
+import css from './EditListingCareRecipientDetailsForm.module.css';
 
-const EditListingCareReceiverDetailsFormComponent = props => (
+const EditListingCareRecipientDetailsFormComponent = props => (
   <FinalForm
     {...props}
     mutators={{ ...arrayMutators }}
@@ -41,7 +41,7 @@ const EditListingCareReceiverDetailsFormComponent = props => (
 
       // Employer Relationship
       const employerRelationshipName = intl.formatMessage({
-        id: 'EditListingCareReceiverDetailsForm.employerRelationshipName',
+        id: 'EditListingCareRecipientDetailsForm.employerRelationshipName',
       });
       const employerRelationshipOptions = [
         { key: 'parent', label: 'My parent' },
@@ -51,80 +51,83 @@ const EditListingCareReceiverDetailsFormComponent = props => (
         { key: 'myself', label: 'Myself' },
       ];
       const employerRelationshipLabel = intl.formatMessage({
-        id: 'EditListingCareReceiverDetailsForm.employerRelationshipLabel',
+        id: 'EditListingCareRecipientDetailsForm.employerRelationshipLabel',
+      });
+      const employerRelationshipErrorMessage = intl.formatMessage({
+        id: 'EditListingCareRecipientDetailsForm.employerRelationshipErrorMessage',
       });
 
       // Certifications and Training
       const certificationsName = intl.formatMessage({
-        id: 'EditListingCareReceiverDetailsForm.certificationsName',
+        id: 'EditListingCareRecipientDetailsForm.certificationsName',
       });
       const certificationsOptions = findOptionsForSelectFilter(certificationsName, filterConfig);
       const certificationsLabel = intl.formatMessage({
-        id: 'EditListingCareReceiverDetailsForm.certificationsLabel',
+        id: 'EditListingCareRecipientDetailsForm.certificationsLabel',
       });
 
       // Additional Information
       const additionalInfoName = intl.formatMessage({
-        id: 'EditListingCareReceiverDetailsForm.additionalInfoName',
+        id: 'EditListingCareRecipientDetailsForm.additionalInfoName',
       });
       const additionalInfoOptions = findOptionsForSelectFilter(additionalInfoName, filterConfig);
       const additionalInfoLabel = intl.formatMessage({
-        id: 'EditListingCareReceiverDetailsForm.additionalInfoLabel',
+        id: 'EditListingCareRecipientDetailsForm.additionalInfoLabel',
       });
 
       // Covid Vaccination
       const covidVaccinationName = intl.formatMessage({
-        id: 'EditListingCareReceiverDetailsForm.covidVaccinationName',
+        id: 'EditListingCareRecipientDetailsForm.covidVaccinationName',
       });
       const covidVaccinationOptions = findOptionsForSelectFilter(
         covidVaccinationName,
         filterConfig
       );
       const covidVaccinationLabel = intl.formatMessage({
-        id: 'EditListingCareReceiverDetailsForm.covidVaccinationLabel',
+        id: 'EditListingCareRecipientDetailsForm.covidVaccinationLabel',
       });
       const errorVaccineNotSelected = intl.formatMessage({
-        id: 'EditListingCareReceiverDetailsForm.covidVaccinationNotSelected',
+        id: 'EditListingCareRecipientDetailsForm.covidVaccinationNotSelected',
       });
 
       // Languages Spoken
       const languagesSpokenRadioName = intl.formatMessage({
-        id: 'EditListingCareReceiverDetailsForm.languagesSpokenRadioName',
+        id: 'EditListingCareRecipientDetailsForm.languagesSpokenRadioName',
       });
       const languagesSpokenRadioOptions = findOptionsForSelectFilter(
         languagesSpokenRadioName,
         filterConfig
       );
       const languagesSpokenRadioLabel = intl.formatMessage({
-        id: 'EditListingCareReceiverDetailsForm.languagesSpokenRadioLabel',
+        id: 'EditListingCareRecipientDetailsForm.languagesSpokenRadioLabel',
       });
       const errorLanguagesNotSelected = intl.formatMessage({
-        id: 'EditListingCareReceiverDetailsForm.languagesSpokenNotSelected',
+        id: 'EditListingCareRecipientDetailsForm.languagesSpokenNotSelected',
       });
       const languagesSpokenTextName = intl.formatMessage({
-        id: 'EditListingCareReceiverDetailsForm.languagesSpokenRadioName',
+        id: 'EditListingCareRecipientDetailsForm.languagesSpokenRadioName',
       });
       const languagesSpokenTextPlaceholder = intl.formatMessage({
-        id: 'EditListingCareReceiverDetailsForm.languagesSpokenTextPlaceholder',
+        id: 'EditListingCareRecipientDetailsForm.languagesSpokenTextPlaceholder',
       });
 
       const { updateListingError, createListingDraftError, showListingsError } = fetchErrors || {};
       const errorMessageUpdateListing = updateListingError ? (
         <p className={css.error}>
-          <FormattedMessage id="EditListingCareReceiverDetailsForm.updateFailed" />
+          <FormattedMessage id="EditListingCareRecipientDetailsForm.updateFailed" />
         </p>
       ) : null;
 
       // This error happens only on first tab (of EditListingWizard)
       const errorMessageCreateListingDraft = createListingDraftError ? (
         <p className={css.error}>
-          <FormattedMessage id="EditListingCareReceiverDetailsForm.createListingDraftError" />
+          <FormattedMessage id="EditListingCareRecipientDetailsForm.createListingDraftError" />
         </p>
       ) : null;
 
       const errorMessageShowListing = showListingsError ? (
         <p className={css.error}>
-          <FormattedMessage id="EditListingCareReceiverDetailsForm.showListingFailed" />
+          <FormattedMessage id="EditListingCareRecipientDetailsForm.showListingFailed" />
         </p>
       ) : null;
 
@@ -139,12 +142,14 @@ const EditListingCareReceiverDetailsFormComponent = props => (
           {errorMessageUpdateListing}
           {errorMessageShowListing}
 
-          <FieldCheckboxGroup
+          <FieldRadioButtonGroup
             className={css.features}
             id={employerRelationshipName}
             name={employerRelationshipName}
             options={employerRelationshipOptions}
             label={employerRelationshipLabel}
+            required={true}
+            validate={requiredFieldArrayRadio()}
           />
           <FieldCheckboxGroup
             className={css.features}
@@ -205,13 +210,13 @@ const EditListingCareReceiverDetailsFormComponent = props => (
   />
 );
 
-EditListingCareReceiverDetailsFormComponent.defaultProps = {
+EditListingCareRecipientDetailsFormComponent.defaultProps = {
   className: null,
   fetchErrors: null,
   filterConfig: config.custom.filters,
 };
 
-EditListingCareReceiverDetailsFormComponent.propTypes = {
+EditListingCareRecipientDetailsFormComponent.propTypes = {
   className: string,
   intl: intlShape.isRequired,
   onSubmit: func.isRequired,
@@ -234,4 +239,4 @@ EditListingCareReceiverDetailsFormComponent.propTypes = {
   filterConfig: propTypes.filterConfig,
 };
 
-export default compose(injectIntl)(EditListingCareReceiverDetailsFormComponent);
+export default compose(injectIntl)(EditListingCareRecipientDetailsFormComponent);

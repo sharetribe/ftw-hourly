@@ -63,7 +63,7 @@ const tabLabel = (intl, tab) => {
   } else if (tab === AVAILABILITY) {
     key = 'EmployerEditListingWizard.tabLabelAvailability';
   } else if (tab === CARE_RECEIVER_DETAILS) {
-    key = 'EmployerEditListingWizard.tabLabelCareReceiverDetails';
+    key = 'EmployerEditListingWizard.tabLabelCareRecipientDetails';
   } else if (tab === CAREGIVER_DETAILS) {
     key = 'EmployerEditListingWizard.tabLabelCaregiverDetails';
   }

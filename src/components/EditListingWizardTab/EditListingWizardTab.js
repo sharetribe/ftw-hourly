@@ -20,7 +20,7 @@ import {
   EditListingPhotosPanel,
   EditListingCareTypesPanel,
   EditListingPricingPanel,
-  EditListingCareReceiverDetailsPanel,
+  EditListingCareRecipientDetailsPanel,
 } from '..';
 
 import css from './EditListingWizardTab.module.css';
@@ -337,11 +337,11 @@ const EditListingWizardTab = props => {
     }
     case CARE_RECEIVER_DETAILS: {
       const submitButtonTranslationKey = isNewListingFlow
-        ? 'EditListingWizard.saveNewCareReceiverDetails'
-        : 'EditListingWizard.saveEditCareReceiverDetails';
+        ? 'EditListingWizard.saveNewCareRecipientDetails'
+        : 'EditListingWizard.saveEditCareRecipientDetails';
 
       return (
-        <EditListingCareReceiverDetailsPanel
+        <EditListingCareRecipientDetailsPanel
           {...panelProps(CARE_RECEIVER_DETAILS)}
           submitButtonText={intl.formatMessage({ id: submitButtonTranslationKey })}
           onSubmit={values => {

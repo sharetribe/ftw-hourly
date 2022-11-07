@@ -326,10 +326,12 @@ export const EditListingPageComponent = props => {
           desktopClassName={css.desktopTopbar}
           mobileClassName={css.mobileTopbar}
         />
-        <UserNav
-          selectedPageName={currentListing ? 'EditListingPage' : 'NewListingPage'}
-          listing={currentListing}
-        />
+        {currentListing && (
+          <UserNav
+            selectedPageName={currentListing ? 'EditListingPage' : 'NewListingPage'}
+            listing={currentListing}
+          />
+        )}
         {editListingWizard}
         <Footer />
       </Page>
@@ -348,10 +350,12 @@ export const EditListingPageComponent = props => {
           desktopClassName={css.desktopTopbar}
           mobileClassName={css.mobileTopbar}
         />
-        <UserNav
-          selectedPageName={currentListing ? 'EditListingPage' : 'NewListingPage'}
-          listing={currentListing}
-        />
+        {currentListing && (
+          <UserNav
+            selectedPageName={currentListing ? 'EditListingPage' : 'NewListingPage'}
+            listing={currentListing}
+          />
+        )}
         <div className={css.placeholderWhileLoading} />
         <Footer />
       </Page>

@@ -7,12 +7,12 @@ import { FormattedMessage } from '../../util/reactIntl';
 
 import { LISTING_STATE_DRAFT } from '../../util/types';
 import { ensureListing } from '../../util/data';
-import { EditListingCareReceiverDetailsForm } from '../../forms';
+import { EditListingCareRecipientDetailsForm } from '../../forms';
 import { ListingLink } from '..';
 
-import css from './EditListingCareReceiverDetailsPanel.module.css';
+import css from './EditListingCareRecipientDetailsPanel.module.css';
 
-const EditListingCareReceiverDetailsPanel = props => {
+const EditListingCareRecipientDetailsPanel = props => {
   const {
     rootClassName,
     className,
@@ -36,17 +36,17 @@ const EditListingCareReceiverDetailsPanel = props => {
   const isPublished = currentListing.id && currentListing.attributes.state !== LISTING_STATE_DRAFT;
   const panelTitle = isPublished ? (
     <FormattedMessage
-      id="EditListingCareReceiverDetailsPanel.title"
+      id="EditListingCareRecipientDetailsPanel.title"
       values={{
         listingTitle: (
           <ListingLink listing={listing}>
-            <FormattedMessage id="EditListingCareReceiverDetailsPanel.listingTitle" />
+            <FormattedMessage id="EditListingCareRecipientDetailsPanel.listingTitle" />
           </ListingLink>
         ),
       }}
     />
   ) : (
-    <FormattedMessage id="EditListingCareReceiverDetailsPanel.createListingTitle" />
+    <FormattedMessage id="EditListingCareRecipientDetailsPanel.createListingTitle" />
   );
 
   const additionalDetails = publicData
@@ -75,7 +75,7 @@ const EditListingCareReceiverDetailsPanel = props => {
   return (
     <div className={classes}>
       <h1 className={css.title}>{panelTitle}</h1>
-      <EditListingCareReceiverDetailsForm
+      <EditListingCareRecipientDetailsForm
         {...formProps}
         saveActionMsg={submitButtonText}
         required={true}
@@ -105,7 +105,7 @@ const EditListingCareReceiverDetailsPanel = props => {
   );
 };
 
-EditListingCareReceiverDetailsPanel.defaultProps = {
+EditListingCareRecipientDetailsPanel.defaultProps = {
   rootClassName: null,
   className: null,
   listing: null,
@@ -113,7 +113,7 @@ EditListingCareReceiverDetailsPanel.defaultProps = {
 
 const { bool, func, object, string, shape } = PropTypes;
 
-EditListingCareReceiverDetailsPanel.propTypes = {
+EditListingCareRecipientDetailsPanel.propTypes = {
   rootClassName: string,
   className: string,
 
@@ -131,4 +131,4 @@ EditListingCareReceiverDetailsPanel.propTypes = {
   intl: intlShape.isRequired,
 };
 
-export default EditListingCareReceiverDetailsPanel;
+export default EditListingCareRecipientDetailsPanel;
