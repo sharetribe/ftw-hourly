@@ -106,16 +106,13 @@ const EditListingCareRecipientDetailsFormComponent = props => (
       const recipientDetailsPlaceholderMessage = intl.formatMessage({
         id: 'EditListingCareRecipientDetailsForm.recipientDetailsPlaceholder',
       });
-      const lengthRecipientDetailsMessage = intl.formatMessage(
-        { id: 'EditListingCareRecipientDetailsForm.recipientDetailsLength' },
+      const maxLengthMessage = intl.formatMessage(
+        { id: 'EditListingCareRecipientDetailsForm.maxLengthMessage' },
         {
           maxLength: RECIPIENT_DETAILS_MAX_LENGTH,
         }
       );
-      const maxLength700Message = maxLength(
-        lengthRecipientDetailsMessage,
-        RECIPIENT_DETAILS_MAX_LENGTH
-      );
+      const maxLength700Message = maxLength(maxLengthMessage, RECIPIENT_DETAILS_MAX_LENGTH);
 
       const { updateListingError, createListingDraftError, showListingsError } = fetchErrors || {};
       const errorMessageUpdateListing = updateListingError ? (

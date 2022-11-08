@@ -42,7 +42,9 @@ const FieldSelectComponent = props => {
   const { valid, invalid, touched, error } = meta;
 
   useEffect(() => {
-    input.onChange(children[0].key);
+    if (firstValueSelected) {
+      input.onChange(children[0].key);
+    }
   }, []);
 
   // Error message and input error styles are only shown if the

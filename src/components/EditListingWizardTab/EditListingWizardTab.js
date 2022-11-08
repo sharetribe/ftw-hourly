@@ -352,8 +352,8 @@ const EditListingWizardTab = props => {
     }
     case CAREGIVER_DETAILS: {
       const submitButtonTranslationKey = isNewListingFlow
-        ? 'EditListingWizard.saveNewPhotos'
-        : 'EditListingWizard.saveEditPhotos';
+        ? 'EditListingWizard.saveNewCaregiverDetails'
+        : 'EditListingWizard.saveEditCaregiverDetails';
 
       return (
         <EditListingPhotosPanel
