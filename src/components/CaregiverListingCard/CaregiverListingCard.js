@@ -11,30 +11,39 @@ import { findOptionsForSelectFilter } from '../../util/search';
 import { createSlug } from '../../util/urlHelpers';
 import config from '../../config';
 import { NamedLink, ResponsiveImage } from '..';
+import { types } from 'sharetribe-flex-sdk';
+const { Money } = types;
 
 import css from './CaregiverListingCard.module.css';
 
 const MIN_LENGTH_FOR_LONG_WORDS = 10;
 
 const priceData = (minPrice, maxPrice, intl) => {
-  const minPriceMoney = new moneySubUnitAmountAtLeast();
+  const minPriceMoney = new Money(minPrice, 'USD');
+  const maxPriceMoney = new Money(minPrice, 'USD');
 
-  if (price && price.currency === config.currency) {
-    const formattedPrice = formatMoney(intl, price);
-    return { formattedPrice, priceTitle: formattedPrice };
-  } else if (price) {
+  if (minPriceMoney && maxPriceMoney) {
+    const formattedMinPrice = formatMoney(intl, minPrice);
+    const formattedMaxPrice = formatMoney(intl, maxPrice);
+
+    return {
+      formattedMinPrice,
+      formattedMaxPrice,
+      priceTitle: formattedMinPrice + ' - ' + formattedMaxPrice,
+    };
+  } else if (maxPriceMoney && minPriceMoney) {
     return {
       formattedMinPrice: intl.formatMessage(
         { id: 'CaregiverListingCard.unsupportedPrice' },
-        { currency: price.currency }
+        { currency: minPriceMoney.currency }
       ),
       formattedMaxPrice: intl.formatMessage(
         { id: 'CaregiverListingCard.unsupportedPrice' },
-        { currency: price.currency }
+        { currency: maxPriceMoney.currency }
       ),
       priceTitle: intl.formatMessage(
         { id: 'CaregiverListingCard.unsupportedPriceTitle' },
-        { currency: price.currency }
+        { currency: maxPriceMoney.currency }
       ),
     };
   }
@@ -74,7 +83,7 @@ export const CaregiverListingCardComponent = props => {
   const certificate = publicData
     ? getCertificateInfo(certificateOptions, publicData.certificate)
     : null;
-  const { formattedPrice, priceTitle } = priceData(price, intl);
+  const { formattedMinPrice, formattedMaxPrice, priceTitle } = priceData(price, intl);
 
   const unitType = config.bookingUnitType;
   const isNightly = unitType === LINE_ITEM_NIGHT;
@@ -106,7 +115,7 @@ export const CaregiverListingCardComponent = props => {
       <div className={css.info}>
         <div className={css.price}>
           <div className={css.priceValue} title={priceTitle}>
-            {formattedPrice}
+            {formattedMinPrice} - {formattedMaxPrice}
           </div>
           <div className={css.perUnit}>
             <FormattedMessage id={unitTranslationKey} />
