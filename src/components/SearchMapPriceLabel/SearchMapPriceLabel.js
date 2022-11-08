@@ -6,6 +6,8 @@ import { propTypes } from '../../util/types';
 import { formatMoney } from '../../util/currency';
 import { ensureListing } from '../../util/data';
 import config from '../../config';
+import { types } from 'sharetribe-flex-sdk';
+const { Money } = types;
 
 import css from './SearchMapPriceLabel.module.css';
 
@@ -25,11 +27,16 @@ class SearchMapPriceLabel extends Component {
   render() {
     const { className, rootClassName, intl, listing, onListingClicked, isActive } = this.props;
     const currentListing = ensureListing(listing);
-    const { price } = currentListing.attributes;
+    const { minPrice, maxPrice } = currentListing.attributes.publicData;
+
+    const minPriceMoney = new Money(minPrice, 'USD');
+    const maxPriceMoney = new Money(maxPrice, 'USD');
 
     // Create formatted price if currency is known or alternatively show just the unknown currency.
     const formattedPrice =
-      price && price.currency === config.currency ? formatMoney(intl, price) : price.currency;
+      minPriceMoney && minPriceMoney.currency === config.currency
+        ? formatMoney(intl, minPriceMoney)
+        : minPriceMoney.currency;
 
     const classes = classNames(rootClassName || css.root, className);
     const priceLabelClasses = classNames(css.priceLabel, { [css.priceLabelActive]: isActive });

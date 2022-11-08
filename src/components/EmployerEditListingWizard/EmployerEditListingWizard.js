@@ -13,10 +13,15 @@ import {
   LISTING_PAGE_PARAM_TYPE_NEW,
   LISTING_PAGE_PARAM_TYPES,
 } from '../../util/urlHelpers';
-import { ensureCurrentUser, ensureListing } from '../../util/data';
+import {
+  ensureCurrentUser,
+  ensureListing,
+  ensureStripeCustomer,
+  ensurePaymentMethodCard,
+} from '../../util/data';
 
-import { Modal, NamedRedirect, Tabs, StripeConnectAccountStatusBox } from '..';
-import { StripeConnectAccountForm } from '../../forms';
+import { Modal, NamedRedirect, Tabs } from '..';
+import { PaymentMethodsForm } from '../../forms';
 
 import EditListingWizardTab, {
   CARETYPES,
@@ -147,50 +152,6 @@ const scrollToTab = (tabPrefix, tabId) => {
   }
 };
 
-// Create return URL for the Stripe onboarding form
-const createReturnURL = (returnURLType, rootURL, routes, pathParams) => {
-  if (returnURLType === 'success') {
-    const path = createResourceLocatorString('LandingPage', routes, pathParams);
-    const root = rootURL.replace(/\/$/, '');
-    return `${root}${path}`;
-  }
-
-  const path = createResourceLocatorString(
-    'EditListingStripeOnboardingPage',
-    routes,
-    { ...pathParams, returnURLType },
-    {}
-  );
-
-  const root = rootURL.replace(/\/$/, '');
-  return `${root}${path}`;
-};
-
-// Get attribute: stripeAccountData
-const getStripeAccountData = stripeAccount => stripeAccount.attributes.stripeAccountData || null;
-
-// Get last 4 digits of bank account returned in Stripe account
-const getBankAccountLast4Digits = stripeAccountData =>
-  stripeAccountData && stripeAccountData.external_accounts.data.length > 0
-    ? stripeAccountData.external_accounts.data[0].last4
-    : null;
-
-// Check if there's requirements on selected type: 'past_due', 'currently_due' etc.
-const hasRequirements = (stripeAccountData, requirementType) =>
-  stripeAccountData != null &&
-  stripeAccountData.requirements &&
-  Array.isArray(stripeAccountData.requirements[requirementType]) &&
-  stripeAccountData.requirements[requirementType].length > 0;
-
-// Redirect user to Stripe's hosted Connect account onboarding form
-const handleGetStripeConnectAccountLinkFn = (getLinkFn, commonParams) => type => () => {
-  getLinkFn({ type, ...commonParams })
-    .then(url => {
-      window.location.href = url;
-    })
-    .catch(err => console.error(err));
-};
-
 const RedirectToStripe = ({ redirectFn }) => {
   useEffect(redirectFn('custom_account_verification'), []);
   return <FormattedMessage id="EmployerEditListingWizard.redirectingToStripe" />;
@@ -208,11 +169,16 @@ class EmployerEditListingWizard extends Component {
       draftId: null,
       showPayoutDetails: false,
       portalRoot: null,
+      isSubmittingPayment: false,
+      cardState: null,
     };
     this.handleCreateFlowTabScrolling = this.handleCreateFlowTabScrolling.bind(this);
     this.handlePublishListing = this.handlePublishListing.bind(this);
     this.handlePayoutModalClose = this.handlePayoutModalClose.bind(this);
     this.handlePayoutSubmit = this.handlePayoutSubmit.bind(this);
+    this.handlePaymentMethodsSubmit = this.handlePaymentMethodsSubmit.bind(this);
+    this.getClientSecret = this.getClientSecret.bind(this);
+    this.getPaymentParams = this.getPaymentParams.bind(this);
   }
 
   componentDidMount() {
@@ -228,17 +194,7 @@ class EmployerEditListingWizard extends Component {
   }
 
   handlePublishListing(id) {
-    const { onPublishListingDraft, currentUser, stripeAccount } = this.props;
-
-    const stripeConnected =
-      currentUser && currentUser.stripeAccount && !!currentUser.stripeAccount.id;
-
-    const stripeAccountData = stripeConnected ? getStripeAccountData(stripeAccount) : null;
-
-    const requirementsMissing =
-      stripeAccount &&
-      (hasRequirements(stripeAccountData, 'past_due') ||
-        hasRequirements(stripeAccountData, 'currently_due'));
+    const { onPublishListingDraft, currentUser } = this.props;
 
     const uploadedImage = this.props.image;
 
@@ -252,14 +208,10 @@ class EmployerEditListingWizard extends Component {
 
     onPublishListingDraft(id);
 
-    if (stripeConnected && !requirementsMissing) {
-      onPublishListingDraft(id);
-    } else {
-      this.setState({
-        draftId: id,
-        showPayoutDetails: true,
-      });
-    }
+    this.setState({
+      draftId: id,
+      showPayoutDetails: true,
+    });
   }
 
   handlePayoutModalClose() {
@@ -269,6 +221,7 @@ class EmployerEditListingWizard extends Component {
     }
   }
 
+  // TODO: Change for payment methods
   handlePayoutSubmit(values) {
     this.props
       .onPayoutDetailsSubmit(values)
@@ -277,6 +230,76 @@ class EmployerEditListingWizard extends Component {
       })
       .catch(() => {
         // do nothing
+      });
+  }
+
+  getClientSecret(setupIntent) {
+    return setupIntent && setupIntent.attributes ? setupIntent.attributes.clientSecret : null;
+  }
+  getPaymentParams(currentUser, formValues) {
+    const { name, addressLine1, addressLine2, postal, state, city, country } = formValues;
+    const addressMaybe =
+      addressLine1 && postal
+        ? {
+            address: {
+              city: city,
+              country: country,
+              line1: addressLine1,
+              line2: addressLine2,
+              postal_code: postal,
+              state: state,
+            },
+          }
+        : {};
+    const billingDetails = {
+      name,
+      email: ensureCurrentUser(currentUser).attributes.email,
+      ...addressMaybe,
+    };
+
+    const paymentParams = {
+      payment_method_data: {
+        billing_details: billingDetails,
+      },
+    };
+
+    return paymentParams;
+  }
+
+  handlePaymentMethodsSubmit(params) {
+    this.setState({ isSubmittingPayment: true });
+    const ensuredCurrentUser = ensureCurrentUser(this.props.currentUser);
+    const stripeCustomer = ensuredCurrentUser.stripeCustomer;
+    const { stripe, card, formValues } = params;
+
+    this.props
+      .onCreateSetupIntent()
+      .then(setupIntent => {
+        const stripeParams = {
+          stripe,
+          card,
+          setupIntentClientSecret: this.getClientSecret(setupIntent),
+          paymentParams: this.getPaymentParams(this.props.currentUser, formValues),
+        };
+
+        return this.props.onHandleCardSetup(stripeParams);
+      })
+      .then(result => {
+        const newPaymentMethod = result.setupIntent.payment_method;
+        // Note: stripe.handleCardSetup might return an error inside successful call (200), but those are rejected in thunk functions.
+
+        return this.props.onSavePaymentMethod(stripeCustomer, newPaymentMethod);
+      })
+      .then(() => {
+        // Update currentUser entity and its sub entities: stripeCustomer and defaultPaymentMethod
+        this.props.fetchStripeCustomer();
+        this.setState({ isSubmittingPayment: false });
+        this.setState({ cardState: 'default' });
+        window.location.href = '/';
+      })
+      .catch(error => {
+        console.error(error);
+        this.setState({ isSubmittingPayment: false });
       });
   }
 
@@ -310,6 +333,9 @@ class EmployerEditListingWizard extends Component {
       onProfileImageUpload,
       onUpdateProfile,
       uploadInProgress,
+      handleCardSetupError,
+      addPaymentMethodError,
+      createStripeCustomerError,
       ...rest
     } = this.props;
 
@@ -357,50 +383,12 @@ class EmployerEditListingWizard extends Component {
       return { name: pageName || 'EditListingPage', params: { ...params, tab } };
     };
 
-    const setPortalRootAfterInitialRender = () => {
-      if (!this.state.portalRoot) {
-        this.setState({ portalRoot: document.getElementById('portal-root') });
-      }
-    };
-    const formDisabled = getAccountLinkInProgress;
     const ensuredCurrentUser = ensureCurrentUser(currentUser);
     const currentUserLoaded = !!ensuredCurrentUser.id;
-    const stripeConnected = currentUserLoaded && !!stripeAccount && !!stripeAccount.id;
 
     const rootURL = config.canonicalRootURL;
     const routes = routeConfiguration();
     const { returnURLType, ...pathParams } = params;
-    const successURL = createReturnURL(
-      STRIPE_ONBOARDING_RETURN_URL_SUCCESS,
-      rootURL,
-      routes,
-      pathParams
-    );
-    const failureURL = createReturnURL(
-      STRIPE_ONBOARDING_RETURN_URL_FAILURE,
-      rootURL,
-      routes,
-      pathParams
-    );
-
-    const accountId = stripeConnected ? stripeAccount.id : null;
-    const stripeAccountData = stripeConnected ? getStripeAccountData(stripeAccount) : null;
-
-    const requirementsMissing =
-      stripeAccount &&
-      (hasRequirements(stripeAccountData, 'past_due') ||
-        hasRequirements(stripeAccountData, 'currently_due'));
-
-    const savedCountry = stripeAccountData ? stripeAccountData.country : null;
-
-    const handleGetStripeConnectAccountLink = handleGetStripeConnectAccountLinkFn(
-      onGetStripeConnectAccountLink,
-      {
-        accountId,
-        successURL,
-        failureURL,
-      }
-    );
 
     const userName = currentUserLoaded
       ? `${ensuredCurrentUser.attributes.profile.firstName} ${ensuredCurrentUser.attributes.profile.lastName}`
@@ -408,8 +396,13 @@ class EmployerEditListingWizard extends Component {
 
     const initalValuesForStripePayment = { name: userName };
 
+    const hasDefaultPaymentMethod =
+      currentUser &&
+      ensureStripeCustomer(currentUser.stripeCustomer).attributes.stripeCustomerId &&
+      ensurePaymentMethodCard(currentUser.stripeCustomer.defaultPaymentMethod).id;
+
     return (
-      <div className={classes} ref={setPortalRootAfterInitialRender}>
+      <div className={classes}>
         <Tabs
           rootClassName={css.tabsContainer}
           navRootClassName={css.nav}
@@ -459,10 +452,6 @@ class EmployerEditListingWizard extends Component {
             </h1>
             {!currentUserLoaded ? (
               <FormattedMessage id="StripePayoutPage.loadingData" />
-            ) : returnedAbnormallyFromStripe && !stripeAccountLinkError ? (
-              <p className={css.modalMessage}>
-                <RedirectToStripe redirectFn={handleGetStripeConnectAccountLink} />
-              </p>
             ) : (
               <>
                 <p className={css.modalMessage}>
@@ -472,14 +461,12 @@ class EmployerEditListingWizard extends Component {
                   className={css.paymentForm}
                   formId="PaymentMethodsForm"
                   initialValues={initalValuesForStripePayment}
-                  onSubmit={handleSubmit}
-                  handleRemovePaymentMethod={handleRemovePaymentMethod}
+                  onSubmit={this.handlePaymentMethodsSubmit}
                   hasDefaultPaymentMethod={hasDefaultPaymentMethod}
                   addPaymentMethodError={addPaymentMethodError}
-                  deletePaymentMethodError={deletePaymentMethodError}
                   createStripeCustomerError={createStripeCustomerError}
                   handleCardSetupError={handleCardSetupError}
-                  inProgress={isSubmitting}
+                  inProgress={this.state.isSubmittingPayment}
                 />
               </>
             )}

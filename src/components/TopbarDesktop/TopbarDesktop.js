@@ -47,7 +47,7 @@ const TopbarDesktop = props => {
 
   const classes = classNames(rootClassName || css.root, className);
 
-  const currentUserType = currentUser?.attributes?.profile?.protectedData?.userType || '';
+  const currentUserType = currentUser?.attributes?.profile?.publicData?.userType || '';
 
   const search = (
     <TopbarSearchForm

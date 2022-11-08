@@ -22,6 +22,12 @@ import {
   getStripeConnectAccountLink,
 } from '../../ducks/stripeConnectAccount.duck';
 import {
+  createStripeSetupIntent,
+  stripeCustomer,
+} from '../PaymentMethodsPage/PaymentMethodsPage.duck.js';
+import { savePaymentMethod, deletePaymentMethod } from '../../ducks/paymentMethods.duck';
+import { handleCardSetup } from '../../ducks/stripe.duck';
+import {
   CaregiverEditListingWizard,
   EmployerEditListingWizard,
   Footer,
@@ -97,6 +103,13 @@ export const EditListingPageComponent = props => {
     onProfileImageUpload,
     onUpdateProfile,
     uploadInProgress,
+    onCreateStripeSetupIntent,
+    onHandleCardSetup,
+    fetchStripeCustomer,
+    onSavePaymentMethod,
+    addPaymentMethodError,
+    createStripeCustomerError,
+    handleCardSetupError,
   } = props;
 
   const { id, type, returnURLType } = params;
@@ -258,6 +271,7 @@ export const EditListingPageComponent = props => {
           onProfileImageUpload={onProfileImageUpload}
           image={image}
           uploadInProgress={uploadInProgress}
+          onHandleCardSetup={onHandleCardSetup}
         />
       );
     } else if (userType === EMPLOYER) {
@@ -307,6 +321,12 @@ export const EditListingPageComponent = props => {
           onProfileImageUpload={onProfileImageUpload}
           image={image}
           uploadInProgress={uploadInProgress}
+          onCreateSetupIntent={onCreateStripeSetupIntent}
+          fetchStripeCustomer={fetchStripeCustomer}
+          onSavePaymentMethod={onSavePaymentMethod}
+          addPaymentMethodError={addPaymentMethodError}
+          createStripeCustomerError={createStripeCustomerError}
+          handleCardSetupError={handleCardSetupError}
         />
       );
     } else {
@@ -461,6 +481,13 @@ const mapStateToProps = state => {
 
     return listings.length === 1 ? listings[0] : null;
   };
+
+  const { addPaymentMethodError, createStripeCustomerError } = state.paymentMethods;
+
+  const { stripeCustomerFetched } = state.PaymentMethodsPage;
+
+  const { handleCardSetupError } = state.stripe;
+
   return {
     getAccountLinkInProgress,
     getAccountLinkError,
@@ -478,6 +505,9 @@ const mapStateToProps = state => {
     image,
     scrollingDisabled: isScrollingDisabled(state),
     uploadInProgress,
+    addPaymentMethodError,
+    createStripeCustomerError,
+    handleCardSetupError,
   };
 };
 
@@ -499,6 +529,11 @@ const mapDispatchToProps = dispatch => ({
   onChange: () => dispatch(clearUpdatedTab()),
   onProfileImageUpload: data => dispatch(uploadImage(data)),
   onUpdateProfile: data => dispatch(updateProfile(data)),
+  onCreateStripeSetupIntent: params => dispatch(createStripeSetupIntent(params)),
+  onHandleCardSetup: params => dispatch(handleCardSetup(params)),
+  fetchStripeCustomer: () => dispatch(stripeCustomer()),
+  onSavePaymentMethod: (stripeCustomer, newPaymentMethod) =>
+    dispatch(savePaymentMethod(stripeCustomer, newPaymentMethod)),
 });
 
 // Note: it is important that the withRouter HOC is **outside** the
