@@ -116,6 +116,8 @@ export const EditListingPageComponent = props => {
   const hasStripeOnboardingDataIfNeeded = returnURLType ? !!(currentUser && currentUser.id) : true;
   const showForm = hasStripeOnboardingDataIfNeeded && (isNewURI || currentListing.id);
 
+  const createProfile = history.location.pathname.includes('create-profile');
+
   if (shouldRedirect) {
     const isPendingApproval =
       currentListing && currentListingState === LISTING_STATE_PENDING_APPROVAL;
@@ -198,7 +200,7 @@ export const EditListingPageComponent = props => {
       return !removedImageIds.includes(img.id);
     });
 
-    const profileImageId = currentUser.profileImage ? currentUser.profileImage.id : null;
+    const profileImageId = currentUser?.profileImage ? currentUser?.profileImage.id : null;
     const profileImage = image || { imageId: profileImageId };
 
     const title = isNewListingFlow
@@ -250,7 +252,7 @@ export const EditListingPageComponent = props => {
             createStripeAccountError || updateStripeAccountError || fetchStripeAccountError
           }
           stripeAccountLinkError={getAccountLinkError}
-          pageName="EditListingPage"
+          pageName={createProfile ? 'CreateProfilePage' : 'EditListingPage'}
           profileImage={profileImage}
           onUpdateProfile={onUpdateProfile}
           onProfileImageUpload={onProfileImageUpload}
@@ -299,7 +301,7 @@ export const EditListingPageComponent = props => {
             createStripeAccountError || updateStripeAccountError || fetchStripeAccountError
           }
           stripeAccountLinkError={getAccountLinkError}
-          pageName="EditListingPage"
+          pageName={createProfile ? 'CreateProfilePage' : 'EditListingPage'}
           profileImage={profileImage}
           onUpdateProfile={onUpdateProfile}
           onProfileImageUpload={onProfileImageUpload}
@@ -321,13 +323,15 @@ export const EditListingPageComponent = props => {
 
     return (
       <Page title={title} scrollingDisabled={scrollingDisabled}>
-        <TopbarContainer
-          className={css.topbar}
-          mobileRootClassName={css.mobileTopbar}
-          desktopClassName={css.desktopTopbar}
-          mobileClassName={css.mobileTopbar}
-        />
-        {currentListing && currentListing.id && currentListing.uuid && (
+        {!createProfile && currentListing && currentListing.id && currentListing.id.uuid && (
+          <TopbarContainer
+            className={css.topbar}
+            mobileRootClassName={css.mobileTopbar}
+            desktopClassName={css.desktopTopbar}
+            mobileClassName={css.mobileTopbar}
+          />
+        )}
+        {!createProfile && currentListing && currentListing.id && currentListing.id.uuid && (
           <UserNav
             selectedPageName={currentListing ? 'EditListingPage' : 'NewListingPage'}
             listing={currentListing}
@@ -335,7 +339,9 @@ export const EditListingPageComponent = props => {
         )}
 
         {editListingWizard}
-        <Footer />
+        {!createProfile && currentListing && currentListing.id && currentListing.id.uuid && (
+          <Footer />
+        )}
       </Page>
     );
   } else {
@@ -346,20 +352,24 @@ export const EditListingPageComponent = props => {
     };
     return (
       <Page title={intl.formatMessage(loadingPageMsg)} scrollingDisabled={scrollingDisabled}>
-        <TopbarContainer
-          className={css.topbar}
-          mobileRootClassName={css.mobileTopbar}
-          desktopClassName={css.desktopTopbar}
-          mobileClassName={css.mobileTopbar}
-        />
-        {currentListing && currentListing.id && currentListing.uuid && (
+        {!createProfile && currentListing && currentListing.id && currentListing.id.uuid && (
+          <TopbarContainer
+            className={css.topbar}
+            mobileRootClassName={css.mobileTopbar}
+            desktopClassName={css.desktopTopbar}
+            mobileClassName={css.mobileTopbar}
+          />
+        )}
+        {!createProfile && currentListing && currentListing.id && currentListing.id.uuid && (
           <UserNav
             selectedPageName={currentListing ? 'EditListingPage' : 'NewListingPage'}
             listing={currentListing}
           />
         )}
         <div className={css.placeholderWhileLoading} />
-        <Footer />
+        {!createProfile && currentListing && currentListing.id && currentListing.id.uuid && (
+          <Footer />
+        )}
       </Page>
     );
   }

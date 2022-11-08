@@ -39,7 +39,7 @@ import {
   removeListingImage,
   clearUpdatedTab,
   savePayoutDetails,
-} from '../EditListingPage/EditListingPage.duck';
+} from './CreateProfilePage.duck';
 import { updateProfile, uploadImage } from '../ProfileSettingsPage/ProfileSettingsPage.duck';
 
 import css from './CreateProfilePage.module.css';
@@ -205,109 +205,114 @@ export const CreateProfilePageComponent = props => {
 
     const userType = currentUser?.attributes.profile.publicData.userType;
 
+    const loadingPageMsg = {
+      id: 'CreateProfilePage.loadingListingData',
+    };
+
     switch (userType) {
       case CAREGIVER:
         return (
-          <CaregiverEditListingWizard
-            id="EditListingWizard"
-            className={css.wizard}
-            params={params}
-            disabled={disableForm}
-            errors={errors}
-            fetchInProgress={fetchInProgress}
-            newListingPublished={newListingPublished}
-            history={history}
-            images={images}
-            listing={currentListing}
-            onAddAvailabilityException={onAddAvailabilityException}
-            onDeleteAvailabilityException={onDeleteAvailabilityException}
-            onUpdateListing={onUpdateListing}
-            onCreateListingDraft={onCreateListingDraft}
-            onPublishListingDraft={onPublishListingDraft}
-            onPayoutDetailsFormChange={onPayoutDetailsFormChange}
-            onPayoutDetailsSubmit={onPayoutDetailsFormSubmit}
-            onGetStripeConnectAccountLink={onGetStripeConnectAccountLink}
-            getAccountLinkInProgress={getAccountLinkInProgress}
-            onImageUpload={onImageUpload}
-            onUpdateImageOrder={onUpdateImageOrder}
-            onRemoveImage={onRemoveListingImage}
-            onChange={onChange}
-            currentUser={currentUser}
-            onManageDisableScrolling={onManageDisableScrolling}
-            stripeOnboardingReturnURL={params.returnURLType}
-            updatedTab={page.updatedTab}
-            updateInProgress={page.updateInProgress || page.createListingDraftInProgress}
-            fetchExceptionsInProgress={page.fetchExceptionsInProgress}
-            availabilityExceptions={page.availabilityExceptions}
-            payoutDetailsSaveInProgress={page.payoutDetailsSaveInProgress}
-            payoutDetailsSaved={page.payoutDetailsSaved}
-            stripeAccountFetched={stripeAccountFetched}
-            stripeAccount={stripeAccount}
-            stripeAccountError={
-              createStripeAccountError || updateStripeAccountError || fetchStripeAccountError
-            }
-            stripeAccountLinkError={getAccountLinkError}
-            pageName="CreateProfilePage"
-            profileImage={profileImage}
-            onUpdateProfile={onUpdateProfile}
-            onProfileImageUpload={onProfileImageUpload}
-            image={image}
-            uploadInProgress={uploadInProgress}
-          />
+          <Page title={intl.formatMessage(loadingPageMsg)} scrollingDisabled={scrollingDisabled}>
+            <CaregiverEditListingWizard
+              id="EditListingWizard"
+              className={css.wizard}
+              params={params}
+              disabled={disableForm}
+              errors={errors}
+              fetchInProgress={fetchInProgress}
+              newListingPublished={newListingPublished}
+              history={history}
+              images={images}
+              listing={currentListing}
+              onAddAvailabilityException={onAddAvailabilityException}
+              onDeleteAvailabilityException={onDeleteAvailabilityException}
+              onUpdateListing={onUpdateListing}
+              onCreateListingDraft={onCreateListingDraft}
+              onPublishListingDraft={onPublishListingDraft}
+              onPayoutDetailsFormChange={onPayoutDetailsFormChange}
+              onPayoutDetailsSubmit={onPayoutDetailsFormSubmit}
+              onGetStripeConnectAccountLink={onGetStripeConnectAccountLink}
+              getAccountLinkInProgress={getAccountLinkInProgress}
+              onImageUpload={onImageUpload}
+              onUpdateImageOrder={onUpdateImageOrder}
+              onRemoveImage={onRemoveListingImage}
+              onChange={onChange}
+              currentUser={currentUser}
+              onManageDisableScrolling={onManageDisableScrolling}
+              stripeOnboardingReturnURL={params.returnURLType}
+              updatedTab={page.updatedTab}
+              updateInProgress={page.updateInProgress || page.createListingDraftInProgress}
+              fetchExceptionsInProgress={page.fetchExceptionsInProgress}
+              availabilityExceptions={page.availabilityExceptions}
+              payoutDetailsSaveInProgress={page.payoutDetailsSaveInProgress}
+              payoutDetailsSaved={page.payoutDetailsSaved}
+              stripeAccountFetched={stripeAccountFetched}
+              stripeAccount={stripeAccount}
+              stripeAccountError={
+                createStripeAccountError || updateStripeAccountError || fetchStripeAccountError
+              }
+              stripeAccountLinkError={getAccountLinkError}
+              pageName="CreateProfilePage"
+              profileImage={profileImage}
+              onUpdateProfile={onUpdateProfile}
+              onProfileImageUpload={onProfileImageUpload}
+              image={image}
+              uploadInProgress={uploadInProgress}
+            />
+          </Page>
         );
       case EMPLOYER:
         return (
-          <EmployerEditListingWizard
-            id="EditListingWizard"
-            className={css.wizard}
-            params={params}
-            disabled={disableForm}
-            errors={errors}
-            fetchInProgress={fetchInProgress}
-            newListingPublished={newListingPublished}
-            history={history}
-            images={images}
-            listing={currentListing}
-            onAddAvailabilityException={onAddAvailabilityException}
-            onDeleteAvailabilityException={onDeleteAvailabilityException}
-            onUpdateListing={onUpdateListing}
-            onCreateListingDraft={onCreateListingDraft}
-            onPublishListingDraft={onPublishListingDraft}
-            onPayoutDetailsFormChange={onPayoutDetailsFormChange}
-            onPayoutDetailsSubmit={onPayoutDetailsFormSubmit}
-            onGetStripeConnectAccountLink={onGetStripeConnectAccountLink}
-            getAccountLinkInProgress={getAccountLinkInProgress}
-            onImageUpload={onImageUpload}
-            onUpdateImageOrder={onUpdateImageOrder}
-            onRemoveImage={onRemoveListingImage}
-            onChange={onChange}
-            currentUser={currentUser}
-            onManageDisableScrolling={onManageDisableScrolling}
-            stripeOnboardingReturnURL={params.returnURLType}
-            updatedTab={page.updatedTab}
-            updateInProgress={page.updateInProgress || page.createListingDraftInProgress}
-            fetchExceptionsInProgress={page.fetchExceptionsInProgress}
-            availabilityExceptions={page.availabilityExceptions}
-            payoutDetailsSaveInProgress={page.payoutDetailsSaveInProgress}
-            payoutDetailsSaved={page.payoutDetailsSaved}
-            stripeAccountFetched={stripeAccountFetched}
-            stripeAccount={stripeAccount}
-            stripeAccountError={
-              createStripeAccountError || updateStripeAccountError || fetchStripeAccountError
-            }
-            stripeAccountLinkError={getAccountLinkError}
-            pageName="CreateProfilePage"
-            profileImage={profileImage}
-            onUpdateProfile={onUpdateProfile}
-            onProfileImageUpload={onProfileImageUpload}
-            image={image}
-            uploadInProgress={uploadInProgress}
-          />
+          <Page title={intl.formatMessage(loadingPageMsg)} scrollingDisabled={scrollingDisabled}>
+            <EmployerEditListingWizard
+              id="EditListingWizard"
+              className={css.wizard}
+              params={params}
+              disabled={disableForm}
+              errors={errors}
+              fetchInProgress={fetchInProgress}
+              newListingPublished={newListingPublished}
+              history={history}
+              images={images}
+              listing={currentListing}
+              onAddAvailabilityException={onAddAvailabilityException}
+              onDeleteAvailabilityException={onDeleteAvailabilityException}
+              onUpdateListing={onUpdateListing}
+              onCreateListingDraft={onCreateListingDraft}
+              onPublishListingDraft={onPublishListingDraft}
+              onPayoutDetailsFormChange={onPayoutDetailsFormChange}
+              onPayoutDetailsSubmit={onPayoutDetailsFormSubmit}
+              onGetStripeConnectAccountLink={onGetStripeConnectAccountLink}
+              getAccountLinkInProgress={getAccountLinkInProgress}
+              onImageUpload={onImageUpload}
+              onUpdateImageOrder={onUpdateImageOrder}
+              onRemoveImage={onRemoveListingImage}
+              onChange={onChange}
+              currentUser={currentUser}
+              onManageDisableScrolling={onManageDisableScrolling}
+              stripeOnboardingReturnURL={params.returnURLType}
+              updatedTab={page.updatedTab}
+              updateInProgress={page.updateInProgress || page.createListingDraftInProgress}
+              fetchExceptionsInProgress={page.fetchExceptionsInProgress}
+              availabilityExceptions={page.availabilityExceptions}
+              payoutDetailsSaveInProgress={page.payoutDetailsSaveInProgress}
+              payoutDetailsSaved={page.payoutDetailsSaved}
+              stripeAccountFetched={stripeAccountFetched}
+              stripeAccount={stripeAccount}
+              stripeAccountError={
+                createStripeAccountError || updateStripeAccountError || fetchStripeAccountError
+              }
+              stripeAccountLinkError={getAccountLinkError}
+              pageName="CreateProfilePage"
+              profileImage={profileImage}
+              onUpdateProfile={onUpdateProfile}
+              onProfileImageUpload={onProfileImageUpload}
+              image={image}
+              uploadInProgress={uploadInProgress}
+            />
+          </Page>
         );
       default: {
-        const loadingPageMsg = {
-          id: 'CreateProfilePage.loadingListingData',
-        };
         return (
           <Page
             title={intl.formatMessage(loadingPageMsg)}
