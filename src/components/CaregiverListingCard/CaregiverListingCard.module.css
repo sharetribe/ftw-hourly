@@ -48,7 +48,7 @@
   display: flex;
   justify-content: center;
   flex-direction: row;
-  padding: 0 2px 0;
+  padding: 0px 0px 0px 10px;
 }
 
 .user {
@@ -141,4 +141,12 @@
 .avatar {
   width: 10rem;
   height: 10rem;
+}
+
+.providedServices {
+  color: var(--matterColor);
+}
+
+.serviceBold {
+  font-weight: bold;
 }

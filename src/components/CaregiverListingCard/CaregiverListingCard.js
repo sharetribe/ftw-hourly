@@ -12,6 +12,7 @@ import config from '../../config';
 import { NamedLink, ResponsiveImage, Avatar } from '..';
 import { types } from 'sharetribe-flex-sdk';
 const { Money, User } = types;
+import { findOptionsForSelectFilter } from '../../util/search';
 
 import css from './CaregiverListingCard.module.css';
 
@@ -49,16 +50,7 @@ const priceData = (minPrice, maxPrice, intl) => {
   return {};
 };
 
-const getCertificateInfo = (certificateOptions, key) => {
-  return certificateOptions.find(c => c.key === key);
-};
-
-class ListingImage extends Component {
-  render() {
-    return <ResponsiveImage {...this.props} />;
-  }
-}
-const LazyImage = lazyLoadWithDimensions(ListingImage, { loadAfterInitialRendering: 3000 });
+// const LazyImage = lazyLoadWithDimensions(ListingImage, { loadAfterInitialRendering: 3000 });
 
 export const CaregiverListingCardComponent = props => {
   const {
@@ -77,10 +69,15 @@ export const CaregiverListingCardComponent = props => {
   const { firstName, lastName } = currentUser?.attributes.profile;
   const title = firstName + ' ' + lastName;
   const { publicData } = currentListing.attributes;
-  const { minPrice, maxPrice, location } = publicData;
+  const { minPrice, maxPrice, location, careTypes: providedServices } = publicData;
   const slug = createSlug(title);
 
   const { formattedMinPrice, formattedMaxPrice, priceTitle } = priceData(minPrice, maxPrice, intl);
+
+  const servicesMap = new Map();
+  findOptionsForSelectFilter('careTypes', filtersConfig).forEach(option =>
+    servicesMap.set(option.key, option.label)
+  );
 
   const avatarUser = { profileImage: listing.images[0] };
   const avatarComponent = (
@@ -119,6 +116,10 @@ export const CaregiverListingCardComponent = props => {
               longWordMinLength: MIN_LENGTH_FOR_LONG_WORDS,
               longWordClass: css.longWord,
             })}
+          </div>
+          <div className={css.providedServices}>
+            <span className={css.serviceBold}>Provides services for: </span>
+            {providedServices.map(service => servicesMap.get(service)).join(', ')}
           </div>
         </div>
       </div>
