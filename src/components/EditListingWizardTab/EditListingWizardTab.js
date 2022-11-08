@@ -35,7 +35,7 @@ export const POLICY = 'policy';
 export const LOCATION = 'location';
 export const PRICING = 'pricing';
 export const PHOTOS = 'photos';
-export const CARE_RECEIVER_DETAILS = 'care-receiver-details';
+export const CARE_RECEIVER_DETAILS = 'care-recipient-details';
 export const CAREGIVER_DETAILS = 'caregiver-details';
 
 // EditListingWizardTab component supports these tabs

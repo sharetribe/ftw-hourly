@@ -2,9 +2,11 @@
 
 .root {
   /* Layout */
-  display: block;
+  display: flex;
   /* flex-direction: column; */
   width: 100%;
+  border-bottom: solid 1px;
+  border-color: var(--matterColor);
 
   /* Remove link's hover effect */
   &:hover {
@@ -44,14 +46,21 @@
 .info {
   /* Layout */
   display: flex;
+  justify-content: center;
   flex-direction: row;
-  padding: 16px 0 2px 0;
+  padding: 0 2px 0;
+}
+
+.user {
+  width: 10rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .price {
   /* Layout */
-  display: flex;
-  flex-direction: column;
+  display: block;
   justify-content: flex-start;
   flex-shrink: 0;
   margin-right: 18px;

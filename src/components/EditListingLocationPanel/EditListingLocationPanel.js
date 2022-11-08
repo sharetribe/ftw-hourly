@@ -23,24 +23,21 @@ class EditListingLocationPanel extends Component {
   getInitialValues() {
     const { listing } = this.props;
     const currentListing = ensureOwnListing(listing);
-    const { geolocation, privateData } = currentListing.attributes;
+    const { geolocation, publicData } = currentListing.attributes;
 
     // Only render current search if full place object is available in the URL params
     // TODO bounds are missing - those need to be queried directly from Google Places
-    const locationFieldsPresent =
-      privateData && privateData.location && privateData.location.address && geolocation;
-    const location = privateData && privateData.location ? privateData.location : {};
-    const { address } = location;
+    const locationFieldsPresent = publicData && publicData.location && geolocation;
+    const location = publicData && publicData.location ? publicData.location : {};
 
-    const travelDistanceFieldPresent = privateData && privateData.travelDistance;
-    const travelDistance =
-      privateData && privateData.travelDistance ? privateData.travelDistance : {};
+    const travelDistanceFieldPresent = publicData && publicData.travelDistance;
+    const travelDistance = publicData && publicData.travelDistance ? publicData.travelDistance : {};
 
     return {
       location: locationFieldsPresent
         ? {
-            search: address,
-            selectedPlace: { address, origin: geolocation },
+            search: location,
+            selectedPlace: { location, origin: geolocation },
           }
         : null,
       travelDistance: travelDistanceFieldPresent ? travelDistance : 15,
@@ -97,8 +94,8 @@ class EditListingLocationPanel extends Component {
 
             const updateValues = {
               geolocation: origin,
-              privateData: {
-                location: { address },
+              publicData: {
+                location: address,
                 travelDistance,
               },
             };
