@@ -433,7 +433,7 @@ export const requestPublishListingDraft = listingId => (dispatch, getState, sdk)
   dispatch(publishListing(listingId));
 
   return sdk.ownListings
-    .publishDraft({ id: listingId }, { expand: true })
+    .publishDraft({ id: listingId })
     .then(response => {
       // Add the created listing to the marketplace data
       dispatch(addMarketplaceEntities(response));

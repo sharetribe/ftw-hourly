@@ -250,6 +250,8 @@ class EmployerEditListingWizard extends Component {
 
     this.props.onUpdateProfile(updatedValues);
 
+    onPublishListingDraft(id);
+
     if (stripeConnected && !requirementsMissing) {
       onPublishListingDraft(id);
     } else {
