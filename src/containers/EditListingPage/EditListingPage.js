@@ -21,7 +21,20 @@ import {
   stripeAccountClearError,
   getStripeConnectAccountLink,
 } from '../../ducks/stripeConnectAccount.duck';
-import { CaregiverEditListingWizard, Footer, NamedRedirect, Page, UserNav } from '../../components';
+import {
+  createStripeSetupIntent,
+  stripeCustomer,
+} from '../PaymentMethodsPage/PaymentMethodsPage.duck.js';
+import { savePaymentMethod, deletePaymentMethod } from '../../ducks/paymentMethods.duck';
+import { handleCardSetup } from '../../ducks/stripe.duck';
+import {
+  CaregiverEditListingWizard,
+  EmployerEditListingWizard,
+  Footer,
+  NamedRedirect,
+  Page,
+  UserNav,
+} from '../../components';
 import { TopbarContainer } from '../../containers';
 
 import {
@@ -48,6 +61,9 @@ const STRIPE_ONBOARDING_RETURN_URL_TYPES = [
 ];
 
 const { UUID } = sdkTypes;
+
+const CAREGIVER = 'caregiver';
+const EMPLOYER = 'employer';
 
 // N.B. All the presentational content needs to be extracted to their own components
 export const EditListingPageComponent = props => {
@@ -87,6 +103,13 @@ export const EditListingPageComponent = props => {
     onProfileImageUpload,
     onUpdateProfile,
     uploadInProgress,
+    onCreateStripeSetupIntent,
+    onHandleCardSetup,
+    fetchStripeCustomer,
+    onSavePaymentMethod,
+    addPaymentMethodError,
+    createStripeCustomerError,
+    handleCardSetupError,
   } = props;
 
   const { id, type, returnURLType } = params;
@@ -105,6 +128,8 @@ export const EditListingPageComponent = props => {
 
   const hasStripeOnboardingDataIfNeeded = returnURLType ? !!(currentUser && currentUser.id) : true;
   const showForm = hasStripeOnboardingDataIfNeeded && (isNewURI || currentListing.id);
+
+  const createProfile = history.location.pathname.includes('create-profile');
 
   if (shouldRedirect) {
     const isPendingApproval =
@@ -188,25 +213,19 @@ export const EditListingPageComponent = props => {
       return !removedImageIds.includes(img.id);
     });
 
-    const profileImageId = currentUser.profileImage ? currentUser.profileImage.id : null;
+    const profileImageId = currentUser?.profileImage ? currentUser?.profileImage.id : null;
     const profileImage = image || { imageId: profileImageId };
 
     const title = isNewListingFlow
       ? intl.formatMessage({ id: 'EditListingPage.titleCreateListing' })
       : intl.formatMessage({ id: 'EditListingPage.titleEditListing' });
 
-    return (
-      <Page title={title} scrollingDisabled={scrollingDisabled}>
-        <TopbarContainer
-          className={css.topbar}
-          mobileRootClassName={css.mobileTopbar}
-          desktopClassName={css.desktopTopbar}
-          mobileClassName={css.mobileTopbar}
-        />
-        <UserNav
-          selectedPageName={listing ? 'EditListingPage' : 'NewListingPage'}
-          listing={listing}
-        />
+    let editListingWizard = null;
+
+    const userType = currentUser?.attributes.profile.publicData.userType;
+
+    if (userType === CAREGIVER) {
+      editListingWizard = (
         <CaregiverEditListingWizard
           id="CaregiverEditListingWizard"
           className={css.wizard}
@@ -246,14 +265,103 @@ export const EditListingPageComponent = props => {
             createStripeAccountError || updateStripeAccountError || fetchStripeAccountError
           }
           stripeAccountLinkError={getAccountLinkError}
-          pageName="EditListingPage"
+          pageName={createProfile ? 'CreateProfilePage' : 'EditListingPage'}
           profileImage={profileImage}
           onUpdateProfile={onUpdateProfile}
           onProfileImageUpload={onProfileImageUpload}
           image={image}
           uploadInProgress={uploadInProgress}
+          onHandleCardSetup={onHandleCardSetup}
         />
-        <Footer />
+      );
+    } else if (userType === EMPLOYER) {
+      editListingWizard = (
+        <EmployerEditListingWizard
+          id="EmployerEditListingWizard"
+          className={css.wizard}
+          params={params}
+          disabled={disableForm}
+          errors={errors}
+          fetchInProgress={fetchInProgress}
+          newListingPublished={newListingPublished}
+          history={history}
+          images={images}
+          listing={currentListing}
+          onAddAvailabilityException={onAddAvailabilityException}
+          onDeleteAvailabilityException={onDeleteAvailabilityException}
+          onUpdateListing={onUpdateListing}
+          onCreateListingDraft={onCreateListingDraft}
+          onPublishListingDraft={onPublishListingDraft}
+          onPayoutDetailsFormChange={onPayoutDetailsFormChange}
+          onPayoutDetailsSubmit={onPayoutDetailsFormSubmit}
+          onGetStripeConnectAccountLink={onGetStripeConnectAccountLink}
+          getAccountLinkInProgress={getAccountLinkInProgress}
+          onImageUpload={onImageUpload}
+          onUpdateImageOrder={onUpdateImageOrder}
+          onRemoveImage={onRemoveListingImage}
+          onChange={onChange}
+          currentUser={currentUser}
+          onManageDisableScrolling={onManageDisableScrolling}
+          stripeOnboardingReturnURL={params.returnURLType}
+          updatedTab={page.updatedTab}
+          updateInProgress={page.updateInProgress || page.createListingDraftInProgress}
+          fetchExceptionsInProgress={page.fetchExceptionsInProgress}
+          availabilityExceptions={page.availabilityExceptions}
+          payoutDetailsSaveInProgress={page.payoutDetailsSaveInProgress}
+          payoutDetailsSaved={page.payoutDetailsSaved}
+          stripeAccountFetched={stripeAccountFetched}
+          stripeAccount={stripeAccount}
+          stripeAccountError={
+            createStripeAccountError || updateStripeAccountError || fetchStripeAccountError
+          }
+          stripeAccountLinkError={getAccountLinkError}
+          pageName={createProfile ? 'CreateProfilePage' : 'EditListingPage'}
+          profileImage={profileImage}
+          onUpdateProfile={onUpdateProfile}
+          onProfileImageUpload={onProfileImageUpload}
+          image={image}
+          uploadInProgress={uploadInProgress}
+          onCreateSetupIntent={onCreateStripeSetupIntent}
+          fetchStripeCustomer={fetchStripeCustomer}
+          onSavePaymentMethod={onSavePaymentMethod}
+          addPaymentMethodError={addPaymentMethodError}
+          createStripeCustomerError={createStripeCustomerError}
+          handleCardSetupError={handleCardSetupError}
+        />
+      );
+    } else {
+      const loadingPageMsg = {
+        id: 'CreateProfilePage.loadingListingData',
+      };
+      editListingWizard = (
+        <Page
+          title={intl.formatMessage(loadingPageMsg)}
+          scrollingDisabled={scrollingDisabled}
+        ></Page>
+      );
+    }
+
+    return (
+      <Page title={title} scrollingDisabled={scrollingDisabled}>
+        {!createProfile && currentListing && currentListing.id && currentListing.id.uuid && (
+          <TopbarContainer
+            className={css.topbar}
+            mobileRootClassName={css.mobileTopbar}
+            desktopClassName={css.desktopTopbar}
+            mobileClassName={css.mobileTopbar}
+          />
+        )}
+        {!createProfile && currentListing && currentListing.id && currentListing.id.uuid && (
+          <UserNav
+            selectedPageName={currentListing ? 'EditListingPage' : 'NewListingPage'}
+            listing={currentListing}
+          />
+        )}
+
+        {editListingWizard}
+        {!createProfile && currentListing && currentListing.id && currentListing.id.uuid && (
+          <Footer />
+        )}
       </Page>
     );
   } else {
@@ -264,18 +372,24 @@ export const EditListingPageComponent = props => {
     };
     return (
       <Page title={intl.formatMessage(loadingPageMsg)} scrollingDisabled={scrollingDisabled}>
-        <TopbarContainer
-          className={css.topbar}
-          mobileRootClassName={css.mobileTopbar}
-          desktopClassName={css.desktopTopbar}
-          mobileClassName={css.mobileTopbar}
-        />
-        <UserNav
-          selectedPageName={listing ? 'EditListingPage' : 'NewListingPage'}
-          listing={listing}
-        />
+        {!createProfile && currentListing && currentListing.id && currentListing.id.uuid && (
+          <TopbarContainer
+            className={css.topbar}
+            mobileRootClassName={css.mobileTopbar}
+            desktopClassName={css.desktopTopbar}
+            mobileClassName={css.mobileTopbar}
+          />
+        )}
+        {!createProfile && currentListing && currentListing.id && currentListing.id.uuid && (
+          <UserNav
+            selectedPageName={currentListing ? 'EditListingPage' : 'NewListingPage'}
+            listing={currentListing}
+          />
+        )}
         <div className={css.placeholderWhileLoading} />
-        <Footer />
+        {!createProfile && currentListing && currentListing.id && currentListing.id.uuid && (
+          <Footer />
+        )}
       </Page>
     );
   }
@@ -367,6 +481,13 @@ const mapStateToProps = state => {
 
     return listings.length === 1 ? listings[0] : null;
   };
+
+  const { addPaymentMethodError, createStripeCustomerError } = state.paymentMethods;
+
+  const { stripeCustomerFetched } = state.PaymentMethodsPage;
+
+  const { handleCardSetupError } = state.stripe;
+
   return {
     getAccountLinkInProgress,
     getAccountLinkError,
@@ -384,6 +505,9 @@ const mapStateToProps = state => {
     image,
     scrollingDisabled: isScrollingDisabled(state),
     uploadInProgress,
+    addPaymentMethodError,
+    createStripeCustomerError,
+    handleCardSetupError,
   };
 };
 
@@ -405,6 +529,11 @@ const mapDispatchToProps = dispatch => ({
   onChange: () => dispatch(clearUpdatedTab()),
   onProfileImageUpload: data => dispatch(uploadImage(data)),
   onUpdateProfile: data => dispatch(updateProfile(data)),
+  onCreateStripeSetupIntent: params => dispatch(createStripeSetupIntent(params)),
+  onHandleCardSetup: params => dispatch(handleCardSetup(params)),
+  fetchStripeCustomer: () => dispatch(stripeCustomer()),
+  onSavePaymentMethod: (stripeCustomer, newPaymentMethod) =>
+    dispatch(savePaymentMethod(stripeCustomer, newPaymentMethod)),
 });
 
 // Note: it is important that the withRouter HOC is **outside** the

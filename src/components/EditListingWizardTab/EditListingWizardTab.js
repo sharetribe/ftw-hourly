@@ -14,25 +14,44 @@ import { createResourceLocatorString } from '../../util/routes';
 import {
   EditListingAvailabilityPanel,
   EditListingBioPanel,
-  EditListingExperiencePanel,
+  EditListingExperienceLevelPanel,
+  EditListingAdditionalDetailsPanel,
   EditListingLocationPanel,
   EditListingPhotosPanel,
-  EditListingPoliciesPanel,
+  EditListingCareTypesPanel,
   EditListingPricingPanel,
+  EditListingCareRecipientDetailsPanel,
+  EditListingCaregiverDetailsPanel,
 } from '..';
 
-import css from './EmployerEditListingWizard.module.css';
+import css from './EditListingWizardTab.module.css';
 
+export const CARETYPES = 'care-types';
 export const AVAILABILITY = 'availability';
 export const BIO = 'bio';
-export const EXPERIENCE = 'experience';
+export const EXPERIENCE_LEVEL = 'experience-level';
+export const ADDITIONAL_DETAILS = 'additional-details';
 export const POLICY = 'policy';
 export const LOCATION = 'location';
 export const PRICING = 'pricing';
 export const PHOTOS = 'photos';
+export const CARE_RECEIVER_DETAILS = 'care-receiver-details';
+export const CAREGIVER_DETAILS = 'caregiver-details';
 
-// EmployerEditListingWizardTab component supports these tabs
-export const SUPPORTED_TABS = [BIO, EXPERIENCE, POLICY, LOCATION, PRICING, AVAILABILITY, PHOTOS];
+// EditListingWizardTab component supports these tabs
+export const SUPPORTED_TABS = [
+  CARETYPES,
+  BIO,
+  EXPERIENCE_LEVEL,
+  ADDITIONAL_DETAILS,
+  POLICY,
+  LOCATION,
+  PRICING,
+  AVAILABILITY,
+  PHOTOS,
+  CARE_RECEIVER_DETAILS,
+  CAREGIVER_DETAILS,
+];
 
 const pathParamsToNextTab = (params, tab, marketplaceTabs) => {
   const nextTabIndex = marketplaceTabs.findIndex(s => s === tab) + 1;
@@ -43,7 +62,7 @@ const pathParamsToNextTab = (params, tab, marketplaceTabs) => {
   return { ...params, tab: nextTab };
 };
 
-const EmployerEditListingWizardTab = props => {
+const EditListingWizardTab = props => {
   const {
     tab,
     marketplaceTabs,
@@ -87,7 +106,7 @@ const EmployerEditListingWizardTab = props => {
     return images ? images.map(img => img.imageId || img.id) : null;
   };
 
-  // When user has update draft listing, he should be redirected to next EmployerEditListingWizardTab
+  // When user has update draft listing, he should be redirected to next EditListingWizardTab
   const redirectAfterDraftUpdate = (listingId, params, tab, marketplaceTabs, history) => {
     const currentPathParams = {
       ...params,
@@ -108,35 +127,15 @@ const EmployerEditListingWizardTab = props => {
       history.replace(draftURI);
     }
 
-    const currentSearch = history.location.search;
     // Redirect to next tab
     const nextPathParams = pathParamsToNextTab(currentPathParams, tab, marketplaceTabs);
-    const searchString =
-      nextPathParams.tab == 'experience' && tab == 'bio'
-        ? { form: 'care-type' }
-        : tab == 'experience' && currentSearch == '?form=care-type'
-        ? { form: 'experience-level' }
-        : tab == 'experience' && currentSearch == '?form=experience-level'
-        ? { form: 'additional-details' }
-        : {};
 
-    nextPathParams.tab =
-      tab == 'experience' &&
-      (currentSearch == '?form=care-type' || currentSearch == '?form=experience-level')
-        ? 'experience'
-        : nextPathParams.tab;
-
-    const to = createResourceLocatorString(
-      pageName || 'EditListingPage',
-      routes,
-      nextPathParams,
-      searchString
-    );
+    const to = createResourceLocatorString(pageName || 'EditListingPage', routes, nextPathParams);
     console.log(to);
     history.push(to);
   };
 
-  const onCompleteEmployerEditListingWizardTab = (tab, updateValues, passThrownErrors = false) => {
+  const onCompleteEditListingWizardTab = (tab, updateValues, passThrownErrors = false) => {
     // Normalize images for API call
     const { images: updatedImages, ...otherValues } = updateValues;
     const imageProperty =
@@ -190,84 +189,113 @@ const EmployerEditListingWizardTab = props => {
       // newListingPublished and fetchInProgress are flags for the last wizard tab
       ready: newListingPublished,
       disabled: fetchInProgress,
+      currentUser,
     };
   };
 
   switch (tab) {
+    case CARETYPES: {
+      const submitButtonTranslationKey = isNewListingFlow
+        ? 'EditListingWizard.saveNewCareTypes'
+        : 'EditListingWizard.saveEditCareTypes';
+      return (
+        <EditListingCareTypesPanel
+          {...panelProps(CARETYPES)}
+          submitButtonText={intl.formatMessage({ id: submitButtonTranslationKey })}
+          onSubmit={values => {
+            onCompleteEditListingWizardTab(tab, values);
+          }}
+        />
+      );
+    }
     case BIO: {
       const submitButtonTranslationKey = isNewListingFlow
-        ? 'EmployerEditListingWizard.saveNewBio'
-        : 'EmployerEditListingWizard.saveEditBio';
+        ? 'EditListingWizard.saveNewBio'
+        : 'EditListingWizard.saveEditBio';
       return (
         <EditListingBioPanel
           {...panelProps(BIO)}
           submitButtonText={intl.formatMessage({ id: submitButtonTranslationKey })}
           onSubmit={values => {
-            onCompleteEmployerEditListingWizardTab(tab, values);
+            onCompleteEditListingWizardTab(tab, values);
           }}
         />
       );
     }
-    case EXPERIENCE: {
+    case EXPERIENCE_LEVEL: {
       const submitButtonTranslationKey = isNewListingFlow
-        ? 'EmployerEditListingWizard.saveNewExperience'
-        : 'EmployerEditListingWizard.saveEditExperience';
+        ? 'EditListingWizard.saveNewExperienceLevel'
+        : 'EditListingWizard.saveEditExperienceLevel';
       return (
-        <EditListingExperiencePanel
-          {...panelProps(EXPERIENCE)}
+        <EditListingExperienceLevelPanel
+          {...panelProps(EXPERIENCE_LEVEL)}
           submitButtonText={intl.formatMessage({ id: submitButtonTranslationKey })}
           onSubmit={values => {
-            onCompleteEmployerEditListingWizardTab(tab, values);
+            onCompleteEditListingWizardTab(tab, values);
+          }}
+        />
+      );
+    }
+    case ADDITIONAL_DETAILS: {
+      const submitButtonTranslationKey = isNewListingFlow
+        ? 'EditListingWizard.saveNewAdditionalDetails'
+        : 'EditListingWizard.saveEditAdditionalDetails';
+      return (
+        <EditListingAdditionalDetailsPanel
+          {...panelProps(ADDITIONAL_DETAILS)}
+          submitButtonText={intl.formatMessage({ id: submitButtonTranslationKey })}
+          onSubmit={values => {
+            onCompleteEditListingWizardTab(tab, values);
           }}
         />
       );
     }
     // case POLICY: {
     //   const submitButtonTranslationKey = isNewListingFlow
-    //     ? 'EmployerEditListingWizard.saveNewPolicies'
-    //     : 'EmployerEditListingWizard.saveEditPolicies';
+    //     ? 'EditListingWizard.saveNewPolicies'
+    //     : 'EditListingWizard.saveEditPolicies';
     //   return (
     //     <EditListingPoliciesPanel
     //       {...panelProps(POLICY)}
     //       submitButtonText={intl.formatMessage({ id: submitButtonTranslationKey })}
     //       onSubmit={values => {
-    //         onCompleteEmployerEditListingWizardTab(tab, values);
+    //         onCompleteEditListingWizardTab(tab, values);
     //       }}
     //     />
     //   );
     // }
     case LOCATION: {
       const submitButtonTranslationKey = isNewListingFlow
-        ? 'EmployerEditListingWizard.saveNewLocation'
-        : 'EmployerEditListingWizard.saveEditLocation';
+        ? 'EditListingWizard.saveNewLocation'
+        : 'EditListingWizard.saveEditLocation';
       return (
         <EditListingLocationPanel
           {...panelProps(LOCATION)}
           submitButtonText={intl.formatMessage({ id: submitButtonTranslationKey })}
           onSubmit={values => {
-            onCompleteEmployerEditListingWizardTab(tab, values);
+            onCompleteEditListingWizardTab(tab, values);
           }}
         />
       );
     }
     case PRICING: {
       const submitButtonTranslationKey = isNewListingFlow
-        ? 'EmployerEditListingWizard.saveNewPricing'
-        : 'EmployerEditListingWizard.saveEditPricing';
+        ? 'EditListingWizard.saveNewPricing'
+        : 'EditListingWizard.saveEditPricing';
       return (
         <EditListingPricingPanel
           {...panelProps(PRICING)}
           submitButtonText={intl.formatMessage({ id: submitButtonTranslationKey })}
           onSubmit={values => {
-            onCompleteEmployerEditListingWizardTab(tab, values);
+            onCompleteEditListingWizardTab(tab, values);
           }}
         />
       );
     }
     case AVAILABILITY: {
       const submitButtonTranslationKey = isNewListingFlow
-        ? 'EmployerEditListingWizard.saveNewAvailability'
-        : 'EmployerEditListingWizard.saveEditAvailability';
+        ? 'EditListingWizard.saveNewAvailability'
+        : 'EditListingWizard.saveEditAvailability';
       return (
         <EditListingAvailabilityPanel
           {...panelProps(AVAILABILITY)}
@@ -279,7 +307,7 @@ const EmployerEditListingWizardTab = props => {
           onSubmit={values => {
             // We want to return the Promise to the form,
             // so that it doesn't close its modal if an error is thrown.
-            return onCompleteEmployerEditListingWizardTab(tab, values, true);
+            return onCompleteEditListingWizardTab(tab, values, true);
           }}
           onNextTab={() =>
             redirectAfterDraftUpdate(listing.id.uuid, params, tab, marketplaceTabs, history)
@@ -289,8 +317,8 @@ const EmployerEditListingWizardTab = props => {
     }
     case PHOTOS: {
       const submitButtonTranslationKey = isNewListingFlow
-        ? 'EmployerEditListingWizard.saveNewPhotos'
-        : 'EmployerEditListingWizard.saveEditPhotos';
+        ? 'EditListingWizard.saveNewPhotos'
+        : 'EditListingWizard.saveEditPhotos';
 
       return (
         <EditListingPhotosPanel
@@ -300,10 +328,45 @@ const EmployerEditListingWizardTab = props => {
           onImageUpload={onImageUpload}
           onRemoveImage={onRemoveImage}
           onSubmit={values => {
-            onCompleteEmployerEditListingWizardTab(tab, values);
+            onCompleteEditListingWizardTab(tab, values);
           }}
           onUpdateImageOrder={onUpdateImageOrder}
-          currentUser={currentUser}
+          onProfileImageUpload={onProfileImageUpload}
+          uploadInProgress={uploadInProgress}
+        />
+      );
+    }
+    case CARE_RECEIVER_DETAILS: {
+      const submitButtonTranslationKey = isNewListingFlow
+        ? 'EditListingWizard.saveNewCareRecipientDetails'
+        : 'EditListingWizard.saveEditCareRecipientDetails';
+
+      return (
+        <EditListingCareRecipientDetailsPanel
+          {...panelProps(CARE_RECEIVER_DETAILS)}
+          submitButtonText={intl.formatMessage({ id: submitButtonTranslationKey })}
+          onSubmit={values => {
+            onCompleteEditListingWizardTab(tab, values);
+          }}
+        />
+      );
+    }
+    case CAREGIVER_DETAILS: {
+      const submitButtonTranslationKey = isNewListingFlow
+        ? 'EditListingWizard.saveNewCaregiverDetails'
+        : 'EditListingWizard.saveEditCaregiverDetails';
+
+      return (
+        <EditListingCaregiverDetailsPanel
+          {...panelProps(PHOTOS)}
+          submitButtonText={intl.formatMessage({ id: submitButtonTranslationKey })}
+          profileImage={profileImage}
+          onImageUpload={onImageUpload}
+          onRemoveImage={onRemoveImage}
+          onSubmit={values => {
+            onCompleteEditListingWizardTab(tab, values);
+          }}
+          onUpdateImageOrder={onUpdateImageOrder}
           onProfileImageUpload={onProfileImageUpload}
           uploadInProgress={uploadInProgress}
         />
@@ -314,13 +377,14 @@ const EmployerEditListingWizardTab = props => {
   }
 };
 
-EmployerEditListingWizardTab.defaultProps = {
+EditListingWizardTab.defaultProps = {
   listing: null,
   updatedTab: null,
   availabilityExceptions: [],
+  pageName: 'EditListingPage',
 };
 
-EmployerEditListingWizardTab.propTypes = {
+EditListingWizardTab.propTypes = {
   params: shape({
     id: string.isRequired,
     slug: string.isRequired,
@@ -377,4 +441,4 @@ EmployerEditListingWizardTab.propTypes = {
   profileImage: object,
 };
 
-export default EmployerEditListingWizardTab;
+export default EditListingWizardTab;

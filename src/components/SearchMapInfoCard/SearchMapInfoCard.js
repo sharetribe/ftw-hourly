@@ -8,6 +8,8 @@ import { propTypes } from '../../util/types';
 import { formatMoney } from '../../util/currency';
 import { ensureListing } from '../../util/data';
 import { ResponsiveImage } from '../../components';
+import { types } from 'sharetribe-flex-sdk';
+const { Money } = types;
 
 import css from './SearchMapInfoCard.module.css';
 
@@ -15,9 +17,17 @@ import css from './SearchMapInfoCard.module.css';
 const ListingCard = props => {
   const { className, clickHandler, intl, isInCarousel, listing, urlToListing } = props;
 
-  const { title, price } = listing.attributes;
+  const { title } = listing.attributes;
+  const { minPrice, maxPrice } = listing.attributes.publicData;
+
+  const minPriceMoney = new Money(minPrice, 'USD');
+  const maxPriceMoney = new Money(maxPrice, 'USD');
+
+  // Create formatted price if currency is known or alternatively show just the unknown currency.
   const formattedPrice =
-    price && price.currency === config.currency ? formatMoney(intl, price) : price.currency;
+    minPriceMoney && minPriceMoney.currency === config.currency
+      ? formatMoney(intl, minPriceMoney)
+      : minPriceMoney.currency;
   const firstImage = listing.images && listing.images.length > 0 ? listing.images[0] : null;
 
   // listing card anchor needs sometimes inherited border radius.

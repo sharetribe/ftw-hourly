@@ -13,20 +13,24 @@ import {
   LISTING_PAGE_PARAM_TYPE_NEW,
   LISTING_PAGE_PARAM_TYPES,
 } from '../../util/urlHelpers';
-import { ensureCurrentUser, ensureListing } from '../../util/data';
+import {
+  ensureCurrentUser,
+  ensureListing,
+  ensureStripeCustomer,
+  ensurePaymentMethodCard,
+} from '../../util/data';
 
-import { Modal, NamedRedirect, Tabs, StripeConnectAccountStatusBox } from '..';
-import { StripeConnectAccountForm } from '../../forms';
+import { Modal, NamedRedirect, Tabs } from '..';
+import { PaymentMethodsForm } from '../../forms';
 
-import EmployerEditListingWizardTab, {
+import EditListingWizardTab, {
+  CARETYPES,
   AVAILABILITY,
-  BIO,
-  EXPERIENCE,
-  POLICY,
   LOCATION,
   PRICING,
-  PHOTOS,
-} from './EmployerEditListingWizardTab';
+  CARE_RECEIVER_DETAILS,
+  CAREGIVER_DETAILS,
+} from '../EditListingWizardTab/EditListingWizardTab';
 import css from './EmployerEditListingWizard.module.css';
 
 // Show availability calendar only if environment variable availabilityEnabled is true
@@ -39,13 +43,12 @@ const availabilityMaybe = config.enableAvailability ? [AVAILABILITY] : [];
 // Note 3: in FTW-hourly template we don't use the POLICY tab so it's commented out.
 // If you want to add a free text field to your listings you can enable the POLICY tab
 export const TABS = [
-  BIO,
-  EXPERIENCE,
-  //POLICY,
+  CARETYPES,
   LOCATION,
   PRICING,
   ...availabilityMaybe,
-  PHOTOS,
+  CARE_RECEIVER_DETAILS,
+  CAREGIVER_DETAILS,
 ];
 
 // Tabs are horizontal in small screens
@@ -56,20 +59,18 @@ const STRIPE_ONBOARDING_RETURN_URL_FAILURE = 'failure';
 
 const tabLabel = (intl, tab) => {
   let key = null;
-  if (tab === BIO) {
-    key = 'EmployerEditListingWizard.tabLabelBio';
-  } else if (tab === EXPERIENCE) {
-    key = 'EmployerEditListingWizard.tabLabelExperience';
-  } else if (tab === POLICY) {
-    key = 'EmployerEditListingWizard.tabLabelPolicy';
+  if (tab === CARETYPES) {
+    key = 'EmployerEditListingWizard.tabLabelCareTypes';
   } else if (tab === LOCATION) {
     key = 'EmployerEditListingWizard.tabLabelLocation';
   } else if (tab === PRICING) {
     key = 'EmployerEditListingWizard.tabLabelPricing';
   } else if (tab === AVAILABILITY) {
     key = 'EmployerEditListingWizard.tabLabelAvailability';
-  } else if (tab === PHOTOS) {
-    key = 'EmployerEditListingWizard.tabLabelPhotos';
+  } else if (tab === CARE_RECEIVER_DETAILS) {
+    key = 'EmployerEditListingWizard.tabLabelCareRecipientDetails';
+  } else if (tab === CAREGIVER_DETAILS) {
+    key = 'EmployerEditListingWizard.tabLabelCaregiverDetails';
   }
 
   return intl.formatMessage({ id: key });
@@ -92,21 +93,10 @@ const tabCompleted = (tab, listing) => {
     publicData,
     privateData,
   } = listing.attributes;
-  const images = listing.images;
 
   switch (tab) {
-    case BIO:
-      return !!(description && title);
-    // TODO: Update publicData to be verified
-    case EXPERIENCE:
-      return !!(
-        publicData &&
-        publicData.careTypes &&
-        publicData.experienceLevel &&
-        publicData.covidVaccination
-      );
-    case POLICY:
-      return !!(publicData && typeof publicData.rules !== 'undefined');
+    case CARETYPES:
+      return !!(publicData && publicData.careTypes);
     case LOCATION:
       return !!(
         geolocation &&
@@ -119,8 +109,16 @@ const tabCompleted = (tab, listing) => {
       return !!(publicData && publicData.minPrice && publicData.maxPrice);
     case AVAILABILITY:
       return !!availabilityPlan;
-    case PHOTOS:
-      return images && images.length > 0;
+    case CARE_RECEIVER_DETAILS:
+      return !!(
+        publicData &&
+        publicData.recipientRelationship &&
+        publicData.gender &&
+        publicData.age &&
+        publicData.recipientDetails
+      );
+    case CAREGIVER_DETAILS:
+      return true;
     default:
       return false;
   }
@@ -154,50 +152,6 @@ const scrollToTab = (tabPrefix, tabId) => {
   }
 };
 
-// Create return URL for the Stripe onboarding form
-const createReturnURL = (returnURLType, rootURL, routes, pathParams) => {
-  if (returnURLType === 'success') {
-    const path = createResourceLocatorString('LandingPage', routes, pathParams);
-    const root = rootURL.replace(/\/$/, '');
-    return `${root}${path}`;
-  }
-
-  const path = createResourceLocatorString(
-    'EditListingStripeOnboardingPage',
-    routes,
-    { ...pathParams, returnURLType },
-    {}
-  );
-
-  const root = rootURL.replace(/\/$/, '');
-  return `${root}${path}`;
-};
-
-// Get attribute: stripeAccountData
-const getStripeAccountData = stripeAccount => stripeAccount.attributes.stripeAccountData || null;
-
-// Get last 4 digits of bank account returned in Stripe account
-const getBankAccountLast4Digits = stripeAccountData =>
-  stripeAccountData && stripeAccountData.external_accounts.data.length > 0
-    ? stripeAccountData.external_accounts.data[0].last4
-    : null;
-
-// Check if there's requirements on selected type: 'past_due', 'currently_due' etc.
-const hasRequirements = (stripeAccountData, requirementType) =>
-  stripeAccountData != null &&
-  stripeAccountData.requirements &&
-  Array.isArray(stripeAccountData.requirements[requirementType]) &&
-  stripeAccountData.requirements[requirementType].length > 0;
-
-// Redirect user to Stripe's hosted Connect account onboarding form
-const handleGetStripeConnectAccountLinkFn = (getLinkFn, commonParams) => type => () => {
-  getLinkFn({ type, ...commonParams })
-    .then(url => {
-      window.location.href = url;
-    })
-    .catch(err => console.error(err));
-};
-
 const RedirectToStripe = ({ redirectFn }) => {
   useEffect(redirectFn('custom_account_verification'), []);
   return <FormattedMessage id="EmployerEditListingWizard.redirectingToStripe" />;
@@ -215,11 +169,16 @@ class EmployerEditListingWizard extends Component {
       draftId: null,
       showPayoutDetails: false,
       portalRoot: null,
+      isSubmittingPayment: false,
+      cardState: null,
     };
     this.handleCreateFlowTabScrolling = this.handleCreateFlowTabScrolling.bind(this);
     this.handlePublishListing = this.handlePublishListing.bind(this);
     this.handlePayoutModalClose = this.handlePayoutModalClose.bind(this);
     this.handlePayoutSubmit = this.handlePayoutSubmit.bind(this);
+    this.handlePaymentMethodsSubmit = this.handlePaymentMethodsSubmit.bind(this);
+    this.getClientSecret = this.getClientSecret.bind(this);
+    this.getPaymentParams = this.getPaymentParams.bind(this);
   }
 
   componentDidMount() {
@@ -235,17 +194,7 @@ class EmployerEditListingWizard extends Component {
   }
 
   handlePublishListing(id) {
-    const { onPublishListingDraft, currentUser, stripeAccount } = this.props;
-
-    const stripeConnected =
-      currentUser && currentUser.stripeAccount && !!currentUser.stripeAccount.id;
-
-    const stripeAccountData = stripeConnected ? getStripeAccountData(stripeAccount) : null;
-
-    const requirementsMissing =
-      stripeAccount &&
-      (hasRequirements(stripeAccountData, 'past_due') ||
-        hasRequirements(stripeAccountData, 'currently_due'));
+    const { onPublishListingDraft, currentUser } = this.props;
 
     const uploadedImage = this.props.image;
 
@@ -257,20 +206,22 @@ class EmployerEditListingWizard extends Component {
 
     this.props.onUpdateProfile(updatedValues);
 
-    if (stripeConnected && !requirementsMissing) {
-      onPublishListingDraft(id);
-    } else {
-      this.setState({
-        draftId: id,
-        showPayoutDetails: true,
-      });
-    }
+    onPublishListingDraft(id);
+
+    this.setState({
+      draftId: id,
+      showPayoutDetails: true,
+    });
   }
 
   handlePayoutModalClose() {
     this.setState({ showPayoutDetails: false });
+    if (window.location.href.includes('create-profile')) {
+      window.location.href = '/';
+    }
   }
 
+  // TODO: Change for payment methods
   handlePayoutSubmit(values) {
     this.props
       .onPayoutDetailsSubmit(values)
@@ -279,6 +230,76 @@ class EmployerEditListingWizard extends Component {
       })
       .catch(() => {
         // do nothing
+      });
+  }
+
+  getClientSecret(setupIntent) {
+    return setupIntent && setupIntent.attributes ? setupIntent.attributes.clientSecret : null;
+  }
+  getPaymentParams(currentUser, formValues) {
+    const { name, addressLine1, addressLine2, postal, state, city, country } = formValues;
+    const addressMaybe =
+      addressLine1 && postal
+        ? {
+            address: {
+              city: city,
+              country: country,
+              line1: addressLine1,
+              line2: addressLine2,
+              postal_code: postal,
+              state: state,
+            },
+          }
+        : {};
+    const billingDetails = {
+      name,
+      email: ensureCurrentUser(currentUser).attributes.email,
+      ...addressMaybe,
+    };
+
+    const paymentParams = {
+      payment_method_data: {
+        billing_details: billingDetails,
+      },
+    };
+
+    return paymentParams;
+  }
+
+  handlePaymentMethodsSubmit(params) {
+    this.setState({ isSubmittingPayment: true });
+    const ensuredCurrentUser = ensureCurrentUser(this.props.currentUser);
+    const stripeCustomer = ensuredCurrentUser.stripeCustomer;
+    const { stripe, card, formValues } = params;
+
+    this.props
+      .onCreateSetupIntent()
+      .then(setupIntent => {
+        const stripeParams = {
+          stripe,
+          card,
+          setupIntentClientSecret: this.getClientSecret(setupIntent),
+          paymentParams: this.getPaymentParams(this.props.currentUser, formValues),
+        };
+
+        return this.props.onHandleCardSetup(stripeParams);
+      })
+      .then(result => {
+        const newPaymentMethod = result.setupIntent.payment_method;
+        // Note: stripe.handleCardSetup might return an error inside successful call (200), but those are rejected in thunk functions.
+
+        return this.props.onSavePaymentMethod(stripeCustomer, newPaymentMethod);
+      })
+      .then(() => {
+        // Update currentUser entity and its sub entities: stripeCustomer and defaultPaymentMethod
+        this.props.fetchStripeCustomer();
+        this.setState({ isSubmittingPayment: false });
+        this.setState({ cardState: 'default' });
+        window.location.href = '/';
+      })
+      .catch(error => {
+        console.error(error);
+        this.setState({ isSubmittingPayment: false });
       });
   }
 
@@ -312,6 +333,9 @@ class EmployerEditListingWizard extends Component {
       onProfileImageUpload,
       onUpdateProfile,
       uploadInProgress,
+      handleCardSetupError,
+      addPaymentMethodError,
+      createStripeCustomerError,
       ...rest
     } = this.props;
 
@@ -331,7 +355,12 @@ class EmployerEditListingWizard extends Component {
         .reverse()
         .find(t => tabsStatus[t]);
 
-      return <NamedRedirect name="EditListingPage" params={{ ...params, tab: nearestActiveTab }} />;
+      return (
+        <NamedRedirect
+          name={pageName || 'EditListingPage'}
+          params={{ ...params, tab: nearestActiveTab }}
+        />
+      );
     }
 
     const { width } = viewport;
@@ -351,69 +380,29 @@ class EmployerEditListingWizard extends Component {
     }
 
     const tabLink = tab => {
-      let search = '';
-      if (tab === 'experience') {
-        search = '?form=care-type';
-      }
-      return { name: pageName || 'EditListingPage', params: { ...params, tab, search } };
+      return { name: pageName || 'EditListingPage', params: { ...params, tab } };
     };
 
-    const setPortalRootAfterInitialRender = () => {
-      if (!this.state.portalRoot) {
-        this.setState({ portalRoot: document.getElementById('portal-root') });
-      }
-    };
-    const formDisabled = getAccountLinkInProgress;
     const ensuredCurrentUser = ensureCurrentUser(currentUser);
     const currentUserLoaded = !!ensuredCurrentUser.id;
-    const stripeConnected = currentUserLoaded && !!stripeAccount && !!stripeAccount.id;
 
     const rootURL = config.canonicalRootURL;
     const routes = routeConfiguration();
     const { returnURLType, ...pathParams } = params;
-    const successURL = createReturnURL(
-      STRIPE_ONBOARDING_RETURN_URL_SUCCESS,
-      rootURL,
-      routes,
-      pathParams
-    );
-    const failureURL = createReturnURL(
-      STRIPE_ONBOARDING_RETURN_URL_FAILURE,
-      rootURL,
-      routes,
-      pathParams
-    );
 
-    const accountId = stripeConnected ? stripeAccount.id : null;
-    const stripeAccountData = stripeConnected ? getStripeAccountData(stripeAccount) : null;
+    const userName = currentUserLoaded
+      ? `${ensuredCurrentUser.attributes.profile.firstName} ${ensuredCurrentUser.attributes.profile.lastName}`
+      : null;
 
-    const requirementsMissing =
-      stripeAccount &&
-      (hasRequirements(stripeAccountData, 'past_due') ||
-        hasRequirements(stripeAccountData, 'currently_due'));
+    const initalValuesForStripePayment = { name: userName };
 
-    const savedCountry = stripeAccountData ? stripeAccountData.country : null;
-
-    const handleGetStripeConnectAccountLink = handleGetStripeConnectAccountLinkFn(
-      onGetStripeConnectAccountLink,
-      {
-        accountId,
-        successURL,
-        failureURL,
-      }
-    );
-
-    const returnedNormallyFromStripe = returnURLType === STRIPE_ONBOARDING_RETURN_URL_SUCCESS;
-    const returnedAbnormallyFromStripe = returnURLType === STRIPE_ONBOARDING_RETURN_URL_FAILURE;
-    const showVerificationNeeded = stripeConnected && requirementsMissing;
-
-    // Redirect from success URL to basic path for StripePayoutPage
-    if (returnedNormallyFromStripe && stripeConnected && !requirementsMissing) {
-      return <NamedRedirect name="EditListingPage" params={pathParams} />;
-    }
+    const hasDefaultPaymentMethod =
+      currentUser &&
+      ensureStripeCustomer(currentUser.stripeCustomer).attributes.stripeCustomerId &&
+      ensurePaymentMethodCard(currentUser.stripeCustomer.defaultPaymentMethod).id;
 
     return (
-      <div className={classes} ref={setPortalRootAfterInitialRender}>
+      <div className={classes}>
         <Tabs
           rootClassName={css.tabsContainer}
           navRootClassName={css.nav}
@@ -421,7 +410,7 @@ class EmployerEditListingWizard extends Component {
         >
           {TABS.map(tab => {
             return (
-              <EmployerEditListingWizardTab
+              <EditListingWizardTab
                 {...rest}
                 key={tab}
                 tabId={`${id}_${tab}`}
@@ -463,52 +452,22 @@ class EmployerEditListingWizard extends Component {
             </h1>
             {!currentUserLoaded ? (
               <FormattedMessage id="StripePayoutPage.loadingData" />
-            ) : returnedAbnormallyFromStripe && !stripeAccountLinkError ? (
-              <p className={css.modalMessage}>
-                <RedirectToStripe redirectFn={handleGetStripeConnectAccountLink} />
-              </p>
             ) : (
               <>
                 <p className={css.modalMessage}>
                   <FormattedMessage id="EmployerEditListingWizard.payoutModalInfo" />
                 </p>
-                <StripeConnectAccountForm
-                  disabled={formDisabled}
-                  inProgress={payoutDetailsSaveInProgress}
-                  ready={payoutDetailsSaved}
-                  currentUser={ensuredCurrentUser}
-                  stripeBankAccountLastDigits={getBankAccountLast4Digits(stripeAccountData)}
-                  savedCountry={savedCountry}
-                  submitButtonText={intl.formatMessage({
-                    id: 'StripePayoutPage.submitButtonText',
-                  })}
-                  stripeAccountError={stripeAccountError}
-                  stripeAccountFetched={stripeAccountFetched}
-                  stripeAccountLinkError={stripeAccountLinkError}
-                  onChange={onPayoutDetailsFormChange}
-                  onSubmit={rest.onPayoutDetailsSubmit}
-                  onGetStripeConnectAccountLink={handleGetStripeConnectAccountLink}
-                  stripeConnected={stripeConnected}
-                >
-                  {stripeConnected && !returnedAbnormallyFromStripe && showVerificationNeeded ? (
-                    <StripeConnectAccountStatusBox
-                      type="verificationNeeded"
-                      inProgress={getAccountLinkInProgress}
-                      onGetStripeConnectAccountLink={handleGetStripeConnectAccountLink(
-                        'custom_account_verification'
-                      )}
-                    />
-                  ) : stripeConnected && savedCountry && !returnedAbnormallyFromStripe ? (
-                    <StripeConnectAccountStatusBox
-                      type="verificationSuccess"
-                      inProgress={getAccountLinkInProgress}
-                      disabled={payoutDetailsSaveInProgress}
-                      onGetStripeConnectAccountLink={handleGetStripeConnectAccountLink(
-                        'custom_account_update'
-                      )}
-                    />
-                  ) : null}
-                </StripeConnectAccountForm>
+                <PaymentMethodsForm
+                  className={css.paymentForm}
+                  formId="PaymentMethodsForm"
+                  initialValues={initalValuesForStripePayment}
+                  onSubmit={this.handlePaymentMethodsSubmit}
+                  hasDefaultPaymentMethod={hasDefaultPaymentMethod}
+                  addPaymentMethodError={addPaymentMethodError}
+                  createStripeCustomerError={createStripeCustomerError}
+                  handleCardSetupError={handleCardSetupError}
+                  inProgress={this.state.isSubmittingPayment}
+                />
               </>
             )}
           </div>
@@ -531,6 +490,7 @@ EmployerEditListingWizard.defaultProps = {
   fetchStripeAccountError: null,
   stripeAccountError: null,
   stripeAccountLinkError: null,
+  pageName: 'EditListingPage',
 };
 
 EmployerEditListingWizard.propTypes = {

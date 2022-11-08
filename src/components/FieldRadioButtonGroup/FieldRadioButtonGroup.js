@@ -50,13 +50,13 @@ const FieldRadioButtonRenderer = props => {
   );
 };
 
-FieldRadioButton.defaultProps = {
+FieldRadioButtonRenderer.defaultProps = {
   rootClassName: null,
   className: null,
   label: null,
 };
 
-FieldRadioButton.propTypes = {
+FieldRadioButtonRenderer.propTypes = {
   rootClassName: string,
   className: string,
   id: string.isRequired,

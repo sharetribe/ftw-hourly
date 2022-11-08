@@ -18,15 +18,16 @@ import { ensureCurrentUser, ensureListing } from '../../util/data';
 import { Modal, NamedRedirect, Tabs, StripeConnectAccountStatusBox } from '..';
 import { StripeConnectAccountForm } from '../../forms';
 
-import CaregiverEditListingWizardTab, {
+import EditListingWizardTab, {
+  CARETYPES,
   AVAILABILITY,
   BIO,
-  EXPERIENCE,
-  POLICY,
+  EXPERIENCE_LEVEL,
+  ADDITIONAL_DETAILS,
   LOCATION,
   PRICING,
   PHOTOS,
-} from './CaregiverEditListingWizardTab';
+} from '../EditListingWizardTab/EditListingWizardTab';
 import css from './CaregiverEditListingWizard.module.css';
 
 // Show availability calendar only if environment variable availabilityEnabled is true
@@ -39,9 +40,10 @@ const availabilityMaybe = config.enableAvailability ? [AVAILABILITY] : [];
 // Note 3: in FTW-hourly template we don't use the POLICY tab so it's commented out.
 // If you want to add a free text field to your listings you can enable the POLICY tab
 export const TABS = [
+  CARETYPES,
   BIO,
-  EXPERIENCE,
-  //POLICY,
+  EXPERIENCE_LEVEL,
+  ADDITIONAL_DETAILS,
   LOCATION,
   PRICING,
   ...availabilityMaybe,
@@ -56,12 +58,14 @@ const STRIPE_ONBOARDING_RETURN_URL_FAILURE = 'failure';
 
 const tabLabel = (intl, tab) => {
   let key = null;
-  if (tab === BIO) {
+  if (tab === CARETYPES) {
+    key = 'CaregiverEditListingWizard.tabLabelCareTypes';
+  } else if (tab === BIO) {
     key = 'CaregiverEditListingWizard.tabLabelBio';
-  } else if (tab === EXPERIENCE) {
-    key = 'CaregiverEditListingWizard.tabLabelExperience';
-  } else if (tab === POLICY) {
-    key = 'CaregiverEditListingWizard.tabLabelPolicy';
+  } else if (tab === EXPERIENCE_LEVEL) {
+    key = 'CaregiverEditListingWizard.tabLabelExperienceLevel';
+  } else if (tab === ADDITIONAL_DETAILS) {
+    key = 'CaregiverEditListingWizard.tabLabelAdditionalDetails';
   } else if (tab === LOCATION) {
     key = 'CaregiverEditListingWizard.tabLabelLocation';
   } else if (tab === PRICING) {
@@ -95,18 +99,15 @@ const tabCompleted = (tab, listing) => {
   const images = listing.images;
 
   switch (tab) {
+    case CARETYPES:
+      return !!(publicData && publicData.careTypes);
     case BIO:
       return !!(description && title);
     // TODO: Update publicData to be verified
-    case EXPERIENCE:
-      return !!(
-        publicData &&
-        publicData.careTypes &&
-        publicData.experienceLevel &&
-        publicData.covidVaccination
-      );
-    case POLICY:
-      return !!(publicData && typeof publicData.rules !== 'undefined');
+    case EXPERIENCE_LEVEL:
+      return !!(publicData && publicData.experienceLevel);
+    case ADDITIONAL_DETAILS:
+      return !!(publicData && publicData.covidVaccination && publicData.languagesSpoken);
     case LOCATION:
       return !!(
         geolocation &&
@@ -269,6 +270,9 @@ class CaregiverEditListingWizard extends Component {
 
   handlePayoutModalClose() {
     this.setState({ showPayoutDetails: false });
+    if (window.location.href.includes('create-profile')) {
+      window.location.href = '/';
+    }
   }
 
   handlePayoutSubmit(values) {
@@ -331,7 +335,12 @@ class CaregiverEditListingWizard extends Component {
         .reverse()
         .find(t => tabsStatus[t]);
 
-      return <NamedRedirect name="EditListingPage" params={{ ...params, tab: nearestActiveTab }} />;
+      return (
+        <NamedRedirect
+          name={pageName || 'EditListingPage'}
+          params={{ ...params, tab: nearestActiveTab }}
+        />
+      );
     }
 
     const { width } = viewport;
@@ -351,11 +360,7 @@ class CaregiverEditListingWizard extends Component {
     }
 
     const tabLink = tab => {
-      let search = '';
-      if (tab === 'experience') {
-        search = '?form=care-type';
-      }
-      return { name: pageName || 'EditListingPage', params: { ...params, tab, search } };
+      return { name: pageName || 'EditListingPage', params: { ...params, tab } };
     };
 
     const setPortalRootAfterInitialRender = () => {
@@ -421,7 +426,7 @@ class CaregiverEditListingWizard extends Component {
         >
           {TABS.map(tab => {
             return (
-              <CaregiverEditListingWizardTab
+              <EditListingWizardTab
                 {...rest}
                 key={tab}
                 tabId={`${id}_${tab}`}
@@ -531,6 +536,7 @@ CaregiverEditListingWizard.defaultProps = {
   fetchStripeAccountError: null,
   stripeAccountError: null,
   stripeAccountLinkError: null,
+  pageName: 'EditListingPage',
 };
 
 CaregiverEditListingWizard.propTypes = {

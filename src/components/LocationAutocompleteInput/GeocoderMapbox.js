@@ -1,6 +1,7 @@
 import { types as sdkTypes } from '../../util/sdkLoader';
 import { userLocation } from '../../util/maps';
 import config from '../../config';
+import queryString from 'query-string';
 
 const { LatLng: SDKLatLng, LatLngBounds: SDKLatLngBounds } = sdkTypes;
 
@@ -67,12 +68,20 @@ const placeBounds = prediction => {
 // Reverse geoencode the latitude and longtude coordinates
 // to return the address of a given location.
 export const getPlaceAddress = async place => {
+  const returnType = { types: 'locality' };
+  const limitCountriesMaybe = config.maps.search.countryLimit
+    ? { country: config.maps.search.countryLimit }
+    : {};
+
   const url =
     'https://api.mapbox.com/geocoding/v5/mapbox.places/' +
     place.origin.lng +
-    ', ' +
+    ',' +
     place.origin.lat +
-    '.json?access_token=' +
+    '.json?' +
+    queryString.stringify(limitCountriesMaybe) +
+    '&' +
+    'access_token=' +
     process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
 
   const response = await fetch(url, {
@@ -83,7 +92,7 @@ export const getPlaceAddress = async place => {
   });
 
   const body = await response.json();
-  return body.features[0].place_name;
+  return body.features[2].place_name;
 };
 
 export const GeocoderAttribution = () => null;
@@ -130,6 +139,7 @@ class GeocoderMapbox {
         limit: 5,
         ...limitCountriesMaybe,
         language: [config.locale],
+        types: ['postcode', 'locality'],
       })
       .send()
       .then(response => {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { func, node, object, string } from 'prop-types';
 import { Field } from 'react-final-form';
 import classNames from 'classnames';
@@ -31,6 +31,7 @@ const FieldSelectComponent = props => {
     meta,
     children,
     onChange,
+    firstValueSelected,
     ...rest
   } = props;
 
@@ -39,6 +40,12 @@ const FieldSelectComponent = props => {
   }
 
   const { valid, invalid, touched, error } = meta;
+
+  useEffect(() => {
+    if (firstValueSelected) {
+      input.onChange(children[0].props.value);
+    }
+  }, []);
 
   // Error message and input error styles are only shown if the
   // field has been touched and the validation has failed.

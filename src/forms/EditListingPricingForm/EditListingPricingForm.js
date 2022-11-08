@@ -37,9 +37,6 @@ export const EditListingPricingFormComponent = props => (
         updated,
         updateInProgress,
         fetchErrors,
-        form: {
-          mutators: { setValue },
-        },
       } = formRenderProps;
 
       const maximumPricePerUnitMessage = intl.formatMessage({
@@ -134,7 +131,7 @@ export const EditListingPricingFormComponent = props => (
           ) : null}
           <div className={css.currencyFieldContainer}>
             <FieldCurrencyInput
-              id={formId ? `${formId}.minPrice` : 'minPrice'}
+              id="minPrice"
               name="minPrice"
               className={css.priceInput}
               label={minimumPricePerUnitMessage}
@@ -143,7 +140,7 @@ export const EditListingPricingFormComponent = props => (
               validate={!submitInProgress && minimumPriceValidators}
             />
             <FieldCurrencyInput
-              id={formId ? `${formId}.maxPrice` : 'maxPrice'}
+              id="maxPrice"
               name="maxPrice"
               className={css.priceInput}
               label={maximumPricePerUnitMessage}

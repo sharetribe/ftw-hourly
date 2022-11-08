@@ -20,6 +20,7 @@ const listingTab = (listing, selectedPageName) => {
       },
     };
   }
+
   const currentListing = ensureOwnListing(listing);
   const id = currentListing.id.uuid;
   const { title = '', state } = currentListing.attributes;
@@ -48,14 +49,6 @@ const UserNav = props => {
   const tabs = [
     {
       ...listingTab(listing, selectedPageName),
-    },
-    {
-      text: <FormattedMessage id="UserNav.profileSettingsPage" />,
-      selected: selectedPageName === 'ProfileSettingsPage',
-      disabled: false,
-      linkProps: {
-        name: 'ProfileSettingsPage',
-      },
     },
     {
       text: <FormattedMessage id="UserNav.contactDetailsPage" />,

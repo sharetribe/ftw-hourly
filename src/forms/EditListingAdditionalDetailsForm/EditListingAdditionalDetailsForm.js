@@ -16,7 +16,6 @@ import {
   FieldTextInput,
 } from '../../components';
 import { findOptionsForSelectFilter } from '../../util/search';
-import { useHistory } from 'react-router-dom';
 
 import css from './EditListingAdditionalDetailsForm.module.css';
 
@@ -125,27 +124,14 @@ const EditListingAdditionalDetailsFormComponent = props => (
 
       const classes = classNames(css.root, className);
       const submitInProgress = updateInProgress;
+      const submitReady = (updated && pristine) || ready;
       const submitDisabled = invalid || disabled || submitInProgress;
 
-      const [submitted, setSubmitted] = useState(false);
-      const [submitReady, setSubmitReady] = useState(false);
-
-      useEffect(() => {
-        setSubmitReady((updated || ready) && submitted);
-      }, [pristine, ready, updated, submitted]);
-
-      const onSubmit = e => {
-        e.preventDefault();
-        setSubmitted(true);
-        handleSubmit(e);
-      };
-
       return (
-        <Form className={classes} onSubmit={onSubmit}>
+        <Form className={classes} onSubmit={handleSubmit}>
           {errorMessageCreateListingDraft}
           {errorMessageUpdateListing}
           {errorMessageShowListing}
-          {{ errorMessageOppositePricing }}
 
           <FieldCheckboxGroup
             className={css.features}

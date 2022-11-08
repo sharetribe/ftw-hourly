@@ -31,6 +31,7 @@ const StripePayoutPage = loadable(() => import(/* webpackChunkName: "StripePayou
 const TermsOfServicePage = loadable(() => import(/* webpackChunkName: "TermsOfServicePage" */ './containers/TermsOfServicePage/TermsOfServicePage'));
 const TransactionPage = loadable(() => import(/* webpackChunkName: "TransactionPage" */ './containers/TransactionPage/TransactionPage'));
 const CreateProfilePage = loadable(() => import(/* webpackChunksFilename: "CreateProfilePage" */ './containers/CreateProfilePage/CreateProfilePage'));
+const CareTypePage = loadable(() => import(/* webpackChunksFilename: "CareTypePage" */ './containers/CareTypePage/CareTypePage'));
 
 // Styleguide helps you to review current components and develop new ones
 const StyleguidePage = loadable(() => import(/* webpackChunkName: "StyleguidePage" */ './containers/StyleguidePage/StyleguidePage'));
@@ -71,9 +72,16 @@ const routeConfiguration = () => {
     {
       path: '/create-profile/:slug/:id/:type/:tab',
       name: 'CreateProfilePage',
-      component: CreateProfilePage,
-      extraProps: { allowOnlyOneListing: true },
-      loadData: pageDataLoadingAPI.CreateProfilePage.loadData,
+      component: EditListingPage,
+      auth: true,
+      loadData: pageDataLoadingAPI.EditListingPage.loadData,
+    },
+    {
+      path: '/select-care-types/:slug/:id/:type',
+      name: 'CareTypePage',
+      component: CareTypePage,
+      auth: true,
+      loadData: pageDataLoadingAPI.EditListingPage.loadData,
     },
     {
       path: '/s',
