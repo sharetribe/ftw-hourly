@@ -278,10 +278,7 @@ const mapStateToProps = state => {
   const mapListings = getListingsById(
     state,
     unionWith(currentPageResultIds, searchMapListingIds, (id1, id2) => id1.uuid === id2.uuid)
-  ).filter(listing => {
-    console.log(listing.attributes.publicData.listingType);
-    listing.attributes.publicData.listingType === oppositeUserType;
-  });
+  ).filter(listing => listing.attributes.publicData.listingType === oppositeUserType);
 
   return {
     listings: pageListings,
