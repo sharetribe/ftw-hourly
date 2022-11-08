@@ -166,6 +166,7 @@ const SignupFormComponent = props => (
               id={formId ? `${formId}.userType` : 'userType'}
               name="userType"
               label={userTypeSelectLabel}
+              firstValueSelected={true}
             >
               <option value={employerSelectValue}>{employerSelectLabel}</option>
               <option value={caregiverSelectValue}>{caregiverSelectLabel}</option>

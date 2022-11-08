@@ -167,7 +167,12 @@ const EditListingCareRecipientDetailsFormComponent = props => (
             validate={requiredFieldArrayRadio(genderErrorMessage)}
           />
           <label htmlFor="age">{ageSelectLabel}</label>
-          <FieldSelect className={css.select} id={formId ? `${formId}.age` : 'age'} name="age">
+          <FieldSelect
+            className={css.select}
+            id={formId ? `${formId}.age` : 'age'}
+            name="age"
+            firstValueSelected={true}
+          >
             {ageSelectOptions.map(item => {
               return (
                 <option key={item.value} value={item.value}>
