@@ -156,7 +156,7 @@ const SignupFormComponent = props => (
 
         handleSubmit(values);
 
-        history.push(`/select-care-types/draft/00000000-0000-0000-0000-000000000000/new`);
+        history.push(`/create-profile/draft/00000000-0000-0000-0000-000000000000/new/care-types`);
       };
 
       return (

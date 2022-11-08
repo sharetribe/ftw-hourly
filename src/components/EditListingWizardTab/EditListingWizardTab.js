@@ -25,7 +25,7 @@ import {
 
 import css from './EditListingWizardTab.module.css';
 
-export const CARETYPES = 'careTypes';
+export const CARETYPES = 'care-types';
 export const AVAILABILITY = 'availability';
 export const BIO = 'bio';
 export const EXPERIENCE_LEVEL = 'experience-level';

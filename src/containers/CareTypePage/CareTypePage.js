@@ -92,7 +92,16 @@ export const CareTypePageComponent = props => {
     history.push(draftURI);
   };
 
-  const handleSubmit = upsertValues => {
+  const handleSubmit = updateValues => {
+    const { images: updatedImages, ...otherValues } = updateValues;
+    const imageProperty =
+      typeof updatedImages !== 'undefined' ? { images: imageIds(updatedImages) } : {};
+    const updateValuesWithImages = { ...otherValues, ...imageProperty };
+
+    const upsertValues = isNewURI
+      ? updateValuesWithImages
+      : { ...updateValuesWithImages, id: currentListing.id };
+
     onCreateListingDraft(upsertValues)
       .then(r => {
         // After successful saving of draft data, user should be redirected to Create Profile page

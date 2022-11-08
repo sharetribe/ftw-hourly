@@ -73,11 +73,15 @@ const routeConfiguration = () => {
       path: '/create-profile/:slug/:id/:type/:tab',
       name: 'CreateProfilePage',
       component: CreateProfilePage,
+      auth: true,
+      loadData: pageDataLoadingAPI.EditListingPage.loadData,
     },
     {
       path: '/select-care-types/:slug/:id/:type',
       name: 'CareTypePage',
       component: CareTypePage,
+      auth: true,
+      loadData: pageDataLoadingAPI.EditListingPage.loadData,
     },
     {
       path: '/s',

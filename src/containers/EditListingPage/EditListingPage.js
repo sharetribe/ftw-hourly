@@ -105,8 +105,8 @@ export const EditListingPageComponent = props => {
   const isDraftURI = type === LISTING_PAGE_PARAM_TYPE_DRAFT;
   const isNewListingFlow = isNewURI || isDraftURI;
 
-  const listingId = currentUserListing?.id || (id ? new UUID(id) : null);
-  const listing = getOwnListing(listing);
+  const listingId = page.submittedListingId || (id ? new UUID(id) : null);
+  const listing = getOwnListing(listingId);
   const currentListing = ensureOwnListing(listing);
   const { state: currentListingState } = currentListing.attributes;
 
@@ -327,10 +327,12 @@ export const EditListingPageComponent = props => {
           desktopClassName={css.desktopTopbar}
           mobileClassName={css.mobileTopbar}
         />
-        <UserNav
-          selectedPageName={currentListing ? 'EditListingPage' : 'NewListingPage'}
-          listing={currentListing}
-        />
+        {currentListing && currentListing.id && currentListing.uuid && (
+          <UserNav
+            selectedPageName={currentListing ? 'EditListingPage' : 'NewListingPage'}
+            listing={currentListing}
+          />
+        )}
 
         {editListingWizard}
         <Footer />
@@ -350,10 +352,12 @@ export const EditListingPageComponent = props => {
           desktopClassName={css.desktopTopbar}
           mobileClassName={css.mobileTopbar}
         />
-        <UserNav
-          selectedPageName={currentListing ? 'EditListingPage' : 'NewListingPage'}
-          listing={currentListing}
-        />
+        {currentListing && currentListing.id && currentListing.uuid && (
+          <UserNav
+            selectedPageName={currentListing ? 'EditListingPage' : 'NewListingPage'}
+            listing={currentListing}
+          />
+        )}
         <div className={css.placeholderWhileLoading} />
         <Footer />
       </Page>
