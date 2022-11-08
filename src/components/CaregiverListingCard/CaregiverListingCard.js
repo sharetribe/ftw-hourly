@@ -20,11 +20,11 @@ const MIN_LENGTH_FOR_LONG_WORDS = 10;
 
 const priceData = (minPrice, maxPrice, intl) => {
   const minPriceMoney = new Money(minPrice, 'USD');
-  const maxPriceMoney = new Money(minPrice, 'USD');
+  const maxPriceMoney = new Money(maxPrice, 'USD');
 
   if (minPriceMoney && maxPriceMoney) {
-    const formattedMinPrice = formatMoney(intl, minPrice);
-    const formattedMaxPrice = formatMoney(intl, maxPrice);
+    const formattedMinPrice = formatMoney(intl, minPriceMoney);
+    const formattedMaxPrice = formatMoney(intl, maxPriceMoney);
 
     return {
       formattedMinPrice,
@@ -74,7 +74,8 @@ export const CaregiverListingCardComponent = props => {
   const classes = classNames(rootClassName || css.root, className);
   const currentListing = ensureListing(listing);
   const id = currentListing.id.uuid;
-  const { title = '', price, publicData } = currentListing.attributes;
+  const { title = '', publicData } = currentListing.attributes;
+  const { minPrice, maxPrice } = publicData;
   const slug = createSlug(title);
   const firstImage =
     currentListing.images && currentListing.images.length > 0 ? currentListing.images[0] : null;
@@ -83,7 +84,7 @@ export const CaregiverListingCardComponent = props => {
   const certificate = publicData
     ? getCertificateInfo(certificateOptions, publicData.certificate)
     : null;
-  const { formattedMinPrice, formattedMaxPrice, priceTitle } = priceData(price, intl);
+  const { formattedMinPrice, formattedMaxPrice, priceTitle } = priceData(minPrice, maxPrice, intl);
 
   const unitType = config.bookingUnitType;
   const isNightly = unitType === LINE_ITEM_NIGHT;

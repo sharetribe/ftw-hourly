@@ -116,6 +116,7 @@ export class SearchPageComponent extends Component {
       searchParams,
       activeListingId,
       onActivateListing,
+      currentUserType,
     } = this.props;
     // eslint-disable-next-line no-unused-vars
     const { mapSearch, page, ...searchInURL } = parse(location.search, {
@@ -185,6 +186,7 @@ export class SearchPageComponent extends Component {
             searchParamsForPagination={parse(location.search)}
             showAsModalMaxWidth={MODAL_BREAKPOINT}
             history={history}
+            currentUserType={currentUserType}
           />
           <ModalInMobile
             className={css.mapPanel}
@@ -269,8 +271,8 @@ const mapStateToProps = state => {
     activeListingId,
   } = state.SearchPage;
   const currentUser = state.user.currentUser;
-  const userType = currentUser?.attributes.profile.publicData.userType;
-  const oppositeUserType = userType === 'caregiver' ? 'employer' : 'caregiver';
+  const currentUserType = currentUser?.attributes.profile.publicData.userType;
+  const oppositeUserType = currentUserType === 'caregiver' ? 'employer' : 'caregiver';
 
   const pageListings = getListingsById(state, currentPageResultIds).filter(
     listing => listing.attributes.publicData.listingType === oppositeUserType
@@ -289,6 +291,7 @@ const mapStateToProps = state => {
     searchListingsError,
     searchParams,
     activeListingId,
+    currentUserType,
   };
 };
 
