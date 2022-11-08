@@ -243,7 +243,7 @@ export const loadData = (params, search) => {
     include: ['author', 'images'],
     'fields.listing': ['title', 'geolocation', 'price', 'publicData'],
     'fields.user': ['profile.displayName', 'profile.abbreviatedName'],
-    'fields.image': ['variants.landscape-crop', 'variants.landscape-crop2x'],
+    'fields.image': ['variants.square-small', 'variants.square-small2x'],
     'limit.images': 1,
   });
 };

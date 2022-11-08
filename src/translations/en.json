@@ -102,6 +102,7 @@
   "CaregiverEditListingWizard.tabLabelPhotos": "Photo",
   "CaregiverEditListingWizard.tabLabelPolicy": "Policies",
   "CaregiverEditListingWizard.tabLabelPricing": "Pricing",
+  "CaregiverListingCard.perUnit": "per hour",
   "CareTypePage.careTypesNextButton": "Next: Bio",
   "CareTypePage.caregiverFormLabel": "What type of care do you want to provide?",
   "CareTypePage.employerFormLabel": "What type of care do you want to receive?",

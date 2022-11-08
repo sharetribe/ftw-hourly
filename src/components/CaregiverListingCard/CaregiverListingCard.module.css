@@ -2,8 +2,9 @@
 
 .root {
   /* Layout */
-  display: flex;
-  flex-direction: column;
+  display: block;
+  /* flex-direction: column; */
+  width: 100%;
 
   /* Remove link's hover effect */
   &:hover {
@@ -13,8 +14,7 @@
 
 .threeToTwoWrapper {
   /* Layout */
-  display: block;
-  width: 100%;
+  display: flex;
   position: relative;
   transition: var(--transitionStyleButton);
 
@@ -127,4 +127,9 @@
   /* use break-word if available */
   word-break: break-word;
   hyphens: auto;
+}
+
+.avatar {
+  width: 10rem;
+  height: 10rem;
 }

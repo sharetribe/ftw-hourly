@@ -14,6 +14,7 @@ const SearchResultsPanel = props => {
     search,
     setActiveListing,
     currentUserType,
+    currentUser,
   } = props;
   const classes = classNames(rootClassName || css.root, className);
 
@@ -48,6 +49,7 @@ const SearchResultsPanel = props => {
               listing={l}
               renderSizes={cardRenderSizes}
               setActiveListing={setActiveListing}
+              currentUser={currentUser}
             />
           ) : (
             <ListingCard

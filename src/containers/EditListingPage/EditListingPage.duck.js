@@ -407,7 +407,7 @@ export function requestCreateListingDraft(data) {
     const queryParams = {
       expand: true,
       include: ['author', 'images'],
-      'fields.image': ['variants.landscape-crop', 'variants.landscape-crop2x'],
+      'fields.image': ['variants.square-small', 'variants.square-small2x'],
     };
 
     return sdk.ownListings
@@ -472,7 +472,7 @@ export function requestUpdateListing(tab, data) {
         const payload = {
           id,
           include: ['author', 'images'],
-          'fields.image': ['variants.landscape-crop', 'variants.landscape-crop2x'],
+          'fields.image': ['variants.square-small', 'variants.square-small2x'],
         };
         return dispatch(requestShowListing(payload));
       })
@@ -569,7 +569,7 @@ export const loadData = params => (dispatch, getState, sdk) => {
   const payload = {
     id: new UUID(id),
     include: ['author', 'images'],
-    'fields.image': ['variants.landscape-crop', 'variants.landscape-crop2x'],
+    'fields.image': ['variants.square-small', 'variants.square-small2x'],
   };
 
   return Promise.all([dispatch(requestShowListing(payload)), dispatch(fetchCurrentUser())])

@@ -117,6 +117,7 @@ export class SearchPageComponent extends Component {
       activeListingId,
       onActivateListing,
       currentUserType,
+      currentUser,
     } = this.props;
     // eslint-disable-next-line no-unused-vars
     const { mapSearch, page, ...searchInURL } = parse(location.search, {
@@ -187,6 +188,7 @@ export class SearchPageComponent extends Component {
             showAsModalMaxWidth={MODAL_BREAKPOINT}
             history={history}
             currentUserType={currentUserType}
+            currentUser={currentUser}
           />
           <ModalInMobile
             className={css.mapPanel}
@@ -292,6 +294,7 @@ const mapStateToProps = state => {
     searchParams,
     activeListingId,
     currentUserType,
+    currentUser,
   };
 };
 

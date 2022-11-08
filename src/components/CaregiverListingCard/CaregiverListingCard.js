@@ -10,9 +10,9 @@ import { richText } from '../../util/richText';
 import { findOptionsForSelectFilter } from '../../util/search';
 import { createSlug } from '../../util/urlHelpers';
 import config from '../../config';
-import { NamedLink, ResponsiveImage } from '..';
+import { NamedLink, ResponsiveImage, Avatar } from '..';
 import { types } from 'sharetribe-flex-sdk';
-const { Money } = types;
+const { Money, User } = types;
 
 import css from './CaregiverListingCard.module.css';
 
@@ -70,11 +70,14 @@ export const CaregiverListingCardComponent = props => {
     renderSizes,
     filtersConfig,
     setActiveListing,
+    currentUser,
   } = props;
   const classes = classNames(rootClassName || css.root, className);
   const currentListing = ensureListing(listing);
   const id = currentListing.id.uuid;
-  const { title = '', publicData } = currentListing.attributes;
+  const { firstName, lastName } = currentUser?.attributes.profile;
+  const title = firstName + ' ' + lastName;
+  const { publicData } = currentListing.attributes;
   const { minPrice, maxPrice } = publicData;
   const slug = createSlug(title);
   const firstImage =
@@ -96,23 +99,26 @@ export const CaregiverListingCardComponent = props => {
     ? 'CaregiverListingCard.perDay'
     : 'CaregiverListingCard.perUnit';
 
+  const avatarUser = { profileImage: listing.images[0] };
+  const avatarComponent = (
+    <Avatar
+      className={css.avatar}
+      renderSizes="(max-width: 767px) 96px, 240px"
+      user={avatarUser}
+      disableProfileLink
+    />
+  );
+
   return (
     <NamedLink className={classes} name="ListingPage" params={{ id, slug }}>
-      <div
+      {/* <div
         className={css.threeToTwoWrapper}
         onMouseEnter={() => setActiveListing(currentListing.id)}
         onMouseLeave={() => setActiveListing(null)}
       >
-        <div className={css.aspectWrapper}>
-          <LazyImage
-            rootClassName={css.rootForImage}
-            alt={title}
-            image={firstImage}
-            variants={['landscape-crop', 'landscape-crop2x']}
-            sizes={renderSizes}
-          />
-        </div>
-      </div>
+        {avatarComponent}
+      </div> */}
+      {avatarComponent}
       <div className={css.info}>
         <div className={css.price}>
           <div className={css.priceValue} title={priceTitle}>
