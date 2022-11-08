@@ -143,8 +143,13 @@ const EditListingWizardTab = props => {
     const updateValuesWithImages = { ...otherValues, ...imageProperty };
 
     if (isNewListingFlow) {
+      const userType = currentUser.attributes.profile.publicData.userType;
+
       const onUpsertListingDraft = isNewURI
-        ? (tab, updateValues) => onCreateListingDraft(updateValues)
+        ? (tab, updateValues) => {
+            updateValues.publicData.listingType = userType;
+            return onCreateListingDraft(updateValues);
+          }
         : onUpdateListing;
 
       const upsertValues = isNewURI

@@ -258,14 +258,11 @@ class CaregiverEditListingWizard extends Component {
 
     this.props.onUpdateProfile(updatedValues);
 
-    if (stripeConnected && !requirementsMissing) {
-      onPublishListingDraft(id);
-    } else {
-      this.setState({
-        draftId: id,
-        showPayoutDetails: true,
-      });
-    }
+    onPublishListingDraft(id);
+    this.setState({
+      draftId: id,
+      showPayoutDetails: true,
+    });
   }
 
   handlePayoutModalClose() {
