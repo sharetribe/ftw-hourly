@@ -268,11 +268,20 @@ const mapStateToProps = state => {
     searchMapListingIds,
     activeListingId,
   } = state.SearchPage;
-  const pageListings = getListingsById(state, currentPageResultIds);
+  const currentUser = state.user.currentUser;
+  const userType = currentUser?.attributes.profile.publicData.userType;
+  const oppositeUserType = userType === 'caregiver' ? 'employer' : 'caregiver';
+
+  const pageListings = getListingsById(state, currentPageResultIds).filter(
+    listing => listing.attributes.publicData.listingType === oppositeUserType
+  );
   const mapListings = getListingsById(
     state,
     unionWith(currentPageResultIds, searchMapListingIds, (id1, id2) => id1.uuid === id2.uuid)
-  );
+  ).filter(listing => {
+    console.log(listing.attributes.publicData.listingType);
+    listing.attributes.publicData.listingType === oppositeUserType;
+  });
 
   return {
     listings: pageListings,
@@ -301,10 +310,7 @@ const mapDispatchToProps = dispatch => ({
 // See: https://github.com/ReactTraining/react-router/issues/4671
 const SearchPage = compose(
   withRouter,
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  ),
+  connect(mapStateToProps, mapDispatchToProps),
   injectIntl
 )(SearchPageComponent);
 
