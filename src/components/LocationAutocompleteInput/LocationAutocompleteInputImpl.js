@@ -256,7 +256,7 @@ class LocationAutocompleteInputImpl extends Component {
     const predictions = this.currentPredictions();
     const newValue = e.target.value;
 
-    // Clear the current values since the input content is changed
+    // Clear the current values since the input content is change
     onChange({
       search: newValue,
       predictions: newValue ? predictions : [],
@@ -340,7 +340,7 @@ class LocationAutocompleteInputImpl extends Component {
 
         this.setState({ fetchingPlaceDetails: false });
         this.props.input.onChange({
-          search: place.address,
+          search: place.address.replace(', United States', ''),
           predictions: [],
           selectedPlace: place,
         });
@@ -382,6 +382,14 @@ class LocationAutocompleteInputImpl extends Component {
         const { search: currentSearch } = currentValue(this.props);
         this.setState({ fetchingPredictions: false });
 
+        let predictions = [];
+
+        results.predictions.forEach(prediction => {
+          prediction.place_name =
+            prediction.place_name && prediction.place_name.replace(', United States', '');
+          predictions.push(prediction);
+        });
+
         // If the earlier predictions arrive when the user has already
         // changed the search term, ignore and wait until the latest
         // predictions arrive. Without this logic, results for earlier
@@ -393,7 +401,7 @@ class LocationAutocompleteInputImpl extends Component {
         if (results.search === currentSearch) {
           onChange({
             search: results.search,
-            predictions: results.predictions,
+            predictions: predictions,
             selectedPlace: null,
           });
         }

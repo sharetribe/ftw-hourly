@@ -68,7 +68,7 @@ const placeBounds = prediction => {
 // Reverse geoencode the latitude and longtude coordinates
 // to return the address of a given location.
 export const getPlaceAddress = async place => {
-  const returnType = { types: 'locality' };
+  const returnType = { types: 'place' };
   const limitCountriesMaybe = config.maps.search.countryLimit
     ? { country: config.maps.search.countryLimit }
     : {};
@@ -92,7 +92,7 @@ export const getPlaceAddress = async place => {
   });
 
   const body = await response.json();
-  return body.features[2].place_name;
+  return body.features[2].place_name.replace(', United States', '');
 };
 
 export const GeocoderAttribution = () => null;
@@ -139,7 +139,7 @@ class GeocoderMapbox {
         limit: 5,
         ...limitCountriesMaybe,
         language: [config.locale],
-        types: ['postcode', 'locality'],
+        types: ['place'],
       })
       .send()
       .then(response => {
