@@ -51,11 +51,10 @@ const EditListingCareRecipientDetailsPanel = props => {
 
   const additionalDetails = publicData
     ? {
-        experienceWith: publicData.experienceWith,
-        certificationsAndTraining: publicData.certificationsAndTraining,
-        additionalInfo: publicData.additionalInfo,
-        covidVaccination: publicData.covidVaccination,
-        languagesSpoken: publicData.languagesSpoken,
+        recipientRelationship: publicData.recipientRelationship,
+        gender: publicData.gender,
+        age: publicData.age,
+        recipientDetails: publicData.recipientDetails,
       }
     : {};
   const initialValues = { ...additionalDetails };

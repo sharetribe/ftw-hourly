@@ -21,6 +21,7 @@ import {
   EditListingCareTypesPanel,
   EditListingPricingPanel,
   EditListingCareRecipientDetailsPanel,
+  EditListingCaregiverDetailsPanel,
 } from '..';
 
 import css from './EditListingWizardTab.module.css';
@@ -356,7 +357,7 @@ const EditListingWizardTab = props => {
         : 'EditListingWizard.saveEditCaregiverDetails';
 
       return (
-        <EditListingPhotosPanel
+        <EditListingCaregiverDetailsPanel
           {...panelProps(PHOTOS)}
           submitButtonText={intl.formatMessage({ id: submitButtonTranslationKey })}
           profileImage={profileImage}

@@ -1,5 +1,4 @@
 import React from 'react';
-import queryString from 'query-string';
 import { intlShape } from '../../util/reactIntl';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
@@ -7,12 +6,12 @@ import { FormattedMessage } from '../../util/reactIntl';
 
 import { LISTING_STATE_DRAFT } from '../../util/types';
 import { ensureListing } from '../../util/data';
-import { EditListingCareRecipientDetailsForm } from '../../forms';
+import { EditListingCaregiverDetailsForm } from '../../forms';
 import { ListingLink } from '..';
 
-import css from './EditListingCareRecipientDetailsPanel.module.css';
+import css from './EditListingCaregiverDetailsPanel.module.css';
 
-const EditListingCareRecipientDetailsPanel = props => {
+const EditListingCaregiverDetailsPanel = props => {
   const {
     rootClassName,
     className,
@@ -36,29 +35,21 @@ const EditListingCareRecipientDetailsPanel = props => {
   const isPublished = currentListing.id && currentListing.attributes.state !== LISTING_STATE_DRAFT;
   const panelTitle = isPublished ? (
     <FormattedMessage
-      id="EditListingCareRecipientDetailsPanel.title"
+      id="EditListingCaregiverDetailsPanel.title"
       values={{
         listingTitle: (
           <ListingLink listing={listing}>
-            <FormattedMessage id="EditListingCareRecipientDetailsPanel.listingTitle" />
+            <FormattedMessage id="EditListingCaregiverDetailsPanel.listingTitle" />
           </ListingLink>
         ),
       }}
     />
   ) : (
-    <FormattedMessage id="EditListingCareRecipientDetailsPanel.createListingTitle" />
+    <FormattedMessage id="EditListingCaregiverDetailsPanel.createListingTitle" />
   );
 
-  const additionalDetails = publicData
-    ? {
-        experienceWith: publicData.experienceWith,
-        certificationsAndTraining: publicData.certificationsAndTraining,
-        additionalInfo: publicData.additionalInfo,
-        covidVaccination: publicData.covidVaccination,
-        languagesSpoken: publicData.languagesSpoken,
-      }
-    : {};
-  const initialValues = { ...additionalDetails };
+  const idealCaregiverDetails = publicData.idealCaregiverDetails;
+  const initialValues = { ...idealCaregiverDetails };
 
   const formProps = {
     className: css.form,
@@ -75,19 +66,16 @@ const EditListingCareRecipientDetailsPanel = props => {
   return (
     <div className={classes}>
       <h1 className={css.title}>{panelTitle}</h1>
-      <EditListingCareRecipientDetailsForm
+      <EditListingCaregiverDetailsForm
         {...formProps}
         saveActionMsg={submitButtonText}
         required={true}
         onSubmit={values => {
-          const { recipientRelationship, gender, age, recipientDetails } = values;
+          const { idealCaregiverDetails } = values;
 
           const updatedValues = {
             publicData: {
-              recipientRelationship,
-              gender,
-              age,
-              recipientDetails,
+              idealCaregiverDetails,
             },
           };
 
@@ -98,7 +86,7 @@ const EditListingCareRecipientDetailsPanel = props => {
   );
 };
 
-EditListingCareRecipientDetailsPanel.defaultProps = {
+EditListingCaregiverDetailsPanel.defaultProps = {
   rootClassName: null,
   className: null,
   listing: null,
@@ -106,7 +94,7 @@ EditListingCareRecipientDetailsPanel.defaultProps = {
 
 const { bool, func, object, string, shape } = PropTypes;
 
-EditListingCareRecipientDetailsPanel.propTypes = {
+EditListingCaregiverDetailsPanel.propTypes = {
   rootClassName: string,
   className: string,
 
@@ -124,4 +112,4 @@ EditListingCareRecipientDetailsPanel.propTypes = {
   intl: intlShape.isRequired,
 };
 
-export default EditListingCareRecipientDetailsPanel;
+export default EditListingCaregiverDetailsPanel;
