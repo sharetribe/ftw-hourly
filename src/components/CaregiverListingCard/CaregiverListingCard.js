@@ -15,6 +15,7 @@ const { Money, User } = types;
 import { findOptionsForSelectFilter } from '../../util/search';
 
 import css from './CaregiverListingCard.module.css';
+import { info } from 'autoprefixer';
 
 const MIN_LENGTH_FOR_LONG_WORDS = 10;
 
@@ -50,6 +51,22 @@ const priceData = (minPrice, maxPrice, intl) => {
   return {};
 };
 
+const cutText = (text, length) => {
+  var textCutoff = text.substr(0, length);
+
+  while (textCutoff.charAt(textCutoff.length - 1) !== ' ') {
+    textCutoff = textCutoff.substr(0, textCutoff.length - 1);
+  }
+
+  textCutoff = textCutoff.substr(0, textCutoff.length - 1);
+
+  if (textCutoff.charAt(textCutoff.length - 1).match(/^[.,:!?]/)) {
+    textCutoff = textCutoff.substr(0, textCutoff.length - 1);
+  }
+
+  return textCutoff;
+};
+
 // const LazyImage = lazyLoadWithDimensions(ListingImage, { loadAfterInitialRendering: 3000 });
 
 export const CaregiverListingCardComponent = props => {
@@ -73,6 +90,8 @@ export const CaregiverListingCardComponent = props => {
   const { minPrice, maxPrice, location, careTypes: providedServices } = publicData;
   const slug = createSlug(title);
 
+  let descriptionCutoff = cutText(description, 300);
+
   const { formattedMinPrice, formattedMaxPrice, priceTitle } = priceData(minPrice, maxPrice, intl);
 
   const servicesMap = new Map();
@@ -91,7 +110,7 @@ export const CaregiverListingCardComponent = props => {
   );
 
   return (
-    <Fragment>
+    <div className={css.container}>
       <NamedLink className={classes} name="ListingPage" params={{ id, slug }}>
         <div className={css.user}>
           {avatarComponent}
@@ -125,15 +144,19 @@ export const CaregiverListingCardComponent = props => {
 
           <div className={css.providedServices}>
             <span className={css.serviceBold}>Provides services for: </span>
-            {providedServices.map(service => servicesMap.get(service)).join(', ')}
+            {providedServices
+              .slice(0, 4)
+              .map(service => servicesMap.get(service))
+              .join(', ') + '...'}
           </div>
-          <div className={css.description}>{description}</div>
+          <div className={css.description}>{descriptionCutoff + '...'}</div>
+          <div className={css.descriptionBox}></div>
         </div>
       </NamedLink>
       <Button className={css.messageButton} onClick={() => onContactUser(title, currentListing.id)}>
         Message
       </Button>
-    </Fragment>
+    </div>
   );
 };
 

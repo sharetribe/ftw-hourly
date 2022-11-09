@@ -10,7 +10,7 @@
   position: relative;
 
   @media (--viewportMedium) {
-    display: flex;
+    display: block;
     flex-direction: row;
     flex-wrap: wrap;
   }
@@ -21,8 +21,10 @@
 }
 
 .listingCard {
-  padding-block: 20px;
+  margin-bottom: 20px;
+  padding-bottom: 20px;
   flex-basis: 100%;
+  position: relative;
 
   @media (--viewportLarge) {
     /**
