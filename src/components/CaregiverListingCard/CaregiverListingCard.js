@@ -9,7 +9,7 @@ import { ensureListing } from '../../util/data';
 import { richText } from '../../util/richText';
 import { createSlug } from '../../util/urlHelpers';
 import config from '../../config';
-import { NamedLink, ResponsiveImage, Avatar } from '..';
+import { NamedLink, ResponsiveImage, Avatar, Button } from '..';
 import { types } from 'sharetribe-flex-sdk';
 const { Money, User } = types;
 import { findOptionsForSelectFilter } from '../../util/search';
@@ -119,7 +119,9 @@ export const CaregiverListingCardComponent = props => {
               })}
             </div>
           </div>
-          <button></button>
+          <Button className={css.messageButton} onClick={onContactUser}>
+            Message
+          </Button>
         </div>
 
         <div className={css.providedServices}>
