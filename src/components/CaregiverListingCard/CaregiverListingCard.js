@@ -68,7 +68,7 @@ export const CaregiverListingCardComponent = props => {
   const id = currentListing.id.uuid;
   const { firstName, lastName } = currentUser?.attributes.profile;
   const title = firstName + ' ' + lastName;
-  const { publicData } = currentListing.attributes;
+  const { publicData, description } = currentListing.attributes;
   const { minPrice, maxPrice, location, careTypes: providedServices } = publicData;
   const slug = createSlug(title);
 
@@ -105,23 +105,28 @@ export const CaregiverListingCardComponent = props => {
       </div>
       <div className={css.info}>
         <div className={css.mainInfo}>
-          <div className={css.title}>
-            {richText(title, {
-              longWordMinLength: MIN_LENGTH_FOR_LONG_WORDS,
-              longWordClass: css.longWord,
-            })}
+          <div className={css.topInfo}>
+            <div className={css.title}>
+              {richText(title, {
+                longWordMinLength: MIN_LENGTH_FOR_LONG_WORDS,
+                longWordClass: css.longWord,
+              })}
+            </div>
+            <div className={css.location}>
+              {richText(location, {
+                longWordMinLength: MIN_LENGTH_FOR_LONG_WORDS,
+                longWordClass: css.longWord,
+              })}
+            </div>
           </div>
-          <div className={css.location}>
-            {richText(location, {
-              longWordMinLength: MIN_LENGTH_FOR_LONG_WORDS,
-              longWordClass: css.longWord,
-            })}
-          </div>
-          <div className={css.providedServices}>
-            <span className={css.serviceBold}>Provides services for: </span>
-            {providedServices.map(service => servicesMap.get(service)).join(', ')}
-          </div>
+          <button></button>
         </div>
+
+        <div className={css.providedServices}>
+          <span className={css.serviceBold}>Provides services for: </span>
+          {providedServices.map(service => servicesMap.get(service)).join(', ')}
+        </div>
+        <div className={css.description}>{description}</div>
       </div>
     </NamedLink>
   );

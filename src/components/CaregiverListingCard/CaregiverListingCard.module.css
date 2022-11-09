@@ -46,8 +46,7 @@
 .info {
   /* Layout */
   display: flex;
-  justify-content: center;
-  flex-direction: row;
+  flex-direction: column;
   padding: 0px 0px 0px 10px;
 }
 
@@ -61,9 +60,9 @@
 .price {
   /* Layout */
   display: block;
-  justify-content: flex-start;
+  justify-content: center;
   flex-shrink: 0;
-  margin-right: 18px;
+  margin-top: 0.2rem;
 }
 
 .priceValue {
@@ -97,7 +96,8 @@
 
 .mainInfo {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 .title {
@@ -115,19 +115,14 @@
   }
 }
 
-.certificateInfo {
-  /* Font */
-  composes: marketplaceTinyFontStyles from global;
-  color: var(--matterColor);
+.location {
+  display: flex;
+}
 
-  /* Remove default margins from font */
-  margin-top: 0;
-  margin-bottom: 0;
-
-  @media (--viewportMedium) {
-    margin-top: 0;
-    margin-bottom: 0;
-  }
+.topInfo {
+  display: flex;
+  flex-shrink: 1;
+  flex-direction: column;
 }
 
 .longWord {
@@ -149,4 +144,10 @@
 
 .serviceBold {
   font-weight: bold;
+}
+
+.description {
+  color: var(--matterColor);
+  line-height: 1rem;
+  margin-top: 0.2rem;
 }
