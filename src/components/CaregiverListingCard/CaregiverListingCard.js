@@ -64,7 +64,7 @@ const cutText = (text, length) => {
     textCutoff = textCutoff.substr(0, textCutoff.length - 1);
   }
 
-  return textCutoff;
+  return textCutoff + '...';
 };
 
 // const LazyImage = lazyLoadWithDimensions(ListingImage, { loadAfterInitialRendering: 3000 });
@@ -85,12 +85,12 @@ export const CaregiverListingCardComponent = props => {
   const currentListing = ensureListing(listing);
   const id = currentListing.id.uuid;
   const { firstName, lastName } = currentUser?.attributes.profile;
-  const title = firstName + ' ' + lastName;
+  const title = currentListing.author.attributes.profile.displayName + '.';
   const { publicData, description } = currentListing.attributes;
   const { minPrice, maxPrice, location, careTypes: providedServices } = publicData;
   const slug = createSlug(title);
 
-  let descriptionCutoff = cutText(description, 300);
+  let descriptionCutoff = description.length > 300 ? cutText(description, 300) : description;
 
   const { formattedMinPrice, formattedMaxPrice, priceTitle } = priceData(minPrice, maxPrice, intl);
 
@@ -149,7 +149,7 @@ export const CaregiverListingCardComponent = props => {
               .map(service => servicesMap.get(service))
               .join(', ') + '...'}
           </div>
-          <div className={css.description}>{descriptionCutoff + '...'}</div>
+          <div className={css.description}>{descriptionCutoff}</div>
           <div className={css.descriptionBox}></div>
         </div>
       </NamedLink>

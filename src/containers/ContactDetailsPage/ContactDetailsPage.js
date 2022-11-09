@@ -84,7 +84,10 @@ export const ContactDetailsPageComponent = props => {
           />
           <UserNav selectedPageName="ContactDetailsPage" listing={currentUserListing} />
         </LayoutWrapperTopbar>
-        <LayoutWrapperAccountSettingsSideNav currentTab="ContactDetailsPage" />
+        <LayoutWrapperAccountSettingsSideNav
+          currentTab="ContactDetailsPage"
+          currentUser={currentUser}
+        />
         <LayoutWrapperMain>
           <div className={css.content}>
             <h1 className={css.title}>
@@ -169,10 +172,7 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const ContactDetailsPage = compose(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  ),
+  connect(mapStateToProps, mapDispatchToProps),
   injectIntl
 )(ContactDetailsPageComponent);
 

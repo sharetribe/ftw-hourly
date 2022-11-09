@@ -65,7 +65,10 @@ export const PasswordChangePageComponent = props => {
           />
           <UserNav selectedPageName="PasswordChangePage" />
         </LayoutWrapperTopbar>
-        <LayoutWrapperAccountSettingsSideNav currentTab="PasswordChangePage" />
+        <LayoutWrapperAccountSettingsSideNav
+          currentTab="PasswordChangePage"
+          currentUser={currentUser}
+        />
         <LayoutWrapperMain>
           <div className={css.content}>
             <h1 className={css.title}>
@@ -134,10 +137,7 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const PasswordChangePage = compose(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  ),
+  connect(mapStateToProps, mapDispatchToProps),
   injectIntl
 )(PasswordChangePageComponent);
 

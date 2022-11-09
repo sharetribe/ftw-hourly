@@ -58,7 +58,7 @@ const scrollToTab = (currentTab, scrollLeft, setScrollLeft) => {
 const LayoutWrapperAccountSettingsSideNavComponent = props => {
   const [scrollLeft, setScrollLeft] = useGlobalState('scrollLeft');
   useEffect(() => {
-    const { currentTab, viewport } = props;
+    const { currentTab, viewport, currentUser } = props;
 
     const { width } = viewport;
     const hasViewport = width > 0;
@@ -78,7 +78,9 @@ const LayoutWrapperAccountSettingsSideNavComponent = props => {
     };
   });
 
-  const { currentTab } = props;
+  const { currentTab, currentUser } = props;
+
+  const userType = currentUser && currentUser.attributes.profile.publicData.userType;
 
   const tabs = [
     {
@@ -97,23 +99,27 @@ const LayoutWrapperAccountSettingsSideNavComponent = props => {
         name: 'PasswordChangePage',
       },
     },
-    {
-      text: <FormattedMessage id="LayoutWrapperAccountSettingsSideNav.paymentsTabTitle" />,
-      selected: currentTab === 'StripePayoutPage',
-      id: 'StripePayoutPageTab',
-      linkProps: {
-        name: 'StripePayoutPage',
-      },
-    },
-    {
-      text: <FormattedMessage id="LayoutWrapperAccountSettingsSideNav.paymentMethodsTabTitle" />,
-      selected: currentTab === 'PaymentMethodsPage',
-      id: 'PaymentMethodsPageTab',
-      linkProps: {
-        name: 'PaymentMethodsPage',
-      },
-    },
   ];
+
+  const payoutTab = {
+    text: <FormattedMessage id="LayoutWrapperAccountSettingsSideNav.paymentsTabTitle" />,
+    selected: currentTab === 'StripePayoutPage',
+    id: 'StripePayoutPageTab',
+    linkProps: {
+      name: 'StripePayoutPage',
+    },
+  };
+
+  const paymentMethodsTab = {
+    text: <FormattedMessage id="LayoutWrapperAccountSettingsSideNav.paymentMethodsTabTitle" />,
+    selected: currentTab === 'PaymentMethodsPage',
+    id: 'PaymentMethodsPageTab',
+    linkProps: {
+      name: 'PaymentMethodsPage',
+    },
+  };
+
+  userType === 'caregiver' ? tabs.push(payoutTab) : tabs.push(paymentMethodsTab);
 
   return <LayoutWrapperSideNav tabs={tabs} />;
 };

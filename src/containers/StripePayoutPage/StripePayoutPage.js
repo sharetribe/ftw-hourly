@@ -153,7 +153,10 @@ export const StripePayoutPageComponent = props => {
           />
           <UserNav selectedPageName="StripePayoutPage" />
         </LayoutWrapperTopbar>
-        <LayoutWrapperAccountSettingsSideNav currentTab="StripePayoutPage" />
+        <LayoutWrapperAccountSettingsSideNav
+          currentTab="StripePayoutPage"
+          currentUser={currentUser}
+        />
         <LayoutWrapperMain>
           <div className={css.content}>
             <h1 className={css.title}>
@@ -285,10 +288,7 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const StripePayoutPage = compose(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  ),
+  connect(mapStateToProps, mapDispatchToProps),
   injectIntl
 )(StripePayoutPageComponent);
 
