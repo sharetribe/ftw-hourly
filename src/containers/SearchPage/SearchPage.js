@@ -26,12 +26,7 @@ import {
   validFilterParams,
   createSearchResultSchema,
 } from './SearchPage.helpers';
-import {
-  sendEnquiry,
-  setInitialValues,
-  fetchTimeSlots,
-  fetchTransactionLineItems,
-} from '../ListingPage/ListingPage.duck';
+import { sendEnquiry, setInitialValues } from '../ListingPage/ListingPage.duck';
 import MainPanel from './MainPanel';
 import css from './SearchPage.module.css';
 const { UUID } = sdkTypes;
@@ -48,6 +43,7 @@ export class SearchPageComponent extends Component {
       isMobileModalOpen: false,
       enquiryModalOpen: false,
       currentListingAuthor: '',
+      currentListingId: '',
     };
 
     this.searchMapListingsInProgress = false;
@@ -112,16 +108,18 @@ export class SearchPageComponent extends Component {
     this.setState({ isMobileModalOpen: false });
   }
 
-  onContactUser(contactName) {
+  onContactUser(contactName, listingId) {
     this.setState({ currentListingAuthor: contactName });
-    const { currentUser, history, callSetInitialValues, params, location } = this.props;
+    this.setState({ currentListingId: listingId });
+
+    const { currentUser, history, callSetInitialValues, location } = this.props;
 
     if (!currentUser) {
       const state = { from: `${location.pathname}${location.search}${location.hash}` };
 
       // We need to log in before showing the modal, but first we need to ensure
       // that modal does open when user is redirected back to this listingpage
-      callSetInitialValues(setInitialValues, { enquiryModalOpenForListingId: params.id });
+      callSetInitialValues(setInitialValues, { enquiryModalOpenForListingId: listingId });
 
       // signup and return back to listingPage.
       history.push(createResourceLocatorString('SignupPage', routeConfiguration(), {}, {}), state);
@@ -133,7 +131,7 @@ export class SearchPageComponent extends Component {
   onSubmitEnquiry(values) {
     const { history, params, onSendEnquiry } = this.props;
     const routes = routeConfiguration();
-    const listingId = new UUID(params.id);
+    const listingId = this.state.currentListingId;
     const { message } = values;
 
     onSendEnquiry(listingId, message.trim())
@@ -335,18 +333,7 @@ SearchPageComponent.propTypes = {
 
 const mapStateToProps = state => {
   const { isAuthenticated } = state.Auth;
-  const {
-    showListingError,
-    reviews,
-    fetchReviewsError,
-    monthlyTimeSlots,
-    sendEnquiryInProgress,
-    sendEnquiryError,
-    lineItems,
-    fetchLineItemsInProgress,
-    fetchLineItemsError,
-    enquiryModalOpenForListingId,
-  } = state.ListingPage;
+  const { sendEnquiryInProgress, sendEnquiryError } = state.ListingPage;
   const {
     currentPageResultIds,
     pagination,

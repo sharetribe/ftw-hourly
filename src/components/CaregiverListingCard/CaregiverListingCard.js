@@ -130,7 +130,7 @@ export const CaregiverListingCardComponent = props => {
           <div className={css.description}>{description}</div>
         </div>
       </NamedLink>
-      <Button className={css.messageButton} onClick={() => onContactUser(title)}>
+      <Button className={css.messageButton} onClick={() => onContactUser(title, currentListing.id)}>
         Message
       </Button>
     </Fragment>
