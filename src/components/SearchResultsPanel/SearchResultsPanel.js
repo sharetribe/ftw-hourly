@@ -15,6 +15,7 @@ const SearchResultsPanel = props => {
     setActiveListing,
     currentUserType,
     currentUser,
+    onContactUser,
   } = props;
   const classes = classNames(rootClassName || css.root, className);
 
@@ -50,6 +51,7 @@ const SearchResultsPanel = props => {
               renderSizes={cardRenderSizes}
               setActiveListing={setActiveListing}
               currentUser={currentUser}
+              onContactUser={onContactUser}
             />
           ) : (
             <ListingCard

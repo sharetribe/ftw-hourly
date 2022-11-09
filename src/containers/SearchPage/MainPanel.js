@@ -170,6 +170,7 @@ class MainPanel extends Component {
       sortConfig,
       currentUserType,
       currentUser,
+      onContactUser,
     } = this.props;
 
     const primaryFilters = filterConfig.filter(f => f.group === 'primary');
@@ -339,6 +340,7 @@ class MainPanel extends Component {
               setActiveListing={onActivateListing}
               currentUserType={currentUserType}
               currentUser={currentUser}
+              onContactUser={onContactUser}
             />
           </div>
         )}

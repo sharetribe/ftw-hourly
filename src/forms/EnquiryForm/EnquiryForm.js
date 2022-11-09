@@ -51,9 +51,11 @@ const EnquiryFormComponent = props => (
       return (
         <Form className={classes} onSubmit={handleSubmit} enforcePagePreloadFor="OrderDetailsPage">
           <IconEnquiry className={css.icon} />
-          <h2 className={css.heading}>
-            <FormattedMessage id="EnquiryForm.heading" values={{ listingTitle }} />
-          </h2>
+          {listingTitle && (
+            <h2 className={css.heading}>
+              <FormattedMessage id="EnquiryForm.heading" values={{ listingTitle }} />
+            </h2>
+          )}
           <FieldTextInput
             className={css.field}
             type="textarea"
@@ -94,7 +96,7 @@ EnquiryFormComponent.propTypes = {
 
   inProgress: bool,
 
-  listingTitle: string.isRequired,
+  listingTitle: string,
   authorDisplayName: string.isRequired,
   sendEnquiryError: propTypes.error,
 

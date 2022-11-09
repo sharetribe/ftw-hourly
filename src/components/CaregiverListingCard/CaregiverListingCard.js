@@ -62,6 +62,7 @@ export const CaregiverListingCardComponent = props => {
     filtersConfig,
     setActiveListing,
     currentUser,
+    onContactUser,
   } = props;
   const classes = classNames(rootClassName || css.root, className);
   const currentListing = ensureListing(listing);
@@ -119,7 +120,7 @@ export const CaregiverListingCardComponent = props => {
               })}
             </div>
           </div>
-          <Button className={css.messageButton} onClick={onContactUser}>
+          <Button className={css.messageButton} onClick={() => onContactUser(title)}>
             Message
           </Button>
         </div>

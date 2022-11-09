@@ -4,6 +4,7 @@ import { injectIntl, intlShape } from '../../util/reactIntl';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { withRouter } from 'react-router-dom';
+import { types as sdkTypes } from '../../util/sdkLoader';
 import debounce from 'lodash/debounce';
 import unionWith from 'lodash/unionWith';
 import classNames from 'classnames';
@@ -14,8 +15,9 @@ import { parse, stringify } from '../../util/urlHelpers';
 import { propTypes } from '../../util/types';
 import { getListingsById } from '../../ducks/marketplaceData.duck';
 import { manageDisableScrolling, isScrollingDisabled } from '../../ducks/UI.duck';
-import { SearchMap, ModalInMobile, Page } from '../../components';
+import { SearchMap, ModalInMobile, Page, Modal } from '../../components';
 import { TopbarContainer } from '../../containers';
+import { EnquiryForm } from '../../forms';
 
 import { searchMapListings, setActiveListing } from './SearchPage.duck';
 import {
@@ -24,8 +26,15 @@ import {
   validFilterParams,
   createSearchResultSchema,
 } from './SearchPage.helpers';
+import {
+  sendEnquiry,
+  setInitialValues,
+  fetchTimeSlots,
+  fetchTransactionLineItems,
+} from '../ListingPage/ListingPage.duck';
 import MainPanel from './MainPanel';
 import css from './SearchPage.module.css';
+const { UUID } = sdkTypes;
 
 const MODAL_BREAKPOINT = 768; // Search is in modal on mobile layout
 const SEARCH_WITH_MAP_DEBOUNCE = 300; // Little bit of debounce before search is initiated.
@@ -37,6 +46,8 @@ export class SearchPageComponent extends Component {
     this.state = {
       isSearchMapOpenOnMobile: props.tab === 'map',
       isMobileModalOpen: false,
+      enquiryModalOpen: false,
+      currentListingAuthor: '',
     };
 
     this.searchMapListingsInProgress = false;
@@ -44,6 +55,8 @@ export class SearchPageComponent extends Component {
     this.onMapMoveEnd = debounce(this.onMapMoveEnd.bind(this), SEARCH_WITH_MAP_DEBOUNCE);
     this.onOpenMobileModal = this.onOpenMobileModal.bind(this);
     this.onCloseMobileModal = this.onCloseMobileModal.bind(this);
+    this.onContactUser = this.onContactUser.bind(this);
+    this.onSubmitEnquiry = this.onSubmitEnquiry.bind(this);
   }
 
   // Callback to determine if new search is needed
@@ -99,6 +112,44 @@ export class SearchPageComponent extends Component {
     this.setState({ isMobileModalOpen: false });
   }
 
+  onContactUser(contactName) {
+    this.setState({ currentListingAuthor: contactName });
+    const { currentUser, history, callSetInitialValues, params, location } = this.props;
+
+    if (!currentUser) {
+      const state = { from: `${location.pathname}${location.search}${location.hash}` };
+
+      // We need to log in before showing the modal, but first we need to ensure
+      // that modal does open when user is redirected back to this listingpage
+      callSetInitialValues(setInitialValues, { enquiryModalOpenForListingId: params.id });
+
+      // signup and return back to listingPage.
+      history.push(createResourceLocatorString('SignupPage', routeConfiguration(), {}, {}), state);
+    } else {
+      this.setState({ enquiryModalOpen: true });
+    }
+  }
+
+  onSubmitEnquiry(values) {
+    const { history, params, onSendEnquiry } = this.props;
+    const routes = routeConfiguration();
+    const listingId = new UUID(params.id);
+    const { message } = values;
+
+    onSendEnquiry(listingId, message.trim())
+      .then(txId => {
+        this.setState({ enquiryModalOpen: false });
+
+        // Redirect to OrderDetailsPage
+        history.push(
+          createResourceLocatorString('OrderDetailsPage', routes, { id: txId.uuid }, {})
+        );
+      })
+      .catch(() => {
+        // Ignore, error handling in duck file
+      });
+  }
+
   render() {
     const {
       intl,
@@ -118,6 +169,9 @@ export class SearchPageComponent extends Component {
       onActivateListing,
       currentUserType,
       currentUser,
+      isAuthenticated,
+      sendEnquiryError,
+      sendEnquiryInProgress,
     } = this.props;
     // eslint-disable-next-line no-unused-vars
     const { mapSearch, page, ...searchInURL } = parse(location.search, {
@@ -189,7 +243,24 @@ export class SearchPageComponent extends Component {
             history={history}
             currentUserType={currentUserType}
             currentUser={currentUser}
+            onContactUser={this.onContactUser}
           />
+          <Modal
+            id="ListingPage.enquiry"
+            contentClassName={css.enquiryModalContent}
+            isOpen={isAuthenticated && this.state.enquiryModalOpen}
+            onClose={() => this.setState({ enquiryModalOpen: false })}
+            onManageDisableScrolling={onManageDisableScrolling}
+          >
+            <EnquiryForm
+              className={css.enquiryForm}
+              submitButtonWrapperClassName={css.enquirySubmitButtonWrapper}
+              authorDisplayName={this.state.currentListingAuthor}
+              sendEnquiryError={sendEnquiryError}
+              onSubmit={this.onSubmitEnquiry}
+              inProgress={sendEnquiryInProgress}
+            />
+          </Modal>
           {/* <ModalInMobile
             className={css.mapPanel}
             id="SearchPage.map"
@@ -263,6 +334,19 @@ SearchPageComponent.propTypes = {
 };
 
 const mapStateToProps = state => {
+  const { isAuthenticated } = state.Auth;
+  const {
+    showListingError,
+    reviews,
+    fetchReviewsError,
+    monthlyTimeSlots,
+    sendEnquiryInProgress,
+    sendEnquiryError,
+    lineItems,
+    fetchLineItemsInProgress,
+    fetchLineItemsError,
+    enquiryModalOpenForListingId,
+  } = state.ListingPage;
   const {
     currentPageResultIds,
     pagination,
@@ -285,6 +369,7 @@ const mapStateToProps = state => {
   ).filter(listing => listing.attributes.publicData.listingType === oppositeUserType);
 
   return {
+    isAuthenticated,
     listings: pageListings,
     mapListings,
     pagination,
@@ -295,6 +380,8 @@ const mapStateToProps = state => {
     activeListingId,
     currentUserType,
     currentUser,
+    sendEnquiryError,
+    sendEnquiryInProgress,
   };
 };
 
@@ -303,6 +390,9 @@ const mapDispatchToProps = dispatch => ({
     dispatch(manageDisableScrolling(componentId, disableScrolling)),
   onSearchMapListings: searchParams => dispatch(searchMapListings(searchParams)),
   onActivateListing: listingId => dispatch(setActiveListing(listingId)),
+  callSetInitialValues: (setInitialValues, values, saveToSessionStorage) =>
+    dispatch(setInitialValues(values, saveToSessionStorage)),
+  onSendEnquiry: (listingId, message) => dispatch(sendEnquiry(listingId, message)),
 });
 
 // Note: it is important that the withRouter HOC is **outside** the

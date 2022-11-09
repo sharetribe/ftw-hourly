@@ -376,7 +376,7 @@
   "EmployerEditListingWizard.tabLabelAvailability": "Availability",
   "EnquiryForm.heading": "Enquire about {listingTitle}",
   "EnquiryForm.messageLabel": "Message to {authorDisplayName}",
-  "EnquiryForm.messagePlaceholder": "Hello {authorDisplayName}! I'm looking forward to…",
+  "EnquiryForm.messagePlaceholder": "I'm looking for care...",
   "EnquiryForm.messageRequired": "A message is required",
   "EnquiryForm.sendEnquiryError": "Whoops, something went wrong. Please try again.",
   "EnquiryForm.submitButtonText": "Send enquiry",
