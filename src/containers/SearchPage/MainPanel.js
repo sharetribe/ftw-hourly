@@ -206,8 +206,7 @@ class MainPanel extends Component {
     // See: https://www.sharetribe.com/api-reference/marketplace.html#availability-filtering
     const hasPaginationInfo = !!pagination && !pagination.paginationUnsupported;
     const listingsLength = listings ? listings.length : 0;
-    const totalItems =
-      searchParamsAreInSync && hasPaginationInfo ? pagination.totalItems : listingsLength;
+    const totalItems = listingsLength;
 
     const listingsAreLoaded = !searchInProgress && searchParamsAreInSync;
 
