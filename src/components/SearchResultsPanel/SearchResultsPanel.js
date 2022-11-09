@@ -2,11 +2,20 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { propTypes } from '../../util/types';
-import { ListingCard, PaginationLinks } from '../../components';
+import { ListingCard, PaginationLinks, CaregiverListingCard } from '../../components';
 import css from './SearchResultsPanel.module.css';
 
 const SearchResultsPanel = props => {
-  const { className, rootClassName, listings, pagination, search, setActiveListing } = props;
+  const {
+    className,
+    rootClassName,
+    listings,
+    pagination,
+    search,
+    setActiveListing,
+    currentUserType,
+    currentUser,
+  } = props;
   const classes = classNames(rootClassName || css.root, className);
 
   const paginationLinks =
@@ -32,15 +41,26 @@ const SearchResultsPanel = props => {
   return (
     <div className={classes}>
       <div className={css.listingCards}>
-        {listings.map(l => (
-          <ListingCard
-            className={css.listingCard}
-            key={l.id.uuid}
-            listing={l}
-            renderSizes={cardRenderSizes}
-            setActiveListing={setActiveListing}
-          />
-        ))}
+        {listings.map(l =>
+          currentUserType === 'employer' ? (
+            <CaregiverListingCard
+              className={css.listingCard}
+              key={l.id.uuid}
+              listing={l}
+              renderSizes={cardRenderSizes}
+              setActiveListing={setActiveListing}
+              currentUser={currentUser}
+            />
+          ) : (
+            <ListingCard
+              className={css.listingCard}
+              key={l.id.uuid}
+              listing={l}
+              renderSizes={cardRenderSizes}
+              setActiveListing={setActiveListing}
+            />
+          )
+        )}
         {props.children}
       </div>
       {paginationLinks}

@@ -116,6 +116,8 @@ export class SearchPageComponent extends Component {
       searchParams,
       activeListingId,
       onActivateListing,
+      currentUserType,
+      currentUser,
     } = this.props;
     // eslint-disable-next-line no-unused-vars
     const { mapSearch, page, ...searchInURL } = parse(location.search, {
@@ -185,8 +187,10 @@ export class SearchPageComponent extends Component {
             searchParamsForPagination={parse(location.search)}
             showAsModalMaxWidth={MODAL_BREAKPOINT}
             history={history}
+            currentUserType={currentUserType}
+            currentUser={currentUser}
           />
-          <ModalInMobile
+          {/* <ModalInMobile
             className={css.mapPanel}
             id="SearchPage.map"
             isModalOpenOnMobile={this.state.isSearchMapOpenOnMobile}
@@ -212,7 +216,7 @@ export class SearchPageComponent extends Component {
                 />
               ) : null}
             </div>
-          </ModalInMobile>
+          </ModalInMobile> */}
         </div>
       </Page>
     );
@@ -268,11 +272,17 @@ const mapStateToProps = state => {
     searchMapListingIds,
     activeListingId,
   } = state.SearchPage;
-  const pageListings = getListingsById(state, currentPageResultIds);
+  const currentUser = state.user.currentUser;
+  const currentUserType = currentUser?.attributes.profile.publicData.userType;
+  const oppositeUserType = currentUserType === 'caregiver' ? 'employer' : 'caregiver';
+
+  const pageListings = getListingsById(state, currentPageResultIds).filter(
+    listing => listing.attributes.publicData.listingType === oppositeUserType
+  );
   const mapListings = getListingsById(
     state,
     unionWith(currentPageResultIds, searchMapListingIds, (id1, id2) => id1.uuid === id2.uuid)
-  );
+  ).filter(listing => listing.attributes.publicData.listingType === oppositeUserType);
 
   return {
     listings: pageListings,
@@ -283,6 +293,8 @@ const mapStateToProps = state => {
     searchListingsError,
     searchParams,
     activeListingId,
+    currentUserType,
+    currentUser,
   };
 };
 
@@ -301,10 +313,7 @@ const mapDispatchToProps = dispatch => ({
 // See: https://github.com/ReactTraining/react-router/issues/4671
 const SearchPage = compose(
   withRouter,
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  ),
+  connect(mapStateToProps, mapDispatchToProps),
   injectIntl
 )(SearchPageComponent);
 

@@ -35,7 +35,7 @@ export const POLICY = 'policy';
 export const LOCATION = 'location';
 export const PRICING = 'pricing';
 export const PHOTOS = 'photos';
-export const CARE_RECEIVER_DETAILS = 'care-receiver-details';
+export const CARE_RECEIVER_DETAILS = 'care-recipient-details';
 export const CAREGIVER_DETAILS = 'caregiver-details';
 
 // EditListingWizardTab component supports these tabs
@@ -143,8 +143,13 @@ const EditListingWizardTab = props => {
     const updateValuesWithImages = { ...otherValues, ...imageProperty };
 
     if (isNewListingFlow) {
+      const userType = currentUser.attributes.profile.publicData.userType;
+
       const onUpsertListingDraft = isNewURI
-        ? (tab, updateValues) => onCreateListingDraft(updateValues)
+        ? (tab, updateValues) => {
+            updateValues.publicData.listingType = userType;
+            return onCreateListingDraft(updateValues);
+          }
         : onUpdateListing;
 
       const upsertValues = isNewURI

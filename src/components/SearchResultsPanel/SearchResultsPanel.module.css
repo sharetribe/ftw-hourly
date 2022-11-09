@@ -20,7 +20,7 @@
 }
 
 .listingCard {
-  margin-bottom: 36px;
+  padding-block: 20px;
   flex-basis: 100%;
 
   @media (--viewportLarge) {
@@ -38,7 +38,7 @@
 
     * flex-basis: calc((100%/columnCount) - (guttersBetweenColumns / columnCount))
     */
-    flex-basis: calc(50% - 12px);
+    flex-basis: calc(100% - 12px);
     margin-right: 24px;
   }
 

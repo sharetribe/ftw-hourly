@@ -88,14 +88,7 @@ const tabLabel = (intl, tab) => {
  * @return true if tab / step is completed.
  */
 const tabCompleted = (tab, listing) => {
-  const {
-    availabilityPlan,
-    description,
-    geolocation,
-    title,
-    publicData,
-    privateData,
-  } = listing.attributes;
+  const { availabilityPlan, description, geolocation, title, publicData } = listing.attributes;
   const images = listing.images;
 
   switch (tab) {
@@ -111,10 +104,9 @@ const tabCompleted = (tab, listing) => {
     case LOCATION:
       return !!(
         geolocation &&
-        privateData &&
-        privateData.location &&
-        privateData.location.address &&
-        privateData.travelDistance != undefined
+        publicData &&
+        publicData.location &&
+        publicData.travelDistance != undefined
       );
     case PRICING:
       return !!(publicData && publicData.minPrice && publicData.maxPrice);
@@ -258,14 +250,11 @@ class CaregiverEditListingWizard extends Component {
 
     this.props.onUpdateProfile(updatedValues);
 
-    if (stripeConnected && !requirementsMissing) {
-      onPublishListingDraft(id);
-    } else {
-      this.setState({
-        draftId: id,
-        showPayoutDetails: true,
-      });
-    }
+    onPublishListingDraft(id);
+    this.setState({
+      draftId: id,
+      showPayoutDetails: true,
+    });
   }
 
   handlePayoutModalClose() {

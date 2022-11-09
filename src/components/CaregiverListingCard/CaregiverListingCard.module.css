@@ -1,0 +1,159 @@
+@import '../../styles/customMediaQueries.css';
+
+.root {
+  /* Layout */
+  display: flex;
+  /* flex-direction: column; */
+  width: 100%;
+  border-bottom: solid 1px;
+  border-color: var(--matterColor);
+
+  /* Remove link's hover effect */
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+.threeToTwoWrapper {
+  /* Layout */
+  display: flex;
+  position: relative;
+  transition: var(--transitionStyleButton);
+
+  &:hover {
+    transform: scale(1.02);
+    box-shadow: var(--boxShadowListingCard);
+  }
+}
+
+/* Firefox doesn't support image aspect ratio inside flexbox */
+.aspectWrapper {
+  padding-bottom: 66.6667%; /* 3:2 Aspect Ratio */
+  background: var(--matterColorNegative); /* Loading BG color */
+}
+
+.rootForImage {
+  /* Layout - image will take space defined by aspect ratio wrapper */
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  border-radius: var(--borderRadius);
+}
+
+.info {
+  /* Layout */
+  display: flex;
+  flex-direction: column;
+  padding: 0px 0px 0px 10px;
+}
+
+.user {
+  width: 10rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.price {
+  /* Layout */
+  display: block;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 0.2rem;
+}
+
+.priceValue {
+  /* Font */
+  composes: h2 from global;
+
+  /* Remove default margins from font */
+  margin-top: 0;
+  margin-bottom: 0;
+
+  @media (--viewportMedium) {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+}
+
+.perUnit {
+  /* Font */
+  composes: marketplaceTinyFontStyles from global;
+  color: var(--matterColor);
+
+  /* Remove default margins from font */
+  margin-top: 0;
+  margin-bottom: 0;
+
+  @media (--viewportMedium) {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+}
+
+.mainInfo {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.title {
+  /* Font */
+  composes: h3 from global;
+  color: var(--matterColor);
+
+  /* Remove default margins from font */
+  margin-top: 0;
+  margin-bottom: 0;
+
+  @media (--viewportMedium) {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+}
+
+.location {
+  display: flex;
+}
+
+.topInfo {
+  display: flex;
+  flex-shrink: 1;
+  flex-direction: column;
+}
+
+.longWord {
+  /* fallback option */
+  word-break: break-all;
+  /* use break-word if available */
+  word-break: break-word;
+  hyphens: auto;
+}
+
+.avatar {
+  width: 10rem;
+  height: 10rem;
+}
+
+.providedServices {
+  color: var(--matterColor);
+}
+
+.serviceBold {
+  font-weight: bold;
+}
+
+.description {
+  color: var(--matterColor);
+  line-height: 1rem;
+  margin-top: 0.2rem;
+}
+
+.messageButton {
+  max-width: 8rem;
+  min-height: 2.5rem;
+  padding-block: 0px;
+}
