@@ -62,35 +62,17 @@ const CaregiverListingContent = props => {
     </div>
   ) : null;
 
+  const avatarUser = { profileImage: currentListing.images[0] };
+
   return (
     <Fragment>
-      {
-        //TODO: Replace this with action bar
-        /* <SectionImages
-          title={title}
-          listing={currentListing}
-          isOwnListing={isOwnListing}
-          editParams={{
-            id: listingId.uuid,
-            slug: listingSlug,
-            type: listingType,
-            tab: listingTab,
-          }}
-          imageCarouselOpen={this.state.imageCarouselOpen}
-          onImageCarouselClose={() => this.setState({ imageCarouselOpen: false })}
-          handleViewPhotosClick={handleViewPhotosClick}
-          onManageDisableScrolling={onManageDisableScrolling}
-        /> */
-      }
       <div className={css.sectionImages}>
         <div className={css.threeToTwoWrapper}>
           <div className={css.aspectWrapper}>{actionBar}</div>
         </div>
         <div className={css.contentContainer}>
-          {/* actionBar */}
-          {/* <SectionAvatar user={currentAuthor} params={params} /> */}
           <div className={css.mainContent}>
-            <SectionAvatar user={currentAuthor} params={params} />
+            <SectionAvatar user={avatarUser} params={params} />
             <SectionHeading
               priceTitle={priceTitle}
               formattedPrice={formattedPrice}
