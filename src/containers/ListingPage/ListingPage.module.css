@@ -45,12 +45,9 @@
 }
 
 .actionBar {
-  position: absolute;
   display: flex;
   justify-content: space-between;
-  top: 13px;
-  left: 13px;
-  width: calc(100% - 26px);
+  width: 100%;
   color: var(--matterColorNegative);
   background-color: var(--matterColor);
   z-index: 1; /* bring on top of mobile image */
@@ -182,18 +179,19 @@
 }
 
 .contentContainer {
+  margin-top: 20px;
   @media (--viewportMedium) {
     max-width: 1056px;
-    margin: 0 auto;
+    /* margin: 0 auto; */
     padding: 0 24px;
     display: flex;
-    position: relative;
+    /* position: relative; */
   }
 
   @media (--viewportLarge) {
     max-width: 1128px;
     padding: 0 36px;
-    margin: 0 auto 117px;
+    /* margin: 0 auto 117px; */
   }
 
   @media (--viewportXLarge) {
@@ -207,13 +205,13 @@
   margin-bottom: 23px;
 
   @media (--viewportMedium) {
-    margin-top: 50px;
+    /* margin-top: 50px; */
     margin-bottom: 51px;
     flex-shrink: 0;
   }
 
   @media (--viewportLarge) {
-    margin-top: 50px;
+    /* margin-top: 50px; */
     margin-bottom: 0px;
     /* contentContainer's full width - (bookingColumn + two paddings + margin + border) */
     max-width: calc(100% - 433px);
@@ -243,17 +241,17 @@
 .sectionAvatar {
   /* Position (over the listing image)*/
   margin-left: 24px;
-  margin-top: -72px;
+  display: flex;
 
   /* Rendering context to the same lavel as listing image */
-  position: relative;
+  /* position: static; */
 
   /* Flex would give too much width by default. */
-  width: 60px;
+  /* width: 60px; */
 
   @media (--viewportMedium) {
-    position: absolute;
-    top: -112px;
+    /* position: absolute; */
+    /* top: -112px; */
     margin-left: 0;
     margin-top: 0;
   }
@@ -270,9 +268,9 @@
 }
 
 .avatarDesktop {
-  display: none; /* Hide the large avatar from the smaller screens */
-  width: 152px;
-  height: 152px;
+  /* display: none; Hide the large avatar from the smaller screens */
+  width: 300px;
+  height: 300px;
 
   @media (--viewportMedium) {
     display: flex;
