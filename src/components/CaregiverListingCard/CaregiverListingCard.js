@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Fragment } from 'react';
 import { array, string, func } from 'prop-types';
 import { FormattedMessage, intlShape, injectIntl } from '../../util/reactIntl';
 import classNames from 'classnames';
@@ -91,47 +91,49 @@ export const CaregiverListingCardComponent = props => {
   );
 
   return (
-    <NamedLink className={classes} name="ListingPage" params={{ id, slug }}>
-      <div className={css.user}>
-        {avatarComponent}
-        <div className={css.price}>
-          <div className={css.priceValue} title={priceTitle}>
-            {formattedMinPrice}-{maxPrice / 100}
-            <span className={css.perUnit}>
-              &nbsp;
-              <FormattedMessage id={'CaregiverListingCard.perUnit'} />
-            </span>
-          </div>
-        </div>
-      </div>
-      <div className={css.info}>
-        <div className={css.mainInfo}>
-          <div className={css.topInfo}>
-            <div className={css.title}>
-              {richText(title, {
-                longWordMinLength: MIN_LENGTH_FOR_LONG_WORDS,
-                longWordClass: css.longWord,
-              })}
-            </div>
-            <div className={css.location}>
-              {richText(location, {
-                longWordMinLength: MIN_LENGTH_FOR_LONG_WORDS,
-                longWordClass: css.longWord,
-              })}
+    <Fragment>
+      <NamedLink className={classes} name="ListingPage" params={{ id, slug }}>
+        <div className={css.user}>
+          {avatarComponent}
+          <div className={css.price}>
+            <div className={css.priceValue} title={priceTitle}>
+              {formattedMinPrice}-{maxPrice / 100}
+              <span className={css.perUnit}>
+                &nbsp;
+                <FormattedMessage id={'CaregiverListingCard.perUnit'} />
+              </span>
             </div>
           </div>
-          <Button className={css.messageButton} onClick={() => onContactUser(title)}>
-            Message
-          </Button>
         </div>
+        <div className={css.info}>
+          <div className={css.mainInfo}>
+            <div className={css.topInfo}>
+              <div className={css.title}>
+                {richText(title, {
+                  longWordMinLength: MIN_LENGTH_FOR_LONG_WORDS,
+                  longWordClass: css.longWord,
+                })}
+              </div>
+              <div className={css.location}>
+                {richText(location, {
+                  longWordMinLength: MIN_LENGTH_FOR_LONG_WORDS,
+                  longWordClass: css.longWord,
+                })}
+              </div>
+            </div>
+          </div>
 
-        <div className={css.providedServices}>
-          <span className={css.serviceBold}>Provides services for: </span>
-          {providedServices.map(service => servicesMap.get(service)).join(', ')}
+          <div className={css.providedServices}>
+            <span className={css.serviceBold}>Provides services for: </span>
+            {providedServices.map(service => servicesMap.get(service)).join(', ')}
+          </div>
+          <div className={css.description}>{description}</div>
         </div>
-        <div className={css.description}>{description}</div>
-      </div>
-    </NamedLink>
+      </NamedLink>
+      <Button className={css.messageButton} onClick={() => onContactUser(title)}>
+        Message
+      </Button>
+    </Fragment>
   );
 };
 

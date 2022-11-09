@@ -150,9 +150,12 @@
   color: var(--matterColor);
   line-height: 1rem;
   margin-top: 0.2rem;
+  text-overflow: ellipsis;
 }
 
 .messageButton {
+  position: absolute;
+  right: 6%;
   max-width: 8rem;
   min-height: 2.5rem;
   padding-block: 0px;

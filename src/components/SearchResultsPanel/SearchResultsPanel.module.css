@@ -7,6 +7,7 @@
 
 .listingCards {
   padding: 0 24px 96px 24px;
+  position: relative;
 
   @media (--viewportMedium) {
     display: flex;
