@@ -4,7 +4,7 @@ import { AvatarLarge, AvatarMedium } from '../../components';
 import css from './ListingPage.module.css';
 
 const SectionAvatar = props => {
-  const { user } = props;
+  const { user, richName } = props;
   return (
     <div className={css.sectionAvatar}>
       <AvatarLarge

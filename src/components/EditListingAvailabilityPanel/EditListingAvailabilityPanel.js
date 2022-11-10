@@ -118,11 +118,9 @@ const createEntriesFromSubmitValues = values =>
 
 // Create availabilityPlan from submit values
 const createAvailabilityPlan = values => ({
-  availabilityPlan: {
-    type: 'availability-plan/time',
-    timezone: values.timezone,
-    entries: createEntriesFromSubmitValues(values),
-  },
+  type: 'availability-plan/time',
+  timezone: values.timezone,
+  entries: createEntriesFromSubmitValues(values),
 });
 
 // Ensure that the AvailabilityExceptions are in sensible order.
@@ -161,7 +159,7 @@ const EditListingAvailabilityPanel = props => {
 
   const classes = classNames(rootClassName || css.root, className);
   const currentListing = ensureOwnListing(listing);
-  const isNextButtonDisabled = !currentListing.attributes.availabilityPlan;
+  const isNextButtonDisabled = !currentListing.attributes.publicData.availabilityPlan;
   const isPublished = currentListing.id && currentListing.attributes.state !== LISTING_STATE_DRAFT;
   const defaultAvailabilityPlan = {
     type: 'availability-plan/time',
@@ -176,7 +174,8 @@ const EditListingAvailabilityPanel = props => {
       // { dayOfWeek: 'sun', startTime: '09:00', endTime: '17:00', seats: 1 },
     ],
   };
-  const availabilityPlan = currentListing.attributes.availabilityPlan || defaultAvailabilityPlan;
+  const availabilityPlan =
+    currentListing.attributes.publicData.availabilityPlan || defaultAvailabilityPlan;
   const initialValues = valuesFromLastSubmit
     ? valuesFromLastSubmit
     : createInitialValues(availabilityPlan);
@@ -184,8 +183,10 @@ const EditListingAvailabilityPanel = props => {
   const handleSubmit = values => {
     setValuesFromLastSubmit(values);
 
+    const availabilityPlan = createAvailabilityPlan(values);
+
     // Final Form can wait for Promises to return.
-    return onSubmit(createAvailabilityPlan(values))
+    return onSubmit({ publicData: { availabilityPlan } })
       .then(() => {
         setIsEditPlanModalOpen(false);
       })

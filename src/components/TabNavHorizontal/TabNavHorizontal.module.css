@@ -47,7 +47,7 @@
   &:hover,
   &:focus {
     text-decoration: none;
-    color: var(--matterColorDark);
+    color: var(--marketplaceColor);
   }
 
   @media (--viewportMedium) {
@@ -62,11 +62,12 @@
   border-radius: 0;
   /* Override Chrome's button outline */
   outline: 0;
+  color: var(--matterColor);
 }
 
 .selectedTabContent {
-  border-bottom-color: var(--matterColorDark);
-  color: var(--matterColorDark);
+  border-bottom-color: var(--marketplaceColor);
+  color: var(--marketplaceColor);
 }
 
 .disabled {

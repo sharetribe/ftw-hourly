@@ -23,7 +23,14 @@ import { TabNav } from '../../components';
 import css from './Tabs.module.css';
 
 const Tabs = props => {
-  const { children, className, rootClassName, navRootClassName, tabRootClassName } = props;
+  const {
+    children,
+    className,
+    rootClassName,
+    navRootClassName,
+    tabRootClassName,
+    isHorizontal,
+  } = props;
   const rootClasses = rootClassName || css.root;
   const classes = classNames(rootClasses, className);
 
@@ -59,23 +66,33 @@ const Tabs = props => {
 
   return (
     <div className={classes}>
-      <TabNav
-        rootClassName={navRootClassName}
-        tabs={tabNavTabs}
-        tabRootClassName={tabRootClassName}
-      />
+      {!isHorizontal && (
+        <TabNav
+          rootClassName={navRootClassName}
+          tabs={tabNavTabs}
+          tabRootClassName={tabRootClassName}
+        />
+      )}
+      {isHorizontal && (
+        <HorizontalTabNav
+          rootClassName={navRootClassName}
+          tabs={tabNavTabs}
+          tabRootClassName={tabRootClassName}
+        />
+      )}
       {selectedTabPanel}
     </div>
   );
 };
 
-const { node, string } = PropTypes;
+const { node, string, bool } = PropTypes;
 
 Tabs.defaultProps = {
   className: null,
   rootClassName: null,
   navRootClassName: null,
   tabRootClassName: null,
+  isHorizontal: false,
 };
 
 Tabs.propTypes = {
@@ -84,6 +101,7 @@ Tabs.propTypes = {
   rootClassName: string,
   navRootClassName: string,
   tabRootClassName: string,
+  isHorizontal: bool,
 };
 
 export default Tabs;

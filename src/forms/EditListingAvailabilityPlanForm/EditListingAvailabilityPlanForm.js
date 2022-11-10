@@ -17,7 +17,49 @@ import {
 
 import css from './EditListingAvailabilityPlanForm.module.css';
 
-const printHourStrings = h => (h > 9 ? `${h}:00` : `0${h}:00`);
+const printHourStrings = h => {
+  if (h === 0 || h === 24) {
+    return '12:00am';
+  }
+
+  if (h === 12) {
+    return '12:00pm';
+  }
+
+  if (h > 12) {
+    h = h % 12;
+    return `${h}:00pm`;
+  }
+
+  return `${h}:00am`;
+};
+
+const timeOrderMap = new Map([
+  ['12:00am', 0],
+  ['1:00am', 1],
+  ['2:00am', 2],
+  ['3:00am', 3],
+  ['4:00am', 4],
+  ['5:00am', 5],
+  ['6:00am', 6],
+  ['7:00am', 7],
+  ['8:00am', 8],
+  ['0:00am', 9],
+  ['10:00am', 10],
+  ['11:00am', 11],
+  ['12:00pm', 12],
+  ['1:00pm', 13],
+  ['2:00pm', 14],
+  ['3:00pm', 15],
+  ['4:00pm', 16],
+  ['5:00pm', 17],
+  ['6:00pm', 18],
+  ['7:00pm', 19],
+  ['8:00pm', 20],
+  ['9:00pm', 21],
+  ['10:00pm', 22],
+  ['11:00pm', 23],
+]);
 
 const HOURS = Array(24).fill();
 const ALL_START_HOURS = [...HOURS].map((v, i) => printHourStrings(i));
@@ -39,7 +81,7 @@ const filterStartHours = (availableStartHours, values, dayOfWeek, index) => {
   const currentEntry = entries[index];
 
   // If there is no end time selected, return all the available start times
-  if (!currentEntry.endTime) {
+  if (!currentEntry.endTime || currentEntry.endTime === '12:00am') {
     return availableStartHours;
   }
 
@@ -54,8 +96,11 @@ const filterStartHours = (availableStartHours, values, dayOfWeek, index) => {
   // return all the available times before current selected end time.
   // Otherwise return all the available start times that are after the previous entry or entries.
   const prevEntry = sortedEntries[currentIndex - 1];
-  const pickBefore = time => h => h < time;
-  const pickBetween = (start, end) => h => h >= start && h < end;
+  const pickBefore = time => h => {
+    return timeOrderMap.get(h) < timeOrderMap.get(time);
+  };
+  const pickBetween = (start, end) => h =>
+    timeOrderMap.get(h) >= timeOrderMap.get(start) && timeOrderMap.get(h) < timeOrderMap.get(end);
 
   return !prevEntry || !prevEntry.endTime
     ? availableStartHours.filter(pickBefore(currentEntry.endTime))
@@ -71,6 +116,10 @@ const filterEndHours = (availableEndHours, values, dayOfWeek, index) => {
     return [];
   }
 
+  if (currentEntry.startTime === '12:00am') {
+    return availableEndHours;
+  }
+
   // By default the entries are not in order so we need to sort the entries by startTime
   // in order to find out the allowed start times
   const sortedEntries = [...entries].sort(sortEntries(-1));
@@ -82,12 +131,23 @@ const filterEndHours = (availableEndHours, values, dayOfWeek, index) => {
   // return all the available end times that are after the start of current entry.
   // Otherwise return all the available end hours between current start time and next entry.
   const nextEntry = sortedEntries[currentIndex + 1];
-  const pickAfter = time => h => h > time;
-  const pickBetween = (start, end) => h => h > start && h <= end;
+  const pickAfter = time => h => {
+    return timeOrderMap.get(h) > timeOrderMap.get(time);
+  };
+  const pickBetween = (start, end) => h =>
+    timeOrderMap.get(h) > timeOrderMap.get(start) && timeOrderMap.get(h) <= timeOrderMap.get(end);
 
-  return !nextEntry || !nextEntry.startTime
-    ? availableEndHours.filter(pickAfter(currentEntry.startTime))
-    : availableEndHours.filter(pickBetween(currentEntry.startTime, nextEntry.startTime));
+  let availableHours = null;
+
+  !nextEntry || !nextEntry.startTime
+    ? (availableHours = availableEndHours.filter(pickAfter(currentEntry.startTime)))
+    : (availableHours = availableEndHours.filter(
+        pickBetween(currentEntry.startTime, nextEntry.startTime)
+      ));
+
+  nextEntry ? availableHours.push('12:00am') : null;
+
+  return availableHours;
 };
 
 const getEntryBoundaries = (values, dayOfWeek, intl, findStartHours) => index => {
@@ -152,10 +212,8 @@ const DailyPlan = props => {
                           id={`${name}.startTime`}
                           name={`${name}.startTime`}
                           selectClassName={css.fieldSelect}
+                          firstValueSelected={true}
                         >
-                          <option disabled value="">
-                            {startTimePlaceholder}
-                          </option>
                           {filterStartHours(availableStartHours, values, dayOfWeek, index).map(
                             s => (
                               <option value={s} key={s}>
@@ -171,10 +229,8 @@ const DailyPlan = props => {
                           id={`${name}.endTime`}
                           name={`${name}.endTime`}
                           selectClassName={css.fieldSelect}
+                          firstValueSelected={true}
                         >
-                          <option disabled value="">
-                            {endTimePlaceholder}
-                          </option>
                           {filterEndHours(availableEndHours, values, dayOfWeek, index).map(s => (
                             <option value={s} key={s}>
                               {s}

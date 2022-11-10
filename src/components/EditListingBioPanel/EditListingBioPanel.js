@@ -46,20 +46,19 @@ const EditListingBioPanel = props => {
     <FormattedMessage id="EditListingDescriptionPanel.createListingTitle" />
   );
 
-  const userFullName = listing?.author?.attributes.profile.displayName;
+  // const userFullName = listing?.author?.attributes.profile.displayName;
 
   return (
     <div className={classes}>
       <h1 className={css.title}>{panelTitle}</h1>
       <EditListingBioForm
         className={css.form}
-        initialValues={{ title, description }}
+        initialValues={{ description }}
         saveActionMsg={submitButtonText}
         onSubmit={values => {
-          const { title = userFullName, description } = values;
+          const { description } = values;
 
           const updateValues = {
-            title: title.trim(),
             description,
           };
 
