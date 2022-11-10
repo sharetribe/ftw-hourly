@@ -50,13 +50,15 @@ import {
   fetchTimeSlots,
   fetchTransactionLineItems,
 } from './ListingPage.duck';
-import SectionImages from './SectionImages';
+// import SectionImages from './SectionImages';
 import SectionAvatar from './SectionAvatar';
 import SectionHeading from './SectionHeading';
 import SectionDescriptionMaybe from './SectionDescriptionMaybe';
 import SectionFeaturesMaybe from './SectionFeaturesMaybe';
 import SectionReviews from './SectionReviews';
 import SectionMapMaybe from './SectionMapMaybe';
+import CaregiverListingContent from '../../components/ListingContent/CaregiverListingContent';
+import EmployerListingContent from './EmployerListingContent';
 import css from './ListingPage.module.css';
 
 const MIN_LENGTH_FOR_LONG_WORDS_IN_TITLE = 16;
@@ -209,6 +211,7 @@ export class ListingPageComponent extends Component {
     const listingId = new UUID(rawParams.id);
     const isPendingApprovalVariant = rawParams.variant === LISTING_PAGE_PENDING_APPROVAL_VARIANT;
     const isDraftVariant = rawParams.variant === LISTING_PAGE_DRAFT_VARIANT;
+
     const currentListing =
       isPendingApprovalVariant || isDraftVariant
         ? ensureOwnListing(getOwnListing(listingId))
@@ -250,18 +253,7 @@ export class ListingPageComponent extends Component {
       publicData,
     } = currentListing.attributes;
 
-    const richTitle = (
-      <span>
-        {richText(title, {
-          longWordMinLength: MIN_LENGTH_FOR_LONG_WORDS_IN_TITLE,
-          longWordClass: css.longWord,
-        })}
-      </span>
-    );
-
-    const bookingTitle = (
-      <FormattedMessage id="ListingPage.bookingTitle" values={{ title: richTitle }} />
-    );
+    const bookingTitle = <FormattedMessage id="ListingPage.bookingTitle" values={{ title: '' }} />;
 
     const topbar = <TopbarContainer />;
 
@@ -383,8 +375,45 @@ export class ListingPageComponent extends Component {
       </NamedLink>
     );
 
-    const yogaStylesOptions = findOptionsForSelectFilter('yogaStyles', filterConfig);
-    const certificateOptions = findOptionsForSelectFilter('certificate', filterConfig);
+    const userType = currentListing?.attributes.publicData.listingType;
+    const mainContent =
+      userType === 'caregiver' ? (
+        <CaregiverListingContent
+          params={params}
+          currentAuthor={currentAuthor}
+          priceTitle={priceTitle}
+          formattedPrice={formattedPrice}
+          publicData={publicData}
+          hostLink={hostLink}
+          showContactUser={showContactUser}
+          onContactUser={this.onContactUser}
+          description={description}
+          geolocation={geolocation}
+          currentListing={currentListing}
+          reviews={reviews}
+          fetchReviewsError={fetchReviewsError}
+          isOwnListing={isOwnListing}
+          unitType={unitType}
+          onSubmit={handleBookingSubmit}
+          bookingTitle={bookingTitle}
+          authorDisplayName={authorDisplayName}
+          onManageDisableScrolling={onManageDisableScrolling}
+          monthlyTimeSlots={monthlyTimeSlots}
+          onFetchTimeSlots={onFetchTimeSlots}
+          onFetchTransactionLineItems={onFetchTransactionLineItems}
+          lineItems={lineItems}
+          fetchLineItemsInProgress={fetchLineItemsInProgress}
+          fetchLineItemsError={fetchLineItemsError}
+          listingId={listingId}
+          listingSlug={listingSlug}
+          listingType={listingType}
+          listingTab={listingTab}
+          intl={intl}
+          handleBookingSubmit={handleBookingSubmit}
+        />
+      ) : (
+        <div>hi</div>
+      ); //)
 
     return (
       <Page
@@ -406,62 +435,7 @@ export class ListingPageComponent extends Component {
         <LayoutSingleColumn className={css.pageRoot}>
           <LayoutWrapperTopbar>{topbar}</LayoutWrapperTopbar>
           <LayoutWrapperMain>
-            <div>
-              <SectionImages
-                title={title}
-                listing={currentListing}
-                isOwnListing={isOwnListing}
-                editParams={{
-                  id: listingId.uuid,
-                  slug: listingSlug,
-                  type: listingType,
-                  tab: listingTab,
-                }}
-                imageCarouselOpen={this.state.imageCarouselOpen}
-                onImageCarouselClose={() => this.setState({ imageCarouselOpen: false })}
-                handleViewPhotosClick={handleViewPhotosClick}
-                onManageDisableScrolling={onManageDisableScrolling}
-              />
-              <div className={css.contentContainer}>
-                <SectionAvatar user={currentAuthor} params={params} />
-                <div className={css.mainContent}>
-                  <SectionHeading
-                    priceTitle={priceTitle}
-                    formattedPrice={formattedPrice}
-                    richTitle={richTitle}
-                    listingCertificate={publicData ? publicData.certificate : null}
-                    certificateOptions={certificateOptions}
-                    hostLink={hostLink}
-                    showContactUser={showContactUser}
-                    onContactUser={this.onContactUser}
-                  />
-                  <SectionDescriptionMaybe description={description} />
-                  <SectionFeaturesMaybe options={yogaStylesOptions} publicData={publicData} />
-                  <SectionMapMaybe
-                    geolocation={geolocation}
-                    publicData={publicData}
-                    listingId={currentListing.id}
-                  />
-                  <SectionReviews reviews={reviews} fetchReviewsError={fetchReviewsError} />
-                </div>
-                <BookingPanel
-                  className={css.bookingPanel}
-                  listing={currentListing}
-                  isOwnListing={isOwnListing}
-                  unitType={unitType}
-                  onSubmit={handleBookingSubmit}
-                  title={bookingTitle}
-                  authorDisplayName={authorDisplayName}
-                  onManageDisableScrolling={onManageDisableScrolling}
-                  monthlyTimeSlots={monthlyTimeSlots}
-                  onFetchTimeSlots={onFetchTimeSlots}
-                  onFetchTransactionLineItems={onFetchTransactionLineItems}
-                  lineItems={lineItems}
-                  fetchLineItemsInProgress={fetchLineItemsInProgress}
-                  fetchLineItemsError={fetchLineItemsError}
-                />
-              </div>
-            </div>
+            {mainContent}
             <Modal
               id="ListingPage.enquiry"
               contentClassName={css.enquiryModalContent}
@@ -621,10 +595,7 @@ const mapDispatchToProps = dispatch => ({
 // See: https://github.com/ReactTraining/react-router/issues/4671
 const ListingPage = compose(
   withRouter,
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  ),
+  connect(mapStateToProps, mapDispatchToProps),
   injectIntl
 )(ListingPageComponent);
 

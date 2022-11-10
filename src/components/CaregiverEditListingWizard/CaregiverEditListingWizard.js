@@ -95,7 +95,7 @@ const tabCompleted = (tab, listing) => {
     case CARETYPES:
       return !!(publicData && publicData.careTypes);
     case BIO:
-      return !!(description && title);
+      return !!description;
     // TODO: Update publicData to be verified
     case EXPERIENCE_LEVEL:
       return !!(publicData && publicData.experienceLevel);
@@ -111,7 +111,7 @@ const tabCompleted = (tab, listing) => {
     case PRICING:
       return !!(publicData && publicData.minPrice && publicData.maxPrice);
     case AVAILABILITY:
-      return !!availabilityPlan;
+      return !!(publicData && publicData.availabilityPlan);
     case PHOTOS:
       return images && images.length > 0;
     default:

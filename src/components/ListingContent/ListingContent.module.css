@@ -1,0 +1,69 @@
+.contentContainer {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  place-content: start;
+  padding-top: var(--topbarHeightDesktop);
+  width: 100%;
+  height: calc(100vh - var(--topbarHeightDesktop));
+
+  @media (--viewportMedium) {
+    max-width: 1056px;
+    /* margin: 0 auto; */
+    padding: 0 24px;
+
+    /* position: relative; */
+  }
+
+  @media (--viewportLarge) {
+    max-width: 1128px;
+    padding: 0 36px;
+    /* margin: 0 auto 117px; */
+  }
+
+  @media (--viewportXLarge) {
+    max-width: 1056px;
+    padding: 0;
+  }
+}
+
+.userDisplay {
+  grid-column: 1/2;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  flex: 0;
+  margin: 0 2rem 0 2rem;
+  width: 350px;
+  max-height: 420px;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.title {
+  /* Font */
+  composes: marketplaceModalTitleStyles from global;
+  color: var(--matterColor);
+  /* display: flex; */
+
+  /* Layout */
+  margin-top: 2remszfd;
+  margin-bottom: 1rem;
+  @media (--viewportMedium) {
+    margin-top: 0;
+    margin-bottom: 2rem;
+  }
+}
+
+.actionBar {
+  width: 100%;
+  position: relative;
+}
+
+.mainContent {
+  grid-column: 2/2;
+  overflow-y: auto;
+}
+
+.sectionAvatar {
+  margin-top: 2rem;
+}

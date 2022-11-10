@@ -201,7 +201,6 @@ export class EditListingPhotosFormComponent extends Component {
               className={classes}
               onSubmit={e => {
                 this.submittedImage = profileImage;
-                console.log(e.target[0].value);
                 handleSubmit(e);
               }}
             >

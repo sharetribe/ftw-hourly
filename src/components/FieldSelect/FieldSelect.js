@@ -43,7 +43,7 @@ const FieldSelectComponent = props => {
 
   useEffect(() => {
     if (firstValueSelected) {
-      input.onChange(children[0].props.value);
+      input.onChange(children[0] && children[0].props.value);
     }
   }, []);
 

@@ -45,12 +45,9 @@
 }
 
 .actionBar {
-  position: absolute;
   display: flex;
   justify-content: space-between;
-  top: 13px;
-  left: 13px;
-  width: calc(100% - 26px);
+  width: 100%;
   color: var(--matterColorNegative);
   background-color: var(--matterColor);
   z-index: 1; /* bring on top of mobile image */
@@ -182,18 +179,21 @@
 }
 
 .contentContainer {
+  margin-top: 20px;
+  display: flex;
+  width: 100%;
   @media (--viewportMedium) {
     max-width: 1056px;
-    margin: 0 auto;
+    /* margin: 0 auto; */
     padding: 0 24px;
-    display: flex;
-    position: relative;
+
+    /* position: relative; */
   }
 
   @media (--viewportLarge) {
     max-width: 1128px;
     padding: 0 36px;
-    margin: 0 auto 117px;
+    /* margin: 0 auto 117px; */
   }
 
   @media (--viewportXLarge) {
@@ -207,13 +207,13 @@
   margin-bottom: 23px;
 
   @media (--viewportMedium) {
-    margin-top: 50px;
+    /* margin-top: 50px; */
     margin-bottom: 51px;
     flex-shrink: 0;
   }
 
   @media (--viewportLarge) {
-    margin-top: 50px;
+    /* margin-top: 50px; */
     margin-bottom: 0px;
     /* contentContainer's full width - (bookingColumn + two paddings + margin + border) */
     max-width: calc(100% - 433px);
@@ -243,17 +243,18 @@
 .sectionAvatar {
   /* Position (over the listing image)*/
   margin-left: 24px;
-  margin-top: -72px;
+  display: grid;
+  flex-wrap: wrap;
 
   /* Rendering context to the same lavel as listing image */
-  position: relative;
+  /* position: static; */
 
   /* Flex would give too much width by default. */
-  width: 60px;
+  /* width: 60px; */
 
   @media (--viewportMedium) {
-    position: absolute;
-    top: -112px;
+    /* position: absolute; */
+    /* top: -112px; */
     margin-left: 0;
     margin-top: 0;
   }
@@ -270,9 +271,10 @@
 }
 
 .avatarDesktop {
-  display: none; /* Hide the large avatar from the smaller screens */
-  width: 152px;
-  height: 152px;
+  /* display: none; Hide the large avatar from the smaller screens */
+  width: 350px;
+  height: 350px;
+  margin-bottom: 1rem;
 
   @media (--viewportMedium) {
     display: flex;
@@ -344,9 +346,9 @@
   /* Font */
   composes: marketplaceModalTitleStyles from global;
   color: var(--matterColor);
+  display: flex;
 
   /* Layout */
-  width: 100%;
   margin-top: 0;
   margin-bottom: 0;
   @media (--viewportMedium) {
@@ -488,6 +490,7 @@
   /* Font */
   composes: h3 from global;
   color: var(--matterColorAnti);
+  display: block;
 
   margin-top: 0;
   margin-bottom: 20px;
@@ -610,4 +613,66 @@
   /* use break-word if available */
   word-break: break-word;
   hyphens: auto;
+}
+
+.userDisplay {
+  display: flex;
+  flex-wrap: wrap;
+  /* flex: 1; */
+  margin: 5rem 0 0 0;
+  width: 350px;
+  justify-content: center;
+}
+
+.price {
+  display: flex;
+  flex-grow: 1;
+  width: 100%;
+}
+
+.topInfo {
+  display: flex;
+  justify-content: flex-start;
+  /* flex-direction: column; */
+}
+
+.userInfo {
+  flex-grow: 1;
+}
+
+.price {
+  /* Layout */
+  display: block;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 0.2rem;
+}
+
+.priceValue {
+  /* Font */
+  composes: h2 from global;
+
+  /* Remove default margins from font */
+  margin-top: 0;
+  margin-bottom: 0;
+  color: var(--marketplaceColor);
+  @media (--viewportMedium) {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+}
+
+.perUnit {
+  /* Font */
+  composes: marketplaceTinyFontStyles from global;
+  color: var(--matterColor);
+
+  /* Remove default margins from font */
+  margin-top: 0;
+  margin-bottom: 0;
+
+  @media (--viewportMedium) {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
 }

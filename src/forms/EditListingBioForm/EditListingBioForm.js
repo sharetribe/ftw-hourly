@@ -96,17 +96,6 @@ const EditListingBioFormComponent = props => (
           {errorMessageCreateListingDraft}
           {errorMessageUpdateListing}
           {errorMessageShowListing}
-          <FieldTextInput
-            id="title"
-            name="title"
-            className={css.title}
-            type="text"
-            label={titleMessage}
-            placeholder={titlePlaceholderMessage}
-            maxLength={TITLE_MAX_LENGTH}
-            validate={composeValidators(maxLength60Message)}
-            autoFocus
-          />
 
           <FieldTextInput
             id="description"
@@ -122,7 +111,6 @@ const EditListingBioFormComponent = props => (
               minLength100Message
             )}
           />
-
           <Button
             className={css.submitButton}
             type="submit"
