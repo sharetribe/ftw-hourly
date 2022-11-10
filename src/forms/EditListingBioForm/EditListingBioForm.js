@@ -96,21 +96,10 @@ const EditListingBioFormComponent = props => (
           {errorMessageCreateListingDraft}
           {errorMessageUpdateListing}
           {errorMessageShowListing}
-          <FieldTextInput
-            id="title"
-            name="title"
-            className={css.title}
-            type="text"
-            label={titleMessage}
-            placeholder={titlePlaceholderMessage}
-            maxLength={TITLE_MAX_LENGTH}
-            validate={composeValidators(maxLength60Message)}
-            autoFocus
-          />
 
           <FieldTextInput
-            id="description"
-            name="description"
+            id="bio"
+            name="bio"
             className={css.description}
             type="textarea"
             label={descriptionMessage}
