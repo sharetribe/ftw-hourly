@@ -42,6 +42,7 @@ const CaregiverListingContent = props => {
     listingType,
     listingTab,
     intl,
+    handleBookingSubmit,
   } = props;
 
   const actionBar = listingId ? (
@@ -103,6 +104,17 @@ const CaregiverListingContent = props => {
           intl={intl}
           selectedTab={selectedTab}
           onSelectTab={handleSelectedTab}
+          isOwnListing={isOwnListing}
+          unitType={unitType}
+          handleBookingSubmit={handleBookingSubmit}
+          currentAuthor={currentAuthor}
+          onManageDisableScrolling={onManageDisableScrolling}
+          monthlyTimeSlots={monthlyTimeSlots}
+          onFetchTimeSlots={onFetchTimeSlots}
+          onFetchTransactionLineItems={onFetchTransactionLineItems}
+          lineItems={lineItems}
+          fetchLineItemsInProgress={fetchLineItemsInProgress}
+          fetchLineItemsError={fetchLineItemsError}
         />
       </div>
     </Fragment>

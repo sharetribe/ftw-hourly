@@ -409,6 +409,7 @@ export class ListingPageComponent extends Component {
           listingType={listingType}
           listingTab={listingTab}
           intl={intl}
+          handleBookingSubmit={handleBookingSubmit}
         />
       ) : (
         <div>hi</div>

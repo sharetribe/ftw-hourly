@@ -1,8 +1,35 @@
 .root {
+  display: grid;
+  grid-template-columns: repeat(2, 50%);
+}
+
+.bookingPanelContainer {
+  display: flex;
+  flex-wrap: wrap;
+  grid-column: 2/2;
+  justify-content: center;
+  /* align-items: flex-start; */
+}
+
+.bookingPanel {
+  @media (--viewportLarge) {
+    display: flex;
+    margin-top: 79px;
+    margin-left: 60px;
+    border-left-style: solid;
+    border-left-width: 1px;
+    border-left-color: var(--matterColorNegative);
+
+    padding-left: 60px;
+
+    /* The calendar needs 312px */
+    flex-basis: 312px;
+    flex-shrink: 0;
+  }
 }
 
 .recurringContainer {
-  width: 50%;
+  /* width: 50%; */
   border-right: solid 1px;
   border-color: var(--matterColorNegative);
   margin-bottom: 1rem;

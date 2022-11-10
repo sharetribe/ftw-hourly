@@ -69,7 +69,25 @@ const convertExperienceToLabel = key => {
 const MIN_LENGTH_FOR_LONG_WORDS = 16;
 
 const ListingMainContent = props => {
-  const { rootClassName, className, currentListing, intl, onSelectTab, selectedTab } = props;
+  const {
+    rootClassName,
+    className,
+    currentListing,
+    intl,
+    onSelectTab,
+    selectedTab,
+    isOwnListing,
+    unitType,
+    handleBookingSubmit,
+    currentAuthor,
+    onManageDisableScrolling,
+    monthlyTimeSlots,
+    onFetchTimeSlots,
+    onFetchTransactionLineItems,
+    lineItems,
+    fetchLineItemsInProgress,
+    fetchLineItemsError,
+  } = props;
 
   const tabs = [
     {
@@ -128,7 +146,23 @@ const ListingMainContent = props => {
   switch (selectedTab) {
     case AVAILABILITY:
       const availabilityPlan = currentListing?.attributes.publicData.availabilityPlan;
-      tabContentPanel = <ListingAvailabilityPanel availabilityPlan={availabilityPlan} />;
+      tabContentPanel = (
+        <ListingAvailabilityPanel
+          availabilityPlan={availabilityPlan}
+          currentListing={currentListing}
+          isOwnListing={isOwnListing}
+          unitType={unitType}
+          handleBookingSubmit={handleBookingSubmit}
+          currentAuthor={currentAuthor}
+          onManageDisableScrolling={onManageDisableScrolling}
+          monthlyTimeSlots={monthlyTimeSlots}
+          onFetchTimeSlots={onFetchTimeSlots}
+          onFetchTransactionLineItems={onFetchTransactionLineItems}
+          lineItems={lineItems}
+          fetchLineItemsInProgress={fetchLineItemsInProgress}
+          fetchLineItemsError={fetchLineItemsError}
+        />
+      );
   }
 
   const details = {

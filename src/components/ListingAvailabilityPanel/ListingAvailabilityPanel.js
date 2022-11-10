@@ -4,8 +4,10 @@ import { withRouter } from 'react-router-dom';
 import { intlShape, injectIntl, FormattedMessage } from '../../util/reactIntl';
 import { array, bool, func, node, object, oneOfType, shape, string } from 'prop-types';
 import classNames from 'classnames';
+import { BookingPanel } from '../';
 
 import css from './ListingAvailabilityPanel.module.css';
+import { BookingTimeForm } from '../../forms';
 
 const DAYS_OF_WEEK = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
@@ -29,11 +31,29 @@ const createTimesArray = availabilityPlan => {
 };
 
 const ListingAvailabilityPanel = props => {
-  const { rootClassName, className, availabilityPlan } = props;
+  const {
+    rootClassName,
+    className,
+    availabilityPlan,
+    currentListing,
+    isOwnListing,
+    unitType,
+    handleBookingSubmit,
+    currentAuthor,
+    onManageDisableScrolling,
+    monthlyTimeSlots,
+    onFetchTimeSlots,
+    onFetchTransactionLineItems,
+    lineItems,
+    fetchLineItemsInProgress,
+    fetchLineItemsError,
+  } = props;
 
   const classes = classNames(rootClassName || css.root, className);
 
   const formattedTimes = availabilityPlan && createTimesArray(availabilityPlan);
+
+  const authorDisplayName = currentAuthor?.attributes.profile.displayName;
 
   return (
     <div className={classes}>
@@ -47,6 +67,25 @@ const ListingAvailabilityPanel = props => {
             </Fragment>
           ))}
         </div>
+      </div>
+      <div className={css.bookingPanelContainer}>
+        <h1 className={css.sectionTitle}>Book Now</h1>
+        <BookingPanel
+          className={css.bookingPanel}
+          listing={currentListing}
+          isOwnListing={isOwnListing}
+          unitType={unitType}
+          onSubmit={handleBookingSubmit}
+          title={authorDisplayName}
+          authorDisplayName={authorDisplayName}
+          onManageDisableScrolling={onManageDisableScrolling}
+          monthlyTimeSlots={monthlyTimeSlots}
+          onFetchTimeSlots={onFetchTimeSlots}
+          onFetchTransactionLineItems={onFetchTransactionLineItems}
+          lineItems={lineItems}
+          fetchLineItemsInProgress={fetchLineItemsInProgress}
+          fetchLineItemsError={fetchLineItemsError}
+        />
       </div>
     </div>
   );
