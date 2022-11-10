@@ -5,6 +5,7 @@
   border-left-style: solid;
   border-left-width: 1px;
   border-left-color: var(--matterColorNegative);
+  height: calc(100vh - 2 * var(--topbarHeightDesktop));
 
   padding-left: 60px;
 }

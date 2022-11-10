@@ -183,6 +183,7 @@ export { default as EmployerEditListingWizard } from './EmployerEditListingWizar
 export { default as Footer } from './Footer/Footer';
 export { default as ListingAvailabilityPanel } from './ListingAvailabilityPanel/ListingAvailabilityPanel';
 export { default as ListingBioPanel } from './ListingBioPanel/ListingBioPanel';
+export { default as ListingServicesPanel } from './ListingServicesPanel/ListingServicesPanel';
 export { default as SectionHero } from './SectionHero/SectionHero';
 export { default as SectionHowItWorks } from './SectionHowItWorks/SectionHowItWorks';
 export { default as SectionLocations } from './SectionLocations/SectionLocations';

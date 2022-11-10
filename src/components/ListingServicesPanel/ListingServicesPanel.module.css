@@ -1,18 +1,27 @@
 .root {
   display: grid;
-  grid-template-columns: repeat(2, 50%);
+  grid-template-rows: repeat(2, 50%);
+  height: 350px;
 }
 
 .servicesOfferedContainer {
+  display: flex;
+  flex-direction: column;
   border-right: solid 1px;
   border-color: var(--matterColorNegative);
-  margin-bottom: 1rem;
+  margin-left: 1rem;
+  height: 350px;
+}
+
+.servicesOffered {
+  display: grid;
+  grid-template-rows: repeat(6, 22%);
+  /* grid-auto-flow: row; */
 }
 
 .helpContainer {
+  margin-left: 1rem;
   display: flex;
   flex-wrap: wrap;
   grid-column: 2/2;
-  justify-content: center;
-  /* align-items: flex-start; */
 }

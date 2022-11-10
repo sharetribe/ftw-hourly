@@ -62,7 +62,6 @@
 .mainContent {
   grid-column: 2/2;
   overflow-y: auto;
-  max-height: 80vh;
 }
 
 .sectionAvatar {
