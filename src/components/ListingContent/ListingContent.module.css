@@ -1,8 +1,10 @@
 .contentContainer {
   display: grid;
   grid-template-columns: auto minmax(0, 1fr);
-  place-content: center;
+  place-content: start;
+  padding-top: var(--topbarHeightDesktop);
   width: 100%;
+  height: calc(100vh - var(--topbarHeightDesktop));
 
   @media (--viewportMedium) {
     max-width: 1056px;
@@ -28,11 +30,13 @@
   grid-column: 1/2;
   display: flex;
   flex-wrap: wrap;
-  /* flex: 1; */
-  margin: 3rem 2rem 0 2rem;
+  flex-direction: row;
+  flex: 0;
+  margin: 0 2rem 0 2rem;
   width: 350px;
-  height: 350px;
+  max-height: 420px;
   justify-content: center;
+  align-items: start;
 }
 
 .title {
@@ -58,7 +62,7 @@
 .mainContent {
   grid-column: 2/2;
   overflow-y: auto;
-  max-height: screen;
+  max-height: 80vh;
 }
 
 .sectionAvatar {

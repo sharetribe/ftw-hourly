@@ -6,7 +6,7 @@ import { array, bool, func, node, object, oneOfType, shape, string } from 'prop-
 import classNames from 'classnames';
 import { convertFilterKeyToLabel } from '../../util/data';
 import { ButtonTabNavHorizontal } from '../TabNavHorizontal/TabNavHorizontal';
-import { ListingAvailabilityPanel } from '../';
+import { ListingAvailabilityPanel, ListingBioPanel } from '../';
 
 import { types } from 'sharetribe-flex-sdk';
 const { Money } = types;
@@ -163,6 +163,13 @@ const ListingMainContent = props => {
           fetchLineItemsError={fetchLineItemsError}
         />
       );
+      break;
+    case BIO:
+      tabContentPanel = <ListingBioPanel currentListing={currentListing} />;
+      break;
+    default:
+      tabContentPanel = null;
+      break;
   }
 
   const details = {
