@@ -2,8 +2,10 @@
 }
 
 .recurringContainer {
-  display: flex;
   width: 50%;
+  border-right: solid 1px;
+  border-color: var(--matterColorNegative);
+  margin-bottom: 1rem;
 }
 
 .recurringTable {
@@ -16,4 +18,8 @@
 .day {
   grid-column: 1/2;
   font-weight: bold;
+}
+
+.times {
+  grid-column: 2/2;
 }

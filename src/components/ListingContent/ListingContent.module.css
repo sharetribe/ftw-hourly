@@ -31,6 +31,7 @@
   /* flex: 1; */
   margin: 3rem 2rem 0 2rem;
   width: 350px;
+  height: 350px;
   justify-content: center;
 }
 
@@ -56,6 +57,8 @@
 
 .mainContent {
   grid-column: 2/2;
+  overflow-y: auto;
+  max-height: screen;
 }
 
 .sectionAvatar {
