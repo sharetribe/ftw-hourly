@@ -353,18 +353,17 @@ export const loadData = (params, search) => dispatch => {
     return dispatch(showListing(listingId, true));
   }
 
-  return Promise.all([
-    dispatch(showListing(listingId, true)),
-    dispatch(fetchReviews(listingId)),
-  ]).then(responses => {
-    if (responses[0] && responses[0].data && responses[0].data.data) {
-      const listing = responses[0].data.data;
+  return Promise.all([dispatch(showListing(listingId)), dispatch(fetchReviews(listingId))]).then(
+    responses => {
+      if (responses[0] && responses[0].data && responses[0].data.data) {
+        const listing = responses[0].data.data;
 
-      // Fetch timeSlots.
-      // This can happen parallel to loadData.
-      // We are not interested to return them from loadData call.
-      fetchMonthlyTimeSlots(dispatch, listing);
+        // Fetch timeSlots.
+        // This can happen parallel to loadData.
+        // We are not interested to return them from loadData call.
+        fetchMonthlyTimeSlots(dispatch, listing);
+      }
+      return responses;
     }
-    return responses;
-  });
+  );
 };

@@ -118,11 +118,9 @@ const createEntriesFromSubmitValues = values =>
 
 // Create availabilityPlan from submit values
 const createAvailabilityPlan = values => ({
-  availabilityPlan: {
-    type: 'availability-plan/time',
-    timezone: values.timezone,
-    entries: createEntriesFromSubmitValues(values),
-  },
+  type: 'availability-plan/time',
+  timezone: values.timezone,
+  entries: createEntriesFromSubmitValues(values),
 });
 
 // Ensure that the AvailabilityExceptions are in sensible order.
@@ -184,8 +182,10 @@ const EditListingAvailabilityPanel = props => {
   const handleSubmit = values => {
     setValuesFromLastSubmit(values);
 
+    const availabilityPlan = createAvailabilityPlan(values);
+
     // Final Form can wait for Promises to return.
-    return onSubmit(createAvailabilityPlan(values))
+    return onSubmit({ availabilityPlan, publicData: { availabilityPlan } })
       .then(() => {
         setIsEditPlanModalOpen(false);
       })

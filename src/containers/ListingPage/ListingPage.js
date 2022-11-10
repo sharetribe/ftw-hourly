@@ -212,12 +212,10 @@ export class ListingPageComponent extends Component {
     const isPendingApprovalVariant = rawParams.variant === LISTING_PAGE_PENDING_APPROVAL_VARIANT;
     const isDraftVariant = rawParams.variant === LISTING_PAGE_DRAFT_VARIANT;
 
-    const currentListing = ensureOwnListing(getOwnListing(listingId));
-
-    // const currentListing =
-    //   isPendingApprovalVariant || isDraftVariant
-    //     ? ensureOwnListing(getOwnListing(listingId))
-    //     : ensureListing(getListing(listingId));
+    const currentListing =
+      isPendingApprovalVariant || isDraftVariant
+        ? ensureOwnListing(getOwnListing(listingId))
+        : ensureListing(getListing(listingId));
 
     const listingSlug = rawParams.slug || createSlug(currentListing.attributes.title || '');
     const params = { slug: listingSlug, ...rawParams };
@@ -377,7 +375,7 @@ export class ListingPageComponent extends Component {
       </NamedLink>
     );
 
-    const userType = currentUser?.attributes.profile.publicData.userType;
+    const userType = currentListing?.attributes.publicData.listingType;
     const mainContent =
       userType === 'caregiver' ? (
         <CaregiverListingContent
@@ -413,7 +411,7 @@ export class ListingPageComponent extends Component {
           intl={intl}
         />
       ) : (
-        <EmployerListingContent />
+        <div>hi</div>
       ); //)
 
     return (
