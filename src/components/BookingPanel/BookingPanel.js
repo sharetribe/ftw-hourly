@@ -221,7 +221,4 @@ BookingPanel.propTypes = {
   intl: intlShape.isRequired,
 };
 
-export default compose(
-  withRouter,
-  injectIntl
-)(BookingPanel);
+export default compose(withRouter, injectIntl)(BookingPanel);

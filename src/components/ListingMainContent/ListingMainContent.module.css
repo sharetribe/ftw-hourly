@@ -1,0 +1,103 @@
+@import '../../styles/customMediaQueries.css';
+
+.root {
+  @media (--viewportLarge) {
+    display: flex;
+    margin-top: 79px;
+    margin-left: 60px;
+    border-left-style: solid;
+    border-left-width: 1px;
+    border-left-color: var(--matterColorNegative);
+
+    padding-left: 60px;
+
+    /* The calendar needs 312px */
+    /* flex-basis: 312px; */
+    flex-shrink: 1;
+  }
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.marketH2 {
+  /* Font */
+  composes: h2 from global;
+  color: var(--marketplaceColor);
+
+  /* Remove default margins from font */
+  margin-top: 0;
+  margin-bottom: 0;
+
+  @media (--viewportMedium) {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+}
+
+.perUnit {
+  /* Font */
+  composes: marketplaceTinyFontStyles from global;
+  color: var(--matterColor);
+
+  /* Remove default margins from font */
+  margin-top: 0;
+  margin-bottom: 0;
+
+  @media (--viewportMedium) {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+}
+
+.location {
+  composes: h2 from global;
+  color: var(--marketplaceColor);
+  display: flex;
+  width: 100%;
+
+  margin-top: 0;
+  margin-bottom: 0;
+
+  @media (--viewportMedium) {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+}
+
+.primaryInfoContainer {
+  display: flex;
+  flex-wrap: wrap;
+  flex-shrink: 0;
+  /* float: left; */
+}
+
+.primaryInfo {
+  /* Layout */
+  display: block;
+  flex-shrink: 0;
+  margin-top: 0.2rem;
+  width: 100%;
+}
+
+.attributesContainer {
+  display: flex;
+  flex-grow: 0;
+  margin-left: 3rem;
+  width: 100%;
+  position: relative;
+}
+
+.attributesGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 50%);
+  column-gap: 2rem;
+  grid-auto-rows: 2.4rem;
+  width: 80%;
+}
+
+.gridItem {
+  display: flex;
+  margin: 0;
+}

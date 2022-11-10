@@ -10,7 +10,7 @@ const SectionHeading = props => {
   return (
     <div className={css.sectionHeading}>
       <div className={css.heading}>
-        <h1 className={css.title}>{richTitle}</h1>
+        {/* <h1 className={css.title}>{richTitle}</h1> */}
         <div className={css.author}>
           {showContactUser ? (
             <span className={css.contactWrapper}>

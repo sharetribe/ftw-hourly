@@ -1,6 +1,9 @@
 import isArray from 'lodash/isArray';
 import reduce from 'lodash/reduce';
 import { sanitizeEntity } from './sanitize';
+import { findOptionsForSelectFilter } from './search';
+import { filters } from '../marketplace-custom-config';
+import { property } from 'lodash';
 
 /**
  * Combine the given relationships objects
@@ -385,4 +388,23 @@ export const humanizeLineItemCode = code => {
   const lowercase = code.replace(/^line-item\//, '').replace(/-/g, ' ');
 
   return lowercase.charAt(0).toUpperCase() + lowercase.slice(1);
+};
+
+export const convertFilterKeyToLabel = (keys, data) => {
+  const dataTypes = [];
+  for (const property in data) {
+    dataTypes.push(property);
+  }
+
+  const filterOptions = [];
+
+  dataTypes.forEach(property => {
+    findOptionsForSelectFilter(property, filters)
+      .filter(data => {
+        return keys.includes(data.key);
+      })
+      .forEach(value => filterOptions.push(value));
+  });
+
+  return filterOptions.map(filter => filter.label);
 };

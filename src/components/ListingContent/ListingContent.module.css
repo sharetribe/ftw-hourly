@@ -1,0 +1,75 @@
+.contentContainer {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  width: 100%;
+
+  @media (--viewportMedium) {
+    max-width: 1056px;
+    /* margin: 0 auto; */
+    padding: 0 24px;
+
+    /* position: relative; */
+  }
+
+  @media (--viewportLarge) {
+    max-width: 1128px;
+    padding: 0 36px;
+    /* margin: 0 auto 117px; */
+  }
+
+  @media (--viewportXLarge) {
+    max-width: 1056px;
+    padding: 0;
+  }
+}
+
+.userDisplay {
+  grid-column: 1/2;
+  display: flex;
+  flex-wrap: wrap;
+  /* flex: 1; */
+  margin: 3rem 2rem 0 2rem;
+  width: 350px;
+  justify-content: center;
+}
+
+.title {
+  /* Font */
+  composes: marketplaceModalTitleStyles from global;
+  color: var(--matterColor);
+  display: flex;
+
+  /* Layout */
+  margin-top: 0;
+  margin-bottom: 0;
+  @media (--viewportMedium) {
+    margin-top: 0;
+    margin-bottom: 2px;
+  }
+}
+
+.bookingPanel {
+  @media (--viewportLarge) {
+    display: block;
+    margin-top: 79px;
+    margin-left: 60px;
+    border-left-style: solid;
+    border-left-width: 1px;
+    border-left-color: var(--matterColorNegative);
+
+    padding-left: 60px;
+
+    /* The calendar needs 312px */
+    flex-basis: 312px;
+    flex-shrink: 0;
+  }
+}
+
+.actionBar {
+  width: 100%;
+  position: relative;
+}
+
+.mainContent {
+  grid-column: 2/2;
+}

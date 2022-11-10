@@ -180,11 +180,13 @@
 
 .contentContainer {
   margin-top: 20px;
+  display: flex;
+  width: 100%;
   @media (--viewportMedium) {
     max-width: 1056px;
     /* margin: 0 auto; */
     padding: 0 24px;
-    display: flex;
+
     /* position: relative; */
   }
 
@@ -241,7 +243,8 @@
 .sectionAvatar {
   /* Position (over the listing image)*/
   margin-left: 24px;
-  display: flex;
+  display: grid;
+  flex-wrap: wrap;
 
   /* Rendering context to the same lavel as listing image */
   /* position: static; */
@@ -269,8 +272,9 @@
 
 .avatarDesktop {
   /* display: none; Hide the large avatar from the smaller screens */
-  width: 300px;
-  height: 300px;
+  width: 350px;
+  height: 350px;
+  margin-bottom: 1rem;
 
   @media (--viewportMedium) {
     display: flex;
@@ -342,9 +346,9 @@
   /* Font */
   composes: marketplaceModalTitleStyles from global;
   color: var(--matterColor);
+  display: flex;
 
   /* Layout */
-  width: 100%;
   margin-top: 0;
   margin-bottom: 0;
   @media (--viewportMedium) {
@@ -486,6 +490,7 @@
   /* Font */
   composes: h3 from global;
   color: var(--matterColorAnti);
+  display: block;
 
   margin-top: 0;
   margin-bottom: 20px;
@@ -608,4 +613,66 @@
   /* use break-word if available */
   word-break: break-word;
   hyphens: auto;
+}
+
+.userDisplay {
+  display: flex;
+  flex-wrap: wrap;
+  /* flex: 1; */
+  margin: 5rem 0 0 0;
+  width: 350px;
+  justify-content: center;
+}
+
+.price {
+  display: flex;
+  flex-grow: 1;
+  width: 100%;
+}
+
+.topInfo {
+  display: flex;
+  justify-content: flex-start;
+  /* flex-direction: column; */
+}
+
+.userInfo {
+  flex-grow: 1;
+}
+
+.price {
+  /* Layout */
+  display: block;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 0.2rem;
+}
+
+.priceValue {
+  /* Font */
+  composes: h2 from global;
+
+  /* Remove default margins from font */
+  margin-top: 0;
+  margin-bottom: 0;
+  color: var(--marketplaceColor);
+  @media (--viewportMedium) {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+}
+
+.perUnit {
+  /* Font */
+  composes: marketplaceTinyFontStyles from global;
+  color: var(--matterColor);
+
+  /* Remove default margins from font */
+  margin-top: 0;
+  margin-bottom: 0;
+
+  @media (--viewportMedium) {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
 }

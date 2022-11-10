@@ -57,7 +57,7 @@ import SectionDescriptionMaybe from './SectionDescriptionMaybe';
 import SectionFeaturesMaybe from './SectionFeaturesMaybe';
 import SectionReviews from './SectionReviews';
 import SectionMapMaybe from './SectionMapMaybe';
-import CaregiverListingContent from './CaregiverListingContent';
+import CaregiverListingContent from '../../components/ListingContent/CaregiverListingContent';
 import EmployerListingContent from './EmployerListingContent';
 import css from './ListingPage.module.css';
 
@@ -252,18 +252,7 @@ export class ListingPageComponent extends Component {
       publicData,
     } = currentListing.attributes;
 
-    const richTitle = (
-      <span>
-        {richText(title, {
-          longWordMinLength: MIN_LENGTH_FOR_LONG_WORDS_IN_TITLE,
-          longWordClass: css.longWord,
-        })}
-      </span>
-    );
-
-    const bookingTitle = (
-      <FormattedMessage id="ListingPage.bookingTitle" values={{ title: richTitle }} />
-    );
+    const bookingTitle = <FormattedMessage id="ListingPage.bookingTitle" values={{ title: '' }} />;
 
     const topbar = <TopbarContainer />;
 
@@ -418,6 +407,7 @@ export class ListingPageComponent extends Component {
           listingSlug={listingSlug}
           listingType={listingType}
           listingTab={listingTab}
+          intl={intl}
         />
       ) : (
         <EmployerListingContent />
