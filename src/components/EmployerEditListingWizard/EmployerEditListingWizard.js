@@ -100,7 +100,7 @@ const tabCompleted = (tab, listing) => {
     case PRICING:
       return !!(publicData && publicData.minPrice && publicData.maxPrice);
     case AVAILABILITY:
-      return !!availabilityPlan;
+      return !!(publicData && publicData.availabilityPlan);
     case CARE_RECEIVER_DETAILS:
       return !!(
         publicData &&
