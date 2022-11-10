@@ -127,7 +127,8 @@ const ListingMainContent = props => {
 
   switch (selectedTab) {
     case AVAILABILITY:
-      tabContentPanel = <ListingAvailabilityPanel />;
+      const availabilityPlan = currentListing?.attributes.publicData.availabilityPlan;
+      tabContentPanel = <ListingAvailabilityPanel availabilityPlan={availabilityPlan} />;
   }
 
   const details = {

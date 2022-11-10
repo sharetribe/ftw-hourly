@@ -1,2 +1,19 @@
 .root {
 }
+
+.recurringContainer {
+  display: flex;
+  width: 50%;
+}
+
+.recurringTable {
+  display: grid;
+  grid-template-columns: 2;
+  column-gap: 2rem;
+  grid-auto-rows: 2.4rem;
+}
+
+.day {
+  grid-column: 1/2;
+  font-weight: bold;
+}
