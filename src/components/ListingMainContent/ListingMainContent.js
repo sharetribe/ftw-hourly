@@ -6,6 +6,7 @@ import { array, bool, func, node, object, oneOfType, shape, string } from 'prop-
 import classNames from 'classnames';
 import { convertFilterKeyToLabel } from '../../util/data';
 import { ButtonTabNavHorizontal } from '../TabNavHorizontal/TabNavHorizontal';
+import { ListingAvailabilityPanel } from '../';
 
 import { types } from 'sharetribe-flex-sdk';
 const { Money } = types;
@@ -13,6 +14,13 @@ import { formatMoneyInteger } from '../../util/currency';
 import { richText } from '../../util/richText';
 
 import css from './ListingMainContent.module.css';
+
+const AVAILABILITY = 'AVAILABILITY';
+const BIO = 'BIO';
+const SERVICES = 'SERVICES';
+const QUALIFICATIONS = 'QUALIFICATIONS';
+const SAFETY = 'SAFETY';
+const RECOMMENDATIONS = 'RECOMMENDATIONS';
 
 const priceData = (minPrice, maxPrice, intl) => {
   const minPriceMoney = new Money(minPrice, 'USD');
@@ -46,52 +54,6 @@ const priceData = (minPrice, maxPrice, intl) => {
   return {};
 };
 
-const tabs = [
-  {
-    text: 'AVAILABILITY',
-    selected: true,
-  },
-  {
-    text: 'BIO',
-    selected: false,
-  },
-  {
-    text: 'SERVICES',
-    selected: false,
-  },
-  {
-    text: 'QUALIFICATIONS',
-    selected: false,
-  },
-  {
-    text: 'SAFETY',
-    selected: false,
-  },
-  {
-    text: 'RECOMMENDATIONS',
-    selected: false,
-  },
-];
-
-const tabLabel = (intl, tab) => {
-  let key = null;
-  if (tab === 'availability') {
-    key = 'AVAILABILITY';
-  } else if (tab === 'bio') {
-    key = 'BIO';
-  } else if (tab === 'services') {
-    key = 'SERVICES';
-  } else if (tab === 'qualifications') {
-    key = 'QUALIFICATIONS';
-  } else if (tab === 'safety') {
-    key = 'SAFETY';
-  } else if (tab === 'recommendations') {
-    key = 'RECOMMENDATIONS';
-  }
-
-  return intl.formatMessage({ id: key });
-};
-
 const experienceLevelConverter = new Map([
   ['novice', '1-2 years'],
   ['competent', '3-4 years'],
@@ -111,33 +73,33 @@ const ListingMainContent = props => {
 
   const tabs = [
     {
-      text: 'AVAILABILITY',
-      selected: selectedTab === 'AVAILABILITY',
+      text: AVAILABILITY,
+      selected: selectedTab === AVAILABILITY,
       onClick: onSelectTab,
     },
     {
-      text: 'BIO',
-      selected: selectedTab === 'BIO',
+      text: BIO,
+      selected: selectedTab === BIO,
       onClick: onSelectTab,
     },
     {
-      text: 'SERVICES',
-      selected: selectedTab === 'SERVICES',
+      text: SERVICES,
+      selected: selectedTab === SERVICES,
       onClick: onSelectTab,
     },
     {
-      text: 'QUALIFICATIONS',
-      selected: selectedTab === 'QUALIFICATIONS',
+      text: QUALIFICATIONS,
+      selected: selectedTab === QUALIFICATIONS,
       onClick: onSelectTab,
     },
     {
-      text: 'SAFETY',
-      selected: selectedTab === 'SAFETY',
+      text: SAFETY,
+      selected: selectedTab === SAFETY,
       onClick: onSelectTab,
     },
     {
-      text: 'RECOMMENDATIONS',
-      selected: selectedTab === 'RECOMMENDATIONS',
+      text: RECOMMENDATIONS,
+      selected: selectedTab === RECOMMENDATIONS,
       onClick: onSelectTab,
     },
   ];
@@ -160,6 +122,13 @@ const ListingMainContent = props => {
   const convertedExperienceLevel = convertExperienceToLabel(experienceLevel);
 
   const infoArray = [];
+
+  let tabContentPanel = null;
+
+  switch (selectedTab) {
+    case AVAILABILITY:
+      tabContentPanel = <ListingAvailabilityPanel />;
+  }
 
   const details = {
     experienceWith,
@@ -229,6 +198,7 @@ const ListingMainContent = props => {
           tabClassName={css.tab}
         />
       </div>
+      {tabContentPanel}
     </div>
   );
 };
