@@ -115,6 +115,7 @@ const CaregiverListingContent = props => {
           lineItems={lineItems}
           fetchLineItemsInProgress={fetchLineItemsInProgress}
           fetchLineItemsError={fetchLineItemsError}
+          reviews={reviews}
         />
       </div>
     </Fragment>
