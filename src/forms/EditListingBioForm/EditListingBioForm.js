@@ -98,8 +98,8 @@ const EditListingBioFormComponent = props => (
           {errorMessageShowListing}
 
           <FieldTextInput
-            id="bio"
-            name="bio"
+            id="description"
+            name="description"
             className={css.description}
             type="textarea"
             label={descriptionMessage}

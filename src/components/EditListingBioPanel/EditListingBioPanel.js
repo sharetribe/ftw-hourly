@@ -53,13 +53,13 @@ const EditListingBioPanel = props => {
       <h1 className={css.title}>{panelTitle}</h1>
       <EditListingBioForm
         className={css.form}
-        initialValues={{ title, description }}
+        initialValues={{ description }}
         saveActionMsg={submitButtonText}
         onSubmit={values => {
-          const { bio } = values;
+          const { description } = values;
 
           const updateValues = {
-            bio,
+            description,
           };
 
           onSubmit(updateValues);
