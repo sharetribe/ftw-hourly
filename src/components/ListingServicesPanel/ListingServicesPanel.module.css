@@ -1,0 +1,18 @@
+.root {
+  display: grid;
+  grid-template-columns: repeat(2, 50%);
+}
+
+.servicesOfferedContainer {
+  border-right: solid 1px;
+  border-color: var(--matterColorNegative);
+  margin-bottom: 1rem;
+}
+
+.helpContainer {
+  display: flex;
+  flex-wrap: wrap;
+  grid-column: 2/2;
+  justify-content: center;
+  /* align-items: flex-start; */
+}

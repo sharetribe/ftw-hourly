@@ -32,7 +32,6 @@
   /* width: 50%; */
   border-right: solid 1px;
   border-color: var(--matterColorNegative);
-  margin-bottom: 1rem;
 }
 
 .recurringTable {
