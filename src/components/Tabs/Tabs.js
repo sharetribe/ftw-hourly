@@ -66,7 +66,7 @@ const Tabs = props => {
 
   return (
     <div className={classes}>
-      {isHorizontal && (
+      {!isHorizontal && (
         <TabNav
           rootClassName={navRootClassName}
           tabs={tabNavTabs}

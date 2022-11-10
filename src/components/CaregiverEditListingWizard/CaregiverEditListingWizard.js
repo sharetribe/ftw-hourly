@@ -95,7 +95,7 @@ const tabCompleted = (tab, listing) => {
     case CARETYPES:
       return !!(publicData && publicData.careTypes);
     case BIO:
-      return !!(description && title);
+      return !!description;
     // TODO: Update publicData to be verified
     case EXPERIENCE_LEVEL:
       return !!(publicData && publicData.experienceLevel);
