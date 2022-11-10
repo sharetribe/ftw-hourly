@@ -1,6 +1,7 @@
 .contentContainer {
   display: grid;
   grid-template-columns: auto minmax(0, 1fr);
+  place-content: center;
   width: 100%;
 
   @media (--viewportMedium) {
@@ -37,31 +38,14 @@
   /* Font */
   composes: marketplaceModalTitleStyles from global;
   color: var(--matterColor);
-  display: flex;
+  /* display: flex; */
 
   /* Layout */
-  margin-top: 0;
-  margin-bottom: 0;
+  margin-top: 2remszfd;
+  margin-bottom: 1rem;
   @media (--viewportMedium) {
     margin-top: 0;
-    margin-bottom: 2px;
-  }
-}
-
-.bookingPanel {
-  @media (--viewportLarge) {
-    display: block;
-    margin-top: 79px;
-    margin-left: 60px;
-    border-left-style: solid;
-    border-left-width: 1px;
-    border-left-color: var(--matterColorNegative);
-
-    padding-left: 60px;
-
-    /* The calendar needs 312px */
-    flex-basis: 312px;
-    flex-shrink: 0;
+    margin-bottom: 2rem;
   }
 }
 
@@ -72,4 +56,8 @@
 
 .mainContent {
   grid-column: 2/2;
+}
+
+.sectionAvatar {
+  margin-top: 2rem;
 }

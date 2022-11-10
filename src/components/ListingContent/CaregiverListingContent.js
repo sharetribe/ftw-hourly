@@ -89,7 +89,12 @@ const CaregiverListingContent = props => {
       <div className={css.contentContainer}>
         <div className={css.userDisplay}>
           <h1 className={css.title}>{richName}</h1>
-          <SectionAvatar user={avatarUser} params={params} richName={richName} />
+          <SectionAvatar
+            user={avatarUser}
+            params={params}
+            richName={richName}
+            className={css.sectionAvatar}
+          />
         </div>
 
         <ListingMainContent
