@@ -212,6 +212,7 @@ const DailyPlan = props => {
                           id={`${name}.startTime`}
                           name={`${name}.startTime`}
                           selectClassName={css.fieldSelect}
+                          firstValueSelected={true}
                         >
                           {filterStartHours(availableStartHours, values, dayOfWeek, index).map(
                             s => (
@@ -228,6 +229,7 @@ const DailyPlan = props => {
                           id={`${name}.endTime`}
                           name={`${name}.endTime`}
                           selectClassName={css.fieldSelect}
+                          firstValueSelected={true}
                         >
                           {filterEndHours(availableEndHours, values, dayOfWeek, index).map(s => (
                             <option value={s} key={s}>
