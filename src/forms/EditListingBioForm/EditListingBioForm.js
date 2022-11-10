@@ -111,7 +111,6 @@ const EditListingBioFormComponent = props => (
               minLength100Message
             )}
           />
-
           <Button
             className={css.submitButton}
             type="submit"

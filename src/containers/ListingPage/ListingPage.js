@@ -211,10 +211,13 @@ export class ListingPageComponent extends Component {
     const listingId = new UUID(rawParams.id);
     const isPendingApprovalVariant = rawParams.variant === LISTING_PAGE_PENDING_APPROVAL_VARIANT;
     const isDraftVariant = rawParams.variant === LISTING_PAGE_DRAFT_VARIANT;
-    const currentListing =
-      isPendingApprovalVariant || isDraftVariant
-        ? ensureOwnListing(getOwnListing(listingId))
-        : ensureListing(getListing(listingId));
+
+    const currentListing = ensureOwnListing(getOwnListing(listingId));
+
+    // const currentListing =
+    //   isPendingApprovalVariant || isDraftVariant
+    //     ? ensureOwnListing(getOwnListing(listingId))
+    //     : ensureListing(getListing(listingId));
 
     const listingSlug = rawParams.slug || createSlug(currentListing.attributes.title || '');
     const params = { slug: listingSlug, ...rawParams };
