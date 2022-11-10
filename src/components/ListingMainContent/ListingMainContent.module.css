@@ -2,7 +2,7 @@
 
 .root {
   margin-top: 79px;
-  margin-left: 60px;
+  margin-inline: 60px;
   border-left-style: solid;
   border-left-width: 1px;
   border-left-color: var(--matterColorNegative);
@@ -93,7 +93,7 @@
   grid-template-columns: repeat(2, 50%);
   column-gap: 2rem;
   grid-auto-rows: 2.4rem;
-  width: 80%;
+  width: 90%;
 }
 
 .gridItem {
@@ -128,26 +128,30 @@
   flex-shrink: 0;
   background-color: var(--matterColorLight);
   box-shadow: var(--boxShadowLight);
-  border-top: 1px solid var(--matterColorNegative);
+  border-top: 2px solid var(--matterColorNegative);
   overflow-x: scroll;
+  margin-top: 5rem;
+  width: 100%;
+  justify-content: space-between;
 
   @media (--viewportLarge) {
-    padding: 128px 0 82px 36px;
+    /* padding: 128px 0 82px 36px; */
     /* flex-direction: column; */
     overflow-x: auto;
     background-color: var(--matterColorBright);
     box-shadow: none;
-    border-top: none;
+    border-bottom: 2px solid var(--matterColorNegative);
   }
 
   @media (--viewportLargeWithPaddings) {
-    padding: 128px 0 82px calc((100% - 1056px) / 2);
+    /* padding: 128px 0 82px calc((100% - 1056px) / 2); */
   }
 }
 
 .tab {
   margin-left: 16px;
   white-space: nowrap;
+  font-size: x-large;
 
   &:first-child {
     margin-left: 0;

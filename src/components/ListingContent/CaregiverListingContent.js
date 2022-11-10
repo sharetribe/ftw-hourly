@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 import { array, arrayOf, bool, func, object, shape, string, oneOf } from 'prop-types';
 import { FormattedMessage, intlShape, injectIntl } from '../../util/reactIntl';
 import { ListingMainContent } from '../';
@@ -77,6 +77,12 @@ const CaregiverListingContent = props => {
     </span>
   );
 
+  const [selectedTab, setSelectedTab] = useState('AVAILABILITY');
+
+  const handleSelectedTab = e => {
+    setSelectedTab(e.target.textContent);
+  };
+
   return (
     <Fragment>
       <div className={css.actionBar}>{actionBar}</div>
@@ -90,6 +96,8 @@ const CaregiverListingContent = props => {
           className={css.mainContent}
           currentListing={currentListing}
           intl={intl}
+          selectedTab={selectedTab}
+          onSelectTab={handleSelectedTab}
         />
       </div>
     </Fragment>

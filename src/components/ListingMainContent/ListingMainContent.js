@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { compose } from 'redux';
 import { withRouter } from 'react-router-dom';
 import { intlShape, injectIntl, FormattedMessage } from '../../util/reactIntl';
@@ -46,6 +46,33 @@ const priceData = (minPrice, maxPrice, intl) => {
   return {};
 };
 
+const tabs = [
+  {
+    text: 'AVAILABILITY',
+    selected: true,
+  },
+  {
+    text: 'BIO',
+    selected: false,
+  },
+  {
+    text: 'SERVICES',
+    selected: false,
+  },
+  {
+    text: 'QUALIFICATIONS',
+    selected: false,
+  },
+  {
+    text: 'SAFETY',
+    selected: false,
+  },
+  {
+    text: 'RECOMMENDATIONS',
+    selected: false,
+  },
+];
+
 const tabLabel = (intl, tab) => {
   let key = null;
   if (tab === 'availability') {
@@ -77,44 +104,43 @@ const convertExperienceToLabel = key => {
   return experienceLevelConverter.get(key);
 };
 
-const selectTab = e => {};
-
 const MIN_LENGTH_FOR_LONG_WORDS = 16;
-const tabs = [
-  {
-    text: 'availability',
-    selected: false,
-    onClick: selectTab,
-  },
-  {
-    text: 'bio',
-    selected: false,
-    onClick: selectTab,
-  },
-  {
-    text: 'services',
-    selected: false,
-    onClick: selectTab,
-  },
-  {
-    text: 'qualifications',
-    selected: false,
-    onClick: selectTab,
-  },
-  {
-    text: 'safety',
-    selected: false,
-    onClick: selectTab,
-  },
-  {
-    text: 'recommendations',
-    selected: false,
-    onClick: selectTab,
-  },
-];
 
 const ListingMainContent = props => {
-  const { rootClassName, className, currentListing, intl } = props;
+  const { rootClassName, className, currentListing, intl, onSelectTab, selectedTab } = props;
+
+  const tabs = [
+    {
+      text: 'AVAILABILITY',
+      selected: selectedTab === 'AVAILABILITY',
+      onClick: onSelectTab,
+    },
+    {
+      text: 'BIO',
+      selected: selectedTab === 'BIO',
+      onClick: onSelectTab,
+    },
+    {
+      text: 'SERVICES',
+      selected: selectedTab === 'SERVICES',
+      onClick: onSelectTab,
+    },
+    {
+      text: 'QUALIFICATIONS',
+      selected: selectedTab === 'QUALIFICATIONS',
+      onClick: onSelectTab,
+    },
+    {
+      text: 'SAFETY',
+      selected: selectedTab === 'SAFETY',
+      onClick: onSelectTab,
+    },
+    {
+      text: 'RECOMMENDATIONS',
+      selected: selectedTab === 'RECOMMENDATIONS',
+      onClick: onSelectTab,
+    },
+  ];
 
   const classes = classNames(rootClassName || css.root, className);
 
@@ -188,13 +214,20 @@ const ListingMainContent = props => {
         <div className={css.attributesContainer}>
           <div className={css.attributesGrid}>
             {convertedInfo.slice(0, 6).map(info => (
-              <div className={css.gridItem}>- {info}</div>
+              <div key={info} className={css.gridItem}>
+                - {info}
+              </div>
             ))}
           </div>
         </div>
       </div>
       <div className={css.tabsContainer}>
-        <ButtonTabNavHorizontal tabs={tabs} rootClassName={css.nav} tabRootClassName={css.tab} />
+        <ButtonTabNavHorizontal
+          tabs={tabs}
+          rootClassName={css.nav}
+          tabRootClassName={css.tabRoot}
+          tabClassName={css.tab}
+        />
       </div>
     </div>
   );
