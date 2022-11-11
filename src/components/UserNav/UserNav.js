@@ -36,7 +36,7 @@ const listingTab = (listing, selectedPageName) => {
         id,
         slug,
         type: getListingType(isDraft),
-        tab: 'photos',
+        tab: 'care-types',
       },
     },
   };

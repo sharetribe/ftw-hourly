@@ -32,6 +32,7 @@ export const LandingPageComponent = props => {
     scrollingDisabled,
     currentUserListing,
     currentUserListingFetched,
+    currentUser,
   } = props;
 
   // Schema for search engines (helps them to understand what this page is about)
@@ -41,6 +42,8 @@ export const LandingPageComponent = props => {
   const schemaTitle = intl.formatMessage({ id: 'LandingPage.schemaTitle' }, { siteTitle });
   const schemaDescription = intl.formatMessage({ id: 'LandingPage.schemaDescription' });
   const schemaImage = `${config.canonicalRootURL}${facebookImage}`;
+
+  const { userType } = currentUser && currentUser.attributes.profile.metadata;
 
   return (
     <Page
@@ -67,7 +70,12 @@ export const LandingPageComponent = props => {
         </LayoutWrapperTopbar>
         <LayoutWrapperMain>
           <div className={css.heroContainer}>
-            <SectionHero className={css.hero} history={history} location={location} />
+            <SectionHero
+              className={css.hero}
+              history={history}
+              location={location}
+              userType={userType}
+            />
           </div>
           <ul className={css.sections}>
             <li className={css.section}>
@@ -112,10 +120,11 @@ LandingPageComponent.propTypes = {
 };
 
 const mapStateToProps = state => {
-  const { currentUserListing, currentUserListingFetched } = state.user;
+  const { currentUser, currentUserListing, currentUserListingFetched } = state.user;
 
   return {
     scrollingDisabled: isScrollingDisabled(state),
+    currentUser,
     currentUserListing,
     currentUserListingFetched,
   };
@@ -127,10 +136,6 @@ const mapStateToProps = state => {
 // lifecycle hook.
 //
 // See: https://github.com/ReactTraining/react-router/issues/4671
-const LandingPage = compose(
-  withRouter,
-  connect(mapStateToProps),
-  injectIntl
-)(LandingPageComponent);
+const LandingPage = compose(withRouter, connect(mapStateToProps), injectIntl)(LandingPageComponent);
 
 export default LandingPage;

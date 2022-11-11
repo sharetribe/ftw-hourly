@@ -8,13 +8,15 @@ import css from './SectionHero.module.css';
 
 const SectionHero = props => {
   const [mounted, setMounted] = useState(false);
-  const { rootClassName, className } = props;
+  const { rootClassName, className, userType } = props;
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
   const classes = classNames(rootClassName || css.root, className);
+
+  const itemsToBrowse = userType === 'employer' ? 'caregivers' : 'jobs';
 
   return (
     <div className={classes}>
@@ -25,6 +27,7 @@ const SectionHero = props => {
         <h2 className={classNames(css.heroSubTitle, { [css.heroSubTitleFEDelay]: mounted })}>
           <FormattedMessage id="SectionHero.subTitle" />
         </h2>
+        {/* Change this to use current location w/ mapbox */}
         <NamedLink
           name="SearchPage"
           to={{
@@ -33,7 +36,7 @@ const SectionHero = props => {
           }}
           className={classNames(css.heroButton, { [css.heroButtonFEDelay]: mounted })}
         >
-          <FormattedMessage id="SectionHero.browseButton" />
+          <FormattedMessage id="SectionHero.browseButton" values={{ itemsToBrowse }} />
         </NamedLink>
       </div>
     </div>

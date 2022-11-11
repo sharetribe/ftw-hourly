@@ -37,7 +37,7 @@ const OwnListingLink = props => {
         id,
         slug,
         type: getListingType(isDraft),
-        tab: 'photos',
+        tab: 'care-types',
       }}
     >
       <span className={css.menuItemBorder} />
