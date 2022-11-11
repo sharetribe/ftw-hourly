@@ -1,28 +1,28 @@
-// This dotenv import is required for the `.env` file to be read
-import flexIntegrationSdk from 'sharetribe-flex-integration-sdk';
+const { integrationSdk, handleError, serialize } = require('../../server/api-util/sdk');
 
-const integrationSdk = flexIntegrationSdk.createInstance({
-  // These two env vars need to be set in the `.env` file.
-  clientId: process.env.FLEX_INTEGRATION_CLIENT_ID,
-  clientSecret: process.env.FLEX_INTEGRATION_CLIENT_SECRET,
+module.exports = (req, res) => {
+  const { listingId, metadata } = req.body;
 
-  // Normally you can just skip setting the base URL and just use the
-  // default that the `createInstance` uses. We explicitly set it here
-  // for local testing and development.
-  baseUrl: process.env.FLEX_INTEGRATION_BASE_URL || 'https://flex-integ-api.sharetribe.com',
-});
-
-export const updateListing = (id, values) => {
-  integrationSdk.listings
-    .show({ id })
-    .then(res => {
-      const listingId = res.data.data.id;
-      return integrationSdk.listings.update({
-        id: listingId,
-        values,
-      });
+  return integrationSdk.listings
+    .update({
+      id: listingId,
+      metadata,
+    })
+    .then(apiResponse => {
+      const { status, statusText, data } = apiResponse;
+      res
+        .status(status)
+        .set('Content-Type', 'application/transit+json')
+        .send(
+          serialize({
+            status,
+            statusText,
+            data,
+          })
+        )
+        .end();
     })
     .catch(e => {
-      throw e;
+      handleError(res, e);
     });
 };

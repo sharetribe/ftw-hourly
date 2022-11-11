@@ -15,8 +15,8 @@ const loginAs = require('./api/login-as');
 const transactionLineItems = require('./api/transaction-line-items');
 const initiatePrivileged = require('./api/initiate-privileged');
 const transitionPrivileged = require('./api/transition-privileged');
-const updateUserMetadata = require('./api/update-user-metadata');
-const updateListingMetadata = require('./api/update-listing-metadata');
+const updateUserMetadata = require('../src/util/update-user-metadata');
+const updateListingMetadata = require('../src/util/update-listing-metadata');
 
 const createUserWithIdp = require('./api/auth/createUserWithIdp');
 
