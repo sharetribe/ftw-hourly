@@ -5,16 +5,16 @@ import classNames from 'classnames';
 import { lazyLoadWithDimensions } from '../../util/contextHelpers';
 import { LINE_ITEM_DAY, LINE_ITEM_NIGHT, propTypes } from '../../util/types';
 import { formatMoneyInteger } from '../../util/currency';
-import { ensureListing } from '../../util/data';
+import { ensureListing, userDisplayNameAsString } from '../../util/data';
 import { richText } from '../../util/richText';
 import { createSlug } from '../../util/urlHelpers';
 import config from '../../config';
 import { NamedLink, ResponsiveImage, Avatar, Button } from '..';
 import { types } from 'sharetribe-flex-sdk';
-const { Money, User } = types;
+const { Money } = types;
 import { findOptionsForSelectFilter } from '../../util/search';
 
-import css from './employerListingCard.module.css';
+import css from './EmployerListingCard.module.css';
 import { info } from 'autoprefixer';
 
 const MIN_LENGTH_FOR_LONG_WORDS = 10;
@@ -84,13 +84,14 @@ export const EmployerListingCardComponent = props => {
   const classes = classNames(rootClassName || css.root, className);
   const currentListing = ensureListing(listing);
   const id = currentListing.id.uuid;
-  const { firstName, lastName } = currentUser?.attributes.profile;
-  const title = currentListing.author.attributes.profile.displayName + '.';
-  const { publicData, description } = currentListing.attributes;
-  const { minPrice, maxPrice, location, careTypes: providedServices } = publicData;
-  const slug = createSlug(title);
+  const currentAuthor = currentListing.author;
+  const userDisplayName = userDisplayNameAsString(currentAuthor) + '.';
+  const { publicData } = currentListing.attributes;
+  const { minPrice, maxPrice, location, careTypes, recipientDetails } = publicData;
+  const slug = createSlug(userDisplayName);
 
-  let descriptionCutoff = description.length > 300 ? cutText(description, 300) : description;
+  let descriptionCutoff =
+    recipientDetails.length > 300 ? cutText(recipientDetails, 300) : recipientDetails;
 
   const { formattedMinPrice, formattedMaxPrice, priceTitle } = priceData(minPrice, maxPrice, intl);
 
@@ -99,12 +100,14 @@ export const EmployerListingCardComponent = props => {
     servicesMap.set(option.key, option.label)
   );
 
-  const avatarUser = { profileImage: listing.images[0] };
+  currentAuthor.profileImage = listing.images[0];
+
   const avatarComponent = (
     <Avatar
       className={css.avatar}
       renderSizes="(max-width: 767px) 96px, 240px"
-      user={avatarUser}
+      initialsClassName={css.avatarInitials}
+      user={currentAuthor}
       disableProfileLink
     />
   );
@@ -119,7 +122,7 @@ export const EmployerListingCardComponent = props => {
               {formattedMinPrice}-{maxPrice / 100}
               <span className={css.perUnit}>
                 &nbsp;
-                <FormattedMessage id={'employerListingCard.perUnit'} />
+                <FormattedMessage id={'EmployerListingCard.perUnit'} />
               </span>
             </div>
           </div>
@@ -128,7 +131,11 @@ export const EmployerListingCardComponent = props => {
           <div className={css.mainInfo}>
             <div className={css.topInfo}>
               <div className={css.title}>
-                {richText(title, {
+                <span className={css.perUnit}>
+                  <FormattedMessage id={'EmployerListingCard.postedBy'} />
+                </span>
+                &nbsp;&nbsp;
+                {richText(userDisplayName, {
                   longWordMinLength: MIN_LENGTH_FOR_LONG_WORDS,
                   longWordClass: css.longWord,
                 })}
@@ -143,8 +150,8 @@ export const EmployerListingCardComponent = props => {
           </div>
 
           <div className={css.providedServices}>
-            <span className={css.serviceBold}>Provides services for: </span>
-            {providedServices
+            <span className={css.serviceBold}>Needs services for: </span>
+            {careTypes
               .slice(0, 4)
               .map(service => servicesMap.get(service))
               .join(', ') + '...'}
@@ -153,7 +160,10 @@ export const EmployerListingCardComponent = props => {
           <div className={css.descriptionBox}></div>
         </div>
       </NamedLink>
-      <Button className={css.messageButton} onClick={() => onContactUser(title, currentListing.id)}>
+      <Button
+        className={css.messageButton}
+        onClick={() => onContactUser(userDisplayName, currentListing.id)}
+      >
         Message
       </Button>
     </div>

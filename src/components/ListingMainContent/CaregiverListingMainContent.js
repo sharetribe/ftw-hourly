@@ -11,14 +11,14 @@ import {
   ListingBioPanel,
   ListingServicesPanel,
   ListingRecommendationsPanel,
-} from '../';
+} from '..';
 
 import { types } from 'sharetribe-flex-sdk';
 const { Money } = types;
 import { formatMoneyInteger } from '../../util/currency';
 import { richText } from '../../util/richText';
 
-import css from './ListingMainContent.module.css';
+import css from './CaregiverListingMainContent.module.css';
 
 const AVAILABILITY = 'AVAILABILITY';
 const BIO = 'BIO';
@@ -73,7 +73,7 @@ const convertExperienceToLabel = key => {
 
 const MIN_LENGTH_FOR_LONG_WORDS = 16;
 
-const ListingMainContent = props => {
+const CaregiverListingMainContent = props => {
   const {
     rootClassName,
     className,
@@ -259,4 +259,4 @@ const ListingMainContent = props => {
   );
 };
 
-export default ListingMainContent;
+export default CaregiverListingMainContent;

@@ -299,7 +299,13 @@ export const userDisplayNameAsString = (user, defaultUserDisplayName) => {
   const hasDisplayName = hasProfile && user.attributes.profile.displayName;
 
   if (hasDisplayName) {
-    return user.attributes.profile.displayName;
+    const displayName = user.attributes.profile.displayName.split(' ');
+    displayName[0] =
+      displayName[0].charAt(0).toUpperCase() + displayName[0].slice(1, displayName[0].length);
+    displayName[1] =
+      displayName[1].charAt(0).toUpperCase() + displayName[1].slice(1, displayName[0].length);
+
+    return displayName[0] + ' ' + displayName[1];
   } else {
     return defaultUserDisplayName || '';
   }
@@ -341,7 +347,7 @@ export const userAbbreviatedName = (user, defaultUserAbbreviatedName) => {
   const hasDisplayName = hasProfile && user.attributes.profile.abbreviatedName;
 
   if (hasDisplayName) {
-    return user.attributes.profile.abbreviatedName;
+    return user.attributes.profile.abbreviatedName.toUpperCase();
   } else {
     return defaultUserAbbreviatedName || '';
   }

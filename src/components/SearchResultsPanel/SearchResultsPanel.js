@@ -2,7 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { propTypes } from '../../util/types';
-import { ListingCard, PaginationLinks, CaregiverListingCard } from '../../components';
+import {
+  ListingCard,
+  PaginationLinks,
+  CaregiverListingCard,
+  EmployerListingCard,
+} from '../../components';
 import css from './SearchResultsPanel.module.css';
 
 const SearchResultsPanel = props => {
@@ -54,12 +59,14 @@ const SearchResultsPanel = props => {
               onContactUser={onContactUser}
             />
           ) : (
-            <ListingCard
+            <EmployerListingCard
               className={css.listingCard}
               key={l.id.uuid}
               listing={l}
               renderSizes={cardRenderSizes}
               setActiveListing={setActiveListing}
+              currentUser={currentUser}
+              onContactUser={onContactUser}
             />
           )
         )}

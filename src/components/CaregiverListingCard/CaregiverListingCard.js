@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import { lazyLoadWithDimensions } from '../../util/contextHelpers';
 import { LINE_ITEM_DAY, LINE_ITEM_NIGHT, propTypes } from '../../util/types';
 import { formatMoneyInteger } from '../../util/currency';
-import { ensureListing } from '../../util/data';
+import { ensureListing, userDisplayNameAsString } from '../../util/data';
 import { richText } from '../../util/richText';
 import { createSlug } from '../../util/urlHelpers';
 import config from '../../config';
@@ -84,11 +84,11 @@ export const CaregiverListingCardComponent = props => {
   const classes = classNames(rootClassName || css.root, className);
   const currentListing = ensureListing(listing);
   const id = currentListing.id.uuid;
-  const { firstName, lastName } = currentUser?.attributes.profile;
-  const title = currentListing.author.attributes.profile.displayName + '.';
+  const currentAuthor = currentListing.author;
+  const userDisplayName = userDisplayNameAsString(currentAuthor) + '.';
   const { publicData, description } = currentListing.attributes;
   const { minPrice, maxPrice, location, careTypes: providedServices } = publicData;
-  const slug = createSlug(title);
+  const slug = createSlug(userDisplayName);
 
   let descriptionCutoff = description.length > 300 ? cutText(description, 300) : description;
 
@@ -99,12 +99,12 @@ export const CaregiverListingCardComponent = props => {
     servicesMap.set(option.key, option.label)
   );
 
-  const avatarUser = { profileImage: listing.images[0] };
+  currentAuthor.profileImage = listing.images[0];
   const avatarComponent = (
     <Avatar
       className={css.avatar}
       renderSizes="(max-width: 767px) 96px, 240px"
-      user={avatarUser}
+      user={currentAuthor}
       disableProfileLink
     />
   );
@@ -128,7 +128,7 @@ export const CaregiverListingCardComponent = props => {
           <div className={css.mainInfo}>
             <div className={css.topInfo}>
               <div className={css.title}>
-                {richText(title, {
+                {richText(userDisplayName, {
                   longWordMinLength: MIN_LENGTH_FOR_LONG_WORDS,
                   longWordClass: css.longWord,
                 })}
@@ -153,7 +153,10 @@ export const CaregiverListingCardComponent = props => {
           <div className={css.descriptionBox}></div>
         </div>
       </NamedLink>
-      <Button className={css.messageButton} onClick={() => onContactUser(title, currentListing.id)}>
+      <Button
+        className={css.messageButton}
+        onClick={() => onContactUser(userDisplayName, currentListing.id)}
+      >
         Message
       </Button>
     </div>

@@ -138,6 +138,10 @@
   height: 10rem;
 }
 
+.avatarInitials {
+  font-size: xxx-large;
+}
+
 .providedServices {
   color: var(--matterColor);
 }

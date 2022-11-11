@@ -1,20 +1,20 @@
 import React, { Fragment, useState } from 'react';
 import { array, arrayOf, bool, func, object, shape, string, oneOf } from 'prop-types';
 import { FormattedMessage, intlShape, injectIntl } from '../../util/reactIntl';
-import { ListingMainContent } from '../';
+import { CaregiverListingMainContent } from '..';
 import SectionAvatar from '../../containers/ListingPage/SectionAvatar';
 import ActionBarMaybe from '../../containers/ListingPage/ActionBarMaybe';
+import { userDisplayNameAsString } from '../../util/data';
 
 import { richText } from '../../util/richText';
 
-import css from './ListingContent.module.css';
+import css from './ListingContainer.module.css';
 
 const MIN_LENGTH_FOR_LONG_WORDS = 16;
 
-const CaregiverListingContent = props => {
+const CaregiverListingContainer = props => {
   const {
     params,
-    currentAuthor,
     formattedPrice,
     publicData,
     hostLink,
@@ -61,17 +61,14 @@ const CaregiverListingContent = props => {
     </div>
   ) : null;
 
-  const avatarUser = { profileImage: currentListing.images[0] };
+  const currentAuthor = currentListing.author;
+  currentAuthor.profileImage = currentListing && currentListing.images && currentListing.images[0];
 
-  const { displayName = '' } = currentAuthor?.attributes.profile;
-  const displayNameArray = displayName.split(' ').map(word => {
-    return word.charAt(0).toUpperCase() + word.substring(1);
-  });
-  const displayNameCapitalized = displayNameArray[0] + ' ' + displayNameArray[1];
+  const displayName = userDisplayNameAsString(currentAuthor) + '.';
 
   const richName = (
     <span>
-      {richText(displayNameCapitalized + '.', {
+      {richText(displayName, {
         longWordMinLength: MIN_LENGTH_FOR_LONG_WORDS,
         longWordClass: css.longWord,
       })}
@@ -91,14 +88,15 @@ const CaregiverListingContent = props => {
         <div className={css.userDisplay}>
           <h1 className={css.title}>{richName}</h1>
           <SectionAvatar
-            user={avatarUser}
+            user={currentAuthor}
             params={params}
             richName={richName}
+            initialsClassName={css.avatarInitials}
             className={css.sectionAvatar}
           />
         </div>
 
-        <ListingMainContent
+        <CaregiverListingMainContent
           className={css.mainContent}
           currentListing={currentListing}
           intl={intl}
@@ -122,4 +120,4 @@ const CaregiverListingContent = props => {
   );
 };
 
-export default CaregiverListingContent;
+export default CaregiverListingContainer;

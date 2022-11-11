@@ -282,7 +282,7 @@
 }
 
 .initialsDesktop {
-  font-size: 48px;
+  font-size: 100px;
   font-weight: var(--fontWeightBold);
   padding-bottom: 8px;
 }
