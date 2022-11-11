@@ -43,7 +43,7 @@ export const LandingPageComponent = props => {
   const schemaDescription = intl.formatMessage({ id: 'LandingPage.schemaDescription' });
   const schemaImage = `${config.canonicalRootURL}${facebookImage}`;
 
-  const { userType } = currentUser && currentUser.attributes.profile.metadata;
+  const { userType } = (currentUser && currentUser.attributes.profile.metadata) || 'employer';
 
   return (
     <Page

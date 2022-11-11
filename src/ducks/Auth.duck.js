@@ -222,6 +222,7 @@ export const signup = params => (dispatch, getState, sdk) => {
   return (
     sdk.currentUser
       .create(createUserParams)
+      // May need to set to delete user if metadata fails
       .then(() => updateUserMetadata({ email, metadata: { userType } }))
       .then(() => dispatch(signupSuccess()))
       //Need to change login to create profile path
