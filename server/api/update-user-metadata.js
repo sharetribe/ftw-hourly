@@ -21,7 +21,7 @@ module.exports = (req, res) => {
 
       return flexIntegrationSdk.users.updateProfile(
         {
-          id: user.id.uuid,
+          id: user.id,
           metadata,
         },
         {
