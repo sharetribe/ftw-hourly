@@ -21,7 +21,7 @@ export const updateUser = (email, values) => {
       return integrationSdk.users.updateProfile(
         {
           id: userId,
-          metadata: { verified: true },
+          metadata: { values },
         },
         {
           expand: true,
@@ -33,5 +33,8 @@ export const updateUser = (email, values) => {
       const attrs = res.data.data.attributes;
       console.log(`Metadata updated for user ${attrs.email}`);
       console.log(`Current metadata: ${JSON.stringify(attrs.profile.metadata, null, 2)}`);
+    })
+    .catch(e => {
+      throw e;
     });
 };
