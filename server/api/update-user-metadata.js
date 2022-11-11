@@ -1,5 +1,6 @@
-// This dotenv import is required for the `.env` file to be read
-import flexIntegrationSdk from 'sharetribe-flex-integration-sdk';
+const { handleError, serialize } = require('../api-util/sdk');
+
+const flexIntegrationSdk = require('sharetribe-flex-integration-sdk');
 
 const integrationSdk = flexIntegrationSdk.createInstance({
   // These two env vars need to be set in the `.env` file.
@@ -12,15 +13,18 @@ const integrationSdk = flexIntegrationSdk.createInstance({
   baseUrl: process.env.FLEX_INTEGRATION_BASE_URL || 'https://flex-integ-api.sharetribe.com',
 });
 
-export const updateUser = (email, values) => {
+module.exports = (req, res) => {
+  const { email, metadata } = req.body;
+
   integrationSdk.users
     .show({ email })
-    .then(res => {
-      const userId = res.data.data.id;
+    .then(userResponse => {
+      const user = userResponse.data.data;
+
       return integrationSdk.users.updateProfile(
         {
-          id: userId,
-          values,
+          id: user.id,
+          metadata,
         },
         {
           expand: true,
@@ -28,12 +32,21 @@ export const updateUser = (email, values) => {
         }
       );
     })
-    .then(res => {
-      const attrs = res.data.data.attributes;
-      console.log(`Metadata updated for user ${attrs.email}`);
-      console.log(`Current metadata: ${JSON.stringify(attrs.profile.metadata, null, 2)}`);
+    .then(apiResponse => {
+      const { status, statusText, data } = apiResponse;
+      res
+        .status(status)
+        .set('Content-Type', 'application/transit+json')
+        .send(
+          serialize({
+            status,
+            statusText,
+            data,
+          })
+        )
+        .end();
     })
     .catch(e => {
-      throw e;
+      handleError(res, e);
     });
 };

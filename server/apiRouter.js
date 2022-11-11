@@ -15,6 +15,8 @@ const loginAs = require('./api/login-as');
 const transactionLineItems = require('./api/transaction-line-items');
 const initiatePrivileged = require('./api/initiate-privileged');
 const transitionPrivileged = require('./api/transition-privileged');
+const updateUserMetadata = require('./api/update-user-metadata');
+const updateListingMetadata = require('./api/update-listing-metadata');
 
 const createUserWithIdp = require('./api/auth/createUserWithIdp');
 
@@ -54,6 +56,8 @@ router.get('/login-as', loginAs);
 router.post('/transaction-line-items', transactionLineItems);
 router.post('/initiate-privileged', initiatePrivileged);
 router.post('/transition-privileged', transitionPrivileged);
+router.post('/update-user-metadata', updateUserMetadata);
+router.post('/update-listing-metadata', updateListingMetadata);
 
 // Create user with identity provider (e.g. Facebook or Google)
 // This endpoint is called to create a new user after user has confirmed

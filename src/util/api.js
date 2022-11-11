@@ -115,3 +115,25 @@ export const transitionPrivileged = body => {
 export const createUserWithIdp = body => {
   return post('/api/auth/create-user-with-idp', body);
 };
+
+// Update user metadata
+//
+// This is similar to the `initiatePrivileged` above. It will use the
+// backend for the transition. The backend endpoint will update the
+// values for the selected user.
+//
+// See `server/api/update-user-metadata.js` to see what data should
+// be sent in the body.
+export const updateUserMetadata = body => {
+  return post('/api/update-user-metadata', body);
+};
+
+// Update listing metadata
+//
+// This is similar to the `updateUserMetadata` above, but with listings.
+//
+// See `server/api/update-user-metadata.js` to see what data should
+// be sent in the body.
+export const updateListingMetadata = body => {
+  return post('/api/update-listing-metadata', body);
+};

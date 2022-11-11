@@ -1,6 +1,6 @@
 import isEmpty from 'lodash/isEmpty';
 import { clearCurrentUser, fetchCurrentUser } from './user.duck';
-import { createUserWithIdp } from '../util/api';
+import { createUserWithIdp, updateUserMetadata } from '../util/api';
 import { storableError } from '../util/errors';
 import * as log from '../util/log';
 
@@ -208,13 +208,12 @@ export const signup = params => (dispatch, getState, sdk) => {
   const { email, password, firstName, lastName, userType, ...rest } = params;
 
   const createUserParams = isEmpty(rest)
-    ? { email, password, firstName, lastName, publicData: { userType } }
+    ? { email, password, firstName, lastName }
     : {
         email,
         password,
         firstName,
         lastName,
-        publicData: { userType },
         protectedData: { ...rest },
       };
 
@@ -223,6 +222,7 @@ export const signup = params => (dispatch, getState, sdk) => {
   return (
     sdk.currentUser
       .create(createUserParams)
+      .then(() => updateUserMetadata({ email, metadata: { userType } }))
       .then(() => dispatch(signupSuccess()))
       //Need to change login to create profile path
       .then(() => dispatch(login(email, password)))

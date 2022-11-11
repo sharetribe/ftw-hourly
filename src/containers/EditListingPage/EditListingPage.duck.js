@@ -11,6 +11,7 @@ import {
 } from '../../ducks/stripeConnectAccount.duck';
 import { fetchCurrentUser } from '../../ducks/user.duck';
 import * as log from '../../util/log';
+import { updateListingMetadata } from '../../util/api';
 
 const { UUID } = sdkTypes;
 
@@ -401,6 +402,9 @@ export function requestShowListing(actionPayload) {
 }
 
 export function requestCreateListingDraft(data) {
+  const listingType = data.listingType;
+  delete data.listingType;
+
   return (dispatch, getState, sdk) => {
     dispatch(createListingDraft(data));
 
@@ -413,7 +417,10 @@ export function requestCreateListingDraft(data) {
     return sdk.ownListings
       .createDraft(data, queryParams)
       .then(response => {
-        //const id = response.data.data.id.uuid;
+        const listingId = response.data.data.id.uuid;
+
+        // TODO: May want to ensure that listing is actually user's
+        updateListingMetadata({ listingId, metadata: { listingType } });
 
         // Add the created listing to the marketplace data
         dispatch(addMarketplaceEntities(response));

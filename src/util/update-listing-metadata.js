@@ -12,26 +12,15 @@ const integrationSdk = flexIntegrationSdk.createInstance({
   baseUrl: process.env.FLEX_INTEGRATION_BASE_URL || 'https://flex-integ-api.sharetribe.com',
 });
 
-export const updateUser = (email, values) => {
-  integrationSdk.users
-    .show({ email })
+export const updateListing = (id, values) => {
+  integrationSdk.listings
+    .show({ id })
     .then(res => {
-      const userId = res.data.data.id;
-      return integrationSdk.users.updateProfile(
-        {
-          id: userId,
-          values,
-        },
-        {
-          expand: true,
-          'fields.user': ['email', 'profile.metadata'],
-        }
-      );
-    })
-    .then(res => {
-      const attrs = res.data.data.attributes;
-      console.log(`Metadata updated for user ${attrs.email}`);
-      console.log(`Current metadata: ${JSON.stringify(attrs.profile.metadata, null, 2)}`);
+      const listingId = res.data.data.id;
+      return integrationSdk.listings.update({
+        id: listingId,
+        values,
+      });
     })
     .catch(e => {
       throw e;

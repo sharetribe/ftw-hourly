@@ -1,5 +1,6 @@
 // This dotenv import is required for the `.env` file to be read
-import flexIntegrationSdk from 'sharetribe-flex-integration-sdk';
+require('dotenv').config();
+const flexIntegrationSdk = require('sharetribe-flex-integration-sdk');
 
 const integrationSdk = flexIntegrationSdk.createInstance({
   // These two env vars need to be set in the `.env` file.
@@ -12,15 +13,36 @@ const integrationSdk = flexIntegrationSdk.createInstance({
   baseUrl: process.env.FLEX_INTEGRATION_BASE_URL || 'https://flex-integ-api.sharetribe.com',
 });
 
-export const updateUser = (email, values) => {
+const emails = [
+  'asldkfj@alskdjfhj.com',
+  'asdfasd@asdfasd.com',
+  'peyton-hobson@uiowa.edu',
+  'kjalsdfh@kjlasd.com',
+  'kljhdf@askjldhf.com',
+  'kajsh@kaljshf.com',
+  'jklhf@kjlasdf.com',
+  'kaljshd@aksjdf.com',
+  'lkajsdfl@akjsldf.com',
+  'kjlasf@askdjl.com',
+  'kjsa@kaljdf.com',
+  'lkajsfd@klajsdf.com',
+  'lkjasdf@akjlasdf.com',
+  'klsdjfk@aksdfjk.com',
+  'person.example@example.com',
+  'peyton.hobson1@gmail.com',
+];
+
+emails.forEach(email => {
   integrationSdk.users
     .show({ email })
     .then(res => {
       const userId = res.data.data.id;
-      return integrationSdk.users.updateProfile(
+      const { userType } = res.data.data.attributes.profile.publicData;
+
+      integrationSdk.users.updateProfile(
         {
           id: userId,
-          values,
+          metadata: { userType },
         },
         {
           expand: true,
@@ -28,12 +50,7 @@ export const updateUser = (email, values) => {
         }
       );
     })
-    .then(res => {
-      const attrs = res.data.data.attributes;
-      console.log(`Metadata updated for user ${attrs.email}`);
-      console.log(`Current metadata: ${JSON.stringify(attrs.profile.metadata, null, 2)}`);
-    })
     .catch(e => {
       throw e;
     });
-};
+});

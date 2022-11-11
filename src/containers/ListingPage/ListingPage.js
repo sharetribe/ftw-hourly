@@ -375,7 +375,7 @@ export class ListingPageComponent extends Component {
       </NamedLink>
     );
 
-    const userType = currentListing?.attributes.publicData.listingType;
+    const userType = currentListing?.attributes.metadata.listingType;
     const mainContent =
       userType === 'caregiver' ? (
         <CaregiverListingContent

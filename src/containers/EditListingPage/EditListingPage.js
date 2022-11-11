@@ -222,7 +222,7 @@ export const EditListingPageComponent = props => {
 
     let editListingWizard = null;
 
-    const userType = currentUser?.attributes.profile.publicData.userType;
+    const userType = currentUser?.attributes.profile.metadata.userType;
 
     if (userType === CAREGIVER) {
       editListingWizard = (

@@ -50,7 +50,7 @@ const EditListingCareTypesPanel = props => {
   );
 
   const user = ensureCurrentUser(currentUser);
-  const userType = user.attributes?.profile.publicData.userType;
+  const userType = user.attributes?.profile.metadata.userType;
 
   const careTypes = publicData && publicData.careTypes;
   const initialValues = { careTypes };

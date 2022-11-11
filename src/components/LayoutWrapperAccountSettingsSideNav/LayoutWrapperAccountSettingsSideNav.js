@@ -80,7 +80,7 @@ const LayoutWrapperAccountSettingsSideNavComponent = props => {
 
   const { currentTab, currentUser } = props;
 
-  const userType = currentUser && currentUser.attributes.profile.publicData.userType;
+  const userType = currentUser && currentUser.attributes.profile.metadata.userType;
 
   const tabs = [
     {

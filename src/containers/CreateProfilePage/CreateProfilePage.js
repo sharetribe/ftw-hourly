@@ -203,7 +203,7 @@ export const CreateProfilePageComponent = props => {
       ? intl.formatMessage({ id: 'CreateProfilePage.titleCreateListing' })
       : intl.formatMessage({ id: 'CreateProfilePage.titleEditListing' });
 
-    const userType = currentUser?.attributes.profile.publicData.userType;
+    const userType = currentUser?.attributes.profile.metadata.userType;
 
     const loadingPageMsg = {
       id: 'CreateProfilePage.loadingListingData',

@@ -344,16 +344,16 @@ const mapStateToProps = state => {
     activeListingId,
   } = state.SearchPage;
   const currentUser = state.user.currentUser;
-  const currentUserType = currentUser?.attributes.profile.publicData.userType;
+  const currentUserType = currentUser?.attributes.profile.metadata.userType;
   const oppositeUserType = currentUserType === 'caregiver' ? 'employer' : 'caregiver';
 
   const pageListings = getListingsById(state, currentPageResultIds).filter(
-    listing => listing.attributes.publicData.listingType === oppositeUserType
+    listing => listing.attributes.metadata.listingType === oppositeUserType
   );
   const mapListings = getListingsById(
     state,
     unionWith(currentPageResultIds, searchMapListingIds, (id1, id2) => id1.uuid === id2.uuid)
-  ).filter(listing => listing.attributes.publicData.listingType === oppositeUserType);
+  ).filter(listing => listing.attributes.metadata.listingType === oppositeUserType);
 
   return {
     isAuthenticated,
