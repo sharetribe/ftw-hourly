@@ -5197,6 +5197,11 @@ entities@^2.0.0:
   resolved "https://registry.npmjs.org/entities/-/entities-2.0.0.tgz"
   integrity sha512-D9f7V0JSRwIxlRI2mjMqufDrRDnx8p+eEOz7aUM9SuvF8gsBzra0/6tbjl1m8eQHrZlYj6PxqE00hZ1SAIKPLw==
 
+env-paths@^2.2.0:
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/env-paths/-/env-paths-2.2.1.tgz#420399d416ce1fbe9bc0a07c62fa68d67fd0f8f2"
+  integrity sha512-+h1lkLKhZMTYjog1VEpJNG7NZJWcuc2DDk/qsqSTRRCOXiLjeQ1d1/udrUGhqMxUgAlwKNZ0cf2uqan5GLuS2A==
+
 enzyme-adapter-react-16@^1.15.6:
   version "1.15.6"
   resolved "https://registry.npmjs.org/enzyme-adapter-react-16/-/enzyme-adapter-react-16-1.15.6.tgz"
@@ -10923,6 +10928,18 @@ shallowequal@^1.1.0:
   version "1.1.0"
   resolved "https://registry.npmjs.org/shallowequal/-/shallowequal-1.1.0.tgz"
   integrity sha512-y0m1JoUZSlPAjXVtPPW70aZWfIL/dSP7AFkRnniLCrK/8MDKog3TySTBmckD+RObVxH0v4Tox67+F14PdED2oQ==
+
+sharetribe-flex-integration-sdk@^1.8.0:
+  version "1.8.0"
+  resolved "https://registry.yarnpkg.com/sharetribe-flex-integration-sdk/-/sharetribe-flex-integration-sdk-1.8.0.tgz#f12eb2a1c2609042c1176d1f4b0125c9be43d9d3"
+  integrity sha512-7N42ET7Mjygu25Cvny1I2MtBrw0Ad+WE+CCIHrFx1/mf4JaEjH/YSJiljvqgpNh6dlykfPwcobqrlFtVYVl7nw==
+  dependencies:
+    axios "^0.21.1"
+    env-paths "^2.2.0"
+    form-data "^3.0.0"
+    lodash "^4.17.10"
+    transit-js "^0.8.861"
+    xdg-basedir "^4.0.0"
 
 sharetribe-flex-sdk@^1.17.0:
   version "1.17.0"
