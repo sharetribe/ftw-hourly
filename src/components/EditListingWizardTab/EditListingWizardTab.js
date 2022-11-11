@@ -138,14 +138,15 @@ const EditListingWizardTab = props => {
   const onCompleteEditListingWizardTab = (tab, updateValues, passThrownErrors = false) => {
     // Normalize images for API call
     const { images: updatedImages, ...otherValues } = updateValues;
-    const userType = currentUser.attributes.profile.metadata.userType;
     const imageProperty =
       typeof updatedImages !== 'undefined' ? { images: imageIds(updatedImages) } : {};
-    const updateValuesWithImages = { ...otherValues, ...imageProperty, listingType: userType };
+    const updateValuesWithImages = { ...otherValues, ...imageProperty };
 
     if (isNewListingFlow) {
       const onUpsertListingDraft = isNewURI
         ? (tab, updateValues) => {
+            const userType = currentUser.attributes.profile.metadata.userType;
+            updateValues.listingType = userType;
             return onCreateListingDraft(updateValues);
           }
         : onUpdateListing;

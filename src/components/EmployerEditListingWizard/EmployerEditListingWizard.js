@@ -209,7 +209,9 @@ class EmployerEditListingWizard extends Component {
   handlePayoutModalClose() {
     this.setState({ showPayoutDetails: false });
     if (window.location.href.includes('create-profile')) {
-      window.location.href = '/';
+      window.location.href = '/signup';
+    } else {
+      window.location.href = '/l';
     }
   }
 

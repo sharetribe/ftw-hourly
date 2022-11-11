@@ -420,7 +420,9 @@ export function requestCreateListingDraft(data) {
         const listingId = response.data.data.id.uuid;
 
         // TODO: May want to ensure that listing is actually user's
-        updateListingMetadata({ listingId, metadata: { listingType } });
+        if (listingType) {
+          updateListingMetadata({ listingId, metadata: { listingType } });
+        }
 
         // Add the created listing to the marketplace data
         dispatch(addMarketplaceEntities(response));

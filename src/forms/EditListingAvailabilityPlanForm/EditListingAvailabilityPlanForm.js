@@ -44,7 +44,7 @@ const timeOrderMap = new Map([
   ['6:00am', 6],
   ['7:00am', 7],
   ['8:00am', 8],
-  ['0:00am', 9],
+  ['9:00am', 9],
   ['10:00am', 10],
   ['11:00am', 11],
   ['12:00pm', 12],
@@ -212,7 +212,7 @@ const DailyPlan = props => {
                           id={`${name}.startTime`}
                           name={`${name}.startTime`}
                           selectClassName={css.fieldSelect}
-                          firstValueSelected={true}
+                          initialValueSelected={fields.value[0].startTime}
                         >
                           {filterStartHours(availableStartHours, values, dayOfWeek, index).map(
                             s => (
@@ -229,7 +229,7 @@ const DailyPlan = props => {
                           id={`${name}.endTime`}
                           name={`${name}.endTime`}
                           selectClassName={css.fieldSelect}
-                          firstValueSelected={true}
+                          initialValueSelected={fields.value[0].endTime}
                         >
                           {filterEndHours(availableEndHours, values, dayOfWeek, index).map(s => (
                             <option value={s} key={s}>
@@ -254,7 +254,7 @@ const DailyPlan = props => {
                 <InlineTextButton
                   type="button"
                   className={css.buttonSetHours}
-                  onClick={() => fields.push({ startTime: null, endTime: null })}
+                  onClick={() => fields.push({ startTime: '8:00am', endTime: '5:00pm' })}
                 >
                   <FormattedMessage id="EditListingAvailabilityPlanForm.setHours" />
                 </InlineTextButton>
@@ -317,8 +317,9 @@ const EditListingAvailabilityPlanFormComponent = props => {
         const classes = classNames(rootClassName || css.root, className);
         const submitInProgress = inProgress;
 
-        const concatDayEntriesReducer = (entries, day) =>
-          values[day] ? entries.concat(values[day]) : entries;
+        const concatDayEntriesReducer = (entries, day) => {
+          return values[day] ? entries.concat(values[day]) : entries;
+        };
         const hasUnfinishedEntries = !!weekdays
           .reduce(concatDayEntriesReducer, [])
           .find(e => !e.startTime || !e.endTime);

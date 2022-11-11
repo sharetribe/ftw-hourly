@@ -32,6 +32,7 @@ const FieldSelectComponent = props => {
     children,
     onChange,
     firstValueSelected,
+    initialValueSelected,
     ...rest
   } = props;
 
@@ -44,6 +45,9 @@ const FieldSelectComponent = props => {
   useEffect(() => {
     if (firstValueSelected) {
       input.onChange(children[0] && children[0].props.value);
+    }
+    if (initialValueSelected) {
+      input.onChange(initialValueSelected);
     }
   }, []);
 

@@ -348,12 +348,22 @@ const mapStateToProps = state => {
   const oppositeUserType = currentUserType === 'caregiver' ? 'employer' : 'caregiver';
 
   const pageListings = getListingsById(state, currentPageResultIds).filter(
-    listing => listing.attributes.metadata.listingType === oppositeUserType
+    listing =>
+      listing &&
+      listing.attributes &&
+      listing.attributes.metadata &&
+      listing.attributes.metadata.listingType === oppositeUserType
   );
   const mapListings = getListingsById(
     state,
     unionWith(currentPageResultIds, searchMapListingIds, (id1, id2) => id1.uuid === id2.uuid)
-  ).filter(listing => listing.attributes.metadata.listingType === oppositeUserType);
+  ).filter(
+    listing =>
+      listing &&
+      listing.attributes &&
+      listing.attributes.metadata &&
+      listing.attributes.metadata.listingType === oppositeUserType
+  );
 
   return {
     isAuthenticated,
