@@ -1,6 +1,5 @@
 const { handleError, serialize } = require('../api-util/sdk');
 const flexIntegrationSdk = require('sharetribe-flex-integration-sdk');
-const log = require('../../src/util/log.js');
 
 // const integrationSdk = flexIntegrationSdk.createInstance({
 //   // These two env vars need to be set in the `.env` file.
@@ -12,20 +11,13 @@ const log = require('../../src/util/log.js');
 //   // for local testing and development.
 //   baseUrl: process.env.FLEX_INTEGRATION_BASE_URL || 'https://flex-integ-api.sharetribe.com',
 // });
-ß;
 module.exports = (req, res) => {
   const { email, metadata } = req.body;
-
-  // const sdk = getSdk(req, res);
 
   flexIntegrationSdk.users
     .show({ email })
     .then(userResponse => {
       const user = userResponse.data.data;
-
-      // console.log(user);
-
-      // const trustedSdk = getTrustedSdk(req);
 
       return flexIntegrationSdk.users.updateProfile(
         {
