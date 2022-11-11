@@ -34,6 +34,7 @@ export const EditListingLocationFormComponent = props => (
         updateInProgress,
         fetchErrors,
         values,
+        userType,
       } = formRenderProps;
 
       // Address Text Field
@@ -97,13 +98,15 @@ export const EditListingLocationFormComponent = props => (
               autocompletePlaceSelected(addressNotRecognizedMessage)
             )}
           />
-          <FieldAddSubtract
-            id={formId ? `${formId}.travelDistance` : 'travelDistance'}
-            name="travelDistance"
-            startingCount={values.travelDistance}
-            countLabel={distanceCountLabel}
-            label={distanceLabel}
-          />
+          {userType === 'caregiver' && (
+            <FieldAddSubtract
+              id={formId ? `${formId}.travelDistance` : 'travelDistance'}
+              name="travelDistance"
+              startingCount={values.travelDistance}
+              countLabel={distanceCountLabel}
+              label={distanceLabel}
+            />
+          )}
           <Button
             className={css.submitButton}
             type="submit"

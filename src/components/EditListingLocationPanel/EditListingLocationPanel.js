@@ -57,6 +57,7 @@ class EditListingLocationPanel extends Component {
       panelUpdated,
       updateInProgress,
       errors,
+      currentUser,
     } = this.props;
 
     const classes = classNames(rootClassName || css.root, className);
@@ -79,6 +80,8 @@ class EditListingLocationPanel extends Component {
       <FormattedMessage id="EditListingLocationPanel.createListingTitle" />
     );
 
+    const { userType } = currentUser && currentUser.attributes.profile.metadata;
+
     return (
       <div className={classes}>
         <h1 className={css.title}>{panelTitle}</h1>
@@ -92,13 +95,22 @@ class EditListingLocationPanel extends Component {
               selectedPlace: { address, origin },
             } = location;
 
-            const updateValues = {
-              geolocation: origin,
-              publicData: {
-                location: address,
-                travelDistance,
-              },
-            };
+            const updateValues =
+              userType === 'caregiver'
+                ? {
+                    geolocation: origin,
+                    publicData: {
+                      location: address,
+                      travelDistance,
+                    },
+                  }
+                : {
+                    geolocation: origin,
+                    publicData: {
+                      location: address,
+                    },
+                  };
+
             this.setState({
               initialValues: {
                 location: { search: address, selectedPlace: { address, origin } },
@@ -114,6 +126,7 @@ class EditListingLocationPanel extends Component {
           updated={panelUpdated}
           updateInProgress={updateInProgress}
           fetchErrors={errors}
+          userType={userType}
         />
       </div>
     );
