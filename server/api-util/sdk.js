@@ -3,7 +3,6 @@ const https = require('https');
 const Decimal = require('decimal.js');
 const log = require('../log');
 const sharetribeSdk = require('sharetribe-flex-sdk');
-const flexIntegrationSdk = require('../../node_modules/sharetribe-flex-integration-sdk');
 
 const CLIENT_ID = process.env.REACT_APP_SHARETRIBE_SDK_CLIENT_ID;
 const CLIENT_SECRET = process.env.SHARETRIBE_SDK_CLIENT_SECRET;
@@ -132,14 +131,3 @@ exports.getTrustedSdk = req => {
     });
   });
 };
-
-exports.integrationSdk = flexIntegrationSdk.createInstance({
-  // These two env vars need to be set in the `.env` file.
-  clientId: process.env.FLEX_INTEGRATION_CLIENT_ID,
-  clientSecret: process.env.FLEX_INTEGRATION_CLIENT_SECRET,
-
-  // Normally you can just skip setting the base URL and just use the
-  // default that the `createInstance` uses. We explicitly set it here
-  // for local testing and development.
-  baseUrl: process.env.FLEX_INTEGRATION_BASE_URL || 'https://flex-integ-api.sharetribe.com',
-});
