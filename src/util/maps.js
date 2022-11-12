@@ -4,6 +4,7 @@ import { types as sdkTypes } from './sdkLoader';
 import config from '../config';
 import turf from 'turf';
 import booleanPointInPolygon from '@turf/boolean-point-in-polygon';
+import { getPlaceOrigin } from '../components/LocationAutocompleteInput/GeocoderMapbox';
 
 const { LatLng, LatLngBounds } = sdkTypes;
 
@@ -218,19 +219,26 @@ export const calculateDistanceBetweenOrigins = (latlng1, latlng2) => {
   return turf.distance(latlng1, latlng2, options);
 };
 
-export const spatialJoin = (listings, filterFeature) => {
+const spatialJoin = (listings, filterFeature) => {
   // Loop through all the features in the source geojson and return the ones that
   // are inside the filter feature (buffered radius) and are confirmed landing sites
   var joined = listings.filter(listing => {
     const { lat, lng } = listing.attributes.geolocation;
-    const point = turf.point([lat, lng]);
+    const point = turf.point([lng, lat]);
     return booleanPointInPolygon(point, filterFeature);
   });
 
   return joined;
 };
 
-export const makeRadii = (lngLatArray, radiusInMiles) => {
+const makeRadii = (lngLatArray, radiusInMiles) => {
   const point = turf.point(lngLatArray);
-  return turf.buffer(point, radiusInMiles, 'meters');
+  return turf.buffer(point, radiusInMiles, 'miles');
+};
+
+export const filterListingsByDistance = (listings, params) => {
+  return getPlaceOrigin(params.address).then(res => {
+    const radii = makeRadii(res, params.distance > 0 ? params.distance : 1);
+    return spatialJoin(listings, radii);
+  });
 };

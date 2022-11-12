@@ -98,12 +98,14 @@ class TopbarComponent extends Component {
     const { search, selectedPlace } = values.location;
     const { history } = this.props;
     const { origin, bounds } = selectedPlace;
+    const distance = 0;
     const originMaybe = config.sortSearchByDistance ? { origin } : {};
     const searchParams = {
       ...currentSearchParams,
       ...originMaybe,
       address: search,
       bounds,
+      distance,
     };
     history.push(createResourceLocatorString('SearchPage', routeConfiguration(), {}, searchParams));
   }
@@ -340,10 +342,7 @@ TopbarComponent.propTypes = {
   intl: intlShape.isRequired,
 };
 
-const Topbar = compose(
-  withViewport,
-  injectIntl
-)(TopbarComponent);
+const Topbar = compose(withViewport, injectIntl)(TopbarComponent);
 
 Topbar.displayName = 'Topbar';
 

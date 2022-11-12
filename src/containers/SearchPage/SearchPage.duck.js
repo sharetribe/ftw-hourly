@@ -141,13 +141,14 @@ export const searchListings = searchParams => (dispatch, getState, sdk) => {
   const { perPage, price, dates, minDuration, distance, bounds, ...rest } = searchParams;
   const priceMaybe = priceSearchParams(price);
 
-  const params = distance
-    ? {
-        ...rest,
-        ...priceMaybe,
-        per_page: perPage,
-      }
-    : { ...rest, ...priceMaybe, bounds, per_page: perPage };
+  const params =
+    distance > 0
+      ? {
+          ...rest,
+          ...priceMaybe,
+          per_page: perPage,
+        }
+      : { ...rest, ...priceMaybe, bounds, per_page: perPage };
 
   return sdk.listings
     .query(params)

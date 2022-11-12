@@ -18,8 +18,7 @@ import { manageDisableScrolling, isScrollingDisabled } from '../../ducks/UI.duck
 import { SearchMap, ModalInMobile, Page, Modal } from '../../components';
 import { TopbarContainer } from '../../containers';
 import { EnquiryForm } from '../../forms';
-import { makeRadii, spatialJoin } from '../../util/maps';
-import { getPlaceOrigin } from '../../components/LocationAutocompleteInput/GeocoderMapbox';
+import { filterListingsByDistance } from '../../util/maps';
 
 import { searchMapListings, setActiveListing } from './SearchPage.duck';
 import {
@@ -46,6 +45,8 @@ export class SearchPageComponent extends Component {
       enquiryModalOpen: false,
       currentListingAuthor: '',
       currentListingId: '',
+      filteredListings: [],
+      listingsFilteredByDistance: false,
     };
 
     this.searchMapListingsInProgress = false;
@@ -55,7 +56,6 @@ export class SearchPageComponent extends Component {
     this.onCloseMobileModal = this.onCloseMobileModal.bind(this);
     this.onContactUser = this.onContactUser.bind(this);
     this.onSubmitEnquiry = this.onSubmitEnquiry.bind(this);
-    this.filterListingsByDistance = this.filterListingsByDistance.bind(this);
   }
 
   // Callback to determine if new search is needed
@@ -97,17 +97,6 @@ export class SearchPageComponent extends Component {
 
       history.push(createResourceLocatorString('SearchPage', routes, {}, searchParams));
     }
-  }
-
-  async filterListingsByDistance(listings) {
-    const params = parse(this.props.history.location.search);
-    const origin = await getPlaceOrigin(params.address);
-
-    const radii = makeRadii(origin, params.distance);
-
-    const filteredListings = spatialJoin(listings, radii);
-
-    return filteredListings;
   }
 
   // Invoked when a modal is opened from a child component,
@@ -199,12 +188,6 @@ export class SearchPageComponent extends Component {
       sortConfig
     );
 
-    let filteredListings = listings;
-
-    if (distance) {
-      this.filterListingsByDistance(listings);
-    }
-
     // Page transition might initially use values from previous search
     const urlQueryString = stringify(urlQueryParams);
     const paramsQueryString = stringify(
@@ -224,9 +207,17 @@ export class SearchPageComponent extends Component {
       this.setState({ isSearchMapOpenOnMobile: true });
     };
 
+    if (distance !== undefined) {
+      const distanceFilterParams = parse(this.props.location.search);
+      filterListingsByDistance(this.props.listings, distanceFilterParams).then(res => {
+        this.setState({ filteredListings: res });
+        this.setState({ listingsFilteredByDistance: true });
+      });
+    }
+
     const { address, bounds, origin } = searchInURL || {};
     const { title, description, schema } = createSearchResultSchema(
-      filteredListings,
+      (this.state.listingsFilteredByDistance && this.state.filteredListings) || listings,
       address,
       intl
     );
@@ -254,7 +245,9 @@ export class SearchPageComponent extends Component {
         <div className={css.container}>
           <MainPanel
             urlQueryParams={validQueryParams}
-            listings={filteredListings}
+            listings={
+              (this.state.listingsFilteredByDistance && this.state.filteredListings) || listings
+            }
             searchInProgress={searchInProgress}
             searchListingsError={searchListingsError}
             searchParamsAreInSync={searchParamsAreInSync}
