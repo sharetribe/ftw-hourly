@@ -138,16 +138,18 @@ export const searchListings = searchParams => (dispatch, getState, sdk) => {
       : {};
   };
 
-  const { perPage, price, dates, minDuration, distance, ...rest } = searchParams;
+  const { perPage, price, dates, minDuration, distance, bounds, ...rest } = searchParams;
   const priceMaybe = priceSearchParams(price);
 
-  const params = {
-    ...rest,
-    ...priceMaybe,
-    per_page: perPage,
-  };
+  const params = distance
+    ? {
+        ...rest,
+        ...priceMaybe,
+        per_page: perPage,
+      }
+    : { ...rest, ...priceMaybe, bounds, per_page: perPage };
 
-  const listings = sdk.listings
+  return sdk.listings
     .query(params)
     .then(response => {
       dispatch(addMarketplaceEntities(response));
@@ -158,8 +160,6 @@ export const searchListings = searchParams => (dispatch, getState, sdk) => {
       dispatch(searchListingsError(storableError(e)));
       throw e;
     });
-
-  return listings;
 };
 
 export const setActiveListing = listingId => ({

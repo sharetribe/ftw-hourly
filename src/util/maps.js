@@ -3,6 +3,7 @@ import seedrandom from 'seedrandom';
 import { types as sdkTypes } from './sdkLoader';
 import config from '../config';
 import turf from 'turf';
+import booleanPointInPolygon from '@turf/boolean-point-in-polygon';
 
 const { LatLng, LatLngBounds } = sdkTypes;
 
@@ -217,20 +218,19 @@ export const calculateDistanceBetweenOrigins = (latlng1, latlng2) => {
   return turf.distance(latlng1, latlng2, options);
 };
 
-function spatialJoin(sourceGeoJSON, filterFeature) {
+export const spatialJoin = (listings, filterFeature) => {
   // Loop through all the features in the source geojson and return the ones that
   // are inside the filter feature (buffered radius) and are confirmed landing sites
-  var joined = sourceGeoJSON.features.filter(function(feature) {
-    return (
-      turf.booleanPointInPolygon(feature, filterFeature) && feature.properties.isAlien === 'yes'
-    );
+  var joined = listings.filter(listing => {
+    const { lat, lng } = listing.attributes.geolocation;
+    const point = turf.point([lat, lng]);
+    return booleanPointInPolygon(point, filterFeature);
   });
 
   return joined;
-}
+};
 
-export const makeRadius = (lngLatArray, radiusInMiles) => {
+export const makeRadii = (lngLatArray, radiusInMiles) => {
   const point = turf.point(lngLatArray);
-  const buffered = turf.buffer(point, radiusInMiles, { units: 'miles' });
-  return buffered;
+  return turf.buffer(point, radiusInMiles, 'meters');
 };

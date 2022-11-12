@@ -95,6 +95,33 @@ export const getPlaceAddress = async place => {
   return body.features[2].place_name.replace(', United States', '');
 };
 
+// Reverse geoencode the latitude and longtude coordinates
+// to return the address of a given location.
+export const getPlaceOrigin = async place => {
+  const limitCountriesMaybe = config.maps.search.countryLimit
+    ? { country: config.maps.search.countryLimit }
+    : {};
+
+  place = place.replace(' ', '%20');
+
+  const url =
+    'https://api.mapbox.com/geocoding/v5/mapbox.places/' +
+    place +
+    '.json?' +
+    'access_token=' +
+    process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
+
+  const response = await fetch(url, {
+    method: 'GET',
+    headers: {
+      Accept: 'application/json',
+    },
+  });
+
+  const body = await response.json();
+  return (body && body.features && body.features[0] && body.features[0].center) || null;
+};
+
 export const GeocoderAttribution = () => null;
 
 /**

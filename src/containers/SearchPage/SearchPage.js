@@ -18,6 +18,8 @@ import { manageDisableScrolling, isScrollingDisabled } from '../../ducks/UI.duck
 import { SearchMap, ModalInMobile, Page, Modal } from '../../components';
 import { TopbarContainer } from '../../containers';
 import { EnquiryForm } from '../../forms';
+import { makeRadii, spatialJoin } from '../../util/maps';
+import { getPlaceOrigin } from '../../components/LocationAutocompleteInput/GeocoderMapbox';
 
 import { searchMapListings, setActiveListing } from './SearchPage.duck';
 import {
@@ -53,6 +55,7 @@ export class SearchPageComponent extends Component {
     this.onCloseMobileModal = this.onCloseMobileModal.bind(this);
     this.onContactUser = this.onContactUser.bind(this);
     this.onSubmitEnquiry = this.onSubmitEnquiry.bind(this);
+    this.filterListingsByDistance = this.filterListingsByDistance.bind(this);
   }
 
   // Callback to determine if new search is needed
@@ -94,6 +97,17 @@ export class SearchPageComponent extends Component {
 
       history.push(createResourceLocatorString('SearchPage', routes, {}, searchParams));
     }
+  }
+
+  async filterListingsByDistance(listings) {
+    const params = parse(this.props.history.location.search);
+    const origin = await getPlaceOrigin(params.address);
+
+    const radii = makeRadii(origin, params.distance);
+
+    const filteredListings = spatialJoin(listings, radii);
+
+    return filteredListings;
   }
 
   // Invoked when a modal is opened from a child component,
@@ -172,14 +186,24 @@ export class SearchPageComponent extends Component {
       sendEnquiryInProgress,
     } = this.props;
     // eslint-disable-next-line no-unused-vars
-    const { mapSearch, page, ...searchInURL } = parse(location.search, {
+    const { mapSearch, page, distance, ...searchInURL } = parse(location.search, {
       latlng: ['origin'],
       latlngBounds: ['bounds'],
     });
 
     // urlQueryParams doesn't contain page specific url params
     // like mapSearch, page or origin (origin depends on config.sortSearchByDistance)
-    const urlQueryParams = pickSearchParamsOnly(searchInURL, filterConfig, sortConfig);
+    const urlQueryParams = pickSearchParamsOnly(
+      { distance, ...searchInURL },
+      filterConfig,
+      sortConfig
+    );
+
+    let filteredListings = listings;
+
+    if (distance) {
+      this.filterListingsByDistance(listings);
+    }
 
     // Page transition might initially use values from previous search
     const urlQueryString = stringify(urlQueryParams);
@@ -201,7 +225,11 @@ export class SearchPageComponent extends Component {
     };
 
     const { address, bounds, origin } = searchInURL || {};
-    const { title, description, schema } = createSearchResultSchema(listings, address, intl);
+    const { title, description, schema } = createSearchResultSchema(
+      filteredListings,
+      address,
+      intl
+    );
 
     // Set topbar class based on if a modal is open in
     // a child component
@@ -226,7 +254,7 @@ export class SearchPageComponent extends Component {
         <div className={css.container}>
           <MainPanel
             urlQueryParams={validQueryParams}
-            listings={listings}
+            listings={filteredListings}
             searchInProgress={searchInProgress}
             searchListingsError={searchListingsError}
             searchParamsAreInSync={searchParamsAreInSync}
