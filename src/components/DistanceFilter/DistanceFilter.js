@@ -145,8 +145,7 @@ class DistanceFilter extends Component {
     return showAsPopup ? (
       <FilterPopup
         className={classes}
-        rootClassName={rootClassName}
-        popupClassName={css.popupSize}
+        rootPopupClassName={css.popupRoot}
         name={name}
         label={labelForPopup}
         isSelected={hasInitialValues}
@@ -159,15 +158,20 @@ class DistanceFilter extends Component {
         keepDirtyOnReinitialize
         {...rest}
       >
-        <FieldTextInput
-          className={css.field}
-          name={name}
-          id={`${id}-input`}
-          type="text"
-          label={filterText}
-          placeholder={placeholder}
-          autoComplete="off"
-        />
+        <div>
+          <FieldTextInput
+            className={css.field}
+            name={name}
+            id={`${id}-input`}
+            type="text"
+            label={filterText}
+            placeholder={placeholder}
+            autoComplete="off"
+          />
+          <label className={css.unitLabel}>
+            {intl.formatMessage({ id: 'DistanceFilter.unit' })}
+          </label>
+        </div>
       </FilterPopup>
     ) : (
       <FilterPlain

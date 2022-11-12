@@ -65,7 +65,7 @@ export const filters = [
   {
     id: 'distance',
     label: 'Distance',
-    type: 'KeywordFilter',
+    type: 'DistanceFilter',
     group: 'primary',
     // Note: PriceFilter is fixed filter,
     // you can't change "queryParamNames: ['price'],"

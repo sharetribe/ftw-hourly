@@ -42,17 +42,26 @@
 
 .labelText {
   display: inline-block;
-  max-width: 250px;
+  max-width: 400px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
+.unitLabel {
+  display: inline-block;
+  flex-grow: 1;
+  margin-left: 0.5rem;
+}
+
 .field {
+  display: inline-block;
   composes: h4 from global;
   margin: 0;
   padding: 1px 0 13px 0;
   border: none;
+  width: 6rem;
+  /* float: left; */
 }
 
 .fieldPlain {
@@ -60,4 +69,8 @@
   margin: 0;
   padding: 16px 0 30px 20px;
   border: none;
+}
+
+.popupSize {
+  padding: 15px 30px 17px 30px;
 }

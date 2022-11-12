@@ -129,6 +129,7 @@ export { default as BookingTimeInfo } from './BookingTimeInfo/BookingTimeInfo';
 export { default as BookingPanel } from './BookingPanel/BookingPanel';
 export { default as CaregiverListingCard } from './CaregiverListingCard/CaregiverListingCard';
 export { default as Discussion } from './Discussion/Discussion';
+export { default as DistanceFilter } from './DistanceFilter/DistanceFilter';
 export { default as EmployerListingCard } from './EmployerListingCard/EmployerListingCard';
 export { default as FilterPlain } from './FilterPlain/FilterPlain';
 export { default as FilterPopup } from './FilterPopup/FilterPopup';
