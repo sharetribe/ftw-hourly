@@ -216,3 +216,21 @@ export const calculateDistanceBetweenOrigins = (latlng1, latlng2) => {
   const options = { units: 'miles' };
   return turf.distance(latlng1, latlng2, options);
 };
+
+function spatialJoin(sourceGeoJSON, filterFeature) {
+  // Loop through all the features in the source geojson and return the ones that
+  // are inside the filter feature (buffered radius) and are confirmed landing sites
+  var joined = sourceGeoJSON.features.filter(function(feature) {
+    return (
+      turf.booleanPointInPolygon(feature, filterFeature) && feature.properties.isAlien === 'yes'
+    );
+  });
+
+  return joined;
+}
+
+export const makeRadius = (lngLatArray, radiusInMiles) => {
+  const point = turf.point(lngLatArray);
+  const buffered = turf.buffer(point, radiusInMiles, { units: 'miles' });
+  return buffered;
+};
