@@ -63,6 +63,22 @@ export const filters = [
     },
   },
   {
+    id: 'distance',
+    label: 'Distance',
+    type: 'KeywordFilter',
+    group: 'primary',
+    // Note: PriceFilter is fixed filter,
+    // you can't change "queryParamNames: ['price'],"
+    queryParamNames: ['distance'],
+    // Price filter configuration
+    // Note: unlike most prices this is not handled in subunits
+    config: {
+      min: 0,
+      max: 100,
+      step: 1,
+    },
+  },
+  {
     id: 'price',
     label: 'Price',
     type: 'PriceFilter',
