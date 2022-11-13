@@ -109,6 +109,7 @@ class FilterPopup extends Component {
       rootClassName,
       className,
       popupClassName,
+      rootPopupClassName,
       id,
       label,
       labelMaxWidth,
@@ -120,7 +121,9 @@ class FilterPopup extends Component {
     } = this.props;
 
     const classes = classNames(rootClassName || css.root, className);
-    const popupClasses = classNames(css.popup, { [css.isOpen]: this.state.isOpen });
+    const popupClasses = classNames(rootPopupClassName || css.popup, {
+      [css.isOpen]: this.state.isOpen,
+    });
     const popupSizeClasses = popupClassName || css.popupSize;
     const labelStyles = isSelected ? css.labelSelected : css.label;
     const labelMaxWidthMaybe = labelMaxWidth ? { maxWidth: `${labelMaxWidth}px` } : {};

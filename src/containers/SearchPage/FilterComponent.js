@@ -6,6 +6,7 @@ import {
   KeywordFilter,
   SelectSingleFilter,
   SelectMultipleFilter,
+  DistanceFilter,
 } from '../../components';
 
 /**
@@ -99,6 +100,19 @@ const FilterComponent = props => {
     case 'KeywordFilter':
       return (
         <KeywordFilter
+          id={componentId}
+          label={label}
+          name={name}
+          queryParamNames={queryParamNames}
+          initialValues={initialValues(queryParamNames)}
+          onSubmit={getHandleChangedValueFn(useHistoryPush)}
+          {...config}
+          {...rest}
+        />
+      );
+    case 'DistanceFilter':
+      return (
+        <DistanceFilter
           id={componentId}
           label={label}
           name={name}

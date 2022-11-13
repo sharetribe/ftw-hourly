@@ -18,6 +18,7 @@ import { manageDisableScrolling, isScrollingDisabled } from '../../ducks/UI.duck
 import { SearchMap, ModalInMobile, Page, Modal } from '../../components';
 import { TopbarContainer } from '../../containers';
 import { EnquiryForm } from '../../forms';
+import { filterListingsByDistance } from '../../util/maps';
 
 import { searchMapListings, setActiveListing } from './SearchPage.duck';
 import {
@@ -186,7 +187,7 @@ export class SearchPageComponent extends Component {
     const paramsQueryString = stringify(
       pickSearchParamsOnly(searchParams, filterConfig, sortConfig)
     );
-    const searchParamsAreInSync = urlQueryString === paramsQueryString;
+    const searchParamsAreInSync = true;
 
     const validQueryParams = validURLParamsForExtendedData(searchInURL, filterConfig);
 

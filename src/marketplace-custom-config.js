@@ -34,32 +34,48 @@
  */
 
 export const filters = [
-  {
-    id: 'dates-length',
-    label: 'Dates',
-    type: 'BookingDateRangeLengthFilter',
-    group: 'primary',
-    // Note: BookingDateRangeFilter is fixed filter,
-    // you can't change "queryParamNames: ['dates'],"
-    queryParamNames: ['dates', 'minDuration'],
-    config: {
-      // A global time zone to use in availability searches. As listings
-      // can be in various time zones, we must decide what time zone we
-      // use in search when looking for available listings within a
-      // certain time interval.
-      //
-      // If you have all/most listings in a certain time zone, change this
-      // config value to that.
-      //
-      // See: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
-      searchTimeZone: 'Etc/UTC',
+  // {
+  //   id: 'dates-length',
+  //   label: 'Dates',
+  //   type: 'BookingDateRangeLengthFilter',
+  //   group: 'primary',
+  //   // Note: BookingDateRangeFilter is fixed filter,
+  //   // you can't change "queryParamNames: ['dates'],"
+  //   queryParamNames: ['dates', 'minDuration'],
+  //   config: {
+  //     // A global time zone to use in availability searches. As listings
+  //     // can be in various time zones, we must decide what time zone we
+  //     // use in search when looking for available listings within a
+  //     // certain time interval.
+  //     //
+  //     // If you have all/most listings in a certain time zone, change this
+  //     // config value to that.
+  //     //
+  //     // See: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+  //     searchTimeZone: 'Etc/UTC',
 
-      // Options for the minimum duration of the booking
-      options: [
-        { key: '0', label: 'Any length' },
-        { key: '60', label: '1 hour', shortLabel: '1h' },
-        { key: '120', label: '2 hours', shortLabel: '2h' },
-      ],
+  //     // Options for the minimum duration of the booking
+  //     options: [
+  //       { key: '0', label: 'Any length' },
+  //       { key: '60', label: '1 hour', shortLabel: '1h' },
+  //       { key: '120', label: '2 hours', shortLabel: '2h' },
+  //     ],
+  //   },
+  // },
+  {
+    id: 'distance',
+    label: 'Distance',
+    type: 'DistanceFilter',
+    group: 'primary',
+    // Note: PriceFilter is fixed filter,
+    // you can't change "queryParamNames: ['price'],"
+    queryParamNames: ['distance'],
+    // Price filter configuration
+    // Note: unlike most prices this is not handled in subunits
+    config: {
+      min: 0,
+      max: 100,
+      step: 1,
     },
   },
   {

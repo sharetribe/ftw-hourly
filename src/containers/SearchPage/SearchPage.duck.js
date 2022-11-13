@@ -5,6 +5,7 @@ import { convertUnitToSubUnit, unitDivisor } from '../../util/currency';
 import { formatDateStringToTz, getExclusiveEndDateWithTz } from '../../util/dates';
 import { parse } from '../../util/urlHelpers';
 import config from '../../config';
+import { expandBounds } from '../../util/maps';
 
 // Pagination page size might need to be dynamic on responsive page layouts
 // Current design has max 3 columns 12 is divisible by 2 and 3
@@ -138,54 +139,14 @@ export const searchListings = searchParams => (dispatch, getState, sdk) => {
       : {};
   };
 
-  const availabilityParams = (datesParam, minDurationParam) => {
-    const dateValues = datesParam ? datesParam.split(',') : [];
-    const hasDateValues = datesParam && dateValues.length === 2;
-    const startDate = hasDateValues ? dateValues[0] : null;
-    const endDate = hasDateValues ? dateValues[1] : null;
-
-    const minDurationMaybe =
-      minDurationParam && Number.isInteger(minDurationParam) && hasDateValues
-        ? { minDuration: minDurationParam }
-        : {};
-
-    // Find configs for 'dates-length' filter
-    // (type: BookingDateRangeLengthFilter)
-    const filterConfigs = config.custom.filters;
-    const idOfBookingDateRangeLengthFilter = 'dates-length';
-    const dateLengthFilterConfig = filterConfigs.find(
-      f => f.id === idOfBookingDateRangeLengthFilter
-    );
-    // Extract time zone
-    const timeZone = dateLengthFilterConfig.config.searchTimeZone;
-
-    return hasDateValues
-      ? {
-          start: formatDateStringToTz(startDate, timeZone),
-          end: getExclusiveEndDateWithTz(endDate, timeZone),
-
-          // When we have `time-partial` value in the availability, the
-          // API returns listings that don't necessarily have the full
-          // start->end range available, but enough that the minDuration
-          // (in minutes) can be fulfilled.
-          //
-          // See: https://www.sharetribe.com/api-reference/marketplace.html#availability-filtering
-          availability: 'time-partial',
-
-          ...minDurationMaybe,
-        }
-      : {};
-  };
-
-  const { perPage, price, dates, minDuration, ...rest } = searchParams;
+  const { perPage, price, dates, minDuration, distance, bounds, ...rest } = searchParams;
   const priceMaybe = priceSearchParams(price);
-  const availabilityMaybe = availabilityParams(dates, minDuration);
 
   const params = {
     ...rest,
     ...priceMaybe,
-    ...availabilityMaybe,
     per_page: perPage,
+    bounds: expandBounds(bounds, distance),
   };
 
   return sdk.listings

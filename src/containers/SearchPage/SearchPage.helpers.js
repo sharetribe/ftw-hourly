@@ -25,7 +25,7 @@ export const validURLParamForExtendedData = (queryParamName, paramValueRaw, filt
       : f.queryParamNames === queryParamName;
   });
 
-  const paramValue = paramValueRaw.toString();
+  const paramValue = (paramValueRaw && paramValueRaw.toString()) || '';
 
   if (filterConfig) {
     const { min, max } = filterConfig.config || {};
