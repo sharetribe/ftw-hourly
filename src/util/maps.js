@@ -3,8 +3,6 @@ import seedrandom from 'seedrandom';
 import { types as sdkTypes } from './sdkLoader';
 import config from '../config';
 import turf from 'turf';
-import booleanPointInPolygon from '@turf/boolean-point-in-polygon';
-import { getPlaceOrigin } from '../components/LocationAutocompleteInput/GeocoderMapbox';
 
 const { LatLng, LatLngBounds } = sdkTypes;
 
