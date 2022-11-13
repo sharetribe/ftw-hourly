@@ -214,7 +214,7 @@ const CaregiverListingMainContent = props => {
               <span className={css.bold}>Pay rate: </span>
               <span className={css.marketH2}>
                 &nbsp;
-                {formattedMinPrice}-{maxPrice / 100}
+                {formattedMinPrice}-{rates[1] / 100}
               </span>
               <span className={css.perUnit}>
                 &nbsp;

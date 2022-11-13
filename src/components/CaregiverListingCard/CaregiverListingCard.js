@@ -116,7 +116,7 @@ export const CaregiverListingCardComponent = props => {
           {avatarComponent}
           <div className={css.price}>
             <div className={css.priceValue} title={priceTitle}>
-              {formattedMinPrice}-{maxPrice / 100}
+              {formattedMinPrice}-{rates[1] / 100}
               <span className={css.perUnit}>
                 &nbsp;
                 <FormattedMessage id={'CaregiverListingCard.perUnit'} />

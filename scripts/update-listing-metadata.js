@@ -56,12 +56,12 @@ if (dryRun === '--dry-run=false') {
         // Wrap calls to integration API in a function, that will be later
         // executed by the bulkUpdate function.
         const fns = dayBasedListings.map(listing => () => {
-          const { listingType } = listing.attributes.publicData;
+          const { minPrice, maxPrice } = listing.attributes.publicData;
 
           return integrationSdk.listings.update({
             id: listing.id,
-            metadata: {
-              listingType,
+            publicData: {
+              rates: [minPrice, maxPrice],
             },
           });
         });
