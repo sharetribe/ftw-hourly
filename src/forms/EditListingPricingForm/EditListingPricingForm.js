@@ -37,6 +37,9 @@ export const EditListingPricingFormComponent = props => (
         updated,
         updateInProgress,
         fetchErrors,
+        form: {
+          mutators: { setValue },
+        },
       } = formRenderProps;
 
       const maximumPricePerUnitMessage = intl.formatMessage({
@@ -60,14 +63,14 @@ export const EditListingPricingFormComponent = props => (
           id: 'EditListingPricingForm.minimumPriceRequired',
         })
       );
-      const minPrice = new Money(config.listingMinimumPriceSubUnits, config.currency);
+      const minimumPrice = new Money(config.listingMinimumPriceSubUnits, config.currency);
       const minPriceRequired = validators.moneySubUnitAmountAtLeast(
         intl.formatMessage(
           {
             id: 'EditListingPricingForm.priceTooLow',
           },
           {
-            minPrice: formatMoney(intl, minPrice),
+            minPrice: formatMoney(intl, minimumPrice),
           }
         ),
         config.listingMinimumPriceSubUnits
@@ -89,31 +92,35 @@ export const EditListingPricingFormComponent = props => (
 
       // const [handles, setHandles] = useState([15, 25]);
       // const [maxPrice, setMaxPrice] = useState(25);
+      // const [minPrice, setMinPrice] = useState(15);
 
       // const handleCurrencyFieldChange = value => {
-      //   setHandles([value[0], value[1]]);
-      //   setMaxPrice(value[1].toString());
-      //   setValue('minPrice', value[0].toString());
-      //   setValue('maxPrice', value[1].toString());
+      //   if ([value[0], value[1]] != handles) {
+      //     setHandles([value[0], value[1]]);
+      //     setMinPrice(value[0].toString());
+      //     setMaxPrice(value[1].toString());
+      //     setValue('minPrice', new Money(value[0], 'USD'));
+      //     setValue('maxPrice', new Money(value[1], 'USD'));
+      //   }
       // };
 
-      const [priceError, setPriceError] = useState(false);
+      // const [priceError, setPriceError] = useState(false);
 
-      const onSubmit = e => {
-        e.preventDefault();
+      // const onSubmit = e => {
+      //   e.preventDefault();
 
-        if (
-          Number(e.target[0].value.replace('$', '')) > Number(e.target[1].value.replace('$', ''))
-        ) {
-          setPriceError(true);
-          return;
-        }
+      //   if (
+      //     Number(e.target[0].value.replace('$', '')) > Number(e.target[1].value.replace('$', ''))
+      //   ) {
+      //     setPriceError(true);
+      //     return;
+      //   }
 
-        handleSubmit(e);
-      };
+      //   handleSubmit(e);
+      // };
 
       return (
-        <Form onSubmit={onSubmit} className={classes}>
+        <Form onSubmit={handleSubmit} className={classes}>
           {updateListingError ? (
             <p className={css.error}>
               <FormattedMessage id="EditListingPricingForm.updateFailed" />
@@ -124,12 +131,12 @@ export const EditListingPricingFormComponent = props => (
               <FormattedMessage id="EditListingPricingForm.showListingFailed" />
             </p>
           ) : null}
-          {priceError ? (
+          {/* {priceError ? (
             <p className={css.error}>
               <FormattedMessage id="EditListingPricingForm.oppositePricingError" />
             </p>
-          ) : null}
-          <div className={css.currencyFieldContainer}>
+          ) : null} */}
+          {/* <div className={css.currencyFieldContainer}>
             <FieldCurrencyInput
               id="minPrice"
               name="minPrice"
@@ -138,6 +145,7 @@ export const EditListingPricingFormComponent = props => (
               placeholder={minimumPricePlaceholderMessage}
               currencyConfig={config.currencyConfig}
               validate={!submitInProgress && minimumPriceValidators}
+              parentValue={minPrice}
             />
             <FieldCurrencyInput
               id="maxPrice"
@@ -147,18 +155,18 @@ export const EditListingPricingFormComponent = props => (
               placeholder={maximumPricePlaceholderMessage}
               currencyConfig={config.currencyConfig}
               validate={!submitInProgress && maxPriceRequired}
+              parentValue={maxPrice}
             />
-          </div>
-          {/* <FieldRangeSlider
-            id="priceRange"
-            name="priceRange"
+          </div> */}
+          <FieldRangeSlider
+            id="rates"
+            name="rates"
             className={css.priceRange}
-            onChange={value => handleCurrencyFieldChange(value)}
             min={10}
             max={50}
             step={1}
-            handles={handles}
-          /> */}
+            handles={[15, 25]}
+          />
           <Button
             className={css.submitButton}
             type="submit"

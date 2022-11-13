@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Field } from 'react-final-form';
 import classNames from 'classnames';
 import { RangeSlider } from '../../components';
@@ -6,6 +6,11 @@ import { RangeSlider } from '../../components';
 const RangeSliderInput = props => {
   const { input, handles, ...rest } = props;
   const { value, ...inputProps } = input;
+
+  useEffect(() => {
+    input.onChange(handles);
+    console.log(handles);
+  }, []);
 
   const currentHandles = Array.isArray(value) ? value : handles;
   return <RangeSlider {...inputProps} {...rest} handles={currentHandles} />;

@@ -48,12 +48,10 @@ const EditListingPricingPanel = props => {
     <FormattedMessage id="EditListingPricingPanel.createListingTitle" />
   );
 
-  const minPrice = publicData && publicData.minPrice;
-  const maxPrice = publicData && publicData.maxPrice;
+  const rates = publicData && publicData.rates;
 
   const initialValues = {
-    minPrice: minPrice ? new Money(minPrice, 'USD') : null,
-    maxPrice: maxPrice ? new Money(maxPrice, 'USD') : null,
+    rates,
   };
 
   // const priceCurrencyValid =
@@ -65,12 +63,11 @@ const EditListingPricingPanel = props => {
       className={css.form}
       initialValues={initialValues}
       onSubmit={values => {
-        const { minPrice, maxPrice } = values;
+        const { rates } = values;
 
         const updateValues = {
           publicData: {
-            minPrice: minPrice.amount,
-            maxPrice: maxPrice.amount,
+            rates,
           },
         };
         onSubmit(updateValues);

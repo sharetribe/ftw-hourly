@@ -196,13 +196,14 @@ class CurrencyInputComponent extends Component {
   }
 
   render() {
-    const { className, currencyConfig, defaultValue, placeholder, intl } = this.props;
+    const { className, currencyConfig, defaultValue, placeholder, intl, parentValue } = this.props;
     const placeholderText = placeholder || intl.formatNumber(defaultValue, currencyConfig);
+
     return (
       <input
         className={className}
         {...allowedInputProps(this.props)}
-        value={this.state.value}
+        value={parentValue || this.state.value}
         onChange={this.onInputChange}
         onBlur={this.onInputBlur}
         onFocus={this.onInputFocus}
