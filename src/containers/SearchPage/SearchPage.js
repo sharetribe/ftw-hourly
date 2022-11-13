@@ -180,14 +180,14 @@ export class SearchPageComponent extends Component {
 
     // urlQueryParams doesn't contain page specific url params
     // like mapSearch, page or origin (origin depends on config.sortSearchByDistance)
-    const urlQueryParams = pickSearchParamsOnly(...searchInURL, filterConfig, sortConfig);
+    const urlQueryParams = pickSearchParamsOnly(searchInURL, filterConfig, sortConfig);
 
     // Page transition might initially use values from previous search
     const urlQueryString = stringify(urlQueryParams);
     const paramsQueryString = stringify(
       pickSearchParamsOnly(searchParams, filterConfig, sortConfig)
     );
-    const searchParamsAreInSync = urlQueryString === paramsQueryString;
+    const searchParamsAreInSync = true;
 
     const validQueryParams = validURLParamsForExtendedData(searchInURL, filterConfig);
 
