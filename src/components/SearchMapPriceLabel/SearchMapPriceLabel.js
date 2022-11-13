@@ -27,10 +27,10 @@ class SearchMapPriceLabel extends Component {
   render() {
     const { className, rootClassName, intl, listing, onListingClicked, isActive } = this.props;
     const currentListing = ensureListing(listing);
-    const { minPrice, maxPrice } = currentListing.attributes.publicData;
+    const { rates } = currentListing.attributes.publicData;
 
-    const minPriceMoney = new Money(minPrice, 'USD');
-    const maxPriceMoney = new Money(maxPrice, 'USD');
+    const minPriceMoney = new Money(rates[0], 'USD');
+    const maxPriceMoney = new Money(rates[1], 'USD');
 
     // Create formatted price if currency is known or alternatively show just the unknown currency.
     const formattedPrice =

@@ -19,9 +19,9 @@ import { info } from 'autoprefixer';
 
 const MIN_LENGTH_FOR_LONG_WORDS = 10;
 
-const priceData = (minPrice, maxPrice, intl) => {
-  const minPriceMoney = new Money(minPrice, 'USD');
-  const maxPriceMoney = new Money(maxPrice, 'USD');
+const priceData = (rates, intl) => {
+  const minPriceMoney = new Money(rates[0], 'USD');
+  const maxPriceMoney = new Money(rates[1], 'USD');
 
   if (minPriceMoney && maxPriceMoney) {
     const formattedMinPrice = formatMoneyInteger(intl, minPriceMoney);
@@ -87,13 +87,13 @@ export const EmployerListingCardComponent = props => {
   const currentAuthor = currentListing.author;
   const userDisplayName = userDisplayNameAsString(currentAuthor) + '.';
   const { publicData } = currentListing.attributes;
-  const { minPrice, maxPrice, location, careTypes, recipientDetails } = publicData;
+  const { rates, location, careTypes, recipientDetails } = publicData;
   const slug = createSlug(userDisplayName);
 
   let descriptionCutoff =
     recipientDetails.length > 300 ? cutText(recipientDetails, 300) : recipientDetails;
 
-  const { formattedMinPrice, formattedMaxPrice, priceTitle } = priceData(minPrice, maxPrice, intl);
+  const { formattedMinPrice, formattedMaxPrice, priceTitle } = priceData(rates, intl);
 
   const servicesMap = new Map();
   findOptionsForSelectFilter('careTypes', filtersConfig).forEach(option =>

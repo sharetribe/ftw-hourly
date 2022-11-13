@@ -27,9 +27,9 @@ const QUALIFICATIONS = 'QUALIFICATIONS';
 const SAFETY = 'SAFETY';
 const RECOMMENDATIONS = 'RECOMMENDATIONS';
 
-const priceData = (minPrice, maxPrice, intl) => {
-  const minPriceMoney = new Money(minPrice, 'USD');
-  const maxPriceMoney = new Money(maxPrice, 'USD');
+const priceData = (rates, intl) => {
+  const minPriceMoney = new Money(rates[0], 'USD');
+  const maxPriceMoney = new Money(rates[1], 'USD');
 
   if (minPriceMoney && maxPriceMoney) {
     const formattedMinPrice = formatMoneyInteger(intl, minPriceMoney);
@@ -132,8 +132,7 @@ const CaregiverListingMainContent = props => {
 
   const {
     location = '',
-    minPrice,
-    maxPrice,
+    rates,
     experienceLevel,
     covidVaccination,
     experienceWith,
@@ -141,7 +140,7 @@ const CaregiverListingMainContent = props => {
     languagesSpoken,
     additionalInfo,
   } = currentListing?.attributes.publicData;
-  const { formattedMinPrice } = priceData(minPrice, maxPrice, intl);
+  const { formattedMinPrice } = priceData(rates, intl);
 
   const convertedExperienceLevel = convertExperienceToLabel(experienceLevel);
 

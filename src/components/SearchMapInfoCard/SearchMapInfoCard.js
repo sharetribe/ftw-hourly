@@ -18,10 +18,10 @@ const ListingCard = props => {
   const { className, clickHandler, intl, isInCarousel, listing, urlToListing } = props;
 
   const { title } = listing.attributes;
-  const { minPrice, maxPrice } = listing.attributes.publicData;
+  const { rates } = listing.attributes.publicData;
 
-  const minPriceMoney = new Money(minPrice, 'USD');
-  const maxPriceMoney = new Money(maxPrice, 'USD');
+  const minPriceMoney = new Money(rates[0], 'USD');
+  const maxPriceMoney = new Money(rates[1], 'USD');
 
   // Create formatted price if currency is known or alternatively show just the unknown currency.
   const formattedPrice =
