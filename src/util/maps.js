@@ -219,30 +219,6 @@ export const calculateDistanceBetweenOrigins = (latlng1, latlng2) => {
   return turf.distance(latlng1, latlng2, options);
 };
 
-const spatialJoin = (listings, filterFeature) => {
-  // Loop through all the features in the source geojson and return the ones that
-  // are inside the filter feature (buffered radius) and are confirmed landing sites
-  var joined = listings.filter(listing => {
-    const { lat, lng } = listing.attributes.geolocation;
-    const point = turf.point([lng, lat]);
-    return booleanPointInPolygon(point, filterFeature);
-  });
-
-  return joined;
-};
-
-const makeRadii = (lngLatArray, radiusInMiles) => {
-  const point = turf.point(lngLatArray);
-  return turf.buffer(point, radiusInMiles, 'miles');
-};
-
-export const filterListingsByDistance = (listings, params) => {
-  return getPlaceOrigin(params.address).then(res => {
-    const radii = makeRadii(res, params.distance > 0 ? params.distance : 1);
-    return spatialJoin(listings, radii);
-  });
-};
-
 export const expandBounds = (bounds, distance) => {
   bounds.ne.lat += distance / 68.939;
   bounds.ne.lng += distance / 54.583;
