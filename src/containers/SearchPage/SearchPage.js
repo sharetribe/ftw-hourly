@@ -45,8 +45,6 @@ export class SearchPageComponent extends Component {
       enquiryModalOpen: false,
       currentListingAuthor: '',
       currentListingId: '',
-      filteredListings: [],
-      listingsFilteredByDistance: false,
     };
 
     this.searchMapListingsInProgress = false;
@@ -175,18 +173,14 @@ export class SearchPageComponent extends Component {
       sendEnquiryInProgress,
     } = this.props;
     // eslint-disable-next-line no-unused-vars
-    const { mapSearch, page, distance, ...searchInURL } = parse(location.search, {
+    const { mapSearch, page, ...searchInURL } = parse(location.search, {
       latlng: ['origin'],
       latlngBounds: ['bounds'],
     });
 
     // urlQueryParams doesn't contain page specific url params
     // like mapSearch, page or origin (origin depends on config.sortSearchByDistance)
-    const urlQueryParams = pickSearchParamsOnly(
-      { distance, ...searchInURL },
-      filterConfig,
-      sortConfig
-    );
+    const urlQueryParams = pickSearchParamsOnly(...searchInURL, filterConfig, sortConfig);
 
     // Page transition might initially use values from previous search
     const urlQueryString = stringify(urlQueryParams);
@@ -207,20 +201,8 @@ export class SearchPageComponent extends Component {
       this.setState({ isSearchMapOpenOnMobile: true });
     };
 
-    if (distance !== undefined) {
-      const distanceFilterParams = parse(this.props.location.search);
-      filterListingsByDistance(this.props.listings, distanceFilterParams).then(res => {
-        this.setState({ filteredListings: res });
-        this.setState({ listingsFilteredByDistance: true });
-      });
-    }
-
     const { address, bounds, origin } = searchInURL || {};
-    const { title, description, schema } = createSearchResultSchema(
-      (this.state.listingsFilteredByDistance && this.state.filteredListings) || listings,
-      address,
-      intl
-    );
+    const { title, description, schema } = createSearchResultSchema(listings, address, intl);
 
     // Set topbar class based on if a modal is open in
     // a child component
@@ -245,9 +227,7 @@ export class SearchPageComponent extends Component {
         <div className={css.container}>
           <MainPanel
             urlQueryParams={validQueryParams}
-            listings={
-              (this.state.listingsFilteredByDistance && this.state.filteredListings) || listings
-            }
+            listings={listings}
             searchInProgress={searchInProgress}
             searchListingsError={searchListingsError}
             searchParamsAreInSync={searchParamsAreInSync}

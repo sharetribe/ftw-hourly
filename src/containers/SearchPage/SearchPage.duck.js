@@ -5,6 +5,7 @@ import { convertUnitToSubUnit, unitDivisor } from '../../util/currency';
 import { formatDateStringToTz, getExclusiveEndDateWithTz } from '../../util/dates';
 import { parse } from '../../util/urlHelpers';
 import config from '../../config';
+import { expandBounds } from '../../util/maps';
 
 // Pagination page size might need to be dynamic on responsive page layouts
 // Current design has max 3 columns 12 is divisible by 2 and 3
@@ -141,14 +142,12 @@ export const searchListings = searchParams => (dispatch, getState, sdk) => {
   const { perPage, price, dates, minDuration, distance, bounds, ...rest } = searchParams;
   const priceMaybe = priceSearchParams(price);
 
-  const params =
-    distance > 0
-      ? {
-          ...rest,
-          ...priceMaybe,
-          per_page: perPage,
-        }
-      : { ...rest, ...priceMaybe, bounds, per_page: perPage };
+  const params = {
+    ...rest,
+    ...priceMaybe,
+    per_page: perPage,
+    bounds: expandBounds(bounds, distance),
+  };
 
   return sdk.listings
     .query(params)

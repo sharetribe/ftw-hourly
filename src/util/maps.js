@@ -242,3 +242,12 @@ export const filterListingsByDistance = (listings, params) => {
     return spatialJoin(listings, radii);
   });
 };
+
+export const expandBounds = (bounds, distance) => {
+  bounds.ne.lat += distance / 68.939;
+  bounds.ne.lng += distance / 54.583;
+  bounds.sw.lat -= distance / 68.939;
+  bounds.sw.lng -= distance / 54.583;
+
+  return bounds;
+};
