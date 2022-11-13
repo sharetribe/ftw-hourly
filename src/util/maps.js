@@ -217,11 +217,22 @@ export const calculateDistanceBetweenOrigins = (latlng1, latlng2) => {
   return turf.distance(latlng1, latlng2, options);
 };
 
+/**
+ * Expand bounds by a specified distance in miles
+ *
+ * @param {LatLngBounds} bounds - bounds to expand
+ * @param {number} distance - distance to expand bounds in each direction
+ *
+ * @return {LatLngBounds} - New expanded bounds
+ */
 export const expandBounds = (bounds, distance) => {
-  bounds.ne.lat += distance / 68.939;
-  bounds.ne.lng += distance / 54.583;
-  bounds.sw.lat -= distance / 68.939;
-  bounds.sw.lng -= distance / 54.583;
+  const neLatLngRads = degToRadians(bounds.ne);
+  const swLatLngRads = degToRadians(bounds.sw);
+
+  bounds.ne.lat += distance / 69.171;
+  bounds.ne.lng += distance / (68.702 * Math.cos(neLatLngRads.lat));
+  bounds.sw.lat -= distance / 69.171;
+  bounds.sw.lng -= distance / (68.702 * Math.cos(swLatLngRads.lat));
 
   return bounds;
 };

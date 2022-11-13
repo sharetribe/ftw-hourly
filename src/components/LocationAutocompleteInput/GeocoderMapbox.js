@@ -68,7 +68,7 @@ const placeBounds = prediction => {
 // Reverse geoencode the latitude and longtude coordinates
 // to return the address of a given location.
 export const getPlaceAddress = async place => {
-  const returnType = { types: 'place' };
+  const returnType = { types: 'postcode' };
   const limitCountriesMaybe = config.maps.search.countryLimit
     ? { country: config.maps.search.countryLimit }
     : {};
@@ -81,6 +81,8 @@ export const getPlaceAddress = async place => {
     '.json?' +
     queryString.stringify(limitCountriesMaybe) +
     '&' +
+    queryString.stringify(returnType) +
+    '&' +
     'access_token=' +
     process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
 
@@ -92,7 +94,7 @@ export const getPlaceAddress = async place => {
   });
 
   const body = await response.json();
-  return body.features[2].place_name.replace(', United States', '');
+  return body.features[0].place_name.replace(', United States', '');
 };
 
 // Reverse geoencode the latitude and longtude coordinates
@@ -166,7 +168,7 @@ class GeocoderMapbox {
         limit: 5,
         ...limitCountriesMaybe,
         language: [config.locale],
-        types: ['place'],
+        types: ['postcode'],
       })
       .send()
       .then(response => {
