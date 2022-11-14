@@ -30,6 +30,7 @@ import EditListingWizardTab, {
   PRICING,
   CARE_RECEIVER_DETAILS,
   CAREGIVER_DETAILS,
+  PROFILE_PICTURE,
 } from '../EditListingWizardTab/EditListingWizardTab';
 import css from './EmployerEditListingWizard.module.css';
 
@@ -49,6 +50,7 @@ export const TABS = [
   ...availabilityMaybe,
   CARE_RECEIVER_DETAILS,
   CAREGIVER_DETAILS,
+  PROFILE_PICTURE,
 ];
 
 // Tabs are horizontal in small screens
@@ -71,6 +73,8 @@ const tabLabel = (intl, tab) => {
     key = 'EmployerEditListingWizard.tabLabelCareRecipientDetails';
   } else if (tab === CAREGIVER_DETAILS) {
     key = 'EmployerEditListingWizard.tabLabelCaregiverDetails';
+  } else if (tab === PROFILE_PICTURE) {
+    key = 'EmployerEditListingWizard.tabLabelProfilePicture';
   }
 
   return intl.formatMessage({ id: key });
@@ -105,7 +109,9 @@ const tabCompleted = (tab, listing) => {
         publicData.recipientDetails
       );
     case CAREGIVER_DETAILS:
-      return true;
+      return !!(publicData && publicData.idealCaregiverDetails);
+    case PROFILE_PICTURE:
+      return !!(images && images.length > 0);
     default:
       return false;
   }

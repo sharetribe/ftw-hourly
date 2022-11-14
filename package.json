@@ -29,6 +29,7 @@
     "express-sitemap": "^1.8.0",
     "final-form": "^4.20.7",
     "final-form-arrays": "^3.0.2",
+    "fs": "^0.0.1-security",
     "full-icu": "^1.4.0",
     "helmet": "^4.6.0",
     "jose": "4.9.2",

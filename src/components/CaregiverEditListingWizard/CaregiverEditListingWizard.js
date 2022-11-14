@@ -26,7 +26,7 @@ import EditListingWizardTab, {
   ADDITIONAL_DETAILS,
   LOCATION,
   PRICING,
-  PHOTOS,
+  PROFILE_PICTURE,
 } from '../EditListingWizardTab/EditListingWizardTab';
 import css from './CaregiverEditListingWizard.module.css';
 
@@ -47,7 +47,7 @@ export const TABS = [
   LOCATION,
   PRICING,
   ...availabilityMaybe,
-  PHOTOS,
+  PROFILE_PICTURE,
 ];
 
 // Tabs are horizontal in small screens
@@ -72,7 +72,7 @@ const tabLabel = (intl, tab) => {
     key = 'CaregiverEditListingWizard.tabLabelPricing';
   } else if (tab === AVAILABILITY) {
     key = 'CaregiverEditListingWizard.tabLabelAvailability';
-  } else if (tab === PHOTOS) {
+  } else if (tab === PROFILE_PICTURE) {
     key = 'CaregiverEditListingWizard.tabLabelPhotos';
   }
 
@@ -112,7 +112,7 @@ const tabCompleted = (tab, listing) => {
       return !!(publicData && publicData.rates);
     case AVAILABILITY:
       return !!(publicData && publicData.availabilityPlan);
-    case PHOTOS:
+    case PROFILE_PICTURE:
       return images && images.length > 0;
     default:
       return false;

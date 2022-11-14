@@ -42,6 +42,7 @@ const log = require('./log');
 const { sitemapStructure } = require('./sitemap');
 const csp = require('./csp');
 const sdkUtils = require('./api-util/sdk');
+const queryEvents = require('./queryEvents');
 
 const buildPath = path.resolve(__dirname, '..', 'build');
 const env = process.env.REACT_APP_ENV;
@@ -70,6 +71,8 @@ log.setup();
 // request information is added to error context when sent
 // to Sentry.
 app.use(log.requestHandler());
+
+app.use(queryEvents());
 
 // The helmet middleware sets various HTTP headers to improve security.
 // See: https://www.npmjs.com/package/helmet

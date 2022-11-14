@@ -16,3 +16,4 @@ npm-debug.log
 yarn-error.log
 .vscode/*
 jsconfig.json
+server/last-sequence-id.state

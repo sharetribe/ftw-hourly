@@ -124,8 +124,9 @@ export class SearchPageComponent extends Component {
 
       // signup and return back to listingPage.
       history.push(createResourceLocatorString('SignupPage', routeConfiguration(), {}, {}), state);
-    } else {
+    } else if (currentUser.attributes.emailVerified) {
       this.setState({ enquiryModalOpen: true });
+    } else {
     }
   }
 

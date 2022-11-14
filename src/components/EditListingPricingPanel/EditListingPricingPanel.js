@@ -51,7 +51,7 @@ const EditListingPricingPanel = props => {
   const rates = publicData && publicData.rates;
 
   const initialValues = {
-    rates: [rates[0] / 100, rates[1] / 100],
+    rates: rates && [rates[0] / 100, rates[1] / 100],
   };
 
   // const priceCurrencyValid =

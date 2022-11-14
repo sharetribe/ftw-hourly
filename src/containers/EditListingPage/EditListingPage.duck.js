@@ -418,10 +418,11 @@ export function requestCreateListingDraft(data) {
       .createDraft(data, queryParams)
       .then(response => {
         const listingId = response.data.data.id.uuid;
+        const userId = response.data.data.relationships.author.data.id.uuid;
 
         // TODO: May want to ensure that listing is actually user's
         if (listingType) {
-          updateListingMetadata({ listingId, metadata: { listingType } });
+          updateListingMetadata({ listingId, metadata: { listingType, userId } });
         }
 
         // Add the created listing to the marketplace data

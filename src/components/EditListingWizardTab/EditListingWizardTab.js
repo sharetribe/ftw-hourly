@@ -34,7 +34,7 @@ export const ADDITIONAL_DETAILS = 'additional-details';
 export const POLICY = 'policy';
 export const LOCATION = 'location';
 export const PRICING = 'pricing';
-export const PHOTOS = 'photos';
+export const PROFILE_PICTURE = 'profile-picture';
 export const CARE_RECEIVER_DETAILS = 'care-recipient-details';
 export const CAREGIVER_DETAILS = 'caregiver-details';
 
@@ -48,7 +48,7 @@ export const SUPPORTED_TABS = [
   LOCATION,
   PRICING,
   AVAILABILITY,
-  PHOTOS,
+  PROFILE_PICTURE,
   CARE_RECEIVER_DETAILS,
   CAREGIVER_DETAILS,
 ];
@@ -319,14 +319,14 @@ const EditListingWizardTab = props => {
         />
       );
     }
-    case PHOTOS: {
+    case PROFILE_PICTURE: {
       const submitButtonTranslationKey = isNewListingFlow
         ? 'EditListingWizard.saveNewPhotos'
         : 'EditListingWizard.saveEditPhotos';
 
       return (
         <EditListingPhotosPanel
-          {...panelProps(PHOTOS)}
+          {...panelProps(PROFILE_PICTURE)}
           submitButtonText={intl.formatMessage({ id: submitButtonTranslationKey })}
           profileImage={profileImage}
           onImageUpload={onImageUpload}
@@ -362,7 +362,7 @@ const EditListingWizardTab = props => {
 
       return (
         <EditListingCaregiverDetailsPanel
-          {...panelProps(PHOTOS)}
+          {...panelProps(CAREGIVER_DETAILS)}
           submitButtonText={intl.formatMessage({ id: submitButtonTranslationKey })}
           profileImage={profileImage}
           onImageUpload={onImageUpload}
