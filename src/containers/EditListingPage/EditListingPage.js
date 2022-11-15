@@ -347,7 +347,7 @@ export const EditListingPageComponent = props => {
 
     return (
       <Page title={title} scrollingDisabled={scrollingDisabled}>
-        {!createProfile && currentListing && currentListing.id && currentListing.id.uuid && (
+        {!createProfile && (
           <TopbarContainer
             className={css.topbar}
             mobileRootClassName={css.mobileTopbar}
@@ -355,17 +355,15 @@ export const EditListingPageComponent = props => {
             mobileClassName={css.mobileTopbar}
           />
         )}
-        {!createProfile && currentListing && currentListing.id && currentListing.id.uuid && (
+        {!createProfile && (
           <UserNav
             selectedPageName={currentListing ? 'EditListingPage' : 'NewListingPage'}
-            listing={currentListing}
+            listing={listing}
           />
         )}
 
         {editListingWizard}
-        {!createProfile && currentListing && currentListing.id && currentListing.id.uuid && (
-          <Footer />
-        )}
+        {!createProfile && <Footer />}
       </Page>
     );
   } else {
