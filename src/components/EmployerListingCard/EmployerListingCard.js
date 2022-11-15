@@ -91,7 +91,9 @@ export const EmployerListingCardComponent = props => {
   const slug = createSlug(userDisplayName);
 
   let descriptionCutoff =
-    recipientDetails.length > 300 ? cutText(recipientDetails, 300) : recipientDetails;
+    recipientDetails && recipientDetails.length > 300
+      ? cutText(recipientDetails, 300)
+      : recipientDetails;
 
   const { formattedMinPrice, formattedMaxPrice, priceTitle } = priceData(rates, intl);
 
