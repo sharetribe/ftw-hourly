@@ -50,6 +50,7 @@ import {
   savePayoutDetails,
 } from './EditListingPage.duck';
 import { updateProfile, uploadImage } from '../ProfileSettingsPage/ProfileSettingsPage.duck';
+import { changeModalValue } from '../TopbarContainer/TopbarContainer.duck';
 
 import css from './EditListingPage.module.css';
 
@@ -110,6 +111,7 @@ export const EditListingPageComponent = props => {
     addPaymentMethodError,
     createStripeCustomerError,
     handleCardSetupError,
+    onChangeMissingInfoModal,
   } = props;
 
   const { id, type, returnURLType } = params;
@@ -272,6 +274,7 @@ export const EditListingPageComponent = props => {
           image={image}
           uploadInProgress={uploadInProgress}
           onHandleCardSetup={onHandleCardSetup}
+          onChangeMissingInfoModal={onChangeMissingInfoModal}
         />
       );
     } else if (userType === EMPLOYER) {
@@ -327,6 +330,7 @@ export const EditListingPageComponent = props => {
           addPaymentMethodError={addPaymentMethodError}
           createStripeCustomerError={createStripeCustomerError}
           handleCardSetupError={handleCardSetupError}
+          onChangeMissingInfoModal={onChangeMissingInfoModal}
         />
       );
     } else {
@@ -534,6 +538,7 @@ const mapDispatchToProps = dispatch => ({
   fetchStripeCustomer: () => dispatch(stripeCustomer()),
   onSavePaymentMethod: (stripeCustomer, newPaymentMethod) =>
     dispatch(savePaymentMethod(stripeCustomer, newPaymentMethod)),
+  onChangeMissingInfoModal: value => dispatch(changeModalValue(value)),
 });
 
 // Note: it is important that the withRouter HOC is **outside** the

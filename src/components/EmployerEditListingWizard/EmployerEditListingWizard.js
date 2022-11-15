@@ -19,6 +19,7 @@ import {
   ensureStripeCustomer,
   ensurePaymentMethodCard,
 } from '../../util/data';
+import { EMAIL_VERIFICATION } from '../ModalMissingInformation/ModalMissingInformation';
 
 import { Modal, NamedRedirect, Tabs } from '..';
 import { PaymentMethodsForm } from '../../forms';
@@ -187,9 +188,12 @@ class EmployerEditListingWizard extends Component {
   }
 
   handlePublishListing(id) {
-    const { onPublishListingDraft, currentUser } = this.props;
+    const { onPublishListingDraft, currentUser, onChangeMissingInfoModal, history } = this.props;
 
     const uploadedImage = this.props.image;
+
+    const hasDefaultPaymentMethod =
+      currentUser && currentUser.stripeCustomer && currentUser.stripeCustomer.defaultPaymentMethod;
 
     // Update profileImage only if file system has been accessed
     const updatedValues =
@@ -201,18 +205,30 @@ class EmployerEditListingWizard extends Component {
 
     onPublishListingDraft(id);
 
-    this.setState({
-      draftId: id,
-      showPayoutDetails: true,
-    });
+    if (
+      currentUser &&
+      !currentUser.attributes.emailVerified &&
+      !history.location.pathname.includes('create-profile')
+    ) {
+      onChangeMissingInfoModal(EMAIL_VERIFICATION);
+    } else if (!!!hasDefaultPaymentMethod) {
+      this.setState({
+        draftId: id,
+        showPayoutDetails: true,
+      });
+    } else if (history.location.pathname.includes('create-profile')) {
+      history.push('/signup');
+    }
   }
 
   handlePayoutModalClose() {
+    const { history } = this.props;
+
     this.setState({ showPayoutDetails: false });
-    if (window.location.href.includes('create-profile')) {
-      window.location.href = '/signup';
+    if (history.location.pathname.includes('create-profile')) {
+      history.push('/signup');
     } else {
-      window.location.href = '/l';
+      history.push('/l');
     }
   }
 

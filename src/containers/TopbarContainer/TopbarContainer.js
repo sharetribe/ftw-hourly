@@ -73,6 +73,7 @@ TopbarContainerComponent.defaultProps = {
   sendVerificationEmailError: null,
   currentUserListing: null,
   authScopes: null,
+  modalValue: null,
 };
 
 TopbarContainerComponent.propTypes = {

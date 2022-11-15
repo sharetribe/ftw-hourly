@@ -582,7 +582,10 @@ export const loadData = params => (dispatch, getState, sdk) => {
     'fields.image': ['variants.square-small', 'variants.square-small2x'],
   };
 
-  return Promise.all([dispatch(requestShowListing(payload)), dispatch(fetchCurrentUser())])
+  return Promise.all([
+    dispatch(requestShowListing(payload)),
+    dispatch(fetchCurrentUser({ include: ['stripeCustomer.defaultPaymentMethod'] })),
+  ])
     .then(response => {
       const currentUser = getState().user.currentUser;
       if (currentUser && currentUser.stripeAccount) {
