@@ -352,7 +352,7 @@ export class AuthenticationPageComponent extends Component {
 
     const emailVerificationContent = (
       <div className={css.content}>
-        <NamedLink className={css.verifyClose} name="ProfileSettingsPage">
+        <NamedLink className={css.verifyClose} name="LandingPage">
           <span className={css.closeText}>
             <FormattedMessage id="AuthenticationPage.verifyEmailClose" />
           </span>
