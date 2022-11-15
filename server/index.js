@@ -72,7 +72,7 @@ log.setup();
 // to Sentry.
 app.use(log.requestHandler());
 
-app.use(queryEvents());
+queryEvents();
 
 // The helmet middleware sets various HTTP headers to improve security.
 // See: https://www.npmjs.com/package/helmet
