@@ -17,6 +17,7 @@ const initiatePrivileged = require('./api/initiate-privileged');
 const transitionPrivileged = require('./api/transition-privileged');
 const updateUserMetadata = require('../src/util/update-user-metadata');
 const updateListingMetadata = require('../src/util/update-listing-metadata');
+const deleteAccount = require('./api/delete-account');
 
 const createUserWithIdp = require('./api/auth/createUserWithIdp');
 
@@ -58,6 +59,7 @@ router.post('/initiate-privileged', initiatePrivileged);
 router.post('/transition-privileged', transitionPrivileged);
 router.post('/update-user-metadata', updateUserMetadata);
 router.post('/update-listing-metadata', updateListingMetadata);
+router.post('/delete-account', deleteAccount);
 
 // Create user with identity provider (e.g. Facebook or Google)
 // This endpoint is called to create a new user after user has confirmed

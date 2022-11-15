@@ -137,3 +137,7 @@ export const updateUserMetadata = body => {
 export const updateListingMetadata = body => {
   return post('/api/update-listing-metadata', body);
 };
+
+export const deleteUserAccount = body => {
+  return post('/api/delete-account', body);
+};

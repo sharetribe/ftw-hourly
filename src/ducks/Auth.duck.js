@@ -1,6 +1,6 @@
 import isEmpty from 'lodash/isEmpty';
 import { clearCurrentUser, fetchCurrentUser } from './user.duck';
-import { createUserWithIdp, updateUserMetadata } from '../util/api';
+import { createUserWithIdp, updateUserMetadata, deleteUserAccount } from '../util/api';
 import { storableError } from '../util/errors';
 import * as log from '../util/log';
 
@@ -222,12 +222,14 @@ export const signup = params => (dispatch, getState, sdk) => {
   return (
     sdk.currentUser
       .create(createUserParams)
-      // May need to set to delete user if metadata fails
-      .then(() => updateUserMetadata({ email, metadata: { userType } }))
+      .then(() =>
+        //Maybe put message on screen if this fails to contact team
+        updateUserMetadata({ email, metadata: { userType } })
+      )
       .then(() => dispatch(signupSuccess()))
       //Need to change login to create profile path
       .then(() => dispatch(login(email, password)))
-      .catch(e => {
+      .catch(e => {∂
         dispatch(signupError(storableError(e)));
         log.error(e, 'signup-failed', {
           email: params.email,
