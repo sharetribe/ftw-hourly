@@ -250,7 +250,7 @@ export const resetPassword = email => (dispatch, getState, sdk) => {
     .catch(e => dispatch(resetPasswordError(storableError(e))));
 };
 
-export const loadData = () => {
+export const loadData = (dispatch, getState, sdk) => {
   // Since verify email happens in separate tab, current user's data might be updated
   return fetchCurrentUser();
 };

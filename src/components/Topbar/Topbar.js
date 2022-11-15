@@ -152,6 +152,8 @@ class TopbarComponent extends Component {
       sendVerificationEmailInProgress,
       sendVerificationEmailError,
       showGenericError,
+      modalValue,
+      onChangeModalValue,
     } = this.props;
 
     const { mobilemenu, mobilesearch, address, origin, bounds } = parse(location.search, {
@@ -270,7 +272,7 @@ class TopbarComponent extends Component {
             </p>
           </div>
         </Modal>
-        {/* <ModalMissingInformation
+        <ModalMissingInformation
           id="MissingInformationReminder"
           containerClassName={css.missingInformationModal}
           currentUser={currentUser}
@@ -281,7 +283,9 @@ class TopbarComponent extends Component {
           onResendVerificationEmail={onResendVerificationEmail}
           sendVerificationEmailInProgress={sendVerificationEmailInProgress}
           sendVerificationEmailError={sendVerificationEmailError}
-        /> */}
+          modalValue={modalValue}
+          onChangeModalValue={onChangeModalValue}
+        />
 
         <GenericError show={showGenericError} />
       </div>

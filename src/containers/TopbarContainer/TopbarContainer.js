@@ -7,6 +7,7 @@ import { propTypes } from '../../util/types';
 import { sendVerificationEmail, hasCurrentUserErrors } from '../../ducks/user.duck';
 import { logout, authenticationInProgress } from '../../ducks/Auth.duck';
 import { manageDisableScrolling } from '../../ducks/UI.duck';
+import { changeModalValue } from './TopbarContainer.duck';
 import { Topbar } from '../../components';
 
 export const TopbarContainerComponent = props => {
@@ -30,6 +31,8 @@ export const TopbarContainerComponent = props => {
     sendVerificationEmailInProgress,
     sendVerificationEmailError,
     onResendVerificationEmail,
+    modalValue,
+    onChangeModalValue,
     ...rest
   } = props;
 
@@ -54,6 +57,8 @@ export const TopbarContainerComponent = props => {
       sendVerificationEmailInProgress={sendVerificationEmailInProgress}
       sendVerificationEmailError={sendVerificationEmailError}
       showGenericError={hasGenericError}
+      modalValue={modalValue}
+      onChangeModalValue={onChangeModalValue}
       {...rest}
     />
   );
@@ -87,7 +92,9 @@ TopbarContainerComponent.propTypes = {
   sendVerificationEmailInProgress: bool.isRequired,
   sendVerificationEmailError: propTypes.error,
   onResendVerificationEmail: func.isRequired,
+  onChangeModalValue: func.isRequired,
   hasGenericError: bool.isRequired,
+  modalValue: string.isRequired,
 
   // from withRouter
   history: shape({
@@ -99,6 +106,9 @@ TopbarContainerComponent.propTypes = {
 const mapStateToProps = state => {
   // Topbar needs isAuthenticated
   const { isAuthenticated, logoutError, authScopes } = state.Auth;
+
+  const { modalValue } = state.TopbarContainer;
+
   // Topbar needs user info.
   const {
     currentUser,
@@ -124,6 +134,7 @@ const mapStateToProps = state => {
     sendVerificationEmailInProgress,
     sendVerificationEmailError,
     hasGenericError,
+    modalValue,
   };
 };
 
@@ -132,6 +143,7 @@ const mapDispatchToProps = dispatch => ({
   onManageDisableScrolling: (componentId, disableScrolling) =>
     dispatch(manageDisableScrolling(componentId, disableScrolling)),
   onResendVerificationEmail: () => dispatch(sendVerificationEmail()),
+  onChangeModalValue: value => dispatch(changeModalValue(value)),
 });
 
 // Note: it is important that the withRouter HOC is **outside** the
@@ -142,10 +154,7 @@ const mapDispatchToProps = dispatch => ({
 // See: https://github.com/ReactTraining/react-router/issues/4671
 const TopbarContainer = compose(
   withRouter,
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )
+  connect(mapStateToProps, mapDispatchToProps)
 )(TopbarContainerComponent);
 
 export default TopbarContainer;

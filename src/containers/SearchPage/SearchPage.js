@@ -15,6 +15,8 @@ import { parse, stringify } from '../../util/urlHelpers';
 import { propTypes } from '../../util/types';
 import { getListingsById } from '../../ducks/marketplaceData.duck';
 import { manageDisableScrolling, isScrollingDisabled } from '../../ducks/UI.duck';
+import { changeModalValue } from '../TopbarContainer/TopbarContainer.duck';
+import { EMAIL_VERIFICATION } from '../../components/ModalMissingInformation/ModalMissingInformation';
 import { SearchMap, ModalInMobile, Page, Modal } from '../../components';
 import { TopbarContainer } from '../../containers';
 import { EnquiryForm } from '../../forms';
@@ -127,6 +129,7 @@ export class SearchPageComponent extends Component {
     } else if (currentUser.attributes.emailVerified) {
       this.setState({ enquiryModalOpen: true });
     } else {
+      this.props.onChangeModalValue(EMAIL_VERIFICATION);
     }
   }
 
@@ -224,6 +227,8 @@ export class SearchPageComponent extends Component {
           className={topbarClasses}
           currentPage="SearchPage"
           currentSearchParams={urlQueryParams}
+          onCloseMissingInfoModal={this.onCloseMissingInfoModal}
+          showModal={this.state.showVerificationEmailModal}
         />
         <div className={css.container}>
           <MainPanel
@@ -248,7 +253,7 @@ export class SearchPageComponent extends Component {
           <Modal
             id="ListingPage.enquiry"
             contentClassName={css.enquiryModalContent}
-            isOpen={isAuthenticated && this.state.enquiryModalOpen}
+            isOpen={isAuthenticated && !!this.state.enquiryModalOpen}
             onClose={() => this.setState({ enquiryModalOpen: false })}
             onManageDisableScrolling={onManageDisableScrolling}
           >
@@ -320,6 +325,7 @@ SearchPageComponent.propTypes = {
   tab: oneOf(['filters', 'listings', 'map']).isRequired,
   filterConfig: propTypes.filterConfig,
   sortConfig: propTypes.sortConfig,
+  onChangeModalValue: func.isRequired,
 
   // from withRouter
   history: shape({
@@ -392,6 +398,7 @@ const mapDispatchToProps = dispatch => ({
   callSetInitialValues: (setInitialValues, values, saveToSessionStorage) =>
     dispatch(setInitialValues(values, saveToSessionStorage)),
   onSendEnquiry: (listingId, message) => dispatch(sendEnquiry(listingId, message)),
+  onChangeModalValue: value => dispatch(changeModalValue(value)),
 });
 
 // Note: it is important that the withRouter HOC is **outside** the
