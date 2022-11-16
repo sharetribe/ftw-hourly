@@ -265,7 +265,7 @@ class CaregiverEditListingWizard extends Component {
       !history.location.pathname.includes('create-profile')
     ) {
       onChangeMissingInfoModal(EMAIL_VERIFICATION);
-    } else if (requirementsMissing && !stripeConnected) {
+    } else if (requirementsMissing || !stripeConnected) {
       this.setState({
         draftId: id,
         showPayoutDetails: true,
