@@ -81,18 +81,13 @@ export const EditListingPageComponent = props => {
     history,
     intl,
     image,
-    onAddAvailabilityException,
-    onDeleteAvailabilityException,
     onCreateListingDraft,
     onPublishListingDraft,
     onUpdateListing,
-    onImageUpload,
-    onRemoveListingImage,
     onManageDisableScrolling,
     onPayoutDetailsFormSubmit,
     onPayoutDetailsFormChange,
     onGetStripeConnectAccountLink,
-    onUpdateImageOrder,
     onChange,
     page,
     params,
@@ -239,8 +234,6 @@ export const EditListingPageComponent = props => {
           history={history}
           images={images}
           listing={currentListing}
-          onAddAvailabilityException={onAddAvailabilityException}
-          onDeleteAvailabilityException={onDeleteAvailabilityException}
           onUpdateListing={onUpdateListing}
           onCreateListingDraft={onCreateListingDraft}
           onPublishListingDraft={onPublishListingDraft}
@@ -248,17 +241,12 @@ export const EditListingPageComponent = props => {
           onPayoutDetailsSubmit={onPayoutDetailsFormSubmit}
           onGetStripeConnectAccountLink={onGetStripeConnectAccountLink}
           getAccountLinkInProgress={getAccountLinkInProgress}
-          onImageUpload={onImageUpload}
-          onUpdateImageOrder={onUpdateImageOrder}
-          onRemoveImage={onRemoveListingImage}
           onChange={onChange}
           currentUser={currentUser}
           onManageDisableScrolling={onManageDisableScrolling}
           stripeOnboardingReturnURL={params.returnURLType}
           updatedTab={page.updatedTab}
           updateInProgress={page.updateInProgress || page.createListingDraftInProgress}
-          fetchExceptionsInProgress={page.fetchExceptionsInProgress}
-          availabilityExceptions={page.availabilityExceptions}
           payoutDetailsSaveInProgress={page.payoutDetailsSaveInProgress}
           payoutDetailsSaved={page.payoutDetailsSaved}
           stripeAccountFetched={stripeAccountFetched}
@@ -273,7 +261,6 @@ export const EditListingPageComponent = props => {
           onProfileImageUpload={onProfileImageUpload}
           image={image}
           uploadInProgress={uploadInProgress}
-          onHandleCardSetup={onHandleCardSetup}
           onChangeMissingInfoModal={onChangeMissingInfoModal}
         />
       );
@@ -290,34 +277,14 @@ export const EditListingPageComponent = props => {
           history={history}
           images={images}
           listing={currentListing}
-          onAddAvailabilityException={onAddAvailabilityException}
-          onDeleteAvailabilityException={onDeleteAvailabilityException}
           onUpdateListing={onUpdateListing}
           onCreateListingDraft={onCreateListingDraft}
           onPublishListingDraft={onPublishListingDraft}
-          onPayoutDetailsFormChange={onPayoutDetailsFormChange}
-          onPayoutDetailsSubmit={onPayoutDetailsFormSubmit}
-          onGetStripeConnectAccountLink={onGetStripeConnectAccountLink}
-          getAccountLinkInProgress={getAccountLinkInProgress}
-          onImageUpload={onImageUpload}
-          onUpdateImageOrder={onUpdateImageOrder}
-          onRemoveImage={onRemoveListingImage}
           onChange={onChange}
           currentUser={currentUser}
           onManageDisableScrolling={onManageDisableScrolling}
-          stripeOnboardingReturnURL={params.returnURLType}
           updatedTab={page.updatedTab}
           updateInProgress={page.updateInProgress || page.createListingDraftInProgress}
-          fetchExceptionsInProgress={page.fetchExceptionsInProgress}
-          availabilityExceptions={page.availabilityExceptions}
-          payoutDetailsSaveInProgress={page.payoutDetailsSaveInProgress}
-          payoutDetailsSaved={page.payoutDetailsSaved}
-          stripeAccountFetched={stripeAccountFetched}
-          stripeAccount={stripeAccount}
-          stripeAccountError={
-            createStripeAccountError || updateStripeAccountError || fetchStripeAccountError
-          }
-          stripeAccountLinkError={getAccountLinkError}
           pageName={createProfile ? 'CreateProfilePage' : 'EditListingPage'}
           profileImage={profileImage}
           onUpdateProfile={onUpdateProfile}
@@ -330,6 +297,7 @@ export const EditListingPageComponent = props => {
           addPaymentMethodError={addPaymentMethodError}
           createStripeCustomerError={createStripeCustomerError}
           handleCardSetupError={handleCardSetupError}
+          onHandleCardSetup={onHandleCardSetup}
           onChangeMissingInfoModal={onChangeMissingInfoModal}
         />
       );

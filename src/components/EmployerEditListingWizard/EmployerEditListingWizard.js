@@ -175,14 +175,6 @@ class EmployerEditListingWizard extends Component {
     this.getPaymentParams = this.getPaymentParams.bind(this);
   }
 
-  componentDidMount() {
-    const { stripeOnboardingReturnURL } = this.props;
-
-    if (stripeOnboardingReturnURL != null && !this.showPayoutDetails) {
-      this.setState({ showPayoutDetails: true });
-    }
-  }
-
   handleCreateFlowTabScrolling(shouldScroll) {
     this.hasScrolledToTab = shouldScroll;
   }
@@ -278,35 +270,48 @@ class EmployerEditListingWizard extends Component {
   }
 
   handlePaymentMethodsSubmit(params) {
+    const {
+      onCreateSetupIntent,
+      currentUser,
+      onHandleCardSetup,
+      onSavePaymentMethod,
+      fetchStripeCustomer,
+      history,
+    } = this.props;
+
     this.setState({ isSubmittingPayment: true });
-    const ensuredCurrentUser = ensureCurrentUser(this.props.currentUser);
+    const ensuredCurrentUser = ensureCurrentUser(currentUser);
     const stripeCustomer = ensuredCurrentUser.stripeCustomer;
     const { stripe, card, formValues } = params;
 
-    this.props
-      .onCreateSetupIntent()
+    onCreateSetupIntent()
       .then(setupIntent => {
         const stripeParams = {
           stripe,
           card,
           setupIntentClientSecret: this.getClientSecret(setupIntent),
-          paymentParams: this.getPaymentParams(this.props.currentUser, formValues),
+          paymentParams: this.getPaymentParams(currentUser, formValues),
         };
 
-        return this.props.onHandleCardSetup(stripeParams);
+        return onHandleCardSetup(stripeParams);
       })
       .then(result => {
         const newPaymentMethod = result.setupIntent.payment_method;
         // Note: stripe.handleCardSetup might return an error inside successful call (200), but those are rejected in thunk functions.
 
-        return this.props.onSavePaymentMethod(stripeCustomer, newPaymentMethod);
+        return onSavePaymentMethod(stripeCustomer, newPaymentMethod);
       })
       .then(() => {
         // Update currentUser entity and its sub entities: stripeCustomer and defaultPaymentMethod
-        this.props.fetchStripeCustomer();
+        fetchStripeCustomer();
         this.setState({ isSubmittingPayment: false });
         this.setState({ cardState: 'default' });
-        window.location.href = '/';
+
+        if (history.location.pathname.includes('create-profile')) {
+          history.push('/signup');
+        } else {
+          history.push('/l');
+        }
       })
       .catch(error => {
         console.error(error);
@@ -325,19 +330,7 @@ class EmployerEditListingWizard extends Component {
       intl,
       errors,
       fetchInProgress,
-      payoutDetailsSaveInProgress,
-      payoutDetailsSaved,
       onManageDisableScrolling,
-      onPayoutDetailsFormChange,
-      onGetStripeConnectAccountLink,
-      getAccountLinkInProgress,
-      createStripeAccountError,
-      updateStripeAccountError,
-      fetchStripeAccountError,
-      stripeAccountFetched,
-      stripeAccount,
-      stripeAccountError,
-      stripeAccountLinkError,
       currentUser,
       pageName,
       profileImage,
@@ -493,14 +486,6 @@ EmployerEditListingWizard.defaultProps = {
   currentUser: null,
   rootClassName: null,
   listing: null,
-  stripeAccount: null,
-  stripeAccountFetched: null,
-  updateInProgress: false,
-  createStripeAccountError: null,
-  updateStripeAccountError: null,
-  fetchStripeAccountError: null,
-  stripeAccountError: null,
-  stripeAccountLinkError: null,
   pageName: 'EditListingPage',
 };
 
@@ -515,8 +500,6 @@ EmployerEditListingWizard.propTypes = {
     type: oneOf(LISTING_PAGE_PARAM_TYPES).isRequired,
     tab: oneOf(TABS).isRequired,
   }).isRequired,
-  stripeAccount: object,
-  stripeAccountFetched: bool,
 
   // We cannot use propTypes.listing since the listing might be a draft.
   listing: shape({
@@ -537,18 +520,8 @@ EmployerEditListingWizard.propTypes = {
     showListingsError: object,
     uploadImageError: object,
   }).isRequired,
-  createStripeAccountError: propTypes.error,
-  updateStripeAccountError: propTypes.error,
-  fetchStripeAccountError: propTypes.error,
-  stripeAccountError: propTypes.error,
-  stripeAccountLinkError: propTypes.error,
 
   fetchInProgress: bool.isRequired,
-  getAccountLinkInProgress: bool.isRequired,
-  payoutDetailsSaveInProgress: bool.isRequired,
-  payoutDetailsSaved: bool.isRequired,
-  onPayoutDetailsFormChange: func.isRequired,
-  onGetStripeConnectAccountLink: func.isRequired,
   onManageDisableScrolling: func.isRequired,
 
   // from withViewport
