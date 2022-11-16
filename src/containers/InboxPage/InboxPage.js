@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { arrayOf, bool, number, oneOf, shape, string } from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
@@ -19,6 +19,8 @@ import { createSlug, stringify } from '../../util/urlHelpers';
 import { ensureCurrentUser, ensureListing } from '../../util/data';
 import { getMarketplaceEntities } from '../../ducks/marketplaceData.duck';
 import { isScrollingDisabled } from '../../ducks/UI.duck';
+import { changeModalValue } from '../TopbarContainer/TopbarContainer.duck';
+import { PAYMENT_DETAILS } from '../../components/ModalMissingInformation/ModalMissingInformation';
 import {
   Avatar,
   BookingTimeInfo,
@@ -294,9 +296,15 @@ export const InboxPageComponent = props => {
     providerNotificationCount,
     scrollingDisabled,
     transactions,
+    onChangeMissingInfoModal,
   } = props;
   const { tab } = params;
   const ensuredCurrentUser = ensureCurrentUser(currentUser);
+
+  useEffect(() => {
+    // Need to prioritize verify email here
+    onChangeMissingInfoModal(PAYMENT_DETAILS);
+  }, []);
 
   const validTab = tab === 'orders' || tab === 'sales';
   if (!validTab) {
@@ -471,8 +479,12 @@ const mapStateToProps = state => {
   };
 };
 
+const mapDispatchToProps = dispatch => ({
+  onChangeMissingInfoModal: value => dispatch(changeModalValue(value)),
+});
+
 const InboxPage = compose(
-  connect(mapStateToProps),
+  connect(mapStateToProps, mapDispatchToProps),
   injectIntl
 )(InboxPageComponent);
 

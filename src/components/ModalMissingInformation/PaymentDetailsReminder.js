@@ -5,7 +5,7 @@ import { NamedLink } from '..';
 import css from './ModalMissingInformation.module.css';
 
 const StripeAccountReminder = props => {
-  const { className, currentUser } = props;
+  const { className, currentUser, onChangeModalValue } = props;
 
   const { userType } = currentUser && currentUser.attributes.profile.metadata;
 
@@ -15,7 +15,7 @@ const StripeAccountReminder = props => {
     return (
       <div className={className}>
         <p className={css.modalTitle}>
-          <FormattedMessage id="ModalMissingInformation.missingPaymentDetailsTitle" /> :
+          <FormattedMessage id="ModalMissingInformation.missingPaymentDetailsTitle" />
         </p>
         <p className={css.modalMessage}>
           {userType === 'caregiver' ? (
@@ -24,7 +24,7 @@ const StripeAccountReminder = props => {
             <FormattedMessage id="ModalMissingInformation.missingPaymentMethodsText" />
           )}
         </p>
-        <div className={css.bottomWrapper}>
+        <div className={css.bottomWrapper} onClick={() => onChangeModalValue(null)}>
           <NamedLink className={css.reminderModalLinkButton} name={redirectPageName}>
             <FormattedMessage id="ModalMissingInformation.gotoPaymentSettings" />
           </NamedLink>
