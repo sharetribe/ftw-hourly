@@ -9,11 +9,11 @@ import { pathByRouteName } from '../../util/routes';
 import { Modal } from '../../components';
 
 import EmailReminder from './EmailReminder';
-import StripeAccountReminder from './StripeAccountReminder';
+import PaymentDetailsReminder from './PaymentDetailsReminder';
 import css from './ModalMissingInformation.module.css';
 
 export const EMAIL_VERIFICATION = 'EMAIL_VERIFICATION';
-export const STRIPE_ACCOUNT = 'STRIPE_ACCOUNT';
+export const PAYMENT_DETAILS = 'PAYMENT_DETAILS';
 
 class ModalMissingInformation extends Component {
   constructor(props) {
@@ -53,10 +53,17 @@ class ModalMissingInformation extends Component {
             onResendVerificationEmail={onResendVerificationEmail}
             sendVerificationEmailInProgress={sendVerificationEmailInProgress}
             sendVerificationEmailError={sendVerificationEmailError}
+            onChangeModalValue={onChangeModalValue}
           />
         );
-      } else if (modalValue === STRIPE_ACCOUNT) {
-        content = <StripeAccountReminder className={classes} />;
+      } else if (modalValue === PAYMENT_DETAILS) {
+        content = (
+          <PaymentDetailsReminder
+            className={classes}
+            currentUser={currentUser}
+            onChangeModalValue={onChangeModalValue}
+          />
+        );
       } else {
         content = null;
       }
