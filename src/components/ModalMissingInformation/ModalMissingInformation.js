@@ -9,7 +9,7 @@ import { pathByRouteName } from '../../util/routes';
 import { Modal } from '../../components';
 
 import EmailReminder from './EmailReminder';
-import StripeAccountReminder from './StripeAccountReminder';
+import PaymentDetailsReminder from './PaymentDetailsReminder';
 import css from './ModalMissingInformation.module.css';
 
 export const EMAIL_VERIFICATION = 'EMAIL_VERIFICATION';
@@ -56,7 +56,7 @@ class ModalMissingInformation extends Component {
           />
         );
       } else if (modalValue === STRIPE_ACCOUNT) {
-        content = <StripeAccountReminder className={classes} />;
+        content = <PaymentDetailsReminder className={classes} currentUser={currentUser} />;
       } else {
         content = null;
       }
