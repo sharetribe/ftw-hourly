@@ -75,8 +75,6 @@ export const InboxPageComponent = props => {
     return transactions;
   }, [transactionIds]);
 
-  const currentTxId = queryString.parse(history.location.search).id;
-
   // Show payment details modal if user doesn't have them
   useEffect(() => {
     onChangeMissingInfoModal(PAYMENT_DETAILS);
@@ -87,7 +85,6 @@ export const InboxPageComponent = props => {
       history.replace({
         pathname: history.location.pathname,
         search: 'id='.concat(
-
           (currentTransactions &&
             currentTransactions.length > 0 &&
             currentTransactions[0].id.uuid) ||

@@ -1,5 +1,4 @@
 import React from 'react';
-import { ensureTransaction } from '../../util/data';
 import {
   TRANSITION_ACCEPT,
   TRANSITION_CANCEL,
@@ -30,7 +29,6 @@ import { Avatar, InlineTextButton, ReviewRating, UserDisplayName } from '../../c
 import { formatDate } from '../../util/dates';
 import { ensureTransaction, ensureUser, ensureListing } from '../../util/data';
 import { propTypes } from '../../util/types';
-
 
 const hasUserLeftAReviewFirst = (userRole, transaction) => {
   // Because function txIsInFirstReviewBy uses isCustomer to check in which state the reviews are
