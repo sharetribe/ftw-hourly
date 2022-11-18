@@ -20,18 +20,23 @@ import { EMAIL_VERIFICATION } from '../../components/ModalMissingInformation/Mod
 import { SearchMap, ModalInMobile, Page, Modal } from '../../components';
 import { TopbarContainer } from '../../containers';
 import { EnquiryForm } from '../../forms';
-import { filterListingsByDistance } from '../../util/maps';
-
-import { searchMapListings, setActiveListing } from './SearchPage.duck';
+import {
+  searchMapListings,
+  setActiveListing,
+  fetchCurrentUserTransactions,
+} from './SearchPage.duck';
+import { sendMessage } from '../InboxPage/InboxPage.duck';
 import {
   pickSearchParamsOnly,
   validURLParamsForExtendedData,
   validFilterParams,
   createSearchResultSchema,
+  hasExistingTransaction,
 } from './SearchPage.helpers';
 import { sendEnquiry, setInitialValues } from '../ListingPage/ListingPage.duck';
 import MainPanel from './MainPanel';
 import css from './SearchPage.module.css';
+import { userDisplayNameAsString } from '../../util/data';
 const { UUID } = sdkTypes;
 
 const MODAL_BREAKPOINT = 768; // Search is in modal on mobile layout
@@ -45,7 +50,7 @@ export class SearchPageComponent extends Component {
       isSearchMapOpenOnMobile: props.tab === 'map',
       isMobileModalOpen: false,
       enquiryModalOpen: false,
-      currentListingAuthor: '',
+      currentListingAuthor: null,
       currentListingId: '',
     };
 
@@ -111,9 +116,11 @@ export class SearchPageComponent extends Component {
     this.setState({ isMobileModalOpen: false });
   }
 
-  onContactUser(contactName, listingId) {
-    this.setState({ currentListingAuthor: contactName });
+  onContactUser(currentAuthor, listingId) {
+    this.setState({ currentListingAuthor: currentAuthor });
     this.setState({ currentListingId: listingId });
+
+    this.props.onFetchCurrentUserTransactions();
 
     const { currentUser, history, callSetInitialValues, location } = this.props;
 
@@ -134,23 +141,50 @@ export class SearchPageComponent extends Component {
   }
 
   onSubmitEnquiry(values) {
-    const { history, params, onSendEnquiry } = this.props;
+    const {
+      history,
+      params,
+      onSendEnquiry,
+      currentUserTransactions,
+      currentUser,
+      onSendMessage,
+    } = this.props;
     const routes = routeConfiguration();
     const listingId = this.state.currentListingId;
     const { message } = values;
 
-    onSendEnquiry(listingId, message.trim())
-      .then(txId => {
-        this.setState({ enquiryModalOpen: false });
+    const existingTransaction = currentUserTransactions.find(transaction =>
+      hasExistingTransaction(transaction, currentUser, this.state.currentListingAuthor)
+    );
 
-        // Redirect to OrderDetailsPage
-        history.push(
-          createResourceLocatorString('OrderDetailsPage', routes, { id: txId.uuid }, {})
-        );
-      })
-      .catch(() => {
-        // Ignore, error handling in duck file
-      });
+    if (existingTransaction) {
+      const txId = existingTransaction.id.uuid;
+      onSendMessage(txId, message.trim())
+        .then(res => {
+          this.setState({ enquiryModalOpen: false });
+
+          // Redirect to InboxPage
+          history.push(
+            createResourceLocatorString('InboxPage', routes, { tab: 'messages' }, { id: txId })
+          );
+        })
+        .catch(() => {
+          // Ignore, error handling in duck file
+        });
+    } else {
+      onSendEnquiry(listingId, message.trim())
+        .then(txId => {
+          this.setState({ enquiryModalOpen: false });
+
+          // Redirect to InboxPage
+          history.push(
+            createResourceLocatorString('InboxPage', routes, { tab: 'messages' }, { id: txId.uuid })
+          );
+        })
+        .catch(() => {
+          // Ignore, error handling in duck file
+        });
+    }
   }
 
   render() {
@@ -175,6 +209,8 @@ export class SearchPageComponent extends Component {
       isAuthenticated,
       sendEnquiryError,
       sendEnquiryInProgress,
+      onFetchCurrentUserTransactions,
+      currentUserTransactions,
     } = this.props;
     // eslint-disable-next-line no-unused-vars
     const { mapSearch, page, ...searchInURL } = parse(location.search, {
@@ -260,39 +296,12 @@ export class SearchPageComponent extends Component {
             <EnquiryForm
               className={css.enquiryForm}
               submitButtonWrapperClassName={css.enquirySubmitButtonWrapper}
-              authorDisplayName={this.state.currentListingAuthor}
+              authorDisplayName={userDisplayNameAsString(this.state.currentListingAuthor)}
               sendEnquiryError={sendEnquiryError}
               onSubmit={this.onSubmitEnquiry}
               inProgress={sendEnquiryInProgress}
             />
           </Modal>
-          {/* <ModalInMobile
-            className={css.mapPanel}
-            id="SearchPage.map"
-            isModalOpenOnMobile={this.state.isSearchMapOpenOnMobile}
-            onClose={() => this.setState({ isSearchMapOpenOnMobile: false })}
-            showAsModalMaxWidth={MODAL_BREAKPOINT}
-            onManageDisableScrolling={onManageDisableScrolling}
-          >
-            <div className={css.mapWrapper}>
-              {shouldShowSearchMap ? (
-                <SearchMap
-                  reusableContainerClassName={css.map}
-                  activeListingId={activeListingId}
-                  bounds={bounds}
-                  center={origin}
-                  isSearchMapOpenOnMobile={this.state.isSearchMapOpenOnMobile}
-                  location={location}
-                  listings={mapListings || []}
-                  onMapMoveEnd={this.onMapMoveEnd}
-                  onCloseAsModal={() => {
-                    onManageDisableScrolling('SearchPage.map', false);
-                  }}
-                  messages={intl.messages}
-                />
-              ) : null}
-            </div>
-          </ModalInMobile> */}
         </div>
       </Page>
     );
@@ -350,6 +359,7 @@ const mapStateToProps = state => {
     searchParams,
     searchMapListingIds,
     activeListingId,
+    transactions,
   } = state.SearchPage;
   const currentUser = state.user.currentUser;
   const currentUserType = currentUser?.attributes.profile.metadata.userType;
@@ -374,6 +384,7 @@ const mapStateToProps = state => {
   );
 
   return {
+    currentUserTransactions: transactions,
     isAuthenticated,
     listings: pageListings,
     mapListings,
@@ -399,6 +410,8 @@ const mapDispatchToProps = dispatch => ({
     dispatch(setInitialValues(values, saveToSessionStorage)),
   onSendEnquiry: (listingId, message) => dispatch(sendEnquiry(listingId, message)),
   onChangeModalValue: value => dispatch(changeModalValue(value)),
+  onFetchCurrentUserTransactions: () => dispatch(fetchCurrentUserTransactions()),
+  onSendMessage: (txId, message) => dispatch(sendMessage(txId, message)),
 });
 
 // Note: it is important that the withRouter HOC is **outside** the

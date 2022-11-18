@@ -414,3 +414,19 @@ export const convertFilterKeyToLabel = (keys, data) => {
 
   return filterOptions.map(filter => filter.label);
 };
+
+export const cutTextToPreview = (text, length) => {
+  var textCutoff = text.substr(0, length);
+
+  while (textCutoff.charAt(textCutoff.length - 1) !== ' ' && textCutoff.length > 0) {
+    textCutoff = textCutoff.substr(0, textCutoff.length - 1);
+  }
+
+  textCutoff = textCutoff.substr(0, textCutoff.length - 1);
+
+  if (textCutoff.charAt(textCutoff.length - 1).match(/^[.,:!?]/)) {
+    textCutoff = textCutoff.substr(0, textCutoff.length - 1);
+  }
+
+  return textCutoff.length > 0 ? textCutoff + '...' : text.substring(0, length);
+};

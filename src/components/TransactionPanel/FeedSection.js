@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import { FormattedMessage } from '../../util/reactIntl';
 import classNames from 'classnames';
 import { ActivityFeed } from '../../components';
@@ -28,7 +28,10 @@ const FeedSection = props => {
   const hasOlderMessages = totalMessagePages > oldestMessagePageFetched;
 
   const showFeed =
-    messages.length > 0 || txTransitions.length > 0 || initialMessageFailed || fetchMessagesError;
+    (messages && messages.length > 0) ||
+    txTransitions.length > 0 ||
+    initialMessageFailed ||
+    fetchMessagesError;
 
   const classes = classNames(rootClassName || css.feedContainer, className);
 

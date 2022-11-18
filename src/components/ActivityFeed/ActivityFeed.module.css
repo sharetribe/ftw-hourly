@@ -2,13 +2,14 @@
 
 .root {
   margin: 0;
-
+  height: 100%;
   /* Clearfix */
   composes: clearfix from global;
 }
 
 .messageItem {
   margin-bottom: 20px;
+  margin-right: 20px;
 
   /* Clearfix */
   composes: clearfix from global;

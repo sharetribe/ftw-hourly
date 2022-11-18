@@ -18,7 +18,6 @@ import {
 } from '../../components';
 
 import css from './EditListingPhotosForm.module.css';
-import { error } from 'bfj/src/events';
 
 const ACCEPT_IMAGES = 'image/*';
 const UPLOAD_CHANGE_DELAY = 2000; // Show spinner so that browser has time to load img srcset
@@ -73,6 +72,7 @@ export class EditListingPhotosFormComponent extends Component {
             currentUser,
             onImageUpload,
             onProfileImageUpload,
+            image,
           } = formRenderProps;
 
           const chooseImageText = (
@@ -127,7 +127,7 @@ export class EditListingPhotosFormComponent extends Component {
           const submitReady = (updated && pristine) || ready;
           const submitInProgress = updateInProgress;
           const submitDisabled =
-            invalid || disabled || submitInProgress || uploadInProgress || ready;
+            invalid || disabled || submitInProgress || uploadInProgress || ready || image === null;
 
           const classes = classNames(css.root, className);
 

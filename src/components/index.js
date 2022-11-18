@@ -133,6 +133,7 @@ export { default as DistanceFilter } from './DistanceFilter/DistanceFilter';
 export { default as EmployerListingCard } from './EmployerListingCard/EmployerListingCard';
 export { default as FilterPlain } from './FilterPlain/FilterPlain';
 export { default as FilterPopup } from './FilterPopup/FilterPopup';
+export { default as InboxItem } from './InboxItem/InboxItem';
 export { default as KeywordFilter } from './KeywordFilter/KeywordFilter';
 export { default as ListingCard } from './ListingCard/ListingCard';
 export { default as CaregiverListingMainContent } from './ListingMainContent/CaregiverListingMainContent';
@@ -189,6 +190,7 @@ export { default as ListingAvailabilityPanel } from './ListingAvailabilityPanel/
 export { default as ListingBioPanel } from './ListingBioPanel/ListingBioPanel';
 export { default as ListingServicesPanel } from './ListingServicesPanel/ListingServicesPanel';
 export { default as ListingRecommendationsPanel } from './ListingRecommendationsPanel/ListingRecommendationsPanel';
+export { default as MessagePanel } from './MessagePanel/MessagePanel';
 export { default as SectionHero } from './SectionHero/SectionHero';
 export { default as SectionHowItWorks } from './SectionHowItWorks/SectionHowItWorks';
 export { default as SectionLocations } from './SectionLocations/SectionLocations';

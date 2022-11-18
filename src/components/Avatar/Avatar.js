@@ -83,18 +83,6 @@ export const AvatarComponent = props => {
         <IconBannedUser className={css.bannedUserIcon} />
       </div>
     );
-  } else if (hasProfileImage && profileLinkEnabled) {
-    return (
-      <NamedLink {...rootProps} {...linkProps}>
-        <ResponsiveImage
-          rootClassName={css.avatarImage}
-          alt={displayName}
-          image={avatarUser.profileImage}
-          variants={AVATAR_IMAGE_VARIANTS}
-          sizes={renderSizes}
-        />
-      </NamedLink>
-    );
   } else if (hasProfileImage) {
     return (
       <div {...rootProps}>
@@ -106,13 +94,6 @@ export const AvatarComponent = props => {
           sizes={renderSizes}
         />
       </div>
-    );
-  } else if (profileLinkEnabled) {
-    // Placeholder avatar (initials)
-    return (
-      <NamedLink {...rootProps} {...linkProps}>
-        <span className={classForInitials}>{abbreviatedName}</span>
-      </NamedLink>
     );
   } else {
     // Placeholder avatar (initials)

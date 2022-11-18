@@ -6,6 +6,7 @@ import { formatDateStringToTz, getExclusiveEndDateWithTz } from '../../util/date
 import { parse } from '../../util/urlHelpers';
 import config from '../../config';
 import { expandBounds } from '../../util/maps';
+import { TRANSITIONS } from '../../util/transaction';
 
 // Pagination page size might need to be dynamic on responsive page layouts
 // Current design has max 3 columns 12 is divisible by 2 and 3
@@ -24,6 +25,10 @@ export const SEARCH_MAP_LISTINGS_ERROR = 'app/SearchPage/SEARCH_MAP_LISTINGS_ERR
 
 export const SEARCH_MAP_SET_ACTIVE_LISTING = 'app/SearchPage/SEARCH_MAP_SET_ACTIVE_LISTING';
 
+export const FETCH_TRANSACTIONS_REQUEST = 'app/SearchPage/FETCH_TRANSACTIONS_REQUEST';
+export const FETCH_TRANSACTIONS_SUCCESS = 'app/SearchPage/FETCH_TRANSACTIONS_SUCCESS';
+export const FETCH_TRANSACTIONS_ERROR = 'app/SearchPage/FETCH_TRANSACTIONS_ERROR';
+
 // ================ Reducer ================ //
 
 const initialState = {
@@ -34,6 +39,9 @@ const initialState = {
   currentPageResultIds: [],
   searchMapListingIds: [],
   searchMapListingsError: null,
+  transactions: [],
+  fetchTransactionInProgress: false,
+  fetchTransactionsError: false,
 };
 
 const resultIds = data => data.data.map(l => l.id);
@@ -87,6 +95,22 @@ const listingPageReducer = (state = initialState, action = {}) => {
         ...state,
         activeListingId: payload,
       };
+    case FETCH_TRANSACTIONS_REQUEST: {
+      return {
+        ...state,
+        fetchTransactionInProgress: true,
+        fetchTransactionsError: false,
+      };
+    }
+    case FETCH_TRANSACTIONS_SUCCESS:
+      return { ...state, fetchTransactionInProgress: false, transactions: payload.data };
+
+    case FETCH_TRANSACTIONS_ERROR:
+      return {
+        ...state,
+        fetchTransactionInProgress: false,
+        fetchTransactionsError: true,
+      };
     default:
       return state;
   }
@@ -124,6 +148,41 @@ export const searchMapListingsError = e => ({
   error: true,
   payload: e,
 });
+
+export const fetchTransactionsRequest = () => ({
+  type: FETCH_TRANSACTIONS_REQUEST,
+});
+
+export const fetchTransactionsSuccess = response => ({
+  type: FETCH_TRANSACTIONS_SUCCESS,
+  payload: { data: response.data },
+});
+
+export const fetchTransactionsError = e => ({
+  type: FETCH_TRANSACTIONS_ERROR,
+  error: true,
+  payload: e,
+});
+
+export const fetchCurrentUserTransactions = () => (dispatch, getState, sdk) => {
+  dispatch(fetchTransactionsRequest());
+
+  const apiQueryParams = {
+    lastTransitions: TRANSITIONS,
+    include: ['provider', 'customer'],
+  };
+
+  return sdk.transactions
+    .query(apiQueryParams)
+    .then(response => {
+      dispatch(addMarketplaceEntities(response));
+      dispatch(fetchTransactionsSuccess(response.data));
+    })
+    .catch(e => {
+      dispatch(fetchTransactionsError(e));
+      throw e;
+    });
+};
 
 export const searchListings = searchParams => (dispatch, getState, sdk) => {
   dispatch(searchListingsRequest(searchParams));
@@ -196,6 +255,7 @@ export const loadData = (params, search) => {
   });
   const { page = 1, address, origin, ...rest } = queryParams;
   const originMaybe = config.sortSearchByDistance && origin ? { origin } : {};
+
   return searchListings({
     ...rest,
     ...originMaybe,

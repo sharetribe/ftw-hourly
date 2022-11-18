@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import { lazyLoadWithDimensions } from '../../util/contextHelpers';
 import { LINE_ITEM_DAY, LINE_ITEM_NIGHT, propTypes } from '../../util/types';
 import { formatMoneyInteger } from '../../util/currency';
-import { ensureListing, userDisplayNameAsString } from '../../util/data';
+import { ensureListing, userDisplayNameAsString, cutTextToPreview } from '../../util/data';
 import { richText } from '../../util/richText';
 import { createSlug } from '../../util/urlHelpers';
 import config from '../../config';
@@ -92,7 +92,7 @@ export const EmployerListingCardComponent = props => {
 
   let descriptionCutoff =
     recipientDetails && recipientDetails.length > 300
-      ? cutText(recipientDetails, 300)
+      ? cutTextToPreview(recipientDetails, 300)
       : recipientDetails;
 
   const { formattedMinPrice, formattedMaxPrice, priceTitle } = priceData(rates, intl);
@@ -164,7 +164,7 @@ export const EmployerListingCardComponent = props => {
       </NamedLink>
       <Button
         className={css.messageButton}
-        onClick={() => onContactUser(userDisplayName, currentListing.id)}
+        onClick={() => onContactUser(currentAuthor, currentListing.id)}
       >
         Message
       </Button>
