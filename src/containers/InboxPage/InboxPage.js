@@ -64,6 +64,8 @@ export const InboxPageComponent = props => {
   const { tab } = params;
   const ensuredCurrentUser = ensureCurrentUser(currentUser);
 
+  const currentTxId = queryString.parse(history.location.search).id;
+
   // Memoize transactionsIds so that inboxItems dont rerender on every select
   let transactionIds = '';
   transactions.forEach(transaction => {
@@ -72,8 +74,6 @@ export const InboxPageComponent = props => {
   const currentTransactions = useMemo(() => {
     return transactions;
   }, [transactionIds]);
-
-  const currentTxId = queryString.parse(history.location.search).id;
 
   // Show payment details modal if user doesn't have them
   useEffect(() => {
@@ -85,11 +85,14 @@ export const InboxPageComponent = props => {
       history.replace({
         pathname: history.location.pathname,
         search: 'id='.concat(
-          currentTransactions && currentTransactions.length > 0 && currentTransactions[0].id.uuid
+          (currentTransactions &&
+            currentTransactions.length > 0 &&
+            currentTransactions[0].id.uuid) ||
+            ''
         ),
       });
     }
-  }, [currentTxId]);
+  }, [currentTxId, currentTransactions, history]);
 
   const validTab = tab === 'messages' || tab === 'notifications';
   if (!validTab) {
