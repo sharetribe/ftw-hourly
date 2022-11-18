@@ -22,6 +22,15 @@ import {
   getUserTxRole,
   isRelevantPastTransition,
 } from '../../util/transaction';
+import { string, arrayOf, bool, func, number } from 'prop-types';
+import { FormattedMessage, injectIntl, intlShape } from '../../util/reactIntl';
+import dropWhile from 'lodash/dropWhile';
+import classNames from 'classnames';
+import { Avatar, InlineTextButton, ReviewRating, UserDisplayName } from '../../components';
+import { formatDate } from '../../util/dates';
+import { ensureTransaction, ensureUser, ensureListing } from '../../util/data';
+import { propTypes } from '../../util/types';
+
 
 const hasUserLeftAReviewFirst = (userRole, transaction) => {
   // Because function txIsInFirstReviewBy uses isCustomer to check in which state the reviews are
