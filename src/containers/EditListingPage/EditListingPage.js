@@ -259,9 +259,9 @@ export const EditListingPageComponent = props => {
           profileImage={profileImage}
           onUpdateProfile={onUpdateProfile}
           onProfileImageUpload={onProfileImageUpload}
-          image={image}
           uploadInProgress={uploadInProgress}
           onChangeMissingInfoModal={onChangeMissingInfoModal}
+          image={image}
         />
       );
     } else if (userType === EMPLOYER) {

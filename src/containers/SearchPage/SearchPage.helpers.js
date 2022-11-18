@@ -165,3 +165,16 @@ export const createSearchResultSchema = (listings, address, intl) => {
     },
   };
 };
+
+// Returns true if transaction is between current User and curent author
+export const hasExistingTransaction = (transaction, currentUser, currentAuthor) => {
+  const txCustomerId = transaction.relationships.customer.data.id.uuid;
+  const txProviderId = transaction.relationships.provider.data.id.uuid;
+  const currentAuthorId = currentAuthor.id.uuid;
+  const currentUserId = currentUser.id.uuid;
+
+  return (
+    (txCustomerId === currentUserId && txProviderId === currentAuthorId) ||
+    (txCustomerId === currentAuthorId && txProviderId === currentUserId)
+  );
+};

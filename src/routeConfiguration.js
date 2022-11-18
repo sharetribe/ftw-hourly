@@ -16,7 +16,7 @@ const CheckoutPage = loadable(() => import(/* webpackChunkName: "CheckoutPage" *
 const ContactDetailsPage = loadable(() => import(/* webpackChunkName: "ContactDetailsPage" */ './containers/ContactDetailsPage/ContactDetailsPage'));
 const EditListingPage = loadable(() => import(/* webpackChunkName: "EditListingPage" */ './containers/EditListingPage/EditListingPage'));
 const EmailVerificationPage = loadable(() => import(/* webpackChunkName: "EmailVerificationPage" */ './containers/EmailVerificationPage/EmailVerificationPage'));
-const InboxPage = loadable(() => import(/* webpackChunkName: "InboxPage" */ './containers/InboxPage/InboxPage'));
+const InboxPage = loadable(() => import(/* webpackChunksFilename: "InboxPage" */ './containers/InboxPage/InboxPage'))
 const LandingPage = loadable(() => import(/* webpackChunkName: "LandingPage" */ './containers/LandingPage/LandingPage'));
 const ListingPage = loadable(() => import(/* webpackChunkName: "ListingPage" */ /* webpackPrefetch: true */ './containers/ListingPage/ListingPage'));
 const PasswordChangePage = loadable(() => import(/* webpackChunkName: "PasswordChangePage" */ './containers/PasswordChangePage/PasswordChangePage'));
@@ -200,7 +200,7 @@ const routeConfiguration = () => {
       name: 'InboxBasePage',
       auth: true,
       authPage: 'LoginPage',
-      component: () => <NamedRedirect name="InboxPage" params={{ tab: 'sales' }} />,
+      component: () => <NamedRedirect name="InboxPage" params={{ tab: 'messages' }} />,
     },
     {
       path: '/inbox/:tab',

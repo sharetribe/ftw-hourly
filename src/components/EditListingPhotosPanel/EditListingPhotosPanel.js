@@ -30,6 +30,8 @@ class EditListingPhotosPanel extends Component {
       currentUser,
       onProfileImageUpload,
       uploadInProgress,
+      image,
+      onUpdateProfile,
     } = this.props;
 
     const rootClass = rootClassName || css.root;
@@ -64,13 +66,22 @@ class EditListingPhotosPanel extends Component {
           initialValues={{ profileImage }}
           onImageUpload={onImageUpload}
           onSubmit={values => {
-            const { profileImage } = values;
+            //Need to add upload image
 
-            const updatedValues = {
-              images: [profileImage],
+            const uploadedImage = image;
+
+            // Update profileImage only if file system has been accessed
+            const updatedValues = { profileImageId: uploadedImage.imageId };
+
+            onUpdateProfile(updatedValues);
+
+            const updateValues = {
+              publicData: {
+                profileImageId: values.profileImage.id,
+              },
             };
 
-            onSubmit(updatedValues);
+            onSubmit(updateValues);
           }}
           onChange={onChange}
           onUpdateImageOrder={onUpdateImageOrder}
@@ -82,6 +93,7 @@ class EditListingPhotosPanel extends Component {
           currentUser={currentUser}
           onProfileImageUpload={onProfileImageUpload}
           uploadInProgress={uploadInProgress}
+          image={image}
         />
       </div>
     );

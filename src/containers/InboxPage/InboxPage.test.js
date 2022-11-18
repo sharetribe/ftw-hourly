@@ -8,7 +8,7 @@ import {
   createOwnListing,
   createBooking,
 } from '../../util/test-data';
-import { InboxPageComponent, InboxItem, txState } from './InboxPage';
+import { InboxPageComponent, InboxItem, txState } from '../DeprecatedInboxPage/InboxPage';
 import { TRANSITION_CONFIRM_PAYMENT } from '../../util/transaction';
 import { LINE_ITEM_NIGHT } from '../../util/types';
 

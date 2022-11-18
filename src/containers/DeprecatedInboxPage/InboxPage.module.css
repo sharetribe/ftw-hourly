@@ -35,18 +35,12 @@
   }
 }
 
-.wrapper {
-  height: calc(100vh - var(--topbarHeight));
-}
-
 .navigation {
   /* Layout */
   display: flex;
-  /* flex-direction: row; */
-  justify-content: center;
+  flex-direction: row;
+  justify-content: space-between;
   padding: 29px 24px 0 24px;
-  width: 25rem;
-  max-height: calc(100vh - var(--topbarHeight));
 
   border-top-width: 1px;
   border-top-color: var(--matterColorNegative);
@@ -62,21 +56,18 @@
     padding: 113px 0 82px 36px;
     flex-direction: column;
     justify-content: flex-start;
-    align-items: center;
     border: none;
     box-shadow: none;
     background-color: transparent;
   }
   @media (--viewportLargeWithPaddings) {
-    padding: 40px 0 0px 0;
+    padding: 113px 0 82px calc((100% - 1056px) / 2);
   }
 }
 
 .title {
   /* Font */
   color: var(--matterColor);
-  display: flex;
-  justify-content: center;
 
   /* Layout */
   margin-top: 0;
@@ -100,7 +91,7 @@
 
   display: flex;
   flex-direction: row;
-  /* overflow-x: auto; */
+  overflow-x: auto;
 
   @media (--viewportMedium) {
     padding-top: 12px;
@@ -108,8 +99,8 @@
   }
 
   @media (--viewportLarge) {
-    /* padding-top: 53px; */
-    /* flex-direction: column; */
+    padding-top: 53px;
+    flex-direction: column;
   }
 }
 
@@ -123,14 +114,6 @@
   @media (--viewportLarge) {
     margin-left: 0;
   }
-}
-
-.tabContent {
-  display: none;
-}
-
-.tabContentVisible {
-  display: block;
 }
 
 .error {
@@ -153,14 +136,8 @@
 }
 
 .itemList {
-  margin-top: 20px;
-  padding-inline: 10%;
-  display: flex;
-  max-height: 100%;
-  width: 100%;
-  flex-direction: row;
-  flex-wrap: wrap;
-  overflow-y: scroll;
+  margin: 0;
+  padding: 0;
 }
 
 @keyframes loadingSpinnerFadeIn {
@@ -192,11 +169,7 @@
 .listItem {
   /* Layout */
   margin-bottom: 10px;
-  display: flex;
-  flex-direction: row;
-  flex-grow: 1;
-  width: 100%;
-  min-height: 6rem;
+  padding-bottom: 12px;
 
   border-bottom-style: solid;
   border-bottom-width: 1px;
@@ -212,36 +185,57 @@
   }
 }
 
-.avatarBase {
-  font-family: 'poppins', Helvetica, Arial, sans-serif;
-  border-radius: 50%;
-
-  /* Position possible initials to the center of the component */
+.item {
   display: flex;
-  align-items: center;
-  justify-content: center;
+  flex-direction: row;
+}
 
-  /* Colors */
-  background-image: linear-gradient(
-    -180deg,
-    var(--marketplaceColorLight) 0%,
-    var(--marketplaceColor) 100%
-  );
-  color: var(--matterColorLight);
+.itemLink {
+  flex: 1;
 
+  /* Layout */
+  display: flex;
+
+  /* Remove text underline from this link */
+  text-decoration: none;
   &:hover {
     text-decoration: none;
   }
+
+  &:hover .itemUsername {
+    /* Hightlight the username when the whole item is hovered */
+    color: var(--marketplaceColor);
+  }
 }
 
-/* Small Avatar */
+.itemAvatar {
+  margin-right: 8px;
 
-.avatarRoot {
-  composes: avatarBase;
+  @media (--viewportLarge) {
+    margin-right: 15px;
+  }
+}
 
-  /* Layout */
+.rowNotificationDot {
+  width: 6px;
+  height: 6px;
+  margin-top: 10px;
+  margin-right: 8px;
+
+  @media (--viewportLarge) {
+    margin-right: 13px;
+    width: 9px;
+    height: 9px;
+  }
+}
+
+.notificationDot {
+  color: var(--matterColorLight);
+
   width: 100%;
   height: 100%;
+  border-radius: 50%;
+  background-color: var(--failColor);
 }
 
 .itemInfo {
@@ -256,7 +250,6 @@
 
   margin-top: 5px;
   margin-bottom: 0;
-  margin-left: 4px;
 
   @media (--viewportMedium) {
     margin-top: 0;
@@ -264,6 +257,21 @@
   }
 
   color: var(--matterColor);
+}
+
+.itemUsername {
+  /* Font */
+  composes: h4 from global;
+  color: var(--matterColor);
+  line-height: 18px;
+
+  margin-top: 0;
+  margin-bottom: 0;
+
+  @media (--viewportMedium) {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
 }
 
 .bookingInfoWrapper {
@@ -290,6 +298,28 @@
     display: inline-block;
     content: '\25CF'; /* middot */
   }
+}
+
+.itemState {
+  /* Font */
+  composes: h5 from global;
+
+  font-weight: var(--fontWeightMedium);
+  margin-top: 6px;
+  margin-bottom: 0px;
+
+  @media (--viewportMedium) {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+}
+
+.lastTransitionedAt {
+  composes: marketplaceTinyFontStyles from global;
+
+  margin-top: 4px;
+  text-align: right;
+  color: var(--matterColor);
 }
 
 .pagination {
@@ -324,6 +354,10 @@
   margin-bottom: 1px;
 }
 
+.nameNotEmphasized {
+  font-weight: var(--fontWeightMedium);
+}
+
 .bookingActionNeeded {
   color: var(--matterColor);
   margin-top: 4px;
@@ -344,6 +378,16 @@
 
 .lastTransitionedAtNotEmphasized {
   color: var(--matterColorAnti);
+}
+
+.bannedUserLink {
+  & .itemUsername,
+  &:hover .itemUsername,
+  & .bookingInfo,
+  & .stateName,
+  & .lastTransitionedAt {
+    color: var(--matterColorAnti);
+  }
 }
 
 .navPlaceholder {

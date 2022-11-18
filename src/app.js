@@ -22,6 +22,7 @@ import config from './config';
 import defaultMessages from './translations/en.json';
 
 import './assets/main.css';
+// import './styles/build.css';
 
 // If you want to change the language of default (fallback) translations,
 // change the imports to match the wanted locale:

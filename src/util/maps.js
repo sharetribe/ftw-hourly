@@ -226,6 +226,10 @@ export const calculateDistanceBetweenOrigins = (latlng1, latlng2) => {
  * @return {LatLngBounds} - New expanded bounds
  */
 export const expandBounds = (bounds, distance) => {
+  if (!bounds) {
+    return null;
+  }
+
   const neLatLngRads = degToRadians(bounds.ne);
   const swLatLngRads = degToRadians(bounds.sw);
 

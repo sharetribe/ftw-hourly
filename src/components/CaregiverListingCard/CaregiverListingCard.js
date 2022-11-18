@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import { lazyLoadWithDimensions } from '../../util/contextHelpers';
 import { LINE_ITEM_DAY, LINE_ITEM_NIGHT, propTypes } from '../../util/types';
 import { formatMoneyInteger } from '../../util/currency';
-import { ensureListing, userDisplayNameAsString } from '../../util/data';
+import { ensureListing, userDisplayNameAsString, cutTextToPreview } from '../../util/data';
 import { richText } from '../../util/richText';
 import { createSlug } from '../../util/urlHelpers';
 import config from '../../config';
@@ -51,22 +51,6 @@ const priceData = (rates, intl) => {
   return {};
 };
 
-const cutText = (text, length) => {
-  var textCutoff = text.substr(0, length);
-
-  while (textCutoff.charAt(textCutoff.length - 1) !== ' ') {
-    textCutoff = textCutoff.substr(0, textCutoff.length - 1);
-  }
-
-  textCutoff = textCutoff.substr(0, textCutoff.length - 1);
-
-  if (textCutoff.charAt(textCutoff.length - 1).match(/^[.,:!?]/)) {
-    textCutoff = textCutoff.substr(0, textCutoff.length - 1);
-  }
-
-  return textCutoff + '...';
-};
-
 // const LazyImage = lazyLoadWithDimensions(ListingImage, { loadAfterInitialRendering: 3000 });
 
 export const CaregiverListingCardComponent = props => {
@@ -90,7 +74,8 @@ export const CaregiverListingCardComponent = props => {
   const { rates, location, careTypes: providedServices } = publicData;
   const slug = createSlug(userDisplayName);
 
-  let descriptionCutoff = description.length > 300 ? cutText(description, 300) : description;
+  let descriptionCutoff =
+    description.length > 300 ? cutTextToPreview(description, 300) : description;
 
   const { formattedMinPrice, formattedMaxPrice, priceTitle } = priceData(rates, intl);
 
@@ -155,7 +140,7 @@ export const CaregiverListingCardComponent = props => {
       </NamedLink>
       <Button
         className={css.messageButton}
-        onClick={() => onContactUser(userDisplayName, currentListing.id)}
+        onClick={() => onContactUser(currentAuthor, currentListing.id)}
       >
         Message
       </Button>

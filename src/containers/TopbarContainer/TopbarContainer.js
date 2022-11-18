@@ -95,7 +95,7 @@ TopbarContainerComponent.propTypes = {
   onResendVerificationEmail: func.isRequired,
   onChangeModalValue: func.isRequired,
   hasGenericError: bool.isRequired,
-  modalValue: string.isRequired,
+  modalValue: string,
 
   // from withRouter
   history: shape({

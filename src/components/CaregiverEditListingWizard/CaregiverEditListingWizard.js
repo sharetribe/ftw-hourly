@@ -247,16 +247,6 @@ class CaregiverEditListingWizard extends Component {
       (hasRequirements(stripeAccountData, 'past_due') ||
         hasRequirements(stripeAccountData, 'currently_due'));
 
-    const uploadedImage = this.props.image;
-
-    // Update profileImage only if file system has been accessed
-    const updatedValues =
-      uploadedImage && uploadedImage.imageId && uploadedImage.file
-        ? { profileImageId: uploadedImage.imageId }
-        : {};
-
-    this.props.onUpdateProfile(updatedValues);
-
     onPublishListingDraft(id);
 
     if (
@@ -460,6 +450,7 @@ class CaregiverEditListingWizard extends Component {
                 currentUser={currentUser}
                 onProfileImageUpload={onProfileImageUpload}
                 uploadInProgress={uploadInProgress}
+                onUpdateProfile={onUpdateProfile}
               />
             );
           })}

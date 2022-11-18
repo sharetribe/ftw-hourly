@@ -182,18 +182,8 @@ class EmployerEditListingWizard extends Component {
   handlePublishListing(id) {
     const { onPublishListingDraft, currentUser, onChangeMissingInfoModal, history } = this.props;
 
-    const uploadedImage = this.props.image;
-
     const hasDefaultPaymentMethod =
       currentUser && currentUser.stripeCustomer && currentUser.stripeCustomer.defaultPaymentMethod;
-
-    // Update profileImage only if file system has been accessed
-    const updatedValues =
-      uploadedImage && uploadedImage.imageId && uploadedImage.file
-        ? { profileImageId: uploadedImage.imageId }
-        : {};
-
-    this.props.onUpdateProfile(updatedValues);
 
     onPublishListingDraft(id);
 
@@ -437,6 +427,7 @@ class EmployerEditListingWizard extends Component {
                 currentUser={currentUser}
                 onProfileImageUpload={onProfileImageUpload}
                 uploadInProgress={uploadInProgress}
+                onUpdateProfile={onUpdateProfile}
               />
             );
           })}

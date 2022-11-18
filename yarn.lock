@@ -9811,10 +9811,19 @@ postcss@^7.0.35:
     picocolors "^0.2.1"
     source-map "^0.6.1"
 
-postcss@^8.3.5, postcss@^8.4.17, postcss@^8.4.18, postcss@^8.4.4, postcss@^8.4.7:
+postcss@^8.3.5, postcss@^8.4.17, postcss@^8.4.4, postcss@^8.4.7:
   version "8.4.18"
   resolved "https://registry.npmjs.org/postcss/-/postcss-8.4.18.tgz"
   integrity sha512-Wi8mWhncLJm11GATDaQKobXSNEYGUHeQLiQqDFG1qQ5UTDPTEvKw0Xt5NsTpktGTwLps3ByrWsBrG0rB8YQ9oA==
+  dependencies:
+    nanoid "^3.3.4"
+    picocolors "^1.0.0"
+    source-map-js "^1.0.2"
+
+postcss@^8.4.18:
+  version "8.4.19"
+  resolved "https://registry.yarnpkg.com/postcss/-/postcss-8.4.19.tgz#61178e2add236b17351897c8bcc0b4c8ecab56fc"
+  integrity sha512-h+pbPsyhlYj6N2ozBmHhHrs9DzGmbaarbLvWipMRO7RLS+v4onj26MPFXA5OBYFxyqYhUJK456SwDcY9H2/zsA==
   dependencies:
     nanoid "^3.3.4"
     picocolors "^1.0.0"
@@ -13242,6 +13251,11 @@ yargs-parser@^21.0.0:
   resolved "https://registry.npmjs.org/yargs-parser/-/yargs-parser-21.0.1.tgz"
   integrity sha512-9BK1jFpLzJROCI5TzwZL/TU4gqjK5xiHV/RfWLOahrjAko/e4DJkRDZQXfvqAsiZzzYhgAzbgz6lg48jcm4GLg==
 
+yargs-parser@^21.1.1:
+  version "21.1.1"
+  resolved "https://registry.yarnpkg.com/yargs-parser/-/yargs-parser-21.1.1.tgz#9096bceebf990d21bb31fa9516e0ede294a77d35"
+  integrity sha512-tVpsJW7DdjecAiFpbIB1e3qxIQsE6NoPc5/eTdrbbIC4h0LVsWhnoa3g+m2HclBIujHzsxZ4VJVA+GUuc2/LBw==
+
 yargs@^16.2.0:
   version "16.2.0"
   resolved "https://registry.npmjs.org/yargs/-/yargs-16.2.0.tgz"
@@ -13256,9 +13270,9 @@ yargs@^16.2.0:
     yargs-parser "^20.2.2"
 
 yargs@^17.0.0:
-  version "17.6.0"
-  resolved "https://registry.yarnpkg.com/yargs/-/yargs-17.6.0.tgz#e134900fc1f218bc230192bdec06a0a5f973e46c"
-  integrity sha512-8H/wTDqlSwoSnScvV2N/JHfLWOKuh5MVla9hqLjK3nsfyy6Y4kDSYSvkU5YCUEPOSnRXfIyx3Sq+B/IWudTo4g==
+  version "17.6.2"
+  resolved "https://registry.yarnpkg.com/yargs/-/yargs-17.6.2.tgz#2e23f2944e976339a1ee00f18c77fedee8332541"
+  integrity sha512-1/9UrdHjDZc0eOU0HxOHoS78C69UD3JRMvzlJ7S79S2nTaWRA/whGCTV8o9e/N/1Va9YIV7Q4sOxD8VV4pCWOw==
   dependencies:
     cliui "^8.0.1"
     escalade "^3.1.1"
@@ -13266,7 +13280,7 @@ yargs@^17.0.0:
     require-directory "^2.1.1"
     string-width "^4.2.3"
     y18n "^5.0.5"
-    yargs-parser "^21.0.0"
+    yargs-parser "^21.1.1"
 
 yargs@^17.3.1:
   version "17.5.1"

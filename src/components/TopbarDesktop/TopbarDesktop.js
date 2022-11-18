@@ -65,7 +65,7 @@ const TopbarDesktop = props => {
     <NamedLink
       className={css.inboxLink}
       name="InboxPage"
-      params={{ tab: currentUserHasListings ? 'sales' : 'orders' }}
+      params={{ tab: 'messages', search: '?id=' }}
     >
       <span className={css.inbox}>
         <FormattedMessage id="TopbarDesktop.inbox" />
