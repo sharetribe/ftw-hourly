@@ -38,6 +38,7 @@ import MainPanel from './MainPanel';
 import css from './SearchPage.module.css';
 import { userDisplayNameAsString } from '../../util/data';
 const { UUID } = sdkTypes;
+import { CAREGIVER, EMPLOYER } from '../../util/constants';
 
 const MODAL_BREAKPOINT = 768; // Search is in modal on mobile layout
 const SEARCH_WITH_MAP_DEBOUNCE = 300; // Little bit of debounce before search is initiated.
@@ -363,7 +364,7 @@ const mapStateToProps = state => {
   } = state.SearchPage;
   const currentUser = state.user.currentUser;
   const currentUserType = currentUser?.attributes.profile.metadata.userType;
-  const oppositeUserType = currentUserType === 'caregiver' ? 'employer' : 'caregiver';
+  const oppositeUserType = currentUserType === CAREGIVER ? EMPLOYER : CAREGIVER;
 
   const pageListings = getListingsById(state, currentPageResultIds).filter(
     listing =>

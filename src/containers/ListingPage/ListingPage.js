@@ -45,6 +45,7 @@ import {
 } from '../../components';
 import { EnquiryForm } from '../../forms';
 import { TopbarContainer, NotFoundPage } from '../../containers';
+import { CAREGIVER } from '../../util/constants';
 
 import {
   sendEnquiry,
@@ -52,13 +53,6 @@ import {
   fetchTimeSlots,
   fetchTransactionLineItems,
 } from './ListingPage.duck';
-// import SectionImages from './SectionImages';
-import SectionAvatar from './SectionAvatar';
-import SectionHeading from './SectionHeading';
-import SectionDescriptionMaybe from './SectionDescriptionMaybe';
-import SectionFeaturesMaybe from './SectionFeaturesMaybe';
-import SectionReviews from './SectionReviews';
-import SectionMapMaybe from './SectionMapMaybe';
 import css from './ListingPage.module.css';
 
 const MIN_LENGTH_FOR_LONG_WORDS_IN_TITLE = 16;
@@ -377,7 +371,7 @@ export class ListingPageComponent extends Component {
 
     const userType = currentListing?.attributes.metadata.listingType;
     const mainContent =
-      userType === 'caregiver' ? (
+      userType === CAREGIVER ? (
         <CaregiverListingContainer
           params={params}
           currentAuthor={currentAuthor}

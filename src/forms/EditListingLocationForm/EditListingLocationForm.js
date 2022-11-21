@@ -11,6 +11,7 @@ import {
   composeValidators,
 } from '../../util/validators';
 import { Form, LocationAutocompleteInputField, Button, FieldAddSubtract } from '../../components';
+import { CAREGIVER } from '../../util/constants';
 
 import css from './EditListingLocationForm.module.css';
 
@@ -98,7 +99,7 @@ export const EditListingLocationFormComponent = props => (
               autocompletePlaceSelected(addressNotRecognizedMessage)
             )}
           />
-          {userType === 'caregiver' && (
+          {userType === CAREGIVER && (
             <FieldAddSubtract
               id={formId ? `${formId}.travelDistance` : 'travelDistance'}
               name="travelDistance"

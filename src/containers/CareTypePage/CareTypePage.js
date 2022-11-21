@@ -21,6 +21,7 @@ import { getMarketplaceEntities } from '../../ducks/marketplaceData.duck';
 import { manageDisableScrolling, isScrollingDisabled } from '../../ducks/UI.duck';
 import { NamedRedirect, Page } from '../../components';
 import { EditListingFeaturesForm } from '../../forms';
+import { CAREGIVER, EMPLOYER } from '../../util/constants';
 
 import {
   requestAddAvailabilityException,
@@ -33,9 +34,6 @@ import {
 import css from './CareTypePage.module.css';
 
 const { UUID } = sdkTypes;
-
-const CAREGIVER = 'caregiver';
-const EMPLOYER = 'employer';
 
 // N.B. All the presentational content needs to be extracted to their own components
 export const CareTypePageComponent = props => {
@@ -81,7 +79,7 @@ export const CareTypePageComponent = props => {
       type: LISTING_PAGE_PARAM_TYPE_DRAFT,
       id: listingId,
       // Change depending on user type
-      tab: userType === 'caregiver' ? 'bio' : 'location',
+      tab: userType === CAREGIVER ? 'bio' : 'location',
     };
     const routes = routeConfiguration();
 
@@ -149,7 +147,7 @@ export const CareTypePageComponent = props => {
           id: currentUserListing.id.uuid,
           slug: createSlug(currentUserListing.attributes.title),
           type: LISTING_PAGE_PARAM_TYPE_EDIT,
-          tab: userType === 'caregiver' ? 'bio' : 'location',
+          tab: userType === CAREGIVER ? 'bio' : 'location',
         }}
       />
     );
@@ -178,7 +176,7 @@ export const CareTypePageComponent = props => {
     const mess = intl.formatMessage({ id: submitButtonTranslationKey });
 
     const careTypesFeaturesLabel = intl.formatMessage(
-      userType === 'caregiver'
+      userType === CAREGIVER
         ? { id: 'CareTypePage.caregiverFormLabel' }
         : { id: 'CareTypePage.employerFormLabel' }
     );

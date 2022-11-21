@@ -1,6 +1,7 @@
 import React from 'react';
 import { FormattedMessage } from '../../util/reactIntl';
 import { NamedLink } from '..';
+import { CAREGIVER } from '../../util/constants';
 
 import css from './ModalMissingInformation.module.css';
 
@@ -9,7 +10,7 @@ const StripeAccountReminder = props => {
 
   const { userType } = currentUser && currentUser.attributes.profile.metadata;
 
-  const redirectPageName = userType === 'caregiver' ? 'StripePayoutPage' : 'PaymentMethodsPage';
+  const redirectPageName = userType === CAREGIVER ? 'StripePayoutPage' : 'PaymentMethodsPage';
 
   if (currentUser) {
     return (
@@ -18,7 +19,7 @@ const StripeAccountReminder = props => {
           <FormattedMessage id="ModalMissingInformation.missingPaymentDetailsTitle" />
         </p>
         <p className={css.modalMessage}>
-          {userType === 'caregiver' ? (
+          {userType === CAREGIVER ? (
             <FormattedMessage id="ModalMissingInformation.missingStripeAccountText" />
           ) : (
             <FormattedMessage id="ModalMissingInformation.missingPaymentMethodsText" />

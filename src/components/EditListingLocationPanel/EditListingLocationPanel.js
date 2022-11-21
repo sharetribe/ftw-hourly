@@ -6,6 +6,7 @@ import { LISTING_STATE_DRAFT } from '../../util/types';
 import { ensureOwnListing } from '../../util/data';
 import { ListingLink } from '../../components';
 import { EditListingLocationForm } from '../../forms';
+import { CAREGIVER } from '../../util/constants';
 
 import css from './EditListingLocationPanel.module.css';
 
@@ -96,7 +97,7 @@ class EditListingLocationPanel extends Component {
             } = location;
 
             const updateValues =
-              userType === 'caregiver'
+              userType === CAREGIVER
                 ? {
                     geolocation: origin,
                     publicData: {

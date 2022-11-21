@@ -8,6 +8,7 @@ import {
   CaregiverListingCard,
   EmployerListingCard,
 } from '../../components';
+import { EMPLOYER } from '../../util/constants';
 import css from './SearchResultsPanel.module.css';
 
 const SearchResultsPanel = props => {
@@ -48,7 +49,7 @@ const SearchResultsPanel = props => {
     <div className={classes}>
       <div className={css.listingCards}>
         {listings.map(l =>
-          currentUserType === 'employer' ? (
+          currentUserType === EMPLOYER ? (
             <CaregiverListingCard
               className={css.listingCard}
               key={l.id.uuid}

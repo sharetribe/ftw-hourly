@@ -27,6 +27,7 @@ import {
   NamedRedirect,
   Page,
 } from '../../components';
+import { CAREGIVER, EMPLOYER } from '../../util/constants';
 
 import {
   requestAddAvailabilityException,
@@ -52,9 +53,6 @@ const STRIPE_ONBOARDING_RETURN_URL_TYPES = [
 ];
 
 const { UUID } = sdkTypes;
-
-const CAREGIVER = 'caregiver';
-const EMPLOYER = 'employer';
 
 // N.B. All the presentational content needs to be extracted to their own components
 export const CreateProfilePageComponent = props => {

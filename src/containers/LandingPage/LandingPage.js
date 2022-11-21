@@ -19,6 +19,7 @@ import {
   Footer,
 } from '../../components';
 import { TopbarContainer } from '../../containers';
+import { EMPLOYER } from '../../util/constants';
 
 import facebookImage from '../../assets/yogatimeFacebook-1200x630.jpg';
 import twitterImage from '../../assets/yogatimeTwitter-600x314.jpg';
@@ -43,7 +44,7 @@ export const LandingPageComponent = props => {
   const schemaDescription = intl.formatMessage({ id: 'LandingPage.schemaDescription' });
   const schemaImage = `${config.canonicalRootURL}${facebookImage}`;
 
-  const { userType } = (currentUser && currentUser.attributes.profile.metadata) || 'employer';
+  const { userType } = (currentUser && currentUser.attributes.profile.metadata) || EMPLOYER;
 
   return (
     <Page

@@ -8,6 +8,7 @@ import { LISTING_STATE_DRAFT } from '../../util/types';
 import { ensureListing, ensureCurrentUser } from '../../util/data';
 import { EditListingFeaturesForm } from '../../forms';
 import { ListingLink } from '..';
+import { CAREGIVER } from '../../util/constants';
 
 import css from './EditListingCareTypesPanel.module.css';
 
@@ -56,7 +57,7 @@ const EditListingCareTypesPanel = props => {
   const initialValues = { careTypes };
 
   const careTypesFeaturesLabel = intl.formatMessage(
-    userType === 'caregiver'
+    userType === CAREGIVER
       ? { id: 'EditListingCareTypesPanel.caregiverFormLabel' }
       : { id: 'EditListingCareTypesPanel.employerFormLabel' }
   );

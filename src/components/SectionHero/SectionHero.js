@@ -3,6 +3,7 @@ import { string } from 'prop-types';
 import { FormattedMessage } from '../../util/reactIntl';
 import classNames from 'classnames';
 import { NamedLink } from '../../components';
+import { CAREGIVER } from '../../util/constants';
 
 import css from './SectionHero.module.css';
 
@@ -16,7 +17,7 @@ const SectionHero = props => {
 
   const classes = classNames(rootClassName || css.root, className);
 
-  const itemsToBrowse = userType === 'employer' ? 'caregivers' : 'jobs';
+  const itemsToBrowse = userType === CAREGIVER ? 'jobs' : 'caregivers';
 
   return (
     <div className={classes}>

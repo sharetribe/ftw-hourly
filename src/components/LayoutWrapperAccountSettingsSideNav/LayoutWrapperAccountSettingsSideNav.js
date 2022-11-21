@@ -9,6 +9,7 @@ import { compose } from 'redux';
 import { FormattedMessage } from '../../util/reactIntl';
 import { withViewport } from '../../util/contextHelpers';
 import { LayoutWrapperSideNav } from '../../components';
+import { CAREGIVER } from '../../util/constants';
 
 import { createGlobalState } from './hookGlobalState';
 
@@ -119,7 +120,7 @@ const LayoutWrapperAccountSettingsSideNavComponent = props => {
     },
   };
 
-  userType === 'caregiver' ? tabs.push(payoutTab) : tabs.push(paymentMethodsTab);
+  userType === CAREGIVER ? tabs.push(payoutTab) : tabs.push(paymentMethodsTab);
 
   return <LayoutWrapperSideNav tabs={tabs} />;
 };

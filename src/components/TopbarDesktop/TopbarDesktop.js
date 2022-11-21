@@ -17,6 +17,7 @@ import {
   OwnListingLink,
 } from '../../components';
 import { TopbarSearchForm } from '../../forms';
+import { EMPLOYER } from '../../util/constants';
 
 import css from './TopbarDesktop.module.css';
 
@@ -170,7 +171,7 @@ const TopbarDesktop = props => {
       </NamedLink>
       {search}
       {listingLink}
-      {currentUserType === 'employer' && createListingLink}
+      {currentUserType === EMPLOYER && createListingLink}
       {inboxLink}
       {profileMenu}
       {signupLink}

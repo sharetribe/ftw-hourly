@@ -4,6 +4,7 @@ import { Form as FinalForm, Field } from 'react-final-form';
 import classNames from 'classnames';
 import { intlShape, injectIntl } from '../../util/reactIntl';
 import { Form, LocationAutocompleteInput } from '../../components';
+import { EMPLOYER } from '../../util/constants';
 
 import css from './TopbarSearchForm.module.css';
 
@@ -79,7 +80,7 @@ class TopbarSearchFormComponent extends Component {
                         isMobile ? css.mobilePredictionsAttribution : null
                       }
                       placeholder={intl.formatMessage(
-                        currentUserType === 'employer'
+                        currentUserType === EMPLOYER
                           ? { id: 'TopbarSearchForm.employerPlaceholder' }
                           : { id: 'TopbarSearchForm.caregiverPlaceholder' }
                       )}
