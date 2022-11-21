@@ -62,7 +62,6 @@ const EmployerListingContainer = props => {
   ) : null;
 
   const currentAuthor = currentListing.author;
-  currentAuthor.profileImage = currentListing && currentListing.images && currentListing.images[0];
 
   const displayName = userDisplayNameAsString(currentAuthor) + '.';
 

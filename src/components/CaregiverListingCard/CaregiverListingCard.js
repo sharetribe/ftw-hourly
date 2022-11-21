@@ -84,12 +84,12 @@ export const CaregiverListingCardComponent = props => {
     servicesMap.set(option.key, option.label)
   );
 
-  currentAuthor.profileImage = listing.images[0];
   const avatarComponent = (
     <Avatar
       className={css.avatar}
       renderSizes="(max-width: 767px) 96px, 240px"
       user={currentAuthor}
+      initialsClassName={css.avatarInitials}
       disableProfileLink
     />
   );
