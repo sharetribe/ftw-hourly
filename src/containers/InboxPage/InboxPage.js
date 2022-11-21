@@ -10,7 +10,12 @@ import { ensureCurrentUser, cutTextToPreview } from '../../util/data';
 import { getMarketplaceEntities } from '../../ducks/marketplaceData.duck';
 import { isScrollingDisabled } from '../../ducks/UI.duck';
 import { changeModalValue } from '../TopbarContainer/TopbarContainer.duck';
-import { fetchMoreMessages, sendMessage, clearMessages } from './InboxPage.duck';
+import {
+  fetchMoreMessages,
+  sendMessage,
+  clearMessages,
+  fetchOtherUserListing,
+} from './InboxPage.duck';
 import { PAYMENT_DETAILS } from '../../components/ModalMissingInformation/ModalMissingInformation';
 import {
   NotificationBadge,
@@ -60,6 +65,8 @@ export const InboxPageComponent = props => {
     transactionRole,
     onClearMessages,
     onSendMessage,
+    onFetchOtherUserListing,
+    otherUserListing,
   } = props;
   const { tab } = params;
   const ensuredCurrentUser = ensureCurrentUser(currentUser);
@@ -74,6 +81,7 @@ export const InboxPageComponent = props => {
   const currentTransactions = useMemo(() => {
     return transactions;
   }, [transactionIds]);
+  const currentTransaction = getCurrentTransaction(currentTransactions, history.location.search);
 
   // Show payment details modal if user doesn't have them
   useEffect(() => {
@@ -91,6 +99,16 @@ export const InboxPageComponent = props => {
             ''
         ),
       });
+    }
+
+    if (currentTransaction) {
+      const { customer, provider } = currentTransaction;
+      const otherUser =
+        ensuredCurrentUser.id.uuid === customer && customer.id.uuid ? customer : provider;
+
+      if (!!otherUser) {
+        onFetchOtherUserListing(otherUser.id.uuid);
+      }
     }
   }, [currentTxId, currentTransactions, history]);
 
@@ -125,14 +143,14 @@ export const InboxPageComponent = props => {
   );
 
   const hasTransactions =
-    (currentUser.id &&
+    (ensuredCurrentUser.id &&
       currentTransactions &&
       currentTransactions.length > 0 &&
-      currentTransactions[0].customer.id.uuid === currentUser.id.uuid) ||
-    (currentUser.id &&
+      currentTransactions[0].customer.id.uuid === ensuredCurrentUser.id.uuid) ||
+    (ensuredCurrentUser.id &&
       currentTransactions &&
       currentTransactions.length > 0 &&
-      currentTransactions[0].provider.id.uuid === currentUser.id.uuid);
+      currentTransactions[0].provider.id.uuid === ensuredCurrentUser.id.uuid);
   const pagingLinks =
     hasTransactions && pagination && pagination.totalPages > 1 ? (
       <PaginationLinks
@@ -185,7 +203,6 @@ export const InboxPageComponent = props => {
     <LinkTabNavHorizontal rootClassName={css.tabs} tabRootClassName={css.tab} tabs={tabs} />
   );
 
-  const currentTransaction = getCurrentTransaction(currentTransactions, history.location.search);
   const initialMessageFailed = !!(
     initialMessageFailedToTransaction &&
     currentTransaction.id &&
@@ -226,7 +243,7 @@ export const InboxPageComponent = props => {
                       tx={tx}
                       intl={intl}
                       params={params}
-                      currentUser={currentUser}
+                      currentUser={ensuredCurrentUser}
                       selected={currentTxId === tx.id.uuid}
                       previewMessage={previewMessage}
                     />
@@ -246,7 +263,7 @@ export const InboxPageComponent = props => {
           {currentTxId && (
             <MessagePanel
               transaction={currentTransaction}
-              currentUser={currentUser}
+              currentUser={ensuredCurrentUser}
               fetchMessagesError={fetchMessagesError}
               fetchMessagesInProgress={fetchMessagesInProgress}
               initialMessageFailed={initialMessageFailed}
@@ -258,6 +275,7 @@ export const InboxPageComponent = props => {
               sendMessageError={sendMessageError}
               transactionRole={transactionRole}
               onSendMessage={onSendMessage}
+              otherUserListing={otherUserListing}
             />
           )}
         </LayoutWrapperMain>
@@ -318,6 +336,7 @@ const mapStateToProps = state => {
     sendMessageInProgress,
     sendMessageError,
     transactionRefs,
+    otherUserListing,
   } = state.InboxPage;
   const {
     currentUser,
@@ -341,6 +360,7 @@ const mapStateToProps = state => {
     fetchMessagesError,
     sendMessageInProgress,
     sendMessageError,
+    otherUserListing,
   };
 };
 
@@ -349,6 +369,7 @@ const mapDispatchToProps = dispatch => ({
   onShowMoreMessages: txId => dispatch(fetchMoreMessages(txId)),
   onSendMessage: (txId, message) => dispatch(sendMessage(txId, message)),
   onClearMessages: () => dispatch(clearMessages()),
+  onFetchOtherUserListing: userId => dispatch(fetchOtherUserListing(userId)),
 });
 
 const InboxPage = compose(

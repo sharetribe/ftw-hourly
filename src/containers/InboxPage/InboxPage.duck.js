@@ -41,6 +41,10 @@ export const SEND_MESSAGE_REQUEST = 'app/InboxPage/SEND_MESSAGE_REQUEST';
 export const SEND_MESSAGE_SUCCESS = 'app/InboxPage/SEND_MESSAGE_SUCCESS';
 export const SEND_MESSAGE_ERROR = 'app/InboxPage/SEND_MESSAGE_ERROR';
 
+export const FETCH_OTHER_USER_LISTING_REQUEST = 'app/InboxPage/FETCH_OTHER_USER_LISTING_REQUEST';
+export const FETCH_OTHER_USER_LISTING_SUCCESS = 'app/InboxPage/FETCH_OTHER_USER_LISTING_SUCCESS';
+export const FETCH_OTHER_USER_LISTING_ERROR = 'app/InboxPage/FETCH_OTHER_USER_LISTING_ERROR';
+
 export const CLEAR_MESSAGES_SUCCESS = 'app/InboxPage/CLEAR_MESSAGES_SUCCESS';
 
 // ================ Reducer ================ //
@@ -65,6 +69,9 @@ const initialState = {
   initialMessageFailedToTransaction: null,
   sendMessageInProgress: false,
   sendMessageError: null,
+  otherUserListing: null,
+  fetchOtherUserListingInProgress: false,
+  fetchOtherUserListingError: false,
 };
 
 const mergeEntityArrays = (a, b) => {
@@ -138,6 +145,20 @@ export default function checkoutPageReducer(state = initialState, action = {}) {
       return { ...state, sendMessageInProgress: false, sendMessageError: payload };
     case CLEAR_MESSAGES_SUCCESS:
       return { ...state, messages: [] };
+    case FETCH_OTHER_USER_LISTING_REQUEST:
+      return { ...state, fetchOtherUserListingInProgress: true, fetchOtherUserListingError: false };
+    case FETCH_OTHER_USER_LISTING_SUCCESS:
+      return {
+        ...state,
+        otherUserListing: payload,
+        fetchOtherUserListingInProgress: false,
+      };
+    case FETCH_OTHER_USER_LISTING_ERROR:
+      return {
+        ...state,
+        fetchOtherUserListingProgress: false,
+        fetchOtherUserListingError: payload,
+      };
     default:
       return state;
   }
@@ -173,11 +194,20 @@ const sendMessageError = e => ({ type: SEND_MESSAGE_ERROR, error: true, payload:
 
 const clearMessagesSuccess = () => ({ type: CLEAR_MESSAGES_SUCCESS });
 
+const fetchOtherUserListingRequest = () => ({ type: FETCH_OTHER_USER_LISTING_REQUEST });
+const fetchOtherUserListingSuccess = response => ({
+  type: FETCH_OTHER_USER_LISTING_SUCCESS,
+  payload: response[0],
+});
+const fetchOtherUserListingError = e => ({
+  type: FETCH_OTHER_USER_LISTING_ERROR,
+  error: true,
+  payload: e,
+});
+
 // ================ Thunks ================ //
 
 const INBOX_PAGE_SIZE = 10;
-
-// const
 
 const fetchMessages = (txId, page) => (dispatch, getState, sdk) => {
   const paging = { page, per_page: MESSAGES_PAGE_SIZE };
@@ -264,6 +294,20 @@ export const sendMessage = (txId, message) => (dispatch, getState, sdk) => {
 
 export const clearMessages = () => (dispatch, getState, sdk) => {
   dispatch(clearMessagesSuccess());
+};
+
+export const fetchOtherUserListing = userId => (dispatch, getState, sdk) => {
+  dispatch(fetchOtherUserListingRequest());
+
+  return sdk.listings
+    .query({ authorId: userId })
+    .then(response => {
+      dispatch(fetchOtherUserListingSuccess(response.data.data));
+    })
+    .catch(e => {
+      dispatch(fetchOtherUserListingError(e));
+      throw e;
+    });
 };
 
 const IMAGE_VARIANTS = {

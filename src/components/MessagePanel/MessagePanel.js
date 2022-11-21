@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useMemo } from 'react';
 import FeedSection from '../TransactionPanel/FeedSection';
 import { SendMessageForm } from '../../forms';
 import { FormattedMessage, injectIntl, intlShape } from '../../util/reactIntl';
@@ -9,6 +9,7 @@ import {
   ensureUser,
   userDisplayNameAsString,
 } from '../../util/data';
+import { UserMessagePreview } from '../';
 
 import css from './MessagePanel.module.css';
 const MessagePanelComponent = props => {
@@ -26,6 +27,7 @@ const MessagePanelComponent = props => {
     sendMessageInProgress,
     sendMessageError,
     onSendMessage,
+    otherUserListing,
   } = props;
 
   //   const [isMobSaf, setIsMobSaf] = useState(false);
@@ -50,7 +52,9 @@ const MessagePanelComponent = props => {
   const providerDisplayNameString = userDisplayNameAsString(provider, '');
   //May need to check for edge case in which both display names empty
   const otherUser =
-    currentUserDisplayNameString === providerDisplayNameString ? provider : customer;
+    currentUserDisplayNameString === providerDisplayNameString
+      ? customer && customer
+      : provider && provider;
   const otherUserDisplayNameString = userDisplayNameAsString(otherUser, '');
 
   const currentListing = ensureListing(currentTransaction.listing);
@@ -105,6 +109,11 @@ const MessagePanelComponent = props => {
 
   return (
     <div className={css.root}>
+      <UserMessagePreview
+        otherUser={otherUser}
+        otherUserListing={otherUserListing}
+        currentTransaction={currentTransaction}
+      />
       <FeedSection
         rootClassName={css.feedContainer}
         currentTransaction={currentTransaction}
