@@ -125,15 +125,14 @@ export const InboxPageComponent = props => {
   );
 
   const hasTransactions =
-    !fetchInProgress &&
-    ((currentUser.id &&
+    (currentUser.id &&
       currentTransactions &&
       currentTransactions.length > 0 &&
       currentTransactions[0].customer.id.uuid === currentUser.id.uuid) ||
-      (currentUser.id &&
-        currentTransactions &&
-        currentTransactions.length > 0 &&
-        currentTransactions[0].provider.id.uuid === currentUser.id.uuid));
+    (currentUser.id &&
+      currentTransactions &&
+      currentTransactions.length > 0 &&
+      currentTransactions[0].provider.id.uuid === currentUser.id.uuid);
   const pagingLinks =
     hasTransactions && pagination && pagination.totalPages > 1 ? (
       <PaginationLinks

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl, intlShape } from '../../util/reactIntl';
 import classNames from 'classnames';
