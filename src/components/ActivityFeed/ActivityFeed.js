@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { string, arrayOf, bool, func, number } from 'prop-types';
 import { FormattedMessage, injectIntl, intlShape } from '../../util/reactIntl';
 import dropWhile from 'lodash/dropWhile';
@@ -191,19 +191,27 @@ export const ActivityFeedComponent = props => {
     }
   };
 
+  const [showingOlderMessages, setShowingOlderMessages] = useState(false);
+
   const feedContainerRef = useRef(null);
 
   useEffect(() => {
-    if (feedContainerRef && feedContainerRef.current) {
+    if (feedContainerRef && feedContainerRef.current && !showingOlderMessages) {
       feedContainerRef.current.scrollTop = feedContainerRef.current.scrollHeight;
     }
+    setShowingOlderMessages(false);
   }, [messages]);
+
+  const onShowMoreMessages = () => {
+    setShowingOlderMessages(true);
+    onShowOlderMessages();
+  };
 
   return (
     <ul className={classes} ref={feedContainerRef}>
       {hasOlderMessages ? (
         <li className={css.showOlderWrapper} key="show-older-messages">
-          <InlineTextButton className={css.showOlderButton} onClick={onShowOlderMessages}>
+          <InlineTextButton className={css.showOlderButton} onClick={onShowMoreMessages}>
             <FormattedMessage id="ActivityFeed.showOlderMessages" />
           </InlineTextButton>
         </li>

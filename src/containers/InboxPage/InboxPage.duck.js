@@ -58,9 +58,9 @@ const initialState = {
   transactionRefs: [],
   fetchMessagesInProgress: false,
   fetchMessagesError: null,
-  totalMessages: 0,
-  totalMessagePages: 0,
-  oldestMessagePageFetched: 0,
+  totalMessages: new Map(),
+  totalMessagePages: new Map(),
+  oldestMessagePageFetched: new Map(),
   messages: new Map(),
   initialMessageFailedToTransaction: null,
   sendMessageInProgress: false,
@@ -95,22 +95,32 @@ export default function checkoutPageReducer(state = initialState, action = {}) {
       return { ...state, fetchMessagesInProgress: true, fetchMessagesError: null };
     case FETCH_MESSAGES_SUCCESS: {
       const oldestMessagePageFetched =
-        state.oldestMessagePageFetched > payload.page
-          ? state.oldestMessagePageFetched
+        state.oldestMessagePageFetched.get(payload.txId) > payload.page
+          ? state.oldestMessagePageFetched.get(payload.txId)
           : payload.page;
+      const oldestMessagePageFetchedMap = state.oldestMessagePageFetched;
+      oldestMessagePageFetchedMap.set(payload.txId, oldestMessagePageFetched);
+
       const oldMessages = state.messages;
       const currentTransactionMessages = oldMessages.get(payload.txId) || [];
       oldMessages.set(
         payload.txId,
         mergeEntityArrays(currentTransactionMessages, payload.messages)
       );
+
+      const oldTotalPagesMap = state.totalMessagePages;
+      oldTotalPagesMap.set(payload.txId, payload.totalPages);
+
+      const oldTotalMessagesMap = state.totalMessages;
+      oldTotalMessagesMap.set(payload.txId, payload.totalItems);
+
       return {
         ...state,
         fetchMessagesInProgress: false,
         messages: oldMessages,
-        totalMessages: payload.totalItems,
-        totalMessagePages: payload.totalPages,
-        oldestMessagePageFetched,
+        totalMessages: oldTotalMessagesMap,
+        totalMessagePages: oldTotalPagesMap,
+        oldestMessagePageFetchedMap,
       };
     }
     case FETCH_MESSAGES_ERROR:
@@ -184,7 +194,7 @@ const fetchMessages = (txId, page) => (dispatch, getState, sdk) => {
           const messages = denormalisedResponseEntities(response);
           const { totalItems, totalPages, page: fetchedPage } = response.data.meta;
           const pagination = { totalItems, totalPages, page: fetchedPage };
-          const totalMessages = getState().InboxPage.totalMessages;
+          const totalMessages = getState().InboxPage.totalMessages.get(txId.uuid);
 
           // Original fetchMessages call succeeded
           dispatch(fetchMessagesSuccess(txId.uuid, messages, pagination));
@@ -214,10 +224,13 @@ const fetchMessages = (txId, page) => (dispatch, getState, sdk) => {
 export const fetchMoreMessages = txId => (dispatch, getState, sdk) => {
   const state = getState();
   const { oldestMessagePageFetched, totalMessagePages } = state.InboxPage;
-  const hasMoreOldMessages = totalMessagePages > oldestMessagePageFetched;
+  const hasMoreOldMessages =
+    totalMessagePages.get(txId.uuid) > oldestMessagePageFetched.get(txId.uuid);
 
   // In case there're no more old pages left we default to fetching the current cursor position
-  const nextPage = hasMoreOldMessages ? oldestMessagePageFetched + 1 : oldestMessagePageFetched;
+  const nextPage = hasMoreOldMessages
+    ? oldestMessagePageFetched.get(txId.uuid) + 1
+    : oldestMessagePageFetched.get(txId.uuid);
 
   return dispatch(fetchMessages(txId, nextPage));
 };

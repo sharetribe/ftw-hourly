@@ -37,6 +37,13 @@ const MessagePanelComponent = props => {
 
   const currentTransaction = ensureTransaction(transaction);
 
+  const oldestMessagePageFetchedValue = oldestMessagePageFetched.get(
+    currentTransaction.id && currentTransaction.id.uuid
+  );
+  const totalMessagePagesValue = totalMessagePages.get(
+    currentTransaction.id && currentTransaction.id.uuid
+  );
+
   // May be better to use id as comparator here
   const currentUserDisplayNameString = userDisplayNameAsString(currentUser, '');
   const { customer, provider, listing } = currentTransaction;
@@ -106,11 +113,11 @@ const MessagePanelComponent = props => {
         fetchMessagesInProgress={fetchMessagesInProgress}
         initialMessageFailed={initialMessageFailed}
         messages={messages}
-        oldestMessagePageFetched={oldestMessagePageFetched}
+        oldestMessagePageFetched={oldestMessagePageFetchedValue}
         // May need to create actual function here later
         onOpenReviewModal={() => console.log('Review Modal opened')}
         onShowMoreMessages={() => onShowMoreMessages(currentTransaction.id)}
-        totalMessagePages={totalMessagePages}
+        totalMessagePages={totalMessagePagesValue}
       />
       {showSendMessageForm ? (
         <SendMessageForm
