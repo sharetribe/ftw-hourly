@@ -1,0 +1,23 @@
+.root {
+  display: flex;
+}
+
+.avatarContainer {
+  display: flex;
+  float: left;
+  text-decoration: none;
+}
+
+.avatarLink {
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+.usernameContainer {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  margin-left: 2rem;
+  font-size: 60px;
+}

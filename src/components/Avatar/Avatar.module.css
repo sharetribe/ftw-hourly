@@ -33,6 +33,7 @@
 .initials {
   font-size: 14px;
   font-weight: var(--fontWeightBold);
+  text-decoration: none;
 }
 
 .avatarImage {

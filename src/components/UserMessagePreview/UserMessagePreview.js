@@ -1,7 +1,8 @@
 import React from 'react';
 import { useMemo } from 'react';
-import { Avatar, NamedLink } from '../';
+import { AvatarLarge, NamedLink } from '../';
 import { createSlug, stringify } from '../../util/urlHelpers';
+import { userDisplayNameAsString } from '../../util/data';
 
 import css from './UserMessagePreview.module.css';
 
@@ -14,8 +15,8 @@ const createListingLink = (listing, otherUser, searchParams = {}, className = ''
     const params = { id: listingId, slug: createSlug(label) };
     const to = { search: stringify(searchParams) };
     return (
-      <NamedLink className={className} name="ListingPage" params={params} to={to}>
-        <Avatar user={otherUser} disableProfileLink />
+      <NamedLink className={css.avatarLink} name="ListingPage" params={params} to={to}>
+        <AvatarLarge user={otherUser} disableProfileLink className={css.avatar} />
       </NamedLink>
     );
   } else {
@@ -28,7 +29,16 @@ const UserMessagePreview = props => {
 
   const listingLink = otherUserListing ? createListingLink(otherUserListing, otherUser) : null;
 
-  return <div>{otherUserListing ? listingLink : <Avatar user={otherUser} />}</div>;
+  const userDisplayNameString = userDisplayNameAsString(otherUser, '');
+
+  return (
+    <div className={css.root}>
+      <div className={css.avatarContainer}>
+        {otherUserListing ? listingLink : <AvatarLarge user={otherUser} className={css.avatar} />}
+      </div>
+      <div className={css.usernameContainer}>{userDisplayNameString}</div>
+    </div>
+  );
 };
 
 export default UserMessagePreview;

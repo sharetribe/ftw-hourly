@@ -37,6 +37,7 @@
 
 .wrapper {
   height: calc(100vh - var(--topbarHeight));
+  padding-top: 40px;
 }
 
 .navigation {
