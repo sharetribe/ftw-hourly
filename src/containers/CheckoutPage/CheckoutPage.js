@@ -161,10 +161,8 @@ export class CheckoutPageComponent extends Component {
       storeData(currentTransaction, STORAGE_KEY);
     }
 
-    console.log(storedData(STORAGE_KEY));
-
     // NOTE: stored data can be empty if user has already successfully completed transaction.
-    const pageData = hasDataInProps ? { currentTransaction } : storedData(STORAGE_KEY);
+    const pageData = storedData(STORAGE_KEY);
 
     // Check if a booking is already created according to stored data.
     const tx = pageData ? pageData.currentTransaction : null;
@@ -482,11 +480,11 @@ export class CheckoutPageComponent extends Component {
 
     const isLoading = !this.state.dataLoaded;
 
-    const { currentTransaction } = this.state.pageData;
+    const { author, listing, currentTransaction } = this.state.pageData;
 
     const existingTransaction = ensureTransaction(currentTransaction);
-    const currentListing = ensureListing(existingTransaction.listing);
-    const currentAuthor = ensureUser(existingTransaction.provider);
+    const currentListing = ensureListing(listing);
+    const currentAuthor = ensureUser(author);
 
     const listingTitle = currentListing.attributes.title;
     const title = intl.formatMessage({ id: 'CheckoutPage.title' }, { listingTitle });

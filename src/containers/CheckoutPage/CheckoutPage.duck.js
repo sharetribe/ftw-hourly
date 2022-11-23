@@ -193,16 +193,19 @@ export const initiateOrder = (orderParams, transactionId) => (dispatch, getState
 
   const handleSuccess = response => {
     const entities = denormalisedResponseEntities(response);
-    if (entities.length !== 1) {
-      throw new Error('Expected a resource in the speculate response');
-    }
-    const tx = entities[0];
-    dispatch(speculateTransactionSuccess(tx));
+    const order = entities[0];
+    dispatch(initiateOrderSuccess(order));
+    dispatch(fetchCurrentUserHasOrdersSuccess(true));
+    return order;
   };
 
   const handleError = e => {
-    log.error(e, 'transaction-failed', {});
-    return dispatch(speculateTransactionError(storableError(e)));
+    dispatch(initiateOrderError(storableError(e)));
+    const transactionIdMaybe = transactionId ? { transactionId: transactionId.uuid } : {};
+    log.error(e, 'initiate-order-failed', {
+      ...transactionIdMaybe,
+    });
+    throw e;
   };
 
   if (isTransition && isPrivilegedTransition) {

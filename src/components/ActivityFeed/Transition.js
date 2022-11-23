@@ -30,6 +30,8 @@ import { formatDate } from '../../util/dates';
 import { ensureTransaction, ensureUser, ensureListing } from '../../util/data';
 import { propTypes } from '../../util/types';
 
+import css from './ActivityFeed.module.css';
+
 const hasUserLeftAReviewFirst = (userRole, transaction) => {
   // Because function txIsInFirstReviewBy uses isCustomer to check in which state the reviews are
   // we should also use isCustomer insted of isProvider

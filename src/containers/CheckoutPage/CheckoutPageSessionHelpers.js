@@ -62,9 +62,11 @@ export const isValidTransaction = transaction => {
 };
 
 // Stores given transaction to sessionStorage
-export const storeData = (currentTransaction, storageKey) => {
+export const storeData = (author, listing, currentTransaction, storageKey) => {
   if (window && window.sessionStorage && currentTransaction) {
     const data = {
+      author,
+      listing,
       currentTransaction,
       storedAt: new Date(),
     };
@@ -102,7 +104,7 @@ export const storedData = storageKey => {
       return sdkTypes.reviver(k, v);
     };
 
-    const { currentTransaction, storedAt } = JSON.parse(checkoutPageData, reviver);
+    const { author, listing, currentTransaction, storedAt } = JSON.parse(checkoutPageData, reviver);
 
     // If sessionStore contains freshly saved data (max 1 day old), use it
     const isFreshlySaved = storedAt
@@ -116,7 +118,7 @@ export const storedData = storageKey => {
       isFreshlySaved && isValidListing(currentTransaction.listing) && isTransactionValid;
 
     if (isStoredDataValid) {
-      return { currentTransaction };
+      return { author, listing, currentTransaction };
     }
   }
   return {};

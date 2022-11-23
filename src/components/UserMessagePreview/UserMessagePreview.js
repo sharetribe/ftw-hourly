@@ -35,7 +35,7 @@ const UserMessagePreview = props => {
     const slug = createSlug(currentTransaction.listing.attributes.title);
     const txId = currentTransaction.id && currentTransaction.id.uuid;
 
-    storeData(currentTransaction, 'CheckoutPage');
+    storeData(otherUser, otherUserListing, currentTransaction, 'CheckoutPage');
 
     history.push({ pathname: `/l/${slug}/${txId}/checkout` });
   };

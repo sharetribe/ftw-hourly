@@ -24,7 +24,9 @@
    :to :state/payment-expired}
   {:name :transition/confirm-payment,
    :actor :actor.role/customer,
-   :actions [{:name :action/stripe-confirm-payment-intent}, {:name :action/stripe-create-payout}],
+   :actions [{:name :action/stripe-confirm-payment-intent},
+   {:name :action/stripe-capture-payment-intent},
+    {:name :action/stripe-create-payout}],
    :from :state/payment-pending,
    :to :state/delivered}
   {:name :transition/review-1-by-provider,
