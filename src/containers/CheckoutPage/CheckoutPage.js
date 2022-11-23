@@ -222,12 +222,7 @@ export class CheckoutPageComponent extends Component {
 
     // Step 1: initiate order by requesting payment from Marketplace API
     const fnRequestPayment = fnParams => {
-      // fnParams should be { listingId, bookingStart, bookingEnd }
-      const hasPaymentIntents =
-        storedTx.attributes.protectedData && storedTx.attributes.protectedData.stripePaymentIntents;
-
-      // If paymentIntent exists, order has been initiated previously.
-      return hasPaymentIntents ? Promise.resolve(storedTx) : onInitiateOrder(fnParams, storedTx.id);
+      return onInitiateOrder(fnParams, storedTx.id);
     };
 
     // Step 2: pay using Stripe SDK
