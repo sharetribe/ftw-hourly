@@ -1,0 +1,74 @@
+{:format :v3,
+ :transitions
+ [{:name :transition/enquire,
+   :actor :actor.role/customer,
+   :actions [],
+   :to :state/enquiry}
+  {:name :transition/request-payment-after-enquiry,
+   :actor :actor.role/customer,
+   :actions
+   [{:name :action/privileged-set-line-items}
+    {:name :action/stripe-create-payment-intent}],
+   :from :state/enquiry,
+   :to :state/payment-pending
+   :privileged? true}
+  {:name :transition/expire-payment,
+   :at
+   {:fn/plus
+    [{:fn/timepoint [:time/first-entered-state :state/payment-pending]}
+     {:fn/period ["PT15M"]}]},
+   :actions
+   [{:name :action/calculate-full-refund}
+    {:name :action/stripe-refund-payment}],
+   :from :state/payment-pending,
+   :to :state/payment-expired}
+  {:name :transition/confirm-payment,
+   :actor :actor.role/customer,
+   :actions [{:name :action/stripe-confirm-payment-intent}, {:name :action/stripe-create-payout}],
+   :from :state/payment-pending,
+   :to :state/delivered}
+  {:name :transition/review-1-by-provider,
+   :actor :actor.role/provider,
+   :actions [{:name :action/post-review-by-provider}],
+   :from :state/delivered,
+   :to :state/reviewed-by-provider}
+  {:name :transition/review-2-by-provider,
+   :actor :actor.role/provider,
+   :actions
+   [{:name :action/post-review-by-provider}
+    {:name :action/publish-reviews}],
+   :from :state/reviewed-by-customer,
+   :to :state/reviewed}
+  {:name :transition/review-1-by-customer,
+   :actor :actor.role/customer,
+   :actions [{:name :action/post-review-by-customer}],
+   :from :state/delivered,
+   :to :state/reviewed-by-customer}
+  {:name :transition/review-2-by-customer,
+   :actor :actor.role/customer,
+   :actions
+   [{:name :action/post-review-by-customer}
+    {:name :action/publish-reviews}],
+   :from :state/reviewed-by-provider,
+   :to :state/reviewed}],
+ :notifications
+ [{:name :notification/money-paid,
+   :on :transition/confirm-payment,
+   :to :actor.role/provider,
+   :template :money-paid}
+  {:name :notification/review-by-provider-first,
+   :on :transition/review-1-by-provider,
+   :to :actor.role/customer,
+   :template :review-by-other-party-unpublished}
+  {:name :notification/review-by-customer-first,
+   :on :transition/review-1-by-customer,
+   :to :actor.role/provider,
+   :template :review-by-other-party-unpublished}
+  {:name :notification/review-by-provider-second,
+   :on :transition/review-2-by-provider,
+   :to :actor.role/customer,
+   :template :review-by-other-party-published}
+  {:name :notification/review-by-customer-second,
+   :on :transition/review-2-by-customer,
+   :to :actor.role/provider,
+   :template :review-by-other-party-published}]}

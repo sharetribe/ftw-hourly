@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import FeedSection from '../TransactionPanel/FeedSection';
+import FeedSection from './FeedSection';
 import { SendMessageForm } from '../../forms';
 import { FormattedMessage, injectIntl, intlShape } from '../../util/reactIntl';
 import { isMobileSafari } from '../../util/userAgent';
@@ -28,6 +28,7 @@ const MessagePanelComponent = props => {
     sendMessageError,
     onSendMessage,
     otherUserListing,
+    onManageDisableScrolling,
   } = props;
 
   //   const [isMobSaf, setIsMobSaf] = useState(false);
@@ -110,9 +111,11 @@ const MessagePanelComponent = props => {
   return (
     <div className={css.root}>
       <UserMessagePreview
+        currentUser={currentUser}
         otherUser={otherUser}
         otherUserListing={otherUserListing}
         currentTransaction={currentTransaction}
+        onManageDisableScrolling={onManageDisableScrolling}
       />
       <FeedSection
         rootClassName={css.feedContainer}

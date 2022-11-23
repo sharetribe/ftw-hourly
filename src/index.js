@@ -53,6 +53,7 @@ const render = (store, shouldHydrate) => {
   // If the server already loaded the auth information, render the app
   // immediately. Otherwise wait for the flag to be loaded and render
   // when auth information is present.
+
   const state = store.getState();
   const cdnAssetsVersion = state.hostedAssets.version;
   const authInfoLoaded = state.Auth.authInfoLoaded;

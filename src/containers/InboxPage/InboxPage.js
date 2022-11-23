@@ -7,15 +7,18 @@ import { withRouter } from 'react-router-dom';
 import queryString from 'query-string';
 import { propTypes } from '../../util/types';
 import { ensureCurrentUser, cutTextToPreview } from '../../util/data';
+import { formatDate } from '../../util/dates';
 import { getMarketplaceEntities } from '../../ducks/marketplaceData.duck';
-import { isScrollingDisabled } from '../../ducks/UI.duck';
+import { isScrollingDisabled, manageDisableScrolling } from '../../ducks/UI.duck';
 import { changeModalValue } from '../TopbarContainer/TopbarContainer.duck';
+import { setCurrentTransaction } from '../../ducks/transactions.duck';
 import {
   fetchMoreMessages,
   sendMessage,
   clearMessages,
   fetchOtherUserListing,
 } from './InboxPage.duck';
+import { fetchTransaction } from '../../ducks/transactions.duck';
 import { PAYMENT_DETAILS } from '../../components/ModalMissingInformation/ModalMissingInformation';
 import {
   NotificationBadge,
@@ -67,6 +70,9 @@ export const InboxPageComponent = props => {
     onSendMessage,
     onFetchOtherUserListing,
     otherUserListing,
+    onManageDisableScrolling,
+    onFetchTransaction,
+    onSetCurrentTransaction,
   } = props;
   const { tab } = params;
   const ensuredCurrentUser = ensureCurrentUser(currentUser);
@@ -102,6 +108,7 @@ export const InboxPageComponent = props => {
     }
 
     if (currentTransaction) {
+      onSetCurrentTransaction(currentTransaction);
       const { customer, provider } = currentTransaction;
       const otherUser =
         ensuredCurrentUser.id.uuid === customer && customer.id.uuid ? customer : provider;
@@ -200,7 +207,12 @@ export const InboxPageComponent = props => {
     },
   ];
   const nav = (
-    <LinkTabNavHorizontal rootClassName={css.tabs} tabRootClassName={css.tab} tabs={tabs} />
+    <LinkTabNavHorizontal
+      rootClassName={css.tabs}
+      tabRootClassName={css.tab}
+      tabContentClass={css.tabContent}
+      tabs={tabs}
+    />
   );
 
   const initialMessageFailed = !!(
@@ -236,6 +248,10 @@ export const InboxPageComponent = props => {
                   const previewMessageLong =
                     (txMessages && txMessages.length > 0 && txMessages[0].attributes.content) || '';
                   const previewMessage = cutTextToPreview(previewMessageLong, 40);
+                  const lastMessageTime =
+                    (txMessages && txMessages.length > 0 && txMessages[0].attributes.createdAt) ||
+                    new Date();
+                  const todayString = intl.formatMessage({ id: 'InboxPage.today' });
                   return (
                     <InboxItem
                       key={tx.id.uuid}
@@ -246,6 +262,7 @@ export const InboxPageComponent = props => {
                       currentUser={ensuredCurrentUser}
                       selected={currentTxId === tx.id.uuid}
                       previewMessage={previewMessage}
+                      lastMessageTime={formatDate(intl, todayString, lastMessageTime)}
                     />
                   );
                 })
@@ -276,6 +293,8 @@ export const InboxPageComponent = props => {
               transactionRole={transactionRole}
               onSendMessage={onSendMessage}
               otherUserListing={otherUserListing}
+              onManageDisableScrolling={onManageDisableScrolling}
+              onFetchTransaction={onFetchTransaction}
             />
           )}
         </LayoutWrapperMain>
@@ -365,11 +384,15 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => ({
+  onManageDisableScrolling: (componentId, disableScrolling) =>
+    dispatch(manageDisableScrolling(componentId, disableScrolling)),
   onChangeMissingInfoModal: value => dispatch(changeModalValue(value)),
   onShowMoreMessages: txId => dispatch(fetchMoreMessages(txId)),
   onSendMessage: (txId, message) => dispatch(sendMessage(txId, message)),
   onClearMessages: () => dispatch(clearMessages()),
   onFetchOtherUserListing: userId => dispatch(fetchOtherUserListing(userId)),
+  onFetchTransaction: txId => dispatch(fetchTransaction(txId)),
+  onSetCurrentTransaction: tx => dispatch(setCurrentTransaction(tx)),
 });
 
 const InboxPage = compose(

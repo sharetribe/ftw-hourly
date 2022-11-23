@@ -446,6 +446,7 @@
   "InboxPage.notificationsTitle": "Inbox: Notifications",
   "InboxPage.stateRequested": "Requested",
   "InboxPage.title": "Inbox",
+  "InboxPage.today": "Today",
   "KeywordFilter.filterText": "Filter results by",
   "KeywordFilter.labelSelected": "\"{labelText}\"",
   "KeywordFilter.placeholder": "Enter a keyword…",

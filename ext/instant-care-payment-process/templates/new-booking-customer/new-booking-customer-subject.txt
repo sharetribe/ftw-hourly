@@ -1,0 +1,1 @@
+You have booked {{transaction.listing.title}}

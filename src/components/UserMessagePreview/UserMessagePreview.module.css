@@ -21,3 +21,26 @@
   margin-left: 2rem;
   font-size: 60px;
 }
+
+.paymentButtonContainer {
+  display: flex;
+  align-items: center;
+  width: 13rem;
+  justify-content: center;
+}
+
+.paymentButton {
+  padding-block: 0;
+}
+
+.paymentButtonRoot {
+  composes: buttonFont buttonText buttonBorders buttonColors from global;
+
+  /* Clear padding that is set for link elements looking like buttons */
+  padding: 0;
+  height: 2.5rem;
+  width: 8rem;
+
+  transition: all var(--transitionStyleButton);
+  cursor: pointer;
+}

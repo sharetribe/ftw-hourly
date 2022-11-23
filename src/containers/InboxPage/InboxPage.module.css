@@ -37,7 +37,7 @@
 
 .wrapper {
   height: calc(100vh - var(--topbarHeight));
-  padding-top: 40px;
+  padding: 40px 20px 30px 40px;
 }
 
 .navigation {
@@ -46,7 +46,7 @@
   /* flex-direction: row; */
   justify-content: center;
   padding: 29px 24px 0 24px;
-  width: 25rem;
+  width: 27rem;
   max-height: calc(100vh - var(--topbarHeight));
 
   border-top-width: 1px;
@@ -127,7 +127,11 @@
 }
 
 .tabContent {
-  display: none;
+  /* Font */
+  font-weight: var(--fontWeightSemiBold);
+  font-size: 18px;
+  line-height: 24px;
+  letter-spacing: 0;
 }
 
 .tabContentVisible {

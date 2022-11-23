@@ -84,7 +84,7 @@ export const TX_TRANSITION_ACTORS = [
  */
 const STATE_INITIAL = 'initial';
 const STATE_ENQUIRY = 'enquiry';
-const STATE_PENDING_PAYMENT = 'pending-payment';
+const STATE_PAYMENT_PENDING = 'payment-pending';
 const STATE_PAYMENT_EXPIRED = 'payment-expired';
 const STATE_PREAUTHORIZED = 'preauthorized';
 const STATE_DECLINED = 'declined';
@@ -118,43 +118,25 @@ const stateDescription = {
     [STATE_INITIAL]: {
       on: {
         [TRANSITION_ENQUIRE]: STATE_ENQUIRY,
-        [TRANSITION_REQUEST_PAYMENT]: STATE_PENDING_PAYMENT,
       },
     },
     [STATE_ENQUIRY]: {
       on: {
-        [TRANSITION_REQUEST_PAYMENT_AFTER_ENQUIRY]: STATE_PENDING_PAYMENT,
+        [TRANSITION_REQUEST_PAYMENT_AFTER_ENQUIRY]: STATE_PAYMENT_PENDING,
       },
     },
 
-    [STATE_PENDING_PAYMENT]: {
+    [STATE_PAYMENT_PENDING]: {
       on: {
         [TRANSITION_EXPIRE_PAYMENT]: STATE_PAYMENT_EXPIRED,
-        [TRANSITION_CONFIRM_PAYMENT]: STATE_PREAUTHORIZED,
+        [TRANSITION_CONFIRM_PAYMENT]: STATE_DELIVERED,
       },
     },
 
     [STATE_PAYMENT_EXPIRED]: {},
-    [STATE_PREAUTHORIZED]: {
-      on: {
-        [TRANSITION_DECLINE]: STATE_DECLINED,
-        [TRANSITION_EXPIRE]: STATE_DECLINED,
-        [TRANSITION_ACCEPT]: STATE_ACCEPTED,
-      },
-    },
 
-    [STATE_DECLINED]: {},
-    [STATE_ACCEPTED]: {
-      on: {
-        [TRANSITION_CANCEL]: STATE_CANCELED,
-        [TRANSITION_COMPLETE]: STATE_DELIVERED,
-      },
-    },
-
-    [STATE_CANCELED]: {},
     [STATE_DELIVERED]: {
       on: {
-        [TRANSITION_EXPIRE_REVIEW_PERIOD]: STATE_REVIEWED,
         [TRANSITION_REVIEW_1_BY_CUSTOMER]: STATE_REVIEWED_BY_CUSTOMER,
         [TRANSITION_REVIEW_1_BY_PROVIDER]: STATE_REVIEWED_BY_PROVIDER,
       },
@@ -211,7 +193,7 @@ const getTransitionsToState = getTransitionsToStateFn(stateDescription);
 
 // This is needed to fetch transactions that need response from provider.
 // I.e. transactions which provider needs to accept or decline
-export const transitionsToRequested = getTransitionsToState(STATE_PREAUTHORIZED);
+export const transitionsToRequested = getTransitionsToState(STATE_DELIVERED);
 
 /**
  * Helper functions to figure out if transaction is in a specific state.
@@ -224,7 +206,7 @@ export const txIsEnquired = tx =>
   getTransitionsToState(STATE_ENQUIRY).includes(txLastTransition(tx));
 
 export const txIsPaymentPending = tx =>
-  getTransitionsToState(STATE_PENDING_PAYMENT).includes(txLastTransition(tx));
+  getTransitionsToState(STATE_PAYMENT_PENDING).includes(txLastTransition(tx));
 
 export const txIsPaymentExpired = tx =>
   getTransitionsToState(STATE_PAYMENT_EXPIRED).includes(txLastTransition(tx));

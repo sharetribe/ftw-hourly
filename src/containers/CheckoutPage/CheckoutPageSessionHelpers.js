@@ -42,7 +42,7 @@ export const isValidListing = listing => {
   const props = {
     id: id => id instanceof UUID,
     attributes: v => {
-      return typeof v === 'object' && v.price instanceof Money;
+      return typeof v === 'object';
     },
   };
   return validateProperties(listing, props);
@@ -61,14 +61,11 @@ export const isValidTransaction = transaction => {
   return validateProperties(transaction, props);
 };
 
-// Stores given bookingDates and listing to sessionStorage
-export const storeData = (bookingData, bookingDates, listing, transaction, storageKey) => {
-  if (window && window.sessionStorage && listing && bookingDates && bookingData) {
+// Stores given transaction to sessionStorage
+export const storeData = (currentTransaction, storageKey) => {
+  if (window && window.sessionStorage && currentTransaction) {
     const data = {
-      bookingData,
-      bookingDates,
-      listing,
-      transaction,
+      currentTransaction,
       storedAt: new Date(),
     };
 
@@ -105,9 +102,7 @@ export const storedData = storageKey => {
       return sdkTypes.reviver(k, v);
     };
 
-    const { bookingData, bookingDates, listing, transaction, storedAt } = checkoutPageData
-      ? JSON.parse(checkoutPageData, reviver)
-      : {};
+    const { currentTransaction, storedAt } = JSON.parse(checkoutPageData, reviver);
 
     // If sessionStore contains freshly saved data (max 1 day old), use it
     const isFreshlySaved = storedAt
@@ -115,16 +110,13 @@ export const storedData = storageKey => {
       : false;
 
     // resolve transaction as valid if it is missing
-    const isTransactionValid = !!transaction ? isValidTransaction(transaction) : true;
+    const isTransactionValid = !!currentTransaction ? isValidTransaction(currentTransaction) : true;
 
     const isStoredDataValid =
-      isFreshlySaved &&
-      isValidBookingDates(bookingDates) &&
-      isValidListing(listing) &&
-      isTransactionValid;
+      isFreshlySaved && isValidListing(currentTransaction.listing) && isTransactionValid;
 
     if (isStoredDataValid) {
-      return { bookingData, bookingDates, listing, transaction };
+      return { currentTransaction };
     }
   }
   return {};

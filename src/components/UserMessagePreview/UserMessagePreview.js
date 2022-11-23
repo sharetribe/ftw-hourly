@@ -1,8 +1,10 @@
 import React from 'react';
-import { useMemo } from 'react';
-import { AvatarLarge, NamedLink } from '../';
+import { AvatarLarge, NamedLink, Button } from '../';
 import { createSlug, stringify } from '../../util/urlHelpers';
 import { userDisplayNameAsString } from '../../util/data';
+import { useHistory } from 'react-router-dom';
+import { EMPLOYER } from '../../util/constants';
+import { storeData } from '../../containers/CheckoutPage/CheckoutPageSessionHelpers';
 
 import css from './UserMessagePreview.module.css';
 
@@ -25,9 +27,22 @@ const createListingLink = (listing, otherUser, searchParams = {}, className = ''
 };
 
 const UserMessagePreview = props => {
-  const { otherUser, otherUserListing, currentTransaction } = props;
+  const { currentUser, otherUser, otherUserListing, currentTransaction } = props;
+
+  const history = useHistory();
+
+  const redirectToCheckout = () => {
+    const slug = createSlug(currentTransaction.listing.attributes.title);
+    const txId = currentTransaction.id && currentTransaction.id.uuid;
+
+    storeData(currentTransaction, 'CheckoutPage');
+
+    history.push({ pathname: `/l/${slug}/${txId}/checkout` });
+  };
 
   const listingLink = otherUserListing ? createListingLink(otherUserListing, otherUser) : null;
+
+  const currentUserType = currentUser && currentUser.attributes.profile.metadata.userType;
 
   const userDisplayNameString = userDisplayNameAsString(otherUser, '');
 
@@ -37,6 +52,13 @@ const UserMessagePreview = props => {
         {otherUserListing ? listingLink : <AvatarLarge user={otherUser} className={css.avatar} />}
       </div>
       <div className={css.usernameContainer}>{userDisplayNameString}</div>
+      <div className={css.paymentButtonContainer}>
+        {currentUserType === EMPLOYER && (
+          <Button rootClassName={css.paymentButtonRoot} onClick={redirectToCheckout}>
+            Pay
+          </Button>
+        )}
+      </div>
     </div>
   );
 };

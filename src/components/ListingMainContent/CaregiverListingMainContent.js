@@ -250,6 +250,7 @@ const CaregiverListingMainContent = props => {
           tabs={tabs}
           rootClassName={css.nav}
           tabRootClassName={css.tabRoot}
+          tabContentClass={css.tabContent}
           tabClassName={css.tab}
         />
       </div>

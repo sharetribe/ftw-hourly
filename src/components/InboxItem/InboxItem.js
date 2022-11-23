@@ -39,7 +39,7 @@ const createListingLink = (listing, otherUser, searchParams = {}, className = ''
 };
 
 const InboxItem = props => {
-  const { tx, intl, params, currentUser, selected, previewMessage } = props;
+  const { tx, intl, params, currentUser, selected, previewMessage, lastMessageTime } = props;
   const { customer, provider } = tx;
 
   const otherUser = currentUser.id.uuid === provider.id.uuid ? customer : provider;
@@ -74,7 +74,7 @@ const InboxItem = props => {
                 {rowNotificationDot && (
                   <div className={css.rowNotificationDot}>{rowNotificationDot}</div>
                 )}
-                {lastTransitionedAt.short}
+                {lastMessageTime}
               </div>
             </div>
           </div>

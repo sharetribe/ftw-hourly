@@ -28,18 +28,35 @@
 
 /* Passed-in props for FeedSection subcomponent */
 .feedContainer {
-  margin: 46px 24px 0 24px;
+  margin: 46px 24px 0 0px;
   display: flex;
   flex-grow: 1;
   flex-direction: column;
   overflow-y: hidden;
 
   @media (--viewportMedium) {
-    margin: 40px 24px 0 24px;
+    margin: 40px 24px 0 0px;
   }
   @media (--viewportLarge) {
     margin: 43px 0 0 0;
   }
+}
+
+/* FeedSection subcomponent */
+.feedHeading {
+  color: var(--matterColorAnti);
+  margin: 0;
+
+  @media (--viewportMedium) {
+    margin: 0;
+  }
+}
+
+.feed {
+  padding: 20px;
+  overflow-y: scroll;
+  border: 1px solid;
+  border-color: var(--matterColorNegative);
 }
 
 /* Prop to be passed to SendMessageForm component */

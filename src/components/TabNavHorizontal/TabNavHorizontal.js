@@ -11,7 +11,16 @@ export const DARK_SKIN = 'dark';
 const { arrayOf, bool, func, node, object, oneOf, string, shape } = PropTypes;
 
 const Tab = props => {
-  const { className, disabled, text, selected, onClick, linkProps, isDark } = props;
+  const {
+    className,
+    tabContentClass,
+    disabled,
+    text,
+    selected,
+    onClick,
+    linkProps,
+    isDark,
+  } = props;
   const darkSkinClasses = isDark
     ? classNames(css.tabContentDarkSkin, {
         [css.selectedTabContentDarkSkin]: selected,
@@ -21,6 +30,7 @@ const Tab = props => {
 
   const linkClasses = classNames(
     css.tabContent,
+    tabContentClass,
     {
       [css.selectedTabContent]: selected,
       [css.disabled]: disabled,
@@ -30,6 +40,7 @@ const Tab = props => {
 
   const buttonClasses = classNames(
     css.tabContent,
+    tabContentClass,
     css.button,
     {
       [css.selectedTabContent]: selected,
@@ -68,7 +79,7 @@ Tab.propTypes = {
 };
 
 const TabNavHorizontal = props => {
-  const { className, rootClassName, tabRootClassName, tabs, skin } = props;
+  const { className, rootClassName, tabRootClassName, tabs, skin, tabContentClass } = props;
   const isDark = skin === DARK_SKIN;
   const classes = classNames(rootClassName || css.root, { [css.darkSkin]: isDark }, className);
   const tabClasses = tabRootClassName || css.tab;
@@ -76,7 +87,15 @@ const TabNavHorizontal = props => {
     <nav className={classes}>
       {tabs.map((tab, index) => {
         const key = typeof tab.text === 'string' ? tab.text : index;
-        return <Tab key={key} className={tabClasses} {...tab} isDark={isDark} />;
+        return (
+          <Tab
+            key={key}
+            className={tabClasses}
+            tabContentClass={tabContentClass}
+            {...tab}
+            isDark={isDark}
+          />
+        );
       })}
     </nav>
   );

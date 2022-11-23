@@ -5,7 +5,7 @@ const { Money } = types;
 // This bookingUnitType needs to be one of the following:
 // line-item/night, line-item/day or line-item/units
 const bookingUnitType = 'line-item/units';
-const PROVIDER_COMMISSION_PERCENTAGE = -10;
+const PROVIDER_COMMISSION_PERCENTAGE = -15.5;
 
 /** Returns collection of lineItems (max 50)
  *
@@ -27,9 +27,8 @@ const PROVIDER_COMMISSION_PERCENTAGE = -10;
  * @param {Object} bookingData
  * @returns {Array} lineItems
  */
-exports.transactionLineItems = (listing, bookingData) => {
-  const unitPrice = listing.attributes.price;
-  const { startDate, endDate } = bookingData;
+exports.transactionLineItems = amount => {
+  const unitPrice = new Money(amount, 'USD');
 
   /**
    * If you want to use pre-defined component and translations for printing the lineItems base price for booking,
@@ -40,21 +39,21 @@ exports.transactionLineItems = (listing, bookingData) => {
    *
    * By default BookingBreakdown prints line items inside LineItemUnknownItemsMaybe if the lineItem code is not recognized. */
 
-  const booking = {
-    code: bookingUnitType,
+  const care = {
+    code: 'line-item/units',
     unitPrice,
-    quantity: calculateQuantityFromHours(startDate, endDate),
+    quantity: 1,
     includeFor: ['customer', 'provider'],
   };
 
   const providerCommission = {
     code: 'line-item/provider-commission',
-    unitPrice: calculateTotalFromLineItems([booking]),
+    unitPrice: calculateTotalFromLineItems([care]),
     percentage: PROVIDER_COMMISSION_PERCENTAGE,
     includeFor: ['provider'],
   };
 
-  const lineItems = [booking, providerCommission];
+  const lineItems = [care, providerCommission];
 
   return lineItems;
 };

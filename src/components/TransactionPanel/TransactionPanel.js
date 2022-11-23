@@ -3,7 +3,7 @@ import { array, arrayOf, bool, func, number, object, string } from 'prop-types';
 import { FormattedMessage, injectIntl, intlShape } from '../../util/reactIntl';
 import classNames from 'classnames';
 import {
-  TRANSITION_REQUEST_PAYMENT_AFTER_ENQUIRY,
+  TRANSITION_REQUEST_PUSH_PAYMENT_AFTER_ENQUIRY,
   txIsAccepted,
   txIsCanceled,
   txIsDeclined,
@@ -37,7 +37,7 @@ import AddressLinkMaybe from './AddressLinkMaybe';
 import BreakdownMaybe from './BreakdownMaybe';
 import DetailCardHeadingsMaybe from './DetailCardHeadingsMaybe';
 import DetailCardImage from './DetailCardImage';
-import FeedSection from './FeedSection';
+import FeedSection from '../MessagePanel/FeedSection';
 import SaleActionButtonsMaybe from './SaleActionButtonsMaybe';
 import PanelHeading, {
   HEADING_ENQUIRED,

@@ -30,8 +30,8 @@
   height: 100%;
 
   /* Font */
-  font-weight: var(--fontWeightBold);
-  font-size: 20px;
+  font-weight: var(--fontWeightMedium);
+  font-size: 14px;
   line-height: 24px;
   letter-spacing: 0;
 

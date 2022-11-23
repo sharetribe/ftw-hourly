@@ -1,9 +1,9 @@
 import React, { useRef, useEffect } from 'react';
 import { FormattedMessage } from '../../util/reactIntl';
 import classNames from 'classnames';
-import { ActivityFeed } from '../../components';
+import { ActivityFeed } from '..';
 
-import css from './TransactionPanel.module.css';
+import css from './MessagePanel.module.css';
 
 // Functional component as a helper to build ActivityFeed section
 const FeedSection = props => {
@@ -37,9 +37,9 @@ const FeedSection = props => {
 
   return showFeed ? (
     <div className={classes}>
-      <h3 className={css.feedHeading}>
+      {/* <h3 className={css.feedHeading}>
         <FormattedMessage id="TransactionPanel.activityHeading" />
-      </h3>
+      </h3> */}
       {initialMessageFailed ? (
         <p className={css.messageError}>
           <FormattedMessage id="TransactionPanel.initialMessageFailed" />
