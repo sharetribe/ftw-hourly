@@ -341,14 +341,7 @@ export const loadData = (params, search) => (dispatch, getState, sdk) => {
 
   const apiQueryParams = {
     lastTransitions: TRANSITIONS,
-    include: [
-      'provider',
-      'provider.profileImage',
-      'customer',
-      'customer.profileImage',
-      'booking',
-      'listing',
-    ],
+    include: ['provider', 'provider.profileImage', 'customer', 'customer.profileImage', 'listing'],
     'fields.transaction': [
       'lastTransition',
       'lastTransitionedAt',

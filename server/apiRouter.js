@@ -18,6 +18,7 @@ const transitionPrivileged = require('./api/transition-privileged');
 const updateUserMetadata = require('../src/util/update-user-metadata');
 const updateListingMetadata = require('../src/util/update-listing-metadata');
 const deleteAccount = require('./api/delete-account');
+const createPaymentIntent = require('./api/stripe-create-payment-intent');
 
 const createUserWithIdp = require('./api/auth/createUserWithIdp');
 
@@ -60,6 +61,7 @@ router.post('/transition-privileged', transitionPrivileged);
 router.post('/update-user-metadata', updateUserMetadata);
 router.post('/update-listing-metadata', updateListingMetadata);
 router.post('/delete-account', deleteAccount);
+router.post('/create-payment-intent', createPaymentIntent);
 
 // Create user with identity provider (e.g. Facebook or Google)
 // This endpoint is called to create a new user after user has confirmed

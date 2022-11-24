@@ -3,6 +3,7 @@
 import config from '../config';
 import { storableError } from '../util/errors';
 import * as log from '../util/log';
+import { updateUserMetadata } from '../util/api';
 
 // ================ Action types ================ //
 
@@ -196,8 +197,13 @@ export const createStripeAccount = params => (dispatch, getState, sdk) => {
     })
     .then(response => {
       const stripeAccount = response.data.data;
-      dispatch(stripeAccountCreateSuccess(stripeAccount));
+      const email = getState().user.currentUser.attributes.email;
+      const stripeAccountId = stripeAccount.attributes.stripeAccountId;
+      updateUserMetadata({ email, metadata: { stripeAccountId } });
       return stripeAccount;
+    })
+    .then(stripeAccount => {
+      dispatch(stripeAccountCreateSuccess(stripeAccount));
     })
     .catch(err => {
       const e = storableError(err);
@@ -230,8 +236,13 @@ export const updateStripeAccount = params => (dispatch, getState, sdk) => {
     )
     .then(response => {
       const stripeAccount = response.data.data;
-      dispatch(stripeAccountUpdateSuccess(stripeAccount));
+      const email = getState().user.currentUser.attributes.email;
+      const stripeAccountId = stripeAccount.attributes.stripeAccountId;
+      updateUserMetadata({ email, metadata: { stripeAccountId } });
       return stripeAccount;
+    })
+    .then(stripeAccount => {
+      dispatch(stripeAccountUpdateSuccess(stripeAccount));
     })
     .catch(err => {
       const e = storableError(err);

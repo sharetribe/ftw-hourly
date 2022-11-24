@@ -141,3 +141,11 @@ export const updateListingMetadata = body => {
 export const deleteUserAccount = body => {
   return post('/api/delete-account', body);
 };
+
+// Create a payment intent through stripe
+//
+// See `server/api/stripe-create-payment-intent.js` to see what data should
+// be sent in the body.
+export const createPaymentIntent = body => {
+  return post('/api/create-payment-intent', body);
+};

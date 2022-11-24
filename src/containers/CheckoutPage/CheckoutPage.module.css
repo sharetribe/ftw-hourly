@@ -24,13 +24,10 @@
   }
 }
 
-.home {
+.elements {
   display: flex;
-  padding: calc((var(--topbarHeight) - var(--CheckoutPage_logoHeight)) / 2) 24px;
-
-  @media (--viewportLarge) {
-    padding: calc((var(--topbarHeightDesktop) - var(--CheckoutPage_logoHeightDesktop)) / 2) 36px;
-  }
+  max-width: 700px;
+  margin-left: 500px;
 }
 
 .logoMobile {

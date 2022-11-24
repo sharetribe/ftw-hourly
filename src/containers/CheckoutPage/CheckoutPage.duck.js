@@ -1,6 +1,6 @@
 import pick from 'lodash/pick';
 import config from '../../config';
-import { initiatePrivileged, transitionPrivileged } from '../../util/api';
+import { initiatePrivileged, transitionPrivileged, createPaymentIntent } from '../../util/api';
 import { denormalisedResponseEntities } from '../../util/data';
 import { storableError } from '../../util/errors';
 import {
@@ -32,6 +32,14 @@ export const STRIPE_CUSTOMER_REQUEST = 'app/CheckoutPage/STRIPE_CUSTOMER_REQUEST
 export const STRIPE_CUSTOMER_SUCCESS = 'app/CheckoutPage/STRIPE_CUSTOMER_SUCCESS';
 export const STRIPE_CUSTOMER_ERROR = 'app/CheckoutPage/STRIPE_CUSTOMER_ERROR';
 
+export const CREATE_PAYMENT_INTENT_REQUEST = 'app/CheckoutPage/CREATE_PAYMENT_INTENT_REQUEST';
+export const CREATE_PAYMENT_INTENT_SUCCESS = 'app/CheckoutPage/CREATE_PAYMENT_INTENT_SUCCESS';
+export const CREATE_PAYMENT_INTENT_ERROR = 'app/CheckoutPage/CREATE_PAYMENT_INTENT_ERROR';
+
+export const FETCH_STRIPE_ACCOUNT_REQUEST = 'app/CheckoutPage/FETCH_STRIPE_ACCOUNT_REQUEST';
+export const FETCH_STRIPE_ACCOUNT_SUCCESS = 'app/CheckoutPage/FETCH_STRIPE_ACCOUNT_SUCCESS';
+export const FETCH_STRIPE_ACCOUNT_ERROR = 'app/CheckoutPage/FETCH_STRIPE_ACCOUNT_ERROR';
+
 // ================ Reducer ================ //
 
 const initialState = {
@@ -45,6 +53,12 @@ const initialState = {
   initiateOrderError: null,
   confirmPaymentError: null,
   stripeCustomerFetched: false,
+  createPaymentIntentInProgress: false,
+  createPaymentIntentError: null,
+  paymentIntentCreated: false,
+  fetchStripeAccountInProgress: false,
+  fetchStripeAccountError: null,
+  stripeAccount: null,
 };
 
 export default function checkoutPageReducer(state = initialState, action = {}) {
@@ -98,6 +112,21 @@ export default function checkoutPageReducer(state = initialState, action = {}) {
       console.error(payload); // eslint-disable-line no-console
       return { ...state, stripeCustomerFetchError: payload };
 
+    case CREATE_PAYMENT_INTENT_REQUEST:
+      return { ...state, createPaymentIntentInProgress: true };
+    case CREATE_PAYMENT_INTENT_SUCCESS:
+      return { ...state, createPaymentIntentInProgress: false, paymentIntentCreated: true };
+    case CREATE_PAYMENT_INTENT_ERROR:
+      console.error(payload); // eslint-disable-line no-console
+      return { ...state, createPaymentIntentInProgress: false, createPaymentIntentError: payload };
+
+    case FETCH_STRIPE_ACCOUNT_REQUEST:
+      return { ...state, fetchStripeAccountInProgress: true };
+    case FETCH_STRIPE_ACCOUNT_SUCCESS:
+      return { ...state, fetchStripeAccountInProgress: false, stripeAccount: payload };
+    case FETCH_STRIPE_ACCOUNT_ERROR:
+      console.error(payload); // eslint-disable-line no-console
+      return { ...state, fetchStripeAccountInProgress: false, fetchStripeAccountError: payload };
     default:
       return state;
   }
@@ -155,6 +184,25 @@ export const stripeCustomerRequest = () => ({ type: STRIPE_CUSTOMER_REQUEST });
 export const stripeCustomerSuccess = () => ({ type: STRIPE_CUSTOMER_SUCCESS });
 export const stripeCustomerError = e => ({
   type: STRIPE_CUSTOMER_ERROR,
+  error: true,
+  payload: e,
+});
+
+export const createPaymentIntentRequest = () => ({ type: CREATE_PAYMENT_INTENT_REQUEST });
+export const createPaymentIntentSuccess = () => ({ type: CREATE_PAYMENT_INTENT_SUCCESS });
+export const createPaymentIntentError = e => ({
+  type: CREATE_PAYMENT_INTENT_ERROR,
+  error: true,
+  payload: e,
+});
+
+export const fetchStripeAccountRequest = () => ({ type: FETCH_STRIPE_ACCOUNT_REQUEST });
+export const fetchStripeAccountSuccess = stripeAccount => ({
+  type: FETCH_STRIPE_ACCOUNT_SUCCESS,
+  payload: stripeAccount,
+});
+export const fetchStripeAccountError = e => ({
+  type: FETCH_STRIPE_ACCOUNT_ERROR,
   error: true,
   payload: e,
 });
@@ -374,4 +422,47 @@ export const stripeCustomer = () => (dispatch, getState, sdk) => {
     .catch(e => {
       dispatch(stripeCustomerError(storableError(e)));
     });
+};
+
+export const fetchStripeAccount = userId => (dispatch, getState, sdk) => {
+  dispatch(fetchStripeAccountRequest());
+
+  return sdk.users
+    .show({ id: userId, include: ['stripeAccount', 'profileImage'] })
+    .then(response => {
+      const stripeAccount = response.data.data.stripeAccount;
+      dispatch(fetchStripeAccountSuccess(stripeAccount));
+      return stripeAccount;
+    })
+    .catch(err => {
+      const e = storableError(err);
+      dispatch(fetchStripeAccountError(e));
+      const stripeMessage =
+        e.apiErrors && e.apiErrors.length > 0 && e.apiErrors[0].meta
+          ? e.apiErrors[0].meta.stripeMessage
+          : null;
+      log.error(err, 'fetch-stripe-account-failed', { stripeMessage });
+      throw e;
+    });
+};
+
+export const makePaymentIntent = (amount, userId) => (dispatch, getState, sdk) => {
+  dispatch(createPaymentIntentRequest());
+
+  const handleSuccess = response => {
+    dispatch(createPaymentIntentSuccess());
+    return response;
+  };
+
+  const handleError = e => {
+    dispatch(createPaymentIntentError(storableError(e)));
+    log.error(e, 'create-payment-intent-Failed', {});
+    throw e;
+  };
+
+  console.log(userId);
+
+  return createPaymentIntent({ amount, userId })
+    .then(handleSuccess)
+    .catch(handleError);
 };
