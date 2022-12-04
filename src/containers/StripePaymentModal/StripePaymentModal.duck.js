@@ -49,10 +49,6 @@ export const FETCH_DEFAULT_PAYMENT_REQUEST = 'app/StripePaymentModal/FETCH_DEFAU
 export const FETCH_DEFAULT_PAYMENT_SUCCESS = 'app/StripePaymentModal/FETCH_DEFAULT_PAYMENT_SUCCESS';
 export const FETCH_DEFAULT_PAYMENT_ERROR = 'app/StripePaymentModal/FETCH_DEFAULT_PAYMENT_ERROR';
 
-export const UPDATE_PAYMENT_METHOD_REQUEST = 'app/StripePaymentModal/UPDATE_PAYMENT_METHOD_REQUEST';
-export const UPDATE_PAYMENT_METHOD_SUCCESS = 'app/StripePaymentModal/UPDATE_PAYMENT_METHOD_SUCCESS';
-export const UPDATE_PAYMENT_METHOD_ERROR = 'app/StripePaymentModal/UPDATE_PAYMENT_METHOD_ERROR';
-
 // ================ Reducer ================ //
 
 export const initialState = {
@@ -74,9 +70,6 @@ export const initialState = {
   fetchDefaultPaymentError: null,
   defaultPayment: null,
   defaultPaymentFetched: false,
-  updatePaymentMethodInProgress: false,
-  updatePaymentMethodError: null,
-  updatePaymentMethodSuccess: false,
 };
 
 export default function StripePaymentModalReducer(state = initialState, action = {}) {
@@ -150,17 +143,6 @@ export default function StripePaymentModalReducer(state = initialState, action =
         defaultPaymentFetched: true,
       };
 
-    case UPDATE_PAYMENT_METHOD_REQUEST:
-      return { ...state, updatePaymentMethodInProgress: true, updatePaymentMethodError: null };
-    case UPDATE_PAYMENT_METHOD_SUCCESS:
-      return {
-        ...state,
-        updatePaymentMethodInProgress: false,
-        updatePaymentMethodSuccess: payload,
-      };
-    case UPDATE_PAYMENT_METHOD_ERROR:
-      return { ...state, updatePaymentMethodInProgress: false, updatePaymentMethodError: payload };
-
     default:
       return state;
   }
@@ -232,16 +214,6 @@ export const fetchDefaultPaymentSuccess = defaultPayment => ({
 });
 export const fetchDefaultPaymentError = e => ({
   type: FETCH_DEFAULT_PAYMENT_ERROR,
-  error: true,
-  payload: e,
-});
-
-export const updatePaymentMethodRequest = () => ({ type: UPDATE_PAYMENT_METHOD_REQUEST });
-export const updatePaymentMethodSuccess = defaultPayment => ({
-  type: UPDATE_PAYMENT_METHOD_SUCCESS,
-});
-export const updatePaymentMethodError = e => ({
-  type: UPDATE_PAYMENT_METHOD_ERROR,
   error: true,
   payload: e,
 });
