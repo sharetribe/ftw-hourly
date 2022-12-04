@@ -9,7 +9,7 @@ import {
   ensureUser,
   userDisplayNameAsString,
 } from '../../util/data';
-import { UserMessagePreview } from '../';
+import { UserListingPreview, PaymentButton } from '../';
 
 import css from './MessagePanel.module.css';
 const MessagePanelComponent = props => {
@@ -29,6 +29,7 @@ const MessagePanelComponent = props => {
     onSendMessage,
     otherUserListing,
     onManageDisableScrolling,
+    onOpenPaymentModal,
   } = props;
 
   //   const [isMobSaf, setIsMobSaf] = useState(false);
@@ -110,13 +111,21 @@ const MessagePanelComponent = props => {
 
   return (
     <div className={css.root}>
-      <UserMessagePreview
-        currentUser={currentUser}
-        otherUser={otherUser}
-        otherUserListing={otherUserListing}
-        currentTransaction={currentTransaction}
-        onManageDisableScrolling={onManageDisableScrolling}
-      />
+      <div className={css.topContainer}>
+        <UserListingPreview
+          otherUser={otherUser}
+          otherUserListing={otherUserListing}
+          intl={intl}
+          rootClassName={css.userMessagePreviewRoot}
+        />
+        <PaymentButton
+          onOpenPaymentModal={onOpenPaymentModal}
+          currentUser={currentUser}
+          otherUser={otherUser}
+          otherUserListing={otherUserListing}
+          currentTransaction={currentTransaction}
+        />
+      </div>
       <FeedSection
         rootClassName={css.feedContainer}
         currentTransaction={currentTransaction}

@@ -32,6 +32,7 @@
 
   @media (--viewportMedium) {
     margin: 0;
+    max-height: 100px;
   }
   @media (--viewportLarge) {
     padding: 0 0 5px 0;

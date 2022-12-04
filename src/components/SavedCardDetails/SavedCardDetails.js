@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, Fragment } from 'react';
 import { bool, func, number, shape, string } from 'prop-types';
 import classNames from 'classnames';
 import { injectIntl, intlShape } from '../../util/reactIntl';
@@ -34,9 +34,14 @@ const SavedCardDetails = props => {
     onDeleteCard,
     onManageDisableScrolling,
     deletePaymentMethodInProgress,
+    hideContent,
   } = props;
 
-  const { last4Digits, expirationMonth, expirationYear, brand } = card || {};
+  const expirationYear = (card && card.expirationYear) || (card && card.exp_year);
+  const expirationMonth = (card && card.expirationMonth) || (card && card.exp_month);
+  const last4Digits = (card && card.last4Digits) || (card && card.last4);
+  const brand = card && card.brand;
+
   const classes = classNames(rootClassName || css.root, className);
 
   const paymentMethodPlaceholderDesktop = intl.formatMessage(
@@ -140,43 +145,49 @@ const SavedCardDetails = props => {
         <MenuLabel className={css.menuLabel}>
           <div className={showExpired ? css.menuLabelWrapperExpired : css.menuLabelWrapper}>
             {active === DEFAULT_CARD ? defaultCard : replaceCard}
-            <span>
-              <IconArrowHead
-                direction="down"
-                size="small"
-                rootClassName={css.iconArrow}
-                className={iconArrowClassName}
-              />
-            </span>
+            {!hideContent && (
+              <span>
+                <IconArrowHead
+                  direction="down"
+                  size="small"
+                  rootClassName={css.iconArrow}
+                  className={iconArrowClassName}
+                />
+              </span>
+            )}
           </div>
         </MenuLabel>
 
-        <MenuContent rootClassName={css.menuContent}>
-          <MenuItem key="first item" className={css.menuItem}>
-            <IconCheckmark
-              className={active === DEFAULT_CARD ? css.iconCheckmark : css.iconCheckmarkHidden}
-              size="small"
-            />
-            <InlineTextButton className={css.menuText} onClick={handleClick(DEFAULT_CARD)}>
-              {defaultCard}
-            </InlineTextButton>
-          </MenuItem>
-          <MenuItem key="divider" className={css.menuDivider}>
-            {replaceCardTitle}
-          </MenuItem>
-          <MenuItem key="second item" className={css.menuItem}>
-            <IconCheckmark
-              className={active === REPLACE_CARD ? css.iconCheckmark : css.iconCheckmarkHidden}
-              size="small"
-            />
-            <InlineTextButton
-              className={css.menuTextReplaceCard}
-              onClick={handleClick(REPLACE_CARD)}
-            >
-              {replaceCard}
-            </InlineTextButton>
-          </MenuItem>
-        </MenuContent>
+        {hideContent ? (
+          <MenuContent rootClassName={css.menuContent}>
+            <MenuItem key="first item" className={css.menuItem}>
+              <IconCheckmark
+                className={active === DEFAULT_CARD ? css.iconCheckmark : css.iconCheckmarkHidden}
+                size="small"
+              />
+              <InlineTextButton className={css.menuText} onClick={handleClick(DEFAULT_CARD)}>
+                {defaultCard}
+              </InlineTextButton>
+            </MenuItem>
+            <MenuItem key="divider" className={css.menuDivider}>
+              {replaceCardTitle}
+            </MenuItem>
+            <MenuItem key="second item" className={css.menuItem}>
+              <IconCheckmark
+                className={active === REPLACE_CARD ? css.iconCheckmark : css.iconCheckmarkHidden}
+                size="small"
+              />
+              <InlineTextButton
+                className={css.menuTextReplaceCard}
+                onClick={handleClick(REPLACE_CARD)}
+              >
+                {replaceCard}
+              </InlineTextButton>
+            </MenuItem>
+          </MenuContent>
+        ) : (
+          <MenuContent />
+        )}
       </Menu>
       {showExpired && !menuOpen ? expiredText : null}
 

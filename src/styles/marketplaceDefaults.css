@@ -112,6 +112,7 @@
 
   --modalPadding: 24px 24px 48px 24px;
   --modalPaddingMedium: 55px 60px 55px 60px;
+  --modalPaddingMediumInline: 55px;
 
   /* ================ LocationAutocompleteInput bottom attribution padding ================ */
 

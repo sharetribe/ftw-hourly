@@ -6,6 +6,7 @@ import { intlShape } from '../../util/reactIntl';
 import { txIsRequested } from '../../util/transaction';
 import classNames from 'classnames';
 import { createSlug, stringify } from '../../util/urlHelpers';
+import { ensureCurrentUser } from '../../util/data';
 
 import css from './InboxItem.module.css';
 
@@ -42,7 +43,9 @@ const InboxItem = props => {
   const { tx, intl, params, currentUser, selected, previewMessage, lastMessageTime } = props;
   const { customer, provider } = tx;
 
-  const otherUser = currentUser.id.uuid === provider.id.uuid ? customer : provider;
+  const ensuredCurrentUser = ensureCurrentUser(currentUser);
+
+  const otherUser = ensuredCurrentUser === provider.id.uuid ? customer : provider;
   const otherUserDisplayName = <UserDisplayName user={otherUser} intl={intl} />;
   const isOtherUserBanned = otherUser.attributes.banned;
 

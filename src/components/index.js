@@ -17,6 +17,7 @@ export { default as IconBannedUser } from './IconBannedUser/IconBannedUser';
 export { default as IconCard } from './IconCard/IconCard';
 export { default as IconCheckmark } from './IconCheckmark/IconCheckmark';
 export { default as IconClose } from './IconClose/IconClose';
+export { default as IconConfirm } from './IconConfirm/IconConfirm';
 export { default as IconEdit } from './IconEdit/IconEdit';
 export { default as IconEmailAttention } from './IconEmailAttention/IconEmailAttention';
 export { default as IconEmailSent } from './IconEmailSent/IconEmailSent';
@@ -49,7 +50,7 @@ export { default as RangeSlider } from './RangeSlider/RangeSlider';
 export { default as ResponsiveImage } from './ResponsiveImage/ResponsiveImage';
 export { default as TimeRange } from './TimeRange/TimeRange';
 export { default as UserDisplayName } from './UserDisplayName/UserDisplayName';
-export { default as UserMessagePreview } from './UserMessagePreview/UserMessagePreview';
+export { default as UserListingPreview } from './UserListingPreview/UserListingPreview';
 export { default as ValidationError } from './ValidationError/ValidationError';
 
 /**
@@ -109,6 +110,7 @@ export { default as FieldPhoneNumberInput } from './FieldPhoneNumberInput/FieldP
 // Fields and inputs using old naming pattern
 export { default as LocationAutocompleteInput, LocationAutocompleteInputField } from './LocationAutocompleteInput/LocationAutocompleteInput';
 export { default as StripeBankAccountTokenInputField } from './StripeBankAccountTokenInputField/StripeBankAccountTokenInputField';
+export { default as Checkbox } from './Checkbox/Checkbox'
 
 // Tab navigation
 export { default as TabNav } from './TabNav/TabNav';
@@ -120,6 +122,7 @@ export { default as UserNav } from './UserNav/UserNav';
 // These components include other components //
 ///////////////////////////////////////////////
 
+export { default as SimpleAccordion } from './Accordion/SimpleAccordion'
 export { default as ActivityFeed } from './ActivityFeed/ActivityFeed';
 export { default as AddImages } from './AddImages/AddImages';
 export { default as Avatar, AvatarMedium, AvatarLarge } from './Avatar/Avatar';
@@ -143,6 +146,7 @@ export { default as Map } from './Map/Map';
 export { default as OrderDiscussionPanel } from './OrderDiscussionPanel/OrderDiscussionPanel';
 export { default as OwnListingLink } from './OwnListingLink/OwnListingLink';
 export { default as Page } from './Page/Page';
+export { default as PaymentButton } from './PaymentButton/PaymentButton'
 export { default as PriceFilter } from './PriceFilter/PriceFilter';
 export { default as Reviews } from './Reviews/Reviews';
 export { default as SavedCardDetails } from './SavedCardDetails/SavedCardDetails';

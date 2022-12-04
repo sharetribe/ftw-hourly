@@ -142,10 +142,43 @@ export const deleteUserAccount = body => {
   return post('/api/delete-account', body);
 };
 
-// Create a payment intent through stripe
+// Create payment intent using stripe account
 //
 // See `server/api/stripe-create-payment-intent.js` to see what data should
 // be sent in the body.
-export const createPaymentIntent = body => {
+export const stripeCreatePaymentIntent = body => {
   return post('/api/create-payment-intent', body);
+};
+
+// Fetch if user has stripe account. Will return true if stripeAccountId is present
+// and false otherwise.
+//
+// See `server/api/fetchHasStripeAccount.js` to see what data should
+// be sent in the body.
+export const fetchHasStripeAccount = body => {
+  return post('/api/has-stripe-account', body);
+};
+
+// Fetch users saved payment methods
+//
+// See `server/api/stripe-payment-methods.js` to see what data should
+// be sent in the body.
+export const stripePaymentMethods = body => {
+  return post('/api/stripe-payment-methods', body);
+};
+
+// Update default payment method of currentUser
+//
+// See `server/api/stripe-update-payment-method.js` to see what data should
+// be sent in the body.
+export const stripeDetachPaymentMethod = body => {
+  return post('/api/stripe-detach-payment-method', body);
+};
+
+// Update payment intent
+//
+// See `server/api/stripe-update-payment-itent.js` to see what data should
+// be sent in the body.
+export const stripeUpdatePaymentIntent = body => {
+  return post('/api/stripe-update-payment-intent', body);
 };

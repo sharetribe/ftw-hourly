@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { arrayOf, bool, number, shape, string, func } from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
@@ -37,6 +37,7 @@ import {
 } from '../../components';
 import { TopbarContainer, NotFoundPage } from '..';
 import config from '../../config';
+import StripePaymentModal from '../StripePaymentModal/StripePaymentModal';
 
 import { getCurrentTransaction } from './InboxPage.helpers';
 import css from './InboxPage.module.css';
@@ -118,6 +119,16 @@ export const InboxPageComponent = props => {
       }
     }
   }, [currentTxId, currentTransactions, history]);
+
+  const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
+
+  const onClosePaymentModal = () => {
+    setIsPaymentModalOpen(false);
+  };
+
+  const onOpenPaymentModal = () => {
+    setIsPaymentModalOpen(true);
+  };
 
   const validTab = tab === 'messages' || tab === 'notifications';
   if (!validTab) {
@@ -295,6 +306,14 @@ export const InboxPageComponent = props => {
               otherUserListing={otherUserListing}
               onManageDisableScrolling={onManageDisableScrolling}
               onFetchTransaction={onFetchTransaction}
+              onOpenPaymentModal={onOpenPaymentModal}
+            />
+          )}
+          {isPaymentModalOpen && (
+            <StripePaymentModal
+              containerClassName={css.paymentModal}
+              isOpen={isPaymentModalOpen}
+              onClose={onClosePaymentModal}
             />
           )}
         </LayoutWrapperMain>

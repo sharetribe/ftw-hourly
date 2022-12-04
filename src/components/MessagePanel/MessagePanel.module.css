@@ -86,3 +86,13 @@
     margin: 47px 0 0 0;
   }
 }
+
+.topContainer {
+  display: flex;
+  align-items: center;
+}
+
+.userMessagePreviewRoot {
+  display: flex;
+  float: left;
+}

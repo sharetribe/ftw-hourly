@@ -1,0 +1,124 @@
+@import '../../styles/customMediaQueries.css';
+
+.root {
+  transition: min-width 1.5s ease-out;
+  -webkit-transition: min-width 1.5s ease-out;
+  -moz-transition: min-width 1.5s ease-out;
+  -ms-transition: min-width 1.5s ease-out;
+  -o-transition: min-width 1.5s ease-out;
+}
+
+.root.single {
+  min-width: 350px;
+}
+
+.root.double {
+  display: grid;
+  grid-template-columns: 2;
+  column-gap: var(--modalPaddingMediumInline);
+  margin-top: 20px;
+  place-content: start;
+  min-width: calc(700px + var(--modalPaddingMediumInline));
+
+  & .leftColumnContainer {
+    grid-column: 1/2;
+    width: 350px;
+  }
+
+  & .paymentElements {
+    grid-column: 2/2;
+    max-width: 350px;
+  }
+}
+
+.root.confirmation {
+  min-width: 0;
+}
+
+.modalContainer {
+  flex-grow: 0;
+
+  /* Create context so the close button can be positioned within it */
+  position: relative;
+
+  /* Display and dimensions */
+  display: flex;
+  flex-direction: column;
+  padding: var(--modalPadding);
+
+  background-color: var(--matterColorLight);
+  border-radius: var(--borderRadius);
+  border-bottom: none;
+
+  min-height: 100vh;
+  height: 100%;
+
+  @media (--viewportMedium) {
+    flex-basis: 0;
+    min-height: auto;
+    height: auto;
+
+    padding: var(--modalPaddingMedium);
+    margin-top: 12.5vh;
+    margin-bottom: 12.5vh;
+    border-bottom: 8px solid var(--marketplaceColor);
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.usernameContainer {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  flex-direction: row;
+  flex-grow: 1;
+  margin-left: 2rem;
+  font-size: 40px;
+}
+
+.userPreviewRoot {
+  display: flex;
+  align-items: center;
+}
+
+.leftColumnContainer {
+  display: flex;
+  align-items: stretch;
+  flex-wrap: wrap;
+}
+
+.confirmationText {
+  display: flex;
+  word-wrap: none;
+  white-space: nowrap;
+  font-size: 30px;
+  animation: 2.5s fadeIn;
+  animation-fill-mode: forwards;
+  /* animation-timing-function: cubic-bezier(0, 0, 0.5, 1); */
+}
+
+.noPayoutMessage {
+  margin-top: 40px;
+}
+
+.noPayoutMessage {
+  composes: marketplaceModalParagraphStyles from global;
+}
+
+.notifyButtonWrapper {
+  composes: marketplaceModalBottomWrapper from global;
+
+  /* Align the helper links to the left since there isn't a Primary Button anymore */
+  text-align: left;
+}

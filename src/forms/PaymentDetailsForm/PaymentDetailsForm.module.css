@@ -1,0 +1,85 @@
+.root {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+}
+
+.currencyInput {
+  display: flex;
+  text-align: center;
+  padding: 5px 0 5px 0;
+  font-size: 40px;
+  margin-inline: 20%;
+}
+
+.currencyRoot {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.amountLabel {
+  font-size: 25px;
+  padding-left: 0.25rem;
+  text-align: center;
+  margin-bottom: 5px;
+}
+
+.amountContainer {
+  display: flex;
+  flex-shrink: 1;
+  flex-direction: column;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding-top: 1rem;
+  min-width: 0;
+  margin-bottom: 1rem;
+}
+
+.amountDisplayContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding-inline: 10%;
+  background: var(--matterColorNegative);
+  border-radius: var(--buttonBorder);
+  border: none;
+}
+
+.amountDisplay {
+  font-weight: 600;
+  color: var(--matterColor);
+}
+
+.submitButton {
+  margin-top: 15px;
+}
+
+.submitButtonRoot {
+  composes: buttonFont buttonText buttonBorders buttonColors from global;
+
+  /* Clear padding that is set for link elements looking like buttons */
+  padding: 0;
+  height: 3rem;
+  width: 100%;
+
+  transition: all var(--transitionStyleButton);
+  cursor: pointer;
+}
+
+.orderError,
+.notFoundError {
+  margin: 11px 0 12px 0;
+
+  @media (--viewportMedium) {
+    margin: 10px 0 12px 0;
+  }
+}
+.orderError {
+  color: var(--failColor);
+}
+.notFoundError {
+  color: var(--attentionColor);
+}

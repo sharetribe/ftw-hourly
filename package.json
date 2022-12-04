@@ -5,9 +5,13 @@
   "license": "Apache-2.0",
   "dependencies": {
     "@babel/runtime": "^7.17.9",
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
     "@loadable/component": "^5.15.2",
     "@loadable/server": "^5.15.2",
     "@mapbox/polyline": "^1.1.1",
+    "@mui/icons-material": "^5.10.16",
+    "@mui/material": "^5.10.16",
     "@sentry/browser": "^6.19.7",
     "@sentry/node": "^6.19.7",
     "@sentry/react": "^7.21.0",

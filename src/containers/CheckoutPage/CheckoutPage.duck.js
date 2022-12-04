@@ -1,468 +1,468 @@
-import pick from 'lodash/pick';
-import config from '../../config';
-import { initiatePrivileged, transitionPrivileged, createPaymentIntent } from '../../util/api';
-import { denormalisedResponseEntities } from '../../util/data';
-import { storableError } from '../../util/errors';
-import {
-  TRANSITION_REQUEST_PAYMENT,
-  TRANSITION_REQUEST_PAYMENT_AFTER_ENQUIRY,
-  TRANSITION_CONFIRM_PAYMENT,
-  isPrivileged,
-} from '../../util/transaction';
-import * as log from '../../util/log';
-import { fetchCurrentUserHasOrdersSuccess, fetchCurrentUser } from '../../ducks/user.duck';
+// import pick from 'lodash/pick';
+// import config from '../../config';
+// import { initiatePrivileged, transitionPrivileged, stripeAcco } from '../../util/api';
+// import { denormalisedResponseEntities } from '../../util/data';
+// import { storableError } from '../../util/errors';
+// import {
+//   TRANSITION_REQUEST_PAYMENT,
+//   TRANSITION_REQUEST_PAYMENT_AFTER_ENQUIRY,
+//   TRANSITION_CONFIRM_PAYMENT,
+//   isPrivileged,
+// } from '../../util/transaction';
+// import * as log from '../../util/log';
+// import { fetchCurrentUserHasOrdersSuccess, fetchCurrentUser } from '../../ducks/user.duck';
 
-// ================ Action types ================ //
+// // ================ Action types ================ //
 
-export const SET_INITIAL_VALUES = 'app/CheckoutPage/SET_INITIAL_VALUES';
+// export const SET_INITIAL_VALUES = 'app/CheckoutPage/SET_INITIAL_VALUES';
 
-export const INITIATE_ORDER_REQUEST = 'app/CheckoutPage/INITIATE_ORDER_REQUEST';
-export const INITIATE_ORDER_SUCCESS = 'app/CheckoutPage/INITIATE_ORDER_SUCCESS';
-export const INITIATE_ORDER_ERROR = 'app/CheckoutPage/INITIATE_ORDER_ERROR';
+// export const INITIATE_ORDER_REQUEST = 'app/CheckoutPage/INITIATE_ORDER_REQUEST';
+// export const INITIATE_ORDER_SUCCESS = 'app/CheckoutPage/INITIATE_ORDER_SUCCESS';
+// export const INITIATE_ORDER_ERROR = 'app/CheckoutPage/INITIATE_ORDER_ERROR';
 
-export const CONFIRM_PAYMENT_REQUEST = 'app/CheckoutPage/CONFIRM_PAYMENT_REQUEST';
-export const CONFIRM_PAYMENT_SUCCESS = 'app/CheckoutPage/CONFIRM_PAYMENT_SUCCESS';
-export const CONFIRM_PAYMENT_ERROR = 'app/CheckoutPage/CONFIRM_PAYMENT_ERROR';
+// export const CONFIRM_PAYMENT_REQUEST = 'app/CheckoutPage/CONFIRM_PAYMENT_REQUEST';
+// export const CONFIRM_PAYMENT_SUCCESS = 'app/CheckoutPage/CONFIRM_PAYMENT_SUCCESS';
+// export const CONFIRM_PAYMENT_ERROR = 'app/CheckoutPage/CONFIRM_PAYMENT_ERROR';
 
-export const SPECULATE_TRANSACTION_REQUEST = 'app/ListingPage/SPECULATE_TRANSACTION_REQUEST';
-export const SPECULATE_TRANSACTION_SUCCESS = 'app/ListingPage/SPECULATE_TRANSACTION_SUCCESS';
-export const SPECULATE_TRANSACTION_ERROR = 'app/ListingPage/SPECULATE_TRANSACTION_ERROR';
+// export const SPECULATE_TRANSACTION_REQUEST = 'app/ListingPage/SPECULATE_TRANSACTION_REQUEST';
+// export const SPECULATE_TRANSACTION_SUCCESS = 'app/ListingPage/SPECULATE_TRANSACTION_SUCCESS';
+// export const SPECULATE_TRANSACTION_ERROR = 'app/ListingPage/SPECULATE_TRANSACTION_ERROR';
 
-export const STRIPE_CUSTOMER_REQUEST = 'app/CheckoutPage/STRIPE_CUSTOMER_REQUEST';
-export const STRIPE_CUSTOMER_SUCCESS = 'app/CheckoutPage/STRIPE_CUSTOMER_SUCCESS';
-export const STRIPE_CUSTOMER_ERROR = 'app/CheckoutPage/STRIPE_CUSTOMER_ERROR';
+// export const STRIPE_CUSTOMER_REQUEST = 'app/CheckoutPage/STRIPE_CUSTOMER_REQUEST';
+// export const STRIPE_CUSTOMER_SUCCESS = 'app/CheckoutPage/STRIPE_CUSTOMER_SUCCESS';
+// export const STRIPE_CUSTOMER_ERROR = 'app/CheckoutPage/STRIPE_CUSTOMER_ERROR';
 
-export const CREATE_PAYMENT_INTENT_REQUEST = 'app/CheckoutPage/CREATE_PAYMENT_INTENT_REQUEST';
-export const CREATE_PAYMENT_INTENT_SUCCESS = 'app/CheckoutPage/CREATE_PAYMENT_INTENT_SUCCESS';
-export const CREATE_PAYMENT_INTENT_ERROR = 'app/CheckoutPage/CREATE_PAYMENT_INTENT_ERROR';
+// export const CREATE_PAYMENT_INTENT_REQUEST = 'app/CheckoutPage/CREATE_PAYMENT_INTENT_REQUEST';
+// export const CREATE_PAYMENT_INTENT_SUCCESS = 'app/CheckoutPage/CREATE_PAYMENT_INTENT_SUCCESS';
+// export const CREATE_PAYMENT_INTENT_ERROR = 'app/CheckoutPage/CREATE_PAYMENT_INTENT_ERROR';
 
-export const FETCH_STRIPE_ACCOUNT_REQUEST = 'app/CheckoutPage/FETCH_STRIPE_ACCOUNT_REQUEST';
-export const FETCH_STRIPE_ACCOUNT_SUCCESS = 'app/CheckoutPage/FETCH_STRIPE_ACCOUNT_SUCCESS';
-export const FETCH_STRIPE_ACCOUNT_ERROR = 'app/CheckoutPage/FETCH_STRIPE_ACCOUNT_ERROR';
+// export const FETCH_STRIPE_ACCOUNT_REQUEST = 'app/CheckoutPage/FETCH_STRIPE_ACCOUNT_REQUEST';
+// export const FETCH_STRIPE_ACCOUNT_SUCCESS = 'app/CheckoutPage/FETCH_STRIPE_ACCOUNT_SUCCESS';
+// export const FETCH_STRIPE_ACCOUNT_ERROR = 'app/CheckoutPage/FETCH_STRIPE_ACCOUNT_ERROR';
 
-// ================ Reducer ================ //
+// // ================ Reducer ================ //
 
-const initialState = {
-  listing: null,
-  bookingData: null,
-  bookingDates: null,
-  speculateTransactionInProgress: false,
-  speculateTransactionError: null,
-  speculatedTransaction: null,
-  transaction: null,
-  initiateOrderError: null,
-  confirmPaymentError: null,
-  stripeCustomerFetched: false,
-  createPaymentIntentInProgress: false,
-  createPaymentIntentError: null,
-  paymentIntentCreated: false,
-  fetchStripeAccountInProgress: false,
-  fetchStripeAccountError: null,
-  stripeAccount: null,
-};
+// const initialState = {
+//   listing: null,
+//   bookingData: null,
+//   bookingDates: null,
+//   speculateTransactionInProgress: false,
+//   speculateTransactionError: null,
+//   speculatedTransaction: null,
+//   transaction: null,
+//   initiateOrderError: null,
+//   confirmPaymentError: null,
+//   stripeCustomerFetched: false,
+//   createPaymentIntentInProgress: false,
+//   createPaymentIntentError: null,
+//   paymentIntentCreated: false,
+//   fetchStripeAccountInProgress: false,
+//   fetchStripeAccountError: null,
+//   stripeAccount: null,
+// };
 
-export default function checkoutPageReducer(state = initialState, action = {}) {
-  const { type, payload } = action;
-  switch (type) {
-    case SET_INITIAL_VALUES:
-      return { ...initialState, ...payload };
+// export default function checkoutPageReducer(state = initialState, action = {}) {
+//   const { type, payload } = action;
+//   switch (type) {
+//     case SET_INITIAL_VALUES:
+//       return { ...initialState, ...payload };
 
-    case SPECULATE_TRANSACTION_REQUEST:
-      return {
-        ...state,
-        speculateTransactionInProgress: true,
-        speculateTransactionError: null,
-        speculatedTransaction: null,
-      };
-    case SPECULATE_TRANSACTION_SUCCESS:
-      return {
-        ...state,
-        speculateTransactionInProgress: false,
-        speculatedTransaction: payload.transaction,
-      };
-    case SPECULATE_TRANSACTION_ERROR:
-      console.error(payload); // eslint-disable-line no-console
-      return {
-        ...state,
-        speculateTransactionInProgress: false,
-        speculateTransactionError: payload,
-      };
+//     case SPECULATE_TRANSACTION_REQUEST:
+//       return {
+//         ...state,
+//         speculateTransactionInProgress: true,
+//         speculateTransactionError: null,
+//         speculatedTransaction: null,
+//       };
+//     case SPECULATE_TRANSACTION_SUCCESS:
+//       return {
+//         ...state,
+//         speculateTransactionInProgress: false,
+//         speculatedTransaction: payload.transaction,
+//       };
+//     case SPECULATE_TRANSACTION_ERROR:
+//       console.error(payload); // eslint-disable-line no-console
+//       return {
+//         ...state,
+//         speculateTransactionInProgress: false,
+//         speculateTransactionError: payload,
+//       };
 
-    case INITIATE_ORDER_REQUEST:
-      return { ...state, initiateOrderError: null };
-    case INITIATE_ORDER_SUCCESS:
-      return { ...state, transaction: payload };
-    case INITIATE_ORDER_ERROR:
-      console.error(payload); // eslint-disable-line no-console
-      return { ...state, initiateOrderError: payload };
+//     case INITIATE_ORDER_REQUEST:
+//       return { ...state, initiateOrderError: null };
+//     case INITIATE_ORDER_SUCCESS:
+//       return { ...state, transaction: payload };
+//     case INITIATE_ORDER_ERROR:
+//       console.error(payload); // eslint-disable-line no-console
+//       return { ...state, initiateOrderError: payload };
 
-    case CONFIRM_PAYMENT_REQUEST:
-      return { ...state, confirmPaymentError: null };
-    case CONFIRM_PAYMENT_SUCCESS:
-      return state;
-    case CONFIRM_PAYMENT_ERROR:
-      console.error(payload); // eslint-disable-line no-console
-      return { ...state, confirmPaymentError: payload };
+//     case CONFIRM_PAYMENT_REQUEST:
+//       return { ...state, confirmPaymentError: null };
+//     case CONFIRM_PAYMENT_SUCCESS:
+//       return state;
+//     case CONFIRM_PAYMENT_ERROR:
+//       console.error(payload); // eslint-disable-line no-console
+//       return { ...state, confirmPaymentError: payload };
 
-    case STRIPE_CUSTOMER_REQUEST:
-      return { ...state, stripeCustomerFetched: false };
-    case STRIPE_CUSTOMER_SUCCESS:
-      return { ...state, stripeCustomerFetched: true };
-    case STRIPE_CUSTOMER_ERROR:
-      console.error(payload); // eslint-disable-line no-console
-      return { ...state, stripeCustomerFetchError: payload };
+//     case STRIPE_CUSTOMER_REQUEST:
+//       return { ...state, stripeCustomerFetched: false };
+//     case STRIPE_CUSTOMER_SUCCESS:
+//       return { ...state, stripeCustomerFetched: true };
+//     case STRIPE_CUSTOMER_ERROR:
+//       console.error(payload); // eslint-disable-line no-console
+//       return { ...state, stripeCustomerFetchError: payload };
 
-    case CREATE_PAYMENT_INTENT_REQUEST:
-      return { ...state, createPaymentIntentInProgress: true };
-    case CREATE_PAYMENT_INTENT_SUCCESS:
-      return { ...state, createPaymentIntentInProgress: false, paymentIntentCreated: true };
-    case CREATE_PAYMENT_INTENT_ERROR:
-      console.error(payload); // eslint-disable-line no-console
-      return { ...state, createPaymentIntentInProgress: false, createPaymentIntentError: payload };
+//     case CREATE_PAYMENT_INTENT_REQUEST:
+//       return { ...state, createPaymentIntentInProgress: true };
+//     case CREATE_PAYMENT_INTENT_SUCCESS:
+//       return { ...state, createPaymentIntentInProgress: false, paymentIntentCreated: true };
+//     case CREATE_PAYMENT_INTENT_ERROR:
+//       console.error(payload); // eslint-disable-line no-console
+//       return { ...state, createPaymentIntentInProgress: false, createPaymentIntentError: payload };
 
-    case FETCH_STRIPE_ACCOUNT_REQUEST:
-      return { ...state, fetchStripeAccountInProgress: true };
-    case FETCH_STRIPE_ACCOUNT_SUCCESS:
-      return { ...state, fetchStripeAccountInProgress: false, stripeAccount: payload };
-    case FETCH_STRIPE_ACCOUNT_ERROR:
-      console.error(payload); // eslint-disable-line no-console
-      return { ...state, fetchStripeAccountInProgress: false, fetchStripeAccountError: payload };
-    default:
-      return state;
-  }
-}
+//     case FETCH_STRIPE_ACCOUNT_REQUEST:
+//       return { ...state, fetchStripeAccountInProgress: true };
+//     case FETCH_STRIPE_ACCOUNT_SUCCESS:
+//       return { ...state, fetchStripeAccountInProgress: false, stripeAccount: payload };
+//     case FETCH_STRIPE_ACCOUNT_ERROR:
+//       console.error(payload); // eslint-disable-line no-console
+//       return { ...state, fetchStripeAccountInProgress: false, fetchStripeAccountError: payload };
+//     default:
+//       return state;
+//   }
+// }
 
-// ================ Selectors ================ //
+// // ================ Selectors ================ //
 
-// ================ Action creators ================ //
+// // ================ Action creators ================ //
 
-export const setInitialValues = initialValues => ({
-  type: SET_INITIAL_VALUES,
-  payload: pick(initialValues, Object.keys(initialState)),
-});
+// export const setInitialValues = initialValues => ({
+//   type: SET_INITIAL_VALUES,
+//   payload: pick(initialValues, Object.keys(initialState)),
+// });
 
-const initiateOrderRequest = () => ({ type: INITIATE_ORDER_REQUEST });
+// const initiateOrderRequest = () => ({ type: INITIATE_ORDER_REQUEST });
 
-const initiateOrderSuccess = order => ({
-  type: INITIATE_ORDER_SUCCESS,
-  payload: order,
-});
+// const initiateOrderSuccess = order => ({
+//   type: INITIATE_ORDER_SUCCESS,
+//   payload: order,
+// });
 
-const initiateOrderError = e => ({
-  type: INITIATE_ORDER_ERROR,
-  error: true,
-  payload: e,
-});
+// const initiateOrderError = e => ({
+//   type: INITIATE_ORDER_ERROR,
+//   error: true,
+//   payload: e,
+// });
 
-const confirmPaymentRequest = () => ({ type: CONFIRM_PAYMENT_REQUEST });
+// const confirmPaymentRequest = () => ({ type: CONFIRM_PAYMENT_REQUEST });
 
-const confirmPaymentSuccess = orderId => ({
-  type: CONFIRM_PAYMENT_SUCCESS,
-  payload: orderId,
-});
+// const confirmPaymentSuccess = orderId => ({
+//   type: CONFIRM_PAYMENT_SUCCESS,
+//   payload: orderId,
+// });
 
-const confirmPaymentError = e => ({
-  type: CONFIRM_PAYMENT_ERROR,
-  error: true,
-  payload: e,
-});
+// const confirmPaymentError = e => ({
+//   type: CONFIRM_PAYMENT_ERROR,
+//   error: true,
+//   payload: e,
+// });
 
-export const speculateTransactionRequest = () => ({ type: SPECULATE_TRANSACTION_REQUEST });
+// export const speculateTransactionRequest = () => ({ type: SPECULATE_TRANSACTION_REQUEST });
 
-export const speculateTransactionSuccess = transaction => ({
-  type: SPECULATE_TRANSACTION_SUCCESS,
-  payload: { transaction },
-});
+// export const speculateTransactionSuccess = transaction => ({
+//   type: SPECULATE_TRANSACTION_SUCCESS,
+//   payload: { transaction },
+// });
 
-export const speculateTransactionError = e => ({
-  type: SPECULATE_TRANSACTION_ERROR,
-  error: true,
-  payload: e,
-});
+// export const speculateTransactionError = e => ({
+//   type: SPECULATE_TRANSACTION_ERROR,
+//   error: true,
+//   payload: e,
+// });
 
-export const stripeCustomerRequest = () => ({ type: STRIPE_CUSTOMER_REQUEST });
-export const stripeCustomerSuccess = () => ({ type: STRIPE_CUSTOMER_SUCCESS });
-export const stripeCustomerError = e => ({
-  type: STRIPE_CUSTOMER_ERROR,
-  error: true,
-  payload: e,
-});
+// export const stripeCustomerRequest = () => ({ type: STRIPE_CUSTOMER_REQUEST });
+// export const stripeCustomerSuccess = () => ({ type: STRIPE_CUSTOMER_SUCCESS });
+// export const stripeCustomerError = e => ({
+//   type: STRIPE_CUSTOMER_ERROR,
+//   error: true,
+//   payload: e,
+// });
 
-export const createPaymentIntentRequest = () => ({ type: CREATE_PAYMENT_INTENT_REQUEST });
-export const createPaymentIntentSuccess = () => ({ type: CREATE_PAYMENT_INTENT_SUCCESS });
-export const createPaymentIntentError = e => ({
-  type: CREATE_PAYMENT_INTENT_ERROR,
-  error: true,
-  payload: e,
-});
+// export const createPaymentIntentRequest = () => ({ type: CREATE_PAYMENT_INTENT_REQUEST });
+// export const createPaymentIntentSuccess = () => ({ type: CREATE_PAYMENT_INTENT_SUCCESS });
+// export const createPaymentIntentError = e => ({
+//   type: CREATE_PAYMENT_INTENT_ERROR,
+//   error: true,
+//   payload: e,
+// });
 
-export const fetchStripeAccountRequest = () => ({ type: FETCH_STRIPE_ACCOUNT_REQUEST });
-export const fetchStripeAccountSuccess = stripeAccount => ({
-  type: FETCH_STRIPE_ACCOUNT_SUCCESS,
-  payload: stripeAccount,
-});
-export const fetchStripeAccountError = e => ({
-  type: FETCH_STRIPE_ACCOUNT_ERROR,
-  error: true,
-  payload: e,
-});
+// export const fetchStripeAccountRequest = () => ({ type: FETCH_STRIPE_ACCOUNT_REQUEST });
+// export const fetchStripeAccountSuccess = stripeAccount => ({
+//   type: FETCH_STRIPE_ACCOUNT_SUCCESS,
+//   payload: stripeAccount,
+// });
+// export const fetchStripeAccountError = e => ({
+//   type: FETCH_STRIPE_ACCOUNT_ERROR,
+//   error: true,
+//   payload: e,
+// });
 
-/* ================ Thunks ================ */
+// /* ================ Thunks ================ */
 
-export const initiateOrder = (orderParams, transactionId) => (dispatch, getState, sdk) => {
-  dispatch(initiateOrderRequest());
+// export const initiateOrder = (orderParams, transactionId) => (dispatch, getState, sdk) => {
+//   dispatch(initiateOrderRequest());
 
-  // If we already have a transaction ID, we should transition, not
-  // initiate.
-  const isTransition = !!transactionId;
-  const transition = TRANSITION_REQUEST_PAYMENT_AFTER_ENQUIRY;
-  const isPrivilegedTransition = isPrivileged(transition);
+//   // If we already have a transaction ID, we should transition, not
+//   // initiate.
+//   const isTransition = !!transactionId;
+//   const transition = TRANSITION_REQUEST_PAYMENT_AFTER_ENQUIRY;
+//   const isPrivilegedTransition = isPrivileged(transition);
 
-  const params = {
-    cardToken: 'CheckoutPage_speculative_card_token',
-  };
+//   const params = {
+//     cardToken: 'CheckoutPage_speculative_card_token',
+//   };
 
-  const bodyParams = isTransition
-    ? {
-        id: transactionId,
-        transition,
-        params,
-      }
-    : {
-        processAlias: config.bookingProcessAlias,
-        transition,
-        params,
-      };
+//   const bodyParams = isTransition
+//     ? {
+//         id: transactionId,
+//         transition,
+//         params,
+//       }
+//     : {
+//         processAlias: config.bookingProcessAlias,
+//         transition,
+//         params,
+//       };
 
-  const queryParams = {
-    include: ['booking', 'provider'],
-    expand: true,
-  };
+//   const queryParams = {
+//     include: ['booking', 'provider'],
+//     expand: true,
+//   };
 
-  const handleSuccess = response => {
-    const entities = denormalisedResponseEntities(response);
-    const order = entities[0];
-    dispatch(initiateOrderSuccess(order));
-    dispatch(fetchCurrentUserHasOrdersSuccess(true));
-    return order;
-  };
+//   const handleSuccess = response => {
+//     const entities = denormalisedResponseEntities(response);
+//     const order = entities[0];
+//     dispatch(initiateOrderSuccess(order));
+//     dispatch(fetchCurrentUserHasOrdersSuccess(true));
+//     return order;
+//   };
 
-  const handleError = e => {
-    dispatch(initiateOrderError(storableError(e)));
-    const transactionIdMaybe = transactionId ? { transactionId: transactionId.uuid } : {};
-    log.error(e, 'initiate-order-failed', {
-      ...transactionIdMaybe,
-    });
-    throw e;
-  };
+//   const handleError = e => {
+//     dispatch(initiateOrderError(storableError(e)));
+//     const transactionIdMaybe = transactionId ? { transactionId: transactionId.uuid } : {};
+//     log.error(e, 'initiate-order-failed', {
+//       ...transactionIdMaybe,
+//     });
+//     throw e;
+//   };
 
-  if (isTransition && isPrivilegedTransition) {
-    // transition privileged
-    return transitionPrivileged({ isSpeculative: false, bodyParams, queryParams })
-      .then(handleSuccess)
-      .catch(handleError);
-  } else if (isTransition) {
-    // transition non-privileged
-    return sdk.transactions
-      .transition(bodyParams, queryParams)
-      .then(handleSuccess)
-      .catch(handleError);
-  } else if (isPrivilegedTransition) {
-    // initiate privileged
-    return initiatePrivileged({ isSpeculative: false, bodyParams, queryParams })
-      .then(handleSuccess)
-      .catch(handleError);
-  } else {
-    // initiate non-privileged
-    return sdk.transactions
-      .initiate(bodyParams, queryParams)
-      .then(handleSuccess)
-      .catch(handleError);
-  }
-};
+//   if (isTransition && isPrivilegedTransition) {
+//     // transition privileged
+//     return transitionPrivileged({ isSpeculative: false, bodyParams, queryParams })
+//       .then(handleSuccess)
+//       .catch(handleError);
+//   } else if (isTransition) {
+//     // transition non-privileged
+//     return sdk.transactions
+//       .transition(bodyParams, queryParams)
+//       .then(handleSuccess)
+//       .catch(handleError);
+//   } else if (isPrivilegedTransition) {
+//     // initiate privileged
+//     return initiatePrivileged({ isSpeculative: false, bodyParams, queryParams })
+//       .then(handleSuccess)
+//       .catch(handleError);
+//   } else {
+//     // initiate non-privileged
+//     return sdk.transactions
+//       .initiate(bodyParams, queryParams)
+//       .then(handleSuccess)
+//       .catch(handleError);
+//   }
+// };
 
-export const confirmPayment = orderParams => (dispatch, getState, sdk) => {
-  dispatch(confirmPaymentRequest());
+// export const confirmPayment = orderParams => (dispatch, getState, sdk) => {
+//   dispatch(confirmPaymentRequest());
 
-  const bodyParams = {
-    id: orderParams.transactionId,
-    transition: TRANSITION_CONFIRM_PAYMENT,
-    params: {},
-  };
+//   const bodyParams = {
+//     id: orderParams.transactionId,
+//     transition: TRANSITION_CONFIRM_PAYMENT,
+//     params: {},
+//   };
 
-  return sdk.transactions
-    .transition(bodyParams)
-    .then(response => {
-      const order = response.data.data;
-      dispatch(confirmPaymentSuccess(order.id));
-      return order;
-    })
-    .catch(e => {
-      dispatch(confirmPaymentError(storableError(e)));
-      const transactionIdMaybe = orderParams.transactionId
-        ? { transactionId: orderParams.transactionId.uuid }
-        : {};
-      log.error(e, 'initiate-order-failed', {
-        ...transactionIdMaybe,
-      });
-      throw e;
-    });
-};
+//   return sdk.transactions
+//     .transition(bodyParams)
+//     .then(response => {
+//       const order = response.data.data;
+//       dispatch(confirmPaymentSuccess(order.id));
+//       return order;
+//     })
+//     .catch(e => {
+//       dispatch(confirmPaymentError(storableError(e)));
+//       const transactionIdMaybe = orderParams.transactionId
+//         ? { transactionId: orderParams.transactionId.uuid }
+//         : {};
+//       log.error(e, 'initiate-order-failed', {
+//         ...transactionIdMaybe,
+//       });
+//       throw e;
+//     });
+// };
 
-export const sendMessage = params => (dispatch, getState, sdk) => {
-  const message = params.message;
-  const orderId = params.id;
+// export const sendMessage = params => (dispatch, getState, sdk) => {
+//   const message = params.message;
+//   const orderId = params.id;
 
-  if (message) {
-    return sdk.messages
-      .send({ transactionId: orderId, content: message })
-      .then(() => {
-        return { orderId, messageSuccess: true };
-      })
-      .catch(e => {
-        log.error(e, 'initial-message-send-failed', { txId: orderId });
-        return { orderId, messageSuccess: false };
-      });
-  } else {
-    return Promise.resolve({ orderId, messageSuccess: true });
-  }
-};
+//   if (message) {
+//     return sdk.messages
+//       .send({ transactionId: orderId, content: message })
+//       .then(() => {
+//         return { orderId, messageSuccess: true };
+//       })
+//       .catch(e => {
+//         log.error(e, 'initial-message-send-failed', { txId: orderId });
+//         return { orderId, messageSuccess: false };
+//       });
+//   } else {
+//     return Promise.resolve({ orderId, messageSuccess: true });
+//   }
+// };
 
-/**
- * Initiate or transition the speculative transaction with the given
- * booking details
- *
- * The API allows us to do speculative transaction initiation and
- * transitions. This way we can create a test transaction and get the
- * actual pricing information as if the transaction had been started,
- * without affecting the actual data.
- *
- * We store this speculative transaction in the page store and use the
- * pricing info for the booking breakdown to get a proper estimate for
- * the price with the chosen information.
- */
-export const speculateTransaction = transactionId => (dispatch, getState, sdk) => {
-  dispatch(speculateTransactionRequest());
+// /**
+//  * Initiate or transition the speculative transaction with the given
+//  * booking details
+//  *
+//  * The API allows us to do speculative transaction initiation and
+//  * transitions. This way we can create a test transaction and get the
+//  * actual pricing information as if the transaction had been started,
+//  * without affecting the actual data.
+//  *
+//  * We store this speculative transaction in the page store and use the
+//  * pricing info for the booking breakdown to get a proper estimate for
+//  * the price with the chosen information.
+//  */
+// export const speculateTransaction = transactionId => (dispatch, getState, sdk) => {
+//   dispatch(speculateTransactionRequest());
 
-  // If we already have a transaction ID, we should transition, not
-  // initiate.
-  const isTransition = !!transactionId;
-  const transition = TRANSITION_REQUEST_PAYMENT_AFTER_ENQUIRY;
-  const isPrivilegedTransition = isPrivileged(transition);
+//   // If we already have a transaction ID, we should transition, not
+//   // initiate.
+//   const isTransition = !!transactionId;
+//   const transition = TRANSITION_REQUEST_PAYMENT_AFTER_ENQUIRY;
+//   const isPrivilegedTransition = isPrivileged(transition);
 
-  const params = {
-    cardToken: 'CheckoutPage_speculative_card_token',
-  };
+//   const params = {
+//     cardToken: 'CheckoutPage_speculative_card_token',
+//   };
 
-  const bodyParams = isTransition
-    ? {
-        id: transactionId,
-        transition,
-        params,
-      }
-    : {
-        processAlias: config.bookingProcessAlias,
-        transition,
-        params,
-      };
+//   const bodyParams = isTransition
+//     ? {
+//         id: transactionId,
+//         transition,
+//         params,
+//       }
+//     : {
+//         processAlias: config.bookingProcessAlias,
+//         transition,
+//         params,
+//       };
 
-  const queryParams = {
-    include: ['booking', 'provider'],
-    expand: true,
-  };
+//   const queryParams = {
+//     include: ['booking', 'provider'],
+//     expand: true,
+//   };
 
-  const handleSuccess = response => {
-    const entities = denormalisedResponseEntities(response);
-    if (entities.length !== 1) {
-      throw new Error('Expected a resource in the speculate response');
-    }
-    const tx = entities[0];
-    dispatch(speculateTransactionSuccess(tx));
-  };
+//   const handleSuccess = response => {
+//     const entities = denormalisedResponseEntities(response);
+//     if (entities.length !== 1) {
+//       throw new Error('Expected a resource in the speculate response');
+//     }
+//     const tx = entities[0];
+//     dispatch(speculateTransactionSuccess(tx));
+//   };
 
-  const handleError = e => {
-    // log.error(e, 'speculate-transaction-failed', {});
-    return dispatch(speculateTransactionError(storableError(e)));
-  };
+//   const handleError = e => {
+//     // log.error(e, 'speculate-transaction-failed', {});
+//     return dispatch(speculateTransactionError(storableError(e)));
+//   };
 
-  if (isTransition && isPrivilegedTransition) {
-    // transition privileged
-    return transitionPrivileged({ isSpeculative: true, bodyParams, queryParams })
-      .then(handleSuccess)
-      .catch(handleError);
-  } else if (isTransition) {
-    // transition non-privileged
-    return sdk.transactions
-      .transitionSpeculative(bodyParams, queryParams)
-      .then(handleSuccess)
-      .catch(handleError);
-  } else if (isPrivilegedTransition) {
-    // initiate privileged
-    return initiatePrivileged({ isSpeculative: true, bodyParams, queryParams })
-      .then(handleSuccess)
-      .catch(handleError);
-  } else {
-    // initiate non-privileged
-    return sdk.transactions
-      .initiateSpeculative(bodyParams, queryParams)
-      .then(handleSuccess)
-      .catch(handleError);
-  }
-};
+//   if (isTransition && isPrivilegedTransition) {
+//     // transition privileged
+//     return transitionPrivileged({ isSpeculative: true, bodyParams, queryParams })
+//       .then(handleSuccess)
+//       .catch(handleError);
+//   } else if (isTransition) {
+//     // transition non-privileged
+//     return sdk.transactions
+//       .transitionSpeculative(bodyParams, queryParams)
+//       .then(handleSuccess)
+//       .catch(handleError);
+//   } else if (isPrivilegedTransition) {
+//     // initiate privileged
+//     return initiatePrivileged({ isSpeculative: true, bodyParams, queryParams })
+//       .then(handleSuccess)
+//       .catch(handleError);
+//   } else {
+//     // initiate non-privileged
+//     return sdk.transactions
+//       .initiateSpeculative(bodyParams, queryParams)
+//       .then(handleSuccess)
+//       .catch(handleError);
+//   }
+// };
 
-// StripeCustomer is a relantionship to currentUser
-// We need to fetch currentUser with correct params to include relationship
-export const stripeCustomer = () => (dispatch, getState, sdk) => {
-  dispatch(stripeCustomerRequest());
+// // StripeCustomer is a relantionship to currentUser
+// // We need to fetch currentUser with correct params to include relationship
+// export const stripeCustomer = () => (dispatch, getState, sdk) => {
+//   dispatch(stripeCustomerRequest());
 
-  return dispatch(fetchCurrentUser({ include: ['stripeCustomer.defaultPaymentMethod'] }))
-    .then(response => {
-      dispatch(stripeCustomerSuccess());
-    })
-    .catch(e => {
-      dispatch(stripeCustomerError(storableError(e)));
-    });
-};
+//   return dispatch(fetchCurrentUser({ include: ['stripeCustomer.defaultPaymentMethod'] }))
+//     .then(response => {
+//       dispatch(stripeCustomerSuccess());
+//     })
+//     .catch(e => {
+//       dispatch(stripeCustomerError(storableError(e)));
+//     });
+// };
 
-export const fetchStripeAccount = userId => (dispatch, getState, sdk) => {
-  dispatch(fetchStripeAccountRequest());
+// export const fetchStripeAccount = userId => (dispatch, getState, sdk) => {
+//   dispatch(fetchStripeAccountRequest());
 
-  return sdk.users
-    .show({ id: userId, include: ['stripeAccount', 'profileImage'] })
-    .then(response => {
-      const stripeAccount = response.data.data.stripeAccount;
-      dispatch(fetchStripeAccountSuccess(stripeAccount));
-      return stripeAccount;
-    })
-    .catch(err => {
-      const e = storableError(err);
-      dispatch(fetchStripeAccountError(e));
-      const stripeMessage =
-        e.apiErrors && e.apiErrors.length > 0 && e.apiErrors[0].meta
-          ? e.apiErrors[0].meta.stripeMessage
-          : null;
-      log.error(err, 'fetch-stripe-account-failed', { stripeMessage });
-      throw e;
-    });
-};
+//   return sdk.users
+//     .show({ id: userId, include: ['stripeAccount', 'profileImage'] })
+//     .then(response => {
+//       const stripeAccount = response.data.data.stripeAccount;
+//       dispatch(fetchStripeAccountSuccess(stripeAccount));
+//       return stripeAccount;
+//     })
+//     .catch(err => {
+//       const e = storableError(err);
+//       dispatch(fetchStripeAccountError(e));
+//       const stripeMessage =
+//         e.apiErrors && e.apiErrors.length > 0 && e.apiErrors[0].meta
+//           ? e.apiErrors[0].meta.stripeMessage
+//           : null;
+//       log.error(err, 'fetch-stripe-account-failed', { stripeMessage });
+//       throw e;
+//     });
+// };
 
-export const makePaymentIntent = (amount, userId) => (dispatch, getState, sdk) => {
-  dispatch(createPaymentIntentRequest());
+// export const makePaymentIntent = (amount, userId) => (dispatch, getState, sdk) => {
+//   dispatch(createPaymentIntentRequest());
 
-  const handleSuccess = response => {
-    dispatch(createPaymentIntentSuccess());
-    return response;
-  };
+//   const handleSuccess = response => {
+//     dispatch(createPaymentIntentSuccess());
+//     return response;
+//   };
 
-  const handleError = e => {
-    dispatch(createPaymentIntentError(storableError(e)));
-    log.error(e, 'create-payment-intent-Failed', {});
-    throw e;
-  };
+//   const handleError = e => {
+//     dispatch(createPaymentIntentError(storableError(e)));
+//     log.error(e, 'create-payment-intent-Failed', {});
+//     throw e;
+//   };
 
-  console.log(userId);
+//   console.log(userId);
 
-  return createPaymentIntent({ amount, userId })
-    .then(handleSuccess)
-    .catch(handleError);
-};
+//   return createPaymentIntent({ amount, userId })
+//     .then(handleSuccess)
+//     .catch(handleError);
+// };

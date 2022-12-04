@@ -368,7 +368,6 @@ export const loadData = (params, search) => (dispatch, getState, sdk) => {
       });
     })
     .catch(e => {
-      console.log(e);
       dispatch(fetchOrdersOrSalesError(storableError(e)));
       throw e;
     });

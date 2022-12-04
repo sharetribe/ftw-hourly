@@ -242,7 +242,7 @@ CurrencyInputComponent.propTypes = {
 export const CurrencyInput = injectIntl(CurrencyInputComponent);
 
 const FieldCurrencyInputComponent = props => {
-  const { rootClassName, className, id, label, input, meta, ...rest } = props;
+  const { rootClassName, className, inputClassName, id, label, input, meta, ...rest } = props;
 
   if (label && !id) {
     throw new Error('id required when a label is given');
@@ -254,13 +254,19 @@ const FieldCurrencyInputComponent = props => {
   // field has been touched and the validation has failed.
   const hasError = touched && invalid && error;
 
-  const inputClasses = classNames(css.input, {
+  const inputClasses = classNames(inputClassName || css.input, {
     [css.inputSuccess]: valid,
     [css.inputError]: hasError,
   });
 
-  const inputProps = { className: inputClasses, id, input, ...rest };
+  const inputProps = {
+    className: inputClasses,
+    id,
+    input,
+    ...rest,
+  };
   const classes = classNames(rootClassName, className);
+
   return (
     <div className={classes}>
       {label ? <label htmlFor={id}>{label}</label> : null}

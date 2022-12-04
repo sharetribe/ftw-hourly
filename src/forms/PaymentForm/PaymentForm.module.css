@@ -1,0 +1,83 @@
+.root {
+  display: flex;
+  height: 100%;
+  align-content: space-between;
+  flex-wrap: wrap;
+  transition-delay: 1.5s;
+  width: 350px;
+}
+
+.paymentElementContainer {
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.paymentButtonContainer {
+  padding-top: 1rem;
+  align-items: flex-end;
+  width: 100%;
+}
+
+.paymentButtonRoot {
+  composes: buttonFont buttonText buttonBorders buttonColors from global;
+
+  /* Clear padding that is set for link elements looking like buttons */
+  padding: 0;
+  height: 3rem;
+  width: 100%;
+
+  transition: all var(--transitionStyleButton);
+  cursor: pointer;
+}
+
+.StripeElement {
+  width: 100%;
+}
+
+.orderError,
+.notFoundError {
+  margin: 11px 0 12px 0;
+
+  @media (--viewportMedium) {
+    margin: 10px 0 12px 0;
+  }
+}
+.orderError {
+  color: var(--failColor);
+}
+.notFoundError {
+  color: var(--attentionColor);
+}
+
+.defaultPaymentTitle {
+  font-weight: var(--fontWeightBold);
+  font-size: 20px;
+  line-height: 24px;
+  letter-spacing: -0.5px;
+  /* margin: 0; */
+  text-align: center;
+
+  @media (--viewportMedium) {
+    font-weight: var(--fontWeightSemiBold);
+    line-height: 40px;
+    letter-spacing: -0.9px;
+    margin-bottom: 10px;
+  }
+}
+
+.changeDefaultText {
+  color: var(--marketplaceColor);
+  margin-block: 0;
+
+  &:hover {
+    text-decoration: underline;
+    cursor: pointer;
+  }
+}
+
+.checkbox {
+  padding-block: 7px;
+}

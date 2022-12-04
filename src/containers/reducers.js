@@ -17,6 +17,7 @@ import PaymentMethodsPage from './PaymentMethodsPage/PaymentMethodsPage.duck';
 import ProfilePage from './ProfilePage/ProfilePage.duck';
 import ProfileSettingsPage from './ProfileSettingsPage/ProfileSettingsPage.duck';
 import SearchPage from './SearchPage/SearchPage.duck';
+import StripePaymentModal from './StripePaymentModal/StripePaymentModal.duck';
 import StripePayoutPage from './StripePayoutPage/StripePayoutPage.duck';
 import TopbarContainer from './TopbarContainer/TopbarContainer.duck';
 import TransactionPage from './TransactionPage/TransactionPage.duck';
@@ -36,6 +37,7 @@ export {
   ProfilePage,
   ProfileSettingsPage,
   SearchPage,
+  StripePaymentModal,
   StripePayoutPage,
   TopbarContainer,
   TransactionPage,

@@ -1,0 +1,18 @@
+.root {
+  display: flex;
+  align-items: center;
+  width: 13rem;
+  justify-content: center;
+}
+
+.buttonRoot {
+  composes: buttonFont buttonText buttonBorders buttonColors from global;
+
+  /* Clear padding that is set for link elements looking like buttons */
+  padding: 0;
+  height: 2.5rem;
+  width: 8rem;
+
+  transition: all var(--transitionStyleButton);
+  cursor: pointer;
+}

@@ -2,6 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 import { oneOfType, string } from 'prop-types';
 import { propTypes } from '../../util/types';
+import { userDisplayNameAsString } from '../../util/data';
 
 const UserDisplayName = props => {
   const {
@@ -16,7 +17,7 @@ const UserDisplayName = props => {
   const userIsDeleted = hasAttributes && user.attributes.deleted;
   const userIsBanned = hasAttributes && user.attributes.banned;
   const userHasProfile = hasAttributes && user.attributes.profile;
-  const userDisplayName = userHasProfile && user.attributes.profile.displayName;
+  const userDisplayName = userHasProfile && userDisplayNameAsString(user, '');
 
   const deletedUserDisplayNameInUse = deletedUserDisplayName
     ? deletedUserDisplayName

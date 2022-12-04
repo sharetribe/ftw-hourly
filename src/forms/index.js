@@ -20,6 +20,7 @@ export { default as LoginForm } from './LoginForm/LoginForm';
 export { default as PasswordChangeForm } from './PasswordChangeForm/PasswordChangeForm';
 export { default as PasswordRecoveryForm } from './PasswordRecoveryForm/PasswordRecoveryForm';
 export { default as PasswordResetForm } from './PasswordResetForm/PasswordResetForm';
+export { default as PaymentDetailsForm} from './PaymentDetailsForm/PaymentDetailsForm'
 export { default as PaymentMethodsForm } from './PaymentMethodsForm/PaymentMethodsForm';
 export { default as PaymentForm } from './PaymentForm/PaymentForm';
 export { default as PriceFilterForm } from './PriceFilterForm/PriceFilterForm';
