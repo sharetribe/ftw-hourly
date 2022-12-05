@@ -45,7 +45,11 @@ export const FETCH_OTHER_USER_LISTING_REQUEST = 'app/InboxPage/FETCH_OTHER_USER_
 export const FETCH_OTHER_USER_LISTING_SUCCESS = 'app/InboxPage/FETCH_OTHER_USER_LISTING_SUCCESS';
 export const FETCH_OTHER_USER_LISTING_ERROR = 'app/InboxPage/FETCH_OTHER_USER_LISTING_ERROR';
 
-export const CLEAR_MESSAGES_SUCCESS = 'app/InboxPage/CLEAR_MESSAGES_SUCCESS';
+export const UPDATE_VIEWED_MESSAGES_REQUEST = 'app/InboxPage/UPDATE_VIEWED_MESSAGES_REQUEST';
+export const UPDATE_VIEWED_MESSAGES_SUCCESS = 'app/UPDATE_VIEWED_MESSAGES_SUCCESS';
+export const UPDATE_VIEWED_MESSAGES_ERROR = 'app/InboxPage/UPDATE_VIEWED_MESSAGES_ERROR';
+
+export const CLEAR_MESSAGES_SUCCESS = 'app/InboxPage/UPDATE_USER_LAST_VIEWED_TIME_SUCCESS';
 
 // ================ Reducer ================ //
 
@@ -72,6 +76,9 @@ const initialState = {
   otherUserListing: null,
   fetchOtherUserListingInProgress: false,
   fetchOtherUserListingError: false,
+  updateUserLastViewedTimeSuccess: false,
+  updateUserLastViewedTimeInProgress: false,
+  updateUserLastViewedTimeError: false,
 };
 
 const mergeEntityArrays = (a, b) => {
@@ -156,8 +163,22 @@ export default function checkoutPageReducer(state = initialState, action = {}) {
     case FETCH_OTHER_USER_LISTING_ERROR:
       return {
         ...state,
-        fetchOtherUserListingProgress: false,
+        fetchOtherUserListingInProgress: false,
         fetchOtherUserListingError: payload,
+      };
+    case UPDATE_VIEWED_MESSAGES_REQUEST:
+      return { ...state, updateViewedMessagesInProgress: true, updateViewedMessagesError: false };
+    case UPDATE_VIEWED_MESSAGES_SUCCESS:
+      return {
+        ...state,
+        viewedMessages: payload,
+        updateViewedMessagesInProgress: false,
+      };
+    case UPDATE_VIEWED_MESSAGES_ERROR:
+      return {
+        ...state,
+        updateViewedMessagesInProgress: false,
+        updateViewedMessagesError: payload,
       };
     default:
       return state;
@@ -201,6 +222,17 @@ const fetchOtherUserListingSuccess = response => ({
 });
 const fetchOtherUserListingError = e => ({
   type: FETCH_OTHER_USER_LISTING_ERROR,
+  error: true,
+  payload: e,
+});
+
+const updateViewedMessagesRequest = () => ({ type: UPDATE_VIEWED_MESSAGES_REQUEST });
+const updateViewedMessagesSuccess = response => ({
+  type: UPDATE_VIEWED_MESSAGES_SUCCESS,
+  payload: response[0],
+});
+const updateViewedMessagesError = e => ({
+  type: UPDATE_VIEWED_MESSAGES_ERROR,
   error: true,
   payload: e,
 });
@@ -297,6 +329,20 @@ export const clearMessages = () => (dispatch, getState, sdk) => {
 };
 
 export const fetchOtherUserListing = userId => (dispatch, getState, sdk) => {
+  dispatch(fetchOtherUserListingRequest());
+
+  return sdk.listings
+    .query({ authorId: userId })
+    .then(response => {
+      dispatch(fetchOtherUserListingSuccess(response.data.data));
+    })
+    .catch(e => {
+      dispatch(fetchOtherUserListingError(e));
+      throw e;
+    });
+};
+
+export const updateViewedMessages = (userId, viewedMessages) => (dispatch, getState, sdk) => {
   dispatch(fetchOtherUserListingRequest());
 
   return sdk.listings

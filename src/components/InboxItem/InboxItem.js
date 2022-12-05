@@ -6,6 +6,7 @@ import { intlShape } from '../../util/reactIntl';
 import classNames from 'classnames';
 import { createSlug, stringify } from '../../util/urlHelpers';
 import MessageInboxItemContent from './MessageInboxItemContent';
+import NotificationInboxItemContent from './NotificationInboxItemContent';
 
 import css from './InboxItem.module.css';
 
@@ -58,7 +59,9 @@ const InboxItem = props => {
           intl={intl}
           previewMessage={previewMessage}
         />
-      ) : null}
+      ) : (
+        <NotificationInboxItemContent />
+      )}
     </NamedLink>
   );
 };
