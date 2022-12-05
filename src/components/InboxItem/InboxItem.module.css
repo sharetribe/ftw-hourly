@@ -1,15 +1,26 @@
 @import '../../styles/customMediaQueries.css';
 
+.rowNotificationDot {
+  width: 10px;
+  height: 10px;
+  /* margin-top: 10px; */
+  margin-right: 8px;
+  display: inline-block;
+
+  @media (--viewportLarge) {
+    margin-right: 13px;
+    width: 12px;
+    height: 12px;
+  }
+}
+
 .notificationDot {
-  color: var(--matterColorLight);
+  color: var(--marketplaceColor);
 
   width: 100%;
   height: 100%;
   border-radius: 50%;
-  background-color: var(--failColor);
-}
-
-.rowNotificationDot {
+  background-color: var(--marketplaceColor);
 }
 
 .item {

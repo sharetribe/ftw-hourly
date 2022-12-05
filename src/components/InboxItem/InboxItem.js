@@ -40,7 +40,7 @@ const createListingLink = (listing, otherUser, searchParams = {}, className = ''
 };
 
 const InboxItem = props => {
-  const { tx, intl, params, currentUser, selected, previewMessage } = props;
+  const { tx, intl, params, currentUser, selected, txMessages } = props;
 
   const currentTab = params.tab;
 
@@ -57,7 +57,7 @@ const InboxItem = props => {
           tx={tx}
           currentUser={currentUser}
           intl={intl}
-          previewMessage={previewMessage}
+          txMessages={txMessages}
         />
       ) : (
         <NotificationInboxItemContent />

@@ -16,7 +16,7 @@ const formatDateLastTransitioned = (intl, date) => {
 };
 
 const MessageInboxItemContent = props => {
-  const { tx, currentUser, previewMessage, intl } = props;
+  const { tx, currentUser, txMessages, intl } = props;
 
   const { customer, provider } = tx;
   const ensuredCurrentUser = ensureCurrentUser(currentUser);
@@ -26,9 +26,9 @@ const MessageInboxItemContent = props => {
   const isOtherUserBanned = otherUser.attributes.banned;
 
   //   const isSaleNotification = txIsRequested(tx);
-  //   const rowNotificationDot = isSaleNotification ? <div className={css.notificationDot} /> : null;
   const lastTransitionedAt = formatDateLastTransitioned(intl, tx.attributes.lastTransitionedAt);
 
+  const previewMessage = (txMessages && txMessages.length > 0 && txMessages[0]) || null;
   const hasPreviewMessage =
     previewMessage && previewMessage.attributes && previewMessage.attributes.content;
   const previewMessageFormatted = hasPreviewMessage
@@ -37,6 +37,12 @@ const MessageInboxItemContent = props => {
   const lastMessageTime = (hasPreviewMessage && previewMessage.attributes.createdAt) || new Date();
   const todayString = intl.formatMessage({ id: 'InboxPage.today' });
   const lastMessageTimeFormatted = formatDate(intl, todayString, lastMessageTime);
+
+  const viewedMessages = currentUser.attributes.profile.metadata.viewedMessages;
+  const txViewedMessages = viewedMessages && viewedMessages.find(item => item.tx.id === tx.id);
+
+  const rowNotificationDot =
+    txViewedMessages != txMessages ? <div className={css.notificationDot} /> : null;
 
   return (
     <div className={css.mainContent}>
@@ -50,9 +56,9 @@ const MessageInboxItemContent = props => {
           <div className={css.itemUsername}>{otherUserDisplayName}</div>
           <div className={css.itemState}>
             <div className={css.lastTransitionedAt} title={lastTransitionedAt.long}>
-              {/* {rowNotificationDot && (
+              {rowNotificationDot && (
                 <div className={css.rowNotificationDot}>{rowNotificationDot}</div>
-              )} */}
+              )}
               {lastMessageTimeFormatted}
             </div>
           </div>

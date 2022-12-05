@@ -255,8 +255,6 @@ export const InboxPageComponent = props => {
               !fetchInProgress || currentTransactions.length > 0 ? (
                 currentTransactions.map(tx => {
                   const txMessages = messages.get(tx.id.uuid);
-                  const previewMessage =
-                    (txMessages && txMessages.length > 0 && txMessages[0]) || null;
                   return (
                     <InboxItem
                       key={tx.id.uuid}
@@ -266,7 +264,7 @@ export const InboxPageComponent = props => {
                       params={params}
                       currentUser={ensuredCurrentUser}
                       selected={currentTxId === tx.id.uuid}
-                      previewMessage={previewMessage}
+                      txMessages={txMessages}
                     />
                   );
                 })
