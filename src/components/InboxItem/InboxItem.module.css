@@ -25,6 +25,10 @@
     /* Hightlight the username when the whole item is hovered */
     background-color: var(--matterColorAnti);
     text-decoration: none;
+
+    & .previewMessage {
+      color: var(--matterColorBright);
+    }
   }
 }
 
@@ -34,6 +38,10 @@
 
 .selected {
   background-color: var(--matterColorAnti);
+
+  & .previewMessage {
+    color: var(--matterColorBright);
+  }
 }
 
 .itemInfo {
@@ -47,6 +55,7 @@
   display: flex;
   line-height: 16px;
   padding-left: 7px;
+  color: var(--matterColorAnti);
 }
 
 .bannedUserLink {
