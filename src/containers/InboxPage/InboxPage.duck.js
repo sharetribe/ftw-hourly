@@ -10,6 +10,7 @@ import pick from 'lodash/pick';
 import pickBy from 'lodash/pickBy';
 import isEmpty from 'lodash/isEmpty';
 import queryString from 'query-string';
+import { updateUserMetadata } from '../../util/api';
 
 const MESSAGES_PAGE_SIZE = 10;
 const { UUID } = sdkTypes;
@@ -76,9 +77,9 @@ const initialState = {
   otherUserListing: null,
   fetchOtherUserListingInProgress: false,
   fetchOtherUserListingError: false,
-  updateUserLastViewedTimeSuccess: false,
-  updateUserLastViewedTimeInProgress: false,
-  updateUserLastViewedTimeError: false,
+  updateViewedMessagesSuccess: false,
+  updateViewedMessagesInProgress: false,
+  updateViewedMessagesError: null,
 };
 
 const mergeEntityArrays = (a, b) => {
@@ -171,7 +172,7 @@ export default function checkoutPageReducer(state = initialState, action = {}) {
     case UPDATE_VIEWED_MESSAGES_SUCCESS:
       return {
         ...state,
-        viewedMessages: payload,
+        updateViewedMessagesSuccess: true,
         updateViewedMessagesInProgress: false,
       };
     case UPDATE_VIEWED_MESSAGES_ERROR:
@@ -227,9 +228,8 @@ const fetchOtherUserListingError = e => ({
 });
 
 const updateViewedMessagesRequest = () => ({ type: UPDATE_VIEWED_MESSAGES_REQUEST });
-const updateViewedMessagesSuccess = response => ({
+const updateViewedMessagesSuccess = () => ({
   type: UPDATE_VIEWED_MESSAGES_SUCCESS,
-  payload: response[0],
 });
 const updateViewedMessagesError = e => ({
   type: UPDATE_VIEWED_MESSAGES_ERROR,
@@ -343,17 +343,11 @@ export const fetchOtherUserListing = userId => (dispatch, getState, sdk) => {
 };
 
 export const updateViewedMessages = (userId, viewedMessages) => (dispatch, getState, sdk) => {
-  dispatch(fetchOtherUserListingRequest());
+  dispatch(updateViewedMessagesRequest());
 
-  return sdk.listings
-    .query({ authorId: userId })
-    .then(response => {
-      dispatch(fetchOtherUserListingSuccess(response.data.data));
-    })
-    .catch(e => {
-      dispatch(fetchOtherUserListingError(e));
-      throw e;
-    });
+  return updateUserMetadata({ userId, metadata: { viewedMessages } })
+    .then(() => dispatch(updateViewedMessagesSuccess()))
+    .catch(e => dispatch(updateViewedMessagesError(e)));
 };
 
 const IMAGE_VARIANTS = {
