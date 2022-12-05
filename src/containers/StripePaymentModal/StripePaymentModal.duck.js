@@ -9,9 +9,6 @@ import {
 import { storableError } from '../../util/errors';
 import * as log from '../../util/log';
 import { fetchCurrentUser } from '../../ducks/user.duck';
-import { ensureCurrentUser, ensureStripeCustomer } from '../../util/data';
-import { handleCardSetup } from '../../ducks/stripe.duck';
-import { savePaymentMethod } from '../../ducks/paymentMethods.duck';
 // import { stripe } from '~/src/ducks';
 
 // ================ Action types ================ //

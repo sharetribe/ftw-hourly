@@ -64,7 +64,7 @@ const StripePaymentModalComponent = props => {
     defaultPaymentFetched,
   } = props;
 
-  const [clientSecret, setClientSecret] = useState('');
+  const [clientSecret, setClientSecret] = useState(null);
   const [modalData, setModalData] = useState(null);
   const [rootClass, setRootClass] = useState(classNames(css.root, css.single));
   const [showPaymentForm, setShowPaymentForm] = useState(false);
@@ -101,7 +101,7 @@ const StripePaymentModalComponent = props => {
     if (confirmPaymentSuccess) {
       setRootClass(classNames(css.root, css.confirmation));
     }
-  }, [paymentIntent, confirmPaymentSuccess, clientSecret]);
+  }, [paymentIntent, confirmPaymentSuccess]);
 
   const onHandleReviewPayment = values => {
     const { amount } = values;
@@ -129,6 +129,11 @@ const StripePaymentModalComponent = props => {
   const onHandleClose = () => {
     onClose();
     onSetInitialState();
+  };
+
+  const onHandleEditPaymentDetails = () => {
+    setClientSecret(null);
+    setRootClass(classNames(css.root, css.single));
   };
 
   const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
@@ -237,7 +242,8 @@ const StripePaymentModalComponent = props => {
                     onSubmit={onHandleReviewPayment}
                     createPaymentIntentInProgress={createPaymentIntentInProgress}
                     createPaymentIntentError={createPaymentIntentError}
-                    paymentIntent={paymentIntent}
+                    clientSecret={clientSecret}
+                    onEditPaymentDetails={onHandleEditPaymentDetails}
                   />
                 </div>
               )}

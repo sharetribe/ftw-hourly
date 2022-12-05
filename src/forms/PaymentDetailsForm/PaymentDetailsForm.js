@@ -42,8 +42,9 @@ const PaymentDetailsFormComponent = props => (
         createPaymentIntentInProgress,
         createPaymentIntentSuccess,
         createPaymentIntentError,
-        paymentIntent,
+        clientSecret,
         values,
+        onEditPaymentDetails,
       } = formRenderProps;
 
       const amountLabel = intl.formatMessage({ id: 'PaymentDetailsForm.amountLabel' });
@@ -67,7 +68,7 @@ const PaymentDetailsFormComponent = props => (
       const classes = classNames(css.root, className);
       const submitReady = (updated && pristine) || ready;
       const submitInProgress = createPaymentIntentInProgress;
-      const submitDisabled = invalid || disabled || submitInProgress || paymentIntent;
+      const submitDisabled = invalid || disabled || submitInProgress || clientSecret;
 
       const totalAmountNumber = values.amount && values.amount.amount + values.amount.amount * 0.06;
       const totalAmountMoney = totalAmountNumber
@@ -146,7 +147,7 @@ const PaymentDetailsFormComponent = props => (
               validate={composeValidators(amountRequiredValidator, amountTooLowValidator)}
               currencyConfig={config.currencyConfig}
               inputClassName={css.currencyInput}
-              disabled={!!paymentIntent}
+              disabled={!!clientSecret}
             />
           </div>
           <div className={css.amountDisplayContainer}>
@@ -160,16 +161,31 @@ const PaymentDetailsFormComponent = props => (
             </div>
           </SimpleAccordion>
           {createPaymentIntentErrorMessage}
-          <Button
-            rootClassName={css.submitButtonRoot}
-            className={css.submitButton}
-            type="submit"
-            inProgress={submitInProgress}
-            disabled={submitDisabled}
-            ready={submitReady}
-          >
-            {saveActionMsg || 'Review'}
-          </Button>
+          {!clientSecret && (
+            <Button
+              rootClassName={css.submitButtonRoot}
+              className={css.submitButton}
+              type="submit"
+              inProgress={submitInProgress}
+              disabled={submitDisabled}
+              ready={submitReady}
+            >
+              {saveActionMsg || 'Review'}
+            </Button>
+          )}
+          {clientSecret && (
+            <Button
+              rootClassName={css.submitButtonRoot}
+              className={css.submitButton}
+              onClick={onEditPaymentDetails}
+              type="button"
+              // inProgress={submitInProgress}
+              // disabled={submitDisabled}
+              // ready={submitReady}
+            >
+              {saveActionMsg || 'Edit'}
+            </Button>
+          )}
         </Form>
       );
     }}

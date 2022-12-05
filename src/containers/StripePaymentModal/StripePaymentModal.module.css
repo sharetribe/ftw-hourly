@@ -10,6 +10,11 @@
 
 .root.single {
   min-width: 350px;
+  /* justify-content: flex-start; */
+
+  & .leftColumnContainer {
+    width: 350px;
+  }
 }
 
 .root.double {

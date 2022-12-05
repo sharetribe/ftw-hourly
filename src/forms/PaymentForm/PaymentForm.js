@@ -123,7 +123,6 @@ const PaymentForm = props => {
   const submitDisabled = submitInProgress || (!isElementsComplete && !showDefaultPayment);
 
   const buttonMessage = intl.formatMessage({ id: 'PaymentForm.paymentButtonMessage' });
-  const paymentClasses = classNames(css.card);
 
   return (
     <Form onSubmit={onHandleSubmit} className={css.root}>
