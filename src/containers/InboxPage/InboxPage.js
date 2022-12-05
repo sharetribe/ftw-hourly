@@ -7,7 +7,6 @@ import { withRouter } from 'react-router-dom';
 import queryString from 'query-string';
 import { propTypes } from '../../util/types';
 import { ensureCurrentUser, cutTextToPreview } from '../../util/data';
-import { formatDate } from '../../util/dates';
 import { getMarketplaceEntities } from '../../ducks/marketplaceData.duck';
 import { isScrollingDisabled, manageDisableScrolling } from '../../ducks/UI.duck';
 import { changeModalValue } from '../TopbarContainer/TopbarContainer.duck';
@@ -91,9 +90,9 @@ export const InboxPageComponent = props => {
   const currentTransaction = getCurrentTransaction(currentTransactions, history.location.search);
 
   // Show payment details modal if user doesn't have them
-  useEffect(() => {
-    onChangeMissingInfoModal(PAYMENT_DETAILS);
-  }, []);
+  // useEffect(() => {
+  //   onChangeMissingInfoModal(PAYMENT_DETAILS);
+  // }, []);
 
   useEffect(() => {
     if (currentTxId === '' || !currentTxId) {
@@ -256,13 +255,8 @@ export const InboxPageComponent = props => {
               !fetchInProgress || currentTransactions.length > 0 ? (
                 currentTransactions.map(tx => {
                   const txMessages = messages.get(tx.id.uuid);
-                  const previewMessageLong =
-                    (txMessages && txMessages.length > 0 && txMessages[0].attributes.content) || '';
-                  const previewMessage = cutTextToPreview(previewMessageLong, 40);
-                  const lastMessageTime =
-                    (txMessages && txMessages.length > 0 && txMessages[0].attributes.createdAt) ||
-                    new Date();
-                  const todayString = intl.formatMessage({ id: 'InboxPage.today' });
+                  const previewMessage =
+                    (txMessages && txMessages.length > 0 && txMessages[0]) || null;
                   return (
                     <InboxItem
                       key={tx.id.uuid}
@@ -273,7 +267,6 @@ export const InboxPageComponent = props => {
                       currentUser={ensuredCurrentUser}
                       selected={currentTxId === tx.id.uuid}
                       previewMessage={previewMessage}
-                      lastMessageTime={formatDate(intl, todayString, lastMessageTime)}
                     />
                   );
                 })
@@ -288,7 +281,7 @@ export const InboxPageComponent = props => {
           {pagingLinks}
         </LayoutWrapperSideNav>
         <LayoutWrapperMain className={css.wrapper}>
-          {currentTxId && (
+          {currentTxId && isMessages && (
             <MessagePanel
               transaction={currentTransaction}
               currentUser={ensuredCurrentUser}
