@@ -39,10 +39,14 @@ const MessageInboxItemContent = props => {
   const lastMessageTimeFormatted = formatDate(intl, todayString, lastMessageTime);
 
   const viewedMessages = currentUser.attributes.profile.metadata.viewedMessages;
-  const txViewedMessages = viewedMessages && viewedMessages.find(item => item.tx.id === tx.id);
+  const txViewedMessages =
+    viewedMessages && viewedMessages.find(item => item && item.txId === tx.id.uuid);
 
   const rowNotificationDot =
-    txViewedMessages != txMessages ? <div className={css.notificationDot} /> : null;
+    (txViewedMessages && txViewedMessages.messageIds.length) !==
+    (txMessages && txMessages.length) ? (
+      <div className={css.notificationDot} />
+    ) : null;
 
   return (
     <div className={css.mainContent}>
@@ -55,10 +59,10 @@ const MessageInboxItemContent = props => {
         <div className={css.itemInfo}>
           <div className={css.itemUsername}>{otherUserDisplayName}</div>
           <div className={css.itemState}>
+            {rowNotificationDot && (
+              <div className={css.rowNotificationDot}>{rowNotificationDot}</div>
+            )}
             <div className={css.lastTransitionedAt} title={lastTransitionedAt.long}>
-              {rowNotificationDot && (
-                <div className={css.rowNotificationDot}>{rowNotificationDot}</div>
-              )}
               {lastMessageTimeFormatted}
             </div>
           </div>

@@ -16,6 +16,7 @@ import {
   sendMessage,
   clearMessages,
   fetchOtherUserListing,
+  updateViewedMessages,
 } from './InboxPage.duck';
 import { fetchTransaction } from '../../ducks/transactions.duck';
 import { PAYMENT_DETAILS } from '../../components/ModalMissingInformation/ModalMissingInformation';
@@ -73,6 +74,7 @@ export const InboxPageComponent = props => {
     onManageDisableScrolling,
     onFetchTransaction,
     onSetCurrentTransaction,
+    onUpdateViewedMessages,
   } = props;
   const { tab } = params;
   const ensuredCurrentUser = ensureCurrentUser(currentUser);
@@ -127,6 +129,26 @@ export const InboxPageComponent = props => {
 
   const onOpenPaymentModal = () => {
     setIsPaymentModalOpen(true);
+  };
+
+  const handleUpdateViewedMessages = txMessages => {
+    let viewedMessages = ensuredCurrentUser.attributes.profile.metadata.viewedMessages;
+    const txMessageIds = txMessages.map(item => item.id.uuid);
+
+    if (!viewedMessages) {
+      viewedMessages = [{ txId: currentTxId, messageIds: txMessageIds }];
+    } else if (viewedMessages.find(item => item && item.txId === currentTxId)) {
+      viewedMessages.forEach((item, i) => {
+        if (item.txId === currentTxId)
+          viewedMessages[i] = { txId: currentTxId, messageIds: txMessageIds };
+      });
+    } else {
+      viewedMessages.push({ txId: currentTxId, messageIds: txMessageIds });
+    }
+
+    const currentUserId = ensuredCurrentUser.id && ensuredCurrentUser.id.uuid;
+
+    onUpdateViewedMessages(currentUserId, viewedMessages);
   };
 
   const validTab = tab === 'messages' || tab === 'notifications';
@@ -232,6 +254,23 @@ export const InboxPageComponent = props => {
   );
 
   const currentMessages = messages.get(currentTxId) || [];
+  console.log(ensuredCurrentUser);
+  const viewedMessages =
+    (ensuredCurrentUser.attributes.profile.metadata &&
+      ensuredCurrentUser.attributes.profile.metadata.viewedMessages) ||
+    [];
+  const currentViewedMessages = viewedMessages.find(item => item && item.txId === currentTxId);
+
+  if (
+    currentTransaction &&
+    currentMessages.length >= 1 &&
+    currentMessages.length !=
+      (currentViewedMessages &&
+        currentViewedMessages.messageIds &&
+        currentViewedMessages.messageIds.length)
+  ) {
+    handleUpdateViewedMessages(currentMessages);
+  }
 
   return (
     <Page title={title} scrollingDisabled={scrollingDisabled}>
@@ -298,6 +337,7 @@ export const InboxPageComponent = props => {
               onManageDisableScrolling={onManageDisableScrolling}
               onFetchTransaction={onFetchTransaction}
               onOpenPaymentModal={onOpenPaymentModal}
+              updateViewedMessages={handleUpdateViewedMessages}
             />
           )}
           {isPaymentModalOpen && (
@@ -403,6 +443,7 @@ const mapDispatchToProps = dispatch => ({
   onFetchOtherUserListing: userId => dispatch(fetchOtherUserListing(userId)),
   onFetchTransaction: txId => dispatch(fetchTransaction(txId)),
   onSetCurrentTransaction: tx => dispatch(setCurrentTransaction(tx)),
+  onUpdateViewedMessages: (tx, messages) => dispatch(updateViewedMessages(tx, messages)),
 });
 
 const InboxPage = compose(

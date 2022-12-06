@@ -120,6 +120,7 @@ export const ActivityFeedComponent = props => {
     onShowOlderMessages,
     fetchMessagesInProgress,
     intl,
+    updateViewedMessages,
   } = props;
   const classes = classNames(rootClassName || css.root, className);
 

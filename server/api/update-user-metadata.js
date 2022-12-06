@@ -1,10 +1,11 @@
 const { integrationSdk, handleError, serialize } = require('../api-util/sdk');
+const log = require('../log');
 
 module.exports = (req, res) => {
-  const { id, email, metadata } = req.body;
+  const { userId, email, metadata } = req.body;
 
   integrationSdk.users
-    .show({ id, email })
+    .show({ id: userId, email })
     .then(userResponse => {
       const user = userResponse.data.data;
 

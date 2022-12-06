@@ -20,6 +20,7 @@ const FeedSection = props => {
     onShowMoreMessages,
     onOpenReviewModal,
     totalMessagePages,
+    updateViewedMessages,
   } = props;
 
   const txTransitions = currentTransaction.attributes.transitions
@@ -59,6 +60,7 @@ const FeedSection = props => {
         onOpenReviewModal={onOpenReviewModal}
         onShowOlderMessages={onShowMoreMessages}
         fetchMessagesInProgress={fetchMessagesInProgress}
+        updateViewedMessages={updateViewedMessages}
       />
     </div>
   ) : null;
