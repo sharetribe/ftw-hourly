@@ -9,6 +9,12 @@ import {
 import { storableError } from '../../util/errors';
 import * as log from '../../util/log';
 import { fetchCurrentUser } from '../../ducks/user.duck';
+import {
+  TRANSITION_PAYMENT_AFTER_ENQUIRY,
+  TRANSITION_PAYMENT_AFTER_REQUEST,
+  TRANSITION_CONFIRM_PAYMENT,
+  TRANSITION_PAYMENT_ERROR,
+} from '../../util/transaction';
 // import { stripe } from '~/src/ducks';
 
 // ================ Action types ================ //
@@ -271,22 +277,50 @@ export const createPaymentIntent = (amount, userId, stripeCustomerId, savePaymen
     .catch(e => handleError(e));
 };
 
+const transitionAfterPayment = (txId, transition) => (dispatch, getState, sdk) => {
+  // const transition = TRANSITION_PAYMENT_AFTER_ENQUIRY;
+
+  const bodyParams = {
+    id: txId.uuid,
+    transition,
+    params: {},
+  };
+  // : {
+  //     processAlias: config.bookingProcessAlias,
+  //     transition,
+  //     params: orderParams,
+  //   };
+  const queryParams = {
+    include: ['provider'],
+    expand: true,
+  };
+
+  return sdk.transactions
+    .transition(bodyParams, queryParams)
+    .then(() => console.log('Payment transition success'))
+    .catch(e => log.error(e, 'transition-payment-failed'));
+};
+
 export const confirmPayment = (
   stripe,
   elements,
   saveCardAsDefault,
   defaultCardId,
   paymentIntentId,
-  useDefaultCard
+  useDefaultCard,
+  txId
 ) => (dispatch, getState, sdk) => {
   dispatch(confirmPaymentRequest());
+  dispatch(transitionAfterPayment(txId, TRANSITION_PAYMENT_AFTER_ENQUIRY));
 
   const handleSuccess = response => {
+    dispatch(transitionAfterPayment(txId, TRANSITION_CONFIRM_PAYMENT));
     dispatch(confirmPaymentSuccess(response));
     return response;
   };
 
   const handleError = e => {
+    dispatch(transitionAfterPayment(txId, TRANSITION_PAYMENT_ERROR));
     dispatch(confirmPaymentError(e));
     log.error(e, 'Confirm-Payment-Failed', {});
     throw e;

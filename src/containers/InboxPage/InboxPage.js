@@ -75,6 +75,7 @@ export const InboxPageComponent = props => {
     onFetchTransaction,
     onSetCurrentTransaction,
     onUpdateViewedMessages,
+    updateViewedMessagesInProgress,
   } = props;
   const { tab } = params;
   const ensuredCurrentUser = ensureCurrentUser(currentUser);
@@ -254,7 +255,6 @@ export const InboxPageComponent = props => {
   );
 
   const currentMessages = messages.get(currentTxId) || [];
-  console.log(ensuredCurrentUser);
   const viewedMessages =
     (ensuredCurrentUser.attributes.profile.metadata &&
       ensuredCurrentUser.attributes.profile.metadata.viewedMessages) ||
@@ -267,7 +267,8 @@ export const InboxPageComponent = props => {
     currentMessages.length !=
       (currentViewedMessages &&
         currentViewedMessages.messageIds &&
-        currentViewedMessages.messageIds.length)
+        currentViewedMessages.messageIds.length) &&
+    !updateViewedMessagesInProgress
   ) {
     handleUpdateViewedMessages(currentMessages);
   }
@@ -365,6 +366,9 @@ InboxPageComponent.defaultProps = {
   pagination: null,
   providerNotificationCount: 0,
   sendVerificationEmailError: null,
+  updateViewedMessagesSuccess: false,
+  updateViewedMessagesInProgress: false,
+  updateViewedMessagesError: null,
 };
 
 InboxPageComponent.propTypes = {
@@ -406,6 +410,9 @@ const mapStateToProps = state => {
     sendMessageError,
     transactionRefs,
     otherUserListing,
+    updateViewedMessagesSuccess,
+    updateViewedMessagesInProgress,
+    updateViewedMessagesError,
   } = state.InboxPage;
   const {
     currentUser,

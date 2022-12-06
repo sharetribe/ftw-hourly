@@ -38,7 +38,9 @@ const MessageInboxItemContent = props => {
   const todayString = intl.formatMessage({ id: 'InboxPage.today' });
   const lastMessageTimeFormatted = formatDate(intl, todayString, lastMessageTime);
 
-  const viewedMessages = currentUser.attributes.profile.metadata.viewedMessages;
+  const viewedMessages =
+    ensuredCurrentUser.attributes.profile.metadata &&
+    ensuredCurrentUser.attributes.profile.metadata.viewedMessages;
   const txViewedMessages =
     viewedMessages && viewedMessages.find(item => item && item.txId === tx.id.uuid);
 

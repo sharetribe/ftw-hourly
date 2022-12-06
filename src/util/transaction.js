@@ -19,11 +19,15 @@ export const TRANSITION_REQUEST_PAYMENT = 'transition/request-payment';
 // then transition that with a request.
 export const TRANSITION_ENQUIRE = 'transition/enquire';
 export const TRANSITION_REQUEST_PAYMENT_AFTER_ENQUIRY = 'transition/request-payment-after-enquiry';
+export const TRANSITION_PAYMENT_AFTER_ENQUIRY = 'transition/payment-after-enquiry';
+export const TRANSITION_PAYMENT_AFTER_REQUEST = 'transition/payment-after-request';
+export const TRANSITION_CONFIRM_PAYMENT = 'transition/confirm-payment';
+export const TRANSITION_PAYMENT_ERROR = 'transition/payment-error';
 
 // Stripe SDK might need to ask 3D security from customer, in a separate front-end step.
 // Therefore we need to make another transition to Marketplace API,
 // to tell that the payment is confirmed.
-export const TRANSITION_CONFIRM_PAYMENT = 'transition/confirm-payment';
+// export const TRANSITION_CONFIRM_PAYMENT = 'transition/confirm-payment';
 
 // If the payment is not confirmed in the time limit set in transaction process (by default 15min)
 // the transaction will expire automatically.
@@ -86,6 +90,7 @@ const STATE_INITIAL = 'initial';
 const STATE_ENQUIRY = 'enquiry';
 const STATE_PAYMENT_PENDING = 'payment-pending';
 const STATE_PAYMENT_EXPIRED = 'payment-expired';
+const STATE_PAYMENT_REQUESTED = 'payment-requested';
 const STATE_PREAUTHORIZED = 'preauthorized';
 const STATE_DECLINED = 'declined';
 const STATE_ACCEPTED = 'accepted';
@@ -108,7 +113,7 @@ const stateDescription = {
   // id is defined only to support Xstate format.
   // However if you have multiple transaction processes defined,
   // it is best to keep them in sync with transaction process aliases.
-  id: 'flex-hourly-default-process/release-1',
+  id: 'instant-care-payment-process/release-8',
 
   // This 'initial' state is a starting point for new transaction
   initial: STATE_INITIAL,
@@ -122,39 +127,23 @@ const stateDescription = {
     },
     [STATE_ENQUIRY]: {
       on: {
-        [TRANSITION_REQUEST_PAYMENT_AFTER_ENQUIRY]: STATE_PAYMENT_PENDING,
+        [TRANSITION_REQUEST_PAYMENT_AFTER_ENQUIRY]: STATE_PAYMENT_REQUESTED,
+        [TRANSITION_PAYMENT_AFTER_ENQUIRY]: STATE_PAYMENT_PENDING,
+      },
+    },
+
+    [STATE_PAYMENT_REQUESTED]: {
+      on: {
+        [TRANSITION_PAYMENT_AFTER_ENQUIRY]: STATE_PAYMENT_PENDING,
       },
     },
 
     [STATE_PAYMENT_PENDING]: {
       on: {
-        [TRANSITION_EXPIRE_PAYMENT]: STATE_PAYMENT_EXPIRED,
-        [TRANSITION_CONFIRM_PAYMENT]: STATE_DELIVERED,
+        [TRANSITION_CONFIRM_PAYMENT]: STATE_ENQUIRY,
+        [TRANSITION_PAYMENT_ERROR]: STATE_ENQUIRY,
       },
     },
-
-    [STATE_PAYMENT_EXPIRED]: {},
-
-    [STATE_DELIVERED]: {
-      on: {
-        [TRANSITION_REVIEW_1_BY_CUSTOMER]: STATE_REVIEWED_BY_CUSTOMER,
-        [TRANSITION_REVIEW_1_BY_PROVIDER]: STATE_REVIEWED_BY_PROVIDER,
-      },
-    },
-
-    [STATE_REVIEWED_BY_CUSTOMER]: {
-      on: {
-        [TRANSITION_REVIEW_2_BY_PROVIDER]: STATE_REVIEWED,
-        [TRANSITION_EXPIRE_PROVIDER_REVIEW_PERIOD]: STATE_REVIEWED,
-      },
-    },
-    [STATE_REVIEWED_BY_PROVIDER]: {
-      on: {
-        [TRANSITION_REVIEW_2_BY_CUSTOMER]: STATE_REVIEWED,
-        [TRANSITION_EXPIRE_CUSTOMER_REVIEW_PERIOD]: STATE_REVIEWED,
-      },
-    },
-    [STATE_REVIEWED]: { type: 'final' },
   },
 };
 

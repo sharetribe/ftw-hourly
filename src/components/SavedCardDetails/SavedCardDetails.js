@@ -245,12 +245,12 @@ SavedCardDetails.propTypes = {
   rootClassName: string,
   className: string,
   intl: intlShape.isRequired,
-  card: shape({
-    brand: string.isRequired,
-    expirationMonth: number.isRequired,
-    expirationYear: number.isRequired,
-    last4Digits: string.isRequired,
-  }),
+  // card: shape({
+  //   brand: string.isRequired,
+  //   expirationMonth: number.isRequired,
+  //   expirationYear: number.isRequired,
+  //   last4Digits: string.isRequired,
+  // }),
   onChange: func,
   onDeleteCard: func,
   onManageDisableScrolling: func,

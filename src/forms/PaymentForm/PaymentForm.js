@@ -108,8 +108,8 @@ const PaymentForm = props => {
   }, [confirmPaymentError]);
 
   const paymentElementOptions = {
-    layout: 'accordion',
-    paymentMethodOrder: ['cards'],
+    layout: 'tabs',
+    paymentMethodOrder: ['bank', 'card'],
     fields: {
       billingDetails: {
         address: {
