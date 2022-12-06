@@ -1,0 +1,46 @@
+.noResults {
+  margin-left: 24px;
+  margin-right: 24px;
+  margin-top: 1px;
+
+  @media (--viewportLarge) {
+    margin-top: 6px;
+  }
+}
+
+.itemList {
+  margin-top: 20px;
+  padding-inline: 10%;
+  display: flex;
+  max-height: 100%;
+  width: 100%;
+  flex-direction: row;
+  flex-wrap: wrap;
+  overflow-y: scroll;
+}
+
+@keyframes loadingSpinnerFadeIn {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.listItemsLoading {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  height: 60px;
+  width: 100%;
+  opacity: 0;
+
+  /* animation shorthand property doesn't work with local scope of CSS Modules */
+  animation-duration: 1s;
+  animation-name: loadingSpinnerFadeIn;
+  animation-fill-mode: forwards;
+}

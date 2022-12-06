@@ -26,9 +26,9 @@ const sortedTransactions = txs =>
 
 export const SET_INITIAL_VALUES = 'app/InboxPage/SET_INITIAL_VALUES';
 
-export const FETCH_ORDERS_OR_SALES_REQUEST = 'app/InboxPage/FETCH_ORDERS_OR_SALES_REQUEST';
-export const FETCH_ORDERS_OR_SALES_SUCCESS = 'app/InboxPage/FETCH_ORDERS_OR_SALES_SUCCESS';
-export const FETCH_ORDERS_OR_SALES_ERROR = 'app/InboxPage/FETCH_ORDERS_OR_SALES_ERROR';
+export const FETCH_TRANSACTIONS_REQUEST = 'app/InboxPage/FETCH_TRANSACTIONS_REQUEST';
+export const FETCH_TRANSACTIONS_SUCCESS = 'app/InboxPage/FETCH_TRANSACTIONS_SUCCESS';
+export const FETCH_TRANSACTIONS_ERROR = 'app/InboxPage/FETCH_TRANSACTIONS_ERROR';
 
 export const FETCH_MESSAGES_REQUEST = 'app/InboxPage/FETCH_MESSAGES_REQUEST';
 export const FETCH_MESSAGES_SUCCESS = 'app/InboxPage/FETCH_MESSAGES_SUCCESS';
@@ -61,8 +61,8 @@ const entityRefs = entities =>
   }));
 
 const initialState = {
-  fetchInProgress: false,
-  fetchOrdersOrSalesError: null,
+  fetchTransactionsInProgress: false,
+  fetchTransactionsError: null,
   pagination: null,
   transactionRefs: [],
   fetchMessagesInProgress: false,
@@ -89,20 +89,19 @@ const mergeEntityArrays = (a, b) => {
 export default function checkoutPageReducer(state = initialState, action = {}) {
   const { type, payload } = action;
   switch (type) {
-    case FETCH_ORDERS_OR_SALES_REQUEST:
-      return { ...state, fetchInProgress: true, fetchOrdersOrSalesError: null };
-    case FETCH_ORDERS_OR_SALES_SUCCESS: {
+    case FETCH_TRANSACTIONS_REQUEST:
+      return { ...state, fetchTransactionsInProgress: true, fetchTransactionsError: null };
+    case FETCH_TRANSACTIONS_SUCCESS: {
       const transactions = sortedTransactions(payload.data.data);
       return {
         ...state,
-        fetchInProgress: false,
+        fetchTransactionsInProgress: false,
         transactionRefs: entityRefs(transactions),
         pagination: payload.data.meta,
       };
     }
-    case FETCH_ORDERS_OR_SALES_ERROR:
-      console.error(payload); // eslint-disable-line
-      return { ...state, fetchInProgress: false, fetchOrdersOrSalesError: payload };
+    case FETCH_TRANSACTIONS_ERROR:
+      return { ...state, fetchTransactionsInProgress: false, fetchTransactionsError: payload };
 
     case SET_INITIAL_VALUES:
       return { ...initialState, ...payload };
@@ -193,13 +192,13 @@ export const setInitialValues = initialValues => ({
   payload: pick(initialValues, Object.keys(initialState)),
 });
 
-const fetchOrdersOrSalesRequest = () => ({ type: FETCH_ORDERS_OR_SALES_REQUEST });
-const fetchOrdersOrSalesSuccess = response => ({
-  type: FETCH_ORDERS_OR_SALES_SUCCESS,
+const fetchTransactionsRequest = () => ({ type: FETCH_TRANSACTIONS_REQUEST });
+const fetchTransactionsSuccess = response => ({
+  type: FETCH_TRANSACTIONS_SUCCESS,
   payload: response,
 });
-const fetchOrdersOrSalesError = e => ({
-  type: FETCH_ORDERS_OR_SALES_ERROR,
+const fetchTransactionsError = e => ({
+  type: FETCH_TRANSACTIONS_ERROR,
   error: true,
   payload: e,
 });
@@ -375,7 +374,7 @@ export const loadData = (params, search) => (dispatch, getState, sdk) => {
   const initialValues = txRef ? {} : pickBy(state, isNonEmpty);
   dispatch(setInitialValues(initialValues));
 
-  dispatch(fetchOrdersOrSalesRequest());
+  dispatch(fetchTransactionsRequest());
 
   const { page = 1 } = parse(search);
 
@@ -399,7 +398,7 @@ export const loadData = (params, search) => (dispatch, getState, sdk) => {
     .query(apiQueryParams)
     .then(response => {
       dispatch(addMarketplaceEntities(response));
-      dispatch(fetchOrdersOrSalesSuccess(response));
+      dispatch(fetchTransactionsSuccess(response));
       return response;
     })
     .then(response => {
@@ -408,7 +407,7 @@ export const loadData = (params, search) => (dispatch, getState, sdk) => {
       });
     })
     .catch(e => {
-      dispatch(fetchOrdersOrSalesError(storableError(e)));
+      dispatch(fetchTransactionsError(storableError(e)));
       throw e;
     });
 };

@@ -33,4 +33,5 @@
  [{:name :notification/money-paid-after-request,
    :on :transition/confirm-payment,
    :to :actor.role/provider,
-   :template :money-paid}]}
+   :template :money-paid},
+   ]}

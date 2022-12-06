@@ -195,6 +195,8 @@ export { default as ListingAvailabilityPanel } from './ListingAvailabilityPanel/
 export { default as ListingBioPanel } from './ListingBioPanel/ListingBioPanel';
 export { default as ListingServicesPanel } from './ListingServicesPanel/ListingServicesPanel';
 export { default as ListingRecommendationsPanel } from './ListingRecommendationsPanel/ListingRecommendationsPanel';
+export { default as MessagesInboxSideList } from './InboxSideLists/MessagesInboxSideList';
+export { default as NotificationsInboxSideList } from './InboxSideLists/NotificationsInboxSideList';
 export { default as MessagePanel } from './MessagePanel/MessagePanel';
 export { default as SectionHero } from './SectionHero/SectionHero';
 export { default as SectionHowItWorks } from './SectionHowItWorks/SectionHowItWorks';

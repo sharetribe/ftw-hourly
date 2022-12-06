@@ -183,7 +183,7 @@ export const ActivityFeedComponent = props => {
   const transitionListItem = transition => {
     if (isRelevantPastTransition(transition.transition)) {
       return (
-        <li key={transition.transition} className={css.transitionItem}>
+        <li key={transition.createdAt} className={css.transitionItem}>
           {transitionComponent(transition)}
         </li>
       );

@@ -34,6 +34,8 @@ import {
   IconSpinner,
   MessagePanel,
   InboxItem,
+  MessagesInboxSideList,
+  NotificationsInboxSideList,
 } from '../../components';
 import { TopbarContainer, NotFoundPage } from '..';
 import config from '../../config';
@@ -47,8 +49,8 @@ export const InboxPageComponent = props => {
     unitType,
     currentUser,
     currentUserListing,
-    fetchInProgress,
-    fetchOrdersOrSalesError,
+    fetchTransactionsInProgress,
+    fetchTransactionsError,
     intl,
     pagination,
     params,
@@ -90,37 +92,11 @@ export const InboxPageComponent = props => {
   const currentTransactions = useMemo(() => {
     return transactions;
   }, [transactionIds]);
-  const currentTransaction = getCurrentTransaction(currentTransactions, history.location.search);
 
   // Show payment details modal if user doesn't have them
   // useEffect(() => {
   //   onChangeMissingInfoModal(PAYMENT_DETAILS);
   // }, []);
-
-  useEffect(() => {
-    if (currentTxId === '' || !currentTxId) {
-      history.replace({
-        pathname: history.location.pathname,
-        search: 'id='.concat(
-          (currentTransactions &&
-            currentTransactions.length > 0 &&
-            currentTransactions[0].id.uuid) ||
-            ''
-        ),
-      });
-    }
-
-    if (currentTransaction) {
-      onSetCurrentTransaction(currentTransaction);
-      const { customer, provider } = currentTransaction;
-      const otherUser =
-        ensuredCurrentUser.id.uuid === customer && customer.id.uuid ? customer : provider;
-
-      if (!!otherUser) {
-        onFetchOtherUserListing(otherUser.id.uuid);
-      }
-    }
-  }, [currentTxId, currentTransactions, history]);
 
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
 
@@ -130,26 +106,6 @@ export const InboxPageComponent = props => {
 
   const onOpenPaymentModal = () => {
     setIsPaymentModalOpen(true);
-  };
-
-  const handleUpdateViewedMessages = txMessages => {
-    let viewedMessages = ensuredCurrentUser.attributes.profile.metadata.viewedMessages;
-    const txMessageIds = txMessages.map(item => item.id.uuid);
-
-    if (!viewedMessages) {
-      viewedMessages = [{ txId: currentTxId, messageIds: txMessageIds }];
-    } else if (viewedMessages.find(item => item && item.txId === currentTxId)) {
-      viewedMessages.forEach((item, i) => {
-        if (item.txId === currentTxId)
-          viewedMessages[i] = { txId: currentTxId, messageIds: txMessageIds };
-      });
-    } else {
-      viewedMessages.push({ txId: currentTxId, messageIds: txMessageIds });
-    }
-
-    const currentUserId = ensuredCurrentUser.id && ensuredCurrentUser.id.uuid;
-
-    onUpdateViewedMessages(currentUserId, viewedMessages);
   };
 
   const validTab = tab === 'messages' || tab === 'notifications';
@@ -163,24 +119,11 @@ export const InboxPageComponent = props => {
   const notificationsTitle = intl.formatMessage({ id: 'InboxPage.notificationsTitle' });
   const title = isMessages ? messagesTitle : notificationsTitle;
 
-  const error = fetchOrdersOrSalesError ? (
+  const error = fetchTransactionsError ? (
     <p className={css.error}>
       <FormattedMessage id="InboxPage.fetchFailed" />
     </p>
   ) : null;
-
-  // Need to make this dynamic when notifications are added
-  const noResults = isMessages ? (
-    !fetchInProgress && currentTransactions.length === 0 && !fetchOrdersOrSalesError ? (
-      <li key="noResults" className={css.noResults}>
-        <FormattedMessage id="InboxPage.noMessagesFound" />
-      </li>
-    ) : null
-  ) : (
-    <li key="noResults" className={css.noResults}>
-      <FormattedMessage id="InboxPage.noNotificationsFound" />
-    </li>
-  );
 
   const hasTransactions =
     (ensuredCurrentUser.id &&
@@ -216,7 +159,6 @@ export const InboxPageComponent = props => {
         name: 'InboxPage',
         params: {
           tab: 'messages',
-          // Need to find permanent solution
           search: '?id=',
         },
       },
@@ -233,12 +175,12 @@ export const InboxPageComponent = props => {
         name: 'InboxPage',
         params: {
           tab: 'notifications',
-          // Need to find permanent solution
           search: '?id=',
         },
       },
     },
   ];
+
   const nav = (
     <LinkTabNavHorizontal
       rootClassName={css.tabs}
@@ -248,6 +190,7 @@ export const InboxPageComponent = props => {
     />
   );
 
+  const currentTransaction = getCurrentTransaction(currentTransactions, history.location.search);
   const initialMessageFailed = !!(
     initialMessageFailedToTransaction &&
     currentTransaction.id &&
@@ -255,23 +198,6 @@ export const InboxPageComponent = props => {
   );
 
   const currentMessages = messages.get(currentTxId) || [];
-  const viewedMessages =
-    (ensuredCurrentUser.attributes.profile.metadata &&
-      ensuredCurrentUser.attributes.profile.metadata.viewedMessages) ||
-    [];
-  const currentViewedMessages = viewedMessages.find(item => item && item.txId === currentTxId);
-
-  if (
-    currentTransaction &&
-    currentMessages.length >= 1 &&
-    currentMessages.length !=
-      (currentViewedMessages &&
-        currentViewedMessages.messageIds &&
-        currentViewedMessages.messageIds.length) &&
-    !updateViewedMessagesInProgress
-  ) {
-    handleUpdateViewedMessages(currentMessages);
-  }
 
   return (
     <Page title={title} scrollingDisabled={scrollingDisabled}>
@@ -290,32 +216,27 @@ export const InboxPageComponent = props => {
           </h1>
           {currentUserListing ? nav : <div className={css.navPlaceholder} />}
           {error}
-          <ul className={css.itemList}>
-            {isMessages ? (
-              !fetchInProgress || currentTransactions.length > 0 ? (
-                currentTransactions.map(tx => {
-                  const txMessages = messages.get(tx.id.uuid);
-                  return (
-                    <InboxItem
-                      key={tx.id.uuid}
-                      unitType={unitType}
-                      tx={tx}
-                      intl={intl}
-                      params={params}
-                      currentUser={ensuredCurrentUser}
-                      selected={currentTxId === tx.id.uuid}
-                      txMessages={txMessages}
-                    />
-                  );
-                })
-              ) : (
-                <li className={css.listItemsLoading}>
-                  <IconSpinner />
-                </li>
-              )
-            ) : null}
-            {noResults}
-          </ul>
+          {isMessages ? (
+            <MessagesInboxSideList
+              fetchTransactionsInProgress={fetchTransactionsInProgress}
+              currentTransactions={currentTransactions}
+              currentTransaction={currentTransaction}
+              messages={messages}
+              intl={intl}
+              params={params}
+              ensuredCurrentUser={ensuredCurrentUser}
+              currentTxId={currentTxId}
+              fetchTransactionsError={fetchTransactionsError}
+              history={history}
+              onSetCurrentTransaction={onSetCurrentTransaction}
+              onFetchOtherUserListing={onFetchOtherUserListing}
+              onUpdateViewedMessages={onUpdateViewedMessages}
+              updateViewedMessagesInProgress={updateViewedMessagesInProgress}
+              currentMessages={currentMessages}
+            />
+          ) : (
+            <NotificationsInboxSideList />
+          )}
           {pagingLinks}
         </LayoutWrapperSideNav>
         <LayoutWrapperMain className={css.wrapper}>
@@ -338,7 +259,6 @@ export const InboxPageComponent = props => {
               onManageDisableScrolling={onManageDisableScrolling}
               onFetchTransaction={onFetchTransaction}
               onOpenPaymentModal={onOpenPaymentModal}
-              updateViewedMessages={handleUpdateViewedMessages}
             />
           )}
           {isPaymentModalOpen && (
@@ -362,7 +282,7 @@ InboxPageComponent.defaultProps = {
   currentUser: null,
   currentUserListing: null,
   currentUserHasOrders: null,
-  fetchOrdersOrSalesError: null,
+  fetchTransactionsError: null,
   pagination: null,
   providerNotificationCount: 0,
   sendVerificationEmailError: null,
@@ -379,8 +299,8 @@ InboxPageComponent.propTypes = {
   unitType: propTypes.bookingUnitType,
   currentUser: propTypes.currentUser,
   currentUserListing: propTypes.ownListing,
-  fetchInProgress: bool.isRequired,
-  fetchOrdersOrSalesError: propTypes.error,
+  fetchTransactionsInProgress: bool.isRequired,
+  fetchTransactionsError: propTypes.error,
   pagination: propTypes.pagination,
   providerNotificationCount: number,
   scrollingDisabled: bool.isRequired,
@@ -397,8 +317,8 @@ InboxPageComponent.propTypes = {
 
 const mapStateToProps = state => {
   const {
-    fetchInProgress,
-    fetchOrdersOrSalesError,
+    fetchTransactionsInProgress,
+    fetchTransactionsError,
     pagination,
     fetchMessagesInProgress,
     totalMessagePages,
@@ -422,8 +342,8 @@ const mapStateToProps = state => {
   return {
     currentUser,
     currentUserListing,
-    fetchInProgress,
-    fetchOrdersOrSalesError,
+    fetchTransactionsInProgress,
+    fetchTransactionsError,
     pagination,
     providerNotificationCount,
     scrollingDisabled: isScrollingDisabled(state),
