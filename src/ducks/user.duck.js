@@ -90,8 +90,9 @@ export default function reducer(state = initialState, action = {}) {
         currentUserShowError: null,
         currentUserHasListings: false,
         currentUserHasListingsError: null,
-        currentUserNotificationCount: 0,
-        currentUserNotificationCountError: null,
+        currentUserNotifications: null,
+        fetchCurrentUserNotificationsError: null,
+        fetchCurrentUserNotificationsInProgress: false,
         currentUserListing: null,
         currentUserListingFetched: false,
       };
@@ -119,7 +120,7 @@ export default function reducer(state = initialState, action = {}) {
       const transactions = payload.transactions;
       let transitions = [];
       transactions.forEach(transaction => {
-        transaction.transitions.forEach(transition => {
+        transaction.attributes.transitions.forEach(transition => {
           transitions.push(transition);
         });
       });
@@ -174,7 +175,7 @@ export const hasCurrentUserErrors = state => {
   return (
     user.currentUserShowError ||
     user.currentUserHasListingsError ||
-    user.currentUserNotificationCountError ||
+    user.fetchCurrentUserNotificationsError ||
     user.currentUserHasOrdersError
   );
 };

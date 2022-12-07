@@ -143,7 +143,7 @@ class TopbarComponent extends Component {
       currentUserListingFetched,
       currentUserHasOrders,
       currentPage,
-      notificationCount,
+      notifications,
       viewport,
       intl,
       location,
@@ -161,7 +161,8 @@ class TopbarComponent extends Component {
       latlngBounds: ['bounds'],
     });
 
-    const notificationDot = notificationCount > 0 ? <div className={css.notificationDot} /> : null;
+    const notificationDot =
+      notifications.length > 0 ? <div className={css.notificationDot} /> : null;
 
     const isMobileLayout = viewport.width < MAX_MOBILE_SCREEN_WIDTH;
     const isMobileMenuOpen = isMobileLayout && mobilemenu === 'open';
@@ -175,7 +176,7 @@ class TopbarComponent extends Component {
         currentUserListingFetched={currentUserListingFetched}
         currentUser={currentUser}
         onLogout={this.handleLogout}
-        notificationCount={notificationCount}
+        notifications={notifications}
         currentPage={currentPage}
       />
     );
@@ -239,7 +240,7 @@ class TopbarComponent extends Component {
             initialSearchFormValues={initialSearchFormValues}
             intl={intl}
             isAuthenticated={isAuthenticated}
-            notificationCount={notificationCount}
+            notifications={notifications}
             onLogout={this.handleLogout}
             onSearchSubmit={this.handleSubmit}
           />
@@ -299,7 +300,7 @@ TopbarComponent.defaultProps = {
   desktopClassName: null,
   mobileRootClassName: null,
   mobileClassName: null,
-  notificationCount: 0,
+  notifications: [],
   currentUser: null,
   currentUserHasOrders: null,
   currentPage: null,
@@ -320,7 +321,7 @@ TopbarComponent.propTypes = {
   currentUserHasListings: bool.isRequired,
   currentUserHasOrders: bool,
   currentPage: string,
-  notificationCount: number,
+  notifications: array,
   onLogout: func.isRequired,
   onManageDisableScrolling: func.isRequired,
   onResendVerificationEmail: func.isRequired,

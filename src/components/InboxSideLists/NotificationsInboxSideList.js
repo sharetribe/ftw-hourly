@@ -2,6 +2,8 @@ import React from 'react';
 import { FormattedMessage } from '../../util/reactIntl';
 import { IconSpinner, InboxItem } from '../';
 
+import css from './InboxSideLists.module.css';
+
 const NotificationsInboxSideList = props => {
   const { currentNotifications, currentNotification } = props;
 

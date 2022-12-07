@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { arrayOf, bool, number, shape, string, func } from 'prop-types';
+import { arrayOf, bool, number, shape, string, func, array } from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { FormattedMessage, injectIntl, intlShape } from '../../util/reactIntl';
@@ -54,7 +54,7 @@ export const InboxPageComponent = props => {
     intl,
     pagination,
     params,
-    providerNotificationCount,
+    notifications,
     scrollingDisabled,
     transactions,
     onChangeMissingInfoModal,
@@ -144,8 +144,11 @@ export const InboxPageComponent = props => {
       />
     ) : null;
 
-  const providerNotificationBadge =
-    providerNotificationCount > 0 ? <NotificationBadge count={providerNotificationCount} /> : null;
+  //Need to change to only new notifications
+  const notificationBadge =
+    notifications && notifications.length > 0 ? (
+      <NotificationBadge count={notifications.length} />
+    ) : null;
 
   const tabs = [
     {
@@ -167,7 +170,7 @@ export const InboxPageComponent = props => {
       text: (
         <span>
           <FormattedMessage id="InboxPage.notificationsTabTitle" />
-          {providerNotificationBadge}
+          {notificationBadge}
         </span>
       ),
       selected: !isMessages,
@@ -235,7 +238,7 @@ export const InboxPageComponent = props => {
               currentMessages={currentMessages}
             />
           ) : (
-            <NotificationsInboxSideList />
+            <NotificationsInboxSideList notifications={notifications} />
           )}
           {pagingLinks}
         </LayoutWrapperSideNav>
@@ -284,7 +287,7 @@ InboxPageComponent.defaultProps = {
   currentUserHasOrders: null,
   fetchTransactionsError: null,
   pagination: null,
-  providerNotificationCount: 0,
+  notifications: [],
   sendVerificationEmailError: null,
   updateViewedMessagesSuccess: false,
   updateViewedMessagesInProgress: false,
@@ -302,7 +305,7 @@ InboxPageComponent.propTypes = {
   fetchTransactionsInProgress: bool.isRequired,
   fetchTransactionsError: propTypes.error,
   pagination: propTypes.pagination,
-  providerNotificationCount: number,
+  notifications: array,
   scrollingDisabled: bool.isRequired,
   transactions: arrayOf(propTypes.transaction).isRequired,
 
@@ -334,18 +337,14 @@ const mapStateToProps = state => {
     updateViewedMessagesInProgress,
     updateViewedMessagesError,
   } = state.InboxPage;
-  const {
-    currentUser,
-    currentUserListing,
-    currentUserNotificationCount: providerNotificationCount,
-  } = state.user;
+  const { currentUser, currentUserListing, currentUserNotifications: notifications } = state.user;
   return {
     currentUser,
     currentUserListing,
     fetchTransactionsInProgress,
     fetchTransactionsError,
     pagination,
-    providerNotificationCount,
+    notifications,
     scrollingDisabled: isScrollingDisabled(state),
     transactions: getMarketplaceEntities(state, transactionRefs),
     fetchMessagesInProgress,

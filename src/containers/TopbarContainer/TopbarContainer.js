@@ -25,7 +25,7 @@ export const TopbarContainerComponent = props => {
     authScopes,
     hasGenericError,
     location,
-    notificationCount,
+    notifications,
     onLogout,
     onManageDisableScrolling,
     sendVerificationEmailInProgress,
@@ -50,7 +50,7 @@ export const TopbarContainerComponent = props => {
       isAuthenticated={isAuthenticated}
       authScopes={authScopes}
       location={location}
-      notificationCount={notificationCount}
+      notification={notifications}
       onLogout={onLogout}
       onManageDisableScrolling={onManageDisableScrolling}
       onResendVerificationEmail={onResendVerificationEmail}
@@ -117,7 +117,7 @@ const mapStateToProps = state => {
     currentUserListing,
     currentUserListingFetched,
     currentUserHasOrders,
-    currentUserNotificationCount: notificationCount,
+    currentUserNotifications: notifications,
     sendVerificationEmailInProgress,
     sendVerificationEmailError,
   } = state.user;
@@ -129,7 +129,7 @@ const mapStateToProps = state => {
     currentUserListing,
     currentUserListingFetched,
     currentUserHasOrders,
-    notificationCount,
+    notifications,
     isAuthenticated,
     authScopes,
     sendVerificationEmailInProgress,

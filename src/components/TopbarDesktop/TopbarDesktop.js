@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { bool, func, object, number, string } from 'prop-types';
+import { bool, func, object, number, string, array } from 'prop-types';
 import { FormattedMessage, intlShape } from '../../util/reactIntl';
 import classNames from 'classnames';
 import { ACCOUNT_SETTINGS_PAGES } from '../../routeConfiguration';
@@ -30,7 +30,7 @@ const TopbarDesktop = props => {
     currentUserHasListings,
     currentUserListing,
     currentUserListingFetched,
-    notificationCount,
+    notifications,
     intl,
     isAuthenticated,
     onLogout,
@@ -60,7 +60,8 @@ const TopbarDesktop = props => {
     />
   );
 
-  const notificationDot = notificationCount > 0 ? <div className={css.notificationDot} /> : null;
+  const notificationDot =
+    notifications && notifications.length > 0 ? <div className={css.notificationDot} /> : null;
 
   const inboxLink = authenticatedOnClientSide ? (
     <NamedLink
@@ -185,7 +186,7 @@ TopbarDesktop.defaultProps = {
   className: null,
   currentUser: null,
   currentPage: null,
-  notificationCount: 0,
+  notifications: [],
   initialSearchFormValues: {},
   currentUserListing: null,
   currentUserListingFetched: false,
@@ -201,7 +202,7 @@ TopbarDesktop.propTypes = {
   currentPage: string,
   isAuthenticated: bool.isRequired,
   onLogout: func.isRequired,
-  notificationCount: number,
+  notifications: array,
   onSearchSubmit: func.isRequired,
   initialSearchFormValues: object,
   intl: intlShape.isRequired,

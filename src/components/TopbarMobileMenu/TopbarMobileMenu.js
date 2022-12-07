@@ -3,7 +3,7 @@
  * shows login actions for those who are not authenticated.
  */
 import React from 'react';
-import { bool, func, number, string } from 'prop-types';
+import { bool, func, number, string, array } from 'prop-types';
 import { FormattedMessage } from '../../util/reactIntl';
 import classNames from 'classnames';
 import { ACCOUNT_SETTINGS_PAGES } from '../../routeConfiguration';
@@ -27,7 +27,7 @@ const TopbarMobileMenu = props => {
     currentUserListing,
     currentUserListingFetched,
     currentUser,
-    notificationCount,
+    notifications,
     onLogout,
   } = props;
 
@@ -71,8 +71,8 @@ const TopbarMobileMenu = props => {
   }
 
   const notificationCountBadge =
-    notificationCount > 0 ? (
-      <NotificationBadge className={css.notificationBadge} count={notificationCount} />
+    notifications && notifications.length > 0 ? (
+      <NotificationBadge className={css.notificationBadge} count={notifications} />
     ) : null;
 
   const displayName = user.attributes.profile.firstName;
@@ -129,7 +129,7 @@ const TopbarMobileMenu = props => {
 
 TopbarMobileMenu.defaultProps = {
   currentUser: null,
-  notificationCount: 0,
+  notifications: [],
   currentPage: null,
   currentUserListing: null,
   currentUserListingFetched: false,
@@ -142,7 +142,7 @@ TopbarMobileMenu.propTypes = {
   currentUserListingFetched: bool,
   currentUser: propTypes.currentUser,
   currentPage: string,
-  notificationCount: number,
+  notifications: array,
   onLogout: func.isRequired,
 };
 
