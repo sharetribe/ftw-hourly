@@ -55,7 +55,7 @@ export const InboxPageComponent = props => {
     intl,
     pagination,
     params,
-    notifications,
+    notificationCount,
     scrollingDisabled,
     transactions,
     onChangeMissingInfoModal,
@@ -153,9 +153,7 @@ export const InboxPageComponent = props => {
 
   //Need to change to only new notifications
   const notificationBadge =
-    notifications && notifications.length > 0 ? (
-      <NotificationBadge count={notifications.length} />
-    ) : null;
+    notificationCount > 0 ? <NotificationBadge count={notificationCount} /> : null;
 
   const tabs = [
     {

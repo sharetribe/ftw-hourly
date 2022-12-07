@@ -21,7 +21,7 @@ import {
 } from '../../util/data';
 import { findNextBoundary, nextMonthFn, monthIdStringInTimeZone } from '../../util/dates';
 import { addMarketplaceEntities } from '../../ducks/marketplaceData.duck';
-import { fetchCurrentUserNotifications } from '../../ducks/user.duck';
+// import { fetchCurrentUserNotifications } from '../../ducks/user.duck';
 
 const { UUID } = sdkTypes;
 
@@ -448,7 +448,7 @@ export const acceptSale = id => (dispatch, getState, sdk) => {
     .then(response => {
       dispatch(addMarketplaceEntities(response));
       dispatch(acceptSaleSuccess());
-      dispatch(fetchCurrentUserNotifications());
+      // dispatch(fetchCurrentUserNotifications());
       return response;
     })
     .catch(e => {
@@ -472,7 +472,7 @@ export const declineSale = id => (dispatch, getState, sdk) => {
     .then(response => {
       dispatch(addMarketplaceEntities(response));
       dispatch(declineSaleSuccess());
-      dispatch(fetchCurrentUserNotifications());
+      // dispatch(fetchCurrentUserNotifications());
       return response;
     })
     .catch(e => {

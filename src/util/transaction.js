@@ -1,4 +1,6 @@
 import { ensureTransaction } from './data';
+import { CAREGIVER } from './constants';
+import getUuid from 'uuid-by-string';
 
 /**
  * Transitions
@@ -304,6 +306,49 @@ export const getUserTxRole = (currentUserId, transaction) => {
     throw new Error(`Parameters for "userIsCustomer" function were wrong.
       currentUserId: ${currentUserId}, transaction: ${transaction}`);
   }
+};
+
+export const filterNotificationsByUserType = (notifications, currentUser) => {
+  const userType = currentUser && currentUser.attributes.profile.metadata.userType;
+
+  if (userType === CAREGIVER) {
+    return notifications.filter(
+      notification => notification && notification.transition === TRANSITION_CONFIRM_PAYMENT
+    );
+  } else {
+    return notifications.filter(
+      notification =>
+        notification && notification.transition === TRANSITION_REQUEST_PAYMENT_AFTER_ENQUIRY
+    );
+  }
+};
+
+export const getNotifications = (currentTransactions, currentUser) => {
+  const notifications =
+    currentTransactions.map(transaction => {
+      transaction.attributes.transitions.map(transition => {
+        transition.transaction = transaction;
+        if (NOTIFICATION_TRANSITIONS.includes(transition.transition)) {
+          return transition;
+        }
+      });
+    }) || [];
+
+  const filteredNotifications = filterNotificationsByUserType(notifications, currentUser);
+
+  return filteredNotifications;
+};
+
+export const filterViewedNotifications = (notifications, currentUser) => {
+  const viewedNotifications =
+    currentUser && currentUser.attributes.profile.metadata.viewedNotifications;
+
+  const notViewedNotifications = notifications.filter(
+    notification =>
+      !viewedNotifications.includes(getUuidByString(notification.createdAt.toUTCString()))
+  );
+
+  return notViewedNotifications;
 };
 
 export const txRoleIsProvider = userRole => userRole === TX_TRANSITION_ACTOR_PROVIDER;

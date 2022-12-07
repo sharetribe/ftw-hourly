@@ -30,7 +30,7 @@ const TopbarDesktop = props => {
     currentUserHasListings,
     currentUserListing,
     currentUserListingFetched,
-    notifications,
+    notificationCount,
     intl,
     isAuthenticated,
     onLogout,
@@ -60,8 +60,7 @@ const TopbarDesktop = props => {
     />
   );
 
-  const notificationDot =
-    notifications && notifications.length > 0 ? <div className={css.notificationDot} /> : null;
+  const notificationDot = notificationCount > 0 ? <div className={css.notificationDot} /> : null;
 
   const inboxLink = authenticatedOnClientSide ? (
     <NamedLink
@@ -186,7 +185,7 @@ TopbarDesktop.defaultProps = {
   className: null,
   currentUser: null,
   currentPage: null,
-  notifications: [],
+  notificationCount: 0,
   initialSearchFormValues: {},
   currentUserListing: null,
   currentUserListingFetched: false,
@@ -202,7 +201,7 @@ TopbarDesktop.propTypes = {
   currentPage: string,
   isAuthenticated: bool.isRequired,
   onLogout: func.isRequired,
-  notifications: array,
+  notificationCount: number,
   onSearchSubmit: func.isRequired,
   initialSearchFormValues: object,
   intl: intlShape.isRequired,

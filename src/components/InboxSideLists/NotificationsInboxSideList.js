@@ -3,38 +3,16 @@ import { FormattedMessage } from '../../util/reactIntl';
 import { IconSpinner, InboxItem } from '../';
 import queryString from 'query-string';
 import getUuid from 'uuid-by-string';
-import {
-  NOTIFICATION_TRANSITIONS,
-  TRANSITION_CONFIRM_PAYMENT,
-  TRANSITION_REQUEST_PAYMENT_AFTER_ENQUIRY,
-  getUserTxRole,
-} from '../../util/transaction';
+import { filterNotificationsByUserType, getNotifications } from '../../util/transaction';
 import { CAREGIVER } from '../../util/constants';
 
 import css from './InboxSideLists.module.css';
 
+//filter notifications by time created
 const sortNotificationsByTime = notifications => {
-  return (
-    notifications &&
-    notifications.sort((a, b) => {
-      return new Date(b.createdAt) - new Date(a.createdAt);
-    })
-  );
-};
-
-// Function to sort notifications by user type
-const filterNotificationsByUserType = (notifications, currentUser) => {
-  const userType = currentUser && currentUser.attributes.profile.metadata.userType;
-
-  if (userType === CAREGIVER) {
-    return notifications.filter(
-      notification => notification.transition === TRANSITION_CONFIRM_PAYMENT
-    );
-  } else {
-    return notifications.filter(
-      notification => notification.transition === TRANSITION_REQUEST_PAYMENT_AFTER_ENQUIRY
-    );
-  }
+  return notifications.sort((a, b) => {
+    return new Date(b.createdAt) - new Date(a.createdAt);
+  });
 };
 
 const NotificationsInboxSideList = props => {
@@ -53,16 +31,7 @@ const NotificationsInboxSideList = props => {
     updateViewedNotificationsError,
   } = props;
 
-  let notifications = [];
-  currentTransactions.forEach(transaction => {
-    transaction.attributes.transitions.forEach(transition => {
-      transition.transaction = transaction;
-      const ownRole = getUserTxRole(currentUser && currentUser.id, transaction);
-      if (NOTIFICATION_TRANSITIONS.includes(transition.transition) && ownRole === 'provider') {
-        notifications.push(transition);
-      }
-    });
-  });
+  const notifications = getNotifications(currentTransactions);
 
   const handleUpdateViewedNotifications = notificationId => {
     let viewedNotifications =
@@ -104,8 +73,7 @@ const NotificationsInboxSideList = props => {
       </li>
     ) : null;
 
-  const filteredNotifications = filterNotificationsByUserType(notifications, currentUser);
-  const sortedNotifications = sortNotificationsByTime(filteredNotifications);
+  const sortedNotifications = sortNotificationsByTime(notifications);
 
   return (
     <ul className={css.itemList}>

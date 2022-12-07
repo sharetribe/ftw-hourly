@@ -27,7 +27,7 @@ const TopbarMobileMenu = props => {
     currentUserListing,
     currentUserListingFetched,
     currentUser,
-    notifications,
+    notificationCount,
     onLogout,
   } = props;
 
@@ -71,8 +71,8 @@ const TopbarMobileMenu = props => {
   }
 
   const notificationCountBadge =
-    notifications && notifications.length > 0 ? (
-      <NotificationBadge className={css.notificationBadge} count={notifications} />
+    notificationCount > 0 ? (
+      <NotificationBadge className={css.notificationBadge} count={notificationCount} />
     ) : null;
 
   const displayName = user.attributes.profile.firstName;
@@ -129,7 +129,7 @@ const TopbarMobileMenu = props => {
 
 TopbarMobileMenu.defaultProps = {
   currentUser: null,
-  notifications: [],
+  notificationCount: 0,
   currentPage: null,
   currentUserListing: null,
   currentUserListingFetched: false,
@@ -142,7 +142,7 @@ TopbarMobileMenu.propTypes = {
   currentUserListingFetched: bool,
   currentUser: propTypes.currentUser,
   currentPage: string,
-  notifications: array,
+  notificationCount: number,
   onLogout: func.isRequired,
 };
 

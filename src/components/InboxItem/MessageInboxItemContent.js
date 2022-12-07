@@ -45,8 +45,9 @@ const MessageInboxItemContent = props => {
     viewedMessages && viewedMessages.find(item => item && item.txId === tx.id.uuid);
 
   const rowNotificationDot =
-    (txViewedMessages && txViewedMessages.messageIds.length) !==
-    (txMessages && txMessages.length) ? (
+    !!txMessages &&
+    !!txViewedMessages &&
+    txViewedMessages.messageIds.length !== txMessages.length ? (
       <div className={css.notificationDot} />
     ) : null;
 
