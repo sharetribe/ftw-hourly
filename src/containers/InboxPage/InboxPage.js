@@ -17,6 +17,7 @@ import {
   clearMessages,
   fetchOtherUserListing,
   updateViewedMessages,
+  updateViewedNotifications,
 } from './InboxPage.duck';
 import { fetchTransaction } from '../../ducks/transactions.duck';
 import { PAYMENT_DETAILS } from '../../components/ModalMissingInformation/ModalMissingInformation';
@@ -80,6 +81,10 @@ export const InboxPageComponent = props => {
     updateViewedMessagesInProgress,
     fetchCurrentUserNotificationsInProgress,
     fetchCurrentUserNotificationsError,
+    onUpdateViewedNotifications,
+    updateViewedNotificationsSuccess,
+    updateViewedNotificationsInProgress,
+    updateViewedNotificationsError,
   } = props;
   const { tab } = params;
   const ensuredCurrentUser = ensureCurrentUser(currentUser);
@@ -248,6 +253,10 @@ export const InboxPageComponent = props => {
               currentUser={currentUser}
               history={history}
               currentTransaction={currentTransaction}
+              onUpdateViewedNotifications={onUpdateViewedNotifications}
+              updateViewedNotificationsSuccess={updateViewedNotificationsSuccess}
+              updateViewedNotificationsInProgress={updateViewedNotificationsInProgress}
+              updateViewedNotificationsError={updateViewedNotificationsError}
             />
           )}
           {pagingLinks}
@@ -346,6 +355,9 @@ const mapStateToProps = state => {
     updateViewedMessagesSuccess,
     updateViewedMessagesInProgress,
     updateViewedMessagesError,
+    updateViewedNotificationsSuccess,
+    updateViewedNotificationsInProgress,
+    updateViewedNotificationsError,
   } = state.InboxPage;
   const {
     currentUser,
@@ -374,6 +386,12 @@ const mapStateToProps = state => {
     otherUserListing,
     fetchCurrentUserNotificationsInProgress,
     fetchCurrentUserNotificationsError,
+    updateViewedMessagesSuccess,
+    updateViewedMessagesInProgress,
+    updateViewedMessagesError,
+    updateViewedNotificationsSuccess,
+    updateViewedNotificationsInProgress,
+    updateViewedNotificationsError,
   };
 };
 
@@ -388,6 +406,8 @@ const mapDispatchToProps = dispatch => ({
   onFetchTransaction: txId => dispatch(fetchTransaction(txId)),
   onSetCurrentTransaction: tx => dispatch(setCurrentTransaction(tx)),
   onUpdateViewedMessages: (tx, messages) => dispatch(updateViewedMessages(tx, messages)),
+  onUpdateViewedNotifications: (userId, viewedNotifications) =>
+    dispatch(updateViewedNotifications(userId, viewedNotifications)),
 });
 
 const InboxPage = compose(

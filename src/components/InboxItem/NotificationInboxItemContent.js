@@ -3,6 +3,7 @@ import { Avatar, UserDisplayName } from '../';
 import { formatDate } from '../../util/dates';
 import { ensureCurrentUser, cutTextToPreview } from '../../util/data';
 import { FormattedMessage } from '../../util/reactIntl';
+import getUuid from 'uuid-by-string';
 import {
   getUserTxRole,
   TRANSITION_CONFIRM_PAYMENT,
@@ -59,11 +60,12 @@ const NotificationInboxItemContent = props => {
   const notificationViewed =
     currentUser &&
     currentUser.attributes.profile.metadata &&
-    currentUser.attributes.profile.metadata.viewedNotifications;
+    currentUser.attributes.profile.metadata.viewedNotifications &&
+    currentUser.attributes.profile.metadata.viewedNotifications.includes(
+      getUuid(notification.createdAt.toUTCString())
+    );
 
   const rowNotificationDot = !notificationViewed ? <div className={css.notificationDot} /> : null;
-
-  // Create loop from one to 100
 
   return (
     <div className={css.mainContent}>

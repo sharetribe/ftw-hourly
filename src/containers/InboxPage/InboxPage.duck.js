@@ -52,6 +52,13 @@ export const UPDATE_VIEWED_MESSAGES_ERROR = 'app/InboxPage/UPDATE_VIEWED_MESSAGE
 
 export const CLEAR_MESSAGES_SUCCESS = 'app/InboxPage/UPDATE_USER_LAST_VIEWED_TIME_SUCCESS';
 
+// Write consts for updating viewed notifications
+export const UPDATE_VIEWED_NOTIFICATIONS_REQUEST =
+  'app/InboxPage/UPDATE_VIEWED_NOTIFICATIONS_REQUEST';
+export const UPDATE_VIEWED_NOTIFICATIONS_SUCCESS =
+  'app/InboxPage/UPDATE_VIEWED_NOTIFICATIONS_SUCCESS';
+export const UPDATE_VIEWED_NOTIFICATIONS_ERROR = 'app/InboxPage/UPDATE_VIEWED_NOTIFICATIONS_ERROR';
+
 // ================ Reducer ================ //
 
 const entityRefs = entities =>
@@ -80,6 +87,9 @@ const initialState = {
   updateViewedMessagesSuccess: false,
   updateViewedMessagesInProgress: false,
   updateViewedMessagesError: null,
+  updateViewedNotificationsSuccess: false,
+  updateViewedNotificationsInProgress: false,
+  updateViewedNotificationsError: null,
 };
 
 const mergeEntityArrays = (a, b) => {
@@ -180,6 +190,26 @@ export default function checkoutPageReducer(state = initialState, action = {}) {
         updateViewedMessagesInProgress: false,
         updateViewedMessagesError: payload,
       };
+
+    case UPDATE_VIEWED_NOTIFICATIONS_REQUEST:
+      return {
+        ...state,
+        updateViewedNotificationsInProgress: true,
+        updateViewedNotificationsError: false,
+      };
+    case UPDATE_VIEWED_NOTIFICATIONS_SUCCESS:
+      return {
+        ...state,
+        updateViewedNotificationsSuccess: true,
+        updateViewedNotificationsInProgress: false,
+      };
+    case UPDATE_VIEWED_NOTIFICATIONS_ERROR:
+      return {
+        ...state,
+        updateViewedNotificationsInProgress: false,
+        updateViewedNotificationsError: payload,
+      };
+
     default:
       return state;
   }
@@ -232,6 +262,16 @@ const updateViewedMessagesSuccess = () => ({
 });
 const updateViewedMessagesError = e => ({
   type: UPDATE_VIEWED_MESSAGES_ERROR,
+  error: true,
+  payload: e,
+});
+
+const updateViewedNotificationsRequest = () => ({ type: UPDATE_VIEWED_NOTIFICATIONS_REQUEST });
+const updateViewedNotificationsSuccess = () => ({
+  type: UPDATE_VIEWED_NOTIFICATIONS_SUCCESS,
+});
+const updateViewedNotificationsError = e => ({
+  type: UPDATE_VIEWED_NOTIFICATIONS_ERROR,
   error: true,
   payload: e,
 });
@@ -347,6 +387,18 @@ export const updateViewedMessages = (userId, viewedMessages) => (dispatch, getSt
   return updateUserMetadata({ userId, metadata: { viewedMessages } })
     .then(() => dispatch(updateViewedMessagesSuccess()))
     .catch(e => dispatch(updateViewedMessagesError(e)));
+};
+
+export const updateViewedNotifications = (userId, viewedNotifications) => (
+  dispatch,
+  getState,
+  sdk
+) => {
+  dispatch(updateViewedNotificationsRequest());
+
+  return updateUserMetadata({ userId, metadata: { viewedNotifications } })
+    .then(() => dispatch(updateViewedNotificationsSuccess()))
+    .catch(e => dispatch(updateViewedNotificationsError(e)));
 };
 
 const IMAGE_VARIANTS = {

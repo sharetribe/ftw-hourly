@@ -121,23 +121,10 @@ export default function reducer(state = initialState, action = {}) {
         fetchCurrentUserNotificationsInProgress: true,
       };
     case FETCH_CURRENT_USER_NOTIFICATIONS_SUCCESS:
-      const transactions = payload.transactions;
-      let transitions = [];
-      const currentUser = state.currentUser;
-      transactions.forEach(transaction => {
-        transaction.attributes.transitions.forEach(transition => {
-          transition.transaction = transaction;
-          const ownRole = getUserTxRole(currentUser.id, transaction);
-          console.log(ownRole);
-          if (NOTIFICATION_TRANSITIONS.includes(transition.transition) && ownRole === 'provider') {
-            transitions.push(transition);
-          }
-        });
-      });
       return {
         ...state,
         fetchCurrentUserNotificationsInProgress: false,
-        currentUserNotifications: transitions,
+        currentUserNotifications: null,
       };
     case FETCH_CURRENT_USER_NOTIFICATIONS_ERROR:
       console.error(payload); // eslint-disable-line

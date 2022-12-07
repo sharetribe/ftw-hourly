@@ -27,6 +27,10 @@ const NotificationsInboxSideList = props => {
     currentUser,
     history,
     currentTransaction,
+    onUpdateViewedNotifications,
+    updateViewedNotificationsSuccess,
+    updateViewedNotificationsInProgress,
+    updateViewedNotificationsError,
   } = props;
 
   let notifications = [];
@@ -40,7 +44,37 @@ const NotificationsInboxSideList = props => {
     });
   });
 
+  const handleUpdateViewedNotifications = notificationId => {
+    let viewedNotifications =
+      currentUser &&
+      currentUser.attributes.profile.metadata &&
+      currentUser.attributes.profile.metadata.viewedNotifications;
+
+    if (!viewedNotifications) {
+      viewedNotifications = [notificationId];
+    } else {
+      viewedNotifications.push(notificationId);
+    }
+
+    const currentUserId = currentUser && currentUser.id && currentUser.id.uuid;
+
+    onUpdateViewedNotifications(currentUserId, viewedNotifications);
+  };
+
+  const viewedNotifications =
+    (currentUser &&
+      currentUser.attributes.profile.metadata &&
+      currentUser.attributes.profile.metadata.viewedNotifications) ||
+    [];
   const currentNotificationUuid = queryString.parse(history.location.search).id;
+
+  if (
+    !viewedNotifications.includes(currentNotificationUuid) &&
+    currentNotificationUuid !== '' &&
+    !updateViewedNotificationsInProgress
+  ) {
+    handleUpdateViewedNotifications(currentNotificationUuid);
+  }
 
   const noNotificationResults =
     notifications && notifications.length === 0 && !fetchTransactionsInProgress ? (
