@@ -17,6 +17,15 @@ import css from './InboxSideLists.module.css';
 //   return currentNotification;
 // };
 
+const sortNotificationsByTime = notifications => {
+  return (
+    notifications &&
+    notifications.sort((a, b) => {
+      return new Date(b.createdAt) - new Date(a.createdAt);
+    })
+  );
+};
+
 const NotificationsInboxSideList = props => {
   const {
     fetchTransactionsInProgress,
@@ -37,7 +46,7 @@ const NotificationsInboxSideList = props => {
   currentTransactions.forEach(transaction => {
     transaction.attributes.transitions.forEach(transition => {
       transition.transaction = transaction;
-      const ownRole = getUserTxRole(currentUser.id, transaction);
+      const ownRole = getUserTxRole(currentUser && currentUser.id, transaction);
       if (NOTIFICATION_TRANSITIONS.includes(transition.transition) && ownRole === 'provider') {
         notifications.push(transition);
       }
@@ -69,6 +78,7 @@ const NotificationsInboxSideList = props => {
   const currentNotificationUuid = queryString.parse(history.location.search).id;
 
   if (
+    currentUser &&
     !viewedNotifications.includes(currentNotificationUuid) &&
     currentNotificationUuid !== '' &&
     !updateViewedNotificationsInProgress
@@ -83,11 +93,13 @@ const NotificationsInboxSideList = props => {
       </li>
     ) : null;
 
+  const sortedNotifications = sortNotificationsByTime(notifications);
+
   return (
     <ul className={css.itemList}>
-      {!fetchTransactionsInProgress ? (
-        notifications && notifications.length > 0 ? (
-          notifications.map(notification => {
+      {!fetchTransactionsInProgress || sortedNotifications.length > 0 ? (
+        sortedNotifications.length > 0 ? (
+          sortedNotifications.map(notification => {
             return (
               <InboxItem
                 key={getUuid(notification.createdAt.toUTCString())}
