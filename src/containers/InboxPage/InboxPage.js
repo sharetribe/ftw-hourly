@@ -241,13 +241,13 @@ export const InboxPageComponent = props => {
             />
           ) : (
             <NotificationsInboxSideList
-              notifications={notifications}
-              fetchCurrentUserNotificationsInProgress={fetchCurrentUserNotificationsInProgress}
-              fetchCurrentUserNotificationsError={fetchCurrentUserNotificationsError}
+              fetchTransactionsInProgress={fetchTransactionsInProgress}
+              currentTransactions={currentTransactions}
               intl={intl}
               params={params}
               currentUser={currentUser}
               history={history}
+              currentTransaction={currentTransaction}
             />
           )}
           {pagingLinks}

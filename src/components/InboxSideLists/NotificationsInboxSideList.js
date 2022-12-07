@@ -3,6 +3,7 @@ import { FormattedMessage } from '../../util/reactIntl';
 import { IconSpinner, InboxItem } from '../';
 import queryString from 'query-string';
 import getUuid from 'uuid-by-string';
+import { NOTIFICATION_TRANSITIONS, getUserTxRole } from '../../util/transaction';
 
 import css from './InboxSideLists.module.css';
 
@@ -18,19 +19,31 @@ import css from './InboxSideLists.module.css';
 
 const NotificationsInboxSideList = props => {
   const {
-    notifications,
-    fetchCurrentUserNotificationsInProgress,
-    fetchCurrentUserNotificationsError,
+    fetchTransactionsInProgress,
+    fetchTransactionsError,
+    currentTransactions,
     intl,
     params,
     currentUser,
     history,
+    currentTransaction,
   } = props;
+
+  let notifications = [];
+  currentTransactions.forEach(transaction => {
+    transaction.attributes.transitions.forEach(transition => {
+      transition.transaction = transaction;
+      const ownRole = getUserTxRole(currentUser.id, transaction);
+      if (NOTIFICATION_TRANSITIONS.includes(transition.transition) && ownRole === 'provider') {
+        notifications.push(transition);
+      }
+    });
+  });
 
   const currentNotificationUuid = queryString.parse(history.location.search).id;
 
   const noNotificationResults =
-    notifications && notifications.length === 0 && !fetchCurrentUserNotificationsInProgress ? (
+    notifications && notifications.length === 0 && !fetchTransactionsInProgress ? (
       <li key="noResults" className={css.noResults}>
         <FormattedMessage id="InboxPage.noNotificationsFound" />
       </li>
@@ -38,7 +51,7 @@ const NotificationsInboxSideList = props => {
 
   return (
     <ul className={css.itemList}>
-      {!fetchCurrentUserNotificationsInProgress ? (
+      {!fetchTransactionsInProgress ? (
         notifications && notifications.length > 0 ? (
           notifications.map(notification => {
             return (

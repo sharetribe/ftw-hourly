@@ -294,10 +294,10 @@ export const isProviderReview = transition => {
 
 export const getUserTxRole = (currentUserId, transaction) => {
   const tx = ensureTransaction(transaction);
-  const customer = tx.customer || tx.relationships.customer;
-  if (currentUserId && currentUserId.uuid && tx.id && (customer.id || customer.data.id)) {
+  const customer = tx.customer;
+  if (currentUserId && currentUserId.uuid && tx.id && customer.id) {
     // user can be either customer or provider
-    return currentUserId.uuid === ((customer.id && customer.id.uuid) || customer.data.id.uuid)
+    return currentUserId.uuid === customer.id.uuid
       ? TX_TRANSITION_ACTOR_CUSTOMER
       : TX_TRANSITION_ACTOR_PROVIDER;
   } else {

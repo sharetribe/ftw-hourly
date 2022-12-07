@@ -45,10 +45,8 @@ const NotificationInboxItemContent = props => {
 
   const ownRole = getUserTxRole(currentUser.id, notification.transaction);
 
-  const customer = notification && notification.transaction.relationships.customer.data;
-  const provider = notification && notification.transaction.relationships.provider.data;
-
-  console.log(customer);
+  const customer = notification && notification.transaction.customer;
+  const provider = notification && notification.transaction.provider;
 
   const otherUsersName = txRoleIsProvider(ownRole) ? (
     <UserDisplayName user={customer} intl={intl} />
