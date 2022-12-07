@@ -3,7 +3,16 @@ import { FormattedMessage } from '../../util/reactIntl';
 import { IconSpinner, InboxItem } from '../';
 
 const NotificationsInboxSideList = props => {
-  return null;
+  const { currentNotifications, currentNotification } = props;
+
+  const noNotificationResults =
+    currentNotifications && currentNotifications.length === 0 ? (
+      <li key="noResults" className={css.noResults}>
+        <FormattedMessage id="InboxPage.noNotificationsFound" />
+      </li>
+    ) : null;
+
+  return <ul className={css.itemList}>{noNotificationResults}</ul>;
   //   const {
   //     fetchTransactionsInProgress,
   //     fetchTransactionsError,

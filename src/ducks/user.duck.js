@@ -60,8 +60,9 @@ const initialState = {
   currentUserShowError: null,
   currentUserHasListings: false,
   currentUserHasListingsError: null,
-  currentUserNotificationCount: 0,
-  currentUserNotificationCountError: null,
+  currentUserNotifications: null,
+  fetchCurrentUserNotificationsError: null,
+  fetchCurrentUserNotificationsInProgress: false,
   currentUserHasOrders: null, // This is not fetched unless unverified emails exist
   currentUserHasOrdersError: null,
   sendVerificationEmailInProgress: false,
@@ -109,12 +110,31 @@ export default function reducer(state = initialState, action = {}) {
       return { ...state, currentUserHasListingsError: payload };
 
     case FETCH_CURRENT_USER_NOTIFICATIONS_REQUEST:
-      return { ...state, currentUserNotificationCountError: null };
+      return {
+        ...state,
+        fetchCurrentUserNotificationsError: null,
+        fetchCurrentUserNotificationsInProgress: true,
+      };
     case FETCH_CURRENT_USER_NOTIFICATIONS_SUCCESS:
-      return { ...state, currentUserNotificationCount: payload.transactions.length };
+      const transactions = payload.transactions;
+      let transitions = [];
+      transactions.forEach(transaction => {
+        transaction.transitions.forEach(transition => {
+          transitions.push(transition);
+        });
+      });
+      return {
+        ...state,
+        fetchCurrentUserNotificationsInProgress: false,
+        currentUserNotifications: transitions,
+      };
     case FETCH_CURRENT_USER_NOTIFICATIONS_ERROR:
       console.error(payload); // eslint-disable-line
-      return { ...state, currentUserNotificationCountError: payload };
+      return {
+        ...state,
+        fetchCurrentUserNotificationsError: payload,
+        fetchCurrentUserNotificationsInProgress: false,
+      };
 
     case FETCH_CURRENT_USER_HAS_ORDERS_REQUEST:
       return { ...state, currentUserHasOrdersError: null };
@@ -297,12 +317,12 @@ export const fetchCurrentUserHasOrders = () => (dispatch, getState, sdk) => {
 // Notificaiton page size is max (100 items on page)
 const NOTIFICATION_PAGE_SIZE = 100;
 
-export const fetchCurrentUserNotifications = () => (dispatch, getState, sdk) => {
+export const fetchCurrentUserNotifications = (page = 1) => (dispatch, getState, sdk) => {
   dispatch(fetchCurrentUserNotificationsRequest());
 
   const apiQueryParams = {
     last_transitions: transitionsToRequested,
-    page: 1,
+    page: page,
     per_page: NOTIFICATION_PAGE_SIZE,
   };
 
