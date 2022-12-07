@@ -31,6 +31,7 @@ const MessagePanelComponent = props => {
     onManageDisableScrolling,
     onOpenPaymentModal,
     updateViewedMessages,
+    onRequestPayment,
   } = props;
 
   //   const [isMobSaf, setIsMobSaf] = useState(false);
@@ -125,6 +126,7 @@ const MessagePanelComponent = props => {
           otherUser={otherUser}
           otherUserListing={otherUserListing}
           currentTransaction={currentTransaction}
+          onRequestPayment={onRequestPayment}
         />
       </div>
       <FeedSection

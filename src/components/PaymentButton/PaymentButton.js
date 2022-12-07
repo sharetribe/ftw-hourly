@@ -13,6 +13,7 @@ const PaymentButton = props => {
     currentUser,
     otherUser,
     otherUserListing,
+    onRequestPayment,
   } = props;
 
   const redirectToCheckout = () => {
@@ -30,6 +31,10 @@ const PaymentButton = props => {
     onOpenPaymentModal();
   };
 
+  const requestPayment = () => {
+    onRequestPayment(currentTransaction.id);
+  };
+
   const currentUserType =
     currentUser &&
     currentUser.attributes &&
@@ -39,9 +44,13 @@ const PaymentButton = props => {
 
   return (
     <div className={css.root}>
-      {currentUserType === EMPLOYER && (
+      {currentUserType === EMPLOYER ? (
         <Button rootClassName={css.buttonRoot} onClick={redirectToCheckout}>
           Pay
+        </Button>
+      ) : (
+        <Button rootClassName={css.buttonRoot} onClick={requestPayment}>
+          Request Payment
         </Button>
       )}
     </div>

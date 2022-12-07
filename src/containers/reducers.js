@@ -3,7 +3,6 @@
  * We are following Ducks module proposition:
  * https://github.com/erikras/ducks-modular-redux
  */
-import CheckoutPage from './CheckoutPage/CheckoutPage.duck';
 import ContactDetailsPage from './ContactDetailsPage/ContactDetailsPage.duck';
 import EditListingPage from './EditListingPage/EditListingPage.duck';
 import CreateProfilePage from './CreateProfilePage/CreateProfilePage.duck';
@@ -23,7 +22,6 @@ import TopbarContainer from './TopbarContainer/TopbarContainer.duck';
 import TransactionPage from './TransactionPage/TransactionPage.duck';
 
 export {
-  CheckoutPage,
   ContactDetailsPage,
   EditListingPage,
   CreateProfilePage,

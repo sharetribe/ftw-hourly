@@ -5,7 +5,7 @@
    :actions [],
    :to :state/enquiry}
   {:name :transition/request-payment-after-enquiry,
-   :actor :actor.role/customer,
+   :actor :actor.role/provider,
    :actions [],
    :from :state/enquiry,
    :to :state/payment-requested}

@@ -18,6 +18,7 @@ import {
   fetchOtherUserListing,
   updateViewedMessages,
   updateViewedNotifications,
+  transitionToRequestPayment,
 } from './InboxPage.duck';
 import { fetchTransaction } from '../../ducks/transactions.duck';
 import { PAYMENT_DETAILS } from '../../components/ModalMissingInformation/ModalMissingInformation';
@@ -85,6 +86,7 @@ export const InboxPageComponent = props => {
     updateViewedNotificationsSuccess,
     updateViewedNotificationsInProgress,
     updateViewedNotificationsError,
+    onTransitionToRequestPayment,
   } = props;
   const { tab } = params;
   const ensuredCurrentUser = ensureCurrentUser(currentUser);
@@ -279,6 +281,7 @@ export const InboxPageComponent = props => {
               onManageDisableScrolling={onManageDisableScrolling}
               onFetchTransaction={onFetchTransaction}
               onOpenPaymentModal={onOpenPaymentModal}
+              onRequestPayment={onTransitionToRequestPayment}
             />
           )}
           {isPaymentModalOpen && (
@@ -406,6 +409,7 @@ const mapDispatchToProps = dispatch => ({
   onUpdateViewedMessages: (tx, messages) => dispatch(updateViewedMessages(tx, messages)),
   onUpdateViewedNotifications: (userId, viewedNotifications) =>
     dispatch(updateViewedNotifications(userId, viewedNotifications)),
+  onTransitionToRequestPayment: txId => dispatch(transitionToRequestPayment(txId)),
 });
 
 const InboxPage = compose(

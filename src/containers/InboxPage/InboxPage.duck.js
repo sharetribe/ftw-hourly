@@ -2,7 +2,7 @@ import reverse from 'lodash/reverse';
 import sortBy from 'lodash/sortBy';
 import { storableError } from '../../util/errors';
 import { parse } from '../../util/urlHelpers';
-import { TRANSITIONS } from '../../util/transaction';
+import { TRANSITIONS, TRANSITION_REQUEST_PAYMENT_AFTER_ENQUIRY } from '../../util/transaction';
 import { addMarketplaceEntities } from '../../ducks/marketplaceData.duck';
 import { denormalisedResponseEntities } from '../../util/data';
 import { types as sdkTypes } from '../../util/sdkLoader';
@@ -10,7 +10,8 @@ import pick from 'lodash/pick';
 import pickBy from 'lodash/pickBy';
 import isEmpty from 'lodash/isEmpty';
 import queryString from 'query-string';
-import { updateUserMetadata } from '../../util/api';
+import { updateUserMetadata, transitionPrivileged } from '../../util/api';
+import * as log from '../../util/log';
 
 const MESSAGES_PAGE_SIZE = 10;
 const { UUID } = sdkTypes;
@@ -50,14 +51,22 @@ export const UPDATE_VIEWED_MESSAGES_REQUEST = 'app/InboxPage/UPDATE_VIEWED_MESSA
 export const UPDATE_VIEWED_MESSAGES_SUCCESS = 'app/UPDATE_VIEWED_MESSAGES_SUCCESS';
 export const UPDATE_VIEWED_MESSAGES_ERROR = 'app/InboxPage/UPDATE_VIEWED_MESSAGES_ERROR';
 
-export const CLEAR_MESSAGES_SUCCESS = 'app/InboxPage/UPDATE_USER_LAST_VIEWED_TIME_SUCCESS';
-
-// Write consts for updating viewed notifications
 export const UPDATE_VIEWED_NOTIFICATIONS_REQUEST =
   'app/InboxPage/UPDATE_VIEWED_NOTIFICATIONS_REQUEST';
 export const UPDATE_VIEWED_NOTIFICATIONS_SUCCESS =
   'app/InboxPage/UPDATE_VIEWED_NOTIFICATIONS_SUCCESS';
 export const UPDATE_VIEWED_NOTIFICATIONS_ERROR = 'app/InboxPage/UPDATE_VIEWED_NOTIFICATIONS_ERROR';
+
+// write three action types consts for transition to request payment, accept payment, decline payment
+
+export const TRANSITION_TO_REQUEST_PAYMENT_REQUEST =
+  'app/InboxPage/TRANSITION_TO_REQUEST_PAYMENT_REQUEST';
+export const TRANSITION_TO_REQUEST_PAYMENT_SUCCESS =
+  'app/InboxPage/TRANSITION_TO_REQUEST_PAYMENT_SUCCESS';
+export const TRANSITION_TO_REQUEST_PAYMENT_ERROR =
+  'app/InboxPage/TRANSITION_TO_REQUEST_PAYMENT_ERROR';
+
+export const CLEAR_MESSAGES_SUCCESS = 'app/InboxPage/UPDATE_USER_LAST_VIEWED_TIME_SUCCESS';
 
 // ================ Reducer ================ //
 
@@ -90,6 +99,9 @@ const initialState = {
   updateViewedNotificationsSuccess: false,
   updateViewedNotificationsInProgress: false,
   updateViewedNotificationsError: null,
+  transitionToRequestPaymentInProgress: false,
+  transitionToRequestPaymentError: null,
+  transitionToRequestPaymentSuccess: false,
 };
 
 const mergeEntityArrays = (a, b) => {
@@ -210,6 +222,25 @@ export default function checkoutPageReducer(state = initialState, action = {}) {
         updateViewedNotificationsError: payload,
       };
 
+    case TRANSITION_TO_REQUEST_PAYMENT_REQUEST:
+      return {
+        ...state,
+        transitionToRequestPaymentInProgress: true,
+        transitionToRequestPaymentError: false,
+      };
+    case TRANSITION_TO_REQUEST_PAYMENT_SUCCESS:
+      return {
+        ...state,
+        transitionToRequestPaymentSuccess: true,
+        transitionToRequestPaymentInProgress: false,
+      };
+    case TRANSITION_TO_REQUEST_PAYMENT_ERROR:
+      return {
+        ...state,
+        transitionToRequestPaymentInProgress: false,
+        transitionToRequestPaymentError: payload,
+      };
+
     default:
       return state;
   }
@@ -272,6 +303,16 @@ const updateViewedNotificationsSuccess = () => ({
 });
 const updateViewedNotificationsError = e => ({
   type: UPDATE_VIEWED_NOTIFICATIONS_ERROR,
+  error: true,
+  payload: e,
+});
+
+const transitionToRequestPaymentRequest = () => ({ type: TRANSITION_TO_REQUEST_PAYMENT_REQUEST });
+const transitionToRequestPaymentSuccess = () => ({
+  type: TRANSITION_TO_REQUEST_PAYMENT_SUCCESS,
+});
+const transitionToRequestPaymentError = e => ({
+  type: TRANSITION_TO_REQUEST_PAYMENT_ERROR,
   error: true,
   payload: e,
 });
@@ -399,6 +440,24 @@ export const updateViewedNotifications = (userId, viewedNotifications) => (
   return updateUserMetadata({ userId, metadata: { viewedNotifications } })
     .then(() => dispatch(updateViewedNotificationsSuccess()))
     .catch(e => dispatch(updateViewedNotificationsError(e)));
+};
+
+// write function to transition to request payment
+export const transitionToRequestPayment = txId => (dispatch, getState, sdk) => {
+  dispatch(transitionToRequestPaymentRequest());
+
+  const bodyParams = {
+    id: txId.uuid,
+    transition: TRANSITION_REQUEST_PAYMENT_AFTER_ENQUIRY,
+    params: {},
+  };
+
+  return transitionPrivileged({ isSpeculative: false, bodyParams })
+    .then(() => dispatch(transitionToRequestPaymentSuccess()))
+    .catch(e => {
+      log.error(e, 'transition-to-request-payment-failed', {});
+      dispatch(transitionToRequestPaymentError(e));
+    });
 };
 
 const IMAGE_VARIANTS = {
