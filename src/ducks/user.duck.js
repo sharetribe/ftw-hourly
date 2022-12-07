@@ -1,6 +1,10 @@
 import { denormalisedResponseEntities, ensureOwnListing } from '../util/data';
 import { storableError } from '../util/errors';
-import { transitionsToRequested } from '../util/transaction';
+import {
+  transitionsToRequested,
+  NOTIFICATION_TRANSITIONS,
+  getUserTxRole,
+} from '../util/transaction';
 import { LISTING_STATE_DRAFT } from '../util/types';
 import * as log from '../util/log';
 import { authInfo } from './Auth.duck';
@@ -119,10 +123,15 @@ export default function reducer(state = initialState, action = {}) {
     case FETCH_CURRENT_USER_NOTIFICATIONS_SUCCESS:
       const transactions = payload.transactions;
       let transitions = [];
+      const currentUser = state.currentUser;
       transactions.forEach(transaction => {
         transaction.attributes.transitions.forEach(transition => {
           transition.transaction = transaction;
-          transitions.push(transition);
+          const ownRole = getUserTxRole(currentUser.id, transaction);
+          console.log(ownRole);
+          if (NOTIFICATION_TRANSITIONS.includes(transition.transition) && ownRole === 'provider') {
+            transitions.push(transition);
+          }
         });
       });
       return {
@@ -323,6 +332,7 @@ export const fetchCurrentUserNotifications = (page = 1) => (dispatch, getState, 
   dispatch(fetchCurrentUserNotificationsRequest());
 
   const apiQueryParams = {
+    include: ['customer.profileImage', 'provider'],
     last_transitions: transitionsToRequested,
     page: page,
     per_page: NOTIFICATION_PAGE_SIZE,

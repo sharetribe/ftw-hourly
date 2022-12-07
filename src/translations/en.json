@@ -546,6 +546,7 @@
   "NotFoundPage.description": "We can't find the page or profile you're looking for. Make sure you've typed in the URL correctly or try searching [Insert company name].",
   "NotFoundPage.heading": "Sorry, we couldn't find that page.",
   "NotFoundPage.title": "Page not found",
+  "NotificationInboxItemContent.notificationConfirmPayment": "{displayName} has sent you a payment",
   "OwnListingLink.addYourListingLink": "Become a teacher",
   "OwnListingLink.editYourListingLink": "Edit profile",
   "Page.schemaDescription": "Book private yoga lessons using [Insert company name] or earn some income teaching yoga",

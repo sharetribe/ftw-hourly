@@ -51,6 +51,7 @@ const InboxItem = props => {
           notification={notification}
           currentUser={currentUser}
           intl={intl}
+          selected={selected}
         />
       )}
     </NamedLink>
@@ -58,7 +59,7 @@ const InboxItem = props => {
 };
 
 InboxItem.propTypes = {
-  tx: propTypes.transaction.isRequired,
+  tx: propTypes.transaction,
   intl: intlShape.isRequired,
 };
 

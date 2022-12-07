@@ -42,7 +42,9 @@ const MessagesInboxSideList = props => {
       onSetCurrentTransaction(currentTransaction);
       const { customer, provider } = currentTransaction;
       const otherUser =
-        ensuredCurrentUser.id.uuid === customer && customer.id.uuid ? customer : provider;
+        ensuredCurrentUser && ensuredCurrentUser.id.uuid === customer && customer.id.uuid
+          ? customer
+          : provider;
 
       if (!!otherUser) {
         onFetchOtherUserListing(otherUser.id.uuid);
@@ -65,7 +67,7 @@ const MessagesInboxSideList = props => {
       viewedMessages.push({ txId: currentTxId, messageIds: txMessageIds });
     }
 
-    const currentUserId = ensuredCurrentUser.id && ensuredCurrentUser.id.uuid;
+    const currentUserId = ensuredCurrentUser && ensuredCurrentUser.id && ensuredCurrentUser.id.uuid;
 
     onUpdateViewedMessages(currentUserId, viewedMessages);
   };
