@@ -2,18 +2,19 @@ import React from 'react';
 import { FormattedMessage } from '../../util/reactIntl';
 import { IconSpinner, InboxItem } from '../';
 import queryString from 'query-string';
+import getUuid from 'uuid-by-string';
 
 import css from './InboxSideLists.module.css';
 
-const getCurrentNotification = (notifications, queryParams) => {
-  const notificationString = queryString.parse(queryParams).id;
+// const getCurrentNotification = (notifications, queryParams) => {
+//   const notificationString = queryString.parse(queryParams).id;
 
-  const currentNotification = notifications.find(
-    notification => notification.createdAt.toTimeString() === notificationString
-  );
+//   const currentNotification = notifications.find(
+//     notification => getUuid(notification.createdAt.toUTCString()) === notificationString
+//   );
 
-  return currentNotification;
-};
+//   return currentNotification;
+// };
 
 const NotificationsInboxSideList = props => {
   const {
@@ -26,9 +27,7 @@ const NotificationsInboxSideList = props => {
     history,
   } = props;
 
-  const currentNotification = notifications
-    ? getCurrentNotification(notifications, history.location.search)
-    : null;
+  const currentNotificationUuid = queryString.parse(history.location.search).id;
 
   const noNotificationResults =
     notifications && notifications.length === 0 && !fetchCurrentUserNotificationsInProgress ? (
@@ -40,20 +39,16 @@ const NotificationsInboxSideList = props => {
   return (
     <ul className={css.itemList}>
       {!fetchCurrentUserNotificationsInProgress ? (
-        notifications.length > 0 ? (
+        notifications && notifications.length > 0 ? (
           notifications.map(notification => {
             return (
               <InboxItem
-                key={notification.createdAt.toTimeString()}
+                key={getUuid(notification.createdAt.toUTCString())}
                 notification={notification}
                 intl={intl}
                 params={params}
                 currentUser={currentUser}
-                selected={
-                  currentNotification &&
-                  notification.createdAt.toTimeString() ==
-                    currentNotification.createdAt.toTimeString()
-                }
+                selected={getUuid(notification.createdAt.toUTCString()) === currentNotificationUuid}
                 currentTab="notifications"
               />
             );

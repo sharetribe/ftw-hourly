@@ -121,6 +121,7 @@ export default function reducer(state = initialState, action = {}) {
       let transitions = [];
       transactions.forEach(transaction => {
         transaction.attributes.transitions.forEach(transition => {
+          transition.transaction = transaction;
           transitions.push(transition);
         });
       });

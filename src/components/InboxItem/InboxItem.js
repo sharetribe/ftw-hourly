@@ -7,6 +7,7 @@ import classNames from 'classnames';
 import { createSlug, stringify } from '../../util/urlHelpers';
 import MessageInboxItemContent from './MessageInboxItemContent';
 import NotificationInboxItemContent from './NotificationInboxItemContent';
+import getUuid from 'uuid-by-string';
 
 import css from './InboxItem.module.css';
 
@@ -28,7 +29,9 @@ const InboxItem = props => {
   const classes = classNames(css.item, selected && css.selected);
 
   const searchParam =
-    currentTab === 'messages' ? tx.id.uuid.toString() : notification.createdAt.toTimeString();
+    currentTab === 'messages'
+      ? tx.id.uuid.toString()
+      : getUuid(notification.createdAt.toUTCString());
 
   return (
     <NamedLink

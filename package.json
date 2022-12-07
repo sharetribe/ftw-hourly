@@ -79,7 +79,8 @@
     "source-map-support": "^0.5.21",
     "stripe": "^11.1.0",
     "turf": "^3.0.14",
-    "url": "^0.11.0"
+    "url": "^0.11.0",
+    "uuid-by-string": "^4.0.0"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.13",
