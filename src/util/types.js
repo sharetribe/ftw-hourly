@@ -362,24 +362,9 @@ propTypes.transaction = shape({
   attributes: shape({
     createdAt: instanceOf(Date),
     lastTransitionedAt: instanceOf(Date).isRequired,
-    lastTransition: oneOf(TRANSITIONS).isRequired,
+    lastTransition: string.isRequired,
 
-    // An enquiry won't need a total sum nor a booking so these are
-    // optional.
-    payinTotal: propTypes.money,
-    payoutTotal: propTypes.money,
-
-    lineItems: arrayOf(
-      shape({
-        code: requiredLineItemPropType,
-        includeFor: arrayOf(oneOf(['customer', 'provider'])).isRequired,
-        quantity: instanceOf(Decimal),
-        unitPrice: propTypes.money.isRequired,
-        lineTotal: propTypes.money.isRequired,
-        reversal: bool.isRequired,
-      })
-    ),
-    transitions: arrayOf(propTypes.transition).isRequired,
+    transitions: arrayOf(object).isRequired,
   }),
   booking: propTypes.booking,
   listing: propTypes.listing,

@@ -78,6 +78,8 @@ export const InboxPageComponent = props => {
     onSetCurrentTransaction,
     onUpdateViewedMessages,
     updateViewedMessagesInProgress,
+    fetchCurrentUserNotificationsInProgress,
+    fetchCurrentUserNotificationsError,
   } = props;
   const { tab } = params;
   const ensuredCurrentUser = ensureCurrentUser(currentUser);
@@ -238,7 +240,15 @@ export const InboxPageComponent = props => {
               currentMessages={currentMessages}
             />
           ) : (
-            <NotificationsInboxSideList notifications={notifications} />
+            <NotificationsInboxSideList
+              notifications={notifications}
+              fetchCurrentUserNotificationsInProgress={fetchCurrentUserNotificationsInProgress}
+              fetchCurrentUserNotificationsError={fetchCurrentUserNotificationsError}
+              intl={intl}
+              params={params}
+              currentUser={currentUser}
+              history={history}
+            />
           )}
           {pagingLinks}
         </LayoutWrapperSideNav>
@@ -337,7 +347,13 @@ const mapStateToProps = state => {
     updateViewedMessagesInProgress,
     updateViewedMessagesError,
   } = state.InboxPage;
-  const { currentUser, currentUserListing, currentUserNotifications: notifications } = state.user;
+  const {
+    currentUser,
+    currentUserListing,
+    currentUserNotifications: notifications,
+    fetchCurrentUserNotificationsInProgress,
+    fetchCurrentUserNotificationsError,
+  } = state.user;
   return {
     currentUser,
     currentUserListing,
@@ -356,6 +372,8 @@ const mapStateToProps = state => {
     sendMessageInProgress,
     sendMessageError,
     otherUserListing,
+    fetchCurrentUserNotificationsInProgress,
+    fetchCurrentUserNotificationsError,
   };
 };
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { string, oneOfType, bool } from 'prop-types';
+import { string, oneOfType, bool, object } from 'prop-types';
 import { injectIntl, intlShape } from '../../util/reactIntl';
 import classNames from 'classnames';
 import { propTypes } from '../../util/types';
@@ -118,7 +118,7 @@ AvatarComponent.propTypes = {
   rootClassName: string,
   className: string,
   initialsClassName: string,
-  user: oneOfType([propTypes.user, propTypes.currentUser]),
+  user: oneOfType([propTypes.user, propTypes.currentUser, object]),
 
   renderSizes: string,
   disableProfileLink: bool,

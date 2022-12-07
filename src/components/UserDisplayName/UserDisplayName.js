@@ -1,6 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
-import { oneOfType, string } from 'prop-types';
+import { oneOfType, string, object } from 'prop-types';
 import { propTypes } from '../../util/types';
 import { userDisplayNameAsString } from '../../util/data';
 
@@ -56,7 +56,7 @@ UserDisplayName.propTypes = {
   rootClassName: string,
   className: string,
 
-  user: oneOfType([propTypes.user, propTypes.currentUser]),
+  user: oneOfType([propTypes.user, propTypes.currentUser, object]),
   deletedUserDisplayName: string,
   bannedUserDisplayName: string,
 };
