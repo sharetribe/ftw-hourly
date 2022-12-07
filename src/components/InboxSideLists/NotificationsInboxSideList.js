@@ -3,19 +3,15 @@ import { FormattedMessage } from '../../util/reactIntl';
 import { IconSpinner, InboxItem } from '../';
 import queryString from 'query-string';
 import getUuid from 'uuid-by-string';
-import { NOTIFICATION_TRANSITIONS, getUserTxRole } from '../../util/transaction';
+import {
+  NOTIFICATION_TRANSITIONS,
+  TRANSITION_CONFIRM_PAYMENT,
+  TRANSITION_REQUEST_PAYMENT_AFTER_ENQUIRY,
+  getUserTxRole,
+} from '../../util/transaction';
+import { CAREGIVER } from '../../util/constants';
 
 import css from './InboxSideLists.module.css';
-
-// const getCurrentNotification = (notifications, queryParams) => {
-//   const notificationString = queryString.parse(queryParams).id;
-
-//   const currentNotification = notifications.find(
-//     notification => getUuid(notification.createdAt.toUTCString()) === notificationString
-//   );
-
-//   return currentNotification;
-// };
 
 const sortNotificationsByTime = notifications => {
   return (
@@ -24,6 +20,21 @@ const sortNotificationsByTime = notifications => {
       return new Date(b.createdAt) - new Date(a.createdAt);
     })
   );
+};
+
+// Function to sort notifications by user type
+const filterNotificationsByUserType = (notifications, currentUser) => {
+  const userType = currentUser && currentUser.attributes.profile.metadata.userType;
+
+  if (userType === CAREGIVER) {
+    return notifications.filter(
+      notification => notification.transition === TRANSITION_CONFIRM_PAYMENT
+    );
+  } else {
+    return notifications.filter(
+      notification => notification.transition === TRANSITION_REQUEST_PAYMENT_AFTER_ENQUIRY
+    );
+  }
 };
 
 const NotificationsInboxSideList = props => {
@@ -93,7 +104,8 @@ const NotificationsInboxSideList = props => {
       </li>
     ) : null;
 
-  const sortedNotifications = sortNotificationsByTime(notifications);
+  const filteredNotifications = filterNotificationsByUserType(notifications, currentUser);
+  const sortedNotifications = sortNotificationsByTime(filteredNotifications);
 
   return (
     <ul className={css.itemList}>
