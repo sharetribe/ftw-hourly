@@ -1,0 +1,43 @@
+{{~#*inline "format-money"~}} {{money-amount money}} {{money.currency}} {{~/inline~}} {{~#*inline
+"format-date"~}} {{date date format="MMM d, YYYY" tz="Etc/UTC"}} {{~/inline~}}
+
+<html>
+  <head>
+    <style type="text/css">
+      table {
+        border-collapse: collapse;
+      }
+      .left {
+        text-align: left;
+      }
+      .right {
+        text-align: right;
+        padding-left: 20px;
+      }
+      .bottom-row > td {
+        padding-bottom: 5px;
+      }
+      .top-row {
+        border-top: 1px solid #ccc;
+      }
+      .top-row > td,
+      .top-row > th {
+        padding-top: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    {{#with transaction}}
+    <h1>
+      Someone has requested that they want to pay you. Please set up your payment details so you can
+      be paid.
+    </h1>
+
+    <hr />
+
+    <p>
+      You have received this email notification because you are a member of {{marketplace.name}}. If
+      you no longer wish to receive these emails, please contact {{marketplace.name}} team.
+    </p>
+  </body>
+</html>

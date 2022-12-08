@@ -174,8 +174,7 @@ export const hasExistingTransaction = (transaction, currentUser, currentAuthor) 
   const currentUserId = currentUser.id.uuid;
 
   return (
-    (transaction.attributes.processVersion === config.processVersion &&
-      txCustomerId === currentUserId && txProviderId === currentAuthorId) ||
+    (txCustomerId === currentUserId && txProviderId === currentAuthorId) ||
     (txCustomerId === currentAuthorId && txProviderId === currentUserId)
   );
 };

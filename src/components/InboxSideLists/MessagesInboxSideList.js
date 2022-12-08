@@ -53,10 +53,6 @@ const MessagesInboxSideList = props => {
     }
   }, [currentTransaction]);
 
-  // useEffect(() => {
-  //   fetchOtherListing();
-  // }, [fetchOtherListing]);
-
   const handleUpdateViewedMessages = txMessages => {
     let viewedMessages = ensuredCurrentUser.attributes.profile.metadata.viewedMessages;
     const txMessageIds = txMessages.map(item => item.id.uuid);

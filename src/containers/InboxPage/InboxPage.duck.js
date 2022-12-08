@@ -511,10 +511,10 @@ export const loadData = (params, search) => (dispatch, getState, sdk) => {
   return sdk.transactions
     .query(apiQueryParams)
     .then(response => {
-      const currentReleaseTransactions = response.data.data.filter(
-        transaction => transaction.attributes.processVersion === config.processVersion
-      );
-      response.data.data = currentReleaseTransactions;
+      // const currentReleaseTransactions = response.data.data.filter(
+      //   transaction => transaction.attributes.processVersion === config.processVersion
+      // );
+      // response.data.data = currentReleaseTransactions;
       dispatch(addMarketplaceEntities(response));
       dispatch(fetchTransactionsSuccess(response));
       return response;
