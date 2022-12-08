@@ -347,8 +347,7 @@ export const filterViewedNotifications = (notifications, currentUser) => {
     currentUser && currentUser.attributes.profile.metadata.viewedNotifications;
 
   const notViewedNotifications = notifications.filter(
-    notification =>
-      !viewedNotifications.includes(getUuidByString(notification.createdAt.toUTCString()))
+    notification => !viewedNotifications.includes(getUuid(notification.createdAt.toUTCString()))
   );
 
   return notViewedNotifications;

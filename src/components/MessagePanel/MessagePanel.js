@@ -32,6 +32,9 @@ const MessagePanelComponent = props => {
     onOpenPaymentModal,
     updateViewedMessages,
     onRequestPayment,
+    transitionToRequestPaymentInProgress,
+    transitionToRequestPaymentError,
+    transitionToRequestPaymentSuccess,
   } = props;
 
   //   const [isMobSaf, setIsMobSaf] = useState(false);
@@ -127,6 +130,9 @@ const MessagePanelComponent = props => {
           otherUserListing={otherUserListing}
           currentTransaction={currentTransaction}
           onRequestPayment={onRequestPayment}
+          transitionToRequestPaymentInProgress={transitionToRequestPaymentInProgress}
+          transitionToRequestPaymentError={transitionToRequestPaymentError}
+          transitionToRequestPaymentSuccess={transitionToRequestPaymentSuccess}
         />
       </div>
       <FeedSection

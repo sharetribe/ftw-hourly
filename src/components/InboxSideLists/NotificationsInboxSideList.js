@@ -19,7 +19,7 @@ const NotificationsInboxSideList = props => {
   const {
     fetchTransactionsInProgress,
     fetchTransactionsError,
-    currentTransactions,
+    transactions,
     intl,
     params,
     currentUser,
@@ -31,7 +31,7 @@ const NotificationsInboxSideList = props => {
     updateViewedNotificationsError,
   } = props;
 
-  const notifications = getNotifications(currentTransactions);
+  const notifications = getNotifications(transactions);
 
   const handleUpdateViewedNotifications = notificationId => {
     let viewedNotifications =

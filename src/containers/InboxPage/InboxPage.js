@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState, useCallback } from 'react';
 import { arrayOf, bool, number, shape, string, func, array } from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
@@ -87,25 +87,18 @@ export const InboxPageComponent = props => {
     updateViewedNotificationsInProgress,
     updateViewedNotificationsError,
     onTransitionToRequestPayment,
+    transitionToRequestPaymentInProgress,
+    transitionToRequestPaymentError,
+    transitionToRequestPaymentSuccess,
   } = props;
   const { tab } = params;
   const ensuredCurrentUser = ensureCurrentUser(currentUser);
 
   const currentTxId = queryString.parse(history.location.search).id;
 
-  // Memoize transactionsIds so that inboxItems dont rerender on every select
-  let transactionIds = '';
-  transactions.forEach(transaction => {
-    transactionIds = transactionIds.concat(transaction.id.uuid);
-  });
-  const currentTransactions = useMemo(() => {
-    return transactions;
-  }, [transactionIds]);
-
-  // Show payment details modal if user doesn't have them
-  // useEffect(() => {
-  //   onChangeMissingInfoModal(PAYMENT_DETAILS);
-  // }, []);
+  const currentTransaction = useMemo(() => {
+    return getCurrentTransaction(transactions, history.location.search);
+  }, [history.location.search]);
 
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
 
@@ -136,13 +129,13 @@ export const InboxPageComponent = props => {
 
   const hasTransactions =
     (ensuredCurrentUser.id &&
-      currentTransactions &&
-      currentTransactions.length > 0 &&
-      currentTransactions[0].customer.id.uuid === ensuredCurrentUser.id.uuid) ||
+      transactions &&
+      transactions.length > 0 &&
+      transactions[0].customer.id.uuid === ensuredCurrentUser.id.uuid) ||
     (ensuredCurrentUser.id &&
-      currentTransactions &&
-      currentTransactions.length > 0 &&
-      currentTransactions[0].provider.id.uuid === ensuredCurrentUser.id.uuid);
+      transactions &&
+      transactions.length > 0 &&
+      transactions[0].provider.id.uuid === ensuredCurrentUser.id.uuid);
   const pagingLinks =
     hasTransactions && pagination && pagination.totalPages > 1 ? (
       <PaginationLinks
@@ -200,7 +193,6 @@ export const InboxPageComponent = props => {
     />
   );
 
-  const currentTransaction = getCurrentTransaction(currentTransactions, history.location.search);
   const initialMessageFailed = !!(
     initialMessageFailedToTransaction &&
     currentTransaction.id &&
@@ -229,7 +221,7 @@ export const InboxPageComponent = props => {
           {isMessages ? (
             <MessagesInboxSideList
               fetchTransactionsInProgress={fetchTransactionsInProgress}
-              currentTransactions={currentTransactions}
+              transactions={transactions}
               currentTransaction={currentTransaction}
               messages={messages}
               intl={intl}
@@ -247,7 +239,7 @@ export const InboxPageComponent = props => {
           ) : (
             <NotificationsInboxSideList
               fetchTransactionsInProgress={fetchTransactionsInProgress}
-              currentTransactions={currentTransactions}
+              transactions={transactions}
               intl={intl}
               params={params}
               currentUser={currentUser}
@@ -282,6 +274,9 @@ export const InboxPageComponent = props => {
               onFetchTransaction={onFetchTransaction}
               onOpenPaymentModal={onOpenPaymentModal}
               onRequestPayment={onTransitionToRequestPayment}
+              transitionToRequestPaymentInProgress={transitionToRequestPaymentInProgress}
+              transitionToRequestPaymentError={transitionToRequestPaymentError}
+              transitionToRequestPaymentSuccess={transitionToRequestPaymentSuccess}
             />
           )}
           {isPaymentModalOpen && (
@@ -359,6 +354,9 @@ const mapStateToProps = state => {
     updateViewedNotificationsSuccess,
     updateViewedNotificationsInProgress,
     updateViewedNotificationsError,
+    transitionToRequestPaymentInProgress,
+    transitionToRequestPaymentError,
+    transitionToRequestPaymentSuccess,
   } = state.InboxPage;
   const {
     currentUser,
@@ -393,6 +391,9 @@ const mapStateToProps = state => {
     updateViewedNotificationsSuccess,
     updateViewedNotificationsInProgress,
     updateViewedNotificationsError,
+    transitionToRequestPaymentInProgress,
+    transitionToRequestPaymentError,
+    transitionToRequestPaymentSuccess,
   };
 };
 

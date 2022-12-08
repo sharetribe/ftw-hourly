@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState, useMemo, useCallback } from 'react';
 import { FormattedMessage } from '../../util/reactIntl';
 import { IconSpinner, InboxItem } from '../';
 import { getCurrentTransaction } from '../../containers/InboxPage/InboxPage.helpers';
@@ -10,7 +10,7 @@ const MessagesInboxSideList = props => {
   const {
     fetchTransactionsInProgress,
     fetchTransactionsError,
-    currentTransactions,
+    transactions,
     currentTransaction,
     messages,
     currentTxId,
@@ -25,21 +25,22 @@ const MessagesInboxSideList = props => {
     currentMessages,
   } = props;
 
+  const [replacedEmptyTxId, setReplacedEmptyTxId] = useState(false);
+
   useEffect(() => {
-    if (currentTxId === '' || !currentTxId) {
+    if ((currentTxId === '' || !currentTxId) && !replacedEmptyTxId) {
+      setReplacedEmptyTxId(true);
       history.replace({
         pathname: history.location.pathname,
         search: 'id='.concat(
-          (currentTransactions &&
-            currentTransactions.length > 0 &&
-            currentTransactions[0].id.uuid) ||
-            ''
+          (transactions && transactions.length > 0 && transactions[0].id.uuid) || ''
         ),
       });
     }
+  }, [currentTxId, history.location.search]);
 
+  useEffect(() => {
     if (currentTransaction) {
-      onSetCurrentTransaction(currentTransaction);
       const { customer, provider } = currentTransaction;
       const otherUser =
         ensuredCurrentUser && ensuredCurrentUser.id.uuid === customer && customer.id.uuid
@@ -50,7 +51,11 @@ const MessagesInboxSideList = props => {
         onFetchOtherUserListing(otherUser.id.uuid);
       }
     }
-  }, [currentTxId, currentTransactions, history]);
+  }, [currentTransaction]);
+
+  // useEffect(() => {
+  //   fetchOtherListing();
+  // }, [fetchOtherListing]);
 
   const handleUpdateViewedMessages = txMessages => {
     let viewedMessages = ensuredCurrentUser.attributes.profile.metadata.viewedMessages;
@@ -91,20 +96,18 @@ const MessagesInboxSideList = props => {
   }
 
   const noMessageResults =
-    (!fetchTransactionsInProgress &&
-      currentTransactions.length === 0 &&
-      !fetchTransactionsError && (
-        <li key="noResults" className={css.noResults}>
-          <FormattedMessage id="InboxPage.noMessagesFound" />
-        </li>
-      )) ||
+    (!fetchTransactionsInProgress && transactions.length === 0 && !fetchTransactionsError && (
+      <li key="noResults" className={css.noResults}>
+        <FormattedMessage id="InboxPage.noMessagesFound" />
+      </li>
+    )) ||
     null;
 
   return (
     <ul className={css.itemList}>
-      {!!currentTransactions || !fetchTransactionsInProgress ? (
-        currentTransactions.length > 0 ? (
-          currentTransactions.map(tx => {
+      {!!transactions || !fetchTransactionsInProgress ? (
+        transactions.length > 0 ? (
+          transactions.map(tx => {
             const txMessages = messages.get(tx.id.uuid);
             return (
               <InboxItem

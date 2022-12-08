@@ -3,6 +3,7 @@ import { storeData } from '../../containers/StripePaymentModal/StripePaymentModa
 import { setInitialValues } from '../../containers/StripePaymentModal/StripePaymentModal.duck';
 import { Button } from '../../components';
 import { EMPLOYER } from '../../util/constants';
+import { TRANSITION_REQUEST_PAYMENT_AFTER_ENQUIRY } from '../../util/transaction';
 
 import css from './PaymentButton.module.css';
 
@@ -14,6 +15,9 @@ const PaymentButton = props => {
     otherUser,
     otherUserListing,
     onRequestPayment,
+    transitionToRequestPaymentInProgress,
+    transitionToRequestPaymentError,
+    transitionToRequestPaymentSuccess,
   } = props;
 
   const redirectToCheckout = () => {
@@ -49,7 +53,15 @@ const PaymentButton = props => {
           Pay
         </Button>
       ) : (
-        <Button rootClassName={css.buttonRoot} onClick={requestPayment}>
+        <Button
+          rootClassName={css.buttonRoot}
+          inProgress={transitionToRequestPaymentInProgress}
+          disabled={
+            currentTransaction.attributes.lastTransition ===
+            TRANSITION_REQUEST_PAYMENT_AFTER_ENQUIRY
+          }
+          onClick={requestPayment}
+        >
           Request Payment
         </Button>
       )}

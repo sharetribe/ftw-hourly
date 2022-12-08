@@ -13,8 +13,7 @@ import {
 
 import css from './InboxItem.module.css';
 
-const resolveTransitionMessage = (transition, ownRole, otherUsersName) => {
-  const isOwnTransition = transition.by === ownRole;
+const resolveTransitionMessage = (transition, otherUsersName) => {
   const currentTransition = transition.transition;
   const displayName = otherUsersName;
 
@@ -27,10 +26,11 @@ const resolveTransitionMessage = (transition, ownRole, otherUsersName) => {
         />
       );
     case TRANSITION_REQUEST_PAYMENT_AFTER_ENQUIRY:
-      return isOwnTransition ? (
-        <FormattedMessage id="ActivityFeed.ownTransitionRequest" />
-      ) : (
-        <FormattedMessage id="ActivityFeed.transitionRequest" values={{ displayName }} />
+      return (
+        <FormattedMessage
+          id="NotificationInboxItemContent.notificationRequestPayment"
+          values={{ displayName }}
+        />
       );
 
     default:
@@ -42,7 +42,7 @@ const resolveTransitionMessage = (transition, ownRole, otherUsersName) => {
 };
 
 const NotificationInboxItemContent = props => {
-  const { notification, currentUser, intl, selected } = props;
+  const { notification, currentUser, intl } = props;
 
   const ownRole = getUserTxRole(currentUser.id, notification.transaction);
 
@@ -55,7 +55,7 @@ const NotificationInboxItemContent = props => {
     <UserDisplayName user={provider} intl={intl} />
   );
 
-  const previewText = resolveTransitionMessage(notification, ownRole, otherUsersName);
+  const previewText = resolveTransitionMessage(notification, otherUsersName);
 
   const notificationViewed =
     currentUser &&
