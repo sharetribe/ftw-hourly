@@ -173,7 +173,10 @@ export const TRANSITIONS = getTransitions(statesFromStateDescription(stateDescri
   t => t.key
 );
 
-export const NOTIFICATION_TRANSITIONS = [TRANSITION_CONFIRM_PAYMENT, TRANSITION_REQUEST_PAYMENT];
+export const NOTIFICATION_TRANSITIONS = [
+  TRANSITION_CONFIRM_PAYMENT,
+  TRANSITION_REQUEST_PAYMENT_AFTER_ENQUIRY,
+];
 
 // This function returns a function that has given stateDesc in scope chain.
 const getTransitionsToStateFn = stateDesc => state =>
@@ -324,15 +327,15 @@ export const filterNotificationsByUserType = (notifications, currentUser) => {
 };
 
 export const getNotifications = (currentTransactions, currentUser) => {
-  const notifications =
-    currentTransactions.map(transaction => {
-      transaction.attributes.transitions.map(transition => {
-        transition.transaction = transaction;
-        if (NOTIFICATION_TRANSITIONS.includes(transition.transition)) {
-          return transition;
-        }
-      });
-    }) || [];
+  let notifications = [];
+  currentTransactions.forEach(transaction => {
+    transaction.attributes.transitions.forEach(transition => {
+      transition.transaction = transaction;
+      if (NOTIFICATION_TRANSITIONS.includes(transition.transition)) {
+        notifications.push(transition);
+      }
+    });
+  });
 
   const filteredNotifications = filterNotificationsByUserType(notifications, currentUser);
 

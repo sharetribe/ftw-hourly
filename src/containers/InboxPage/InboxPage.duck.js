@@ -453,8 +453,6 @@ export const transitionToRequestPayment = txId => (dispatch, getState, sdk) => {
     params: {},
   };
 
-  console.log('paymentRequested');
-
   return sdk.transactions
     .transition(bodyParams)
     .then(() => dispatch(transitionToRequestPaymentSuccess()))
