@@ -39,7 +39,7 @@ const sortSearchByDistance = false;
 //
 // In a way, 'processAlias' defines which transaction process (or processes)
 // this particular web application is able to handle.
-const processVersion = '1';
+const processVersion = 1;
 const caregiverInitiatedProcessAlias = `caregiver-initiated/release-${processVersion}`;
 const employerInitiatedProcessAlias = `employer-initiated/release-${processVersion}`;
 

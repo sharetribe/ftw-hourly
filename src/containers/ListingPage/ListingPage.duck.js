@@ -7,10 +7,7 @@ import { transactionLineItems } from '../../util/api';
 import * as log from '../../util/log';
 import { denormalisedResponseEntities } from '../../util/data';
 import { findNextBoundary, nextMonthFn, monthIdStringInTimeZone } from '../../util/dates';
-import {
-  TRANSITION_ENQUIRE_AS_PROVIDER,
-  TRANSITION_ENQUIRE_AS_CUSTOMER,
-} from '../../util/transaction';
+import { TRANSITION_ENQUIRE } from '../../util/transaction';
 import {
   LISTING_PAGE_DRAFT_VARIANT,
   LISTING_PAGE_PENDING_APPROVAL_VARIANT,

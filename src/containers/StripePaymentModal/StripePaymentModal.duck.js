@@ -12,6 +12,7 @@ import { fetchCurrentUser } from '../../ducks/user.duck';
 import {
   TRANSITION_PAYMENT_AFTER_ENQUIRY,
   TRANSITION_PAYMENT_AFTER_REQUEST,
+  TRANSITION_REQUEST_PAYMENT_AFTER_ENQUIRY,
   TRANSITION_CONFIRM_PAYMENT,
   TRANSITION_PAYMENT_ERROR,
 } from '../../util/transaction';
@@ -285,18 +286,9 @@ const transitionAfterPayment = (txId, transition) => (dispatch, getState, sdk) =
     transition,
     params: {},
   };
-  // : {
-  //     processAlias: config.bookingProcessAlias,
-  //     transition,
-  //     params: orderParams,
-  //   };
-  const queryParams = {
-    include: ['provider'],
-    expand: true,
-  };
 
   return sdk.transactions
-    .transition(bodyParams, queryParams)
+    .transition(bodyParams)
     .then(() => console.log('Payment transition success'))
     .catch(e => log.error(e, 'transition-payment-failed'));
 };
@@ -308,19 +300,24 @@ export const confirmPayment = (
   defaultCardId,
   paymentIntentId,
   useDefaultCard,
-  txId
+  tx
 ) => (dispatch, getState, sdk) => {
   dispatch(confirmPaymentRequest());
-  dispatch(transitionAfterPayment(txId, TRANSITION_PAYMENT_AFTER_ENQUIRY));
+
+  const paymentTransition =
+    tx.attributes.lastTransition === TRANSITION_REQUEST_PAYMENT_AFTER_ENQUIRY
+      ? TRANSITION_PAYMENT_AFTER_REQUEST
+      : TRANSITION_PAYMENT_AFTER_ENQUIRY;
+  dispatch(transitionAfterPayment(tx.id, paymentTransition));
 
   const handleSuccess = response => {
-    dispatch(transitionAfterPayment(txId, TRANSITION_CONFIRM_PAYMENT));
+    dispatch(transitionAfterPayment(tx.id, TRANSITION_CONFIRM_PAYMENT));
     dispatch(confirmPaymentSuccess(response));
     return response;
   };
 
   const handleError = e => {
-    dispatch(transitionAfterPayment(txId, TRANSITION_PAYMENT_ERROR));
+    dispatch(transitionAfterPayment(tx.id, TRANSITION_PAYMENT_ERROR));
     dispatch(confirmPaymentError(e));
     log.error(e, 'Confirm-Payment-Failed', {});
     throw e;

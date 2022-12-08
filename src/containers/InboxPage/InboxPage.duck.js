@@ -453,6 +453,8 @@ export const transitionToRequestPayment = txId => (dispatch, getState, sdk) => {
     params: {},
   };
 
+  console.log('paymentRequested');
+
   return sdk.transactions
     .transition(bodyParams)
     .then(() => dispatch(transitionToRequestPaymentSuccess()))
@@ -512,7 +514,7 @@ export const loadData = (params, search) => (dispatch, getState, sdk) => {
     .query(apiQueryParams)
     .then(response => {
       const currentReleaseTransactions = response.data.data.filter(
-        transaction => transaction.attributes.processVersion === config.bookingProcessVersion
+        transaction => transaction.attributes.processVersion === config.processVersion
       );
       response.data.data = currentReleaseTransactions;
       dispatch(addMarketplaceEntities(response));

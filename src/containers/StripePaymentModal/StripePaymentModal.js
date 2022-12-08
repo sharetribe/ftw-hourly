@@ -123,7 +123,7 @@ const StripePaymentModalComponent = props => {
       defaultPaymentId,
       paymentIntent.id,
       useDefaultCard,
-      modalData.transaction.id
+      modalData.transaction
     );
   };
 
@@ -438,7 +438,7 @@ const mapDispatchToProps = dispatch => ({
     hasDefaultCard,
     paymentIntentId,
     useDefaultCard,
-    txId
+    tx
   ) =>
     dispatch(
       confirmPayment(
@@ -448,7 +448,7 @@ const mapDispatchToProps = dispatch => ({
         hasDefaultCard,
         paymentIntentId,
         useDefaultCard,
-        txId
+        tx
       )
     ),
   onSetInitialState: () => dispatch(setInitialValues(initialState)),
