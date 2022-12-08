@@ -1,0 +1,1 @@
+{{transaction.customer.display-name}} has booked {{transaction.listing.title}}

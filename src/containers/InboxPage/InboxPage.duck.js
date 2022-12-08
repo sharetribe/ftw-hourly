@@ -12,6 +12,7 @@ import isEmpty from 'lodash/isEmpty';
 import queryString from 'query-string';
 import { updateUserMetadata, transitionPrivileged } from '../../util/api';
 import * as log from '../../util/log';
+import config from '../../config';
 
 const MESSAGES_PAGE_SIZE = 10;
 const { UUID } = sdkTypes;
@@ -452,7 +453,8 @@ export const transitionToRequestPayment = txId => (dispatch, getState, sdk) => {
     params: {},
   };
 
-  return transitionPrivileged({ isSpeculative: false, bodyParams })
+  return sdk.transactions
+    .transition(bodyParams)
     .then(() => dispatch(transitionToRequestPaymentSuccess()))
     .catch(e => {
       log.error(e, 'transition-to-request-payment-failed', {});
@@ -498,6 +500,7 @@ export const loadData = (params, search) => (dispatch, getState, sdk) => {
       'transitions',
       'payinTotal',
       'payoutTotal',
+      'processVersion',
     ],
     'fields.user': ['profile.displayName', 'profile.abbreviatedName'],
     'fields.image': ['variants.square-small', 'variants.square-small2x'],
@@ -508,6 +511,10 @@ export const loadData = (params, search) => (dispatch, getState, sdk) => {
   return sdk.transactions
     .query(apiQueryParams)
     .then(response => {
+      const currentReleaseTransactions = response.data.data.filter(
+        transaction => transaction.attributes.processVersion === config.bookingProcessVersion
+      );
+      response.data.data = currentReleaseTransactions;
       dispatch(addMarketplaceEntities(response));
       dispatch(fetchTransactionsSuccess(response));
       return response;

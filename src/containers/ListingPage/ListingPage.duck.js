@@ -7,12 +7,16 @@ import { transactionLineItems } from '../../util/api';
 import * as log from '../../util/log';
 import { denormalisedResponseEntities } from '../../util/data';
 import { findNextBoundary, nextMonthFn, monthIdStringInTimeZone } from '../../util/dates';
-import { TRANSITION_ENQUIRE } from '../../util/transaction';
+import {
+  TRANSITION_ENQUIRE_AS_PROVIDER,
+  TRANSITION_ENQUIRE_AS_CUSTOMER,
+} from '../../util/transaction';
 import {
   LISTING_PAGE_DRAFT_VARIANT,
   LISTING_PAGE_PENDING_APPROVAL_VARIANT,
 } from '../../util/urlHelpers';
 import { fetchCurrentUser, fetchCurrentUserHasOrdersSuccess } from '../../ducks/user.duck';
+import { CAREGIVER } from '../../util/constants';
 
 const { UUID } = sdkTypes;
 
@@ -280,11 +284,17 @@ export const fetchTimeSlots = (listingId, start, end, timeZone) => (dispatch, ge
 
 export const sendEnquiry = (listingId, message) => (dispatch, getState, sdk) => {
   dispatch(sendEnquiryRequest());
+
+  const currentUserType = getState().user.currentUser.attributes.profile.metadata.userType;
   const bodyParams = {
     transition: TRANSITION_ENQUIRE,
-    processAlias: config.bookingProcessAlias,
+    processAlias:
+      currentUserType === CAREGIVER
+        ? config.caregiverInitiatedProcessAlias
+        : config.employerInitiatedProcessAlias,
     params: { listingId },
   };
+
   return sdk.transactions
     .initiate(bodyParams)
     .then(response => {
