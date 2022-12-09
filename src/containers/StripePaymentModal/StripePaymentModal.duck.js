@@ -347,8 +347,8 @@ export const transitionNotifyForPayment = txId => (dispatch, getState, sdk) => {
 
   return sdk.transactions
     .transition(bodyParams)
-    .then(() => console.log('Payment transition success'))
-    .catch(e => log.error(e, 'transition-payment-failed'));
+    .then(() => dispatch(transitionNotifyForPaymentSuccess))
+    .catch(e => dispatch(transitionNotifyForPaymentError(e)));
 };
 
 export const confirmPayment = (

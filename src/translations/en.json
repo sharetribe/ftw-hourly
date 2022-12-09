@@ -547,6 +547,7 @@
   "NotFoundPage.heading": "Sorry, we couldn't find that page.",
   "NotFoundPage.title": "Page not found",
   "NotificationInboxItemContent.notificationConfirmPayment": "{displayName} has sent you a payment",
+  "NotificationInboxItemContent.notifyForPayment": "{displayName} is trying to pay you.",
   "NotificationInboxItemContent.notificationRequestPayment": "{displayName} has requested a payment",
   "OwnListingLink.addYourListingLink": "Become a teacher",
   "OwnListingLink.editYourListingLink": "Edit profile",

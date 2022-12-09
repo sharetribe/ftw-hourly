@@ -9,6 +9,7 @@ import {
   TRANSITION_CONFIRM_PAYMENT,
   TRANSITION_REQUEST_PAYMENT_AFTER_ENQUIRY,
   TRANSITION_REQUEST_PAYMENT_AFTER_NOTIFICATION,
+  TRANSITION_NOTIFY_FOR_PAYMENT,
   txRoleIsProvider,
 } from '../../util/transaction';
 
@@ -37,6 +38,13 @@ const resolveTransitionMessage = (transition, otherUsersName) => {
       return (
         <FormattedMessage
           id="NotificationInboxItemContent.notificationRequestPayment"
+          values={{ displayName }}
+        />
+      );
+    case TRANSITION_NOTIFY_FOR_PAYMENT:
+      return (
+        <FormattedMessage
+          id="NotificationInboxItemContent.notifyForPayment"
           values={{ displayName }}
         />
       );

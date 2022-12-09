@@ -95,9 +95,12 @@ export const InboxPageComponent = props => {
 
   const currentTxId = queryString.parse(history.location.search).id;
 
-  const currentTransaction = useMemo(() => {
-    return getCurrentTransaction(transactions, history.location.search);
-  }, [history.location.search]);
+  let currentTransaction = null;
+  if (transactions) {
+    currentTransaction = useMemo(() => {
+      return getCurrentTransaction(transactions, history.location.search);
+    }, [transactions.length, history.location.search]);
+  }
 
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
 

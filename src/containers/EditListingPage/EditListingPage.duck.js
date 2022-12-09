@@ -595,7 +595,7 @@ export const loadData = params => (dispatch, getState, sdk) => {
       // Because of two dispatch functions, response is an array.
       // We are only interested in the response from requestShowListing here,
       // so we need to pick the first one
-      if (response[0].data && response[0].data.data) {
+      if (response[0] && response[0].data && response[0].data.data) {
         const listing = response[0].data.data;
 
         // If the listing doesn't have availabilityPlan yet

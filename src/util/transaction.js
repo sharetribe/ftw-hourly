@@ -23,6 +23,7 @@ export const TRANSITION_ENQUIRE = 'transition/enquire';
 export const TRANSITION_NOTIFY_FOR_PAYMENT = 'transition/notify-for-payment';
 export const TRANSITION_REQUEST_PAYMENT_AFTER_NOTIFICATION =
   'transition/request-payment-after-notification';
+export const TRANSITION_PAYMENT_AFTER_NOTIFICATION = 'transition/payment-after-notification';
 export const TRANSITION_REQUEST_PAYMENT_AFTER_ENQUIRY = 'transition/request-payment-after-enquiry';
 export const TRANSITION_PAYMENT_AFTER_ENQUIRY = 'transition/payment-after-enquiry';
 export const TRANSITION_PAYMENT_AFTER_REQUEST = 'transition/payment-after-request';
@@ -104,6 +105,7 @@ const STATE_DELIVERED = 'delivered';
 const STATE_REVIEWED = 'reviewed';
 const STATE_REVIEWED_BY_CUSTOMER = 'reviewed-by-customer';
 const STATE_REVIEWED_BY_PROVIDER = 'reviewed-by-provider';
+const STATE_NOTIFIED_FOR_PAYMENT = 'notified-for-payment';
 
 /**
  * Description of transaction process
@@ -134,12 +136,20 @@ const stateDescription = {
       on: {
         [TRANSITION_REQUEST_PAYMENT_AFTER_ENQUIRY]: STATE_PAYMENT_REQUESTED,
         [TRANSITION_PAYMENT_AFTER_ENQUIRY]: STATE_PAYMENT_PENDING,
+        [TRANSITION_NOTIFY_FOR_PAYMENT]: STATE_NOTIFIED_FOR_PAYMENT,
+      },
+    },
+
+    [STATE_NOTIFIED_FOR_PAYMENT]: {
+      on: {
+        [TRANSITION_PAYMENT_AFTER_NOTIFICATION]: STATE_PAYMENT_PENDING,
+        [TRANSITION_REQUEST_PAYMENT_AFTER_NOTIFICATION]: STATE_PAYMENT_REQUESTED,
       },
     },
 
     [STATE_PAYMENT_REQUESTED]: {
       on: {
-        [TRANSITION_PAYMENT_AFTER_ENQUIRY]: STATE_PAYMENT_PENDING,
+        [TRANSITION_PAYMENT_AFTER_REQUEST]: STATE_PAYMENT_PENDING,
       },
     },
 
@@ -181,6 +191,7 @@ export const NOTIFICATION_TRANSITIONS = [
   TRANSITION_REQUEST_PAYMENT_AFTER_ENQUIRY,
   TRANSITION_NOTIFY_FOR_PAYMENT,
   TRANSITION_REQUEST_PAYMENT_AFTER_NOTIFICATION,
+  TRANSITION_PAYMENT_AFTER_NOTIFICATION,
 ];
 
 // This function returns a function that has given stateDesc in scope chain.
@@ -319,14 +330,22 @@ export const getUserTxRole = (currentUserId, transaction) => {
 export const filterNotificationsByUserType = (notifications, currentUser) => {
   const userType = currentUser && currentUser.attributes.profile.metadata.userType;
 
+  // console.log(userType);
+
   if (userType === CAREGIVER) {
-    return notifications.filter(
-      notification => notification && notification.transition === TRANSITION_CONFIRM_PAYMENT
-    );
+    return notifications.filter(notification => {
+      return (
+        notification &&
+        (notification.transition === TRANSITION_CONFIRM_PAYMENT ||
+          notification.transition === TRANSITION_NOTIFY_FOR_PAYMENT)
+      );
+    });
   } else {
     return notifications.filter(
       notification =>
-        notification && notification.transition === TRANSITION_REQUEST_PAYMENT_AFTER_ENQUIRY
+        notification &&
+        (notification.transition === TRANSITION_REQUEST_PAYMENT_AFTER_ENQUIRY ||
+          notification.transition === TRANSITION_REQUEST_PAYMENT_AFTER_NOTIFICATION)
     );
   }
 };
@@ -349,7 +368,10 @@ export const getNotifications = (currentTransactions, currentUser) => {
 
 export const filterViewedNotifications = (notifications, currentUser) => {
   const viewedNotifications =
-    currentUser && currentUser.attributes.profile.metadata.viewedNotifications;
+    (currentUser &&
+      currentUser.attributes.profile.metadata &&
+      currentUser.attributes.profile.metadata.viewedNotifications) ||
+    [];
 
   const notViewedNotifications = notifications.filter(
     notification => !viewedNotifications.includes(getUuid(notification.createdAt.toUTCString()))

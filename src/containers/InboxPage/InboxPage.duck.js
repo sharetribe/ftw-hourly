@@ -504,14 +504,7 @@ export const loadData = (params, search) => (dispatch, getState, sdk) => {
   const apiQueryParams = {
     lastTransitions: TRANSITIONS,
     include: ['provider', 'provider.profileImage', 'customer', 'customer.profileImage', 'listing'],
-    'fields.transaction': [
-      'lastTransition',
-      'lastTransitionedAt',
-      'transitions',
-      'payinTotal',
-      'payoutTotal',
-      'processVersion',
-    ],
+    'fields.transaction': ['lastTransition', 'lastTransitionedAt', 'transitions'],
     'fields.user': ['profile.displayName', 'profile.abbreviatedName'],
     'fields.image': ['variants.square-small', 'variants.square-small2x'],
     page,
@@ -521,10 +514,6 @@ export const loadData = (params, search) => (dispatch, getState, sdk) => {
   return sdk.transactions
     .query(apiQueryParams)
     .then(response => {
-      // const currentReleaseTransactions = response.data.data.filter(
-      //   transaction => transaction.attributes.processVersion === config.processVersion
-      // );
-      // response.data.data = currentReleaseTransactions;
       dispatch(addMarketplaceEntities(response));
       dispatch(fetchTransactionsSuccess(response));
       return response;

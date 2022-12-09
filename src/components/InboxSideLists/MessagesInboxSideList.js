@@ -79,17 +79,19 @@ const MessagesInboxSideList = props => {
     [];
   const currentViewedMessages = viewedMessages.find(item => item && item.txId === currentTxId);
 
-  if (
-    currentTransaction &&
-    currentMessages.length >= 1 &&
-    currentMessages.length !=
-      (currentViewedMessages &&
-        currentViewedMessages.messageIds &&
-        currentViewedMessages.messageIds.length) &&
-    !updateViewedMessagesInProgress
-  ) {
-    handleUpdateViewedMessages(currentMessages);
-  }
+  useEffect(() => {
+    if (
+      currentTransaction &&
+      currentMessages.length >= 1 &&
+      currentMessages.length !=
+        (currentViewedMessages &&
+          currentViewedMessages.messageIds &&
+          currentViewedMessages.messageIds.length) &&
+      !updateViewedMessagesInProgress
+    ) {
+      handleUpdateViewedMessages(currentMessages);
+    }
+  }, [currentTxId, currentMessages]);
 
   const noMessageResults =
     (!fetchTransactionsInProgress && transactions.length === 0 && !fetchTransactionsError && (

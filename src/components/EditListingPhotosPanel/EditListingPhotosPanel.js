@@ -119,14 +119,11 @@ EditListingPhotosPanel.propTypes = {
   // We cannot use propTypes.listing since the listing might be a draft.
   listing: object,
 
-  onImageUpload: func.isRequired,
-  onUpdateImageOrder: func.isRequired,
   onSubmit: func.isRequired,
   onChange: func.isRequired,
   submitButtonText: string.isRequired,
   panelUpdated: bool.isRequired,
   updateInProgress: bool.isRequired,
-  onRemoveImage: func.isRequired,
   profileImage: object,
 };
 

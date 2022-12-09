@@ -7,6 +7,7 @@ import { filterNotificationsByUserType, getNotifications } from '../../util/tran
 import { CAREGIVER } from '../../util/constants';
 
 import css from './InboxSideLists.module.css';
+import { useEffect } from 'react';
 
 //filter notifications by time created
 const sortNotificationsByTime = notifications => {
@@ -31,7 +32,7 @@ const NotificationsInboxSideList = props => {
     updateViewedNotificationsError,
   } = props;
 
-  const notifications = getNotifications(transactions);
+  const notifications = getNotifications(transactions, currentUser);
 
   const handleUpdateViewedNotifications = notificationId => {
     let viewedNotifications =
@@ -57,14 +58,16 @@ const NotificationsInboxSideList = props => {
     [];
   const currentNotificationUuid = queryString.parse(history.location.search).id;
 
-  if (
-    currentUser &&
-    !viewedNotifications.includes(currentNotificationUuid) &&
-    currentNotificationUuid !== '' &&
-    !updateViewedNotificationsInProgress
-  ) {
-    handleUpdateViewedNotifications(currentNotificationUuid);
-  }
+  useEffect(() => {
+    if (
+      currentUser &&
+      !viewedNotifications.includes(currentNotificationUuid) &&
+      currentNotificationUuid !== '' &&
+      !updateViewedNotificationsInProgress
+    ) {
+      handleUpdateViewedNotifications(currentNotificationUuid);
+    }
+  }, [currentNotificationUuid]);
 
   const noNotificationResults =
     notifications && notifications.length === 0 && !fetchTransactionsInProgress ? (
