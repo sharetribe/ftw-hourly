@@ -20,6 +20,9 @@ export const TRANSITION_REQUEST_PAYMENT = 'transition/request-payment';
 // A customer can also initiate a transaction with an enquiry, and
 // then transition that with a request.
 export const TRANSITION_ENQUIRE = 'transition/enquire';
+export const TRANSITION_NOTIFY_FOR_PAYMENT = 'transition/notify-for-payment';
+export const TRANSITION_REQUEST_PAYMENT_AFTER_NOTIFICATION =
+  'transition/request-payment-after-notification';
 export const TRANSITION_REQUEST_PAYMENT_AFTER_ENQUIRY = 'transition/request-payment-after-enquiry';
 export const TRANSITION_PAYMENT_AFTER_ENQUIRY = 'transition/payment-after-enquiry';
 export const TRANSITION_PAYMENT_AFTER_REQUEST = 'transition/payment-after-request';
@@ -176,6 +179,8 @@ export const TRANSITIONS = getTransitions(statesFromStateDescription(stateDescri
 export const NOTIFICATION_TRANSITIONS = [
   TRANSITION_CONFIRM_PAYMENT,
   TRANSITION_REQUEST_PAYMENT_AFTER_ENQUIRY,
+  TRANSITION_NOTIFY_FOR_PAYMENT,
+  TRANSITION_REQUEST_PAYMENT_AFTER_NOTIFICATION,
 ];
 
 // This function returns a function that has given stateDesc in scope chain.

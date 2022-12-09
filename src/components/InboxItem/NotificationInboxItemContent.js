@@ -8,6 +8,7 @@ import {
   getUserTxRole,
   TRANSITION_CONFIRM_PAYMENT,
   TRANSITION_REQUEST_PAYMENT_AFTER_ENQUIRY,
+  TRANSITION_REQUEST_PAYMENT_AFTER_NOTIFICATION,
   txRoleIsProvider,
 } from '../../util/transaction';
 
@@ -26,6 +27,13 @@ const resolveTransitionMessage = (transition, otherUsersName) => {
         />
       );
     case TRANSITION_REQUEST_PAYMENT_AFTER_ENQUIRY:
+      return (
+        <FormattedMessage
+          id="NotificationInboxItemContent.notificationRequestPayment"
+          values={{ displayName }}
+        />
+      );
+    case TRANSITION_REQUEST_PAYMENT_AFTER_NOTIFICATION:
       return (
         <FormattedMessage
           id="NotificationInboxItemContent.notificationRequestPayment"

@@ -21,7 +21,6 @@ import {
   transitionToRequestPayment,
 } from './InboxPage.duck';
 import { fetchTransaction } from '../../ducks/transactions.duck';
-import { PAYMENT_DETAILS } from '../../components/ModalMissingInformation/ModalMissingInformation';
 import {
   NotificationBadge,
   Page,
@@ -410,7 +409,7 @@ const mapDispatchToProps = dispatch => ({
   onUpdateViewedMessages: (tx, messages) => dispatch(updateViewedMessages(tx, messages)),
   onUpdateViewedNotifications: (userId, viewedNotifications) =>
     dispatch(updateViewedNotifications(userId, viewedNotifications)),
-  onTransitionToRequestPayment: txId => dispatch(transitionToRequestPayment(txId)),
+  onTransitionToRequestPayment: tx => dispatch(transitionToRequestPayment(tx)),
 });
 
 const InboxPage = compose(

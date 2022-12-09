@@ -2,7 +2,12 @@ import reverse from 'lodash/reverse';
 import sortBy from 'lodash/sortBy';
 import { storableError } from '../../util/errors';
 import { parse } from '../../util/urlHelpers';
-import { TRANSITIONS, TRANSITION_REQUEST_PAYMENT_AFTER_ENQUIRY } from '../../util/transaction';
+import {
+  TRANSITIONS,
+  TRANSITION_REQUEST_PAYMENT_AFTER_ENQUIRY,
+  TRANSITION_REQUEST_PAYMENT_AFTER_NOTIFICATION,
+  TRANSITION_NOTIFY_FOR_PAYMENT,
+} from '../../util/transaction';
 import { addMarketplaceEntities } from '../../ducks/marketplaceData.duck';
 import { denormalisedResponseEntities } from '../../util/data';
 import { types as sdkTypes } from '../../util/sdkLoader';
@@ -444,12 +449,17 @@ export const updateViewedNotifications = (userId, viewedNotifications) => (
 };
 
 // write function to transition to request payment
-export const transitionToRequestPayment = txId => (dispatch, getState, sdk) => {
+export const transitionToRequestPayment = tx => (dispatch, getState, sdk) => {
   dispatch(transitionToRequestPaymentRequest());
+  const lastTransition = tx.attributesl.lastTransition;
+
+  const transitionFromNotification = lastTransition === TRANSITION_NOTIFY_FOR_PAYMENT;
 
   const bodyParams = {
-    id: txId.uuid,
-    transition: TRANSITION_REQUEST_PAYMENT_AFTER_ENQUIRY,
+    id: txId.id.uuid,
+    transition: transitionFromNotification
+      ? TRANSITION_REQUEST_PAYMENT_AFTER_NOTIFICATION
+      : TRANSITION_REQUEST_PAYMENT_AFTER_ENQUIRY,
     params: {},
   };
 

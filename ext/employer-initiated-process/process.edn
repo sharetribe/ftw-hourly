@@ -47,14 +47,18 @@
  :notifications
  [{:name :notification/money-paid,
    :on :transition/confirm-payment,
-   :to :actor.role/customer,
-   :template :money-paid},
-   {:name :notification/payment-requested,
-   :on :transition/request-payment-after-enquiry,
    :to :actor.role/provider,
    :template :money-paid},
+   {:name :notification/payment-requested-after-enquiry,
+   :on :transition/request-payment-after-enquiry,
+   :to :actor.role/customer,
+   :template :money-paid},
+   {:name :notification/payment-requested-after-notification,
+   :on :transition/request-payment-after-notification,
+   :to :actor.role/customer,
+   :template :money-paid}
    {:name :notification/notify-for-payment,
    :on :transition/notify-for-payment,
-   :to :actor.role/customer,
+   :to :actor.role/provider,
    :template :money-paid},
    ]}

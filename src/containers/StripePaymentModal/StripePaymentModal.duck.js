@@ -15,6 +15,7 @@ import {
   TRANSITION_REQUEST_PAYMENT_AFTER_ENQUIRY,
   TRANSITION_CONFIRM_PAYMENT,
   TRANSITION_PAYMENT_ERROR,
+  TRANSITION_NOTIFY_FOR_PAYMENT,
 } from '../../util/transaction';
 // import { stripe } from '~/src/ducks';
 
@@ -53,6 +54,14 @@ export const FETCH_DEFAULT_PAYMENT_REQUEST = 'app/StripePaymentModal/FETCH_DEFAU
 export const FETCH_DEFAULT_PAYMENT_SUCCESS = 'app/StripePaymentModal/FETCH_DEFAULT_PAYMENT_SUCCESS';
 export const FETCH_DEFAULT_PAYMENT_ERROR = 'app/StripePaymentModal/FETCH_DEFAULT_PAYMENT_ERROR';
 
+//write three consts for transiton notify for payment like above
+export const TRANSITION_NOTIFY_FOR_PAYMENT_REQUEST =
+  'app/StripePaymentModal/TRANSITION_NOTIFY_FOR_PAYMENT_REQUEST';
+export const TRANSITION_NOTIFY_FOR_PAYMENT_SUCCESS =
+  'app/StripePaymentModal/TRANSITION_NOTIFY_FOR_PAYMENT_SUCCESS';
+export const TRANSITION_NOTIFY_FOR_PAYMENT_ERROR =
+  'app/StripePaymentModal/TRANSITION_NOTIFY_FOR_PAYMENT_ERROR';
+
 // ================ Reducer ================ //
 
 export const initialState = {
@@ -74,6 +83,9 @@ export const initialState = {
   fetchDefaultPaymentError: null,
   defaultPayment: null,
   defaultPaymentFetched: false,
+  transitionNotifyForPaymentInProgress: false,
+  transitionNotifyForPaymentError: null,
+  transitionNotifyForPaymentSuccess: false,
 };
 
 export default function StripePaymentModalReducer(state = initialState, action = {}) {
@@ -145,6 +157,26 @@ export default function StripePaymentModalReducer(state = initialState, action =
         fetchDefaultPaymentInProgress: false,
         fetchDefaultPaymentError: payload,
         defaultPaymentFetched: true,
+      };
+
+    // WRITE THREE CASES FOR TRANSITION NOTIFY FOR PAYMENT like above
+    case TRANSITION_NOTIFY_FOR_PAYMENT_REQUEST:
+      return {
+        ...state,
+        transitionNotifyForPaymentInProgress: true,
+        transitionNotifyForPaymentError: null,
+      };
+    case TRANSITION_NOTIFY_FOR_PAYMENT_SUCCESS:
+      return {
+        ...state,
+        transitionNotifyForPaymentvInProgress: false,
+        transitionNotifyForPaymentSuccess: true,
+      };
+    case TRANSITION_NOTIFY_FOR_PAYMENT_ERROR:
+      return {
+        ...state,
+        transitionNotifyForPaymentInProgress: false,
+        transitionNotifyForPaymentPaymentError: payload,
       };
 
     default:
@@ -222,6 +254,19 @@ export const fetchDefaultPaymentError = e => ({
   payload: e,
 });
 
+// write three functions for transition notify for payment like above
+export const transitionNotifyForPaymentRequest = () => ({
+  type: TRANSITION_NOTIFY_FOR_PAYMENT_REQUEST,
+});
+export const transitionNotifyForPaymentSuccess = () => ({
+  type: TRANSITION_NOTIFY_FOR_PAYMENT_SUCCESS,
+});
+export const transitionNotifyForPaymentError = e => ({
+  type: TRANSITION_NOTIFY_FOR_PAYMENT_ERROR,
+  error: true,
+  payload: e,
+});
+
 export const sendMessage = params => (dispatch, getState, sdk) => {
   const message = params.message;
   const orderId = params.id;
@@ -278,8 +323,21 @@ export const createPaymentIntent = (amount, userId, stripeCustomerId, savePaymen
     .catch(e => handleError(e));
 };
 
-const transitionAfterPayment = (txId, transition) => (dispatch, getState, sdk) => {
-  // const transition = TRANSITION_PAYMENT_AFTER_ENQUIRY;
+export const transitionAfterPayment = (txId, transition) => (dispatch, getState, sdk) => {
+  const bodyParams = {
+    id: txId.uuid,
+    transition,
+    params: {},
+  };
+
+  return sdk.transactions
+    .transition(bodyParams)
+    .then(() => console.log('Payment transition success'))
+    .catch(e => log.error(e, 'transition-payment-failed'));
+};
+
+export const transitionNotifyForPayment = txId => (dispatch, getState, sdk) => {
+  const transition = TRANSITION_NOTIFY_FOR_PAYMENT;
 
   const bodyParams = {
     id: txId.uuid,

@@ -39,8 +39,8 @@ const sortSearchByDistance = false;
 //
 // In a way, 'processAlias' defines which transaction process (or processes)
 // this particular web application is able to handle.
-const caregiverInitiatedProcessAlias = `caregiver-initiated/release-3`;
-const employerInitiatedProcessAlias = `employer-initiated/release-2`;
+const caregiverInitiatedProcessAlias = `caregiver-initiated/release-4`;
+const employerInitiatedProcessAlias = `employer-initiated/release-3`;
 
 // The transaction line item code for the main unit type in bookings.
 //
