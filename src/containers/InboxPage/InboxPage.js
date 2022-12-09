@@ -97,6 +97,7 @@ export const InboxPageComponent = props => {
 
   let currentTransaction = null;
   if (transactions) {
+    // Change transactions.length to array of currentTransaction ids
     currentTransaction = useMemo(() => {
       return getCurrentTransaction(transactions, history.location.search);
     }, [transactions.length, history.location.search]);

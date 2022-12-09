@@ -224,9 +224,10 @@ const StripePaymentModalComponent = props => {
   });
 
   const notifyButtonDisabled =
-    modalData &&
-    modalData.transaction &&
-    modalData.transaction.attributes.lastTransition !== TRANSITION_ENQUIRE;
+    (modalData &&
+      modalData.transaction &&
+      modalData.transaction.attributes.lastTransition !== TRANSITION_ENQUIRE) ||
+    transitionNotifyForPaymentSuccess;
 
   return (
     <Fragment>
@@ -313,6 +314,7 @@ const StripePaymentModalComponent = props => {
                   onClick={handleNotifyForPayment}
                   inProgress={transitionNotifyForPaymentInProgress}
                   disabled={notifyButtonDisabled}
+                  ready={transitionNotifyForPaymentSuccess}
                 >
                   {notifyProviderMessage}
                 </Button>

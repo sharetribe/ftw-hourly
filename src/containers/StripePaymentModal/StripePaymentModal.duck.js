@@ -169,7 +169,7 @@ export default function StripePaymentModalReducer(state = initialState, action =
     case TRANSITION_NOTIFY_FOR_PAYMENT_SUCCESS:
       return {
         ...state,
-        transitionNotifyForPaymentvInProgress: false,
+        transitionNotifyForPaymentInProgress: false,
         transitionNotifyForPaymentSuccess: true,
       };
     case TRANSITION_NOTIFY_FOR_PAYMENT_ERROR:
@@ -337,6 +337,7 @@ export const transitionAfterPayment = (txId, transition) => (dispatch, getState,
 };
 
 export const transitionNotifyForPayment = txId => (dispatch, getState, sdk) => {
+  dispatch(transitionNotifyForPaymentRequest());
   const transition = TRANSITION_NOTIFY_FOR_PAYMENT;
 
   const bodyParams = {
@@ -347,7 +348,7 @@ export const transitionNotifyForPayment = txId => (dispatch, getState, sdk) => {
 
   return sdk.transactions
     .transition(bodyParams)
-    .then(() => dispatch(transitionNotifyForPaymentSuccess))
+    .then(() => dispatch(transitionNotifyForPaymentSuccess()))
     .catch(e => dispatch(transitionNotifyForPaymentError(e)));
 };
 

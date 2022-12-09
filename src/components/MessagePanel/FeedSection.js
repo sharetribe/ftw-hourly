@@ -51,17 +51,19 @@ const FeedSection = props => {
           <FormattedMessage id="TransactionPanel.messageLoadingFailed" />
         </p>
       ) : null}
-      <ActivityFeed
-        className={css.feed}
-        messages={messages}
-        transaction={currentTransaction}
-        currentUser={currentUser}
-        hasOlderMessages={hasOlderMessages && !fetchMessagesInProgress}
-        onOpenReviewModal={onOpenReviewModal}
-        onShowOlderMessages={onShowMoreMessages}
-        fetchMessagesInProgress={fetchMessagesInProgress}
-        updateViewedMessages={updateViewedMessages}
-      />
+      {currentTransaction && (
+        <ActivityFeed
+          className={css.feed}
+          messages={messages}
+          transaction={currentTransaction}
+          currentUser={currentUser}
+          hasOlderMessages={hasOlderMessages && !fetchMessagesInProgress}
+          onOpenReviewModal={onOpenReviewModal}
+          onShowOlderMessages={onShowMoreMessages}
+          fetchMessagesInProgress={fetchMessagesInProgress}
+          updateViewedMessages={updateViewedMessages}
+        />
+      )}
     </div>
   ) : null;
 };
