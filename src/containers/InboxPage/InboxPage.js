@@ -105,6 +105,7 @@ export const InboxPageComponent = props => {
   const currentTxId = queryString.parse(history.location.search).id;
 
   const [transactions, setTransactions] = useState([]);
+  const [currentTransaction, setCurrentTransaction] = useState(null);
 
   useEffect(() => {
     if (!arraysEqual(currentTransactions, transactions)) {
@@ -112,12 +113,8 @@ export const InboxPageComponent = props => {
     }
   }, [currentTransactions]);
 
-  let currentTransaction = null;
-
-  currentTransaction = useMemo(() => {
-    if (transactions) {
-      return getCurrentTransaction(transactions, history.location.search);
-    }
+  useEffect(() => {
+    setCurrentTransaction(getCurrentTransaction(transactions, history.location.search));
   }, [transactions, history.location.search]);
 
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
