@@ -45,6 +45,15 @@ import StripePaymentModal from '../StripePaymentModal/StripePaymentModal';
 import { getCurrentTransaction } from './InboxPage.helpers';
 import css from './InboxPage.module.css';
 
+const objectsEqual = (o1, o2) =>
+  o1 && o2 && typeof o1 === 'object' && Object.keys(o1).length > 0
+    ? Object.keys(o1).length === Object.keys(o2).length &&
+      Object.keys(o1).every(p => objectsEqual(o1[p], o2[p]))
+    : o1 === o2;
+
+const arraysEqual = (a1, a2) =>
+  a1.length === a2.length && a1.every((o, idx) => objectsEqual(o, a2[idx]));
+
 export const InboxPageComponent = props => {
   const {
     unitType,
@@ -57,7 +66,7 @@ export const InboxPageComponent = props => {
     params,
     notificationCount,
     scrollingDisabled,
-    transactions,
+    currentTransactions,
     onChangeMissingInfoModal,
     history,
     fetchMessagesInProgress,
@@ -95,13 +104,21 @@ export const InboxPageComponent = props => {
 
   const currentTxId = queryString.parse(history.location.search).id;
 
+  const [transactions, setTransactions] = useState([]);
+
+  useEffect(() => {
+    if (!arraysEqual(currentTransactions, transactions)) {
+      setTransactions(currentTransactions);
+    }
+  }, [currentTransactions]);
+
   let currentTransaction = null;
-  if (transactions) {
-    // Change transactions.length to array of currentTransaction ids
-    currentTransaction = useMemo(() => {
+
+  currentTransaction = useMemo(() => {
+    if (transactions) {
       return getCurrentTransaction(transactions, history.location.search);
-    }, [transactions.length, history.location.search]);
-  }
+    }
+  }, [transactions, history.location.search]);
 
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
 
@@ -325,7 +342,7 @@ InboxPageComponent.propTypes = {
   pagination: propTypes.pagination,
   notifications: array,
   scrollingDisabled: bool.isRequired,
-  transactions: arrayOf(propTypes.transaction).isRequired,
+  currentTransactions: arrayOf(propTypes.transaction).isRequired,
 
   /* from withRouter */
   history: shape({
@@ -376,7 +393,7 @@ const mapStateToProps = state => {
     pagination,
     notifications,
     scrollingDisabled: isScrollingDisabled(state),
-    transactions: getMarketplaceEntities(state, transactionRefs),
+    currentTransactions: getMarketplaceEntities(state, transactionRefs),
     fetchMessagesInProgress,
     totalMessagePages,
     messages,

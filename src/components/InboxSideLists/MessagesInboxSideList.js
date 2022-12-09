@@ -94,17 +94,20 @@ const MessagesInboxSideList = props => {
   }, [currentTxId, currentMessages]);
 
   const noMessageResults =
-    (!fetchTransactionsInProgress && transactions.length === 0 && !fetchTransactionsError && (
-      <li key="noResults" className={css.noResults}>
-        <FormattedMessage id="InboxPage.noMessagesFound" />
-      </li>
-    )) ||
+    (!fetchTransactionsInProgress &&
+      transactions &&
+      transactions.length === 0 &&
+      !fetchTransactionsError && (
+        <li key="noResults" className={css.noResults}>
+          <FormattedMessage id="InboxPage.noMessagesFound" />
+        </li>
+      )) ||
     null;
 
   return (
     <ul className={css.itemList}>
       {!!transactions || !fetchTransactionsInProgress ? (
-        transactions.length > 0 ? (
+        transactions && transactions.length > 0 ? (
           transactions.map(tx => {
             const txMessages = messages.get(tx.id.uuid);
             return (

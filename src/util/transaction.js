@@ -352,14 +352,16 @@ export const filterNotificationsByUserType = (notifications, currentUser) => {
 
 export const getNotifications = (currentTransactions, currentUser) => {
   let notifications = [];
-  currentTransactions.forEach(transaction => {
-    transaction.attributes.transitions.forEach(transition => {
-      transition.transaction = transaction;
-      if (NOTIFICATION_TRANSITIONS.includes(transition.transition)) {
-        notifications.push(transition);
-      }
+  if (currentTransactions) {
+    currentTransactions.forEach(transaction => {
+      transaction.attributes.transitions.forEach(transition => {
+        transition.transaction = transaction;
+        if (NOTIFICATION_TRANSITIONS.includes(transition.transition)) {
+          notifications.push(transition);
+        }
+      });
     });
-  });
+  }
 
   const filteredNotifications = filterNotificationsByUserType(notifications, currentUser);
 
