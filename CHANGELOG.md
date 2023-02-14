@@ -15,7 +15,25 @@ https://github.com/sharetribe/flex-template-web/
 
 ---
 
-## Upcoming version 2022-XX-XX
+## Upcoming version 2023-XX-XX
+
+## [v12.0.0] 2023-02-14
+
+### Updates from upstream (FTW-daily v10.0.0)
+
+- [add] This adds support for page asset files that can be created in Console. These asset files are
+  taken into use for
+
+  - LandingPage
+  - TermsOfServicePage
+  - PrivacyPolicyPage
+  - AboutPage
+  - and other static pages can also be created through Console (they'll be visible in route:
+    /p/:asset-name/)
+
+  [#1520](https://github.com/sharetribe/ftw-daily/pull/1520)
+
+  [v12.0.0]: https://github.com/sharetribe/ftw-hourly/compare/v11.1.0.../v12.0.0
 
 ## [v11.1.0] 2023-02-07
 
