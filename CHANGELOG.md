@@ -17,6 +17,9 @@ https://github.com/sharetribe/flex-template-web/
 
 ## Upcoming version 2023-XX-XX
 
+- [fix] AuthenticationPage.duck.js: had wrong asset name.
+  [#228](https://github.com/sharetribe/ftw-hourly/pull/228)
+
 ## [v12.0.0] 2023-02-14
 
 ### Updates from upstream (FTW-daily v10.0.0)
