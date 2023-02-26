@@ -30,12 +30,17 @@
   transition: var(--transitionStyleButton);
 
   flex-shrink: 0;
-  padding: 21px 24px 21px 24px;
+  padding: 4px 8px 4px 8px;
   height: 100%;
 
   @media (--viewportLarge) {
-    padding: 21px 36px 21px 36px;
+    padding: 6px 16px 6px 16px;
   }
+}
+.logoLink:hover {
+  border-bottom: 4px solid var(--marketplaceColor);
+  border-radius: 0;
+  text-decoration: none;
 }
 .logoLink:hover {
   border-bottom: 4px solid var(--marketplaceColor);
@@ -45,12 +50,12 @@
 
 .logo {
   /* If height is increased, change link paddings accordingly */
-  height: 27px;
+  height: 58px;
 
   /* Good aspect ratio should be less than 160/27 (width/height) */
   /* NOTE: extremely wide logos, need special handling. */
   width: auto;
-  max-width: 220px;
+  max-width: 120px;
   object-fit: contain;
   object-position: left center;
 }
