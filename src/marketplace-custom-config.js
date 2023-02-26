@@ -57,8 +57,9 @@ export const filters = [
       // Options for the minimum duration of the booking
       options: [
         { key: '0', label: 'Any length' },
-        { key: '60', label: '1 hour', shortLabel: '1h' },
         { key: '120', label: '2 hours', shortLabel: '2h' },
+        { key: '180', label: '3 hours', shortLabel: '3h' },
+		  { key: '240', label: '4 hours', shortLabel: '4h' },
       ],
     },
   },
@@ -92,11 +93,11 @@ export const filters = [
     config: {},
   },
   {
-    id: 'yogaStyles',
-    label: 'Yoga styles',
+    id: 'caddieTypes',
+    label: 'Caddie types',
     type: 'SelectMultipleFilter',
     group: 'secondary',
-    queryParamNames: ['pub_yogaStyles'],
+    queryParamNames: ['pub_caddieTypes'],
     config: {
       // Optional modes: 'has_all', 'has_any'
       // https://www.sharetribe.com/api-reference/marketplace.html#extended-data-filtering
@@ -107,18 +108,16 @@ export const filters = [
       // Note: label is not added through the translation files
       // to make filter customizations a bit easier.
       options: [
-        { key: 'ashtanga', label: 'Ashtanga' },
-        { key: 'hatha', label: 'Hatha' },
-        { key: 'kundalini', label: 'Kundalini' },
-        { key: 'restorative', label: 'Restorative' },
-        { key: 'vinyasa', label: 'Vinyasa' },
-        { key: 'yin', label: 'Yin' },
+        { key: 'caddie', label: 'Caddie' },
+        { key: 'forecaddie', label: 'Forecaddie' },
+        { key: 'bagcarrier', label: 'Bag Carrier' },
+        
       ],
     },
   },
   {
     id: 'certificate',
-    label: 'Certificate',
+    label: 'Experience',
     type: 'SelectSingleFilter',
     group: 'secondary',
     queryParamNames: ['pub_certificate'],
@@ -128,9 +127,12 @@ export const filters = [
       // Note: label is not added through the translation files
       // to make filter customizations a bit easier.
       options: [
-        { key: 'none', label: 'None', hideFromFilters: true, hideFromListingInfo: true },
-        { key: '200h', label: 'Registered yoga teacher 200h' },
-        { key: '500h', label: 'Registered yoga teacher 500h' },
+        { key: 'local', label: 'Local', hideFromFilters: true, hideFromListingInfo: true },
+        { key: '1-5-years', label: '1-5 Years Local Course Member' },
+		  { key: '5-10-years', label: '5-10 Years Local Course Member' },
+		  { key: '11-years', label: '11+ Years Local Course Member' },
+		  { key: 'professional', label: 'Local Professional' },
+		  { key: 'professional', label: 'Local Professional - PGA' },
       ],
     },
   },
