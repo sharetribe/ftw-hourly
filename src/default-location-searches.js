@@ -9,52 +9,62 @@ const { LatLng, LatLngBounds } = sdkTypes;
 // `predictionPlace` (util.types.place) properties.
 const defaultLocations = [
   {
-    id: 'default-new-york',
+    id: 'default-lothians',
     predictionPlace: {
-      address: 'New York City, New York, USA',
+      address: 'Edinburgh, Lothians, South East Scotland',
       bounds: new LatLngBounds(
-        new LatLng(40.917576401307, -73.7008392055224),
-        new LatLng(40.477399, -74.2590879797556)
+        new LatLng(56.106745, -1.597070),
+        new LatLng(55.636759, -3.393334)
       ),
     },
   },
   {
-    id: 'default-los-angeles',
+    id: 'default-glasgow',
     predictionPlace: {
-      address: 'Los Angeles, California, USA',
+      address: 'Glasgow, Ayrshire, South West Scotland',
       bounds: new LatLngBounds(
-        new LatLng(34.161440999758, -118.121305008073),
-        new LatLng(33.9018913203336, -118.521456965901)
+        new LatLng(55.922704, -3.809119),
+        new LatLng(55.291280, -4.959937)
       ),
     },
   },
   {
-    id: 'default-san-francisco',
+    id: 'default-st-andrews',
     predictionPlace: {
-      address: 'San Francisco, California, USA',
+      address: 'St Andrews, Fife, Central East Scotland',
       bounds: new LatLngBounds(
-        new LatLng(37.8324430069081, -122.354995082683),
-        new LatLng(37.6044780500533, -122.517910874663)
+        new LatLng(56.599990, -2.438575),
+        new LatLng(56.216292, -4.002753)
       ),
     },
   },
   {
-    id: 'default-seattle',
+    id: 'default-fort-william',
     predictionPlace: {
-      address: 'Seattle, Washington, USA',
+      address: 'Fort William, Mull, Central West Scotland',
       bounds: new LatLngBounds(
-        new LatLng(47.7779392908564, -122.216605992108),
-        new LatLng(47.3403950185547, -122.441233019046)
+        new LatLng(56.864419, -4.158744),
+        new LatLng(56.321528,-6.2488987)
       ),
     },
   },
   {
-    id: 'default-portland',
+    id: 'default-aberdeen',
     predictionPlace: {
-      address: 'Portland, Oregon, USA',
+      address: 'Aberdeen, North East Scotland',
       bounds: new LatLngBounds(
-        new LatLng(45.858099013046, -122.441059986416),
-        new LatLng(45.3794799927623, -122.929215816001)
+        new LatLng(57.768393, -1.774467),
+        new LatLng(57.134479, -3.090080)
+      ),
+    },
+  },
+  {
+    id: 'default-highlands',
+    predictionPlace: {
+      address: 'Highlands, North & West Scotland',
+      bounds: new LatLngBounds(
+        new LatLng(58.763670, -2.936271),
+        new LatLng(58.037480, -5.462041)
       ),
     },
   },
