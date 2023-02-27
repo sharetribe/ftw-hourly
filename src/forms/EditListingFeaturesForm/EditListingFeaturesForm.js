@@ -49,7 +49,7 @@ const EditListingFeaturesFormComponent = props => (
         </p>
       ) : null;
 
-      const options = findOptionsForSelectFilter('yogaStyles', filterConfig);
+      const options = findOptionsForSelectFilter('caddieTypes', filterConfig);
       return (
         <Form className={classes} onSubmit={handleSubmit}>
           {errorMessage}
