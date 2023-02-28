@@ -17,8 +17,23 @@ https://github.com/sharetribe/flex-template-web/
 
 ## Upcoming version 2023-XX-XX
 
+## [v12.1.0] 2023-02-28
+
 - [fix] AuthenticationPage.duck.js: had wrong asset name.
   [#228](https://github.com/sharetribe/ftw-hourly/pull/228)
+
+### Updates from upstream (FTW-daily v10.1.0)
+
+- [change] remove background-color from images (to allow opacity).
+  [#1590](https://github.com/sharetribe/ftw-daily/pull/1590)
+- [change] improve error handling possibilities on PageBuilder.
+  [#1589](https://github.com/sharetribe/ftw-daily/pull/1589)
+- [fix] AuthenticationPage.duck.js: had wrong asset name.
+  [#1588](https://github.com/sharetribe/ftw-daily/pull/1588)
+- [change] P.js: remove requirement for mandatory children.
+  [#1587](https://github.com/sharetribe/ftw-daily/pull/1587)
+
+  [v12.1.0]: https://github.com/sharetribe/ftw-hourly/compare/v12.0.0.../v12.1.0
 
 ## [v12.0.0] 2023-02-14
 
