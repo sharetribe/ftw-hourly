@@ -152,7 +152,7 @@
 }
 
 /**
- * Theme: dark 
+ * Theme: dark
  * These styles are at the bottom of the file so that they overwrite rules for default "light" theme.
  */
 .darkTheme h1,
@@ -193,11 +193,12 @@
 
 /* button on dark theme */
 .darkTheme .ctaButton {
-  border: 1px solid var(--marketplaceColorDark);
+  border: none;
   text-decoration: none;
 
   &:hover {
     color: white;
+    border: none;
   }
 }
 
