@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SectionHero matches snapshot 1`] = `
+<div
+  className="root"
+>
+  <div
+    className="heroContent"
+  >
+    <h1
+      className="heroMainTitle heroMainTitleFEDelay"
+    >
+      <span>
+        SectionHero.title
+      </span>
+    </h1>
+    <h2
+      className="heroSubTitle heroSubTitleFEDelay"
+    >
+      <span>
+        SectionHero.subTitle
+      </span>
+    </h2>
+    <a
+      className="heroButton heroButtonFEDelay"
+      href="/s?address=United%20States%20of%20America&bounds=71.540724%2C-66.885444%2C18.765563%2C-179.9"
+      onClick={[Function]}
+      onMouseOver={[Function]}
+      onTouchStart={[Function]}
+      style={Object {}}
+      title={null}
+    >
+      <span>
+        SectionHero.browseButton
+      </span>
+    </a>
+  </div>
+</div>
+`;

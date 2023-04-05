@@ -1,0 +1,72 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ListingCard matches snapshot 1`] = `
+<NamedLink
+  className="root"
+  name="ListingPage"
+  params={
+    Object {
+      "id": "listing1",
+      "slug": "listing1-title",
+    }
+  }
+>
+  <div
+    className="threeToTwoWrapper"
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+  >
+    <div
+      className="aspectWrapper"
+    >
+      <lazyLoadWithDimensions(ListingImage)
+        alt="listing1 title"
+        image={null}
+        rootClassName="rootForImage"
+        sizes={null}
+        variants={
+          Array [
+            "landscape-crop",
+            "landscape-crop2x",
+          ]
+        }
+      />
+    </div>
+  </div>
+  <div
+    className="info"
+  >
+    <div
+      className="price"
+    >
+      <div
+        className="priceValue"
+        title={55}
+      >
+        55
+      </div>
+      <div
+        className="perUnit"
+      >
+        <MemoizedFormattedMessage
+          id="ListingCard.perUnit"
+        />
+      </div>
+    </div>
+    <div
+      className="mainInfo"
+    >
+      <div
+        className="title"
+      >
+        listing1
+         
+        title
+      </div>
+      <div
+        className="certificateInfo"
+      />
+    </div>
+  </div>
+</NamedLink>
+`;

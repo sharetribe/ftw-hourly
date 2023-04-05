@@ -1,0 +1,54 @@
+@import '../../styles/customMediaQueries.css';
+
+.root {
+  composes: marketplaceModalFormRootStyles from global;
+
+  justify-content: flex-start;
+
+  @media (--viewportMedium) {
+    justify-content: space-between;
+  }
+}
+
+.name {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 24px;
+
+  @media (--viewportMedium) {
+    margin-top: 32px;
+  }
+}
+
+.firstNameRoot {
+  width: calc(34% - 9px);
+}
+
+.lastNameRoot {
+  width: calc(66% - 9px);
+}
+
+.password {
+  composes: marketplaceModalPasswordMargins from global;
+}
+
+.bottomWrapper {
+  composes: marketplaceModalBottomWrapper from global;
+}
+
+.bottomWrapperText {
+  composes: marketplaceModalBottomWrapperText from global;
+}
+
+.termsText {
+  composes: marketplaceModalHelperText from global;
+}
+
+.termsLink {
+  composes: marketplaceModalHelperLink from global;
+
+  &:hover {
+    text-decoration: underline;
+    cursor: pointer;
+  }
+}

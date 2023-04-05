@@ -1,0 +1,241 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SearchPageComponent matches snapshot 1`] = `
+<Page
+  description="SearchPage.schemaDescription"
+  schema={
+    Object {
+      "@context": "http://schema.org",
+      "@type": "SearchResultsPage",
+      "description": "SearchPage.schemaDescription",
+      "mainEntity": Array [
+        "{\\"@type\\":\\"ItemList\\",\\"name\\":\\"SearchPage.schemaMapSearch\\",\\"itemListOrder\\":\\"http://schema.org/ItemListOrderAscending\\",\\"itemListElement\\":[]}",
+      ],
+      "name": "SearchPage.schemaTitle",
+    }
+  }
+  scrollingDisabled={false}
+  title="SearchPage.schemaTitle"
+>
+  <withRouter(Connect(TopbarContainerComponent))
+    className="topbar"
+    currentPage="SearchPage"
+    currentSearchParams={Object {}}
+  />
+  <div
+    className="container"
+  >
+    <MainPanel
+      className={null}
+      filterConfig={
+        Array [
+          Object {
+            "config": Object {
+              "options": Array [
+                Object {
+                  "key": "0",
+                  "label": "Any length",
+                },
+                Object {
+                  "key": "60",
+                  "label": "1 hour",
+                  "shortLabel": "1h",
+                },
+                Object {
+                  "key": "120",
+                  "label": "2 hours",
+                  "shortLabel": "2h",
+                },
+              ],
+              "searchTimeZone": "Etc/UTC",
+            },
+            "group": "primary",
+            "id": "dates-length",
+            "label": "Dates",
+            "queryParamNames": Array [
+              "dates",
+              "minDuration",
+            ],
+            "type": "BookingDateRangeLengthFilter",
+          },
+          Object {
+            "config": Object {
+              "max": 1000,
+              "min": 0,
+              "step": 5,
+            },
+            "group": "primary",
+            "id": "price",
+            "label": "Price",
+            "queryParamNames": Array [
+              "price",
+            ],
+            "type": "PriceFilter",
+          },
+          Object {
+            "config": Object {},
+            "group": "primary",
+            "id": "keyword",
+            "label": "Keyword",
+            "queryParamNames": Array [
+              "keywords",
+            ],
+            "type": "KeywordFilter",
+          },
+          Object {
+            "config": Object {
+              "options": Array [
+                Object {
+                  "key": "ashtanga",
+                  "label": "Ashtanga",
+                },
+                Object {
+                  "key": "hatha",
+                  "label": "Hatha",
+                },
+                Object {
+                  "key": "kundalini",
+                  "label": "Kundalini",
+                },
+                Object {
+                  "key": "restorative",
+                  "label": "Restorative",
+                },
+                Object {
+                  "key": "vinyasa",
+                  "label": "Vinyasa",
+                },
+                Object {
+                  "key": "yin",
+                  "label": "Yin",
+                },
+              ],
+              "searchMode": "has_all",
+            },
+            "group": "secondary",
+            "id": "yogaStyles",
+            "label": "Yoga styles",
+            "queryParamNames": Array [
+              "pub_yogaStyles",
+            ],
+            "type": "SelectMultipleFilter",
+          },
+          Object {
+            "config": Object {
+              "options": Array [
+                Object {
+                  "hideFromFilters": true,
+                  "hideFromListingInfo": true,
+                  "key": "none",
+                  "label": "None",
+                },
+                Object {
+                  "key": "200h",
+                  "label": "Registered yoga teacher 200h",
+                },
+                Object {
+                  "key": "500h",
+                  "label": "Registered yoga teacher 500h",
+                },
+              ],
+            },
+            "group": "secondary",
+            "id": "certificate",
+            "label": "Certificate",
+            "queryParamNames": Array [
+              "pub_certificate",
+            ],
+            "type": "SelectSingleFilter",
+          },
+        ]
+      }
+      history={
+        Object {
+          "push": [Function],
+        }
+      }
+      listings={Array []}
+      onActivateListing={[Function]}
+      onCloseModal={[Function]}
+      onManageDisableScrolling={[Function]}
+      onMapIconClick={[Function]}
+      onOpenModal={[Function]}
+      pagination={
+        Object {
+          "page": 1,
+          "perPage": 12,
+          "totalItems": 22,
+          "totalPages": 2,
+        }
+      }
+      resultsCount={0}
+      rootClassName={null}
+      searchInProgress={false}
+      searchListingsError={null}
+      searchParamsAreInSync={true}
+      searchParamsForPagination={Object {}}
+      showAsModalMaxWidth={768}
+      sortConfig={
+        Object {
+          "active": true,
+          "conflictingFilters": Array [
+            "keyword",
+          ],
+          "options": Array [
+            Object {
+              "key": "createdAt",
+              "label": "Newest",
+            },
+            Object {
+              "key": "-createdAt",
+              "label": "Oldest",
+            },
+            Object {
+              "key": "-price",
+              "label": "Lowest price",
+            },
+            Object {
+              "key": "price",
+              "label": "Highest price",
+            },
+            Object {
+              "key": "relevance",
+              "label": "Relevance",
+              "longLabel": "Relevance (Keyword search)",
+            },
+          ],
+          "queryParamName": "sort",
+          "relevanceKey": "relevance",
+        }
+      }
+      urlQueryParams={Object {}}
+    />
+    <withViewport(ModalInMobileComponent)
+      className="mapPanel"
+      id="SearchPage.map"
+      isModalOpenOnMobile={false}
+      onClose={[Function]}
+      onManageDisableScrolling={[Function]}
+      showAsModalMaxWidth={768}
+    >
+      <div
+        className="mapWrapper"
+      >
+        <withRouter(SearchMapComponent)
+          activeListingId={null}
+          isSearchMapOpenOnMobile={false}
+          listings={Array []}
+          location={
+            Object {
+              "search": "",
+            }
+          }
+          onCloseAsModal={[Function]}
+          onMapMoveEnd={[Function]}
+          reusableContainerClassName="map"
+        />
+      </div>
+    </withViewport(ModalInMobileComponent)>
+  </div>
+</Page>
+`;

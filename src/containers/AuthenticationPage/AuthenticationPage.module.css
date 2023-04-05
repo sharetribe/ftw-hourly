@@ -1,0 +1,240 @@
+@import '../../styles/customMediaQueries.css';
+
+.layoutWrapperMain {
+  min-height: calc(100vh - var(--topbarHeight));
+
+  @media (--viewportMedium) {
+    min-height: calc(100vh - var(--topbarHeightDesktop));
+  }
+}
+
+.root {
+  composes: marketplaceModalRootStyles from global;
+  composes: defaultBackgroundImageForDesktop from global;
+}
+
+.content {
+  composes: marketplaceModalBaseStyles from global;
+  padding-top: 29px;
+}
+
+/* ================ Tabs & Form ================ */
+
+.tabs {
+  @media (--viewportMedium) {
+    margin-top: 6px;
+  }
+}
+
+.tab {
+  composes: marketplaceModalTitleStyles from global;
+  margin-top: 0;
+  margin-bottom: 0;
+
+  @media (--viewportMedium) {
+    margin-top: 0;
+  }
+}
+
+.form {
+  margin-top: 24px;
+
+  @media (--viewportMedium) {
+    margin-top: 30px;
+    padding-top: 2px;
+  }
+}
+
+.loginForm {
+  margin-top: 24px;
+
+  /* We don't want the form to take the whole space so that on mobile view
+  the social login buttons will be after the sign up button
+  and not in the bottom of the page.
+  We also need to add flex-basis value so that Safari will show the
+  whole form correctly.  */
+  flex-grow: 0;
+  flex-basis: 260px;
+
+  @media (--viewportMedium) {
+    flex-basis: 330px;
+    margin-top: 30px;
+    padding-top: 2px;
+  }
+}
+
+.signupForm {
+  margin-top: 24px;
+
+  /* We don't want the form to take the whole space so that on mobile view
+  the social login buttons will be after the sign up button
+  and not in the bottom of the page.
+  We also need to add flex-basis value so that Safari will show the
+  whole form correctly.  */
+  flex-grow: 0;
+  flex-basis: 340px;
+
+  @media (--viewportMedium) {
+    flex-basis: 410px;
+    margin-top: 30px;
+    padding-top: 2px;
+  }
+}
+
+.bottomWrapper {
+  composes: marketplaceModalBottomWrapper from global;
+
+  /* Align the helper links to the left since there isn't a Primary Button anymore */
+  text-align: left;
+}
+
+/* Terms of Service modal*/
+
+.termsWrapper {
+  width: 100%;
+  padding-top: 40px;
+
+  @media (--viewportMedium) {
+    width: 604px;
+    padding-top: 11px;
+  }
+}
+
+/* ================ Hide Top bar in screens smaller than 768px  ================ */
+
+.hideOnMobile {
+  display: none;
+
+  @media (--viewportMedium) {
+    display: block;
+  }
+}
+
+/* ================ Close icon ================ */
+
+.verifyClose {
+  composes: marketplaceModalCloseStyles from global;
+
+  /* This is not a real modal, z-index should not be modal's z-index */
+  z-index: 1;
+}
+
+.closeText {
+  composes: marketplaceModalCloseText from global;
+}
+
+.closeIcon {
+  composes: marketplaceModalCloseIcon from global;
+}
+
+/* ================ Typography ================ */
+
+/* Title of the modal */
+.modalTitle {
+  composes: marketplaceModalTitleStyles from global;
+}
+
+/* Paragraph for the Modal */
+.modalMessage {
+  composes: marketplaceModalParagraphStyles from global;
+}
+
+/* Make the email pop */
+.email {
+  font-weight: var(--fontWeightHighlightEmail);
+}
+
+/* Helper links */
+.modalHelperLink {
+  composes: a from global;
+  composes: marketplaceModalHelperLink from global;
+}
+
+/* Helper texts for the links, not the actual links */
+.modalHelperText {
+  composes: marketplaceModalHelperText from global;
+}
+
+.modalIcon {
+  composes: marketplaceModalIconStyles from global;
+
+  /* Align the icon and rest of the content in the modal. Sign & Login doesn't use an icon, maybe we should add one? */
+  margin-top: 47px;
+
+  @media (--viewportMedium) {
+    margin-top: 0;
+  }
+}
+
+/* ================ Errors ================ */
+
+.error {
+  composes: marketplaceModalPasswordMargins from global;
+}
+
+/* ================ Social logins & SSO ================ */
+
+.signupWithIdpTitle {
+  composes: marketplaceModalTitleStyles from global;
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-top: 16px;
+  color: var(--matterColorDark);
+
+  @media (--viewportMedium) {
+    margin-top: 6px;
+  }
+}
+
+.confirmInfoText {
+  composes: h4 from global;
+}
+
+.buttonIcon {
+  position: absolute;
+  left: 0;
+  margin-left: 20px;
+}
+
+.socialButtonWrapper {
+  margin-bottom: 6px;
+  @media (--viewportMedium) {
+    margin-top: 8px;
+  }
+}
+
+.socialButtonsOr {
+  width: 100%;
+  height: 32px;
+  margin: 28px 0 20px 0;
+  text-align: center;
+  position: relative;
+  background-color: var(--matterColorLight);
+
+  &:after {
+    content: '';
+    width: 100%;
+    border-bottom: solid 1px #d2d2d2;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    z-index: 1;
+  }
+}
+
+@media (--viewportMedium) {
+  .socialButtonsOr {
+    height: 34px;
+    margin: 15px 0;
+  }
+}
+
+.socialButtonsOrText {
+  background-color: var(--matterColorLight);
+  width: auto;
+  display: inline-block;
+  z-index: 3;
+  padding: 0 20px 0 20px;
+  position: relative;
+  margin: 0;
+}

@@ -1,0 +1,353 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PaginationLinks should match snapshot with both links disabled 1`] = `
+<nav
+  className="root"
+>
+  <div
+    className="prev"
+  >
+    <IconArrowHead
+      className={null}
+      direction="left"
+      rootClassName="arrowIcon disabled"
+      size="big"
+    />
+  </div>
+  <div
+    className="pageNumberList pageNumberList1Items"
+  >
+    <NamedLink
+      className="toPageLink currentPage"
+      key="1"
+      name="SomePage"
+      params={
+        Object {
+          "id": "some-page-id",
+        }
+      }
+      title="PaginationLinks.toPage"
+      to={
+        Object {
+          "search": "page=1&param=foobar",
+        }
+      }
+    >
+      1
+    </NamedLink>
+  </div>
+  <div
+    className="next"
+  >
+    <IconArrowHead
+      className={null}
+      direction="right"
+      rootClassName="arrowIcon disabled"
+      size="big"
+    />
+  </div>
+</nav>
+`;
+
+exports[`PaginationLinks should match snapshot with both links enabled 1`] = `
+<nav
+  className="root"
+>
+  <NamedLink
+    className="prev"
+    name="SomePage"
+    params={
+      Object {
+        "id": "some-page-id",
+      }
+    }
+    title="PaginationLinks.previous"
+    to={
+      Object {
+        "search": "page=1&param=foobar",
+      }
+    }
+  >
+    <IconArrowHead
+      className={null}
+      direction="left"
+      rootClassName="arrowIcon"
+      size="big"
+    />
+  </NamedLink>
+  <div
+    className="pageNumberList pageNumberList3Items"
+  >
+    <NamedLink
+      className="toPageLink"
+      key="1"
+      name="SomePage"
+      params={
+        Object {
+          "id": "some-page-id",
+        }
+      }
+      title="PaginationLinks.toPage"
+      to={
+        Object {
+          "search": "page=1&param=foobar",
+        }
+      }
+    >
+      1
+    </NamedLink>
+    <NamedLink
+      className="toPageLink currentPage"
+      key="2"
+      name="SomePage"
+      params={
+        Object {
+          "id": "some-page-id",
+        }
+      }
+      title="PaginationLinks.toPage"
+      to={
+        Object {
+          "search": "page=2&param=foobar",
+        }
+      }
+    >
+      2
+    </NamedLink>
+    <NamedLink
+      className="toPageLink"
+      key="3"
+      name="SomePage"
+      params={
+        Object {
+          "id": "some-page-id",
+        }
+      }
+      title="PaginationLinks.toPage"
+      to={
+        Object {
+          "search": "page=3&param=foobar",
+        }
+      }
+    >
+      3
+    </NamedLink>
+  </div>
+  <NamedLink
+    className="next"
+    name="SomePage"
+    params={
+      Object {
+        "id": "some-page-id",
+      }
+    }
+    title="PaginationLinks.next"
+    to={
+      Object {
+        "search": "page=3&param=foobar",
+      }
+    }
+  >
+    <IconArrowHead
+      className={null}
+      direction="right"
+      rootClassName="arrowIcon"
+      size="big"
+    />
+  </NamedLink>
+</nav>
+`;
+
+exports[`PaginationLinks should match snapshot with prev disabled and next enabled 1`] = `
+<nav
+  className="root"
+>
+  <div
+    className="prev"
+  >
+    <IconArrowHead
+      className={null}
+      direction="left"
+      rootClassName="arrowIcon disabled"
+      size="big"
+    />
+  </div>
+  <div
+    className="pageNumberList pageNumberList3Items"
+  >
+    <NamedLink
+      className="toPageLink currentPage"
+      key="1"
+      name="SomePage"
+      params={
+        Object {
+          "id": "some-page-id",
+        }
+      }
+      title="PaginationLinks.toPage"
+      to={
+        Object {
+          "search": "page=1&param=foobar",
+        }
+      }
+    >
+      1
+    </NamedLink>
+    <NamedLink
+      className="toPageLink"
+      key="2"
+      name="SomePage"
+      params={
+        Object {
+          "id": "some-page-id",
+        }
+      }
+      title="PaginationLinks.toPage"
+      to={
+        Object {
+          "search": "page=2&param=foobar",
+        }
+      }
+    >
+      2
+    </NamedLink>
+    <NamedLink
+      className="toPageLink"
+      key="3"
+      name="SomePage"
+      params={
+        Object {
+          "id": "some-page-id",
+        }
+      }
+      title="PaginationLinks.toPage"
+      to={
+        Object {
+          "search": "page=3&param=foobar",
+        }
+      }
+    >
+      3
+    </NamedLink>
+  </div>
+  <NamedLink
+    className="next"
+    name="SomePage"
+    params={
+      Object {
+        "id": "some-page-id",
+      }
+    }
+    title="PaginationLinks.next"
+    to={
+      Object {
+        "search": "page=2&param=foobar",
+      }
+    }
+  >
+    <IconArrowHead
+      className={null}
+      direction="right"
+      rootClassName="arrowIcon"
+      size="big"
+    />
+  </NamedLink>
+</nav>
+`;
+
+exports[`PaginationLinks should match snapshot with prev enabled and next disabled 1`] = `
+<nav
+  className="root"
+>
+  <NamedLink
+    className="prev"
+    name="SomePage"
+    params={
+      Object {
+        "id": "some-page-id",
+      }
+    }
+    title="PaginationLinks.previous"
+    to={
+      Object {
+        "search": "page=2&param=foobar",
+      }
+    }
+  >
+    <IconArrowHead
+      className={null}
+      direction="left"
+      rootClassName="arrowIcon"
+      size="big"
+    />
+  </NamedLink>
+  <div
+    className="pageNumberList pageNumberList3Items"
+  >
+    <NamedLink
+      className="toPageLink"
+      key="1"
+      name="SomePage"
+      params={
+        Object {
+          "id": "some-page-id",
+        }
+      }
+      title="PaginationLinks.toPage"
+      to={
+        Object {
+          "search": "page=1&param=foobar",
+        }
+      }
+    >
+      1
+    </NamedLink>
+    <NamedLink
+      className="toPageLink"
+      key="2"
+      name="SomePage"
+      params={
+        Object {
+          "id": "some-page-id",
+        }
+      }
+      title="PaginationLinks.toPage"
+      to={
+        Object {
+          "search": "page=2&param=foobar",
+        }
+      }
+    >
+      2
+    </NamedLink>
+    <NamedLink
+      className="toPageLink currentPage"
+      key="3"
+      name="SomePage"
+      params={
+        Object {
+          "id": "some-page-id",
+        }
+      }
+      title="PaginationLinks.toPage"
+      to={
+        Object {
+          "search": "page=3&param=foobar",
+        }
+      }
+    >
+      3
+    </NamedLink>
+  </div>
+  <div
+    className="next"
+  >
+    <IconArrowHead
+      className={null}
+      direction="right"
+      rootClassName="arrowIcon disabled"
+      size="big"
+    />
+  </div>
+</nav>
+`;

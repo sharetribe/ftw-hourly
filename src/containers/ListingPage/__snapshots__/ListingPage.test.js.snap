@@ -1,0 +1,316 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ListingPage matches snapshot 1`] = `
+<Page
+  author="user-1 display name"
+  description="listing1 description"
+  facebookImages={Array []}
+  schema={
+    Object {
+      "@context": "http://schema.org",
+      "@type": "ItemPage",
+      "description": "listing1 description",
+      "image": "[]",
+      "name": "ListingPage.schemaTitle",
+    }
+  }
+  scrollingDisabled={false}
+  title="ListingPage.schemaTitle"
+  twitterImages={Array []}
+>
+  <LayoutSingleColumn
+    className="pageRoot"
+    rootClassName={null}
+  >
+    <LayoutWrapperTopbar
+      className={null}
+      rootClassName={null}
+    >
+      <withRouter(Connect(TopbarContainerComponent)) />
+    </LayoutWrapperTopbar>
+    <LayoutWrapperMain
+      className={null}
+      rootClassName={null}
+    >
+      <div>
+        <SectionImages
+          editParams={
+            Object {
+              "id": "listing1",
+              "slug": "listing1-title",
+              "tab": "description",
+              "type": "edit",
+            }
+          }
+          handleViewPhotosClick={[Function]}
+          imageCarouselOpen={false}
+          isOwnListing={false}
+          listing={
+            Object {
+              "attributes": Object {
+                "deleted": false,
+                "description": "listing1 description",
+                "geolocation": LatLng {
+                  "_sdkType": "LatLng",
+                  "lat": 40,
+                  "lng": 60,
+                },
+                "price": Money {
+                  "_sdkType": "Money",
+                  "amount": 5500,
+                  "currency": "USD",
+                },
+                "publicData": Object {},
+                "state": "published",
+                "title": "listing1 title",
+              },
+              "author": Object {
+                "attributes": Object {
+                  "banned": false,
+                  "deleted": false,
+                  "profile": Object {
+                    "abbreviatedName": "TT",
+                    "displayName": "user-1 display name",
+                  },
+                },
+                "id": UUID {
+                  "_sdkType": "UUID",
+                  "uuid": "user-1",
+                },
+                "type": "user",
+              },
+              "id": UUID {
+                "_sdkType": "UUID",
+                "uuid": "listing1",
+              },
+              "images": Array [],
+              "type": "listing",
+            }
+          }
+          onImageCarouselClose={[Function]}
+          onManageDisableScrolling={[Function]}
+          title="listing1 title"
+        />
+        <div
+          className="contentContainer"
+        >
+          <SectionAvatar
+            params={
+              Object {
+                "id": "listing1",
+                "slug": "listing1-title",
+              }
+            }
+            user={
+              Object {
+                "attributes": Object {
+                  "banned": false,
+                  "deleted": false,
+                  "profile": Object {
+                    "abbreviatedName": "TT",
+                    "displayName": "user-1 display name",
+                  },
+                },
+                "id": UUID {
+                  "_sdkType": "UUID",
+                  "uuid": "user-1",
+                },
+                "type": "user",
+              }
+            }
+          />
+          <div
+            className="mainContent"
+          >
+            <SectionHeading
+              certificateOptions={
+                Array [
+                  Object {
+                    "key": "cat1",
+                    "label": "Cat 1",
+                  },
+                  Object {
+                    "key": "cat2",
+                    "label": "Cat 2",
+                  },
+                ]
+              }
+              formattedPrice={55}
+              hostLink={
+                <NamedLink
+                  className="authorNameLink"
+                  name="ListingPage"
+                  params={
+                    Object {
+                      "id": "listing1",
+                      "slug": "listing1-title",
+                    }
+                  }
+                  to={
+                    Object {
+                      "hash": "#host",
+                    }
+                  }
+                >
+                  user-1 display name
+                </NamedLink>
+              }
+              onContactUser={[Function]}
+              priceTitle={55}
+              richTitle={
+                <span>
+                  
+                  listing1
+                   
+                  title
+                  
+                </span>
+              }
+              showContactUser={true}
+            />
+            <SectionDescriptionMaybe
+              description="listing1 description"
+            />
+            <SectionFeaturesMaybe
+              options={
+                Array [
+                  Object {
+                    "key": "feat1",
+                    "label": "Feat 1",
+                  },
+                  Object {
+                    "key": "feat2",
+                    "label": "Feat 2",
+                  },
+                  Object {
+                    "key": "feat3",
+                    "label": "Feat 3",
+                  },
+                ]
+              }
+              publicData={Object {}}
+            />
+            <SectionMapMaybe
+              className={null}
+              geolocation={
+                LatLng {
+                  "_sdkType": "LatLng",
+                  "lat": 40,
+                  "lng": 60,
+                }
+              }
+              listingId={
+                UUID {
+                  "_sdkType": "UUID",
+                  "uuid": "listing1",
+                }
+              }
+              publicData={Object {}}
+              rootClassName={null}
+            />
+            <SectionReviews
+              fetchReviewsError={null}
+              reviews={Array []}
+            />
+          </div>
+          <withRouter(injectIntl(BookingPanel))
+            authorDisplayName="user-1 display name"
+            className="bookingPanel"
+            fetchLineItemsError={null}
+            fetchLineItemsInProgress={false}
+            isOwnListing={false}
+            lineItems={null}
+            listing={
+              Object {
+                "attributes": Object {
+                  "deleted": false,
+                  "description": "listing1 description",
+                  "geolocation": LatLng {
+                    "_sdkType": "LatLng",
+                    "lat": 40,
+                    "lng": 60,
+                  },
+                  "price": Money {
+                    "_sdkType": "Money",
+                    "amount": 5500,
+                    "currency": "USD",
+                  },
+                  "publicData": Object {},
+                  "state": "published",
+                  "title": "listing1 title",
+                },
+                "author": Object {
+                  "attributes": Object {
+                    "banned": false,
+                    "deleted": false,
+                    "profile": Object {
+                      "abbreviatedName": "TT",
+                      "displayName": "user-1 display name",
+                    },
+                  },
+                  "id": UUID {
+                    "_sdkType": "UUID",
+                    "uuid": "user-1",
+                  },
+                  "type": "user",
+                },
+                "id": UUID {
+                  "_sdkType": "UUID",
+                  "uuid": "listing1",
+                },
+                "images": Array [],
+                "type": "listing",
+              }
+            }
+            monthlyTimeSlots={null}
+            onFetchTimeSlots={[Function]}
+            onFetchTransactionLineItems={[Function]}
+            onManageDisableScrolling={[Function]}
+            onSubmit={[Function]}
+            title={
+              <Memo(MemoizedFormattedMessage)
+                id="ListingPage.bookingTitle"
+                values={
+                  Object {
+                    "title": <span>
+                      
+                      listing1
+                       
+                      title
+                      
+                    </span>,
+                  }
+                }
+              />
+            }
+            unitType="line-item/night"
+          />
+        </div>
+      </div>
+      <injectIntl(ModalComponent)
+        contentClassName="enquiryModalContent"
+        id="ListingPage.enquiry"
+        isOpen={false}
+        onClose={[Function]}
+        onManageDisableScrolling={[Function]}
+      >
+        <EnquiryForm
+          authorDisplayName="user-1 display name"
+          className="enquiryForm"
+          inProgress={false}
+          listingTitle="listing1 title"
+          onSubmit={[Function]}
+          sendEnquiryError={null}
+          submitButtonWrapperClassName="enquirySubmitButtonWrapper"
+        />
+      </injectIntl(ModalComponent)>
+    </LayoutWrapperMain>
+    <LayoutWrapperFooter
+      className={null}
+      rootClassName={null}
+    >
+      <injectIntl(Footer) />
+    </LayoutWrapperFooter>
+  </LayoutSingleColumn>
+</Page>
+`;

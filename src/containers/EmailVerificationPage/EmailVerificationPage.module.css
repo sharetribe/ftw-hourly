@@ -1,0 +1,22 @@
+@import '../../styles/customMediaQueries.css';
+
+.layoutWrapperMain {
+  min-height: calc(100vh - var(--topbarHeight));
+
+  @media (--viewportMedium) {
+    min-height: calc(100vh - var(--topbarHeightDesktop));
+  }
+}
+
+.root {
+  composes: marketplaceModalRootStyles from global;
+  composes: defaultBackgroundImageForDesktop from global;
+}
+
+.content {
+  composes: marketplaceModalBaseStyles from global;
+}
+
+.error {
+  composes: marketplaceModalPasswordMargins from global;
+}
