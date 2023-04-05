@@ -21,6 +21,7 @@ import { StripeConnectAccountForm } from '../../forms';
 import EditListingWizardTab, {
   AVAILABILITY,
   DESCRIPTION,
+  GOLFCOURSE,
   FEATURES,
   POLICY,
   LOCATION,
@@ -42,6 +43,7 @@ export const TABS = [
   DESCRIPTION,
   FEATURES,
   //POLICY,
+  GOLFCOURSE,
   LOCATION,
   PRICING,
   ...availabilityMaybe,
@@ -60,6 +62,8 @@ const tabLabel = (intl, tab) => {
     key = 'EditListingWizard.tabLabelDescription';
   } else if (tab === FEATURES) {
     key = 'EditListingWizard.tabLabelFeatures';
+  } else if (tab === GOLFCOURSE) {
+    key = 'Golf Course';
   } else if (tab === POLICY) {
     key = 'EditListingWizard.tabLabelPolicy';
   } else if (tab === LOCATION) {

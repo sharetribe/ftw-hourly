@@ -21,6 +21,7 @@ import {
 } from '../../components';
 
 import css from './EditListingWizard.module.css';
+import EditListingGolfFeaturesPanel from '../EditListingGolfFeaturesPanel/EditListingFeaturesPanel';
 
 export const AVAILABILITY = 'availability';
 export const DESCRIPTION = 'description';
@@ -29,11 +30,12 @@ export const POLICY = 'policy';
 export const LOCATION = 'location';
 export const PRICING = 'pricing';
 export const PHOTOS = 'photos';
-
+export const GOLFCOURSE = 'golfcourse';
 // EditListingWizardTab component supports these tabs
 export const SUPPORTED_TABS = [
   DESCRIPTION,
   FEATURES,
+  GOLFCOURSE,
   POLICY,
   LOCATION,
   PRICING,
@@ -188,6 +190,21 @@ const EditListingWizardTab = props => {
       return (
         <EditListingFeaturesPanel
           {...panelProps(FEATURES)}
+          submitButtonText={intl.formatMessage({ id: submitButtonTranslationKey })}
+          onSubmit={values => {
+            onCompleteEditListingWizardTab(tab, values);
+          }}
+        />
+      );
+    }
+
+    case GOLFCOURSE: {
+      const submitButtonTranslationKey = isNewListingFlow
+        ? 'EditListingWizard.saveNewGolfCourse'
+        : 'EditListingWizard.saveEditGolfCourse';
+      return (
+        <EditListingGolfFeaturesPanel
+          {...panelProps(GOLFCOURSE)}
           submitButtonText={intl.formatMessage({ id: submitButtonTranslationKey })}
           onSubmit={values => {
             onCompleteEditListingWizardTab(tab, values);

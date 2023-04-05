@@ -58,6 +58,7 @@ import SectionFeaturesMaybe from './SectionFeaturesMaybe';
 import SectionReviews from './SectionReviews';
 import SectionMapMaybe from './SectionMapMaybe';
 import css from './ListingPage.module.css';
+import SectionFeaturesGolfCourse from './SectionFeaturesGolfCourse';
 
 const MIN_LENGTH_FOR_LONG_WORDS_IN_TITLE = 16;
 
@@ -385,6 +386,7 @@ export class ListingPageComponent extends Component {
 
     const caddieTypesOptions = findOptionsForSelectFilter('caddieTypes', filterConfig);
     const certificateOptions = findOptionsForSelectFilter('certificate', filterConfig);
+    const golfCourseOptions = findOptionsForSelectFilter('golfCourse', filterConfig);
 
     return (
       <Page
@@ -435,6 +437,7 @@ export class ListingPageComponent extends Component {
                     onContactUser={this.onContactUser}
                   />
                   <SectionDescriptionMaybe description={description} />
+                  <SectionFeaturesGolfCourse options={golfCourseOptions} publicData={publicData} />
                   <SectionFeaturesMaybe options={caddieTypesOptions} publicData={publicData} />
                   <SectionMapMaybe
                     geolocation={geolocation}

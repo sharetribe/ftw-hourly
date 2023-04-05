@@ -4,23 +4,24 @@ import { PropertyGroup } from '../../components';
 
 import css from './ListingPage.module.css';
 
-const SectionFeaturesMaybe = props => {
+const SectionFeaturesGolfCourse = props => {
   const { options, publicData } = props;
   if (!publicData) {
     return null;
   }
 
-  const selectedOptions = publicData && publicData.caddieTypes ? publicData.caddieTypes : [];
+  const selectedOptions = publicData && publicData.golfCourse ? publicData.golfCourse : [];
   const selectedConfigOptions = options.filter(o => selectedOptions.find(s => s === o.key));
 
-  console.log(selectedOptions, 'CaddieTypes');
+  console.log(selectedOptions, 'PublicData');
+
   return (
     <div className={css.sectionFeatures}>
       <h2 className={css.featuresTitle}>
-        <FormattedMessage id="ListingPage.featuresTitle" />
+        <FormattedMessage id="Golf Courses" />
       </h2>
       <PropertyGroup
-        id="ListingPage.caddieTypes"
+        id="ListingPage.golfCourse"
         options={selectedConfigOptions}
         selectedOptions={selectedOptions}
         twoColumns={selectedConfigOptions.length > 5}
@@ -29,4 +30,4 @@ const SectionFeaturesMaybe = props => {
   );
 };
 
-export default SectionFeaturesMaybe;
+export default SectionFeaturesGolfCourse;
