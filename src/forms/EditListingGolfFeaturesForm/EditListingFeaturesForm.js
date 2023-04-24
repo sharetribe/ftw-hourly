@@ -50,13 +50,47 @@ const EditListingGolfFormComponent = props => (
       ) : null;
 
       const options = findOptionsForSelectFilter('golfCourse', filterConfig);
+
+      function groupById(arr) {
+        const groups = {};
+        
+        for (const item of arr) {
+          const id = item.id;
+          
+          if (!groups[id]) {
+            groups[id] = [];
+          }
+          
+          groups[id].push(item);
+        }
+        
+        return groups;
+      }
+      const groups = groupById(options);
+
+      console.log(groups, options)
+
       return (
         <Form className={classes} onSubmit={handleSubmit}>
           {errorMessage}
           {errorMessageShowListing}
 
-          <FieldCheckboxGroup className={css.features} id={name} name={name} options={options} />
-
+          {/* <FieldCheckboxGroup className={css.features} id={name} name={name} options={options} /> */}
+          <select name="cars" id="cars">
+            {groups && groups.map((value, index) => {
+              return (
+                <>
+                  <optgroup label={value['id']}>
+                    <option value="volvo">{value.value}</option>
+                  </optgroup>
+                </>
+              )
+            })}
+            {/* <optgroup label="German Cars">
+              <option value="mercedes">Mercedes</option>
+              <option value="audi">Audi</option>
+            </optgroup> */}
+          </select>
           <Button
             className={css.submitButton}
             type="submit"
