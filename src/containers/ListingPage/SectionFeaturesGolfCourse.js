@@ -10,16 +10,20 @@ const SectionFeaturesGolfCourse = props => {
     return null;
   }
 
-  const selectedOptions = publicData && publicData.golfCourse ? publicData.golfCourse : [];
-  const selectedConfigOptions = options.filter(o => selectedOptions.find(s => s === o.key));
+  console.log(publicData);
 
-  console.log(selectedOptions, 'PublicData');
+  const selectedOptions = publicData && publicData.golfCourse ? publicData.golfCourse : [];
+  const selectedConfigOptions = options.filter(o => selectedOptions === o.key);
+
+  console.log(selectedConfigOptions);
+  // console.log(selectedOptions, 'PublicData');
 
   return (
     <div className={css.sectionFeatures}>
       <h2 className={css.featuresTitle}>
         <FormattedMessage id="Golf Courses" />
       </h2>
+
       <PropertyGroup
         id="ListingPage.golfCourse"
         options={selectedConfigOptions}

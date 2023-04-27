@@ -31,6 +31,7 @@ const FieldSelectComponent = props => {
     meta,
     children,
     onChange,
+    options,
     ...rest
   } = props;
 
@@ -58,11 +59,31 @@ const FieldSelectComponent = props => {
     ...rest,
   };
 
+  let Foptions = options ? options : [];
+
+  const groupedOptions = Foptions.reduce((acc, curr) => {
+    if (!acc[curr.id]) {
+      acc[curr.id] = [];
+    }
+    acc[curr.id].push(curr);
+    return acc;
+  }, {});
+
   const classes = classNames(rootClassName || css.root, className);
   return (
     <div className={classes}>
       {label ? <label htmlFor={id}>{label}</label> : null}
-      <select {...selectProps}>{children}</select>
+      <select {...selectProps}>
+        {Object.keys(groupedOptions).map(id => (
+          <optgroup label={id} key={id}>
+            {groupedOptions[id].map(option => (
+              <option value={option.key} key={option.id}>
+                {option.label}
+              </option>
+            ))}
+          </optgroup>
+        ))}
+      </select>
       <ValidationError fieldMeta={meta} />
     </div>
   );

@@ -35,7 +35,7 @@ const EditListingGolfFeaturesPanel = props => {
   const isPublished = currentListing.id && currentListing.attributes.state !== LISTING_STATE_DRAFT;
   const panelTitle = isPublished ? (
     <FormattedMessage
-      id="Add your golf courses"
+      id="Select your Golf Course"
       values={{
         listingTitle: (
           <ListingLink listing={listing}>

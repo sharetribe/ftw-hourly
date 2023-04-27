@@ -33,6 +33,8 @@
  *         (i.e. pub_<key> or meta_<key>).
  */
 
+import GolfCourseData from './Data/GolfCourseData';
+
 export const filters = [
   {
     id: 'dates-length',
@@ -95,26 +97,19 @@ export const filters = [
   {
     id: 'golfCourse',
     label: 'Golf Course',
-    type: 'SelectMultipleFilter',
+    type: 'SelectSingleFilter',
     group: 'secondary',
     queryParamNames: ['pub_golfCourse'],
     config: {
       // Optional modes: 'has_all', 'has_any'
       // https://www.sharetribe.com/api-reference/marketplace.html#extended-data-filtering
-      searchMode: 'has_all',
+      searchMode: 'has_one',
 
       // "key" is the option you see in Flex Console.
       // "label" is set here for this web app's UI only.
       // Note: label is not added through the translation files
       // to make filter customizations a bit easier.
-      options: [
-        {key:"GFC1",id:"GFC1",value:'GF2'},
-        {key:"GFC2",id:"GFC1",value:'GF2'},
-        {key:"GFC3",id:"GFC2",value:'GF2'},
-        {key:"GFC4",id:"GFC3",value:'GF2'},
-        {key:"GFC5",id:"GFC2",value:'GF2'},
-        {key:"GFC6",id:"GFC3",value:'GF2'}
-      ],
+      options: GolfCourseData,
     },
   },
   {
@@ -189,3 +184,7 @@ export const sortConfig = {
     { key: 'relevance', label: 'Relevance', longLabel: 'Relevance (Keyword search)' },
   ],
 };
+
+
+
+

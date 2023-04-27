@@ -7,7 +7,13 @@ import { FormattedMessage } from '../../util/reactIntl';
 import { findOptionsForSelectFilter } from '../../util/search';
 import { propTypes } from '../../util/types';
 import config from '../../config';
-import { Button, FieldCheckboxGroup, Form } from '../../components';
+import {
+  Button,
+  FieldCheckboxGroup,
+  FieldSelect,
+  Form,
+  SelectSingleFilter,
+} from '../../components';
 
 import css from './EditListingFeaturesForm.module.css';
 
@@ -51,46 +57,24 @@ const EditListingGolfFormComponent = props => (
 
       const options = findOptionsForSelectFilter('golfCourse', filterConfig);
 
-      function groupById(arr) {
-        const groups = {};
-        
-        for (const item of arr) {
-          const id = item.id;
-          
-          if (!groups[id]) {
-            groups[id] = [];
-          }
-          
-          groups[id].push(item);
-        }
-        
-        return groups;
-      }
-      const groups = groupById(options);
-
-      console.log(groups, options)
-
+      console.log(options);
       return (
         <Form className={classes} onSubmit={handleSubmit}>
           {errorMessage}
           {errorMessageShowListing}
-
           {/* <FieldCheckboxGroup className={css.features} id={name} name={name} options={options} /> */}
-          <select name="cars" id="cars">
-            {groups && groups.map((value, index) => {
-              return (
-                <>
-                  <optgroup label={value['id']}>
-                    <option value="volvo">{value.value}</option>
-                  </optgroup>
-                </>
-              )
-            })}
-            {/* <optgroup label="German Cars">
-              <option value="mercedes">Mercedes</option>
-              <option value="audi">Audi</option>
-            </optgroup> */}
-          </select>
+          {/* <GroupedSelect options={options} /> */}
+          {/* <select>
+            <option value="GFC2">Volvo</option>
+          </select> */}
+
+          {options && options.length > 0 && (
+            <>
+              {' '}
+              <FieldSelect name={name} id={name} options={options} />{' '}
+            </>
+          )}
+
           <Button
             className={css.submitButton}
             type="submit"
@@ -98,7 +82,7 @@ const EditListingGolfFormComponent = props => (
             disabled={submitDisabled}
             ready={submitReady}
           >
-            Add golf Course
+            Select your Golf Course
             {saveActionMsg}
           </Button>
         </Form>
