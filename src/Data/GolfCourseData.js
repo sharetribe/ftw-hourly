@@ -1,364 +1,463 @@
 const GolfCourseData = [
-  //   {
-  //     key: 'st-andrews-fife-courses',
-  //     label: 'St Andrews & Fife Golf Courses',
-  //     id: 'St Andrews & Fife Golf Courses',
-  //     hideFromFilters: true,
-  //     hideFromListingInfo: true,
-  //   },
   {
-    key: 'crail-golfing-society-gc',
-    label: 'Crail Golfing Society Golf Course',
-    id: 'St Andrews & Fife Golf Courses',
+    key: "crail-golfing-society-golf-course-caddie-hire",
+    id: "St Andrews & Fife Golf Courses",
+    label: "Crail Golfing Society Golf Course"
   },
   {
-    key: 'drumoig-gc',
-    label: 'Drumoig Golf Course',
-    id: 'St Andrews & Fife Golf Courses',
+    key: "drumoig-golf-course-caddie-hire",
+    id: "St Andrews & Fife Golf Courses",
+    label: "Drumoig Golf Course"
   },
   {
-    key: 'dumbarnie-links-gc',
-    label: 'Dumbarnie Links Golf Course',
-    id: 'St Andrews & Fife Golf Courses',
+    key: "dumbarnie-links-golf-course-caddie-hire",
+    id: "St Andrews & Fife Golf Courses",
+    label: "Dumbarnie Links Golf Course"
   },
   {
-    key: 'elie-gc',
-    label: 'Elie Golf Course',
-    id: 'St Andrews & Fife Golf Courses',
+    key: "elie-golf-course-caddie-hire",
+    id: "St Andrews & Fife Golf Courses",
+    label: "Elie Golf Course"
   },
   {
-    key: 'kinghorn-gc',
-    label: 'Kinghorn Golf Course',
-    id: 'St Andrews & Fife Golf Courses',
+    key: "kinghorn-golf-course-caddie-hire",
+    id: "St Andrews & Fife Golf Courses",
+    label: "Kinghorn Golf Course"
   },
   {
-    key: 'kingsbarns-gc',
-    label: 'Kingsbarns Golf Course',
-    id: 'St Andrews & Fife Golf Courses',
+    key: "kingsbarns-golf-course-caddie-hire",
+    id: "St Andrews & Fife Golf Courses",
+    label: "Kingsbarns Golf Course"
   },
   {
-    key: 'ladybank-gc',
-    label: 'Ladybank Golf Course',
-    id: 'St Andrews & Fife Golf Courses',
+    key: "ladybank-golf-course-caddie-hire",
+    id: "St Andrews & Fife Golf Courses",
+    label: "Ladybank Golf Course"
   },
   {
-    key: 'leven-links-gc',
-    label: 'Leven Links Golf Course',
-    id: 'St Andrews & Fife Golf Courses',
+    key: "leven-links-golf-course-caddie-hire",
+    id: "St Andrews & Fife Golf Courses",
+    label: "Leven Links Golf Course"
   },
   {
-    key: 'lundin-links-gc',
-    label: 'Lundin Links Golf Course',
-    id: 'St Andrews & Fife Golf Courses',
+    key: "lundin-links-golf-course-caddie-hire",
+    id: "St Andrews & Fife Golf Courses",
+    label: "Lundin Links Golf Course"
   },
   {
-    key: 'st-andrews-new-gc',
-    label: 'St Andrews New Golf Course',
-    id: 'St Andrews & Fife Golf Courses',
+    key: "st-andrews-new-golf-course-caddie-hire",
+    id: "St Andrews & Fife Golf Courses",
+    label: "St Andrews New Golf Course"
   },
   {
-    key: 'st-andrews-old-gc',
-    label: 'St Andrews Old Golf Course',
-    id: 'St Andrews & Fife Golf Courses',
+    key: "st-andrews-old-golf-course-caddie-hire",
+    id: "St Andrews & Fife Golf Courses",
+    label: "St Andrews Old Golf Course"
   },
   {
-    key: 'st-andrews-castle-gc',
-    label: 'St Andrews Castle Golf Course',
-    id: 'St Andrews & Fife Golf Courses',
+    key: "st-andrews-castle-golf-course-caddie-hire",
+    id: "St Andrews & Fife Golf Courses",
+    label: "St Andrews Castle Golf Course"
   },
   {
-    key: 'st-andrews-jubilee-gc',
-    label: 'St Andrews Jubilee Golf Course',
-    id: 'St Andrews & Fife Golf Courses',
+    key: "st-andrews-jubilee-golf-course-caddie-hire",
+    id: "St Andrews & Fife Golf Courses",
+    label: "St Andrews Jubilee Golf Course"
   },
   {
-    key: 'st-andrews-bay-gc',
-    label: 'St Andrews Bay Golf Course',
-    id: 'St Andrews & Fife Golf Courses',
+    key: "st-andrews-bay-golf-course-caddie-hire",
+    id: "St Andrews & Fife Golf Courses",
+    label: "St Andrews Bay Golf Course"
   },
   {
-    key: 'st-andrews-dukes-gc',
-    label: "St Andrews Duke's Golf Course",
-    id: 'St Andrews & Fife Golf Courses',
+    key: "st-andrews-dukes-golf-course-caddie-hire",
+    id: "St Andrews & Fife Golf Courses",
+    label: "St Andrews Duke's Golf Course"
   },
   {
-    key: 'st-andrews-eden-gc',
-    label: 'St Andrews Eden Golf Course',
-    id: 'St Andrews & Fife Golf Courses',
+    key: "st-andrews-eden-golf-course-caddie-hire",
+    id: "St Andrews & Fife Golf Courses",
+    label: "St Andrews Eden Golf Course"
   },
   {
-    key: 'scotscraig-gc',
-    label: 'Scotscraig Golf Course',
-    id: 'St Andrews & Fife Golf Courses',
-  },
-  //   {
-  //     key: 'east-lothian-courses',
-  //     label: 'East Lothian Golf Courses',
-  //     hideFromFilters: true,
-  //     hideFromListingInfo: true,
-  //     id: 'East Lothian Golf Courses',
-  //   },
-  {
-    key: 'archerfield-dirleton-gc',
-    label: 'Archerfield Dirleton Golf Course',
-    id: 'East Lothian Golf Courses',
+    key: "scotscraig-golf-course-caddie-hire",
+    id: "St Andrews & Fife Golf Courses",
+    label: "Scotscraig Golf Course"
   },
   {
-    key: 'archerfield-fidra-gc',
-    label: 'Archerfield Fidra Golf Course',
-    id: 'East Lothian Golf Courses',
-  },
-  { key: 'craigielaw-gc', label: 'Craigielaw Golf Course', id: 'East Lothian Golf Courses' },
-  { key: 'dunbar-gc', label: 'Dunbar Golf Course', id: 'East Lothian Golf Courses' },
-  { key: 'eyemouth-gc', label: 'Eyemouth Golf Course', id: 'East Lothian Golf Courses' },
-  { key: 'gullane-no1-gc', label: 'Gullane No. 1 Golf Course', id: 'East Lothian Golf Courses' },
-  { key: 'gullane-no2-gc', label: 'Gullane No. 2 Golf Course', id: 'East Lothian Golf Courses' },
-  { key: 'gullane-no3-gc', label: 'Gullane No. 3 Golf Course', id: 'East Lothian Golf Courses' },
-  { key: 'kilspindie-gc', label: 'Kilspindie Golf Course', id: 'East Lothian Golf Courses' },
-  { key: 'longniddry-gc', label: 'Longniddry Golf Course', id: 'East Lothian Golf Courses' },
-  { key: 'luffness-gc', label: 'Luffness Golf Course', id: 'East Lothian Golf Courses' },
-  { key: 'muirfield-gc', label: 'Muirfield Golf Course', id: 'East Lothian Golf Courses' },
-  {
-    key: 'musselburg-links-gc',
-    label: 'Musselburgh Links Golf Course',
-    id: 'East Lothian Golf Courses',
+    id: "East Lothian Golf Courses",
+    key: "archerfield-dirleton-golf-course-caddie-hire",
+    label: "Archerfield Dirleton Golf Course"
   },
   {
-    key: 'musselburgh-monktonhall-gc',
-    label: 'Musselburgh Monktonhall Golf Course',
-    id: 'East Lothian Golf Courses',
+    key: "archerfield-fidra-golf-course-caddie-hire",
+    id: "East Lothian Golf Courses",
+    label: "Archerfield Fidra Golf Course"
   },
   {
-    key: 'north-berwick-west-links-gc',
-    label: 'North Berwick West Links Golf Course',
-    id: 'East Lothian Golf Courses',
+    key: "craigielaw-golf-course-caddie-hire",
+    id: "East Lothian Golf Courses",
+    label: "Craigielaw Golf Course"
   },
   {
-    key: 'renaissance-club-gc',
-    label: 'Renaissance Club Golf Course',
-    id: 'East Lothian Golf Courses',
+    key: "dunbar-golf-course-caddie-hire",
+    id: "East Lothian Golf Courses",
+    label: "Dunbar Golf Course"
   },
   {
-    key: 'royal-musselburgh-gc',
-    label: 'Royal Musselburgh Golf Course',
-    id: 'East Lothian Golf Courses',
-  },
-  { key: 'west-linton-gc', label: 'West Linton Golf Course', id: 'East Lothian Golf Courses' },
-  //   {
-  //     key: 'west-coast-courses',
-  //     label: 'West Coast Golf Courses',
-  //     hideFromFilters: true,
-  //     hideFromListingInfo: true,
-  //   },
-  { key: 'ayr-belleisle-gc', label: 'Ayr Belleisle Golf Course', id: 'West Coast Golf Courses' },
-  {
-    key: 'dundonald-links-gc',
-    label: 'Dundonald Links Golf Course',
-    id: 'West Coast Golf Courses',
-  },
-  { key: 'gailes-links-gc', label: 'Gailes Links Golf Course', id: 'West Coast Golf Courses' },
-  {
-    key: 'irvine-golf-club-gc',
-    label: 'Irvine Golf Club Golf Course',
-    id: 'West Coast Golf Courses',
+    key: "eyemouth-golf-course-caddie-hire",
+    id: "East Lothian Golf Courses",
+    label: "Eyemouth Golf Course"
   },
   {
-    key: 'kilmarnock-barassie-gc',
-    label: 'Kilmarnock Barassie Golf Course',
-    id: 'West Coast Golf Courses',
-  },
-  { key: 'loch-lomond-gc', label: 'Loch Lomond Golf Course', id: 'West Coast Golf Courses' },
-  {
-    key: 'powfoot-golf-club-gc',
-    label: 'Powfoot Golf Club Golf Course',
-    id: 'West Coast Golf Courses',
-  },
-  { key: 'prestwick-gc', label: 'Prestwick Golf Course', id: 'West Coast Golf Courses' },
-  { key: 'royal-troon-gc', label: 'Royal Troon Golf Course', id: 'West Coast Golf Courses' },
-  {
-    key: 'royal-troon-portland-gc',
-    label: 'Royal Troon Portland Golf Course',
-    id: 'West Coast Golf Courses',
-  },
-  { key: 'troon-darley)-gc', label: 'Troon (Darley) Golf Course', id: 'West Coast Golf Courses' },
-  {
-    key: 'trump-turnberry-ailsa-gc',
-    label: 'Trump Turnberry (Ailsa) Golf Course',
-    id: 'West Coast Golf Courses',
+    key: "gullane-no1-golf-course-caddie-hire",
+    id: "East Lothian Golf Courses",
+    label: "Gullane No. 1 Golf Course"
   },
   {
-    key: 'turnberry-robert-the-bruce-gc',
-    label: 'Turnberry Robert the Bruce Golf Course',
-    id: 'West Coast Golf Courses',
-  },
-  { key: 'western-gailes-gc', label: 'Western Gailes Golf Course', id: 'West Coast Golf Courses' },
-  { key: 'new-key', label: 'West Coast Golf Courses', id: 'West Coast Golf Courses' },
-  //   {
-  //     key: 'aberdeen-north-east-courses',
-  //     label: 'Aberdeen & North East Golf Courses',
-  //     hideFromFilters: true,
-  //     hideFromListingInfo: true,
-  //   },
-  {
-    key: 'cruden-bay-gc',
-    id: 'Aberdeen & North East Golf Courses',
-    label: 'Cruden Bay Golf Course',
+    key: "gullane-no2-golf-course-caddie-hire",
+    id: "East Lothian Golf Courses",
+    label: "Gullane No. 2 Golf Course"
   },
   {
-    key: 'cruden-bay-st-olaf-gc',
-    id: 'Aberdeen & North East Golf Courses',
-    label: 'Cruden Bay (St. Olaf) Golf Course',
+    key: "gullane-no3-golf-course-caddie-hire",
+    id: "East Lothian Golf Courses",
+    label: "Gullane No. 3 Golf Course"
   },
   {
-    key: 'fraserburgh-gc',
-    id: 'Aberdeen & North East Golf Courses',
-    label: 'Fraserburgh Golf Course',
+    key: "kilspindie-golf-course-caddie-hire",
+    id: "East Lothian Golf Courses",
+    label: "Kilspindie Golf Course"
   },
   {
-    key: 'inverallochy-gc',
-    id: 'Aberdeen & North East Golf Courses',
-    label: 'Inverallochy Golf Course',
+    key: "longniddry-golf-course-caddie-hire",
+    id: "East Lothian Golf Courses",
+    label: "Longniddry Golf Course"
   },
   {
-    key: 'meldrum-house-golf-club-gc',
-    id: 'Aberdeen & North East Golf Courses',
-    label: 'Meldrum House Golf Club Golf Course',
-  },
-  { key: 'murcur-gc', id: 'Aberdeen & North East Golf Courses', label: 'Murcur Golf Course' },
-  {
-    key: 'newmachar-golf-club-swailhead-gc',
-    id: 'Aberdeen & North East Golf Courses',
-    label: 'Newmachar Golf Club (Swailhead) Golf Course',
+    key: "luffness-golf-course-caddie-hire",
+    id: "East Lothian Golf Courses",
+    label: "Luffness Golf Course"
   },
   {
-    key: 'newmachar-hawkshill-gc',
-    id: 'Aberdeen & North East Golf Courses',
-    label: 'Newmachar (Hawkshill) Golf Club',
-  },
-  { key: 'peterhead-gc', id: 'Aberdeen & North East Golf Courses', label: 'Peterhead Golf Course' },
-  {
-    key: 'portlethen-golf-club-gc',
-    id: 'Aberdeen & North East Golf Courses',
-    label: 'Portlethen Golf Club Golf Course',
+    key: "muirfield-golf-course-caddie-hire",
+    id: "East Lothian Golf Courses",
+    label: "Muirfield Golf Course"
   },
   {
-    key: 'royal-aberdeen-gc',
-    id: 'Aberdeen & North East Golf Courses',
-    label: 'Royal Aberdeen Golf Course',
+    key: "musselburg-links-golf-course-caddie-hire",
+    id: "East Lothian Golf Courses",
+    label: "Musselburgh Links Golf Course"
   },
   {
-    key: 'stonehaven-golf-club-gc',
-    id: 'Aberdeen & North East Golf Courses',
-    label: 'Stonehaven Golf Club Golf Course',
+    key: "musselburgh-monktonhall-golf-course-caddie-hire",
+    id: "East Lothian Golf Courses",
+    label: "Musselburgh Monktonhall Golf Course"
   },
   {
-    key: 'trump-internationa-gc',
-    id: 'Aberdeen & North East Golf Courses',
-    label: 'Trump International Golf Course',
+    key: "north-berwick-west-links-golf-course-caddie-hire",
+    id: "East Lothian Golf Courses",
+    label: "North Berwick West Links Golf Course"
   },
+  {
+    key: "renaissance-club-golf-course-caddie-hire",
+    id: "East Lothian Golf Courses",
+    label: "Renaissance Club Golf Course"
+  },
+  {
+    key: "royal-musselburgh-golf-course-caddie-hire",
+    id: "East Lothian Golf Courses",
+    label: "Royal Musselburgh Golf Course"
+  },
+  {
+    key: "west-linton-golf-course-caddie-hire",
+    id: "East Lothian Golf Courses",
+    label: "West Linton Golf Course"
+  },
+  {
+    id: "West Coast Golf Courses",
+    key: "ayr-belleisle-golf-course-caddie-hire",
+    id: "West Coast Golf Courses",
+    label: "Ayr Belleisle Golf Course"
+  },
+  {
+    key: "dundonald-links-golf-course-caddie-hire",
+    id: "West Coast Golf Courses",
+    label: "Dundonald Links Golf Course"
+  },
+  {
+    key: "gailes-links-golf-course-caddie-hire",
+    id: "West Coast Golf Courses",
+    label: "Gailes Links Golf Course"
+  },
+  {
+    key: "irvine-golf-club-golf-course-caddie-hire",
+    id: "West Coast Golf Courses",
+    label: "Irvine Golf Club Golf Course"
+  },
+  {
+    key: "kilmarnock-barassie-golf-course-caddie-hire",
+    id: "West Coast Golf Courses",
+    label: "Kilmarnock Barassie Golf Course"
+  },
+  {
+    key: "loch-lomond-golf-course-caddie-hire",
+    id: "West Coast Golf Courses",
+    label: "Loch Lomond Golf Course"
+  },
+  {
+    key: "powfoot-golf-club-golf-course-caddie-hire",
+    id: "West Coast Golf Courses",
+    label: "Powfoot Golf Club Golf Course"
+  },
+  {
+    key: "prestwick-golf-course-caddie-hire",
+    id: "West Coast Golf Courses",
+    label: "Prestwick Golf Course"
+  },
+  {
+    key: "royal-troon-golf-course-caddie-hire",
+    id: "West Coast Golf Courses",
+    label: "Royal Troon Golf Course"
+  },
+  {
+    key: "royal-troon-portland-golf-course-caddie-hire",
+    id: "West Coast Golf Courses",
+    label: "Royal Troon Portland Golf Course"
+  },
+  {
+    key: "troon-darley)-golf-course-caddie-hire",
+    id: "West Coast Golf Courses",
+    label: "Troon (Darley) Golf Course"
+  },
+  {
+    key: "trump-turnberry-ailsa-golf-course-caddie-hire",
+    id: "West Coast Golf Courses",
+    label: "Trump Turnberry (Ailsa) Golf Course"
+  },
+  {
+    key: "turnberry-robert-the-bruce-golf-course-caddie-hire",
+    id: "West Coast Golf Courses",
+    label: "Turnberry Robert the Bruce Golf Course"
+  },
+  {
+    key: "western-gailes-golf-course-caddie-hire",
+    id: "West Coast Golf Courses",
+    label: "Western Gailes Golf Course"
+  },
+  {
+    key: "cruden-bay-golf-course-caddie-hire",
+    id: "Aberdeen & North East Golf Courses",
 
-  {
-    key: 'blairgowrie-landsdowne-gc',
-    id: 'Perthshire & Central Scotland Golf Courses',
-    label: 'Blairgowrie (Landsdowne) Golf Course',
+    label: "Cruden Bay Golf Course"
   },
   {
-    key: 'blairgowrie-rosemount-gc',
-    id: 'Perthshire & Central Scotland Golf Courses',
-    label: 'Blairgowrie (Rosemount) Golf Course',
-  },
-  {
-    key: 'carnoustie-buddon-gc',
-    id: 'Perthshire & Central Scotland Golf Courses',
-    label: 'Carnoustie (Buddon) Golf Course',
-  },
-  {
-    key: 'carnoustie-burnside-gc',
-    id: 'Perthshire & Central Scotland Golf Courses',
-    label: 'Carnoustie (Burnside) Golf Course',
-  },
-  {
-    key: 'carnoustie-championship-gc',
-    id: 'Perthshire & Central Scotland Golf Courses',
-    label: 'Carnoustie Championship Golf Course',
-  },
-  {
-    key: 'downfield-dundee-gc',
-    id: 'Perthshire & Central Scotland Golf Courses',
-    label: 'Downfield (Dundee) Golf Course',
-  },
-  {
-    key: 'edzell-gc',
-    id: 'Perthshire & Central Scotland Golf Courses',
-    label: 'Edzell Golf Course',
-  },
-  {
-    key: 'forfar-golf-club-gc',
-    id: 'Perthshire & Central Scotland Golf Courses',
-    label: 'Forfar Golf Club Golf Course',
-  },
-  {
-    key: 'gleneagles-kings-gc',
-    id: 'Perthshire & Central Scotland Golf Courses',
-    label: "Gleneagles King's Golf Course",
-  },
-  {
-    key: 'gleneagles-pga-centenary-gc',
-    id: 'Perthshire & Central Scotland Golf Courses',
-    label: 'Gleneagles PGA Centenary Golf Course',
-  },
-  {
-    key: 'gleneagles-queens-gc',
-    id: 'Perthshire & Central Scotland Golf Courses',
-    label: "Gleneagles Queen's Golf Cours",
-  },
-  {
-    key: 'monifeith-golf-club-ashludie)-gc',
-    id: 'Perthshire & Central Scotland Golf Courses',
-    label: 'Monifeith Golf Club (Ashludie) Golf Course',
-  },
-  {
-    key: 'monifeith-golf-club-medal-gc',
-    id: 'Perthshire & Central Scotland Golf Courses',
-    label: 'Monifeith Golf Club (Medal) Golf Course',
-  },
-  {
-    key: 'montrose-1572-gc',
-    id: 'Perthshire & Central Scotland Golf Courses',
-    label: 'Montrose 1572 Golf Course',
-  },
-  {
-    key: 'panmure-gc',
-    id: 'Perthshire & Central Scotland Golf Courses',
-    label: 'Panmure Golf Course',
-  },
+    key: "cruden-bay-st-olaf-golf-course-caddie-hire",
+    id: "Aberdeen & North East Golf Courses",
 
-  { key: 'boat-of-garten-gc', id: 'Highlands Golf Courses', label: 'Boat of Garten Golf Course' },
-  { key: 'brora-gc', id: 'Highlands Golf Courses', label: 'Brora Golf Course' },
-  { key: 'castle-stuart-gc', id: 'Highlands Golf Courses', label: 'Castle Stuart Golf Course' },
-  {
-    key: 'elgin-golf-golf-club-gc',
-    id: 'Highlands Golf Courses',
-    label: 'Elgin Golf Club Golf Course',
+    label: "Cruden Bay (St. Olaf) Golf Course"
   },
-  { key: 'golspie-gc', id: 'Highlands Golf Courses', label: 'Golspie Golf Course' },
   {
-    key: 'grantown-on-spey-gc',
-    id: 'Highlands Golf Courses',
-    label: 'Grantown on Spey Golf Course',
+    key: "fraserburgh-golf-course-caddie-hire",
+    id: "Aberdeen & North East Golf Courses",
+
+    label: "Fraserburgh Golf Course"
   },
-  { key: 'macrihanish-gc', id: 'Highlands Golf Courses', label: 'Macrihanish Golf Course' },
-  { key: 'moray-golf-club-gc', id: 'Highlands Golf Courses', label: 'Moray Golf Club Golf Course' },
-  { key: 'nairn-dunbar-gc', id: 'Highlands Golf Courses', label: 'Nairn (Dunbar) Golf Course' },
-  { key: 'nairn-gc', id: 'Highlands Golf Courses', label: 'Nairn Golf Course' },
-  { key: 'Rroyal-dornoch-gc', id: 'Highlands Golf Courses', label: 'Royal Dornoch Golf Course' },
   {
-    key: 'royal-dornoch-struie-gc',
-    id: 'Highlands Golf Courses',
-    label: 'Royal Dornoch (Struie) Golf Course',
+    key: "inverallochy-golf-course-caddie-hire",
+    id: "Aberdeen & North East Golf Courses",
+
+    label: "Inverallochy Golf Course"
   },
-  { key: 'skibo-castle-gc', id: 'Highlands Golf Courses', label: 'Skibo Castle Golf Course' },
-  { key: 'tain-gc', id: 'Highlands Golf Courses', label: 'Tain Golf Course' },
+  {
+    key: "meldrum-house-golf-club-golf-course-caddie-hire",
+    id: "Aberdeen & North East Golf Courses",
+
+    label: "Meldrum House Golf Club Golf Course"
+  },
+  { key: "murcur-golf-course-caddie-hire", label: "Murcur Golf Course" },
+  {
+    key: "newmachar-golf-club-swailhead-golf-course-caddie-hire",
+    id: "Aberdeen & North East Golf Courses",
+
+    label: "Newmachar Golf Club (Swailhead) Golf Course"
+  },
+  {
+    key: "newmachar-hawkshill-golf-course-caddie-hire",
+    id: "Aberdeen & North East Golf Courses",
+
+    label: "Newmachar (Hawkshill) Golf Club"
+  },
+  { key: "peterhead-golf-course-caddie-hire", label: "Peterhead Golf Course" },
+  {
+    key: "portlethen-golf-club-golf-course-caddie-hire",
+    id: "Aberdeen & North East Golf Courses",
+
+    label: "Portlethen Golf Club Golf Course"
+  },
+  {
+    key: "royal-aberdeen-golf-course-caddie-hire",
+    id: "Aberdeen & North East Golf Courses",
+
+    label: "Royal Aberdeen Golf Course"
+  },
+  {
+    key: "stonehaven-golf-club-golf-course-caddie-hire",
+    id: "Aberdeen & North East Golf Courses",
+
+    label: "Stonehaven Golf Club Golf Course"
+  },
+  {
+    key: "trump-internationa-golf-course-caddie-hire",
+    id: "Aberdeen & North East Golf Courses",
+
+    label: "Trump International Golf Course"
+  },
+  {
+    key: "blairgowrie-landsdowne-golf-course-caddie-hire",
+    id: "Perthshire & Central Scotland Golf Courses",
+    label: "Blairgowrie (Landsdowne) Golf Course"
+  },
+  {
+    key: "blairgowrie-rosemount-golf-course-caddie-hire",
+    id: "Perthshire & Central Scotland Golf Courses",
+    label: "Blairgowrie (Rosemount) Golf Course"
+  },
+  {
+    key: "carnoustie-buddon-golf-course-caddie-hire",
+    id: "Perthshire & Central Scotland Golf Courses",
+    label: "Carnoustie (Buddon) Golf Course"
+  },
+  {
+    key: "carnoustie-burnside-golf-course-caddie-hire",
+    id: "Perthshire & Central Scotland Golf Courses",
+    label: "Carnoustie (Burnside) Golf Course"
+  },
+  {
+    key: "carnoustie-championship-golf-course-caddie-hire",
+    id: "Perthshire & Central Scotland Golf Courses",
+    label: "Carnoustie Championship Golf Course"
+  },
+  {
+    key: "downfield-dundee-golf-course-caddie-hire",
+    id: "Perthshire & Central Scotland Golf Courses",
+    label: "Downfield (Dundee) Golf Course"
+  },
+  {
+    key: "edzell-golf-course-caddie-hire",
+    id: "Perthshire & Central Scotland Golf Courses",
+    label: "Edzell Golf Course"
+  },
+  {
+    key: "forfar-golf-club-golf-course-caddie-hire",
+    id: "Perthshire & Central Scotland Golf Courses",
+    label: "Forfar Golf Club Golf Course"
+  },
+  {
+    key: "gleneagles-kings-golf-course-caddie-hire",
+    id: "Perthshire & Central Scotland Golf Courses",
+    label: "Gleneagles King's Golf Course"
+  },
+  {
+    key: "gleneagles-pga-centenary-golf-course-caddie-hire",
+    id: "Perthshire & Central Scotland Golf Courses",
+    label: "Gleneagles PGA Centenary Golf Course"
+  },
+  {
+    key: "gleneagles-queens-golf-course-caddie-hire",
+    id: "Perthshire & Central Scotland Golf Courses",
+    label: "Gleneagles Queen's Golf Course"
+  },
+  {
+    key: "monifeith-golf-club-ashludie)-golf-course-caddie-hire",
+    id: "Perthshire & Central Scotland Golf Courses",
+    label: "Monifeith Golf Club (Ashludie) Golf Course"
+  },
+  {
+    key: "monifeith-golf-club-medal-golf-course-caddie-hire",
+    id: "Perthshire & Central Scotland Golf Courses",
+    label: "Monifeith Golf Club (Medal) Golf Course"
+  },
+  {
+    key: "montrose-1572-golf-course-caddie-hire",
+    id: "Perthshire & Central Scotland Golf Courses",
+    label: "Montrose 1572 Golf Course"
+  },
+  {
+    key: "panmure-golf-course-caddie-hire",
+    id: "Perthshire & Central Scotland Golf Courses",
+    label: "Panmure Golf Course"
+  },
+  {
+    key: "boat-of-garten-golf-course-caddie-hire",
+    id: "Highlands Golf Courses",
+    label: "Boat of Garten Golf Course"
+  },
+  {
+    key: "brora-golf-course-caddie-hire",
+    id: "Highlands Golf Courses",
+    label: "Brora Golf Course"
+  },
+  {
+    key: "castle-stuart-golf-course-caddie-hire",
+    id: "Highlands Golf Courses",
+    label: "Castle Stuart Golf Course"
+  },
+  {
+    key: "elgin-golf-golf-club-golf-course-caddie-hire",
+    id: "Highlands Golf Courses",
+    label: "Elgin Golf Club Golf Course"
+  },
+  {
+    key: "golspie-golf-course-caddie-hire",
+    id: "Highlands Golf Courses",
+    label: "Golspie Golf Course"
+  },
+  {
+    key: "grantown-on-spey-golf-course-caddie-hire",
+    id: "Highlands Golf Courses",
+    label: "Grantown on Spey Golf Course"
+  },
+  {
+    key: "macrihanish-golf-course-caddie-hire",
+    id: "Highlands Golf Courses",
+    label: "Macrihanish Golf Course"
+  },
+  {
+    key: "moray-golf-club-golf-course-caddie-hire",
+    id: "Highlands Golf Courses",
+    label: "Moray Golf Club Golf Course"
+  },
+  {
+    key: "nairn-dunbar-golf-course-caddie-hire",
+    id: "Highlands Golf Courses",
+    label: "Nairn (Dunbar) Golf Course"
+  },
+  {
+    key: "nairn-golf-course-caddie-hire",
+    id: "Highlands Golf Courses",
+    label: "Nairn Golf Course"
+  },
+  {
+    key: "Rroyal-dornoch-golf-course-caddie-hire",
+    id: "Highlands Golf Courses",
+    label: "Royal Dornoch Golf Course"
+  },
+  {
+    key: "royal-dornoch-struie-golf-course-caddie-hire",
+    id: "Highlands Golf Courses",
+    label: "Royal Dornoch (Struie) Golf Course"
+  },
+  {
+    key: "skibo-castle-golf-course-caddie-hire",
+    id: "Highlands Golf Courses",
+    label: "Skibo Castle Golf Course"
+  },
+  {
+    key: "tain-golf-course-caddie-hire",
+    id: "Highlands Golf Courses",
+    label: "Tain Golf Course"
+  }
 ];
 
 export default GolfCourseData;

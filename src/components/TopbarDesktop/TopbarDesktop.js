@@ -48,12 +48,15 @@ const TopbarDesktop = props => {
   const classes = classNames(rootClassName || css.root, className);
 
   const search = (
-    <TopbarSearchForm
-      className={css.searchLink}
-      desktopInputRoot={css.topbarSearchWithLeftPadding}
-      onSubmit={onSearchSubmit}
-      initialValues={initialSearchFormValues}
-    />
+    <div className={css.searchLink}>
+      {/* <TopbarSearchForm
+        // style={{ display: "none" }}
+        className={css.searchLink}
+        desktopInputRoot={css.topbarSearchWithLeftPadding}
+        onSubmit={onSearchSubmit}
+        initialValues={initialSearchFormValues}
+      /> */}
+    </div>
   );
 
   const notificationDot = notificationCount > 0 ? <div className={css.notificationDot} /> : null;
