@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { Footer as FooterContent } from '../../components/index.js';
+import './CaddieList.css'
 import { TopbarContainer } from '../../containers/index.js';
 
 import { validProps } from './Field';
@@ -10,6 +11,7 @@ import SectionBuilder from './SectionBuilder/SectionBuilder.js';
 import StaticPage from './StaticPage.js';
 
 import css from './PageBuilder.module.css';
+import { useSelector } from 'react-redux';
 
 const getMetadata = (meta, schemaType, fieldOptions) => {
   const { pageTitle, pageDescription, socialSharing } = meta;
@@ -74,7 +76,7 @@ const getMetadata = (meta, schemaType, fieldOptions) => {
  */
 const PageBuilder = props => {
   const { pageAssetsData, inProgress, fallbackPage, schemaType, options, ...pageProps } = props;
-
+  const [caddieList, setCaddieList] = React.useState([])
   if (!pageAssetsData && fallbackPage && !inProgress) {
     return fallbackPage;
   }
@@ -90,6 +92,42 @@ const PageBuilder = props => {
     main
     footer
   `;
+
+  const Data = useSelector(state => state.marketplaceData.entities.listing)
+  const imageData = useSelector(state => state.marketplaceData.entities.image)
+
+  const usersId = useSelector(state => state.SearchPage.currentPageResultIds)
+  const [count, setCount] = React.useState(1);
+
+  const setData = React.useCallback(() => {
+    usersId?.forEach(user => {
+
+      let images = imageData[Data[user.uuid].relationships.images.data[0].id.uuid] ? imageData[Data[user.uuid].relationships.images.data[0].id.uuid].attributes.variants : '';
+
+
+
+      let caddieDetails = {
+        name: Data[user.uuid].attributes.title,
+        price: Data[user.uuid].attributes.price,
+        image: images
+      }
+      if (Data[user.uuid]) {
+        setCaddieList(prevList => [...prevList, caddieDetails]);
+      }
+    });
+  }, [usersId, Data]);
+
+  React.useEffect(() => {
+    const timeout = setTimeout(() => {
+      setData();
+    }, 100);
+
+    return () => {
+      clearTimeout(timeout);
+    };
+  }, [setData]);
+
+  console.log(caddieList);
   return (
     <StaticPage {...pageMetaProps} {...pageProps}>
       <LayoutComposer areas={layoutAreas} className={css.layout}>
@@ -102,8 +140,35 @@ const PageBuilder = props => {
               </Topbar>
               <Main as="main" className={css.main}>
                 <SectionBuilder sections={sections} options={options} />
+
               </Main>
               <Footer>
+
+
+                <div className='ml-auto mr-auto p-4 w-2/3 mt-12'>
+                  <span className='m-4 text-4xl font-semibold'>Caddie List</span>
+
+                </div>
+
+                <div className='grid grid-cols-3 w-2/3 ml-auto mr-auto  '>
+
+                  {caddieList && <> {caddieList.map((caddie) => {
+                    return (
+                      <>
+                        <div className='flex flex-row w-auto shadow m-4 p-4'>
+                          <div className=''>
+                            <img className='w-32 h-25' src={caddie.image['landscape-crop'].url} />
+                          </div>
+                          <div className='flex flex-col ml-4'>
+                            <span className='text-2xl'>{caddie.name}</span>
+                            <span className='mt-4 text-green-500'>{caddie.price.currency} - {caddie.price.amount}</span>
+
+                          </div>
+                        </div>
+                      </>
+                    )
+                  })} </>}
+                </div>
                 <FooterContent />
               </Footer>
             </>
