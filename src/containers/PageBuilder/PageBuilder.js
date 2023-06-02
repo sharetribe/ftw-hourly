@@ -12,6 +12,7 @@ import StaticPage from './StaticPage.js';
 
 import css from './PageBuilder.module.css';
 import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom/cjs/react-router-dom.min.js';
 
 const getMetadata = (meta, schemaType, fieldOptions) => {
   const { pageTitle, pageDescription, socialSharing } = meta;
@@ -109,7 +110,8 @@ const PageBuilder = props => {
       let caddieDetails = {
         name: Data[user.uuid].attributes.title,
         price: Data[user.uuid].attributes.price,
-        image: images
+        image: images,
+        userId: user.uuid
       }
       if (Data[user.uuid]) {
         setCaddieList(prevList => [...prevList, caddieDetails]);
@@ -145,24 +147,26 @@ const PageBuilder = props => {
               <Footer>
 
 
-                <div className='ml-auto mr-auto p-4 w-2/3 mt-12'>
-                  <span className='m-4 text-4xl font-semibold'>Caddie List</span>
+                <div className='ml-auto mr-auto text-center md:text-left p-4 w-2/3 mt-12'>
+                  <span className='m-4 text-4xl  font-semibold'>Caddie List</span>
 
                 </div>
 
-                <div className='grid grid-cols-3 w-2/3 ml-auto mr-auto  '>
+                <div className='grid grid-cols-2 md:grid-cols-3 md:w-2/3 ml-auto mr-auto  '>
 
                   {caddieList && <> {caddieList.map((caddie) => {
                     return (
                       <>
-                        <div className='flex flex-row w-auto shadow m-4 p-4'>
+                        <div className='flex flex-row w-auto shadow md:m-4 mx-2 p-4'>
                           <div className=''>
-                            <img className='w-32 h-25' src={caddie.image['landscape-crop'].url} />
+                            <img className='md:w-32 md:h-25 w-28' src={caddie.image['landscape-crop'].url} />
                           </div>
                           <div className='flex flex-col ml-4'>
-                            <span className='text-2xl'>{caddie.name}</span>
-                            <span className='mt-4 text-green-500'>{caddie.price.currency} - {caddie.price.amount}</span>
-
+                            <span className='md:text-2xl text-xl'>{caddie.name}</span>
+                            <span className='md:mt-1 mt-2 text-sm md:text-xl text-green-500'>{caddie.price.currency} - {caddie.price.amount}</span>
+                            <Link to={`/l/test-listing/${caddie.userId}`}>
+                              <button>View Profile</button>
+                            </Link>
                           </div>
                         </div>
                       </>

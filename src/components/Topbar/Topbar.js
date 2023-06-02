@@ -221,7 +221,7 @@ class TopbarComponent extends Component {
             onClick={this.handleMobileSearchOpen}
             title={intl.formatMessage({ id: 'Topbar.searchIcon' })}
           >
-            <SearchIcon className={css.searchMenuIcon} />
+            {/* <SearchIcon className={css.searchMenuIcon} /> */}
           </Button>
         </div>
         <div className={css.desktop}>
@@ -249,7 +249,7 @@ class TopbarComponent extends Component {
         >
           {authInProgress ? null : mobileMenu}
         </Modal>
-        <Modal
+        {/* <Modal
           id="TopbarMobileSearch"
           containerClassName={css.modalContainer}
           isOpen={isMobileSearchOpen}
@@ -267,7 +267,7 @@ class TopbarComponent extends Component {
               <FormattedMessage id="Topbar.mobileSearchHelp" />
             </p>
           </div>
-        </Modal>
+        </Modal> */}
         <ModalMissingInformation
           id="MissingInformationReminder"
           containerClassName={css.missingInformationModal}
