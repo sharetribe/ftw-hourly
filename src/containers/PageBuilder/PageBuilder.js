@@ -114,7 +114,10 @@ const PageBuilder = props => {
         userId: user.uuid
       }
       if (Data[user.uuid]) {
-        setCaddieList(prevList => [...prevList, caddieDetails]);
+        let ifexist = caddieList.some(item => item.userId === user.uuid);
+        if (!ifexist) {
+          setCaddieList(prevList => [...prevList, caddieDetails]);
+        }
       }
     });
   }, [usersId, Data]);
